@@ -687,12 +687,27 @@ defaults:
   # against the outside-Zone-A figure: conservative, four stalls it may not
   # owe.
   # (or/clackamas/gladstone/17.48.parking.txt#L23-L31,L159,L171,L174-L175)
+  #
+  # ORDINANCE 1545 (in force 2026-08-13) reprints Table 1 and splits the row
+  # this building took. The codified row "(b) Duplex, Triplex, Quadplex,
+  # Townhouse, Cottage -- 1 space per dwelling unit" becomes two: "(a) ...
+  # Duplex, Residential Home, Townhouse -- 1 space per unit" and "(b) Triplex or
+  # Quadplex -- Lots 3,000-4,999 sf: 2 spaces total; Lots over 4,999 sf: 3
+  # spaces total; Quadplex Lots over 6,999 sf: 4 spaces total" (p. 9-37), the
+  # OAR 660-046-0220(2)(e)(B) bands copied whole. One per unit is still the
+  # printed figure on the townhouse row and on the quadplex row's top band
+  # (four spaces for four units), so the value stands and only its citation
+  # moves. On a smaller lot the quadplex row asks 2 or 3, and the state layer's
+  # banded `preempts: cap` (or/_state.yaml) already clips one per unit to
+  # exactly those figures for a Large City, so the screen charges what the
+  # amended table asks on every lot of 3,000 sq ft and up. (2026-11-10,
+  # FOLLOWUPS 156)
   parking_min_per_unit:
     value: 1
-    cite: GMC 17.48.030 Table 1(1)(b), Duplex, Triplex, Quadplex, Townhouse, Cottage
-    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
-    retrieved: '2026-08-29'
-    quote: "or/clackamas/gladstone/17.48/17.48.030.txt#L122,L137,L139,L152-L154"
+    cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.48.030 Table 1(1)(a) Townhouse, 1 space per unit, and (1)(b) Quadplex Lots over 6,999 sf, 4 spaces total (p. 9-37)
+    url: https://www.ci.gladstone.or.us/media/30151
+    retrieved: '2026-10-15'
+    quote: "or/clackamas/gladstone/amended/ord1545.txt#L1618-L1619,L1621,L1625,L1632-L1634,L1638-L1639"
     variants:
       - exempt: true
         when: [gladstone_parking_exception_area]
@@ -708,12 +723,15 @@ defaults:
   # left empty on purpose, so `exempt` rather than absence: a maximum has to
   # beat the broader layers rather than fall through them.
   # (or/clackamas/gladstone/17.48/17.48.030.txt#L98-L99,L101-L111,L113-L120)
+  # Ordinance 1545's reprint keeps both columns for the Triplex or Quadplex
+  # row: "Min: None / Max: None" in Zone A, "Not Applicable" in Zone B, and
+  # "Not Applicable" twice on the townhouse row (p. 9-37). (2026-11-10)
   parking_max_per_unit:
     exempt: true
-    cite: GMC 17.48.030 Table 1(1)(b), Zone A and Zone B maximum columns
-    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
-    retrieved: '2026-08-29'
-    quote: "or/clackamas/gladstone/17.48/17.48.030.txt#L122,L137,L140-L141,L152-L153,L155-L157"
+    cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.48.030 Table 1(1)(a)-(b), Zone A and Zone B maximum columns (p. 9-37)
+    url: https://www.ci.gladstone.or.us/media/30151
+    retrieved: '2026-10-15'
+    quote: "or/clackamas/gladstone/amended/ord1545.txt#L1618-L1619,L1621-L1624,L1633-L1634,L1640-L1642"
   # HOW BIG. 17.48.040(2)(f) sends every parking space and access aisle to the
   # chapter's dimension tables, and the 90-degree row of the standard table
   # reads 9.5 by 18.0 with a 24.0 aisle.
