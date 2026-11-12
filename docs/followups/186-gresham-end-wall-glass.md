@@ -20,3 +20,5 @@ Per end wall at 5%: 25 ft x 20 ft = 25 sq ft of glass (~3 x 36x48, glass ~9 sq f
 sq ft (~4).
 
 RULED 2026-11-12 (2026-11-12-gresham-glass-each-facade): EACH facade; an end wall that cannot sit >= 3 ft from a side/rear line -> exclude (RED when no placement works). Lane gresham-end-glass building off rel7 d2802db7 -> rel8.
+
+BUILT 2026-11-12: flats/gresham-end-glass 04831082 + mirror count 18e321b5 (hand-off ../vicinitideals-worktrees/gresham-end-glass.handoff.md). 21 Gresham 7.0420 zones: non-street outside walls must sit >= 3 ft off side/rear lines; tries the flatter-spot placements first, else RED (no variance). Alley/side-street/side-yard-parking pods are not moved (straight RED if close) -- strict. Est. 5-20 of the 40 go RED; bound decides. Needs rel8 bound.
