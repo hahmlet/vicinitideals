@@ -19,3 +19,5 @@ Not read:
 (e) Building code side: a bedroom escape window each, habitable-room light (glass >= 8% of floor area)
     and air (4% openable), energy-code glazing limits.
 Offered 2026-11-12 as one reading lane (read-only first, then build only where a rule can bind a GREEN).
+
+DONE 2026-11-12: both readers reported (../vicinitideals-worktrees/glazing-pdx.findings.md, glazing-rest.findings.md). Report for Steph's design agent: https://claude.ai/artifact/PvTVXncwqnjMT4br3Krhdj (base case = doors on 80 ft front; end-door option; tiers by greens; building code; gotchas). Follow-ons in flight: end-wall 3 ft hold extended (gresham-end-glass lane: Beaverton commercial/MU 76, OC South End 21, S Hillsboro 2, Gladstone DCO 1, Gresham DEM/DCL/CNTH/CNRM 16); Tigard TMU first storey 12 ft vs 9'2" (pod-80x25 lane, 49). Open for Steph (low): Portland 33.130.230 "fourplexes are exempt from this Section" -- lift the 15% too? Design assumes no.

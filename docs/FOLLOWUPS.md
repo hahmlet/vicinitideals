@@ -60,7 +60,7 @@ the full one.)
 
 186. [Claude] [scan: YES -- toward red, FALSE GREEN] **Gresham end walls need 5% glass but 40 greens put one < 3 ft from a lot line (no windows allowed)** -- RULED 11-12 each wall, exclude (RED if no placement keeps 3 ft); BUILT flats/gresham-end-glass 18e321b5 (slides pod 3 ft off, else RED; est. 5-20 RED of 40) -> rel8 bound. [file](followups/186-gresham-end-wall-glass.md)
 
-187. [Claude] [scan: YES if a rule binds] **Window (glazing) rules not read yet: Portland plan districts, design districts/overlays, building-code light/egress** -- Steph GO 11-12; two readers running (glazing-pdx, glazing-rest -> ../vicinitideals-worktrees/glazing-*.findings.md). [file](followups/187-glazing-gaps.md) Steph wants the result as a report by likely green impact, with exceptions and gotchas, for another agent to size the glazing conservatively.
+187. [Claude] [scan: YES -- end-wall glass places] **Glazing rules: read, report published** -- report https://claude.ai/artifact/PvTVXncwqnjMT4br3Krhdj (base + end door, by green impact); build follow-ons: end-wall 3 ft hold for Beaverton CS/GC/SC, OC South End, S Hillsboro, Gladstone DCO, Gresham DEM/DCL/CN (in gresham-end-glass lane); Tigard TMU 12 ft storey (pod-80x25 lane); Steph low-priority: Portland CM 'fourplexes exempt' literal? [file](followups/187-glazing-gaps.md) Steph wants the result as a report by likely green impact, with exceptions and gotchas, for another agent to size the glazing conservatively.
 
 185. [Claude] [scan: YES -- every lot] **Screen the 80 x 25 pod, 20 ft tall, 9'2" storeys** -- RULED 11-12 (screen ran 80 x 30 since 11-08); lane pod-80x25 -> rel8 full bound. [file](followups/185-pod-depth-30.md)
 
