@@ -348,6 +348,22 @@ SIDE_YARD_PARKING_SILENT = (
 )
 #: Driveway approaches the drawn plan holds: one shared drive to the court.
 PLAN_APPROACHES = 1
+#: The street face must show a count of roof design elements from the code's
+#: menu (Tualatin TDC 73A.030(1)(b): three of 73A.040's six), and half the
+#: menu needs a pitched roof. A flat roof reaches the count only with add-ons
+#: (eaves, overhangs, roof planes at different heights) the pod's catalog does
+#: not show. A flat roof allowed with a design add-on is YELLOW with a flag
+#: (rulings.yaml ``2026-11-10-tigard-cornice-yellow``, and the Clackamas
+#: roof-garden ruling of 2026-11-11): flag ROOF-ELEMENTS, never GREEN, not RED
+#: on this alone.
+CLOSER_LOOK_ROOF_ELEMENTS = "CLOSER_LOOK_ROOF_ELEMENTS"
+
+#: The code binds the building to the architectural styles of a design book
+#: the corpus does not hold (Wilsonville's Villebois Architectural Pattern
+#: Book, WC 4.125(.23)(C)), so whether a style allows the pod's flat roof is
+#: unread. Unread is the conservative answer: YELLOW with
+#: ROOF-STYLE-BOOK-UNREAD until the book is read, never GREEN.
+CLOSER_LOOK_ROOF_BOOK = "CLOSER_LOOK_ROOF_BOOK"
 #: The plan's fit, missed on the ground left once the steep ground is taken
 #: off and met without that (:attr:`LotFacts.steep_blocks`): the slope
 #: eliminates the lot, not the pod's placement (Steph 2026-10-04). The fit
@@ -2328,6 +2344,29 @@ def cornice_owed(rules: ZoneResolution, design: Design) -> float | None:
     return float(need)
 
 
+def roof_book_unread(rules: ZoneResolution, design: Design) -> bool:
+    """True where a style book this corpus has not read sets the roof form
+    (``roof_style_book_unread``) and the pod's roof is not stated pitched."""
+    if rules.get("roof_style_book_unread") is not True:
+        return False
+    pitch = design.roof_pitch_in_12
+    return not (pitch is not None and pitch > 0)
+
+
+def roof_elements_owed(rules: ZoneResolution, design: Design) -> int | None:
+    """The count of roof design elements (``roof_design_elements_min``) a flat
+    roof here must reach with add-ons the pod does not show; None where the
+    code asks none or the pod's roof is pitched. A design that states no roof
+    owes it too: nothing shows the roof is not flat."""
+    need = rules.get("roof_design_elements_min")
+    if need is None or isinstance(need, bool):
+        return None
+    pitch = design.roof_pitch_in_12
+    if pitch is not None and pitch > 0:
+        return None
+    return int(need)
+
+
 def approaches_missing(rules: ZoneResolution, design: Design) -> int:
     """How many driveway approaches the code asks beyond the one the plan
     draws: ``ceil(units / driveway_units_per_approach) - PLAN_APPROACHES``,
@@ -3731,6 +3770,10 @@ def screen(
         closer = (*closer, CLOSER_LOOK_STEEP_COARSE)
     if lot.entrance_side_fit is not None:
         closer = (*closer, CLOSER_LOOK_ENTRANCE_SIDE)
+    if roof_elements_owed(rules, design) is not None:
+        closer = (*closer, CLOSER_LOOK_ROOF_ELEMENTS)
+    if roof_book_unread(rules, design):
+        closer = (*closer, CLOSER_LOOK_ROOF_BOOK)
     if review is not None and not reach:
         # Where ORS 197A.400 reaches, a condition the review adds must itself
         # be clear and objective (Steph 2026-10-15): flagged, not yellow.
@@ -4655,6 +4698,20 @@ def _account(
     for name, (code, by) in sorted(LEVER_FLAGS.items()):
         if name in rules.levers:
             flag(code, by, fact=name, source="drawn")
+    elements = roof_elements_owed(rules, design)
+    if elements is not None:
+        flag(
+            "ROOF-ELEMENTS",
+            CLOSER_LOOK_ROOF_ELEMENTS,
+            bounds=(0.0, float(elements)),
+            source=_cite(rules, "roof_design_elements_min"),
+        )
+    if roof_book_unread(rules, design):
+        flag(
+            "ROOF-STYLE-BOOK-UNREAD",
+            CLOSER_LOOK_ROOF_BOOK,
+            source=_cite(rules, "roof_style_book_unread"),
+        )
     cornice = cornice_owed(rules, design)
     if cornice is not None:
         flag(
@@ -4796,6 +4853,8 @@ __all__ = [
     "CLOSER_LOOK_ROOF_CORNICE",
     "CLOSER_LOOK_STEEP_COARSE",
     "CLOSER_LOOK_ENTRANCE_SIDE",
+    "CLOSER_LOOK_ROOF_BOOK",
+    "CLOSER_LOOK_ROOF_ELEMENTS",
     "CLOSER_LOOK_REVIEW_CONDITIONS",
     "GEOMETRY_UNREADABLE",
     "MIN_DENSITY_CHECKS",

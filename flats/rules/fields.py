@@ -97,6 +97,8 @@ _LABELS: dict[str, str] = {
     "driveway_walkway_ft": "walkway beside the driveway",
     "land_division_parent_standards": "parent-lot standards apply",
     "max_building_width_ft": "max. building width",
+    "roof_design_elements_min": "roof design elements on the front face, at least",
+    "roof_style_book_unread": "roof form set by a style book not yet read",
     "max_mass_footprint_sqft": "max. footprint under one roof",
     "min_roof_pitch_in_12": "min. roof pitch (rise in 12)",
     "flat_roof_cornice_min_in": "flat roof allowed with a cornice at least (inches)",
@@ -724,6 +726,38 @@ _F: tuple[FieldDef, ...] = (
         "where a building may stand and this says how big it may be, so a lot "
         "with room to spare on every yard still fails it.",
         True,
+    ),
+    FieldDef(
+        "roof_style_book_unread",
+        "bool",
+        "True where the code binds new housing to the architectural styles of "
+        "a design book the corpus does not hold, so the roof form the styles "
+        "allow is unread: Wilsonville WC 4.125(.23)(C) holds middle housing "
+        "in the Village zone to the Villebois Architectural Pattern Book's "
+        "Architectural Styles (the Village Center Architectural Standards "
+        "inside the Village Center). The pod's roof is flat, and a style "
+        "that refuses a flat roof makes it RED (rulings.yaml "
+        "2026-10-21-pod-roof-flat); unread, it is YELLOW with "
+        "ROOF-STYLE-BOOK-UNREAD, never GREEN. A design that states a pitched "
+        "roof owes nothing. Optional: absent means no such book binds.",
+        False,
+    ),
+    FieldDef(
+        "roof_design_elements_min",
+        "count",
+        "A MINIMUM count of roof design elements the street face must show, "
+        "picked from the code's own menu, as printed: Tualatin TDC "
+        "73A.030(1)(b) \"At least three Residential Roof Design Elements\" "
+        "from 73A.040's six. Half the menu needs a pitched roof (a dormer, "
+        "the pitched roof itself, decoration in a gable end); a flat roof "
+        "reaches the count only with add-ons -- a 12 in eave, a 6 in "
+        "overhang, roof planes at different heights -- and the pod's catalog "
+        "shows none of them. A flat roof allowed with a design add-on is "
+        "YELLOW with a flag (the Tigard cornice and Clackamas roof-garden "
+        "rulings, 2026-11-10 and 2026-11-11): YELLOW with ROOF-ELEMENTS, "
+        "never RED on it and never GREEN. A design that states a pitched "
+        "roof owes nothing. Optional: absent means no such menu was read.",
+        False,
     ),
     FieldDef(
         "max_mass_footprint_sqft",
@@ -2227,6 +2261,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # a historic district. A zone that is silent about it is not an
         # incomplete zone.
         "max_building_width_ft",
+        # A roof-element menu a flat roof meets only with add-ons (Tualatin).
+        "roof_design_elements_min",
+        # A roof form set by a style book not held (Villebois).
+        "roof_style_book_unread",
         # Design-district rules on the building itself (FOLLOWUPS 109 chunk
         # 3): a handful of districts state them and most zones state none.
         "max_mass_footprint_sqft",

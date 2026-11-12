@@ -131,7 +131,11 @@ def test_a_lot_with_a_home_keeps_its_answer(corpus, policies) -> None:
     s = _screened(corpus, policies, _v_row(**HOME))
     assert s.lot.observed.get(NO_DWELLING_FACT) is False
     assert FLAG not in {f.code for f in s.signed.flags}
-    assert s.signed.colour is flag_plan.Colour.green
+    # Its only hold since 2026-11-11 (roof-rereads) is the unread Villebois
+    # Pattern Book's roof styles (FACT-LOCAL-STREET was there when it was
+    # GREEN): YELLOW on ROOF-STYLE-BOOK-UNREAD, never on vacancy.
+    assert s.signed.colour is flag_plan.Colour.yellow
+    assert "ROOF-STYLE-BOOK-UNREAD" in {f.code for f in s.signed.flags}
 
 
 def test_a_vacant_lot_is_held_open_by_name_never_green(corpus, policies) -> None:

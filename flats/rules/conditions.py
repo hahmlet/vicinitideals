@@ -1100,11 +1100,12 @@ _C: tuple[ConditionDef, ...] = (
         "4/12 hipped, 6/12 gabled), which the flat-roofed pod fails. The city "
         "publishes no plan-district layer (Community_Development FeatureServer "
         "holds zoning, natural resources and the comprehensive plan only, "
-        "checked 2026-11-10), and the figure is not traced, so it is "
-        "unmeasured: a lot in those three zones stays off GREEN on it.",
+        "checked 2026-11-10), so the figure is traced as Hillsboro's "
+        "drawn_areas (2026-11-11); a lot the traced line cuts is unanswered "
+        "and stays off GREEN on it.",
         evidence=(
-            "Figure 12.61.200-A, Downtown Plan District Boundaries -- to be "
-            "traced as Hillsboro's drawn_areas; not held yet"
+            "Figure 12.61.200-A, Downtown Plan District Boundaries -- held as "
+            "Hillsboro's drawn_areas downtown_plan_district"
         ),
         assume=None,
     ),
@@ -2029,6 +2030,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "gladstone_parking_exception_area",
     "gladstone_town_center",
     "hillsboro_center_core",
+    "hillsboro_downtown_plan_district",
     "inside_mapped_use_area",
     "north_bethany_kaiser_main_street",
     "north_bethany_park_blocks",

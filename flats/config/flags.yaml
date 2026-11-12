@@ -991,7 +991,7 @@ types:
     approved_on: null
     raised_from: [HISTORIC_LISTING_UNSETTLED]
   PDX-COMMUNITY-DESIGN-STANDARDS:
-    description: "The lot is in a Portland Conservation District, where a new building needs historic resource review or must meet the Community Design Standards, the clear and objective alternative (PCC 33.445.210.D, 33.445.500, 33.218). Those standards place the building and its parking -- the front setback between the neighbours' and never more than 25 ft (exactly 25 ft in Piedmont), the car in off an alley where there is one, no parking in the front setback -- and none of it is measured."
+    description: "The lot is in a Portland Conservation District, where a new building needs historic resource review or must meet the Community Design Standards, the clear and objective alternative (PCC 33.445.210.D, 33.445.500, 33.218). Those standards place the building and its parking -- the front setback between the neighbours' and never more than 25 ft (exactly 25 ft in Piedmont), the car in off an alley where there is one, no parking in the front setback -- and the roof: pitched at least 6/12 (or at the neighbours' pitch), flat only with a roof deck of no more than 150 sq ft or, in the multi-dwelling zones, a cornice (33.218.100.D, 110.F, 140.O), which the flat-roofed pod's catalog does not show -- and none of it is measured."
     kind: categorical
     risk: possible
     severity: 4
@@ -1035,6 +1035,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_STEEP_COARSE]
+  ROOF-STYLE-BOOK-UNREAD:
+    description: "The code binds new homes to the architectural styles of a design book this corpus does not hold -- Wilsonville's Villebois Architectural Pattern Book (WC 4.125(.23)(C): where the pod matches no Pattern Book unit type, 'only the Architectural Styles, Architectural Patterns ... and Fencing must be complied with'; inside the Village Center, the Village Center Architectural Standards). The roof forms those styles allow are unread. A style that refuses a flat roof makes the flat-roofed pod RED (rulings.yaml 2026-10-21-pod-roof-flat); unread, the lot is held YELLOW"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Get the Architectural Pattern Book for the lot's Villebois Specific Area Plan (or the Village Center Architectural Standards) from Wilsonville Planning and read the roof forms its Architectural Styles allow"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_ROOF_BOOK]
+  ROOF-ELEMENTS:
+    description: "The code asks the street face of the building to show a count of roof design elements from its own menu (Tualatin TDC 73A.030(1)(b): at least three of the six in 73A.040, two on the rear and on a street-side wall), and half the menu needs a pitched roof -- a dormer, the pitched roof itself, decoration in a gable end. A flat roof reaches the count only with add-ons: eaves of at least 12 in, an overhang of at least 6 in, roof planes at different heights. The pod's roof is flat and its catalog shows none of them. A flat roof allowed with a design add-on is YELLOW with a flag (rulings.yaml 2026-11-10-tigard-cornice-yellow; the Clackamas roof-garden ruling of 2026-11-11), not RED; the bounds are the elements the catalog shows and the count asked"
+    kind: parametric
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, design]
+    path: "Confirm the pod's flat roof can carry three of Tualatin's roof elements on its street face (12 in eaves, a 6 in overhang, roof planes at different heights), or design a pitched roof, and add it to the design catalog; whether an overhang without a gable counts as 73A.040(4)'s barge- or verge-board overhang is a question for the city"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_ROOF_ELEMENTS]
   DRIVEWAY-SECOND-APPROACH:
     description: "The code asks one driveway approach for every two dwelling units (Oregon City 16.12.035.F, a requirement: Steph 2026-09-30), which is two for the four-unit pod, and the plan draws one shared drive; no second approach's width, spacing or offset is held to prove it fits (the bounds are the approaches the plan draws and the approaches the code asks)"
     kind: parametric
@@ -1723,7 +1753,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-HILLSBORO-DOWNTOWN-PLAN-DISTRICT:
-    description: "Whether the lot lies inside Hillsboro's Downtown Plan District (Figure 12.61.200-A), where 12.61.800 refuses a flat primary roof (4/12 hipped, 6/12 gabled) and the flat-roofed pod is RED"
+    description: "Plan district edge unconfirmed: whether the lot lies inside Hillsboro's Downtown Plan District (Figure 12.61.200-A, traced 2026-11-11), where 12.61.800 refuses a flat primary roof (4/12 hipped, 6/12 gabled) and the flat-roofed pod is RED; the traced line cuts this lot"
     kind: categorical
     risk: possible
     severity: 9
@@ -1731,7 +1761,7 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "Trace Figure 12.61.200-A (CDC 12.61.200) as Hillsboro's drawn_areas; the city publishes no plan-district layer"
+    path: "Lay the lot over Figure 12.61.200-A (CDC 12.61.200), or ask a Hillsboro planner which side of the plan district line it falls"
     priority: next
     status: pending
     approved_by: null

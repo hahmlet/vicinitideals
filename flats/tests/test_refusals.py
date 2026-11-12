@@ -405,7 +405,9 @@ pytestmark = pytest.mark.unit
 # "NOT ENCODED, on purpose: Maps 150-1 through 150-5" note; CI2 and IR keep theirs.
 # 296 -> 297 comments on 2026-11-10 (rel7 add-ons, flats/roof-ban): Wood Village LR 7.5/LR 12/MR 2/MR 4
 # roof pitch -- 210.375 C(1) / 220.355 C(1) (a development set behind another dwelling) NOT ENCODED.
-EXPECTED = {"notes": 163, "comments": 297, "tests": 18}
+# 297 -> 298 comments on 2026-11-11 (flats/roof-rereads, FOLLOWUPS 181(b)): Tualatin's new
+# roof_design_elements_min default -- 73A.020(2)(b) (a facade behind another dwelling) NOT ENCODED.
+EXPECTED = {"notes": 163, "comments": 298, "tests": 18}
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no

@@ -3185,7 +3185,7 @@ zones:
       value: true
       quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L94,L97"
     min_roof_pitch_in_12:
-      # FOLLOWUPS 109 chunk 3. 16.22.050(B)(2)(c), for "Attached
+      # FOLLOWUPS 109 chunk 3. 16.22.050(D)(2)(c), for "Attached
       # Single-Family Dwellings in the VTH District": "Hipped, gambrel, or
       # gabled roofs are required. Flat roofs are prohibited." That is the
       # townhouse form. The quadplex on one lot is not reached by it, nor by
@@ -3193,13 +3193,23 @@ zones:
       # or more families" (16.12) and the pod is four. No pitch is stated,
       # so the townhouse value is the least that is not flat, 1 in 12. The
       # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      # RE-READ 2026-11-11 (roof-rereads, FOLLOWUPS 181(b)): stands. The rule
+      # is 16.22.050(D)(2)(c) (#L367,L369,L397; it was
+      # cited as B). The townhouse is 16.12's "Dwelling, single-family
+      # attached (townhouse or rowhouse)" (16.12.030.txt#L656), so it reaches
+      # the pod on its own lots. 16.44.120's flat-roof cornice option does not
+      # loosen it: 16.22.050(A)(3)(b) makes the VTH standards prevail over
+      # Article 16.4 (#L51-L52), and HV states no middle-housing exemption.
+      # New detached houses are X in VTH (#L78,L81), so no detached-house rule
+      # is laxer. Only the townhouse path is RED on the roof; the quadplex
+      # path is untouched, so this is no false RED.
       exempt: true
-      cite: HV LDC 16.12, dwelling, multiple-family (five or more families); 16.22.050(B)(2), attached single-family dwellings only
+      cite: HV LDC 16.12, dwelling, multiple-family (five or more families); 16.22.050(D)(2), attached single-family dwellings only
       quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L642-L646"
       variants:
         - value: 1
           when: [unit_lots]
-          cite: HV LDC 16.22.050(B)(2)(c), roofs of attached single-family dwellings in VTH
+          cite: HV LDC 16.22.050(D)(2)(c), roofs of attached single-family dwellings in VTH
           quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L397,L432-L433"
     min_lot_sqft:
       value: 2000
