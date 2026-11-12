@@ -58,7 +58,7 @@ the full one.)
 182. [Claude] [scan: YES -- false greens only] **No-sewer rule: city pipe in the street outside every district** -- RULED 11-11 YELLOW (SEWER-STREET-MAIN); BUILT flats/no-sewer 4592039a (rel8: ~148 G->Y, ~398 G->R); bound must re-acquire 15 sewer layers. [file](followups/182-no-sewer-street-pipe.md)
 181. [Claude] [scan: YES -- false greens only] **Roof sweep: Clackamas unincorporated pitched-roof rule** -- RULED 11-11 YELLOW; BUILT flats/clackamas-roof 4245abd9 (ZDO 1005.03(F)(4), 13 zones, ~385 G->Y; at rel8 merge add quadfit mirror flat_roof_outdoor_use_max_stories: 13 + regen gaps); (b) re-reads open. [file](followups/181-roof-sweep-clackamas.md)
 
-186. [Claude] [Steph: each facade or total?] [scan: YES -- toward yellow, FALSE GREEN] **Gresham end walls need 5% glass but 40 greens put one < 3 ft from a lot line (no windows allowed)** -- found 11-12 from 183; reading question for Steph. [file](followups/186-gresham-end-wall-glass.md)
+186. [Claude] [scan: YES -- toward red, FALSE GREEN] **Gresham end walls need 5% glass but 40 greens put one < 3 ft from a lot line (no windows allowed)** -- RULED 11-12 each wall, exclude (RED if no placement keeps 3 ft); lane gresham-end-glass building -> rel8. [file](followups/186-gresham-end-wall-glass.md)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 

@@ -1,6 +1,6 @@
 # 186. Gresham end walls: 5% clear glass required, but no windows allowed within 3 ft of a lot line (2026-11-12)
 
-[Claude] [Steph: aggregate vs each facade] [scan: YES -- toward yellow, FALSE GREEN risk]
+[Claude] [scan: YES -- toward yellow, FALSE GREEN risk]
 
 Gresham 7.0420(I)(2) (flats/provenance/docs/or/multnomah/gresham/7/7.0420.txt, Transparency): "Clear glass
 in windows and/or doors shall occupy a minimum of 5 percent of all other facades" (VT >= 60%). Applies in
@@ -18,3 +18,5 @@ placement works). Party walls between homes are not facades. Side Wall Articulat
 option (a) on a 25 ft end wall (< 35 ft), so its 10% glass option is never needed.
 Per end wall at 5%: 25 ft x 20 ft = 25 sq ft of glass (~3 x 36x48, glass ~9 sq ft each); at 26 ft tall 32.5
 sq ft (~4).
+
+RULED 2026-11-12 (2026-11-12-gresham-glass-each-facade): EACH facade; an end wall that cannot sit >= 3 ft from a side/rear line -> exclude (RED when no placement works). Lane gresham-end-glass building off rel7 d2802db7 -> rel8.
