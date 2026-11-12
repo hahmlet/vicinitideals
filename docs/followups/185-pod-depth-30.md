@@ -24,3 +24,5 @@ RULED 2026-11-12 (2026-11-12-single-design-80x25-20ft): the screen had been runn
 (the 11-11 note above was wrong: it said pod80x25 "stays", but pod80x25 is archived). Switch to 80 x 25,
 height 20 ft, each storey 9'2" (Steph 11-12: "8' wall with 14 in truss" per floor, ground and top). Lane pod-80x25 off rel7 -> rel8, full bound (every lot). False-GREEN watch: code minimum
 building heights / storey heights / first-floor heights that 26/12 passed and 20/9.17 fail.
+
+BUILT 2026-11-12 flats/pod-80x25 91f29656 (hand-off ../vicinitideals-worktrees/pod-80x25.handoff.md): pod80x25@3 active, 80x30 archived. Now miss: Tigard TMU 12 ft first storey; 25 ft floors in Milwaukie DMU, Oregon City WFDD, Troutdale MU-3, Hillsboro UC-RM/NC/OR/RP. Ties at exactly 20 ft (pass only if the pod's code-measured height is >= 20): Clackamas SCMU, Tualatin MUC, Tigard MU-CBD, WashCo TO:BUS. Kenton 33.538.230 25 ft walls (Map 538-4) unencoded -> holding Kenton CM2/CM3/CE YELLOW. Quadfit port + 5 test fixes in progress. Asked Steph 11-12: how is the 20 ft measured.
