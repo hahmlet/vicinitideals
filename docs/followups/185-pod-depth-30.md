@@ -1,6 +1,6 @@
 # 185. Pod is really 80 x 30 (homes 20 x 30), not 80 x 25 (Steph 2026-11-11)
 
-[Claude] [Steph] [scan: YES -- every lot]
+[Claude] [scan: YES -- every lot]
 
 Steph has been building to 20 x 30 homes with the factory; FLATS pod80x25.yaml is
 20 x 25 (my glazing study also used a 30 ft end wall, adding to the mix-up).
@@ -19,3 +19,8 @@ comparison run. Factory design goes back to 20 x 25 (lift list in 145 will chang
 Still open: real height "going to be lower than 26" and ground storey -- Steph to
 give figures; keep 26 / 12 until then (26 is the cautious side for height limits;
 a ground storey under 12 ft would fail Tigard TMU-type minimums).
+
+RULED 2026-11-12 (2026-11-12-single-design-80x25-20ft): the screen had been running pod80x30 since 11-08
+(the 11-11 note above was wrong: it said pod80x25 "stays", but pod80x25 is archived). Switch to 80 x 25,
+height 20 ft, each storey 9'2" (Steph 11-12: "8' wall with 14 in truss" per floor, ground and top). Lane pod-80x25 off rel7 -> rel8, full bound (every lot). False-GREEN watch: code minimum
+building heights / storey heights / first-floor heights that 26/12 passed and 20/9.17 fail.

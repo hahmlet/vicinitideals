@@ -2781,6 +2781,29 @@
     (9 ft, 33.266) wherever the code allows it for this building; elsewhere the
     plan's 12 ft stands. FOLLOWUPS 178(a).
   source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
+- id: 2026-11-12-single-design-80x25-20ft
+  kind: ruling
+  date: 2026-11-12
+  scope: {}
+  question: >-
+    Since 2026-11-08 the screen has tested every lot with 20 x 30 homes (an
+    80 x 30 building, 26 ft tall, 12 ft ground storey), but Steph said
+    2026-11-11 "I really do want 25x20" and 2026-11-12 "We're gunna be 20ft
+    tall unless we go to a pitched roof". Switch the whole screen to 20 x 25
+    homes (80 x 25), 20 ft tall?
+  ruling: >-
+    "Yes: 20x25, 20 ft tall". Ground storey: "Each floor is 8' wall with
+    14" truss for either the ceiling of the ground floor or for the roof of
+    the top floor" -- 9 ft 2 in per storey, 18 ft 4 in of structure inside
+    the 20 ft height.
+  effect: >-
+    The single screened design becomes 4 attached townhomes, each 20 ft wide
+    x 25 ft deep, 2 storeys, flat roof, 80 x 25 with every door on the 80 ft
+    face, height 20 ft; each storey 9 ft 2 in (ground storey not 12 ft), so a
+    code minimum first-storey or storey height above that misses. Supersedes the 80 x 30
+    size in 2026-11-08-single-design-80x30 (parking, roof and door rules of
+    that ruling stand). Every lot is re-screened. FOLLOWUPS 185.
+  source: Steph 2026-11-12 (chat), docs/followups/185-pod-depth-30.md
 - id: 2026-11-12-gresham-glass-each-facade
   kind: ruling
   date: 2026-11-12

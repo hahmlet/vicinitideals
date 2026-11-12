@@ -60,7 +60,9 @@ the full one.)
 
 186. [Claude] [scan: YES -- toward red, FALSE GREEN] **Gresham end walls need 5% glass but 40 greens put one < 3 ft from a lot line (no windows allowed)** -- RULED 11-12 each wall, exclude (RED if no placement keeps 3 ft); lane gresham-end-glass building -> rel8. [file](followups/186-gresham-end-wall-glass.md)
 
-187. [Claude] [scan: YES if a rule binds] **Window (glazing) rules not read yet: Portland plan districts, design districts/overlays, building-code light/egress** -- Steph GO 11-12; two readers running (glazing-pdx, glazing-rest -> ../vicinitideals-worktrees/glazing-*.findings.md). [file](followups/187-glazing-gaps.md)
+187. [Claude] [scan: YES if a rule binds] **Window (glazing) rules not read yet: Portland plan districts, design districts/overlays, building-code light/egress** -- Steph GO 11-12; two readers running (glazing-pdx, glazing-rest -> ../vicinitideals-worktrees/glazing-*.findings.md). [file](followups/187-glazing-gaps.md) Steph wants the result as a report by likely green impact, with exceptions and gotchas, for another agent to size the glazing conservatively.
+
+185. [Claude] [scan: YES -- every lot] **Screen the 80 x 25 pod, 20 ft tall, 9'2" storeys** -- RULED 11-12 (screen ran 80 x 30 since 11-08); lane pod-80x25 -> rel8 full bound. [file](followups/185-pod-depth-30.md)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
@@ -170,7 +172,6 @@ the full one.)
 
 ## 2. Waiting on Steph
 
-185. [Claude] [Steph] [scan: YES if heights change] **Pod depth + heights** -- Steph 11-11 keeps 20 x 25 (no compare run); awaiting real height (<26) and ground storey. [file](followups/185-pod-depth-30.md)
 179. [Claude] [Steph] [scan: YES if adopted] **End-door variant: windows needed** -- typical 15% = 9 windows + door on the 30 ft end; ~10,500 lots back; state rule checked: does not reach a single pod; Steph to decide. [file](followups/179-end-door-variant.md)
 178. [Claude] [Steph] [scan: YES] **False-green round 4 findings** -- Wood Village roof ban ~108 false greens (lane roof-ban); fg4-fixes lane; Steph: Portland 9 ft drive? narrow 20 ft streets? no-sewer lots? Tigard cornice? [file](followups/178-fg-round4-questions.md)
 177. [Claude] [Steph] [scan: YES] **Front-door ruling halves the greens** -- RULED 11-10 soften to YELLOW (design-change flag); lane door-yellow; rel6 folds into rel7. [file](followups/177-door-rule-green-loss.md)
