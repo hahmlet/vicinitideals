@@ -475,7 +475,21 @@ SIGHT_DRIVEWAY = "SIGHT_DRIVEWAY"
 #: building: a note only, the colour unchanged (rulings.yaml
 #: 2026-11-09-portland-driveway-clear-zone-note).
 SIGHT_DRIVEWAY_NOTE = "SIGHT_DRIVEWAY_NOTE"
+#: The building stands clear of every street corner's clear-vision area but
+#: where a street meets an alley, and this city's area reaches alley corners
+#: (Hillsboro 12.50.260 B.1.a.ii, Oregon City 10.32.040: "street" includes
+#: alley; Gresham, Sandy, Canby state an alley figure). Where the alley's
+#: paving runs is not mapped, so YELLOW with a flag, never RED.
+SIGHT_CORNER_ALLEY = "SIGHT_CORNER_ALLEY"
+#: The drawn parking court (where the city's area keeps parked vehicles
+#: out) or the drawn drive (where it keeps driveways out: Gresham
+#: 9.0200.A.5) reaches the corner clear-vision area at its largest. The
+#: court's and drive's place is not searched for this, so YELLOW with a
+#: flag, never RED (:attr:`LotFacts.sight_corner_parking`).
+SIGHT_CORNER_PARKING = "SIGHT_CORNER_PARKING"
 SIGHT_RULINGS = {
+    SIGHT_CORNER_ALLEY: "2026-11-09-sight-triangle-corner-check",
+    SIGHT_CORNER_PARKING: "2026-11-09-sight-triangle-corner-check",
     SIGHT_CORNER_CURB: "2026-11-09-curb-position-middle-way",
     SIGHT_CORNER_UNSETTLED: "2026-11-09-sight-triangle-corner-check",
     SIGHT_DRIVEWAY: "2026-11-09-curb-position-middle-way",
@@ -1178,6 +1192,10 @@ class LotFacts:
     #: :attr:`sight_driveway_note` (:data:`SIGHT_DRIVEWAY_NOTE`).
     sight_driveway_doubt: bool = False
     sight_driveway_note: bool = False
+    #: The drawn court (a rule with ``vehicles``) or lane (``driveways``)
+    #: reaches the corner clear-vision area at its largest
+    #: (:data:`SIGHT_CORNER_PARKING`).
+    sight_corner_parking: bool = False
     #: The code the sight area was read from, for the flag.
     sight_cite: str | None = None
     #: The drawing finally kept stands the building with its door face more
@@ -3943,6 +3961,8 @@ def screen(
         closer = (*closer, lot.sight_corner_doubt)
     if lot.sight_driveway_doubt:
         closer = (*closer, SIGHT_DRIVEWAY)
+    if lot.sight_corner_parking:
+        closer = (*closer, SIGHT_CORNER_PARKING)
 
     # A Durham apron miss is no longer RED: it stays in ``reasons`` and holds
     # the lot YELLOW with its flag (2026-11-09-busy-road-driveway-spacing-yellow).
@@ -4782,6 +4802,7 @@ def _account(
     sight = {
         SIGHT_CORNER_CURB: "SIGHT-CORNER-CURB",
         SIGHT_CORNER_UNSETTLED: "SIGHT-CORNER-UNSETTLED",
+        SIGHT_CORNER_ALLEY: "SIGHT-CORNER-ALLEY",
     }
     if lot.sight_corner_doubt in sight:
         flag(
@@ -4792,6 +4813,11 @@ def _account(
         flag("SIGHT-DRIVEWAY", SIGHT_DRIVEWAY, source=lot.sight_cite or SIGHT_RULINGS[SIGHT_DRIVEWAY])
     if lot.sight_driveway_note:
         flag("SIGHT-DRIVEWAY-NOTE", SIGHT_DRIVEWAY_NOTE, source=SIGHT_RULINGS[SIGHT_DRIVEWAY_NOTE])
+    if lot.sight_corner_parking:
+        flag(
+            "SIGHT-CORNER-PARKING", SIGHT_CORNER_PARKING,
+            source=lot.sight_cite or SIGHT_RULINGS[SIGHT_CORNER_PARKING],
+        )
     if parking_setback_doubt:
         flag(
             "PARKING-SETBACK-DOUBT",
@@ -5045,6 +5071,8 @@ __all__ = [
     "SIGHT_CORNER_UNSETTLED",
     "SIGHT_DRIVEWAY",
     "SIGHT_DRIVEWAY_NOTE",
+    "SIGHT_CORNER_ALLEY",
+    "SIGHT_CORNER_PARKING",
     "ALLEY_COURT_OFF_STRETCH",
     "ALLEY_COURT_OFF_STRETCH_RULING",
     "COURT_GROUND_UNREAD",

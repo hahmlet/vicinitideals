@@ -2760,6 +2760,9 @@ clear_vision:
     basis: lot_line
     source: data/flats/books/sight-manuals/west-linn/42.txt#L14-L16
     cite: CDC 42.040; 42.020(B)
+    # Parked vehicles (FOLLOWUPS 161): 'planting, fence, wall, structure or temporary or permanent obstruction' -- a parked car read as a temporary obstruction (judgement).
+    vehicles: true
+    vehicles_quote: data/flats/books/sight-manuals/west-linn/42.txt#L11
     note: '''the triangular area formed by the right-of-way or property lines ... 30 feet distant from
       the intersection of the right-of-way line''; 42.020(B) bars ''planting, fence, wall, structure''.
       The 42.030 Willamette General Commercial exception is not applied (conservative).'

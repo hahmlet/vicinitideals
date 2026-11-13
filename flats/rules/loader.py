@@ -2053,7 +2053,8 @@ _SIGHT_KEYS = frozenset({
     "status", "kind", "legs_ft", "base_ft", "depth_ft", "depth_from", "sight_ft",
     "eye_back_ft", "basis", "except_zones", "unsettled_zones", "exempt_no_setback",
     "exempt_at_lot_line", "note_only", "quote", "says", "source", "cite", "ruling", "note",
-    "zone_legs_ft",
+    "zone_legs_ft", "vehicles", "driveways", "vehicles_quote", "alley", "alley_legs_ft",
+    "alley_quote", "class_map", "class_rank_min",
 })
 _SIGHT_KINDS = {"corner": ("triangle", "asymmetric", "wedge"), "driveway": ("edge", "apex", "wedge")}
 
@@ -2070,7 +2071,7 @@ def _feet(raw: object) -> tuple[float, ...] | None:
 
 
 def _parse_sight_rule(raw: object, *, at: str, which: str, problems: list[str]) -> SightRule | None:
-    from flats.rules.model import CLEAR_VISION_BASES, CLEAR_VISION_STATUSES
+    from flats.rules.model import CLEAR_VISION_ALLEY, CLEAR_VISION_BASES, CLEAR_VISION_STATUSES
 
     if not isinstance(raw, dict):
         problems.append(f"{at}: expected status, legs_ft, basis, quote and note")
@@ -2143,7 +2144,7 @@ def _parse_sight_rule(raw: object, *, at: str, which: str, problems: list[str]) 
         problems.append(f"{at}.depth_from: curb, lot_line or front_setback")
         return None
     flags = {}
-    for key in ("exempt_no_setback", "exempt_at_lot_line", "note_only"):
+    for key in ("exempt_no_setback", "exempt_at_lot_line", "note_only", "vehicles", "driveways"):
         v = raw.get(key, False)
         if not isinstance(v, bool):
             problems.append(f"{at}.{key}: true or false")
@@ -2156,6 +2157,37 @@ def _parse_sight_rule(raw: object, *, at: str, which: str, problems: list[str]) 
             problems.append(f"{at}.{key}: a list of zone codes")
             return None
         zones[key] = tuple(v)
+    extras: dict[str, object] = {}
+    if (flags["vehicles"] or flags["driveways"]) and not _pointer(raw.get("vehicles_quote")):
+        problems.append(f"{at}.vehicles_quote: the words that keep vehicles out, path#Lnn")
+        return None
+    if raw.get("vehicles_quote") is not None:
+        extras["vehicles_quote"] = str(raw["vehicles_quote"]).strip()
+    alley = raw.get("alley", "unread")
+    if alley not in CLEAR_VISION_ALLEY:
+        problems.append(f"{at}.alley: one of {', '.join(CLEAR_VISION_ALLEY)}")
+        return None
+    if alley != "unread" and not _pointer(raw.get("alley_quote")):
+        problems.append(f"{at}.alley_quote: the words that size or exclude alley corners, path#Lnn")
+        return None
+    if alley == "read":
+        got = _feet(raw.get("alley_legs_ft"))
+        if got is None:
+            problems.append(f"{at}.alley_legs_ft: required for a read alley corner")
+            return None
+        extras["alley_legs_ft"] = got
+    extras["alley"] = alley
+    if raw.get("alley_quote") is not None:
+        extras["alley_quote"] = str(raw["alley_quote"]).strip()
+    cmap, cmin = raw.get("class_map"), raw.get("class_rank_min")
+    if (cmap is None) != (cmin is None) or (
+        cmap is not None
+        and (not isinstance(cmap, str) or isinstance(cmin, bool) or not isinstance(cmin, int))
+    ):
+        problems.append(f"{at}: class_map (a TSP map key) and class_rank_min (an integer) together")
+        return None
+    if cmap is not None:
+        extras["class_map"], extras["class_rank_min"] = cmap, cmin
     zone_legs: dict[str, tuple[float, ...]] = {}
     for z, v in (raw.get("zone_legs_ft") or {}).items():
         got = _feet(v)
@@ -2170,8 +2202,13 @@ def _parse_sight_rule(raw: object, *, at: str, which: str, problems: list[str]) 
         says=None if says is None else str(says).strip(),
         source=None if source is None else source.strip(),
         cite=str(raw.get("cite") or ""), ruling=raw.get("ruling"), note=note.strip(),
-        **nums, **flags, **zones,  # type: ignore[arg-type]
+        **nums, **flags, **zones, **extras,  # type: ignore[arg-type]
     )
+
+
+def _pointer(raw: object) -> bool:
+    """A ``path#Lnn`` pointer (store or manual)."""
+    return isinstance(raw, str) and "#L" in raw
 
 
 def _parse_clear_vision(

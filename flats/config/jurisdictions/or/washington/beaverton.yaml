@@ -4877,6 +4877,9 @@ clear_vision:
     says: The sight clearance area requirements for Town Centers and Regional Centers
     source: data/flats/books/sight-manuals/beaverton/edm-ch2.txt#L1213-L1216
     cite: BDC 60.55.35.3; EDM 210.18
+    # Parked vehicles (FOLLOWUPS 161): EDM 210.18 'commercial sign, vehicle, hedge, off-street parking space'.
+    vehicles: true
+    vehicles_quote: data/flats/books/sight-manuals/beaverton/edm-ch2.txt#L1203-L1205
     note: 'EDM: ''a triangular area measuring 15 feet along the right-of-way or private access''; no structure.
       The 2025 file is a public review draft but its figure equals the 2019 text. Regional and Town Centers
       are case by case: unsettled there.'

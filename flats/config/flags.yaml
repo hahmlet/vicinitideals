@@ -395,6 +395,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [SIGHT_DRIVEWAY_NOTE]
+  SIGHT-CORNER-ALLEY:
+    description: "The building stands where the city's clear-vision area at a street-and-alley corner may reach; where the alley's paving runs is not mapped (FOLLOWUPS 161)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Find the alley's paved edge and the street's curb; draw the alley corner's area from them and check the building stands outside it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_CORNER_ALLEY]
+  SIGHT-CORNER-PARKING:
+    description: "The drawn parking court or drive reaches the corner clear-vision area, which this city keeps parked cars (or driveways) out of; moving them may clear it (FOLLOWUPS 161)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Find the curb; draw the corner area from it and place the court and drive outside it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_CORNER_PARKING]
   SIDE-YARD-PARKING-SILENT:
     description: "The fit depends on side-yard parking the code neither allows nor forbids; Steph's silent-code ruling keeps the lot yellow"
     kind: categorical

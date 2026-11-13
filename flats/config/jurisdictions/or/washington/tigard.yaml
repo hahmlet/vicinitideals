@@ -2308,9 +2308,16 @@ clear_vision:
     quote: or/washington/tigard/tdc.18.930.vision-clearance.txt#L53-L61
     says: points that are 30 feet distance from the intersection of the right-of-way line
     cite: TDC 18.930.030-.040
-    note: Along the right-of-way or property lines, 30 ft; 35 ft on an arterial (L53; street class unmapped,
-      so a fit between is YELLOW); 18.930.030(B) bars 'wall structures, and temporary or permanent obstructions'.
-      Except MU-CBD.
+    note: "Along the right-of-way or property lines, 30 ft; 35 ft on an arterial (L53). The street's class
+      is read from the city's TSP map (street_class_tigard, the map 18.920 driveway spacing reads; ARTERIAL
+      and above rank 3 or more): 35 ft at a corner either of whose streets is an arterial, 30 where both
+      rank below, both as options (a fit between YELLOW) where either is unranked (2026-11-13). 18.930.030(B)
+      bars 'wall structures, and temporary or permanent obstructions'. Except MU-CBD."
+    class_map: street_class_tigard
+    class_rank_min: 3
+    # Parked vehicles (FOLLOWUPS 161): 18.930.030(B) 'free of vehicles, hedges, plantings, fences'.
+    vehicles: true
+    vehicles_quote: or/washington/tigard/tdc.18.930.vision-clearance.txt#L41
   driveway:
     status: read
     kind: edge

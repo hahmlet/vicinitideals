@@ -1542,6 +1542,9 @@ clear_vision:
     quote: or/washington/sherwood/sdc.16.58.vision-clearance.txt#L4-L26
     says: In all zones, the minimum distance shall be twenty (20) feet.
     cite: SDC 16.58.010
+    # Parked vehicles (FOLLOWUPS 161): 16.58.010(C) 'structure, or temporary or permanent obstruction' -- a parked car read as a temporary obstruction (judgement).
+    vehicles: true
+    vehicles_quote: or/washington/sherwood/sdc.16.58.vision-clearance.txt#L15-L16
     note: '''two (2) sides of which are lot lines'', extended on a rounded corner; no ''structure'' over
       2.5 ft; ''Where no setbacks are required, buildings may be constructed within the clear vision area.'''
   driveway:

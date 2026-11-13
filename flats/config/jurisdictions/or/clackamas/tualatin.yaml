@@ -2639,6 +2639,9 @@ clear_vision:
     basis: lot_line
     source: data/flats/books/sight-manuals/tualatin/tdc.txt#L20887-L20898
     cite: TDC 75.020(8)
+    # Parked vehicles (FOLLOWUPS 161): 'no vehicular parking, hedge, planting, fence'.
+    vehicles: true
+    vehicles_quote: data/flats/books/sight-manuals/tualatin/tdc.txt#L20903-L20904
     note: 'Along the right-of-way lines: 10 ft for local streets, 25 ft where a collector or arterial
       meets (street class unmapped here, so a fit between is YELLOW). ''Vision clearance area'' (tdc.txt#L2174)
       bars structures. Not in the stored code; the TDC is held in data/flats/books.'

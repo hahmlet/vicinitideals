@@ -9774,7 +9774,15 @@ clear_vision:
     cite: Gresham PWS 6.04, Table 6.04; GCDC 9.0200
     note: '''two sides of which are the back of the street curb'', extended on a rounded corner; ''No
       fence, wall, landscaping, sign, structure, or parked vehicle'' (L69-L71). Back-of-curb basis: the
-      middle way. ''No driveway or off-street parking area'' in it is not checked (the court is not carved).'
+      middle way. ''No driveway or off-street parking area shall be located in the Clear Vision Area''
+      (L73): the drawn court and drive are checked against it (2026-11-13). Alleys 25 ft along the back
+      of the curb and the property line along the alley (L90-L91, Table 6.04 L114).'
+    vehicles: true
+    driveways: true
+    vehicles_quote: or/multnomah/gresham/pws.6.03-6.04.txt#L69-L73
+    alley: read
+    alley_legs_ft: 25
+    alley_quote: or/multnomah/gresham/pws.6.03-6.04.txt#L114
     ruling: 2026-11-09-curb-position-middle-way
   driveway:
     status: read

@@ -2159,29 +2159,42 @@ zone_rulings:
 # Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
 clear_vision:
   corner:
-    status: unsettled
+    status: read
     legs_ft:
     - 15
+    - 35
+    zone_legs_ft:
+      KTTC: [20, 35]
+      KTBB: [20, 35]
+      KTC: [20, 35]
+      KTRC: [20, 35]
+    basis: curb
+    quote: or/washington/king-city/kcc.16.144.vision-clearance.txt#L21-L28
+    says: formed using the curb line or pavement edge
+    cite: KCC 16.144.020-.030
+    note: 'Read 2026-11-13 (FOLLOWUPS 161): 16.144.020 applies the chapter to ''all development including
+      the construction of new structures'' (L13-L17) and 16.144.030 opens ''All structures and landscaping
+      shall satisfy the applicable standards of this section'' (L19-L20): a building is barred. From the
+      curb line or pavement edge: 35 ft at the six named streets (A.1, L29-L40), 20 ft at every intersection
+      in the Kingston Terrace District (A.2, L44-L46), 15 ft elsewhere (A.3, L48-L50). The pod is let only
+      in the Kingston Terrace zones, where a named street (Beef Bend, Roy Rogers, Elsner, 131st, Fischer)
+      may form the corner: 20 or 35, the larger drawn for GREEN. Curb basis: the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way
+    # Parked vehicles (FOLLOWUPS 161): 16.144.030(B) 'A clear area shall contain no vehicle'.
+    vehicles: true
+    vehicles_quote: or/washington/king-city/kcc.16.144.vision-clearance.txt#L52
+  driveway:
+    status: read
+    kind: edge
+    legs_ft:
     - 20
     - 35
     basis: curb
     quote: or/washington/king-city/kcc.16.144.vision-clearance.txt#L21-L28
-    says: formed using the curb line or pavement edge
-    cite: KCC 16.144.030
-    note: '15 ft (35 on six named streets, 20 in Kingston Terrace) from the curb or pavement edge; (B)
-      bars a ''vehicle, hedge, planting, fence, wall, sign or any similar permanent obstruction'', (C)
-      names buildings only on curves: whether a building is barred is unclear. Unsettled: the conservative
-      default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings at its largest
-      plausible size, measured with the curb at the lot line; a corner lot it reaches is YELLOW, never
-      GREEN and never RED on it, until the rule is read.'
-    ruling: 2026-11-09-sight-triangle-corner-check
-  driveway:
-    status: unsettled
-    kind: edge
-    legs_ft: 15
-    basis: curb
-    quote: or/washington/king-city/kcc.16.144.vision-clearance.txt#L21-L28
     says: or a driveway pro-
-    cite: KCC 16.144.030(A)(3)
-    note: 15 ft at a driveway; whether a building is barred is unclear, as at corners.
-    ruling: 2026-11-09-sight-triangle-corner-check
+    cite: KCC 16.144.030(A)
+    note: 'A driveway is an intersection under (A) (L21-L23); A.1 and A.2 except only ''driveways serving
+      no more than two residences'' (L29-L30, L44), which the pod''s drive (four) is not, so its drive
+      takes 20 ft in Kingston Terrace or 35 at a named street; the larger is drawn (the driveway check
+      is never RED). Was 15 (A.3), short of both.'
+    ruling: 2026-11-09-curb-position-middle-way
