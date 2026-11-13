@@ -66,6 +66,7 @@ the full one.)
 
 188. [Claude] [scan: YES -- toward yellow] **Lots cut by a district boundary pass untested** (S/E Hillsboro, Portland map areas) -- found 11-12; count + sample, then split-zone-yellow rule. [file](followups/188-cut-district-untested.md)
 189. [Claude] [scan: YES -- toward green only] **rel7 move-read fix-forwards: pdx-9ft cases not moved, Thorville bulb unmeasured, Clackamas R10 51.2% share red** -- none a false GREEN. [file](followups/189-rel7-fix-forwards.md)
+190. [Claude] [Steph] **Grow LXC 137 disk -- shared fast drive 95% full; needs OK to delete 137's old auto-backups first** -- WAITING ON STEPH. [file](followups/190-grow-137-disk.md)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
