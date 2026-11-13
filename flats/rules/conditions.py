@@ -507,19 +507,37 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "beaverton_active_frontage",
+        "site_fact",
+        "Every street line of the Beaverton Downtown lot is on a street of "
+        "Figure 70.20.10.6.2 (Active Frontage Design Map), Type A or Type B, "
+        "or the lot is an Area C tax lot (70.20.10.6.D.4.a), so its street "
+        "facade must meet the Active Ground Floor Design: at least the "
+        "Residential design's 12 feet floor to floor (S2.c, "
+        "70.20.10.txt#L415, D.3 L491). Traced 2026-11-13 onto the RLIS "
+        "centrelines (flats/config/areas/or/washington/beaverton/"
+        "active-frontage-design.geojson, flats.geom.active_frontage). False "
+        "where every street line and the lot's outline stand clear of every "
+        "mapped line by 60 ft; unanswered -- out of GREEN -- on a mapped and "
+        "an unmapped street, near a traced line's end, or on an Area D tax "
+        "lot (D.4.b: Type A only once the SW Millikan Way extension is "
+        "dedicated).",
+        evidence="Beaverton BDC Figure 70.20.10.6.2 (PDF page 612), traced onto RLIS centrelines, against the lot's s4 street lines and outline",
+        assume=None,
+    ),
+    ConditionDef(
         "beaverton_type_a_frontage",
         "site_fact",
-        "The Beaverton Downtown lot fronts a Type A frontage of Figure "
-        "70.20.10.6.2 (Active Frontage Design Map), or is one of the Area C "
-        "or Area D tax lots 70.20.10.6.D.4 names, so the building facade on "
-        "it must meet the Non-residential Active Ground Floor Design, whose "
+        "Every street line of the Beaverton Downtown lot is on a street of "
+        "Figure 70.20.10.6.2 and at least one is a Type A frontage, or the "
+        "lot is an Area C tax lot (70.20.10.6.D.4.a), so the building facade "
+        "must meet the Non-residential Active Ground Floor Design, whose "
         "S1.a asks a ground floor at least 16 feet floor to floor "
-        "(70.20.10.txt#L377-L378, L486-L496). The figure is not held (the "
-        "stored map PDF carries Figure 70.15.25.1, the use map, not this "
-        "one), so nothing observes the fact yet and every lot in a zone "
-        "that turns on it is unanswered -- out of GREEN -- until the figure "
-        "is traced (FOLLOWUPS 105).",
-        evidence="Beaverton BDC Figure 70.20.10.6.2 -- not held; needs fetching and tracing onto RLIS centrelines",
+        "(70.20.10.txt#L377-L378, L486-L496). Read with "
+        "beaverton_active_frontage from the trace of 2026-11-13 "
+        "(flats.geom.active_frontage): False wherever that is False or the "
+        "lot's mapped lines are all Type B; unanswered where it is.",
+        evidence="Beaverton BDC Figure 70.20.10.6.2 (PDF page 612), traced onto RLIS centrelines, against the lot's s4 street lines and outline",
         assume=None,
     ),
     ConditionDef(

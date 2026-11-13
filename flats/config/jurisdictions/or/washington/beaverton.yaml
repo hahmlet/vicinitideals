@@ -178,7 +178,7 @@ crossrefs:
       (70.15.10.txt#L92), the map note 4 of the RC-OT table sends minimum density to. It decides
       where a floor applies, and minimum density is a flag here.
   "70.20.10.6.2":
-    outcome: fetch
+    outcome: read
     note: >-
       Figure 70.20.10.6.2, the Active Frontage Design Map, and a standard that does reach the pod.
       70.20.10.6.D (70.20.10.txt#L486-L491): building facades fronting a mapped street must meet
@@ -190,10 +190,10 @@ crossrefs:
       the screened pod's ground floor is 9 ft 2 in, so it misses S2 as well: a Type B frontage
       must be held at 12 when the figure is traced, never exempt. Facades not on a
       mapped street are exempt. Encoded 2026-11-08: min_ground_story_ft 16 under
-      beaverton_type_a_frontage in RC-BC, RC-OT, RC-MU and RC-DT. The figure itself is not held
-      (the stored map PDF carries Figure 70.15.25.1, the use map), so the fact is unobserved and
-      every lot in those zones is held out of GREEN. Kept in the queue until the figure is fetched
-      and traced: see FOLLOWUPS 105.
+      beaverton_type_a_frontage in RC-BC, RC-OT, RC-MU and RC-DT. Figure fetched and traced
+      2026-11-13 (FOLLOWUPS 105 item 1; PDF page 612, flats/config/areas/or/washington/beaverton/
+      active-frontage-design.geojson): 16 on a Type A frontage, 12 on a Type B one (S2.c,
+      70.20.10.txt#L415) under beaverton_active_frontage, exempt off the map.
   "60.70.35.14":
     outcome: other_building
     note: >-
@@ -4184,24 +4184,30 @@ zones:
       via: "or/washington/beaverton/70.15/70.15.05.txt#L10-L14"
     min_ground_story_ft:
       # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
-      # Active Frontage Design Map) meets the Active Ground Floor Design;
-      # a Type A frontage takes the Non-residential design, whose S1.a asks
-      # a ground floor of at least 16 ft floor to floor, against the pod's
-      # 12. Facades on no mapped street are exempt. The figure is not held,
-      # so `beaverton_type_a_frontage` is unobserved and every lot here is
-      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
-      # 2026-11-08). Type B may take the Residential design instead, which
-      # asks at least 12 ft floor to floor (70.20.10.txt#L415): the 12 ft
-      # ground floor of the pods before 2026-11-12 met it, the screened
-      # pod's 9 ft 2 in (rulings.yaml 2026-11-12-single-design-80x25-20ft)
-      # does not. So a facade on ANY mapped street (Type A or B) misses, and
-      # tracing the figure must hold Type B frontages at 12, not exempt them.
+      # Active Frontage Design Map) meets the Active Ground Floor Design.
+      # Type A takes the Non-residential design, whose S1.a asks a ground
+      # floor of at least 16 ft floor to floor; Type B may take that or the
+      # Residential design, whose S2.c asks at least 12 ft (70.20.10.txt#L415),
+      # so 12 is the least a Type B frontage owes. Facades on no mapped
+      # street are exempt. Traced 2026-11-13 (FOLLOWUPS 105 item 1) onto the
+      # RLIS centrelines (areas/or/washington/beaverton/
+      # active-frontage-design.geojson, flats.geom.active_frontage): a lot
+      # whose every street line is on a mapped street owes 12, or 16 with a
+      # Type A line; a lot clear of every mapped line is exempt; a lot on a
+      # mapped and an unmapped street, near a traced end, or an Area D tax
+      # lot is unanswered and held out of GREEN. Area C tax lots take Type A
+      # (D.4.a). The screened pod's 9 ft 2 in ground floor (rulings.yaml
+      # 2026-11-12-single-design-80x25-20ft) misses both 12 and 16.
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
       variants:
+        - value: 12
+          when: [beaverton_active_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
         - value: 16
-          when: [beaverton_type_a_frontage]
+          when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
@@ -4348,24 +4354,30 @@ zones:
       via: "or/washington/beaverton/70.15/70.15.05.txt#L10-L14"
     min_ground_story_ft:
       # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
-      # Active Frontage Design Map) meets the Active Ground Floor Design;
-      # a Type A frontage takes the Non-residential design, whose S1.a asks
-      # a ground floor of at least 16 ft floor to floor, against the pod's
-      # 12. Facades on no mapped street are exempt. The figure is not held,
-      # so `beaverton_type_a_frontage` is unobserved and every lot here is
-      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
-      # 2026-11-08). Type B may take the Residential design instead, which
-      # asks at least 12 ft floor to floor (70.20.10.txt#L415): the 12 ft
-      # ground floor of the pods before 2026-11-12 met it, the screened
-      # pod's 9 ft 2 in (rulings.yaml 2026-11-12-single-design-80x25-20ft)
-      # does not. So a facade on ANY mapped street (Type A or B) misses, and
-      # tracing the figure must hold Type B frontages at 12, not exempt them.
+      # Active Frontage Design Map) meets the Active Ground Floor Design.
+      # Type A takes the Non-residential design, whose S1.a asks a ground
+      # floor of at least 16 ft floor to floor; Type B may take that or the
+      # Residential design, whose S2.c asks at least 12 ft (70.20.10.txt#L415),
+      # so 12 is the least a Type B frontage owes. Facades on no mapped
+      # street are exempt. Traced 2026-11-13 (FOLLOWUPS 105 item 1) onto the
+      # RLIS centrelines (areas/or/washington/beaverton/
+      # active-frontage-design.geojson, flats.geom.active_frontage): a lot
+      # whose every street line is on a mapped street owes 12, or 16 with a
+      # Type A line; a lot clear of every mapped line is exempt; a lot on a
+      # mapped and an unmapped street, near a traced end, or an Area D tax
+      # lot is unanswered and held out of GREEN. Area C tax lots take Type A
+      # (D.4.a). The screened pod's 9 ft 2 in ground floor (rulings.yaml
+      # 2026-11-12-single-design-80x25-20ft) misses both 12 and 16.
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
       variants:
+        - value: 12
+          when: [beaverton_active_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
         - value: 16
-          when: [beaverton_type_a_frontage]
+          when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
@@ -4511,24 +4523,30 @@ zones:
       via: "or/washington/beaverton/70.15/70.15.05.txt#L10-L14"
     min_ground_story_ft:
       # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
-      # Active Frontage Design Map) meets the Active Ground Floor Design;
-      # a Type A frontage takes the Non-residential design, whose S1.a asks
-      # a ground floor of at least 16 ft floor to floor, against the pod's
-      # 12. Facades on no mapped street are exempt. The figure is not held,
-      # so `beaverton_type_a_frontage` is unobserved and every lot here is
-      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
-      # 2026-11-08). Type B may take the Residential design instead, which
-      # asks at least 12 ft floor to floor (70.20.10.txt#L415): the 12 ft
-      # ground floor of the pods before 2026-11-12 met it, the screened
-      # pod's 9 ft 2 in (rulings.yaml 2026-11-12-single-design-80x25-20ft)
-      # does not. So a facade on ANY mapped street (Type A or B) misses, and
-      # tracing the figure must hold Type B frontages at 12, not exempt them.
+      # Active Frontage Design Map) meets the Active Ground Floor Design.
+      # Type A takes the Non-residential design, whose S1.a asks a ground
+      # floor of at least 16 ft floor to floor; Type B may take that or the
+      # Residential design, whose S2.c asks at least 12 ft (70.20.10.txt#L415),
+      # so 12 is the least a Type B frontage owes. Facades on no mapped
+      # street are exempt. Traced 2026-11-13 (FOLLOWUPS 105 item 1) onto the
+      # RLIS centrelines (areas/or/washington/beaverton/
+      # active-frontage-design.geojson, flats.geom.active_frontage): a lot
+      # whose every street line is on a mapped street owes 12, or 16 with a
+      # Type A line; a lot clear of every mapped line is exempt; a lot on a
+      # mapped and an unmapped street, near a traced end, or an Area D tax
+      # lot is unanswered and held out of GREEN. Area C tax lots take Type A
+      # (D.4.a). The screened pod's 9 ft 2 in ground floor (rulings.yaml
+      # 2026-11-12-single-design-80x25-20ft) misses both 12 and 16.
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
       variants:
+        - value: 12
+          when: [beaverton_active_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
         - value: 16
-          when: [beaverton_type_a_frontage]
+          when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
@@ -4686,24 +4704,30 @@ zones:
       via: "or/washington/beaverton/70.15/70.15.05.txt#L10-L14"
     min_ground_story_ft:
       # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
-      # Active Frontage Design Map) meets the Active Ground Floor Design;
-      # a Type A frontage takes the Non-residential design, whose S1.a asks
-      # a ground floor of at least 16 ft floor to floor, against the pod's
-      # 12. Facades on no mapped street are exempt. The figure is not held,
-      # so `beaverton_type_a_frontage` is unobserved and every lot here is
-      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
-      # 2026-11-08). Type B may take the Residential design instead, which
-      # asks at least 12 ft floor to floor (70.20.10.txt#L415): the 12 ft
-      # ground floor of the pods before 2026-11-12 met it, the screened
-      # pod's 9 ft 2 in (rulings.yaml 2026-11-12-single-design-80x25-20ft)
-      # does not. So a facade on ANY mapped street (Type A or B) misses, and
-      # tracing the figure must hold Type B frontages at 12, not exempt them.
+      # Active Frontage Design Map) meets the Active Ground Floor Design.
+      # Type A takes the Non-residential design, whose S1.a asks a ground
+      # floor of at least 16 ft floor to floor; Type B may take that or the
+      # Residential design, whose S2.c asks at least 12 ft (70.20.10.txt#L415),
+      # so 12 is the least a Type B frontage owes. Facades on no mapped
+      # street are exempt. Traced 2026-11-13 (FOLLOWUPS 105 item 1) onto the
+      # RLIS centrelines (areas/or/washington/beaverton/
+      # active-frontage-design.geojson, flats.geom.active_frontage): a lot
+      # whose every street line is on a mapped street owes 12, or 16 with a
+      # Type A line; a lot clear of every mapped line is exempt; a lot on a
+      # mapped and an unmapped street, near a traced end, or an Area D tax
+      # lot is unanswered and held out of GREEN. Area C tax lots take Type A
+      # (D.4.a). The screened pod's 9 ft 2 in ground floor (rulings.yaml
+      # 2026-11-12-single-design-80x25-20ft) misses both 12 and 16.
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
       variants:
+        - value: 12
+          when: [beaverton_active_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
         - value: 16
-          when: [beaverton_type_a_frontage]
+          when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-

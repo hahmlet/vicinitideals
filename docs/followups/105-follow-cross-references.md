@@ -34,18 +34,15 @@ Routing rows read (routing.csv stays open until something is encoded inside the 
 
 ## Still open
 
-1. **Beaverton 70.20.10.6.2, the Active Frontage Design Map: HELD, trace still owed.** Facades on
-   mapped Downtown streets must meet the Active Ground Floor rules; Type A frontages (and the Area C and D
-   tax lots of D.4) take the non-residential design, a ground floor at least 16 ft floor to floor
-   (70.20.10.txt#L377-L378, L486-L496), against the pod's 12. Type B may take the residential design,
-   which 12 ft meets. Round 2 encoded `min_ground_story_ft` 16 under the site fact
-   `beaverton_type_a_frontage` in RC-BC, RC-OT, RC-MU and RC-DT. Nothing observes the fact, so every lot
-   in those zones is held out of GREEN (FACT-BEAVERTON-TYPE-A-FRONTAGE). The figure is NOT in the corpus:
-   the stored map PDF (flats/config/areas/or/washington/beaverton/downtown-street-types-and-frontage)
-   carries Figure 70.15.25.1, the Active Frontage USE Map, a different figure. Next: fetch Chapter 70's
-   Figure 70.20.10.6.2 (ask Steph first), trace its Type A streets onto RLIS centrelines the Hillsboro
-   way (flats/geom/active_use.py), observe the fact in flats/ingest/quadfit.py, and the held lots off
-   Type A streets reopen.
+1. **Beaverton 70.20.10.6.2, the Active Frontage Design Map: TRACED 2026-11-13 (flats/beaverton-type-a,
+   dd475d15).** Figure fetched from the BDC full export (PDF page 612, same sha256 as the stored source),
+   georeferenced to RLIS centrelines and typed per 20 ft piece (A / B / doubt / none) into
+   flats/config/areas/or/washington/beaverton/active-frontage-design.geojson (`drawn: true`); read by
+   flats/geom/active_frontage.py and observed in flats/ingest/quadfit.py. Two facts now: on the map
+   (12 ft ground floor, D.3/S2.c) and Type A (16 ft, D.2/S1.a); off the map the D.1 exemption stands.
+   A lot within 60 ft of a traced end or with mixed frontage stays held; Area C = Type A, Area D held.
+   Run 124: 228 off the map lose this hold (0 to GREEN, other holds remain); 73 newly bound (RED, the pod
+   misses 12 and 16); 152 still held. Left: D.1's "within min/max setback" fronting test is not modelled.
 2. **Corner vision areas** -- still unmodelled; round 4 collected the legs (below). (Washington 418-3; West Linn Chapter 42, held round 4; Beaverton 60.55.35.3,
    which defers to the Engineering Design Manual). This corpus does not model vision areas anywhere.
    This is the known under-count.
@@ -157,5 +154,5 @@ Read, not encoded (possible false GREENs, each needs a mechanism or data; listed
 - **Washington 418-2 future right-of-way** for R-24 NB, NMU, CCMU (half the TSP maximum width; not
   for Middle Housing): the TSP design parameters are not held. Zones already UNKNOWN.
 - Cornelius Type I middle housing site review (18.100.030 (A)(2)): ministerial, GREEN tier; no change.
-- Beaverton 70.20.10.6.2 / 70.15.25.1 trace (item 1): not done this round; the hold stands.
+- Beaverton 70.20.10.6.2 trace (item 1): done 2026-11-13 on flats/beaverton-type-a (see item 1).
 - Lake Oswego 50.06.001.5: not fetched (layer switched off, zero lots).
