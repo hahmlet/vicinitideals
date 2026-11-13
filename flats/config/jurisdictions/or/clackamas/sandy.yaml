@@ -1302,6 +1302,9 @@ clear_vision:
     quote: or/clackamas/sandy/17.74/17.74.30.txt#L6-L17
     says: Intersection of a street and another street
     cite: SDC 17.74.30
+    alley: read
+    alley_legs_ft: 20
+    alley_quote: or/clackamas/sandy/17.74/17.74.30.txt#L16
     note: '''a triangular area formed by the intersection of the curb lines'' (edge of asphalt where none),
       30 ft along the curb line street to street; bars ''sign, structure, solid fence, or vegetation''.
       Curb basis: the middle way.'

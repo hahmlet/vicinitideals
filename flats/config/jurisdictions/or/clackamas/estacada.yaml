@@ -1040,6 +1040,9 @@ clear_vision:
     says: two sides of which are lines measured from the corner intersection to a distance of fifteen
       (15) feet
     cite: EMC 16.08.010; 16.60.010
+    # Parked vehicles (FOLLOWUPS 161): 'structure or temporary or permanent obstruction' -- a parked car read as a temporary obstruction (judgement).
+    vehicles: true
+    vehicles_quote: or/clackamas/estacada/16.60/16.60.010.txt#L5
     note: '16.60.010(2) (16.60/16.60.010.txt#L5): ''no planting, fence, wall, sign, banner, structure''
       over 2.5 ft. ''The corner intersection'' is not said to be of the lot lines or the curbs: read both
       ways, the middle way.'

@@ -3685,6 +3685,59 @@ def sight_driveway_checked(
     return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
 
+def sight_corner_court_checked(
+    s: Screened, lot: QuadfitLot, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` answered on whether the drawn court or drive stands in the
+    corner clear-vision area (FOLLOWUPS 161; ``clear_vision.corner``).
+
+    Where the city's area keeps parked vehicles out (``vehicles``: Gresham
+    9.0200.A, Tigard 18.930, ...) the drawn court, and where it keeps
+    driveways out (``driveways``: Gresham 9.0200.A.5) the drawn lane, is
+    held YELLOW (``sight_corner_parking``) when it reaches the area at its
+    largest (``high``: the curb at the lot line, the largest figure, the
+    alley corners). Never RED: the court's and the drive's place is not
+    searched for it, and the curb may stand back. A plan RED both ways is
+    not read."""
+    from shapely.geometry import Polygon
+
+    from flats.geom import sight_triangle as sight
+
+    cv = lot.clear_vision
+    rule = None if cv is None else cv.corner
+    if s.facts is None or rule is None or not (rule.vehicles or rule.driveways):
+        return s
+    if lot.lot_geom is None:
+        return s
+    if s.signed.triage is Triage.red and s.screening.triage is Triage.red and not _map_green(s):
+        return s
+    drawing = s.drawing or {}
+    if not drawing.get("fits"):
+        return s
+    areas = sight.corner_areas(lot.lot_geom, lot.edges, rule, lot.zone)
+    held = False
+    if areas is not None:
+        rings = []
+        if rule.vehicles:
+            rings.append(drawing.get("court"))
+        if rule.driveways:
+            rings.append(drawing.get("lane"))
+        for ring in rings:
+            if ring and len(ring) >= 4 and sight.reaches(areas.high, Polygon(ring), lot.lot_geom):
+                held = True
+                break
+    if held == s.facts.sight_corner_parking:
+        return s
+    facts = dataclasses.replace(s.facts, sight_corner_parking=held)
+    if held and areas is not None and not facts.sight_cite:
+        facts = dataclasses.replace(facts, sight_cite=areas.cite or None)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
 def court_yard_checked(
     s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy
 ) -> Screened:
@@ -5546,6 +5599,7 @@ def _screen_lot_once(
         won = court_yard_checked(won, policy=policy, relief=relief)
         won = alley_court_checked(won, policy=policy, relief=relief)
         won = sight_driveway_checked(won, lot, roads, policy=policy, relief=relief)
+        won = sight_corner_court_checked(won, lot, policy=policy, relief=relief)
         won = entrance_drawn_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
         won = road_standin_checked(won, lot)

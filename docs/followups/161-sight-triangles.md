@@ -46,3 +46,11 @@ RULED 2026-11-09 (Steph, rulings.yaml): 1 build the corner check YES; 2 Portland
 yellow+flag between); 4 West Linn pod = single-family apex; 6 Multnomah pockets take both Portland parking rulings.
 Still open: Q5 Milwaukie (buy AASHTO / email city; hold yellow meanwhile).
 RULED 2026-11-10 (Steph): Milwaukie uses the AASHTO figures already held (Clackamas reproduction); no purchase.
+
+Leftovers 2026-11-13 (branch flats/sight-leftovers, hand-off ../vicinitideals-worktrees/sight-leftovers.handoff.md):
+King City read (buildings barred; 20/35 ft in Kingston Terrace; the pod's 4-unit drive takes 20/35, not 15). Gladstone,
+Oregon City: buildings barred, size still unsettled (ROW width / city engineer) -> stay YELLOW. Hillsboro wedge 450 -> 500
+(AASHTO at 45 mph). Tigard 30/35 picked per corner from the TSP class map. New checks (YELLOW+flag, never RED): alley
+corners (SIGHT_CORNER_ALLEY; Gresham 25, Sandy 20, Canby 15 read, else the corner figure) and parked cars / drive in the
+corner area (SIGHT_CORNER_PARKING; vehicles: 14 cities, driveways: Gresham). Needs a bound. Open for Steph: Oregon City /
+Hillsboro engineer-set size (keep YELLOW?).

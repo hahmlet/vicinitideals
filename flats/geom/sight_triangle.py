@@ -24,6 +24,16 @@ Two areas are drawn per corner (:class:`SightAreas`):
 
 A fit in between is YELLOW with the area's reason.
 
+Where a street meets an ALLEY (an alley lot line, :attr:`flats.geom.edges.
+Edge.alley`) the corner is drawn too (:func:`alley_corners`), at the code's
+alley figure where read (``SightRule.alley``), else at the street corner's
+largest. It joins ``high`` only: where an alley's paving runs is not mapped,
+so a building there is held YELLOW (``SIGHT_CORNER_ALLEY``), never RED.
+
+A figure that turns on the streets' class (Tigard: 35 ft at an arterial, 30
+otherwise) is chosen per corner from the ranks the lot lines carry
+(``SightRule.class_map``); an unranked street leaves both figures as options.
+
 Coordinates are the lot polygon's, in feet. The corners are where two of
 the lot's streets (:func:`flats.fit.frontage.street_chains`, which merges a
 rounded corner's chords into the streets they join) meet: the straight
@@ -89,6 +99,11 @@ class StreetLine:
 class Corner:
     a: StreetLine
     b: StreetLine
+    #: Each street's TSP rank (:attr:`flats.geom.edges.Edge.street_rank`, the
+    #: highest along it); None where any of its lines is unranked.
+    ranks: tuple[int | None, int | None] = (None, None)
+    #: Street ``b`` is an alley (:func:`alley_corners`).
+    alley: bool = False
 
 
 @dataclass(frozen=True)
@@ -133,6 +148,13 @@ def _line_at(lot: BaseGeometry, chain: Sequence[Edge], corner_end: str) -> Stree
     return StreetLine(x0, y0, (x1 - x0) / n, (y1 - y0) / n, nx, ny)
 
 
+def _chain_rank(chain: Sequence[Edge]) -> int | None:
+    ranks = [e.street_rank for e in chain]
+    if not ranks or any(r is None for r in ranks):
+        return None
+    return max(r for r in ranks if r is not None)
+
+
 def _turn_deg(a: StreetLine, b: StreetLine) -> float:
     dot = max(-1.0, min(1.0, a.ux * b.ux + a.uy * b.uy))
     return math.degrees(math.acos(dot))
@@ -159,7 +181,30 @@ def corners(lot: BaseGeometry, edges: LotEdges | None) -> tuple[Corner, ...]:
                 # the same street bending is near 180.
                 turn = _turn_deg(a, b)
                 if CORNER_TURN_MIN_DEG <= turn <= 180.0 - CORNER_TURN_MIN_DEG:
-                    out.append(Corner(a, b))
+                    out.append(Corner(a, b, (_chain_rank(ci), _chain_rank(cj))))
+    return tuple(out)
+
+
+def alley_corners(lot: BaseGeometry, edges: LotEdges | None) -> tuple[Corner, ...]:
+    """Where one of the lot's streets meets one of its alley lines: a street
+    chain's end that is an end of an alley edge, the two lines at a corner's
+    angle (:data:`CORNER_TURN_MIN_DEG`). Street ``a``, alley ``b``."""
+    if edges is None or lot is None or lot.is_empty:
+        return ()
+    alleys = [e for e in edges.edges if e.alley and e.length_ft > 0]
+    if not alleys:
+        return ()
+    out: list[Corner] = []
+    for chain in street_chains(edges):
+        ends = (("start", (chain[0].x1, chain[0].y1)), ("end", (chain[-1].x2, chain[-1].y2)))
+        for end, (x, y) in ends:
+            for e in alleys:
+                for a_end, (ax, ay) in (("start", (e.x1, e.y1)), ("end", (e.x2, e.y2))):
+                    if math.hypot(x - ax, y - ay) > _MEET_TOL_FT:
+                        continue
+                    a, b = _line_at(lot, chain, end), _line_at(lot, (e,), a_end)
+                    if CORNER_TURN_MIN_DEG <= _turn_deg(a, b) <= 180.0 - CORNER_TURN_MIN_DEG:
+                        out.append(Corner(a, b, (_chain_rank(chain), None), alley=True))
     return tuple(out)
 
 
@@ -228,6 +273,35 @@ def _figures(rule: Any, zone: str | None) -> list[tuple[float, ...]]:
     return [(v,) for v in legs]
 
 
+def _corner_figures(
+    rule: Any, c: Corner, figures: list[tuple[float, ...]]
+) -> list[tuple[float, ...]]:
+    """The figures at this corner: one, where the rule turns on the streets'
+    class and both streets are ranked (the largest at a corner either of
+    whose streets ranks ``class_rank_min`` or above, the smallest where both
+    rank below); every option otherwise."""
+    cmin = getattr(rule, "class_rank_min", None)
+    if cmin is None or len(figures) < 2 or any(r is None for r in c.ranks):
+        return figures
+    busy = max(r for r in c.ranks if r is not None) >= cmin
+    pick = max if busy else min
+    return [pick(figures, key=lambda f: max(f))]
+
+
+def _alley_shapes(rule: Any, figures: list[tuple[float, ...]], found: Sequence[Corner]) -> list[Polygon]:
+    """The areas at the alley corners: the code's alley figure where read,
+    nothing where its area is at street corners only, else the street
+    corner's largest figure drawn as the rule draws it."""
+    how = getattr(rule, "alley", "unread")
+    if how == "none" or not found:
+        return []
+    if how == "read":
+        leg = max(rule.alley_legs_ft)
+        return [triangle(c, leg, leg) for c in found]
+    biggest = max(figures, key=lambda f: max(f))
+    return [p for c in found for p in _shapes(c, rule, biggest, 0.0)]
+
+
 def corner_areas(
     lot: BaseGeometry,
     edges: LotEdges | None,
@@ -240,22 +314,27 @@ def corner_areas(
     :class:`flats.rules.model.SightRule`), clipped to the lot; None where
     the rule keeps nothing off it (no rule, ``status: none``, a zone it
     excepts, no corner, or nothing of either area on the lot)."""
-    from flats.score.screen import SIGHT_CORNER_CURB, SIGHT_CORNER_UNSETTLED
+    from flats.score.screen import (
+        SIGHT_CORNER_ALLEY,
+        SIGHT_CORNER_CURB,
+        SIGHT_CORNER_UNSETTLED,
+    )
 
     if rule is None or rule.status == "none" or (zone and zone in rule.except_zones):
         return None
-    found = corners(lot, edges)
-    if not found:
-        return None
-    unsettled = rule.status == "unsettled" or bool(zone and zone in rule.unsettled_zones)
-    curb = rule.basis != "lot_line"
     figures = _figures(rule, zone)
     if not figures or not all(figures):
         return None
-    biggest = max(figures, key=lambda f: max(f))
-    smallest = min(figures, key=lambda f: max(f))
-    high = unary_union([
-        p for c in found for p in _shapes(c, rule, biggest, 0.0)
+    found = corners(lot, edges)
+    by_alley = _alley_shapes(rule, figures, alley_corners(lot, edges))
+    if not found and not by_alley:
+        return None
+    unsettled = rule.status == "unsettled" or bool(zone and zone in rule.unsettled_zones)
+    curb = rule.basis != "lot_line"
+    street_high = unary_union([
+        p
+        for c in found
+        for p in _shapes(c, rule, max(_corner_figures(rule, c, figures), key=lambda f: max(f)), 0.0)
     ]).intersection(lot)
     if unsettled:
         low: BaseGeometry = Polygon()
@@ -264,6 +343,7 @@ def corner_areas(
         d = generous_ft if curb else 0.0
         parts = []
         for c in found:
+            smallest = min(_corner_figures(rule, c, figures), key=lambda f: max(f))
             shapes = _shapes(c, rule, smallest, d)
             sure = shapes[0]
             for p in shapes[1:]:
@@ -273,6 +353,13 @@ def corner_areas(
         # A gap between the figures with the lot line as the basis is a
         # street class nobody mapped: as unsettled as an unread rule.
         reason = SIGHT_CORNER_CURB if curb else SIGHT_CORNER_UNSETTLED
+    high = street_high
+    if by_alley:
+        high = unary_union([street_high, *by_alley]).intersection(lot)
+        # Held for the alley corner alone where the street corners leave no
+        # doubt of their own.
+        if street_high.difference(low).area < OVERLAP_SQFT:
+            reason = SIGHT_CORNER_ALLEY
     if high.is_empty or high.area < OVERLAP_SQFT:
         return None
     return SightAreas(low=low, high=high, reason=reason, cite=rule.cite or "")

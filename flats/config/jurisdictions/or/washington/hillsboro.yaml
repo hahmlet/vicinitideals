@@ -4952,23 +4952,30 @@ clear_vision:
     status: unsettled
     kind: wedge
     sight_ft:
-    - 450
+    - 500
     eye_back_ft: 14.5
     basis: travel_lane
     source: data/flats/books/sight-manuals/hillsboro/dcs-2025-combined.txt#L3013-L3031
-    cite: Hillsboro DCS 230.5.1, Figure 230.3
+    cite: Hillsboro DCS 230.5.1, Figure 230.3; HCC 12.50.260
     note: '''The Engineer shall evaluate safe intersection sight distance using ... AASHTO'', applying
       ''to the placement of any object located within or behind the public right-of-way''; nothing over
-      30 in. Figure 12.50.360-A unread. The wedge at 450 ft contains Figure 230.3''s 25 ft corner. Unsettled:
-      the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings
-      at its largest plausible size, measured with the curb at the lot line; a corner lot it reaches is
-      YELLOW, never GREEN and never RED on it, until the rule is read.'
+      30 in. HCC 12.50.260(C)(1) (12.50.260.txt#L16-L17) takes AASHTO at the cross street''s posted or
+      85th-percentile speed from a traffic study; (C)(2) private intersections Figure 12.50.360-A, unread.
+      The speed is not mapped: the wedge is drawn at 500 ft, AASHTO''s figure at 45 mph (the AASHTO table
+      held at gmc-17.54-clear-vision.txt#L77), the design speed of a Hillsboro arterial (DCS Table 210.2,
+      dcs-2025-combined.txt#L2272-L2276); it was 450 (read 2026-11-13). (B)(1)(a)(ii) reaches ''the intersections
+      of a street and an alley'' (L9). Unsettled: the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check):
+      the area bars buildings at its largest plausible size; a corner lot it reaches is YELLOW, never GREEN
+      and never RED on it.'
+    # Parked vehicles (FOLLOWUPS 161): 12.50.260(C)(3) 'plantings, walls, structures, or temporary or permanent obstructions' -- a parked car read as a temporary obstruction (judgement).
+    vehicles: true
+    vehicles_quote: or/washington/hillsboro/12.50/12.50.260.txt#L19
     ruling: 2026-11-09-sight-triangle-corner-check
   driveway:
     status: unsettled
     kind: wedge
     sight_ft:
-    - 450
+    - 500
     eye_back_ft: 14.5
     basis: travel_lane
     source: data/flats/books/sight-manuals/hillsboro/dcs-2025-combined.txt#L3013-L3031

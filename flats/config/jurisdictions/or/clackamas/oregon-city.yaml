@@ -3436,8 +3436,13 @@ clear_vision:
     source: data/flats/books/sight-manuals/oregon-city/ocmc-10.32-traffic-sight-obstructions.txt#L8-L25
     cite: OCMC 10.32
     note: '''the area of which is to be determined by the city engineer'' with a sight-distance table
-      (250 ft at 25 mph, 15 ft back). Speed unmapped and the engineer decides. Unsettled: the conservative
-      default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings at its largest
-      plausible size, measured with the curb at the lot line; a corner lot it reaches is YELLOW, never
-      GREEN and never RED on it, until the rule is read.'
+      (200-450 ft for 20-45 mph, 15 ft back; L8-L25). A building is barred: 10.32.040(B) exempts only
+      ''existing structures'' and subjects ''All construction initiated after June 8, 1978, which encroaches
+      on the clear vision area'' (L42). The size stays unsettled: the engineer sets it and the speed is
+      not mapped. ''Street'' includes ''alley'' (L33), so a street-and-alley corner has one too. Unsettled:
+      the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings
+      at its largest plausible size; a corner lot it reaches is YELLOW, never GREEN and never RED on it.'
+    # Parked vehicles (FOLLOWUPS 161): 10.32.060 'A parked motor vehicle or other movable obstruction, located within the clear vision area'.
+    vehicles: true
+    vehicles_quote: data/flats/books/sight-manuals/oregon-city/ocmc-10.32-traffic-sight-obstructions.txt#L53
     ruling: 2026-11-09-sight-triangle-corner-check

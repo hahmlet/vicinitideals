@@ -3969,6 +3969,9 @@ clear_vision:
     basis: lot_line
     source: data/flats/books/sight-manuals/happy-valley/edm.txt#L1642-L1646
     cite: Happy Valley EDM; HVMC 16.50
+    # Parked vehicles (FOLLOWUPS 161): 'wall, vehicle, hedge or other planting or structure'.
+    vehicles: true
+    vehicles_quote: data/flats/books/sight-manuals/happy-valley/edm.txt#L1645
     note: '''the triangular area beginning at the intersection of the projected right-of-way lines and
       extending 25 feet along each leg''; ''No fence, berm, wall, vehicle, hedge or other planting or
       structure''. Not in the stored code: the manual is held in data/flats/books.'

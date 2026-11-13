@@ -1966,10 +1966,14 @@ clear_vision:
     basis: lot_line
     source: data/flats/books/sight-manuals/gladstone/gmc-17.54-clear-vision.txt#L17-L40
     cite: GMC 17.54.020
-    note: 'Measured along the property lines, 20/30/40 ft for an 80/60/50-or-less ft right of way (unmapped).
-      Bars ''any sign, fence, hedge, shrubbery, natural growth or other obstructions'': whether a building
-      is one is unclear, leaning yes. Not in the stored code. Unsettled: the conservative default (rulings.yaml
-      2026-11-09-sight-triangle-corner-check): the area bars buildings at its largest plausible size,
-      measured with the curb at the lot line; a corner lot it reaches is YELLOW, never GREEN and never
-      RED on it, until the rule is read.'
+    note: 'Measured along the property lines, 20/30/40 ft for an 80/60/50-or-less ft right of way (L17-L40).
+      A building is barred: 17.54.010 applies the standards ''to all development in the city'' (L14), and
+      (2)(a) excepts only ''permanent buildings existing on the date'' (L41, L48), so a new one is caught
+      (read 2026-11-13). The figure stays unsettled: the right-of-way width is not mapped, and a right of
+      way over 80 ft is not listed. Unsettled: the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check):
+      the area bars buildings at its largest plausible size; a corner lot it reaches is YELLOW, never GREEN
+      and never RED on it.'
+    # Parked vehicles (FOLLOWUPS 161): 'sign, fence, hedge, shrubbery, natural growth or other obstructions to the view' -- a parked car read as one (judgement, the conservative side).
+    vehicles: true
+    vehicles_quote: data/flats/books/sight-manuals/gladstone/gmc-17.54-clear-vision.txt#L20-L22
     ruling: 2026-11-09-sight-triangle-corner-check
