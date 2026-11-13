@@ -1097,12 +1097,21 @@ def test_a_derived_number_is_asked_as_the_page_prints_it():
     row = next(
         r for r in check._rows(layer, set()) if (r["zone"], r["field"], r["when"]) == ("LDR-5", "setback_rear_ft", "")
     )
-    assert (row["value"], row["printed"]) == (20, 15)
+    # 2026-11-12 (rel8, flats/pod-80x25): the held rear is 15 + max(0, H - 21)
+    # at the screened height; at pod80x25@3's 20 ft no step-back is owed, so
+    # the card asks the printed 15 as held (20 under the archived 26 ft pods).
+    from flats.rules.fields import DESIGN_HEIGHT_FT
+
+    owed = max(0, DESIGN_HEIGHT_FT - 21)
+    assert (row["value"], row["printed"]) == (15 + owed, 15)
 
     card = check._card(layer, check._Ask(row, "value"))
 
-    assert (card["printed"], card["value"]) == ("15 ft", "20 ft")
-    assert "step-back" in card["derived_why"]
+    if owed:
+        assert (card["printed"], card["value"]) == ("15 ft", f"{15 + owed:g} ft")
+        assert "step-back" in card["derived_why"]
+    else:
+        assert not card.get("derived_why")
     assert card["placed"] in ("boxed", "column")
 
 
