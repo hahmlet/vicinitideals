@@ -16,16 +16,5 @@ None is a false GREEN; all are possible false YELLOW/RED.
 - F1 (note only) Eldorado 22E08AC02500: the fg4 lane's "missed by 0.2 ft" was wrong; it is 24.5 ft
   short and correctly RED.
 
-## F5 (2026-11-13, from the rel8 bound) -- West Linn sewer feed fails the certificate check
-
-geo.westlinnoregon.gov now chains to "GoDaddy TLS Root CA - R1", which 137's Python cert store does
-not trust, so `flats.ingest.acquire` fails `util_sewer_west_linn` (curl fails the same way). The
-2026-11-10 snapshot keeps the 2026-10-01 copy. Fix: trust that root (newer certifi / a pinned extra
-CA bundle for that host) before the next county refresh; never turn verification off.
-
-## F6 (2026-11-13) -- bound recipe acquired into the worktree, not the shared snapshot
-
-The rel8 body.sh ran `flats.ingest.acquire` from the worktree without `--root`, so it wrote to
-`/root/wt/<sha>/data/flats/sources/`, not `$SRC`. Coordinator merged the four new sewer layers
-(cws, cws_boundary, sandy, lake_oswego) into the shared 2026-11-10 snapshot by hand (manifest backup
-in /root/rel8_bound/). Fix the /root/recipes/bound_splice template: pass `--root $D/flats/sources`.
+- F5 DONE 766dd02d: West Linn sewer root (GoDaddy TLS Root CA - R1) pinned in flats/config/ca/, trusted beside certifi by the ingest clients (flats/ingest/tls.py); live acquire from 137 verified.
+- F6 DONE (recipe, no repo commit): /root/recipes/bound_splice/body.sh has an acquire() helper that passes `--root $D/flats/sources`; acquire.py default root left as is.
