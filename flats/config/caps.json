@@ -686,6 +686,9 @@
       ],
       "setback_street_side_ft": [
         "utility_easement"
+      ],
+      "window_spacing_ft": [
+        "protected_water_feature"
       ]
     },
     "R-2": {
@@ -740,6 +743,9 @@
       ],
       "setback_street_side_ft": [
         "utility_easement"
+      ],
+      "window_spacing_ft": [
+        "protected_water_feature"
       ]
     },
     "R-3.5": {
@@ -782,6 +788,9 @@
       ],
       "setback_street_side_ft": [
         "utility_easement"
+      ],
+      "window_spacing_ft": [
+        "protected_water_feature"
       ]
     },
     "R-5": {
@@ -823,6 +832,9 @@
       ],
       "setback_street_side_ft": [
         "utility_easement"
+      ],
+      "window_spacing_ft": [
+        "protected_water_feature"
       ]
     },
     "R-6": {
@@ -868,6 +880,9 @@
       ],
       "setback_street_side_ft": [
         "utility_easement"
+      ],
+      "window_spacing_ft": [
+        "protected_water_feature"
       ]
     },
     "R-8": {
@@ -913,6 +928,9 @@
       ],
       "setback_street_side_ft": [
         "utility_easement"
+      ],
+      "window_spacing_ft": [
+        "protected_water_feature"
       ]
     },
     "WFDD": {

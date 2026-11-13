@@ -3062,7 +3062,7 @@ zones:
       cite: "Wilsonville WC 4.125(.23)(C): where the structure matches no Pattern Book unit type, the Architectural Styles must be complied with; the Pattern Book applies outside the Village Center"
       url: https://api.municode.com/PublicationPdfDownload/1951
       retrieved: '2026-08-27'
-      quote: "or/clackamas/wilsonville/4/4.125.txt#L1026-L1027,L743"
+      quote: "or/clackamas/wilsonville/4/4.125.txt#L743,L1026-L1027"
       via: "or/clackamas/wilsonville/4/4.125.txt#L1018"
     section: ["4.125", "4.001"]
     cite_default:

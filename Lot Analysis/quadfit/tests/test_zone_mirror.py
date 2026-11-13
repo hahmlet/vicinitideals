@@ -1144,6 +1144,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     # 22 -> 34 on 2026-11-12 (FOLLOWUPS 187): Gresham DEM/DCL/CN, Beaverton
     # commercial/MU, Oregon City South End, South Hillsboro, Gladstone C-2.
     "facade_glass_other_pct": 34,
+    # 2026-11-12 (rel8 assembly): flats/clackamas-roof (FOLLOWUPS 181(a)) ZDO 1005.03(F)(4)
+    # in 13 unincorporated Clackamas zones; flats/roof-rereads (181(b)) Wilsonville V's
+    # unread style book. Tualatin's roof_design_elements_min sits in defaults, not counted.
+    "flat_roof_outdoor_use_max_stories": 13,
+    "roof_style_book_unread": 1,
     # 2026-11-09 (FOLLOWUPS 112(b), multco-pockets): Multnomah unincorporated R5, R7, R10
     # and R20 restate PCC 33.266.120 and 33.110 at zone level (Title 33 governs the
     # Portland-administered pockets): stall, driveway, side-yard reach, corner street,

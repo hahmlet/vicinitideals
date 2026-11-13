@@ -58,6 +58,9 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         # South Hillsboro's Town and Village Center Core Areas, Figure 12.65.930-A
         # (FOLLOWUPS 147, 2026-11-04).
         "hillsboro_center_core",
+        # Hillsboro's Downtown Plan District, Figure 12.61.200-A (FOLLOWUPS 181(b),
+        # flats/roof-rereads; added at rel8 assembly 2026-11-12).
+        "hillsboro_downtown_plan_district",
         "inside_mapped_use_area",
         "north_bethany_kaiser_main_street",
         "north_bethany_park_blocks",

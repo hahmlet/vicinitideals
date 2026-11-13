@@ -569,11 +569,16 @@ def test_a_townhouse_row_can_square_to_slanted_side_lines(corpus, policies) -> N
         lot, [design], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
     )
     trusted = rules(min_frontage_ft=20, min_lot_width_ft=20, min_lot_sqft=2_000)
+    # 2026-11-12 (rel8: flats/no-bearing x flats/pod-80x25): the bridge fills
+    # street_bearings from the lot's front bearings before it screens; the raw
+    # facts lack them, and the door-stating pod80x25@3 turned at 160 deg is now
+    # held MEASURE-STREET-DIRECTION on a lot with no measured street direction.
+    facts = replace(lot.facts, street_bearings=tuple(lot.front_bearings))
     straight_screen = screen(
-        trusted, lot.facts, design, straight, policy=policies[0], relief=policies[1]
+        trusted, facts, design, straight, policy=policies[0], relief=policies[1]
     )
     tilted_screen = screen(
-        trusted, lot.facts, design, twin.fit, policy=policies[0], relief=policies[1]
+        trusted, facts, design, twin.fit, policy=policies[0], relief=policies[1]
     )
 
     assert not straight.fits

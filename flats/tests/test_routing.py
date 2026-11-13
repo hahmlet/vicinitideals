@@ -544,6 +544,10 @@ FOLLOWED = {
     # 2026-11-08 (FOLLOWUPS 153): Hillsboro's design applicability (12.50.710)
     # names 12.50.715, the middle housing standards quoted for the entrance rule.
     "or/washington/hillsboro 12.50.710 -> 12.50.715",
+    # 2026-11-12 (rel8, flats/gresham-end-glass FOLLOWUPS 187): 12.65.710 is now
+    # quoted for South Hillsboro's side/rear windows; its cottage-cluster pointer
+    # (L20) lands on 12.50.715, already quoted. Cottage clusters do not reach the pod.
+    "or/washington/hillsboro 12.65.710 -> 12.50.715",
     # 2026-11-06 (FOLLOWUPS 146): Section 1009 stored and read for side-yard parking.
     "or/clackamas/_unincorporated 1005.09 -> 1009",
     # 2026-10-31 (library batch 7): cutting the two unincorporated codes made these

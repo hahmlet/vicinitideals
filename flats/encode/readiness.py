@@ -987,9 +987,20 @@ def states_a_roof_rule(text: str, field: str, value) -> bool:
     :data:`_FLAT_ROOF_REFUSED`). Only ``min_roof_pitch_in_12``.
     """
     # A variant's row is named "<field> [<conditions>]".
-    if field.split(" ", 1)[0] != "min_roof_pitch_in_12" or isinstance(value, bool):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
         return False
-    if not isinstance(value, (int, float)):
+    if field.split(" ", 1)[0] == "roof_design_elements_min":
+        # Tualatin 73A.030(1)(b): "At least three Residential Roof Design
+        # Elements" -- a count whose unit is the menu's own name (rel8,
+        # 2026-11-12; FOLLOWUPS 181(b)).
+        word = _spelled(float(value))
+        if not word or value <= 0:
+            return False
+        spelled = r"[-\s]+".join(re.escape(p) for p in re.split(r"[- ]", word) if p)
+        return bool(
+            re.search(rf"\b{spelled}\s+(?:residential\s+)?roof\s+design\s+elements?\b", text, re.I)
+        )
+    if field.split(" ", 1)[0] != "min_roof_pitch_in_12":
         return False
     if value == 1 and _FLAT_ROOF_REFUSED.search(text):
         return True

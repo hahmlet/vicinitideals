@@ -290,7 +290,9 @@ def _screened(corpus, wide: float, deep: float, zone: str):
     )
     lot = lot_from_row(row, corpus.layers)
     (s,) = screen_lot(
-        lot, [load_catalog().latest("pod80x30")], rules=corpus, policy=slack.load_policy(),
+        # 2026-11-12 (rel8): the screened design, not pod80x30 by name -- pod80x25@3
+        # (flats/pod-80x25) archived 80x30; these tests are about the end wall.
+        lot, load_catalog().active(), rules=corpus, policy=slack.load_policy(),
         relief=relief.load_policy(), step_deg=30.0,
     )
     return s

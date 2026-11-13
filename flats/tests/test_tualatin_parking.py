@@ -283,9 +283,12 @@ def test_four_refusals_against_ten_values(tualatin: Layer) -> None:
         r for r in refusals()
         if r.kind == "comments" and r.where == TUALATIN and "front_lot_line_through" not in r.text
     ]
-    assert len(mine) == 2
+    # 2 -> 3 on 2026-11-12 (rel8, flats/roof-rereads FOLLOWUPS 181(b)): the
+    # 73A.020(2)(b) NOT ENCODED comment, a design-standard refusal, not parking.
+    assert len(mine) == 3
     # 10 -> 13 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
     # 13 -> 15 on 2026-10-02: the perimeter strip and the islands.
     # 15 -> 17 on 2026-11-05: parking_side_yard_allowed and _stated (FOLLOWUPS 146).
     # 17 -> 18 on 2026-11-08: entrance_faces_street (FOLLOWUPS 153).
-    assert len(tualatin.defaults) == 18
+    # 18 -> 19 on 2026-11-12 (rel8, flats/roof-rereads): roof_design_elements_min.
+    assert len(tualatin.defaults) == 19

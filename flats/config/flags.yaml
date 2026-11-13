@@ -2454,6 +2454,23 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  # 2026-11-12 (rel8 assembly): flats/gresham-end-glass (FOLLOWUPS 187) registered the
+  # site fact south_hillsboro_plan_district without its flag type (test_flags).
+  FACT-SOUTH-HILLSBORO-PLAN-DISTRICT:
+    description: "Plan district edge unconfirmed: whether the lot lies inside the South Hillsboro Plan District (CDC 12.65.020.A; the city's Community Plan Areas polygon stands in for Figure 12.65.930-A), where 12.65.710 asks glass on side and rear walls, so no end wall may stand under 3 ft from a side or rear lot line"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Lay the lot over the South Hillsboro Plan District map (CDC 12.65.020.A), or ask a Hillsboro planner which side of the line it falls"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-HILLSBORO-FAR-RESIDENTIAL-UNCOUNTED:
     description: "Whether the pod's floor area counts toward the MU-VTC minimum floor area ratio (0.4 outside a Center Core, 0.5 inside): 12.65.150.A counts free-standing residential buildings 'within an approved PUD', and neither the PUD nor the reading is held"
     kind: categorical
