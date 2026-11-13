@@ -130,6 +130,10 @@ def lot(*, at_front: float | None = 60.0, across: float | None = 60.0) -> LotFac
         frontage_ft=at_front or 0.0,
         lot_width_ft=at_front,
         avg_lot_width_ft=across,
+        # 2026-11-13 (drive-spacing, FOLLOWUPS 178): this city now holds a
+        # driveway-spacing rule; the lot's frontage is read clear, as it would be
+        # mid-block on a local street. These tests are not about spacing.
+        driveway_spacing="clear",
     )
 
 

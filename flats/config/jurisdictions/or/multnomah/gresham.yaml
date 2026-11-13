@@ -1510,13 +1510,12 @@ readings:
     queue: nofield
     outcome: other_stage
     note: >-
-      "Local Transitional, Industrial, Commercial 45 feet2 45 feet" -- a row of the Public Works
-      Standards' street right-of-way width table, giving the dedication required for a local
-      street by its functional classification. A right-of-way width is what a developer dedicates
-      to the city when land is subdivided or a street is built; it is on the far side of the lot
-      line from everything this screen measures, and it arrives at the platting stage rather than
-      the building stage. Oregon City's 16.12.016 street cross-section table and Wilsonville's
-      4.177 street standards are the same shape and are ruled the same way in this pass.
+      "Local Transitional, Industrial, Commercial 45 feet2 45 feet" -- a row of Table 6.03,
+      Driveway Approach Locations (minimum distance from driveway centerline to curb return), not
+      a right-of-way width table as this note first read it. It reaches the pod and is encoded in
+      flats/config/driveway_spacing.yaml (FOLLOWUPS 178, 2026-11-13): 100 feet from a Major or
+      Standard Arterial's curb return, 45 feet from any other street, residential column, and an
+      arterial frontage held unread for the queue-length rule.
     fingerprint: 1556a05d4b0cf386
 definitions:
   # "Corner Lot. A lot that has frontage on two or more streets. A corner lot

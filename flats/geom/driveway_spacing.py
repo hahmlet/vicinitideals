@@ -51,6 +51,16 @@ street the map reads as neither collector nor arterial is held unread
 wherever it may be industrial: any of its lines (by name) within
 ``reach_ft`` of an industrial district on the city's zoning map
 (:class:`IndustrialReach`; coordinator 2026-11-10, never a false GREEN).
+
+**Rules the screen cannot weigh** (FOLLOWUPS 178). A class under an entry's
+``unread`` holds every frontage on it unread: its code states a rule nothing
+measures there (Gresham's arterial queue length, PWS 6.03; Fairview's
+collector and arterial spacing, left to a TSP not held; Sherwood's
+Neighborhood Route queues). An intersection rule's ``unread_cross`` names the
+cross classes beside which the code adds such a rule (Sherwood's standing
+queues at a Neighborhood Route, collector or arterial; Fairview's controlled
+intersections): a driveway within :data:`UNREAD_CROSS_REACH_FT` of one, by the
+rule's basis, is never shown clear, and never fails on that ground alone.
 """
 
 from __future__ import annotations
@@ -58,7 +68,7 @@ from __future__ import annotations
 import functools
 import json
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -104,6 +114,12 @@ CROSS_TO_FT = 60.0
 CROSS_OFFSET_FT = 12.0
 #: Shortest frontage edge whose class is read.
 MIN_READ_EDGE_FT = 10.0
+#: How far, by an intersection rule's basis, a cross street of an
+#: ``unread_cross`` class holds a driveway unread: not a code figure. The
+#: codes that ask it (a standing queue, a controlled intersection's TSP
+#: spacing) print no distance; 150 ft is six queued cars, the conservative
+#: reach a corner lot's driveway is judged against (FOLLOWUPS 178).
+UNREAD_CROSS_REACH_FT = 150.0
 
 BASES = frozenset({"centreline", "right_of_way_line", "curb_return"})
 
@@ -130,6 +146,11 @@ class IntersectionRule:
     cite: str
     quote: str
     quote_also: str = ""
+    #: Cross classes beside which the code adds a rule nothing measures
+    #: (a standing queue, a TSP figure not held): see the module docstring.
+    unread_cross: frozenset[str] = frozenset()
+    unread_cite: str = ""
+    unread_quote: str = ""
 
 
 @dataclass(frozen=True)
@@ -175,6 +196,9 @@ class SpacingRules:
     map_ruling: str | None = None
     #: Industrial streets no map classes (Cornelius); None elsewhere.
     industrial: IndustrialStreets | None = None
+    #: Classes whose frontage the code holds to a rule nothing measures
+    #: (``figure_ft`` None): every frontage on one is unread.
+    unread: Mapping[str, FrontageRule] = field(default_factory=dict)
 
     def quotes(self) -> list[tuple[str, float | None, str]]:
         """Every ``(quote, printed figure or None, cite)`` the entry holds."""
@@ -187,6 +211,12 @@ class SpacingRules:
             out.append((r.quote, r.figure_ft, r.cite))
             if r.quote_also:
                 out.append((r.quote_also, None, r.cite))
+            if r.unread_cross:
+                out.append((r.unread_quote, None, r.unread_cite))
+        for u in self.unread.values():
+            out.append((u.quote, None, u.cite))
+            if u.quote_also:
+                out.append((u.quote_also, None, u.cite))
         if self.applies is not None:
             out.append((self.applies.quote, None, self.applies.cite))
             if self.applies.quote_also:
@@ -207,12 +237,20 @@ class SpacingRules:
         return words.pop() if len(words) == 1 else None
 
     def strictest_cross(self, on: str) -> float:
-        """The largest figure a cross street could carry for a frontage class."""
-        return max((r.figure_ft for r in self.intersections if on in r.on), default=0.0)
+        """The largest figure a cross street could carry for a frontage class
+        (an ``unread_cross`` rule reaching :data:`UNREAD_CROSS_REACH_FT`)."""
+        return max(
+            (
+                max(r.figure_ft, UNREAD_CROSS_REACH_FT if r.unread_cross else 0.0)
+                for r in self.intersections
+                if on in r.on
+            ),
+            default=0.0,
+        )
 
 
-def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
-    frontage = {
+def _frontage_rules(raw: Mapping[str, Any] | None) -> dict[str, FrontageRule]:
+    return {
         cls: FrontageRule(
             cls,
             None if v.get("figure_ft") is None else float(v["figure_ft"]),
@@ -220,8 +258,15 @@ def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
             str(v["quote"]),
             str(v.get("quote_also") or ""),
         )
-        for cls, v in (raw.get("frontage") or {}).items()
+        for cls, v in (raw or {}).items()
     }
+
+
+def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
+    frontage = _frontage_rules(raw.get("frontage"))
+    unread = _frontage_rules(raw.get("unread"))
+    if set(frontage) & set(unread):
+        raise ValueError(f"{layer}: a class both barred and unread: {sorted(set(frontage) & set(unread))}")
     rules = []
     for v in raw.get("from_intersections") or ():
         basis = str(v["basis"])
@@ -236,8 +281,13 @@ def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
                 str(v["cite"]),
                 str(v["quote"]),
                 str(v.get("quote_also") or ""),
+                frozenset(v.get("unread_cross") or ()),
+                str(v.get("unread_cite") or ""),
+                str(v.get("unread_quote") or ""),
             )
         )
+        if rules[-1].unread_cross and not rules[-1].unread_quote:
+            raise ValueError(f"{layer}: unread_cross without unread_quote")
     applies = None
     if raw.get("applies"):
         a = raw["applies"]
@@ -262,6 +312,7 @@ def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
         applies=applies,
         map_ruling=raw.get("map_ruling"),
         industrial=industrial,
+        unread=unread,
     )
 
 
@@ -554,6 +605,8 @@ def chain_answer(
     ``(station, cross half-width, cross class or None)``."""
     if on in rules.frontage:
         return BLOCKED
+    if on in rules.unread:
+        return UNREAD
     applying = [r for r in rules.intersections if on in r.on]
     if not applying:
         return CLEAR
@@ -569,6 +622,10 @@ def chain_answer(
                 passing.append((station, r.figure_ft + _allowance(r.basis, half_width)))
             if cross is not None and cross in r.cross:
                 failing.append((station, r.figure_ft))
+            # A rule the code adds beside a busier cross street and nothing
+            # measures: never cleared within reach, never failed on.
+            if r.unread_cross and (cross is None or cross in r.unread_cross):
+                passing.append((station, UNREAD_CROSS_REACH_FT + _allowance(r.basis, half_width)))
     if not passing:
         return CLEAR
     if _best_clearance_with_allowances(length, passing, width, inset=inset) >= 0.0:
@@ -625,6 +682,10 @@ def read_lot(
         if cls in rules.frontage:
             answers.append(BLOCKED)
             why.append(f"{cls}: driveways spaced from other driveways")
+            continue
+        if cls in rules.unread:
+            answers.append(UNREAD)
+            why.append(f"{cls}: the code's rule here is not measured")
             continue
         if not any(cls in r.on for r in rules.intersections):
             answers.append(CLEAR)

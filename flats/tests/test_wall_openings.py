@@ -287,6 +287,10 @@ def _screened(corpus, wide: float, deep: float, zone: str):
         TLID="1S3E99AA  -99999", jurisdiction="gresham", zone=zone, area_sqft=wide * deep,
         lot_depth_ft=deep, frontage_ft=wide, lot_width_ft=wide, edges_json=json.dumps(edges),
         wkb=whole, lot_wkb=whole,
+        # 2026-11-13 (drive-spacing, FOLLOWUPS 178): this city now holds a
+        # driveway-spacing rule; the lot's frontage is read clear, as it would be
+        # mid-block on a local street. These tests are not about spacing.
+        driveway_spacing="clear",
     )
     lot = lot_from_row(row, corpus.layers)
     (s,) = screen_lot(

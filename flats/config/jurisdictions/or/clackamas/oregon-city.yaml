@@ -107,11 +107,13 @@ readings:
     queue: nofield
     outcome: other_building
     note: >-
-      TWO TABLES, BOTH ALREADY SETTLED IN THIS FILE. The spacing table asks 175 feet from a street
-      corner on a major or minor arterial, 100 on a collector and 25 on a local street -- and
-      every one of those rows ends with the same qualifier, "for all uses other than duplexes,
-      triplexes, quadplexes and townhouses", which excludes this building by name. It is a
-      recorded refusal here with its reasoning. The approach-size table is read and encoded: the
+      TWO TABLES, BOTH SETTLED. The spacing table asks 175 feet from a street corner on a major or
+      minor arterial, 100 on a collector and 25 on a local street, and every row ends "for all
+      uses other than ... quadplexes and townhouses" -- but 16.12.035.B (#L22-L23) brings those
+      dwellings back to "the minimum distance from a street corner standard". So the corner
+      distance reaches the pod and is encoded in flats/config/driveway_spacing.yaml (FOLLOWUPS
+      178, 2026-11-13; the 2026-08 reading here missed B); the between-driveways half does not
+      reach it. The approach-size table is read and encoded: the
       "Triplexes, quadplexes and cottage clusters" row gives 10 feet minimum and 36 feet maximum,
       and those are the figures this layer holds. What is left on the card is the rows for other
       buildings -- multi-family at 18 and 30 feet, and commercial, industrial, office,
@@ -364,8 +366,8 @@ crossrefs:
       dotted branch matching nothing. Same shape as 16.08 above, and this one lands somewhere the
       store already holds: 16.12.035 Driveways is inside the 16.12.streets slice, its approach
       widths are encoded as `driveway_approach_min_width_ft` and
-      `driveway_approach_max_width_ft`, and its spacing table is ruled NOT ENCODED in this file
-      with reasons. Nothing to fetch and nothing left to read.
+      `driveway_approach_max_width_ft`, and its street-corner distance is held in
+      flats/config/driveway_spacing.yaml (FOLLOWUPS 178). Nothing to fetch and nothing left to read.
   "13.12":
     outcome: other_path
     note: >-
