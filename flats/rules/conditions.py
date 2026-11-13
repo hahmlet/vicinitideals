@@ -1667,6 +1667,20 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_kenton_building_line",
+        "site_fact",
+        "The lot has a site frontage on Kenton plan district Map 538-4, where "
+        "buildings extend to the street lot line and their exterior walls "
+        "must be at least 25 feet high (PCC 33.538.230; multi-dwelling zoned "
+        "sites are exempt). Assumed unknown: it decides the colour.",
+        evidence=(
+            "the Map 538-4 frontages as Portland Maps publishes them (BPS Zoning "
+            "Code Layers layer 72, Required Building Areas) and the lots they "
+            "overlap -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "pdx_lombard_subdistrict_a",
         "site_fact",
         "The lot is in Subdistrict A of Portland's Lombard Street plan "
@@ -1715,9 +1729,10 @@ _C: tuple[ConditionDef, ...] = (
         "street or light rail line (East Corridor, Hollywood, Lombard, North "
         "Interstate), a required building line (North Interstate), a minimum "
         "floor area ratio printed only on a map or above what the pod "
-        "supplies (Hollywood, Kenton, West Portland), walls at least 25 ft high "
-        "on Kenton's Map 538-4 frontages (every Kenton CM2/CM3/CE lot until "
-        "that map is traced), residential use prohibited on a map (West Portland "
+        "supplies (Hollywood, Kenton, West Portland), a Kenton lot whose answer "
+        "to the 25 ft walls of Map 538-4 is in doubt (one the frontage only "
+        "touches, or one partly multi-dwelling zoned) or that has a Map 538-6 "
+        "frontage no driveway may cross, residential use prohibited on a map (West Portland "
         "Employment Focus Area), a rear setback of a quarter of the site's "
         "depth (West Portland), setbacks set by wall-plane area and a light "
         "rail setback (Macadam), the Linnton Hillside lot-of-record rule "
@@ -2084,6 +2099,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "pdx_johnson_creek_impervious",
     "pdx_johnson_creek_land_division",
     "pdx_johnson_creek_unmeasured",
+    "pdx_kenton_building_line",
     "pdx_lombard_subdistrict_a",
     "pdx_min_site_frontage_area",
     "pdx_nw_residential_limited",

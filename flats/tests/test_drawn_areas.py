@@ -85,6 +85,8 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "pdx_johnson_creek_impervious",
         "pdx_johnson_creek_land_division",
         "pdx_johnson_creek_unmeasured",
+        # Kenton Map 538-4 frontages (FOLLOWUPS 185, 2026-11-13).
+        "pdx_kenton_building_line",
         "pdx_lombard_subdistrict_a",
         "pdx_min_site_frontage_area",
         # Batch B: Northwest Map 562-2 (FOLLOWUPS 109, 2026-11-04).
