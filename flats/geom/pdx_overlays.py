@@ -148,6 +148,7 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import math
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import date
@@ -1447,9 +1448,20 @@ def _min_far_cannot_fit(s: Any, reading: Reading, bind: flag_plan.Bind, floor_sq
     if bind.threshold is None or measured <= 0:
         return False
     footprint = float(s.design.footprint.width_ft) * float(s.design.footprint.depth_ft)
-    # Each further pod is counted whole: the one drawn may stand partly off the
-    # overlay, but the pods the count imagines stand on the overlay part.
-    return clearly_cannot_fit(bind.threshold * measured, floor_sqft, footprint, buildable)
+    needed = bind.threshold * measured
+    if part < 1.0:
+        # Only floor standing on the overlay part counts, and the drawn pod may
+        # stand off it (observed FAR 0) where one pod moved onto it, or across
+        # its line, would meet the minimum: so no floor of two pods here. The
+        # most floor any plan can stand on the overlay is its buildable ground
+        # there at the design's full height; RED only where even that is short
+        # (ruling 2026-11-04-min-floor-area-more-pods; FOLLOWUPS 148 move-read
+        # F1: 1N1E36CB01100, 1S1E23CD00900, 1N1E22DD12801).
+        stories = float(getattr(s.design, "stories", 0) or 0)
+        if not (math.isfinite(needed) and needed > 0 and stories > 0 and math.isfinite(buildable)):
+            return False
+        return buildable * stories < needed
+    return clearly_cannot_fit(needed, floor_sqft, footprint, buildable)
 
 
 __all__ = [
