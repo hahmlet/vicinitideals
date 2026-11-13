@@ -1,52 +1,14 @@
 # 178. False-green round 4 (2026-11-10): findings and Steph questions
 
-[Claude] [Steph] [scan: YES]
+[Claude] [scan: YES]
 
-Round 4 batch C (Multnomah, seed 65, live run 122): 16/50 wrong -- 13 are
-the side-door kind fixed by rel7 (ruling 2026-11-10-side-door-fit-yellow);
-3/50 otherwise (6%). After rel7: 1 false green + 1 doubtful in the sample.
-Report ../vicinitideals-worktrees/fg-rate-C.md. Batch D (Wash+Clack) running.
+Round 4 (Multnomah batch C 16/50 wrong, Wash+Clack batch D 17/60 wrong; reports ../vicinitideals-worktrees/fg-rate-C.md, fg-rate-D.md) -- all four Steph questions RULED 2026-11-10 and every fix is built. Rel7 (live, run 124): door-yellow, Wood Village roof ban + Tigard cornice YELLOW (roof-ban 2e675fee/f4072a52 -> b381a27d, 0a7d473a), fg4-fixes 1-4a (Beaverton EDM 210.21 spacing c3ae3b0a; Clackamas half-frontage 84fd6c21; Beaverton plex front court 2dadcf2c; ZDO 1009 strip off R/VR 41d18db9, ef5583e9), Portland 9 ft drive 6320d47c, narrow street fire YELLOW bdc19c96. (c) no public sewer = RED (lane no-sewer 4592039a) rides rel8, bound running 11-13 (ruling 2026-11-10-no-public-sewer-red).
 
-Built / building:
-- Wood Village LR 7.5 / LR 12 / MR 2 / MR 4 flat-roof ban (210.375 B(3),
-  220.355) skipped twice -> ~108 false greens; lane roof-ban off rel7 (also
-  sweeps roof wording in every city). May join rel7 before release.
-- 1S1E23BA  -03601 Portland R5 through lot: court between building and a
-  second street, rel7 may miss (KNOWN-154) -> for the rel7 move read.
-
-Questions for Steph (asked 2026-11-10):
-- (a) Portland driveway 9 ft (code minimum, 33.266) vs the plan's 12 ft:
-  9 ft keeps more narrow lots green with doors to the street (2 sample lots
-  + some rel7 door yellows). Cost: tighter drive than the plan elsewhere.
-- (b) Streets whose whole public strip is ~20 ft: treat as too narrow for
-  a fire truck (YELLOW) before paving is measured? 1 sample lot
-  (1S1E19CA  -07700). Recommend YES (unmeasured = conservative).
-
-Batch D (Wash+Clack, 60 lots): 17 wrong / 2 doubtful / 41 right (28%); rel7 fixes
-16 -> ~2% after rel7. No new kind. Report ../vicinitideals-worktrees/fg-rate-D.md.
-Lane fg4-fixes off rel7 (cherry-pick before release): Beaverton driveway spacing
-missing from rel7's table (false green), Clackamas building-frontage share (noted
-2026-09-09, never encoded), Beaverton front court behind the 10 ft yard (code read;
-Claude decides by the text), rel7 risk notes (Clackamas R-zone 5 ft strip,
-turning circles missed).
-More questions for Steph:
-- (c) Lots with no public sewer (Lake Oswego edge; FLATS ignores sewer): YELLOW
-  (check service) or RED? Recommend YELLOW.
-- (d) Tigard rowhouse flat roof allowed only with a 12 in+ cornice: can the pod
-  carry one? If not, Tigard townhouse greens go RED under the flat-roof ruling.
-
-RULED 2026-11-10: (a) "9ft in Portland" (2026-11-10-portland-driveway-9ft); (b) narrow street = fire YELLOW (2026-11-10-narrow-street-fire-yellow), "a common Fire and Safety shoot down point on a permit". Lanes pdx-9ft and narrow-row off rel7.
-RULED 2026-11-10: (c) no public sewer = RED (2026-11-10-no-public-sewer-red), lane no-sewer; (d) Tigard cornice = YELLOW + flag (2026-11-10-tigard-cornice-yellow), folded into lane roof-ban.
-fg4-fixes DONE 11-10: flats/fg4-fixes head 2d5c40c7 (cherry-pick onto rel7):
-69a6726a Beaverton EDM spacing (~350 G->Y), e3afe56e+168e2590 Clackamas half-
-frontage build line (13 zones), 60d846ad+2d5c40c7 Beaverton fourplex front
-court (toward GREEN; Claude kept the reading: code bans front parking only
-for townhouses + caps at half frontage; move reader must check the gains).
-4a Clackamas 1009 strip on R-zone fourplexes: stored copy drops blank cells;
-scout fetching the ZDO Table 1001-1 PDF. Spacing table gaps: Gresham, Oregon
-City, West Linn next (hand-off ../vicinitideals-worktrees/fg4-fixes.handoff.md).
-4a LIFTED a02a17c0 + d95ab627 (head d95ab627): ZDO Table 1001-1 stored; 1009 strip off
-R/VR quadplexes (toward GREEN, tens of lots; move reader checks). e3afe56e scope OK.
+STILL OPEN (Claude work, no Steph answer needed):
+- Driveway spacing table has no entry for cities that store a rule (table: flats/config/driveway_spacing.yaml; list in ../vicinitideals-worktrees/fg4-fixes.handoff.md, "Other cities"): Gresham PWS 6.03 Table 6.03 (100 ft from arterial curb return / 45 ft; large GREEN pool; arterial queue-length rule L55-L57 unmeasured), Oregon City 16.12.035 (175/100/25), West Linn 48.060, Milwaukie 12.16, Fairview 19.162, Sherwood, Wilsonville. A city with no entry is not checked = a possible false GREEN on arterials.
+- Not done: Clackamas SCMU 1005.09 frontage share (needs Map 1005-1 which FLATS does not hold); 1005.02(E)(1) 20 ft front setback option (stricter reading kept).
+- Known, not fixed: 1S1E23BA  -03601 Portland R5 through lot (court between building and a second street, KNOWN-154).
+- Beaverton plexes: Claude kept the court-in-front reading (code bans front parking only for townhouses, caps at half frontage); a move-read check of the gains is the safety net.
 Spacing table gaps DONE 11-13 (flats/drive-spacing off rel8, rides rel9): Gresham, Oregon City,
 West Linn (+ TSP Table 15 stored), Milwaukie, Fairview, Sherwood, Wilsonville encoded in
 driveway_spacing.yaml; unread rules hold YELLOW (G->Y only). Hand-off
