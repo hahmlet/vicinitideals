@@ -781,12 +781,16 @@ def _ordered(layers: dict[str, Layer]) -> list[tuple[str, Dangling]]:
     named a row rather than a condition. What they are about is the rule --
     ``fetch`` and ``later`` are decisions and a decision is not a disposal --
     so the rule is what they ask for.
+
+    2026-11-13 (FOLLOWUPS 105 item 1): the corpus's last ``fetch``, Beaverton
+    70.20.10.6.2, was fetched and traced and is ``read`` now, so ``later``
+    -- the other ordered decision -- is asked for too.
     """
     return [
         (layer_id, row)
         for layer_id, layer in layers.items()
         for row in dangling(layer)
-        if row.outcome == "fetch"
+        if row.outcome in ("fetch", "later")
     ]
 
 
@@ -808,13 +812,16 @@ def test_and_the_queue_prints_why_it_is_still_there(layers: dict[str, Layer]) ->
     # The top layer's first dozen rows need not carry a ruling (Clackamas,
     # 2026-10-20, once its minimum density made more pointers binding), so
     # the queue is asked of the first layer near the top that has one.
-    for layer_id, row in _ordered(layers)[:3]:
+    # 2026-11-13: the corpus's last ``fetch`` closed (Beaverton 70.20.10.6.2),
+    # so any ordered row -- ``later`` too -- is asked for its own heading.
+    for layer_id, row in _ordered(layers):
         printed = "\n".join(render(dangling(layers[layer_id])))
         head = printed.split("closed —")[0]
-        if "FETCH:" in head:
+        said = f"{row.outcome.upper()}:"
+        if said in head and row.ref in head:
             break
 
-    assert "FETCH:" in head
+    assert said in head
     assert row.ref in head
     # The closed ones are out of the working queue and under their own heading.
     # Asked as "they are below the line" rather than "they are not above it":

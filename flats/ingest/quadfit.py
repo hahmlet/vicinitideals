@@ -162,6 +162,7 @@ from flats.geom.sidewalk import (
     load_streets,
     observed_sidewalk_easement,
 )
+from flats.geom.active_frontage import FACTS as ACTIVE_FRONTAGE_FACTS, observed_active_frontage
 from flats.geom.active_use import FACTS as ACTIVE_USE_FACTS, observed_active_use
 from flats.geom.street_types import CONDITION as STREET_TYPE_FACT, observed_street_types
 from flats.geom import street_names
@@ -425,6 +426,9 @@ OBSERVABLE: tuple[str, ...] = (
     # Hillsboro lots only, from the traced Figure 12.65.930-A
     # (flats.geom.active_use).
     *ACTIVE_USE_FACTS,
+    # Beaverton lots only, from the traced Figure 70.20.10.6.2
+    # (flats.geom.active_frontage).
+    *ACTIVE_FRONTAGE_FACTS,
     "corner_lot",
     "through_lot",
     "split_zone",
@@ -612,6 +616,11 @@ def observed_facts(
       12.65.930-A, through :func:`flats.geom.active_use.observed_active_use`;
       a lot with no street lines from its shape (``lot_wkb``), False only
       well clear of every traced Active Use line.
+    * ``beaverton_active_frontage`` / ``beaverton_type_a_frontage`` --
+      Beaverton lots only: the street lines and outline against the Downtown
+      Active Frontage Design Map, traced off Figure 70.20.10.6.2, through
+      :func:`flats.geom.active_frontage.observed_active_frontage`; the Area C
+      and D tax lots of 70.20.10.6.D.4 by their ``TLID``.
     """
     out: dict[str, bool] = {}
     edges = json.loads(row.get("edges_json") or "[]")
@@ -633,6 +642,9 @@ def observed_facts(
             )
         out.update(observed_street_types(edges, _layer_id(row), row.get("zone")))
     out.update(observed_active_use(edges, _layer_id(row), row.get("lot_wkb")))
+    out.update(
+        observed_active_frontage(edges, _layer_id(row), row.get("lot_wkb"), row.get("TLID"))
+    )
     if layers is not None and row.get("neighbour_zones_json"):
         out.update(_neighbour_facts(row, layers))
     if layers is not None and edges:

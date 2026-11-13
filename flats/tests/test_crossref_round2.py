@@ -3,8 +3,11 @@
 * Beaverton Downtown, Figure 70.20.10.6.2: a facade on a Type A frontage
   takes the Non-residential Active Ground Floor Design, a ground floor at
   least 16 ft floor to floor (70.20.10.6 S1.a, D.2), against the pod's 12.
-  The figure is not held, so ``beaverton_type_a_frontage`` is unobserved and
-  every lot in RC-BC, RC-OT, RC-MU and RC-DT is held out of GREEN.
+  Traced 2026-11-13 (FOLLOWUPS 105 item 1, flats.geom.active_frontage and
+  flats/tests/test_active_frontage.py): a Type B frontage owes the
+  Residential design's 12 ft (S2.c) under ``beaverton_active_frontage``,
+  Type A 16 ft with ``beaverton_type_a_frontage`` too; a lot either fact
+  leaves unanswered is held out of GREEN.
 * Washington County 430-84: alley access only from an "improved alley"
   (409-3.3 A, not held). Where the court is reached from the alley the lot
   carries ALLEY-IMPROVEMENT-UNCONFIRMED, below the yellow line: no colour
@@ -29,6 +32,7 @@ from flats.tests.test_round2_rulings import DESIGN, check, facts, fit, rules
 BEAVERTON = "or/washington/beaverton"
 WASHCO = "or/washington/_unincorporated"
 TYPE_A = "beaverton_type_a_frontage"
+ON_MAP = "beaverton_active_frontage"
 DOWNTOWN = ("RC-BC", "RC-OT", "RC-MU", "RC-DT")
 ALLEY_FLAG = "ALLEY-IMPROVEMENT-UNCONFIRMED"
 TYPE_A_FLAG = "FACT-BEAVERTON-TYPE-A-FRONTAGE"
@@ -55,16 +59,20 @@ def _run(rule_set, lot_facts, config=None, design=DESIGN):
 
 
 @pytest.mark.parametrize("zone", DOWNTOWN)
-def test_the_ground_floor_binds_only_on_a_type_a_frontage(corpus: RuleSet, zone: str) -> None:
+def test_the_ground_floor_binds_only_on_a_mapped_frontage(corpus: RuleSet, zone: str) -> None:
     assert corpus.resolve(BEAVERTON, zone, ()).get("min_ground_story_ft") is None
-    assert corpus.resolve(BEAVERTON, zone, (TYPE_A,)).get("min_ground_story_ft") == 16
-    # A lever, so the unobserved fact holds the lot out of GREEN.
-    assert TYPE_A in corpus.layers[BEAVERTON].zones[zone].values["min_ground_story_ft"].levers
+    # Type B: the Residential design's 12 ft is the least it may take (S2.c).
+    assert corpus.resolve(BEAVERTON, zone, (ON_MAP,)).get("min_ground_story_ft") == 12
+    assert corpus.resolve(BEAVERTON, zone, (ON_MAP, TYPE_A)).get("min_ground_story_ft") == 16
+    # Levers, so an unanswered fact holds the lot out of GREEN.
+    levers = corpus.layers[BEAVERTON].zones[zone].values["min_ground_story_ft"].levers
+    assert {ON_MAP, TYPE_A} <= levers
 
 
 def test_other_beaverton_zones_do_not_turn_on_it(corpus: RuleSet) -> None:
     for zone in ("RC-E", "RMA", "CM-RM"):
         assert TYPE_A not in corpus.resolve(BEAVERTON, zone, ()).levers
+        assert ON_MAP not in corpus.resolve(BEAVERTON, zone, ()).levers
 
 
 @pytest.mark.parametrize("zone", DOWNTOWN)
@@ -72,7 +80,7 @@ def test_an_unobserved_type_a_frontage_is_never_green(corpus: RuleSet, zone: str
     # Signed as the release signs it: an unsigned draft returns before the
     # facts are read, so the question would never be asked.
     resolved = replace(corpus.resolve(BEAVERTON, zone, ()), verdict=RuleVerdict.trusted)
-    got = _run(resolved, facts(street_lines_ft=(80.0,)), Configuration(unknown=(TYPE_A,)))
+    got = _run(resolved, facts(street_lines_ft=(80.0,)), Configuration(unknown=(ON_MAP, TYPE_A)))
     assert got.colour is not Colour.green
     assert FACT_UNOBSERVED in got.reasons
     assert [f for f in got.flags if f.code == TYPE_A_FLAG]

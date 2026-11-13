@@ -2424,8 +2424,8 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
-  FACT-BEAVERTON-TYPE-A-FRONTAGE:
-    description: "Whether the Beaverton Downtown lot fronts a Type A frontage of Figure 70.20.10.6.2 (or is an Area C or D tax lot), where the ground floor must be at least 16 ft floor to floor (BDC 70.20.10.6 S1.a, 70.20.10.6.D.2) against the pod's 12 ft"
+  FACT-BEAVERTON-ACTIVE-FRONTAGE:
+    description: "Whether every street line of the Beaverton Downtown lot is on a street of Figure 70.20.10.6.2 (Type A or B; or the lot is an Area C tax lot), where the ground floor must be at least 12 ft floor to floor (BDC 70.20.10.6 S2.c, 70.20.10.6.D.3) against the pod's 9 ft 2 in"
     kind: categorical
     risk: possible
     severity: 5
@@ -2433,7 +2433,22 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "Fetch Figure 70.20.10.6.2 (the Active Frontage Design Map, BDC Chapter 70) and trace its Type A streets onto the RLIS centrelines (FOLLOWUPS 105): a lot on one fails the 16 ft ground floor; a lot on none is cleared"
+    path: "Check the lot against the traced Figure 70.20.10.6.2 (flats/config/areas/or/washington/beaverton/active-frontage-design.geojson, FOLLOWUPS 105): a lot on a mapped and an unmapped street, within 60 ft of a traced line's end, or an Area D tax lot is held; read which facade fronts the mapped street within the zone's minimum and maximum setback (70.20.10.6.D.1), and for Area D whether the SW Millikan Way extension is dedicated"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-BEAVERTON-TYPE-A-FRONTAGE:
+    description: "Whether the Beaverton Downtown lot fronts a Type A frontage of Figure 70.20.10.6.2 (or is an Area C tax lot), where the ground floor must be at least 16 ft floor to floor (BDC 70.20.10.6 S1.a, 70.20.10.6.D.2) against the pod's 9 ft 2 in"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Check the lot against the traced Figure 70.20.10.6.2 (flats/config/areas/or/washington/beaverton/active-frontage-design.geojson, FOLLOWUPS 105): a lot on a Type A frontage fails the 16 ft ground floor, on Type B alone the 12 ft one; a lot clear of every mapped line is exempt"
     priority: later
     status: pending
     approved_by: null
