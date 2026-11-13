@@ -1,5 +1,5 @@
 {
-  "digest": "a6524c61f762700cfe06c401bb201d75b0d7ffb489a86c956da89dd6384d7a49",
+  "digest": "15cbdb5e404afe7409a613af7501ee6222eb20b7480a3da785d1ec4f21173442",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -2126,7 +2126,88 @@
     },
     "or/washington/king-city": {
       "section_unread": 0,
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "parking_lot_line_buffer_ft",
+          "claimed": "16.124.110",
+          "found": "16.124.080",
+          "quote": "or/washington/king-city/kcc.16.124.landscaping.txt#L193-L198",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "KTBB",
+          "field": "parking_lot_line_buffer_ft",
+          "claimed": "16.124.110",
+          "found": "16.124.080",
+          "quote": "or/washington/king-city/kcc.16.124.landscaping.txt#L193-L198",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "KTBB",
+          "field": "parking_lot_line_buffer_ft [abuts_lower_density_zone]",
+          "claimed": "16.124.110 16.124.110",
+          "found": "16.124.080",
+          "quote": "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L198,L203-L208",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "KTBB",
+          "field": "parking_lot_line_buffer_ft [abuts_residential_zone]",
+          "claimed": "16.124.110 16.124.110",
+          "found": "16.124.080",
+          "quote": "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L201",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "KTBB",
+          "field": "parking_lot_line_buffer_ft [abuts_lower_density_zone+abuts_residential_zone]",
+          "claimed": "16.124.110",
+          "found": "16.124.080",
+          "quote": "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L201,L206-L208",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "KTTC",
+          "field": "parking_lot_line_buffer_ft",
+          "claimed": "16.124.110",
+          "found": "16.124.080",
+          "quote": "or/washington/king-city/kcc.16.124.landscaping.txt#L193-L198",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "KTTC",
+          "field": "parking_lot_line_buffer_ft [abuts_lower_density_zone]",
+          "claimed": "16.124.110 16.124.110",
+          "found": "16.124.080",
+          "quote": "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L198,L203-L208",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "KTTC",
+          "field": "parking_lot_line_buffer_ft [abuts_residential_zone]",
+          "claimed": "16.124.110 16.124.110",
+          "found": "16.124.080",
+          "quote": "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L201",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "KTTC",
+          "field": "parking_lot_line_buffer_ft [abuts_lower_density_zone+abuts_residential_zone]",
+          "claimed": "16.124.110",
+          "found": "16.124.080",
+          "quote": "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L201,L206-L208",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "R-9",
+          "field": "parking_lot_line_buffer_ft",
+          "claimed": "16.124.110 16.84.010",
+          "found": "16.124.080",
+          "quote": "or/washington/king-city/kcc.16.124.landscaping.txt#L193-L208",
+          "kind": "heading_same_file"
+        }
+      ],
       "label": "King City",
       "counts": {},
       "gaps": []

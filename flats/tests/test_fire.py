@@ -1293,7 +1293,15 @@ def _turned_case(corpus, policies):
     from flats.fit.rectangle import Fitter
     from flats.ingest import quadfit
 
+    import dataclasses
+
     lot, s, _ = _placement_retry_case(corpus, policies)
+    # The fixture's own fit used to stand at 30 degrees (rel6, where this lane was
+    # built); since pdx-cm-buffer (FOLLOWUPS 171) CE's parking buffer reshapes the
+    # envelope and the fit comes out square, so the case sets the fit's 30 degrees
+    # it tests, as test_fire_only_red_uses_the_next_fitting_placement_within_reach
+    # does (rel9 assembly, 2026-11-13). The drawing still stands square.
+    s = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=30.0))
     assert not math.isclose(s.fit.angle_deg, 0.0, abs_tol=1e-6)
     fitter = Fitter(s.envelope.geom, (s.fit.angle_deg, 0.0), ground=s.envelope.ground)
     assert quadfit._drawn_angle(s, fitter) == 0.0

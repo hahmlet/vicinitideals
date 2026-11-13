@@ -132,7 +132,16 @@ def test_the_flag_sits_below_the_yellow_line() -> None:
 #: Answered off the Active Use streets and not a flag lot, so only the core
 #: and the FAR doubt are open. Inside the growth boundary, so ORS 197A.400
 #: lifts MU-VTC's conditions review as it does on every South Hillsboro lot.
-PLAIN = {"hillsboro_active_use_1": False, "hillsboro_active_use_2": False, "flag_lot": False}
+#: Inside the South Hillsboro Plan District, as every MU-VTC lot is: since
+#: cut-district (FOLLOWUPS 188) a value gated `only_when` on the district
+#: (gresham-end-glass's end-wall glass, rel8) leans on it, and an unanswered
+#: district holds the lot YELLOW (rel9 assembly, 2026-11-13).
+PLAIN = {
+    "hillsboro_active_use_1": False,
+    "hillsboro_active_use_2": False,
+    "flag_lot": False,
+    "south_hillsboro_plan_district": True,
+}
 
 
 def _screen(corpus: RuleSet, observed: dict):
