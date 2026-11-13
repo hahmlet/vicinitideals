@@ -566,7 +566,9 @@ readings:
       "the City's authorized representative shall make the final determination of maximum driveway
       width on a case-by-case basis" -- which is discretion, and ORS 197A.400 keeps discretion off
       housing. The Table 2.12 access spacing rows on this card (1,320 and 1,000 feet on a major
-      arterial, 300 and 100 on a collector) ride the same route and fall with it.
+      arterial, 300 and 100 on a collector) ride the same route; since 2026-11-13 the screen knows
+      the streets a lot touches, so for a lot whose every frontage (two or more) is a collector or
+      arterial they are encoded in flats/config/driveway_spacing.yaml (FOLLOWUPS 178).
     fingerprint: 2f1fa0785e59f725
   "4.planning.txt#4.001":
     queue: nofield

@@ -47,3 +47,7 @@ scout fetching the ZDO Table 1001-1 PDF. Spacing table gaps: Gresham, Oregon
 City, West Linn next (hand-off ../vicinitideals-worktrees/fg4-fixes.handoff.md).
 4a LIFTED a02a17c0 + d95ab627 (head d95ab627): ZDO Table 1001-1 stored; 1009 strip off
 R/VR quadplexes (toward GREEN, tens of lots; move reader checks). e3afe56e scope OK.
+Spacing table gaps DONE 11-13 (flats/drive-spacing off rel8, rides rel9): Gresham, Oregon City,
+West Linn (+ TSP Table 15 stored), Milwaukie, Fairview, Sherwood, Wilsonville encoded in
+driveway_spacing.yaml; unread rules hold YELLOW (G->Y only). Hand-off
+../vicinitideals-worktrees/drive-spacing.handoff.md.

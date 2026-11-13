@@ -428,8 +428,10 @@ readings:
     queue: nofield
     outcome: other_stage
     note: >-
-      CURB-CUT SPACING, AND IT IS RECORDED RATHER THAN WAVED AWAY BECAUSE WEST LINN'S VERSION IS
-      NOT EXCLUDED THE WAY OREGON CITY'S IS. 48.060(C) forbids a curb cut closer to an
+      CURB-CUT SPACING, ENCODED 2026-11-13 IN flats/config/driveway_spacing.yaml (FOLLOWUPS 178),
+      with the TSP's Table 15 that 48.025(B)(6)(a) adds (stored as tsp.access-spacing). The
+      reasoning below closed it when nothing located a lot against its intersections; the
+      driveway-spacing check now does. 48.060(C) forbids a curb cut closer to an
       intersecting street right-of-way line than 150 feet on an arterial met by another arterial,
       100 feet on the other arterial and collector combinations, and 35 feet on a local street
       meeting any other street; (D) then asks 150 feet between adjacent curb cuts on an arterial,
@@ -623,6 +625,18 @@ code:
   - id: "42.clear-vision"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC42.html
     title: "CDC Chapter 42 - Clear Vision Areas"
+    allow_thin: true
+  # The 2016 TSP's access management tables (Ord. 1646): CDC 48.025(B)(6)(a)
+  # applies "the access spacing standards found in Tables 14 and 15 of the
+  # TSP and in CDC 48.060" to curb cuts. Stored 2026-11-13 for the driveway
+  # spacing check (flats/config/driveway_spacing.yaml, FOLLOWUPS 178).
+  - id: "tsp.access-spacing"
+    url: https://westlinnoregon.gov/sites/default/files/fileattachments/public_works/page/5402/ord_1646_2016_transportation_system_plan.pdf
+    title: "Transportation System Plan (2016) - Access Management, Tables 14 and 15"
+    start: "Table 14: Highway 43 Access Spacing Standards"
+    nth: 2
+    end: "Access Consolidation through Management"
+    extraction: plain
     allow_thin: true
   - id: "28.river-protection"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC28.html
