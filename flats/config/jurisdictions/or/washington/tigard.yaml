@@ -775,6 +775,22 @@ zones:
       value: axis_required
       cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
       quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+    # FOLLOWUPS 162 (2026-11-09). 18.280.040.H (L159-L162): "The main
+    # entrance of each rowhouse must face the street. If a rowhouse has more
+    # than one street property line, the entrance may face either street."
+    # 18.280 reaches rowhouses in this zone (18.280.020.A, L5). "Face" is
+    # "To front upon" (18.30.020, L307-L308); no angle is printed, so none
+    # is held (`entrance_angle_max_deg` absent reads nought). No alternative
+    # is offered. The 45 degrees of 18.320.050 and 18.670.080.C reach only
+    # nonresidential and mixed-use development (18.320.020.B, 18.670.070.A.2,
+    # 18.670.080.A.2); 18.270's is for quads. orientation_constraint above
+    # already stands the long face to the street, so this row records the
+    # reading and moves no lot.
+    entrance_faces_street:
+      value: required
+      cite: "Tigard CDC 18.280.040.H: \"The main entrance of each rowhouse must face the street. If a rowhouse has more than one street property line, the entrance may face either street.\" (\"Face\": to front upon, 18.30.020; no angle printed)"
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     parking_stall_width_ft:
       value: 8.5
       cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
@@ -920,6 +936,22 @@ zones:
       value: axis_required
       cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
       quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+    # FOLLOWUPS 162 (2026-11-09). 18.280.040.H (L159-L162): "The main
+    # entrance of each rowhouse must face the street. If a rowhouse has more
+    # than one street property line, the entrance may face either street."
+    # 18.280 reaches rowhouses in this zone (18.280.020.A, L5). "Face" is
+    # "To front upon" (18.30.020, L307-L308); no angle is printed, so none
+    # is held (`entrance_angle_max_deg` absent reads nought). No alternative
+    # is offered. The 45 degrees of 18.320.050 and 18.670.080.C reach only
+    # nonresidential and mixed-use development (18.320.020.B, 18.670.070.A.2,
+    # 18.670.080.A.2); 18.270's is for quads. orientation_constraint above
+    # already stands the long face to the street, so this row records the
+    # reading and moves no lot.
+    entrance_faces_street:
+      value: required
+      cite: "Tigard CDC 18.280.040.H: \"The main entrance of each rowhouse must face the street. If a rowhouse has more than one street property line, the entrance may face either street.\" (\"Face\": to front upon, 18.30.020; no angle printed)"
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     parking_stall_width_ft:
       value: 8.5
       cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
@@ -1065,6 +1097,22 @@ zones:
       value: axis_required
       cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
       quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+    # FOLLOWUPS 162 (2026-11-09). 18.280.040.H (L159-L162): "The main
+    # entrance of each rowhouse must face the street. If a rowhouse has more
+    # than one street property line, the entrance may face either street."
+    # 18.280 reaches rowhouses in this zone (18.280.020.A, L5). "Face" is
+    # "To front upon" (18.30.020, L307-L308); no angle is printed, so none
+    # is held (`entrance_angle_max_deg` absent reads nought). No alternative
+    # is offered. The 45 degrees of 18.320.050 and 18.670.080.C reach only
+    # nonresidential and mixed-use development (18.320.020.B, 18.670.070.A.2,
+    # 18.670.080.A.2); 18.270's is for quads. orientation_constraint above
+    # already stands the long face to the street, so this row records the
+    # reading and moves no lot.
+    entrance_faces_street:
+      value: required
+      cite: "Tigard CDC 18.280.040.H: \"The main entrance of each rowhouse must face the street. If a rowhouse has more than one street property line, the entrance may face either street.\" (\"Face\": to front upon, 18.30.020; no angle printed)"
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     parking_stall_width_ft:
       value: 8.5
       cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
@@ -1198,6 +1246,22 @@ zones:
       value: axis_required
       cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
       quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+    # FOLLOWUPS 162 (2026-11-09). 18.280.040.H (L159-L162): "The main
+    # entrance of each rowhouse must face the street. If a rowhouse has more
+    # than one street property line, the entrance may face either street."
+    # 18.280 reaches rowhouses in this zone (18.280.020.A, L5). "Face" is
+    # "To front upon" (18.30.020, L307-L308); no angle is printed, so none
+    # is held (`entrance_angle_max_deg` absent reads nought). No alternative
+    # is offered. The 45 degrees of 18.320.050 and 18.670.080.C reach only
+    # nonresidential and mixed-use development (18.320.020.B, 18.670.070.A.2,
+    # 18.670.080.A.2); 18.270's is for quads. orientation_constraint above
+    # already stands the long face to the street, so this row records the
+    # reading and moves no lot.
+    entrance_faces_street:
+      value: required
+      cite: "Tigard CDC 18.280.040.H: \"The main entrance of each rowhouse must face the street. If a rowhouse has more than one street property line, the entrance may face either street.\" (\"Face\": to front upon, 18.30.020; no angle printed)"
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     parking_stall_width_ft:
       value: 8.5
       cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
@@ -1326,6 +1390,22 @@ zones:
       value: axis_required
       cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
       quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+    # FOLLOWUPS 162 (2026-11-09). 18.280.040.H (L159-L162): "The main
+    # entrance of each rowhouse must face the street. If a rowhouse has more
+    # than one street property line, the entrance may face either street."
+    # 18.280 reaches rowhouses in this zone (18.280.020.A, L5). "Face" is
+    # "To front upon" (18.30.020, L307-L308); no angle is printed, so none
+    # is held (`entrance_angle_max_deg` absent reads nought). No alternative
+    # is offered. The 45 degrees of 18.320.050 and 18.670.080.C reach only
+    # nonresidential and mixed-use development (18.320.020.B, 18.670.070.A.2,
+    # 18.670.080.A.2); 18.270's is for quads. orientation_constraint above
+    # already stands the long face to the street, so this row records the
+    # reading and moves no lot.
+    entrance_faces_street:
+      value: required
+      cite: "Tigard CDC 18.280.040.H: \"The main entrance of each rowhouse must face the street. If a rowhouse has more than one street property line, the entrance may face either street.\" (\"Face\": to front upon, 18.30.020; no angle printed)"
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     parking_stall_width_ft:
       value: 8.5
       cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
@@ -1482,6 +1562,22 @@ zones:
       value: axis_required
       cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
       quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+    # FOLLOWUPS 162 (2026-11-09). 18.280.040.H (L159-L162): "The main
+    # entrance of each rowhouse must face the street. If a rowhouse has more
+    # than one street property line, the entrance may face either street."
+    # 18.280 reaches rowhouses in this zone (18.280.020.A, L5). "Face" is
+    # "To front upon" (18.30.020, L307-L308); no angle is printed, so none
+    # is held (`entrance_angle_max_deg` absent reads nought). No alternative
+    # is offered. The 45 degrees of 18.320.050 and 18.670.080.C reach only
+    # nonresidential and mixed-use development (18.320.020.B, 18.670.070.A.2,
+    # 18.670.080.A.2); 18.270's is for quads. orientation_constraint above
+    # already stands the long face to the street, so this row records the
+    # reading and moves no lot.
+    entrance_faces_street:
+      value: required
+      cite: "Tigard CDC 18.280.040.H: \"The main entrance of each rowhouse must face the street. If a rowhouse has more than one street property line, the entrance may face either street.\" (\"Face\": to front upon, 18.30.020; no angle printed)"
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
     parking_stall_width_ft:
       value: 8.5
       cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
@@ -1690,6 +1786,31 @@ zones:
       value: axis_required
       cite: Tigard CDC 18.280.040.H, the main entrance of each rowhouse must face the street
       quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+    # FOLLOWUPS 162 (2026-11-09). 18.280.040.H (L159-L162): "The main
+    # entrance of each rowhouse must face the street. If a rowhouse has more
+    # than one street property line, the entrance may face either street."
+    # 18.280 reaches rowhouses in this zone (18.280.020.A, L5). "Face" is
+    # "To front upon" (18.30.020, L307-L308); no angle is printed, so none
+    # is held (`entrance_angle_max_deg` absent reads nought). No alternative
+    # is offered. The 45 degrees of 18.320.050 and 18.670.080.C reach only
+    # nonresidential and mixed-use development (18.320.020.B, 18.670.070.A.2,
+    # 18.670.080.A.2); 18.270's is for quads. orientation_constraint above
+    # already stands the long face to the street, so this row records the
+    # reading and moves no lot.
+    entrance_faces_street:
+      value: required
+      cite: "Tigard CDC 18.280.040.H: \"The main entrance of each rowhouse must face the street. If a rowhouse has more than one street property line, the entrance may face either street.\" (\"Face\": to front upon, 18.30.020; no angle printed)"
+      quote: "or/washington/tigard/18.280/18.280.040.txt#L159-L162"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L5"
+      variants:
+        # Bridgeport Village rowhouses take 18.620, not 18.280
+        # (18.280.020.B, L11): 18.620.080.B, "facing the street upon which
+        # the development fronts", either street on a corner. No angle.
+        - value: required
+          when: [tigard_bridgeport_village]
+          cite: "Tigard CDC 18.620.080.B: \"Primary structures must be oriented with their main entrance facing the street upon which the development fronts. If the site is on a corner, it may have its main entrance oriented to either street or at the corner.\""
+          quote: "or/washington/tigard/18.620/18.620.080.txt#L5,L11-L12"
+          via: "or/washington/tigard/18.280/18.280.020.txt#L11"
     parking_stall_width_ft:
       value: 8.5
       cite: Tigard CDC Table 18.410.2, 90 degree stall width 8 ft. 6 in. (18.280.040.D, Chapter 18.410 applies)
@@ -1839,6 +1960,16 @@ zones:
       value: axis_required
       cite: Tigard CDC 18.650.080.A, 50 percent of the first story front elevation within the maximum front setback, and individual entrances to rowhouse development oriented to the street
       quote: "or/washington/tigard/18.650/18.650.080.txt#L21-L22,L54"
+    # FOLLOWUPS 162 (2026-11-09). 18.280 does not reach MU-CBD (18.280.020.C,
+    # L15); 18.650.080.A (L54) makes individual rowhouse entrances "oriented
+    # to the street or public right-of-way, not to the interior or to a
+    # parking lot". No angle printed, none held. Moves no lot:
+    # orientation_constraint above already stands the long face to the street.
+    entrance_faces_street:
+      value: required
+      cite: "Tigard CDC 18.650.080.A: \"All street-facing building elevations must include ... individual entrances to rowhouse development that are oriented to the street or public right-of-way, not to the interior or to a parking lot.\" (no angle printed)"
+      quote: "or/washington/tigard/18.650/18.650.080.txt#L54"
+      via: "or/washington/tigard/18.280/18.280.020.txt#L15"
     parking_front_prohibited:
       value: true
       cite: Tigard CDC 18.650.070.B.1, parking areas located on the side or rear of newly constructed buildings
