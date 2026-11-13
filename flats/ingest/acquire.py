@@ -70,6 +70,7 @@ import httpx
 import shapefile  # pyshp
 
 from flats.ingest.sources import Dataset, Geometry, Kind, Pipeline, load_pipeline
+from flats.ingest.tls import ssl_context
 
 SNAPSHOTS = Path(__file__).resolve().parents[2] / "data" / "flats" / "sources"
 MANIFEST = "manifest.json"
@@ -751,6 +752,7 @@ def acquire(
 
     own = client is None
     client = client or httpx.Client(
+        verify=ssl_context(),
         timeout=httpx.Timeout(600.0, connect=60.0),
         follow_redirects=True,
         headers={"User-Agent": _USER_AGENT},

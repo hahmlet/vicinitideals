@@ -6,26 +6,20 @@ From ../vicinitideals-worktrees/rel7-moves.findings.md (move reader on net live 
 fingerprint a0274bc3322afc538045642f2c37c2dd; 699 gained greens all read right, verdict SHIP).
 None is a false GREEN; all are possible false YELLOW/RED.
 
-- F2 pdx-9ft named cases did not move: 1N2E21BA -12200 (R7, fit -63.5 at 70 ft wide, never
-  reached) and 1S2E15AD -08900 (CM2, still ENTRANCE-SIDE-DOOR after the 9 ft retry). Check whether
-  the lane's expectation was wrong or the retry is not reached.
-- F3 22E08DA01100 (Thorville Ave, Clackamas): fire road unmeasured -> FIRE-DEAD-END yellow;
-  measure the bulb (flats fire_roads._room_to_turn).
-- F4 22E06AD01800 (Clackamas R10): yellow -> red on parking_frontage_share 51.22% vs 50% cap
-  after the 1009 strip change; retry other placements before RED.
+- F2 CLOSED, expectation was wrong (no code change, branch flats/fix-189): the 9 ft retry IS
+  reached on both. 1N2E21BA -12200 (70 ft wide): the pod's 80 ft face cannot face the street on a
+  60 ft envelope at any lane width; turned, it misses by 1.5 ft (116.5 of 118 ft deep) and a 9 ft
+  lane makes the court aisle deeper, never shallower -> RED stands. 1S2E15AD -08900 (67 ft wide):
+  an 80 ft face cannot face the street -> ENTRANCE-SIDE-DOOR stands. The lane targeted 94-97 ft lots.
+- F3 FIXED on flats/fix-189 (fire_roads._room_across): Thorville's 80 ft bulb stands 16 ft off the
+  centreline; the room at a dead end is now also read across the street's own mapped right-of-way.
+  The lot loses FIRE-DEAD-END but stays YELLOW on ENTRANCE-SIDE-DOOR. ~1% of walked dead ends read
+  ROOM (14 of ~1,400 in the test area), toward green only. Awaits a bound.
+- F4 FIXED on flats/fix-189 (quadfit._screen_on): a parking-frontage cap miss retries the building
+  squared to each street the lot abuts and keeps the better reading; Rusk Rd reads 48.78% -> back to
+  YELLOW. Awaits a bound.
 - F1 (note only) Eldorado 22E08AC02500: the fg4 lane's "missed by 0.2 ft" was wrong; it is 24.5 ft
   short and correctly RED.
 
-## F5 (2026-11-13, from the rel8 bound) -- West Linn sewer feed fails the certificate check
-
-geo.westlinnoregon.gov now chains to "GoDaddy TLS Root CA - R1", which 137's Python cert store does
-not trust, so `flats.ingest.acquire` fails `util_sewer_west_linn` (curl fails the same way). The
-2026-11-10 snapshot keeps the 2026-10-01 copy. Fix: trust that root (newer certifi / a pinned extra
-CA bundle for that host) before the next county refresh; never turn verification off.
-
-## F6 (2026-11-13) -- bound recipe acquired into the worktree, not the shared snapshot
-
-The rel8 body.sh ran `flats.ingest.acquire` from the worktree without `--root`, so it wrote to
-`/root/wt/<sha>/data/flats/sources/`, not `$SRC`. Coordinator merged the four new sewer layers
-(cws, cws_boundary, sandy, lake_oswego) into the shared 2026-11-10 snapshot by hand (manifest backup
-in /root/rel8_bound/). Fix the /root/recipes/bound_splice template: pass `--root $D/flats/sources`.
+- F5 DONE 766dd02d: West Linn sewer root (GoDaddy TLS Root CA - R1) pinned in flats/config/ca/, trusted beside certifi by the ingest clients (flats/ingest/tls.py); live acquire from 137 verified.
+- F6 DONE (recipe, no repo commit): /root/recipes/bound_splice/body.sh has an acquire() helper that passes `--root $D/flats/sources`; acquire.py default root left as is.

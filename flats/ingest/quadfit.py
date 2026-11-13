@@ -4133,7 +4133,35 @@ def _screen_on(
         )
         if facing is not None and _shown(facing) <= _shown(chosen):
             chosen = facing
+    if here.front_bearings and _frontage_missed(chosen.signed):
+        # The best fit's court takes more of a street frontage than the code
+        # allows. That is one placement, not the lot: a cap miss is RED only
+        # where no placement passes (FOLLOWUPS 189 F4, 22E06AD01800). Try
+        # the building squared to each street the lot abuts -- its court
+        # then behind it from that street -- and keep a reading only where
+        # the map shows it better. Each is a whole screen of a real fit, its
+        # share measured on its own drawing.
+        for bearing in here.front_bearings:
+            turned = _facing_reading(
+                here, design, got, env, base, fitter, screened,
+                refit_on(fitter.only((bearing,)), False), offered, reading,
+                angles=(bearing,), face_street=False,
+            )
+            if turned is not None and _shown(turned) < _shown(chosen):
+                chosen = turned
     return chosen, fitter
+
+
+#: The checks a parking-frontage cap fails on (:func:`flats.score.screen`):
+#: the share, and the same sentence's ceiling in feet.
+FRONTAGE_CAPS: frozenset[str] = frozenset({"parking_frontage_share", "parking_frontage_width"})
+
+
+def _frontage_missed(signed: Screening) -> bool:
+    """Whether ``signed`` fails a parking-frontage cap."""
+    return any(
+        c.check in FRONTAGE_CAPS and c.verdict is CheckVerdict.fails for c in signed.checks
+    )
 
 
 def _facing_reading(
@@ -4147,15 +4175,20 @@ def _facing_reading(
     refit: Callable[[Sequence[Fix] | None], Fit],
     offered: Sequence[Fix],
     reading: Callable[[Fit, LotFacts, Screening, Screening], Screened],
+    *,
+    angles: Sequence[float] | None = None,
+    face_street: bool = True,
 ) -> Screened | None:
     """The lot read with the building's front doors to the street: the fit
     confined to the lot's front bearings, unflipped (``face_street``), its
     court beside the building dropped where no drive reaches it, as
-    :func:`_screen_on` does for the free fit. None where it does not fit."""
+    :func:`_screen_on` does for the free fit. None where it does not fit.
+    ``angles`` and ``face_street`` read it at other directions than the
+    front bearings, or flipped (the frontage-cap retry, FOLLOWUPS 189 F4)."""
     fit = refit(None)
     if fit.beside and not beside_reaches_street(here, design, got, fit, fitter, env):
         fit = fit_for(
-            fitter.only(here.front_bearings),
+            fitter.only(here.front_bearings if angles is None else angles),
             design,
             got,
             placement=False,
@@ -4164,7 +4197,7 @@ def _facing_reading(
             corner=base.corner,
             frontage_ft=base.cap_frontage_ft,
             street_deg=(),
-            face_street=True,
+            face_street=face_street,
         )
     if not fit.fits:
         return None
