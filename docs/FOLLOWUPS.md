@@ -64,12 +64,12 @@ the full one.)
 
 185. [Claude] [scan: YES -- every lot] **Screen the 80 x 25 pod, 20 ft tall, 9'2" storeys** -- RULED 11-12 (screen ran 80 x 30 since 11-08); BUILT flats/pod-80x25 c6f46146 (quadfit 375 pass; Kenton CM held yellow); ~49 Tigard TMU + 25 ft-minimum zones close; RULED 11-12 height per city (slab-on-grade, ~19'2" no parapet); RULED 19'1" no parapet: 20 ft minimums miss (lane pod-height-final); -> rel8 full bound. [file](followups/185-pod-depth-30.md)
 
-188. [Claude] [scan: YES -- toward yellow] **Lots cut by a district boundary pass untested** (S/E Hillsboro, Portland map areas) -- found 11-12; count + sample, then split-zone-yellow rule. [file](followups/188-cut-district-untested.md)
+188. [Claude] [scan: YES -- toward yellow] **Lots cut by a district boundary pass untested** (S/E Hillsboro, Portland map areas) -- BUILT on flats/cut-district (rides rel9; rel7a: 0 false GREEN found, ~0 colour moves, flags only; awaits rel9 bound). [file](followups/188-cut-district-untested.md)
 189. [Claude] [scan: YES -- toward green only] **rel7 move-read fix-forwards: pdx-9ft cases not moved, Thorville bulb unmeasured, Clackamas R10 51.2% share red** -- none a false GREEN. [file](followups/189-rel7-fix-forwards.md)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
-- Weekly re-screen state -- run 87 PROMOTED 2026-10-28; NEXT full re-screen ~2026-11-10, splices in between. [file](followups/weekly-rescreen.md)
+- Weekly re-screen state -- run 124 PROMOTED 2026-11-12 (rel7, pod80x30); NEXT rel8 full bound (pod80x25@3). [file](followups/weekly-rescreen.md)
 67. [Claude] **Washington County makes the owner hand over road land first (CDC 302-2.14 C(1) ...)** -- (b) BUILT e67b7193 (flats/road-land-leftovers), rides flats/rel4; remove after the bound. [file](followups/67-wash-co-road-dedication.md)
 77. [Claude] **Road land to the centre line in the cities, not just unincorporated Washington County** -- segment qualifiers BUILT e67b7193 (Milwaukie 18 rows, King City 3), rides flats/rel4; left: no-centre-line case (needs 137). [file](followups/77-city-road-dedication.md)
 78. [Claude] **Portland false GREENs: main street minimum floor area and protected historic buildings are RED** -- last item BUILT 8d1597ef (flats/pdx-gresham-leftovers): "m" ground-floor active use from 2029 = notice now, YELLOW from 2029-01-01 (0 moves); later: wire the transit-street map. [file](followups/78-portland-false-greens.md)

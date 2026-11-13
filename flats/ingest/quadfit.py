@@ -246,6 +246,8 @@ from flats.score.paper import (
     side_street_fed,
 )
 from flats.score.screen import (
+    AREA_FLAGS,
+    AREA_REVIEWS,
     PARKING_FRONT_SHARE,
     BUILDING_SHARE,
     CLOSER_LOOK_SPLIT_ZONE,
@@ -854,11 +856,46 @@ def _drawn_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[st
     """The site facts an area the lot's layer traced settles (see
     :class:`~flats.rules.model.DrawnArea`), for a lot of a zone the area
     names. :func:`observed_facts` keeps a True a map code already holds."""
+    return {k: v for k, v in _drawn_answers(row, layers).items() if v is not None}
+
+
+#: The drawn facts no standard's lever reaches: the screen applies their rule
+#: itself (:data:`flats.score.screen.AREA_REVIEWS`, ``AREA_FLAGS``), so a lot
+#: their line cuts has to be named to it (:func:`drawn_cut`).
+_SCREEN_AREAS: frozenset[str] = frozenset(AREA_REVIEWS) | frozenset(AREA_FLAGS)
+
+
+def drawn_cut(
+    row: Mapping[str, Any], layers: Mapping[str, Layer] | None, observed: Mapping[str, bool]
+) -> tuple[str, ...]:
+    """The screen-applied drawn facts (:data:`_SCREEN_AREAS`) whose traced
+    line cuts through this lot, for :attr:`flats.score.screen.LotFacts.drawn_cut`
+    (FOLLOWUPS 188). A fact something else already answered (a map code) is
+    not cut; nor is a lot with no shape, which no area was asked about."""
+    if layers is None:
+        return ()
+    got = _drawn_answers(row, layers, only=_SCREEN_AREAS)
+    return tuple(sorted(n for n, v in got.items() if v is None and n not in observed))
+
+
+def _drawn_answers(
+    row: Mapping[str, Any],
+    layers: Mapping[str, Layer],
+    only: frozenset[str] | None = None,
+) -> dict[str, bool | None]:
+    """Each traced area of the lot's zone and its answer: True inside,
+    False outside, None where the line cuts the lot
+    (:func:`flats.geom.drawn.observed_drawn`). ``only`` limits the areas
+    asked to those conditions."""
     home = _home_layer(row, layers)
     if home is None or not home.drawn_areas or row.get("zone") is None:
         return {}
     zone = screened_zone(row, layers)
-    areas = [a for a in home.drawn_areas.values() if zone in a.zones]
+    areas = [
+        a
+        for a in home.drawn_areas.values()
+        if zone in a.zones and (only is None or a.condition in only)
+    ]
     lot_wkb = row.get("lot_wkb")
     if not areas or not lot_wkb:
         return {}
@@ -866,7 +903,7 @@ def _drawn_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[st
 
     lot_geom = shapely.from_wkb(lot_wkb)
     own = _own_ground(row, lot_geom)
-    out: dict[str, bool] = {}
+    out: dict[str, bool | None] = {}
     for area in areas:
         # A use area is a part of the zone the code maps (Tualatin's
         # Residential Sub-District is blocks of CC, 58.200(2)(a)): only the
@@ -877,6 +914,8 @@ def _drawn_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[st
         got = observed_drawn(ground, load_area(area.file))
         if got is not None:
             out[area.condition] = got
+        else:
+            out.setdefault(area.condition, None)
     return out
 
 
@@ -2064,6 +2103,7 @@ def lot_from_row(
         curve_on_the_line=curve_on_the_line(row, layers) if bend else None,
         inside_ugb=inside_ugb_of(row),
         plat_origin=plat_origin_of(row),
+        drawn_cut=drawn_cut(row, layers, observed),
     )
     juris = str(row.get("jurisdiction"))
     try:

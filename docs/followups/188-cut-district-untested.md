@@ -2,12 +2,25 @@
 
 [Claude] [scan: YES -- toward yellow]
 
-Found 2026-11-12 by the gresham-end-glass lane (FOLLOWUPS 187 extension, flats/gresham-end-glass 4c3e50be,
-hand-off ../vicinitideals-worktrees/gresham-end-glass.handoff.md). When a district boundary (South
-Hillsboro, East Hillsboro, the Portland map areas) cuts through a lot, the district test returns no answer
-and the lot is let through untested instead of held out of GREEN. For South Hillsboro end-wall glass it
-is nil in practice (5 ft side setback), but the same gap reaches every district-scoped rule in those places.
+Found 2026-11-12 by the gresham-end-glass lane. BUILT 2026-11-13 on branch `flats/cut-district`
+(hand-off ../vicinitideals-worktrees/cut-district.handoff.md); rides the release after rel8 (rel9),
+not merged into flats/rel8.
 
-Standing ruling 2026-10-14 (split zones -> yellow) points to the fix: a lot a district boundary cuts is
-YELLOW + flag for that district's rules, unless every side of the cut passes. Before building: count the
-cut lots per district on the current bound (how many are GREEN), and read a sample. Ride a weekly re-screen.
+What was open: a traced district (`drawn_areas`) answers a lot True, False or -- where its line cuts the
+lot -- not at all. A `when` variant on the fact already held such a lot (FACT-<district>, then
+`_bounded` tries both sides). Two paths did not:
+1. `only_when` / `unless` values (resolver): the silenced or applied value recorded no lever, so the cut
+   lot screened as if outside, untested on the inside rule (Portland Map 120-2 frontage, Map 120-3 rear
+   vehicle area, East Hillsboro city standards; South Hillsboro glass once rel8 lands).
+2. The screen's own traced-area reviews and records (`AREA_REVIEWS`, `AREA_FLAGS`) were asked only of a
+   lot wholly inside.
+
+Built: `ZoneResolution.gate_levers` (every `only_when`/`unless` condition, applied or silent) joins
+`levers`, so a cut lot leans on the district -> YELLOW + FACT-<district>, lowered to severity 0 only
+where `_bounded` finds every side clears. `LotFacts.drawn_cut` (bridge `drawn_cut()`) names a cut
+review/record area; `area_review` asks it as if inside (the worse side). Tests:
+flats/tests/test_cut_district.py.
+
+Count on rel7a (run 124 outputs, 137 /root/bridge_spliced_rel7a): 8 GREEN cut lots, all read right;
+the only_when gap held 5 cut lots, none GREEN; washington_plan_review 2 cut, 1 GREEN (stays GREEN with
+CLEAR-OBJECTIVE). Remaining: the bound on rel9 (expected moves all toward yellow, a handful).
