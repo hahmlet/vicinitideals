@@ -376,15 +376,59 @@ defaults:
   # side or rear of buildings" without saying a required yard may hold it.
   # YELLOW at best (ruling 2026-11-05-side-yard-parking-silent-codes).
   #
-  # NO STRIP. 16.124.110 B bars parking from a BUFFER, and a buffer is owed only
-  # where 16.124.110 requires one: its C names commercial and multi-family
-  # property abutting another zone, and its F (Kingston Terrace) names parking
-  # that serves "dwelling, multi", mixed-use, commercial or institutional
-  # development. 16.24 starts "dwelling, multi" at five units, so a fourplex and
-  # a single-family attached row are neither. A zone-based reading of C could
-  # reach a townhouse row in a denser zone abutting a lesser one; that turns on
-  # the neighbouring zone line by line, which this field cannot say. Left out;
-  # FOLLOWUPS 146 round 4 hand-off.
+  # THE 16.124.110 BUFFER (FOLLOWUPS 146, kc-buffer, 2026-11-13; replaces the
+  # round-4 "no strip" note). 16.114.020 applies Chapter 16.124 in Kingston
+  # Terrace (16.114/16.114.020.txt#L14), and 16.124.110 reads, left column of
+  # kcc.16.124.landscaping.txt: C, "A buffer/screening area shall be provided
+  # between different types of land use zones (for example, between
+  # single-family and multi-family residential, and between residential and
+  # commercial) on all portions of the lot abutting a lesser zone" (L193-L198);
+  # C.1 ten feet "on a commercial property abutting a residential zone"
+  # (L199-L201); C.2 five feet "on a multi-family property abutting a
+  # single-family zone" (L203-L205); C.3 ten feet "on a multi-family property
+  # abutting a commercial zone" (L206-L208). Right column: A, a buffer is "an
+  # area within a required interior setback adjacent to a property line"
+  # (L180-L183); B, "No building, accessways or parking areas shall be allowed
+  # in a buffer area accept where an accessway has been approved by the city"
+  # (L184-L188) -- so neither the drive lane nor the court may stand in it
+  # (approval is relief, and no variance is taken: ruling
+  # 2026-10-02-no-variances).
+  #
+  # READ BY THE ZONE, the conservative reading. C sorts "types of land use
+  # zones", so "multi-family property" is read as a lot in a zone that admits
+  # multi-dwellings: R-12, R-15, R-24 and AT (16.84.010 "Multi-dwelling N P P
+  # P N P", 16.84/16.84.010.txt#L4,L14; 16.80.020 names R-15 and R-24
+  # "Multi-family Residential", 16.80/16.80.020.txt#L7-L12) and the four
+  # Kingston Terrace zones (Table 16.114-2, "Dwelling, multi Y Y Y CU",
+  # 16.114/16.114.040.txt#L37). The use reading -- a fourplex or a
+  # townhouse row is not "dwelling, multi" (five units, 16.24) -- would owe
+  # nothing, and would be the GREEN this field exists to prevent if it is
+  # wrong; it is a question for Steph in the kc-buffer hand-off. R-9 admits no
+  # multi-dwelling and holds no buffer (zone level). F (Kingston Terrace
+  # parking serving "dwelling, multi", mixed-use, commercial or institutional
+  # development) does not reach a fourplex's stalls; C does.
+  #
+  # ONE FIGURE OFF EVERY LINE. The bridge says whether ANY non-street line
+  # abuts a lesser zone (`abuts_lower_density_zone`, the `neighbours:` block),
+  # not which, and the strip is kept off every non-street line
+  # (flats/ingest/quadfit.py, "No line named"). Single-family (C.2, 5 ft) and
+  # commercial (C.3, 10 ft) neighbours share the one fact, so the larger
+  # printed figure, 10, is held for both: a lot with SF only along one side
+  # is charged 10 where the code asks 5 (Sandy's 17.98.50 A bargain, the
+  # same direction). A planted strip that alone sinks a fit makes the lot
+  # YELLOW PARKING-STRIP-UNCONFIRMED (ruling 2026-10-04-planted-strips-yellow),
+  # never GREEN; a neighbour the list cannot place leaves the fact unread.
+  parking_lot_line_buffer_ft:
+    exempt: true
+    cite: King City KCMC 16.124.110 C, a buffer is owed only on the portions of a lot abutting a lesser zone
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L193-L198"
+    variants:
+      - value: 10
+        when: [abuts_lower_density_zone]
+        cite: King City KCMC 16.124.110 C.3, a ten-foot buffer on a multi-family property abutting a commercial zone (C.2's five feet abutting a single-family zone is inside it), held off every non-street line; 16.124.110 A-B, no building, accessways or parking areas in a buffer
+        quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L198,L203-L208"
   parking_side_yard_allowed:
     value: lane_and_court
     cite: King City KCMC 16.24, a setback runs from the wall or foundation of a building; no chapter bars parking from an interior side yard
@@ -578,6 +622,13 @@ zones:
           when: [unit_lots]
           cite: King City KCMC 16.84.010 housing types, Single dwelling attached P in R-9 (16.24.030, a single-family attached dwelling is on its own lot, a townhouse)
           quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L4,L7-L8,L14"
+    # 16.124.110 C (see the defaults): R-9 admits no multi-dwelling, so a lot
+    # here is neither the multi-family nor the commercial property C buffers.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: King City KCMC 16.124.110 C buffers a commercial or multi-family property abutting a lesser zone; 16.84.010, Multi-dwelling N in R-9
+      quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L193-L208"
+      via: "or/washington/king-city/16.84/16.84.010.txt#L4,L14"
     min_lot_sqft:
       value: 1500
       cite: King City KCMC 16.84.040 Table, R-9 column, Minimum lot size, note 1 (townhouse lots may be a minimum of 1,500 sq ft)
@@ -1594,6 +1645,31 @@ zones:
       cite: King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L114-L118,L142-L150,L3007-L3019"
       via: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L108-L110"
+    # 16.124.110 C.1 (see the defaults): ten feet "on a commercial property
+    # abutting a residential zone". KTTC admits retail sales and offices
+    # (Table 16.114-2, 16.114/16.114.040.txt#L39-L41), so it is read as a
+    # commercial zone as well as a multi-family one, the stricter way; the
+    # pod is a residential use here, and whether C.1 reaches it is the
+    # kc-buffer hand-off's question.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: King City KCMC 16.124.110 C, a buffer is owed only on the portions of a lot abutting a lesser zone
+      quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L193-L198"
+      variants:
+        - value: 10
+          when: [abuts_lower_density_zone]
+          cite: King City KCMC 16.124.110 C.3, a ten-foot buffer on a multi-family property abutting a commercial zone (C.2's five feet abutting a single-family zone is inside it), held off every non-street line; 16.124.110 A-B, no building, accessways or parking areas in a buffer
+          quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L198,L203-L208"
+        - value: 10
+          when: [abuts_residential_zone]
+          cite: King City KCMC 16.124.110 C.1, a ten-foot buffer on a commercial property abutting a residential zone, held off every non-street line; 16.124.110 A-B, no building, accessways or parking areas in a buffer
+          quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L201"
+        # Both facts true: one variant naming both, so the two ten-foot rows
+        # are not an equal tie (Value.under refuses ties as ambiguous).
+        - value: 10
+          when: [abuts_lower_density_zone, abuts_residential_zone]
+          cite: King City KCMC 16.124.110 C.1 and C.3, ten feet either way, held off every non-street line
+          quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L201,L206-L208"
     min_lot_sqft:
       value: 1500
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot size (note 16 read the stricter way)
@@ -1704,6 +1780,31 @@ zones:
       cite: King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L114-L118,L142-L150,L3007-L3019"
       via: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L108-L110"
+    # 16.124.110 C.1 (see the defaults): ten feet "on a commercial property
+    # abutting a residential zone". KTBB admits retail sales and offices
+    # (Table 16.114-2, 16.114/16.114.040.txt#L39-L41), so it is read as a
+    # commercial zone as well as a multi-family one, the stricter way; the
+    # pod is a residential use here, and whether C.1 reaches it is the
+    # kc-buffer hand-off's question.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: King City KCMC 16.124.110 C, a buffer is owed only on the portions of a lot abutting a lesser zone
+      quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L193-L198"
+      variants:
+        - value: 10
+          when: [abuts_lower_density_zone]
+          cite: King City KCMC 16.124.110 C.3, a ten-foot buffer on a multi-family property abutting a commercial zone (C.2's five feet abutting a single-family zone is inside it), held off every non-street line; 16.124.110 A-B, no building, accessways or parking areas in a buffer
+          quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L198,L203-L208"
+        - value: 10
+          when: [abuts_residential_zone]
+          cite: King City KCMC 16.124.110 C.1, a ten-foot buffer on a commercial property abutting a residential zone, held off every non-street line; 16.124.110 A-B, no building, accessways or parking areas in a buffer
+          quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L201"
+        # Both facts true: one variant naming both, so the two ten-foot rows
+        # are not an equal tie (Value.under refuses ties as ambiguous).
+        - value: 10
+          when: [abuts_lower_density_zone, abuts_residential_zone]
+          cite: King City KCMC 16.124.110 C.1 and C.3, ten feet either way, held off every non-street line
+          quote: "or/washington/king-city/kcc.16.124.landscaping.txt#L180-L188,L193-L201,L206-L208"
     min_lot_sqft:
       value: 1500
       cite: King City KCMC 16.114.050 Table 16.114-4, Minimum lot size (note 16 read the stricter way)
@@ -2157,6 +2258,44 @@ zone_rulings:
       zone_rulings.
 
 # Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+neighbours:
+  abuts_lower_density_zone:
+    true_for: [SF, R-9, LC, NMU]
+    false_for: [R-12, R-15, R-24, AT, KTC, KTRC]
+    quote: "or/washington/king-city/16.80/16.80.020.txt#L1-L28"
+    cite: King City KCMC 16.80.020 zoning classification districts, read with 16.84.010 and Table 16.114-2 for 16.124.110 C
+    note: >-
+      Read only by `parking_lot_line_buffer_ft` (16.124.110 C.2 and C.3, the
+      defaults): the "lesser zone" a multi-family property owes a buffer
+      against is a single-family zone or a commercial zone. Single-family:
+      SF ("Single-family Residential") and R-9, the one other older district
+      that admits no multi-dwelling (16.84.010, Multi-dwelling N in R-9 and SF,
+      16.84/16.84.010.txt#L4,L14). Commercial: LC ("Limited Commercial") and
+      NMU. False: the districts that admit multi-dwellings and are not
+      commercial -- R-12, R-15, R-24, AT, and the Central and Rural Character
+      Neighborhoods (Table 16.114-2: no retail, no office,
+      16.114/16.114.040.txt#L37-L41). KTTC and KTBB admit retail and offices
+      and multi-dwellings, so they may be a commercial zone to a lot beside
+      them and are on neither list; CF, ROS and the county pockets are not
+      sorted by C either. A line against any of them, another jurisdiction,
+      unzoned land or a split neighbour leaves the fact unread and the lot
+      out of GREEN unless it clears the buffer anyway.
+  abuts_residential_zone:
+    true_for: [SF, R-9, R-12, R-15, R-24, AT, KTC, KTRC]
+    false_for: [LC, NMU, CF, ROS]
+    quote: "or/washington/king-city/16.80/16.80.020.txt#L1-L28"
+    cite: King City KCMC 16.80.020 zoning classification districts, read with Table 16.114-2 for 16.124.110 C.1
+    note: >-
+      Read only by `parking_lot_line_buffer_ft` in KTTC and KTBB (16.124.110
+      C.1, ten feet on a commercial property abutting a residential zone).
+      True: the six older residential districts named Residential in
+      16.80.020 (SF, R-9, R-12, R-15, R-24 and AT, Apartments and Townhouses)
+      and the two Kingston Terrace neighbourhoods that admit no retail or
+      office (KTC, KTRC; 16.114/16.114.040.txt#L39-L41). False: Limited
+      Commercial, Neighborhood Mixed-Use, Community Facilities and Recreation
+      Open Space. KTTC and KTBB are mixed (dwellings and shops), on neither
+      list, so a line against one is unread and held to the buffer.
+
 clear_vision:
   corner:
     status: read
