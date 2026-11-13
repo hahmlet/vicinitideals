@@ -323,11 +323,22 @@ AREA_REVIEWS: dict[str, str] = {
 }
 
 
-def area_review(config: Configuration | None) -> str | None:
-    """The first traced-area review (:data:`AREA_REVIEWS`) this lot holds."""
+def area_review(config: Configuration | None, lot: LotFacts | None = None) -> str | None:
+    """The first traced-area review (:data:`AREA_REVIEWS`) this lot holds,
+    or that the area's line cuts through (:attr:`LotFacts.drawn_cut`).
+
+    A cut lot is asked the review as if inside (FOLLOWUPS 188): the review
+    only adds to what the lot is asked, so the inside reading is the worse of
+    the two, and taking it is answering both sides at once. Outside the reach
+    of ORS 197A.400 that is a closer look; inside it the lot keeps its colour
+    with CLEAR-OBJECTIVE, as a lot wholly inside does.
+    """
     if config is None:
         return None
-    return next((n for n in sorted(AREA_REVIEWS) if n in config.conditions), None)
+    cut = lot.drawn_cut if lot is not None else ()
+    return next(
+        (n for n in sorted(AREA_REVIEWS) if n in config.conditions or n in cut), None
+    )
 
 
 #: The code requires one driveway approach for every N dwelling units and the
@@ -1072,6 +1083,13 @@ class LotFacts:
     #: 33(c)), so the court the fit passed may stand in a front or side yard.
     #: Holds the lot out of GREEN. False where nothing measured it.
     court_ground_unread: bool = False
+    #: Site facts a traced area answers (``drawn_areas``) whose line cuts
+    #: through this lot, so the fact is unanswered -- kept only for the areas
+    #: no standard's lever reaches (:data:`AREA_REVIEWS`, :data:`AREA_FLAGS`),
+    #: whose rule the screen applies itself. Every other drawn fact left
+    #: unanswered holds the lot through its lever (FOLLOWUPS 188). Empty
+    #: where nothing was traced, or nothing cut.
+    drawn_cut: tuple[str, ...] = ()
     #: Why the corner clear-vision area holds this lot out of GREEN
     #: (:data:`SIGHT_CORNER_CURB` or :data:`SIGHT_CORNER_UNSETTLED`), set by
     #: the bridge when the fit stands only on the smaller of the two areas
@@ -3735,7 +3753,7 @@ def screen(
         # Where ORS 197A.400 reaches, a condition the review adds must itself
         # be clear and objective (Steph 2026-10-15): flagged, not yellow.
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
-    elif area_review(config) is not None and not reach:
+    elif area_review(config, lot) is not None and not reach:
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
     if approaches_missing(rules, design):
         closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
@@ -4645,12 +4663,14 @@ def _account(
         flag(code, by, fact=review, source=_cite(rules, REVIEW_FIELDS[review]))
     if cleared_use is not None:
         flag("CLEAR-OBJECTIVE", CLEAR_OBJECTIVE, fact=cleared_use[0], source=cleared_use[1])
-    if (area := area_review(config)) is not None:
+    if (area := area_review(config, lot)) is not None:
         code, by = ("CLEAR-OBJECTIVE", CLEAR_OBJECTIVE) if reach else ("REVIEW-CONDITIONS", CLOSER_LOOK_REVIEW_CONDITIONS)
         flag(code, by, fact=area, source=AREA_REVIEWS[area])
     if config is not None:
         for name, (code, by) in sorted(AREA_FLAGS.items()):
-            if name in config.conditions:
+            # A lot the area's line cuts carries the record too: it is below
+            # the yellow line, so it costs the lot nothing (FOLLOWUPS 188).
+            if name in config.conditions or name in lot.drawn_cut:
                 flag(code, by, fact=name, source="drawn")
     for name, (code, by) in sorted(LEVER_FLAGS.items()):
         if name in rules.levers:
