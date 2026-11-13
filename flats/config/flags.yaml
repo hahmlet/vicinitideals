@@ -2745,6 +2745,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-KENTON-BUILDING-LINE:
+    description: "Whether a commercial lot has a site frontage on Kenton plan district Map 538-4 (PCC 33.538.230), where the building must stand at the street lot line with exterior walls at least 25 feet high"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against Map 538-4: a lot the traced frontage lots cut is unanswered"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-PDX-LOMBARD-SUBDISTRICT-A:
     description: "Whether the lot is in Subdistrict A of Portland's Lombard Street plan district, where on RM2 sites the main entrance of each building faces the street lot line (PCC 33.545.120.C.2)"
     kind: categorical

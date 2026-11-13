@@ -255,13 +255,17 @@ def test_every_encoded_floor_is_quoted_from_a_line_that_states_a_floor() -> None
     """The misquote guard, made specific: the cited lines must contain the
     words 'minimum' and 'height'. Every one of the five is a prose sentence or
     a table row that says so in as many words, so this is a real constraint
-    and not a tautology."""
+    and not a tautology.
+
+    2026-11-13 (FOLLOWUPS 185): Portland's Kenton 33.538.230 states its floor
+    as walls that "must be at least 25 feet high", with neither word; "at
+    least" and "high" are taken as the same words, and nothing else is."""
     store = ProvenanceStore()
     for name, code, field, _value, quote in encoded():
         assert quote, f"{name} {code} {field} has no quote"
         text = store.quote(quote).lower()
-        assert "minimum" in text, f"{name} {code} {field}: {text[:120]!r}"
-        assert "height" in text, f"{name} {code} {field}: {text[:120]!r}"
+        assert "minimum" in text or "at least" in text, f"{name} {code} {field}: {text[:120]!r}"
+        assert "height" in text or "high" in text, f"{name} {code} {field}: {text[:120]!r}"
 
 
 def test_no_floor_sits_above_its_own_zones_ceiling() -> None:
@@ -322,6 +326,12 @@ FLOORS_ABOVE_THE_POD = {
     ("or/washington/tigard", "MU-CBD", "min_building_height_ft"),
     ("or/washington/_unincorporated", "TO:BUS", "min_building_height_ft"),
     ("or/clackamas/_unincorporated", "SCMU", "min_building_height_ft"),
+    # 2026-11-13 (FOLLOWUPS 185, flats/kenton-538): Kenton 33.538.230, walls
+    # at least 25 ft high on the Map 538-4 frontages -- only on the lots
+    # pdx_kenton_building_line traces (only_when), silent elsewhere.
+    ("or/multnomah/portland", "CM2", "min_building_height_ft"),
+    ("or/multnomah/portland", "CM3", "min_building_height_ft"),
+    ("or/multnomah/portland", "CE", "min_building_height_ft"),
 }
 
 
