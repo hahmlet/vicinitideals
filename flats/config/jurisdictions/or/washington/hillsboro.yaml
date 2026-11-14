@@ -1300,6 +1300,7 @@ zones:
           when: [hillsboro_downtown_plan_district]
           cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
           quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
+          via: "or/washington/hillsboro/12.61/12.61.200.txt#L2,L4-L6"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.21.620-1, Housing Types Permitted in the SCR-LD Zone (Quadplex P)
@@ -2399,6 +2400,7 @@ zones:
           when: [hillsboro_downtown_plan_district]
           cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
           quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
+          via: "or/washington/hillsboro/12.61/12.61.200.txt#L2,L4-L6"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.22.420-1, Housing Types Permitted in the SCR-MD Zone (Quadplex P)
@@ -2556,6 +2558,7 @@ zones:
           when: [hillsboro_downtown_plan_district]
           cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
           quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
+          via: "or/washington/hillsboro/12.61/12.61.200.txt#L2,L4-L6"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.22.520-1, Housing Types Permitted in the SCR-HD Zone (Quadplex P)
@@ -3893,6 +3896,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
           quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
+          via: "or/washington/hillsboro/cdc.12.64.amberglen.txt#L875-L876,L882,L894-L895"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -4041,6 +4045,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
           quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
+          via: "or/washington/hillsboro/cdc.12.64.amberglen.txt#L875-L876,L882,L894-L895"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -4195,6 +4200,7 @@ zones:
           when: [inside_mapped_use_area, flag_lot]
           cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
           quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
+          via: "or/washington/hillsboro/cdc.12.64.amberglen.txt#L875-L876,L882,L894-L895"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -4333,6 +4339,7 @@ zones:
           when: [inside_mapped_use_area, flag_lot]
           cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
           quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
+          via: "or/washington/hillsboro/cdc.12.64.amberglen.txt#L875-L876,L882,L894-L895"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -4465,6 +4472,7 @@ zones:
           when: [inside_mapped_use_area, flag_lot]
           cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
           quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
+          via: "or/washington/hillsboro/cdc.12.64.amberglen.txt#L875-L876,L882,L894-L895"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW

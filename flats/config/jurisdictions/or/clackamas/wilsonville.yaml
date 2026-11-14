@@ -3046,6 +3046,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1951
       retrieved: '2026-08-27'
       quote: "or/clackamas/wilsonville/4/4.113.txt#L239-L242"
+      via: "or/clackamas/wilsonville/4/4.125.txt#L1-L2"
     roof_style_book_unread:
       # Roof re-read (roof-rereads, FOLLOWUPS 181(b), 2026-11-11). Middle
       # housing on a built Villebois lot goes through 4.125(.23); its (C)

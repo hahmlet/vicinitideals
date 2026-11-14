@@ -6236,6 +6236,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 18
           when: [unit_lots]
@@ -6262,6 +6263,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 12
           when: [unit_lots]
@@ -6285,6 +6287,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: true
           when: [unit_lots]
@@ -6303,6 +6306,7 @@ zones:
           when: [alley_at_rear]
           cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
           quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+          via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
         - value: false
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
@@ -6319,11 +6323,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: lane
           when: [unit_lots]
           cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
           quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L106-L108"
     # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
     # from a single approach on the side of the corner lot.
     corner_access_street:
@@ -6332,6 +6338,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L99-L100,L887-L888"
       variants:
         - value: side
           when: [unit_lots]
@@ -6660,6 +6667,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 18
           when: [unit_lots]
@@ -6686,6 +6694,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 12
           when: [unit_lots]
@@ -6709,6 +6718,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: true
           when: [unit_lots]
@@ -6727,6 +6737,7 @@ zones:
           when: [alley_at_rear]
           cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
           quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+          via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
         - value: false
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
@@ -6743,11 +6754,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: lane
           when: [unit_lots]
           cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
           quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L106-L108"
     # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
     # from a single approach on the side of the corner lot.
     corner_access_street:
@@ -6756,6 +6769,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L99-L100,L887-L888"
       variants:
         - value: side
           when: [unit_lots]
@@ -7080,6 +7094,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 18
           when: [unit_lots]
@@ -7106,6 +7121,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 12
           when: [unit_lots]
@@ -7129,6 +7145,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: true
           when: [unit_lots]
@@ -7147,6 +7164,7 @@ zones:
           when: [alley_at_rear]
           cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
           quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+          via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
         - value: false
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
@@ -7163,11 +7181,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: lane
           when: [unit_lots]
           cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
           quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L106-L108"
     # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
     # from a single approach on the side of the corner lot.
     corner_access_street:
@@ -7176,6 +7196,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L99-L100,L887-L888"
       variants:
         - value: side
           when: [unit_lots]
@@ -7377,6 +7398,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: true
           when: [unit_lots]
@@ -7395,6 +7417,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: 18
           when: [unit_lots]
@@ -7421,6 +7444,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: 12
           when: [unit_lots]
@@ -7444,6 +7468,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: true
           when: [unit_lots]
@@ -7457,11 +7482,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L53,L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: false
           when: [alley_at_rear]
           cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
           quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
         - value: false
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
@@ -7478,11 +7505,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: lane
           when: [unit_lots]
           cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
           quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L106-L108"
     # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
     # from a single approach on the side of the corner lot.
     corner_access_street:
@@ -7491,6 +7520,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L99-L100,L887-L888"
       variants:
         - value: side
           when: [unit_lots]
@@ -7692,6 +7722,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: true
           when: [unit_lots]
@@ -7710,6 +7741,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: 18
           when: [unit_lots]
@@ -7736,6 +7768,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: 12
           when: [unit_lots]
@@ -7759,6 +7792,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: true
           when: [unit_lots]
@@ -7772,11 +7806,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L53,L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: false
           when: [alley_at_rear]
           cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
           quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
         - value: false
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
@@ -7793,11 +7829,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: lane
           when: [unit_lots]
           cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
           quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L106-L108"
     # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
     # from a single approach on the side of the corner lot.
     corner_access_street:
@@ -7806,6 +7844,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L99-L100,L887-L888"
       variants:
         - value: side
           when: [unit_lots]
@@ -8693,6 +8732,7 @@ zones:
     min_frontage_line:
       value: radius_end
       quote: "or/multnomah/gresham/4/4.0430.txt#L141,L144"
+      via: "or/multnomah/gresham/4/4.0430.txt#L8,L14-L18,L144"
     min_frontage_ft:
       value: 100
       quote: "or/multnomah/gresham/4/4.0430.txt#L8,L14-L18"
@@ -9149,6 +9189,7 @@ zones:
     min_frontage_line:
       value: radius_end
       quote: "or/multnomah/gresham/4/4.0430.txt#L141,L144"
+      via: "or/multnomah/gresham/4/4.0430.txt#L8,L14-L18,L144"
     min_frontage_ft:
       # Row B: 100 ft for residential. Note 11 rewrites it for townhouses --
       # 16 ft interior, 32 ft on a corner without an alley or shared access,

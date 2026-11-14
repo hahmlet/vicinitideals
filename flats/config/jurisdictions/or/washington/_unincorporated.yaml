@@ -1744,17 +1744,20 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-29'
       quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      via: "or/washington/_unincorporated/cdc.106.definitions.txt#L1"
       variants:
         - value: lane
           when: [east_hillsboro_city_standards, unit_lots]
           cite: "East Hillsboro Community Plan overlay, the stricter of county and city (ruling 2026-10-31-east-hillsboro-city-standards-are-an-overlay): Hillsboro CDC 12.50.350.C.1, on the townhouse path driveways may serve parking in side-yard setbacks"
           quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_side_yard_stated:
       value: none
       cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
       quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+      via: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L3-L6"
     parking_lot_line_buffer_ft:
       value: 5
       cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
@@ -1926,12 +1929,14 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-29'
       quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      via: "or/washington/_unincorporated/cdc.106.definitions.txt#L1"
     parking_side_yard_stated:
       value: none
       cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
       quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+      via: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L3-L6"
     parking_lot_line_buffer_ft:
       value: 5
       cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
@@ -2105,12 +2110,14 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-29'
       quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      via: "or/washington/_unincorporated/cdc.106.definitions.txt#L1"
     parking_side_yard_stated:
       value: none
       cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
       quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+      via: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L3-L6"
     parking_lot_line_buffer_ft:
       value: 5
       cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
@@ -2287,12 +2294,14 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-29'
       quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      via: "or/washington/_unincorporated/cdc.106.definitions.txt#L1"
     parking_side_yard_stated:
       value: none
       cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
       quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+      via: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L3-L6"
     parking_lot_line_buffer_ft:
       value: 5
       cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
@@ -2631,17 +2640,20 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-29'
       quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      via: "or/washington/_unincorporated/cdc.106.definitions.txt#L1"
       variants:
         - value: lane
           when: [east_hillsboro_city_standards, unit_lots]
           cite: "East Hillsboro Community Plan overlay, the stricter of county and city (ruling 2026-10-31-east-hillsboro-city-standards-are-an-overlay): Hillsboro CDC 12.50.350.C.1, on the townhouse path driveways may serve parking in side-yard setbacks"
           quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+          via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_side_yard_stated:
       value: none
       cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
       quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+      via: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L3-L6"
     parking_lot_line_buffer_ft:
       value: 5
       cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
@@ -2814,12 +2826,14 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-29'
       quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      via: "or/washington/_unincorporated/cdc.106.definitions.txt#L1"
     parking_side_yard_stated:
       value: none
       cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
       quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+      via: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L3-L6"
     parking_lot_line_buffer_ft:
       value: 5
       cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
@@ -2857,11 +2871,24 @@ zones:
   # held. Overlay work.
   R-6 NB:
     entrance_faces_street:
-      value: unclear
-      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      # 2026-11-13 (FOLLOWUPS 112, pagecheck-34): was `unclear`, read off
+      # 390-20.3 C, which binds "Multi-dwelling buildings" only (L3237). The
+      # pod is four units and 106-143 starts a Multi-Dwelling Structure at
+      # five (cdc.106.definitions.txt#L782-L783; rulings.yaml
+      # 2026-09-29-definitions-literal), so 390-20.3 C never reaches it,
+      # and residential development here is exempt from 390-20 outright
+      # (390-20.2 A(1), cdc.390.north-bethany.txt#L3061-L3062),
+      # and no other 390 entrance standard names this district (whole-file
+      # grep "entrance|entry"; the community plan's entrance table is the
+      # Main Street area, R-24 NB / R-25+ NB / NCC NB). 430-84 lists this
+      # district (L3-L6), so its entry orientation governs, as in the
+      # city-wide default.
+      value: required
+      cite: "Washington County CDC 430-84.3 B(1) Entry Orientation (Triplexes and Quadplexes), applied in R-6 NB by 430-84 (L3-L6); 390-20.3 C reaches only Multi-Dwelling Structures of five or more units (106-143)"
       url: https://api.municode.com/PublicationPdfDownload/3090
-      retrieved: '2026-09-28'
-      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
+      retrieved: '2026-11-13'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L156-L171"
+      via: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L3-L6"
     cite_default:
       cite: Washington County CDC 390-8 (R-6 North Bethany District)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -2928,11 +2955,22 @@ zones:
       390-8, the dimensions of R-6 (303-7) by 390-8.7.
   R-9 NB:
     entrance_faces_street:
-      value: unclear
-      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      # 2026-11-13 (FOLLOWUPS 112, pagecheck-34): was `unclear`, read off
+      # 390-20.3 C, which binds "Multi-dwelling buildings" only (L3237). The
+      # pod is four units and 106-143 starts a Multi-Dwelling Structure at
+      # five (cdc.106.definitions.txt#L782-L783; rulings.yaml
+      # 2026-09-29-definitions-literal), so 390-20.3 C never reaches it,
+      # and no other 390 entrance standard names this district (whole-file
+      # grep "entrance|entry"; the community plan's entrance table is the
+      # Main Street area, R-24 NB / R-25+ NB / NCC NB). 430-84 lists this
+      # district (L3-L6), so its entry orientation governs, as in the
+      # city-wide default.
+      value: required
+      cite: "Washington County CDC 430-84.3 B(1) Entry Orientation (Triplexes and Quadplexes), applied in R-9 NB by 430-84 (L3-L6); 390-20.3 C reaches only Multi-Dwelling Structures of five or more units (106-143)"
       url: https://api.municode.com/PublicationPdfDownload/3090
-      retrieved: '2026-09-28'
-      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
+      retrieved: '2026-11-13'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L156-L171"
+      via: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L3-L6"
     cite_default:
       cite: Washington County CDC 390-9 (R-9 North Bethany District), 304-7.2 by 390-9.6
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3070,11 +3108,22 @@ zones:
       detached house.
   R-15 NB:
     entrance_faces_street:
-      value: unclear
-      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      # 2026-11-13 (FOLLOWUPS 112, pagecheck-34): was `unclear`, read off
+      # 390-20.3 C, which binds "Multi-dwelling buildings" only (L3237). The
+      # pod is four units and 106-143 starts a Multi-Dwelling Structure at
+      # five (cdc.106.definitions.txt#L782-L783; rulings.yaml
+      # 2026-09-29-definitions-literal), so 390-20.3 C never reaches it,
+      # and no other 390 entrance standard names this district (whole-file
+      # grep "entrance|entry"; the community plan's entrance table is the
+      # Main Street area, R-24 NB / R-25+ NB / NCC NB). 430-84 lists this
+      # district (L3-L6), so its entry orientation governs, as in the
+      # city-wide default.
+      value: required
+      cite: "Washington County CDC 430-84.3 B(1) Entry Orientation (Triplexes and Quadplexes), applied in R-15 NB by 430-84 (L3-L6); 390-20.3 C reaches only Multi-Dwelling Structures of five or more units (106-143)"
       url: https://api.municode.com/PublicationPdfDownload/3090
-      retrieved: '2026-09-28'
-      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
+      retrieved: '2026-11-13'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L156-L171"
+      via: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L3-L6"
     cite_default:
       cite: Washington County CDC 390-10 (R-15 North Bethany District)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3170,6 +3219,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
+      via: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3058-L3060"
     cite_default:
       cite: Washington County CDC 390-11 (R-24 North Bethany District), 306-7.2 by 390-11.6
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3601,12 +3651,14 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-29'
       quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      via: "or/washington/_unincorporated/cdc.106.definitions.txt#L1"
     parking_side_yard_stated:
       value: none
       cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
       quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+      via: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L3-L6"
     parking_lot_line_buffer_ft:
       value: 5
       cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
@@ -4072,6 +4124,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
       quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L336-L338"
+      via: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L23,L26-L27,L333-L334"
     cite_default:
       cite: Washington County CDC 392 (Pedestrian-Oriented Mixed-Use Districts), NMU
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -4207,6 +4260,7 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
       quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L336-L338"
+      via: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L23,L26-L27,L333-L334"
     cite_default:
       cite: Washington County CDC 392 (Pedestrian-Oriented Mixed-Use Districts), CCMU
       url: https://api.municode.com/PublicationPdfDownload/3090

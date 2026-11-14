@@ -834,6 +834,7 @@ zones:
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.90.definitions.txt#L2914-L2917"
+      via: "or/washington/beaverton/bdc.90.definitions.txt#L3"
     cite_default:
       cite: "Beaverton BDC 20.05 (MR Multi-Unit Residential), Tables 20.05.15 and 20.05.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -952,6 +953,7 @@ zones:
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+      via: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2398-L2401"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -1098,6 +1100,7 @@ zones:
           when: [unit_lots]
           cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
           quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
+          via: "or/washington/beaverton/60.05/60.05.60.txt#L5-L6"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -1150,6 +1153,7 @@ zones:
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+      via: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2398-L2401"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -1305,6 +1309,7 @@ zones:
           when: [unit_lots]
           cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
           quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
+          via: "or/washington/beaverton/60.05/60.05.60.txt#L5-L6"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -1357,6 +1362,7 @@ zones:
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+      via: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2398-L2401"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -1517,6 +1523,7 @@ zones:
           when: [unit_lots]
           cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
           quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
+          via: "or/washington/beaverton/60.05/60.05.60.txt#L5-L6"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -1578,6 +1585,7 @@ zones:
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+      via: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2398-L2401"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -1727,6 +1735,7 @@ zones:
           when: [unit_lots]
           cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
           quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
+          via: "or/washington/beaverton/60.05/60.05.60.txt#L5-L6"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -4201,15 +4210,18 @@ zones:
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
       variants:
         - value: 12
           when: [beaverton_active_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
         - value: 16
           when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 60 du/net acre (all-
       residential development); 120 ft; front 6 (max 12), street side 6,
@@ -4371,15 +4383,18 @@ zones:
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
       variants:
         - value: 12
           when: [beaverton_active_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
         - value: 16
           when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre (18 where
       Figure 70.15.10.2.3 says so, not encoded); 65 ft; front 6 (max 16),
@@ -4540,15 +4555,18 @@ zones:
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
       variants:
         - value: 12
           when: [beaverton_active_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
         - value: 16
           when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 43 du/net acre; 75 ft;
       front 6 (max 16), street side 6, side 10 and rear 20 (0 as RC-BC).
@@ -4721,15 +4739,18 @@ zones:
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
       variants:
         - value: 12
           when: [beaverton_active_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
         - value: 16
           when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; 30 to 60 du/net acre; 60 ft;
       front 10 (max 20), street side 10, interior 0 (side 10 and rear 20

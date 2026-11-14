@@ -1126,6 +1126,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       value: 65
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1319,6 +1320,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1505,6 +1507,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1680,6 +1683,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"
@@ -1879,6 +1883,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       # "Minimum lot width / All, except 50 feet, except / Townhouse 20 feet".
       # The pod on one lot is in "All".
@@ -1977,11 +1982,13 @@ zones:
       value: 5
       cite: OCMC 17.52.060.C, five-foot landscaped buffer where a parking lot and its drive aisles abut adjoining properties; 17.52.010 applicability
       quote: "or/clackamas/oregon-city/17.zoning.txt#L14791-L14797,L15324-L15330"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3922-L3930"
       variants:
         - exempt: true
           when: [unit_lots]
           cite: OCMC 17.52.010, the parking chapter "does not apply to ... townhouses"
           quote: "or/clackamas/oregon-city/17.zoning.txt#L14791-L14797"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3922-L3930"
         - value: 10
           when: [abuts_lower_density_zone]
           cite: OCMC Table 17.12.040 note 1 (ten-foot landscaped yard on the side abutting R-10, R-8 or R-6)
@@ -2218,6 +2225,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       value: 25
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"

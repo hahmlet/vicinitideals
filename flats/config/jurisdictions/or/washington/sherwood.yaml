@@ -737,6 +737,7 @@ zones:
     min_frontage_line:
       value: front
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
+      via: "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135"
     min_frontage_ft:
       value: 25
       cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line

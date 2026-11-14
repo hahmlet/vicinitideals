@@ -1309,11 +1309,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/1818
       retrieved: '2026-08-30'
       quote: "or/clackamas/tualatin/41/41.300.txt#L99-L101"
+      via: "or/clackamas/tualatin/41/41.300.txt#L2,L7-L8"
       variants:
         - value: lane
           when: [unit_lots]
           cite: TDC 41.300 Table 41-3, the townhouse parking setback is set through Architectural Review; 73C.090(6)(c) states the driveway
           quote: "or/clackamas/tualatin/41/41.300.txt#L99-L101"
+          via: "or/clackamas/tualatin/41/41.300.txt#L2,L7-L8"
     max_density_du_per_acre:
       # Table 41-3, MAXIMUM DENSITY. The table states a ceiling per
       # housing type and prints "None" against Quadplex, which is the pod on
