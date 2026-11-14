@@ -2,6 +2,8 @@
 
 [Claude] [scan: YES -- toward yellow/green only]
 
+BUILT 2026-11-14: flats/corner-th-191 3652cfa6 (on pagecheck-34, rides rel10). Hand-off ../vicinitideals-worktrees/corner-th-191.handoff.md. quadfit rules.yaml re-port (Hillsboro UC) left uncommitted in the worktree -- commit at release. Bent/curved corners held YELLOW (MEASURE-CORNER-HOME-LOT); asked Steph (scratch Q19).
+
 Found 2026-11-14 by pagecheck-34 (../vicinitideals-worktrees/pagecheck-34.handoff.md, branch
 flats/pagecheck-34 d9d9edda). The screen applies the corner-lot townhouse frontage (25 ft, Gresham
 dc79bd29 corner change) to every middle townhouse lot, so a corner townhouse plat can never pass.
