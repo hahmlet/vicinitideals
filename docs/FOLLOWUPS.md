@@ -62,6 +62,7 @@ the full one.)
 
 188. [Claude] [scan: YES -- toward yellow] **Lots cut by a district boundary pass untested** (S/E Hillsboro, Portland map areas) -- found 11-12; count + sample, then split-zone-yellow rule. [file](followups/188-cut-district-untested.md)
 189. [Claude] [scan: YES -- toward green only] **rel7 move-read fix-forwards: pdx-9ft cases not moved, Thorville bulb unmeasured, Clackamas R10 51.2% share red** -- none a false GREEN. F5/F6 (ingest cert, recipe root) done 766dd02d. [file](followups/189-rel7-fix-forwards.md)
+191. [Claude] [scan: YES -- toward green only] **Middle townhouse lots asked for the corner lot's 25 ft frontage (false RED); drop 3 untied Hillsboro UC entries** -- found 11-14 by pagecheck-34; not built. [file](followups/191-corner-townhouse-false-red.md)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
