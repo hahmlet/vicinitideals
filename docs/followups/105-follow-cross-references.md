@@ -35,16 +35,12 @@ Batch 1 + round 2 (flats/crossref-follow 9a229b24, rel4); round 3 (flats/crossre
    This is the known under-count.
 3. **West Linn Chapter 28**: HELD and read round 4 (below); needs a quadfit overlay. Was: (river protection areas and Habitat Conservation Areas) kept `fetch`. The
    areas are boundaries the screen does not hold (see the 28.040 ruling).
-4. **Resolver gap** in flats/encode/crossrefs.py `_resolves`. A held section answers only for printed
-   full-number headings. So subsections printed locally ("7." under 60.05.15), hyphen numbering
-   (Washington 431-8, 407-6, 307-7.5), letter suffixes (Hillsboro 12.61.700G), ranges (Gresham
-   4.1531-4.1534) and table or figure captions all read as unfetched. A fix would let `ref` resolve
-   when it starts with a held id plus "." or "-". That shifts every layer's ledger, so it is its own
-   change.
+4. **Resolver gap: DONE** fdcbada3 (2026-11-13): held parts, hyphen headings, letter suffixes,
+   all-member ranges and table captions resolve; 2091 -> 1865 unfetched rows, 59 stale rulings removed.
 5. **Beaverton, noticed and not chased**: 60.05.20.7.A asks for a 10 ft walkway along an elevation with
    a primary entrance. It reads as commercial (tenant entrances, display windows). Cooper Mountain
    Nature Park 25 ft setback (Table 20.22.15 G.6): already listed NOT ENCODED.
-6. **Non-binding rows: not worked.** 1,523 open rows that stand beside no encoded value (round 3
+6. **Non-binding rows: not worked.** 1,405 open rows (11-13 ledger) that stand beside no encoded value (round 3
    read one, Beaverton 60.05.25.13 landscape buffers: N/A for middle housing except the Cooper Mountain
    NPB-25 already listed). Most are use-specific chapters, procedures and boilerplate; the top of the
    queue by mentions was skimmed and nothing distance-bearing seen besides that one.
