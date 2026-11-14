@@ -84,3 +84,9 @@ radius per boom length. Factory list to be redrawn for 20 x 25.
 ## Steph 2026-11-14: crane guide delivered
 Guide: Factory-Sim repo docs/research/S3f-crane-28t-vs-45t.md (28 t Manitex 2892C = current plan, pick panels off the parked trailer; 45 t National NBT45-2 = whole trailer loads lifted off, then set from the ground). Load charts, outrigger spreads, pad sizes (~26x42 / ~28x42), piece weights for the 20x25 pod (heaviest panel 863 lb, container ~4,100-4,600 lb), truck turning (est) all in it. Supersedes the 11-11 piece list (30x80 pod).
 Steph asked the cost of evaluating BOTH cranes. Answer given: the solver is the main cost either way; a second crane adds roughly a fifth to a quarter more build (charts as data + 360 vs rear-only swing) PLUS ground landing spots for the 4 whole loads (the real extra); scan time grows only on lots where the 28 t fails if run "28 t first, 45 t only on a miss". Offered: build both that way. Still open: colour of a failed check (YELLOW proposed), street setup allowed by default?
+
+## Steph 2026-11-14: direction for slice 2
+- **No colour.** "Don't flag any lots by color yet, we're just starting something from scratch." Output is a report only; nothing touches the screen colour, reasons or flags.
+- **Two cranes:** 28 t first, 45 t only where the 28 t misses (offer accepted by going ahead).
+- **45 t landing spot:** "consider the location of the truck that backs up as a valid landing spot. It'll be fairly level, and the size of the load." The whole load is set down where the trailer stood.
+- **Street:** evaluate the site in front of the lot where we can: road width, and whether the crane's set-up fits there. Overhead power lines are NOT calculated now ("another job depending on the results of the on-site load"); Portland is mostly overhead lines, and craning over them plus utility buffers (up ~30 ft, across up to ~100 ft, down) is not seen as reliable. Report street set-ups as "power lines not checked".
