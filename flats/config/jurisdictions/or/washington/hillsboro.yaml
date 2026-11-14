@@ -49,34 +49,6 @@ crossrefs:
       exception area along First Avenue, which allows three stories within 100 ft of the arterial
       and two stories from 100 to 200 ft. A height allowance; the pod is two storeys at 26 ft,
       under either figure, so it can only loosen.
-  "12.70.040":
-    outcome: procedure
-    note: >-
-      Type II procedure ("either a Type II procedure as described in Section 12.70.040 or a Type
-      I", 12.80.100). Notice, decision and appeal steps; the tier the review lands in is already
-      carried by review_discretion.
-  "12.70.110":
-    outcome: procedure
-    note: >-
-      Application submittal requirements ("More specific submittal requirements are provided on
-      application forms and checklists as authorized in Section 12.70.110"). What to file, not
-      ground the building gives up.
-  "12.70.120":
-    outcome: procedure
-    note: >-
-      Conditions of approval: "Pursuant to Section 12.70.120, the Review Authority may impose
-      conditions on the approval" (12.80.099). The conditions tier is already carried by
-      review_discretion.
-  "12.70.140":
-    outcome: procedure
-    note: >-
-      "Refer to Section 12.70.140" (12.80.096): Expiration of a Decision (12.80, "J. Expiration of
-      a Decision"). When an approval lapses; a process, no ground taken.
-  "12.70.150":
-    outcome: procedure
-    note: >-
-      "Refer to Section 12.70.150" (12.80.096): Extension of a Decision (12.80, "K. Extension of a
-      Decision"). How an approval is extended; a process, no ground taken.
 code:
 - id: "cdc.12.30.300.lots-of-record"
   url: https://api.municode.com/PublicationPdfDownload/4450
@@ -228,6 +200,24 @@ code:
   title: "CDC Subchapter 12.68 - Witch Hazel Village South Plan District"
   start: "SUBCHAPTER 12.68"
   end: "SUBCHAPTER 12.70"
+  extraction: plain
+# Subchapter 12.70, Procedures (FOLLOWUPS 105 round 5, 2026-11-13): the most
+# cited unheld subchapter in this layer (12.70.200 x19, 12.70.050 x30, 12.70.030
+# x25). Read: review types I-IV, notice, hearings, conditions, expiry, appeals,
+# and the transportation studies. 12.70.200 states the study methods and the
+# mitigation it can order; who must study is 12.70.210 A (a Traffic Management
+# Plan at 20 or more trips in any hour onto a residential route, L1862) and
+# 12.70.220 A (an impact analysis above 50 peak-hour trips, L1921; or where the
+# City Engineer finds a significant impact, L1928-L1931). Four homes make a few
+# peak-hour trips, far under both counts; the City Engineer limb is a decider's
+# finding, the conditions tier at most. No dimension on the lot.
+# Holding it retires the procedure rulings on 12.70.040, .110, .120, .140 and
+# .150 (Type II, submittal, conditions, expiry, extension; notes in git history).
+- id: "cdc.12.70.procedures"
+  url: https://api.municode.com/PublicationPdfDownload/4450
+  title: "CDC Subchapter 12.70 - Procedures (review types 12.70.020-.060, transportation studies 12.70.200-.230)"
+  start: "SUBCHAPTER 12.70"
+  end: "SUBCHAPTER 12.80"
   extraction: plain
 - id: "cdc.12.80.applications"
   url: https://api.municode.com/PublicationPdfDownload/4450

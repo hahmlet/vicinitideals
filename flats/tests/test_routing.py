@@ -351,6 +351,11 @@ OPEN = {
     "or/washington/beaverton 70.20.05 -> 70.20.10.6",
     "or/washington/hillsboro 12.50.140 -> 12.80.150",
     "or/washington/hillsboro 12.80.040 -> 12.80.170",
+    # Visible since Subchapter 12.70 was fetched (FOLLOWUPS 105 round 5, 2026-11-13):
+    # Development Review "subject to the Type II procedure as described in Section
+    # 12.70.040" (12.80/12.80.040.txt#L40). Notice and appeal steps; the tier the
+    # review lands in is carried by review_discretion. Listed open.
+    "or/washington/hillsboro 12.80.040 -> 12.70.040",
     # 2026-10-08: was FOLLOWED while EFU's farm-labor-housing variant was
     # encoded (its citation landed in the target). Steph's by-right-only
     # ruling removed that variant, so the row is open again. 39.4245(A)

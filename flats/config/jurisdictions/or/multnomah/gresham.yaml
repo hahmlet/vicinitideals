@@ -1543,6 +1543,21 @@ definitions:
     cite: "Gresham Development Code 3.0100, Lot, Corner Lot"
 
 crossrefs:
+  # FOLLOWUPS 105 round 5 (2026-11-13): the binding rows left in this layer.
+  "4.115":
+    outcome: misread
+    note: >-
+      A split of 4.1152: "Headings in Section 4.115 2 apply as follows" (4/4.1152.txt#L2;
+      also 4/4.1150.txt#L24 and eleven more in 4.1152). The column gap falls inside the
+      number. 4.1152 is held and was read whole by FOLLOWUPS 112; 4.1102(C) takes quadplexes
+      out of it (4/4.1102.txt#L13-L14).
+  "4.114":
+    outcome: misread
+    note: >-
+      A split of 4.1142, the Downtown street types: "For each street type in Section 4.114 2"
+      (4/4.1141.txt#L6, 4/4.1140.txt#L12, 4/4.1152.txt#L706). 4.1142 is held and its access
+      bars are encoded (no townhouse or parking access from Urban Boulevard, Beech, Main or
+      Stanley; the Downtown Local curb-cut permission).
   # FOLLOWUPS 105 round 4 (2026-11-09): binding since the max front setback was encoded.
   "10.0200":
     outcome: other_building
@@ -1794,6 +1809,33 @@ code:
     # 6.04), so the thinness guard reads it as a landing page and the corpus
     # watch re-refused it every sweep. Read 2026-08-26; unchanged 2026-11-09.
     allow_thin: true
+  # Future Street Plans (FOLLOWUPS 105 round 5, 2026-11-13; fetched under the
+  # standing download OK of 2026-11-09). Cited beside the flag-lot height limits
+  # (4.0136) and by the Downtown, Civic and Rockwood design standards. Read in
+  # full; the reading follows (the ruling went stale once the text was held).
+  - id: "9.0700.future-street-plans"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0700.pdf
+    title: "Section 9.0700 - Future Street Plans"
+    # READ 2026-11-13, NOT ENCODED (procedure):
+    # Fetched 2026-11-13 (9.0700.future-street-plans.txt). A Future Street Plan is required of
+    # Type II and III partitions and subdivisions, design reviews level D and E (C at the
+    # Manager's discretion), Special Use Review uses, and townhouse projects in MDR-24, THR-SW
+    # and HDR-PV (L40-L48). A quadplex on one lot is neither a land division nor a Special Use
+    # and the townhouse row is the unit-lot path; which design review level it takes is set in
+    # Article 7, not held, so a plan may be required. A plan is a drawing, not a distance. The 4.0136 mention is flag lot CREATION
+    # (4/4.0136.txt#L18), a land division. The design-standard mentions (4.1152, 4.1252, 7.0512 A1 S1) do
+    # not reach the pod: 4.1102(C) and 7.0502(B) exempt quadplexes and Table 4.1220 refuses
+    # one in Civic. What can still reach a pod lot: where an adopted future street abuts or
+    # crosses the site, the site plan shows the alignment (Downtown 9.0720 B, L123-L125;
+    # Rockwood 9.0731, L188-L190), the Manager "may require dedication" if a traffic analysis
+    # finds it needed and roughly proportional (L134-L139, L202-L206), and "may require
+    # modification ... to reserve portions of the site for future street acquisition",
+    # limiting them to landscaping or surface parking (9.0712, L103-L108). Every one of those
+    # is a decider's condition, never a stated distance, so at most it is the conditions tier
+    # (2026-10-14-review-tiers), GREEN with a flag inside the UGB
+    # (2026-10-15-clear-objective-green-flag). NOT ENCODED: no future-street map (Downtown
+    # Plan, Appendix 39, the Manager's recorded index) is held, so no lot can be told it is
+    # crossed. Run 124: 89 Gresham GREENs, 5 of them Downtown (DRL-1 1, DRL-2 4).
   # The chapter Table 4.0130's height cell points at. Every district column in
   # that table prints its maximum height with note 12 stuck to the number --
   # "35 ft.12" -- and note 12 sends a shoreline lot here. The footnote ledger

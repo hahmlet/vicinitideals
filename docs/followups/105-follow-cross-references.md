@@ -1,6 +1,6 @@
 # 105. Follow every cross-reference one layer down (Steph 2026-10-20).
 
-105. [Claude] [rounds 1-4 DONE and live (main); open list below] [scan: YES (new standards bind)]
+105. [Claude] [rounds 1-4 DONE and live (main); round 5 BUILT on flats/crossref-5 (rel10); open list below] [scan: YES (new standards bind)]
    **Follow every cross-reference one layer down (Steph 2026-10-20).** A footnote or standard that says
    "see Section X", "conform with Table Y for the Z district" or "may be approved per Section W" is not
    read until the place it points to is. Steph's words: "If the next layer is clear and objective, then it
@@ -15,6 +15,20 @@
 
 ## Done (all on main and live; history in git)
 Batch 1 + round 2 (flats/crossref-follow 9a229b24, rel4); round 3 (flats/crossref-follow-2 b78a4495, rel5: Tigard RES-A/B/C 5 ft S-3 strip, every binding row in the corpus ruled); round 4 (flats/crossref-follow-3 3f1e7f0e, rel6: ten binding rows, 128 routing rows read, Washington R-9 NB / R-24 NB / NMU / CCMU 5 ft buffer, Washington alley flag 16 ft). Fetched under Steph's OK (11-08, standing download OK 11-09): Tigard 18.420, Canby 16.41.060, Gladstone 17.76, Washington 409, West Linn 42 and 28. Canby 16.41.060 and Gladstone 17.76 read, no change. Items 4 (Washington improved alley flag) and 5 (Clackamas 1002.02 trees, answered by the trees ruling) and 9, 10 are done.
+
+## Round 5 (flats/crossref-5, 2026-11-13; rides rel10): every binding row left, read. Zero lot moves.
+Fetched (standing download OK 11-09): Gresham 9.0700 Future Street Plans; Hillsboro CDC Subchapter 12.70
+Procedures; Clackamas ZDO 825 Manufactured Dwelling Parks; ORS 197A.140-146 (Sandy's "ORS 197.360 to
+197.380", renumbered 2025). None states a distance on the pod's lot. Ruled: Gresham 4.115 / 4.114 misread
+("4.115 2" is 4.1152, "4.114 2" is 4.1142, both held); Sandy 197.360 other_path (land division); Milwaukie
+329A other_building (child care); Multnomah 17.38 other_path (as Portland) and 33.120 other_path (the layer
+maps no multi-dwelling zone); Cornelius 18.175 and Tigard 18.435 other_building (signs); Tigard 18.40.10-12
+misread (figure captions; the words are held); Canby 10.1.20 misread (1984 history notes); Portland
+33.245.040 narrows_only (inclusionary bonus). Hillsboro 12.70.050 / 12.70.030 resolve by the fetch; five
+Hillsboro 12.70 rulings retired. Read, not encoded: Gresham 9.0712 / 9.0720 / 9.0731 let the Manager reserve or
+take land for an adopted future street crossing a site (a condition, GREEN + flag inside the UGB at most); no
+future-street map is held. ZDO 825.02: a tenant relocation plan and a per-space payment before a park is
+redeveloped (money, not ground). Hillsboro 12.70.220 A.3: the City Engineer may ask any site for a traffic study.
 
 ## Still open
 

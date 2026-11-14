@@ -1595,6 +1595,15 @@ definitions:
     cite: "PCC 33.910, Lot-Related Definitions, Corner Lot"
 
 crossrefs:
+  # FOLLOWUPS 105 round 5 (2026-11-13).
+  "33.245.040":
+    outcome: narrows_only
+    note: >-
+      Inclusionary housing standards, cited only as the price of a bonus: "Bonus FAR is allowed
+      for projects that voluntarily comply with the standards of 33.245.040 and 33.245.050"
+      (33.120/33.120.211.txt#L47; 33.130/33.130.212.txt#L11, L46). Inclusionary housing binds at
+      20 or more units; for four homes it only buys extra floor area or height, and this screen
+      never grades against a bonus.
 
   # --- five chapters the use tables point at, none of them this building ---
   # All five stand beside `quadplex_allowed` because they are cited from the

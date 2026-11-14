@@ -137,6 +137,32 @@ code:
 # - 18.420.060, site tree canopy (L269 on): trees are ignored and entered per lot (Steph
 #   2026-11-01).
 crossrefs:
+  # FOLLOWUPS 105 round 5 (2026-11-13).
+  "18.40.10":
+    outcome: misread
+    note: >-
+      A figure caption inside the held section: "Lot width is measured from the front lot line as
+      shown in the figure below. Figure 18.40.10 Lot Width" (18.40/18.40.060.txt#L5-L7). The
+      measure is in words in the definition, "the horizontal distance between the side lot lines
+      as measured at the minimum front setback point" (18.30/18.30.020.txt#L542-L544). The image
+      is not held (ecode360 serves a browser challenge).
+  "18.40.11":
+    outcome: misread
+    note: >-
+      Figure caption: "Lot frontage is measured along the front lot line as shown in the figure
+      below. Figure 18.40.11 Lot Frontage" (18.40/18.40.060.txt#L11-L13). The sentence is the
+      rule min_frontage_line already cites (L11).
+  "18.40.12":
+    outcome: misread
+    note: >-
+      Figure caption for segmented lot lines (18.40/18.40.060.txt#L17-L22); the method is stated
+      in words above it (L17-L20). This screen reads no lateral-change limit from it.
+  "18.435":
+    outcome: other_building
+    note: >-
+      The sign chapter: forty-eight "See Chapter 18.435, Signs" glossary lines
+      (18.30/18.30.010.txt#L5, L7, L60, L68 ...) and each zone's sign paragraph. The pod builds no
+      sign.
   # FOLLOWUPS 105 round 4 (2026-11-09): binding since entrance_faces_street was encoded.
   "18.660.3":
     outcome: misread

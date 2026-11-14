@@ -728,6 +728,9 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         "or/washington/beaverton/wc.beaverton-upaa.txt",
         # ORS 197A.400, the state's clear-and-objective statute (FOLLOWUPS 85).
         "or/ors.197a.400.txt",
+        # ORS 197A.140-146, expedited land division (formerly 197.360-197.380), which
+        # Sandy's middle housing land division cites (FOLLOWUPS 105 round 5, 2026-11-13).
+        "or/ors.197a.140-146.txt",
         # West Linn's 2016 TSP access tables (Ord. 1646), which CDC
         # 48.025(B)(6)(a) applies to curb cuts: a plan, numbered by table,
         # not a codified chapter (drive-spacing, FOLLOWUPS 178, 2026-11-13).

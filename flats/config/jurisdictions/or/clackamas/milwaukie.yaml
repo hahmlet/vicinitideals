@@ -726,6 +726,15 @@ readings:
       building, and a maximum in any case.
     fingerprint: 7986e09682f5f655
 crossrefs:
+  # FOLLOWUPS 105 round 5 (2026-11-13).
+  "329A":
+    outcome: other_building
+    note: >-
+      ORS Chapter 329A, the state's child care licensing chapter, named in the Day Care use
+      category: "Provision of child care ... in a facility that is certified or recorded by the
+      State of Oregon pursuant to ORS Chapter 329A" (19.309/19.309.2.txt#L67;
+      19.310/19.310.2.txt#L65) and in the family child care home definition. A child care use,
+      not the four homes this screen places.
   # --- FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer ---
   "19.911":
     outcome: other_path

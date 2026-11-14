@@ -1,0 +1,2164 @@
+SUBCHAPTER 12.70
+ PROCEDURES
+12.70.010 Purpose and Subchapter Organization.
+12.70.020 Summary of Review Procedures.
+12.70.025 Alternative Review Procedures.
+12.70.030 Type I Procedure.
+12.70.040 Type II Procedure.
+12.70.050 Type III Procedure.
+12.70.060 Type IV Procedure.
+12.70.062 Public Communications and Engagement Plan.
+12.70.070 Initiation of an Application.
+12.70.080 Withdrawal of an Application.
+12.70.090 Pre-Application Conference.
+12.70.100 Neighborhood Meetings.
+12.70.110 Application Submittal and Completeness Review.
+12.70.120 Conditions of Approval.
+12.70.130 Effective Date of Decision.
+12.70.140 Expiration of Decision.
+12.70.150 Extension of Decision.
+12.70.160 Public Hearings.
+12.70.170 Public Hearings on Cases Remanded from LUBA.
+12.70.180 Appeals.
+12.70.200 Transportation Studies.
+12.70.210 Traffic Management Plan.
+12.70.220 Traffic Impact Analysis.
+12.70.230 Transportation Planning Rule Compliance Analysis.
+CDC12.70:1
+
+12.70.010  Purpose and Subchapter Organization.
+A. Purpose. This subchapter establishes decision-making procedures for review and processing
+of land use applications and permits, for the following purposes:
+1. To make the review process clear and understandable for applicants;
+2. To enable the public to effectively participate in the local decision-making process; and
+3. To facilitate timely review of land use applications by the City.
+B. Subchapter Organization. Details specific to each procedure type (I—IV) are included in
+Sections 12.70.030 through 12.70.060. Provisions common to multiple procedure types are
+included in Sections 12.70.070 through 12.70.180. Sections 12.70.200 through 12.70.230
+include methodologies for Transportation Studies which may be required in a land use
+application.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019)
+12.70.020  Summary of Review Procedures.
+A. General. All land use applications shall be decided by using 1 of the following procedure types.
+The procedure type for each application governs the decision-making process for that
+application. Review procedures for applications that are not land use decisions or limited land
+use decisions under ORS 197.015, or permits under ORS 215.402 or 227.160 are listed in
+Section 12.70.025.
+B. Description of Procedure Types for Land Use Application. There are 4 types of decision-making
+procedures:
+1. Type I. Type I procedures apply to "ministerial" permits and applications. Decisions on
+ministerial permits are made by City staff, based on approval criteria that do not require
+exercise of policy or legal judgment. A decision to approve or deny a ministerial permit
+must be made unless the application is withdrawn. Type I procedures require right to
+appeal only to the applicant.
+2. Type II. Type II procedures apply to "administrative" permits and applications. Decisions
+on administrative applications are made by City staff, based on clear and objective
+approval criteria that require only limited discretion in applying approval criteria. A
+decision to approve or deny an administrative application must be made unless the
+application is withdrawn. Type II procedures require public notice and an opportunity for
+appeal, but do not require a public hearing.
+3. Type III. Type III procedures apply to "quasi-judicial" applications. Decisions on quasi-
+judicial applications are made by an elected or appointed Review Authority, and require
+substantial exercise of discretion and judgment in applying approval criteria. A decision to
+approve or deny a quasi-judicial application must be made unless the application is
+withdrawn. Type III procedures require public notice and one or more public hearings.
+4. Type IV. Type IV procedures apply to "legislative" matters. Legislative decisions are made
+by an elected or appointed Review Authority and involve the adoption or amendment of
+ 12.70.020PROCEDURES
+CDC12.70:3Supp. No. 1
+policy by ordinance. Legislative decisions may also apply to applications involving a large
+geographic area containing many properties. No final decision to approve or deny a
+legislative matter is required. Type IV procedures require general public notice and one or
+more public hearings.
+C. Determination of Proper Procedure Type. Unless already specified in Table 12.70.020-1, the
+Director shall determine whether a permit or application is processed as Type I, II, III or IV
+based on the descriptions in subsection B, above. Questions regarding the appropriate
+procedure shall be resolved in favor of the procedure type providing the widest notice and
+opportunity to participate.
+D. Consolidated Reviews.
+1. At the request of the applicant, multiple Type II or III applications for a single proposal may
+be consolidated and processed concurrently under the highest numbered procedure
+required for any part of the application, or processed individually under the procedures
+identified by this Code. For example, a proposal requiring both Development Review
+(Type II) and a Planned Unit Development (Type III) application would be processed
+under Type III procedures if consolidated at the applicant's request.
+2. If the individual applications would be assigned to different Review Authorities, the
+consolidated applications will be assigned to the highest Review Authority using the
+following hierarchy from lowest to highest:
+a. Director or designee;
+b. Historic Landmarks Advisory Committee;
+c. Planning and Zoning Hearings Board;
+d. Planning Commission.
+3. When proposals are consolidated at the applicant's request, the following processes
+shall be applied:
+a. Separate responses to the applicable criteria shall be submitted for each applica-
+tion;
+b. The public notice shall identify each application to be decided; and
+c. Separate findings and decisions shall be made on each application.
+4. If the consolidated proposals include an application for a Comprehensive Plan Map
+amendment, the final decision on the Plan Map amendment shall precede any decision
+on a proposed Zone Change and all other decisions on a proposed development.
+Similarly, the final decision on a Zone Change shall precede a decision on a proposed
+Development Review or any other action.
+E. Summary Table. Table 12.70.020-1 summarizes land use applications and permits by proce-
+dure type, decision authority and appeal authority.
+12.70.020 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:4Supp. No. 1
+F. Application Elevation. Notwithstanding Table 12.70.020-1 or the Director's determination, an
+applicant may choose to elevate a Type I or II application to a higher numbered procedure type,
+provided the applicant pays the appropriate fee for the selected procedure type and the
+Director determines that statutory timelines for reaching a final decision can be met.
+  Table 12.70.020-1:
+Land Use Applications and Permits, Procedures, and Review Authorities
+ Permit/Application Procedure
+Type
+1
+ Neighborhood
+Meeting
+Required
+Review Authority
+2
+ Primary
+Code
+Sections Decision
+3  Appeal
+Adjustment, Minor
+Same as
+primary
+application
+PD/PC PC/CC 12.80.154
+Adjustment, Major III Same as original
+application PC CC 12.80.156
+Annexation III CC (D) LUBA Metro Ch.
+3.09
+CDC Text Amendment IV PC (R)
+CC (D) LUBA 12.80.140
+Comprehensive Plan 12.80.160
+ • Map Amendment III
+'
+PC (R)
+CC (D) LUBA 12.80.162
+ • Minor Text Amendment IV PC (R)
+CC (D) LUBA 12.80.164
+ • Major Amendment IV PC (R)
+CC (D) LUBA 12.80.166
+Conditional Use III
+'
+PZHB CC 12.80.020
+Cultural Resources 12.80.030
+ • Nomination to or Removal
+from the Inventory III
+HLAC (R)
+PC (R)
+CC (D)
+LUBA
+12.80.030
+12.27.330
+12.27.340
+ • Minor Alteration II PD PC 12.80.030
+12.27.360
+ • Major Alteration,
+Demolition, or Relocation III HLAC (R)
+PC (D) CC 12.80.030
+12.27.370
+Development Review
+ • Type II II PD PC 12.80.040
+ • Type III III
+'
+PC CC 12.80.040
+ 12.70.020PROCEDURES
+CDC12.70:5Supp. No. 1
+Table 12.70.020-1:
+Land Use Applications and Permits, Procedures, and Review Authorities
+ Permit/Application Procedure
+Type
+1
+ Neighborhood
+Meeting
+Required
+Review Authority
+2
+ Primary
+Code
+Sections Decision
+3  Appeal
+Director's Interpretation
+ • For reasonable
+accommodation I PD PC 12.80.050
+ • Site specific II PD CC 12.80.050
+ • Not site specific I PD CC 12.80.050
+Extension of Approval
+ • First and second II PD PC 12.70.150
+ • Multi-phase project
+II/III Same as
+original
+application
+PD/PC PD/CC 12.70.150
+Fence Permit I CDD PC 12.80.060
+12.50.250
+Floodplain Activity I I CDD PC 12.80.070
+12.27.130
+Floodplain Activity II II CDD PC 12.80.070
+Home Occupation Permit I CDD PC 12.80.080
+Lot Consolidation I CDD PC 12.80.094
+Modification, Minor II CDD PC 12.80.100
+Modification, Major
+II/III Same as
+original
+application
+Same as original
+application CDD/PC PC/CC 12.80.100
+Non-conforming Use or
+Structure Expansion III
+'
+PZHB CC 12.80.110
+Pre-existing Structure or Use Expansion (Amberglen Plan District):
+ •  < 10% existing gfa I CDD PC 12.64.020
+ •  > 10% but <20% existing
+gfa II CDD PC 12.64.020
+ •  > 20% existing gfa III
+'
+PZHB CC 12.64.020
+Partition (preliminary plat) II CDD PC 12.80.096
+Partition (final plat) I CDD PC 12.80.096
+Planned Unit Development III
+'
+PC (R)
+CC (D) LUBA 12.80.120
+Planned Unit Development Implementation
+12.70.020 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:6Supp. No. 1
+Table 12.70.020-1:
+Land Use Applications and Permits, Procedures, and Review Authorities
+ Permit/Application Procedure
+Type
+1
+ Neighborhood
+Meeting
+Required
+Review Authority
+2
+ Primary
+Code
+Sections Decision
+3  Appeal
+By Development Review II CDD PC 12.80.122
+By Final Plat I CDD PC 12.80.122
+Property Line Adjustment I CDD PC 12.80.092
+Significant Natural
+Resources Permit, III III
+'
+PC CC 12.80.130
+12.27.220
+Significant Natural
+Resources Permit, II II CDD PC 12.80.130
+12.27.220
+Significant Natural
+Resources Permit, I I CDD PC 12.80.130
+12.27.220
+Subdivision (Preliminary Plat) II CDD PC 12.80.098
+Variance
+ • In mixed-use or light rail
+zones III
+'
+PC CC 12.80.152
+ • In standard zones III ' PZHB CC 12.80.152
+Zone Change
+ • Owner Initiated III PZHB (R)
+CC (D) LUBA 12.80.168
+ • Annexation-related III PC (R)
+CC (D) LUBA 12.80.168
+ • City Initiated III PC (R)
+CC (D) LUBA 12.80.168
+ • City-initiated in
+conjunction with a CDC
+Text Amendment
+IV PC (R)
+CC (D) LUBA 12.80.140
+Non-Temporary Emergency
+Shelter Review I CDD CC 12.80.180
+1 Type I — Ministerial; Type II — Administrative; Type III — Quasi Judicial; Type IV — Legislative
+2 CDD — Director; HLAC — Historic Landmarks Advisory Committee; PZHB — Planning & Zoning Hearings Board; PC —
+Planning Commission; CC — City Council; LUBA — Oregon Land Use Board of Appeals
+3 (R) — Recommendation; (D) — Decision
+ 12.70.020PROCEDURES
+CDC12.70:7Supp. No. 1
+G. Application of Days in Procedures. Timelines in this subchapter are expressed in 24-hour
+calendar days, unless the deadline for an action fall on a weekend or legal holiday, in which
+case the deadline will be considered to be the (calendar) day after the weekend or holiday.
+(Ord. 6465 § 2, 2024; Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6250 § 1,
+2017; Ord. 6149 § 1, 2015; Ord. 6120 § 1, 2015; Ord. No. 6500, § 1(Exh. A), 6-17-2025; Ord. No.
+6508, § 1 (Exh. A), 11-4-2025)
+12.70.025  Alternative Review Procedures.
+A. General Description. Alternative review procedures apply to development applications that are
+not otherwise subject to Type I, II, III or IV procedures. Alternative review procedures are for
+applications that are not land use decisions or limited land use decisions under ORS 197.015,
+or permits under ORS 215.402 or 227.160, as listed in Section 12.70.025.
+B. When Applicable. Alternative review procedures apply to Zoning Review, Expedited Land
+Division (ELD), and Middle Housing Land Division (MHLD) applications.
+C. Pre-Application Conference. A pre-application conference is not required for an application
+reviewed under alterative review procedures.
+D. Neighborhood Meeting. A neighborhood meeting is not required for an application reviewed
+under alterative review procedures.
+E. Procedural Requirements for Zoning Review.
+1. Application Requirements. Applications for Zoning Review shall, at a minimum, include
+the requirements listed in Subsection 12.80.170.D.
+2. Building Permit Submittal, Review, and Approval. Building permit applications shall not
+be submitted, reviewed, or approved prior to the submittal of a Zoning Review applica-
+tion. Building permit applications may be submitted and reviewed concurrently with a
+Zoning Review application or submitted and reviewed following the approval of a Zoning
+Review application. In no circumstance shall the Building Official issue a building permit
+prior to the approval of a Zoning Review application.
+3. Completeness Review. Zoning Review applications are not subject to completeness
+review.
+4. Public Notice. Zoning Review applications do not require public notice or an opportunity
+for comment.
+5. Review Authority. The review authority for Zoning Review shall be the Director. The
+Director shall approve, approve with conditions of approval, or deny a Zoning Review
+application within 21 days after the application materials as noted in CDC Section
+12.80.170.D are uploaded and the applicant completes the upload task in the online plan
+review system. The applicant may request an extension(s) to this review period in writing;
+however the total of all extensions cannot exceed 90 days beyond the upload date.
+12.70.020 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:8Supp. No. 1
+6. Notice of Decision. Written notice of the decision for Zoning Review shall be provided to
+the applicant and shall indicate whether the application was approved, approved with
+conditions of approval, or denied. Notices granting approval shall state the date the
+approval expires per Subsection 12.70.140.D.2.
+7. Appeal. Only an applicant may appeal the decision on a Zoning Review application. The
+appeal must be filed with the Director within 14 days of the date the written Notice of
+Decision was mailed. If the decision is appealed, the Director shall appoint a referee to
+decide the appeal decision; the referee may not be a City employee or official. For
+purposes of the appeal of a Zoning Review application, the referee shall be the Hearings
+Officer of the Planning and Zoning Hearings Board. The appeal authority's decision is the
+City's final local decision on the application. If the applicant does not file an appeal within
+the time specified, the decision is final on the date the written Notice of Decision was
+mailed.
+F. Preliminary and Final Plat Procedures for Expedited and Middle Housing Land Divisions. The
+City shall use the following procedure for an ELD, as described in ORS 197.360, or an MHLD
+at request of the applicant.
+1. Application Requirements. Preliminary and final plat applications for ELD and MHLD
+shall, at a minimum, include the following:
+a. An application form, signed by the applicant or applicant's representative and the
+property owner or owner's representative;
+b. Payment in full of the appropriate application fee, based on the fee schedule in
+effect on the date of the submittal;
+c. A preliminary plat or final plat with all information required on the application form
+and/or checklist; and
+d. A narrative describing the project and addressing compliance with all approval
+criteria and applicable standards.
+2. Completeness Review.
+a. ELD and MHLD applications are subject to the completeness review procedures set
+forth in Subsection 12.70.110.E.
+3. Review Authority. The review authority for ELDs and MHLDs shall be the Director. The
+Director shall approve, approve with conditions of approval, or deny the application within
+63 days of receiving a completed application. The Director's decision shall be based on
+applicable elements of the CDC. If an application for an MHLD is submitted and reviewed
+concurrently with a Partition or Subdivision preliminary plat to create parent lots, the
+review timeframe applicable to the Partition or Subdivision will be used.
+4. Notice of Decision. Written notice of the decision for ELDs or MHLDs shall be provided to
+the applicant. The notice of decision shall include:
+a. A summary statement explaining the determination;
+b. An explanation of appeal rights under ORS 197.830 to 197.855; and
+ 12.70.025PROCEDURES
+CDC12.70:9Supp. No. 1
+c. The date the approval expires per Subsection 12.70.140.D.3.
+5. Failure to Approve or Deny Application Within Specified Time.
+a Pursuant to ORS 227.178, the City will reach a final decision on an application
+within 63 days from the date the application is determined to be or deemed
+complete unless the applicant agrees to extend the timeline as allowed below.
+b. Pursuant to ORS 227.178, the 63 day timeline may be extended at the written
+request of the applicant. The total of all extensions may not exceed 245 days.
+6. Appeal. The decision is the final local decision on the application. Appeal of the decision
+shall follow procedures in ORS 197.830 to 197.855.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.030  Type I Procedure.
+A. General Description. Type I procedures apply to "ministerial" permits. Decisions on ministerial
+permits are made by City staff, based on clear and objective approval criteria, and do not
+require interpretation or the exercise of policy or legal judgment. A decision to approve or deny
+a ministerial permit must be made unless the application is withdrawn. Type I procedures
+require notice and right to appeal only to the applicant.
+B. When Applicable. Table 12.70.020-1 identifies Type I applications. Applications not listed on
+Table 12.70.020-1 may be identified as Type I by the Director based on the General Description
+in this section.
+C. Pre-Application Conference. A pre-application conference is not required for Type I applica-
+tions.
+D. Neighborhood Meeting. A neighborhood meeting is not required for Type I applications.
+E. Application Requirements.
+1. Type I applications shall be submitted on application forms provided by the Director. The
+application forms shall list applicable submittal requirements as required by Subsection
+12.70.110.C.
+2. Type I application forms shall include a Decision Section in which the Director or the
+Director's designee will note the Decision, supporting findings, and appeal provisions.
+3. Type I applications shall be accompanied by the required fee.
+4. Type I applications are subject to the completeness review procedures set forth in
+Subsections 12.70.110.D. and E.
+F. Public Notice. Type I applications do not require public notice or an opportunity for comment.
+G. Review Authority. The review authority for Type I applications shall be the Director. The Director
+shall approve, approve with conditions or deny a Type I application within 15 days after the
+application was determined to be complete.
+12.70.025 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:10Supp. No. 1
+H. Notice of Decision. Written Notice of the Decision for Type I applications shall consist of either
+the approved Permit or a copy of the Permit marked "Denied." Either Notice shall be signed by
+the Director or the Director's designee. The completed Notice of Decision shall be provided to
+the applicant by mail or hand-delivery within 5 days after the application is approved or denied.
+In the case of an extension of approval, the Notice of Decision shall also be provided to the
+review authority that granted the original approval. Together with the Permit or the application
+form, the Notice of the Decision shall:
+1. Include a brief summary of the proposal, and the approval or denial of the application;
+2. State the facts upon which the Director relied to determine whether the application
+satisfied or failed to satisfy each applicable approval criterion and/or standard;
+3. State that the decision is the final local decision unless an appeal is filed as provided in
+Section 12.70.180. The Notice of Decision shall state the date and time by which an
+appeal must be filed; and
+4. State the date the Decision expires.
+I. Appeal.
+1. Only an applicant may appeal a Type I decision. Appeal authorities are identified in Table
+12.70.020-1 and appeal requirements and procedures are set forth in Section 12.70.180.
+If the applicant does not file an appeal within the time specified in Section 12.70.180, the
+decision is final.
+2. If the applicant appeals the Director's decision, the appeal authority's decision is the final
+local decision on the application.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6178 § 1, 2016; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.70.040  Type II Procedure.
+A. General Description. Type II procedures apply to "administrative" permits and applications.
+Decisions on administrative applications are made by City staff, based on reasonably objective
+approval criteria that require only limited discretion. A decision to approve or deny an
+administrative application must be made unless the application is withdrawn. Type II proce-
+dures require public notice and an opportunity for appeal, but do not require a public hearing.
+B. When Applicable. Table 12.70.020-1 identifies Type II applications. Applications not listed on
+Table 12.70.020-1 may be identified as Type II by the Director based on the General
+Description in this section.
+C. Pre-Application Conference. Pre-application conferences are not required for Type II applica-
+tions, but are strongly encouraged. Guidelines for pre-applications conferences are set forth in
+Section 12.70.090.
+ 12.70.040PROCEDURES
+CDC12.70:11Supp. No. 1
+D. Neighborhood Meeting. Neighborhood meetings are strongly encouraged for Type II applica-
+tions, but are not required. Section 12.70.100 sets forth requirements and procedures for
+neighborhood meetings. These procedures should be considered guidelines for voluntary
+neighborhood meetings for a Type II application.
+E. Application Requirements.
+1. Type II applications shall be submitted on application forms provided by the Director. The
+application forms shall list applicable submittal requirements as required by Subsection
+12.70.110.C.
+2. Type II applications shall be accompanied by the required fee.
+3. Type II applications are subject to the completeness review procedures set forth in
+Subsections 12.70.110.D. and E.
+F. Public Notice and Comment Period. Public notice is required for all Type II applications. This
+notice invites affected parties to participate by providing area property owners and other
+interested parties with an opportunity to submit written comments on the application before a
+Notice of Decision is issued.
+1. After a Type II application has been accepted as complete under Subsection 12.70.110.E.,
+the Community Development Department shall mail a written public notice to the
+following parties:
+a. The applicant(s) and/or authorized representative(s);
+b. The owner(s) or contract purchaser(s) of record of the subject property or proper-
+ties;
+c. Property owners of record within 200 feet of the perimeter property line of the
+property or properties subject to the application, using the most recent property tax
+assessment roll of the Washington County Department of Assessment and Taxation
+to determine the property owner(s) of record; and
+d. Any governmental agency which is entitled to notice under an intergovernmental
+agreement entered into with the City.
+2. Written public notice of the pending application shall include the following information:
+a. The case file number for the application, the name of the applicant and a concise
+description of the nature of the request;
+b. A vicinity map and description of the subject site reasonably sufficient to inform the
+reader of its location, including map and tax lot number and site address, if
+available;
+c. A list of the relevant approval criteria applicable to the decision by Code section
+number;
+d. A statement that the application and all documents and evidence submitted by the
+applicant are available for review, and copies can be obtained at reasonable cost;
+e. A brief summary of the decision-making process for the application;
+12.70.040 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:12Supp. No. 1
+f. The place, date, and time that written comments on the application are due, and the
+name and telephone number of the City representative to contact about the
+application;
+g. A statement that comments received after the close of the public comment period
+will not be considered by the Director;
+h. A statement that issues which may provide the basis for an appeal to the Land Use
+Board of Appeals (LUBA) must be raised in writing prior to the expiration of the
+comment period with sufficient specificity to enable the applicant and review
+authority to respond to the issue;
+i. A statement that a decision shall be issued after the comment period closes, and
+that decision shall be mailed to the applicant and to anyone else who submitted
+written comments or who is otherwise legally entitled to notice of the decision; and
+j. An affidavit of mailing of the public notice, including the notice, the mailing date and
+a list of parties to whom the notice was mailed, shall be prepared and made a part
+of the case file.
+3. Public notices for Type II applications shall include a minimum period of 14 days from the
+date the notice was mailed for the submission of written comments before a Notice of
+Decision is issued.
+G. Review Authority. The review authority for Type II applications shall be the Director. Based on
+the criteria and the facts contained within the record, the Director shall approve, approve with
+conditions or deny the requested application. The Director's Decision shall address all of the
+relevant approval criteria and consider written comments submitted before the close of the
+comment period.
+H. Notice of Decision.
+1. The decision is final for purposes of appeal on the date the notice is mailed. Within 7 days
+after the Director has issued it, a Notice of Decision shall be sent by mail to the following
+parties:
+a. The applicant and/or authorized representative;
+b. The owner(s) of record of the subject property;
+c. Any person or group who submitted written comments during the comment period,
+or who submitted a written request to receive notice of the decision; and
+d. Any governmental agency which is entitled to the Notice of Decision under an
+intergovernmental agreement with the City, and other agencies that provided
+comments during the application review period.
+2. The Notice of Decision shall include the following information:
+a. A brief summary of the proposal, the Decision, and any conditions of approval;
+b. A description of the site reasonably sufficient to inform the reader of its location,
+including map and tax lot number and site address, if available;
+ 12.70.040PROCEDURES
+CDC12.70:13Supp. No. 1
+c. A statement of the facts upon which the Director relied to determine whether the
+application satisfied or failed to satisfy the applicable approval criteria;
+d. A statement that the decision is final, unless appealed as provided in Section
+12.70.180;
+e. The requirements for filing an appeal of the decision, including a statement of the
+date and time by which an appeal must be filed; and
+f. A statement that the complete case file, including findings, conclusions, and
+conditions of approval, if any, is available for review; and the name and telephone
+number of the City representative to contact about reviewing the case file.
+I. Appeal.
+1. The Director's decision may be appealed by the applicant or any person who provided
+comments during the public comment period.
+2. The Decision shall become final unless an appeal is filed.
+3. The review authority for an appeal of a Type II application is identified in Table 12.70.020-1.
+4. The appeal shall follow the requirements and procedures of Section 12.70.180.
+5. The decision of the review authority on the appeal shall be the final decision of the City.
+Any further appeal shall be made to the Land Use Board of Appeals (LUBA).
+(Ord. 6401 § 1, 2022; Ord. 6250 § 1, 2017; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.050  Type III Procedure.
+A. General Description. Type III procedures apply to "quasi-judicial" applications. Decisions on
+quasi-judicial applications are made by an elected or appointed Review Authority, and require
+substantial exercise of discretion and judgment in applying approval criteria. A decision to
+approve or deny a quasi-judicial application must be made unless the application is withdrawn.
+Type III procedures require public notice and a public hearing.
+B. When Applicable. Table 12.70.020-1 identifies Type III applications. Applications not listed on
+Table 12.70.020-1 may be identified as Type III by the Director based on the General
+Description in this section.
+C. Pre-Application Conference. Pre-application conferences are not required for Type III applica-
+tions, but are strongly encouraged. Guidelines for pre-application conferences are set forth in
+Section 12.70.090.
+D. Neighborhood Meeting. Neighborhood meetings are mandatory for most Type III applications,
+as specified in Table 12.70.020-1. When required, neighborhood meetings shall follow the
+requirements and procedures in Section 12.70.100.
+E. Application Requirements.
+1. Type III applications shall be submitted on forms provided by the Director. The application
+forms shall list applicable submittal requirements as required by Subsection 12.70.110.C.
+12.70.040 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:14Supp. No. 1
+2. Type III applications shall be accompanied by the required fee.
+3. Type III applications are subject to the completeness review procedures set forth in
+Subsections 12.70.110.D. and E.
+F. Notice of Public Hearing. Public notice is required for all Type III applications. This notice invites
+affected parties to participate by providing area property owners and other interested parties
+with an opportunity to submit written and oral comments on the application before and during
+the public hearing.
+1. After the application has been deemed complete under Subsection 12.70.110.E., the
+Community Development Department shall mail a written notice of the public hearing to
+the following parties:
+a. The applicant(s) and/or authorized representative;
+b. The owner(s) or contract purchaser(s) of record of the subject property or proper-
+ties;
+c. Owners of record of properties within 500 feet of the perimeter property line of the
+property or properties subject to the application, using the most recent property tax
+assessment roll of the Washington County Department of Assessment and Taxation
+to determine the property owner(s) of record; and
+d. Any governmental agency which is entitled to notice under an intergovernmental
+agreement entered into with the City.
+2. Notice of public hearings for certain applications shall also be mailed as shown in Table
+12.70.050-1 to the following parties:
+  Table 12.70.050-1:
+Additional Notice on Specific Type III Applications
+Application Characteristics Additional Parties for Notification
+The only access to a proposed
+development is a highway/railroad
+crossing
+The applicable road authority; or the rail authority
+and the rail owner, in accordance with ORS
+197.794.
+A proposed zone change on property
+within 1020 feet of the
+Portland-Hillsboro Airport
+The Port of Portland, in accordance with ORS
+227.175.
+A proposed zone change affecting a
+manufactured home or mobile home
+park
+All mailing addresses within the park in accordance
+with ORS 227.175.
+A proposed Zone Change,
+Comprehensive Plan Map
+Amendment, or Planned Unit
+Development
+Community or neighborhood association and the
+Citizen Participation Organization within which the
+property is located; the State, county and city
+agencies or individuals who request such notice,
+and DLCD, in compliance with applicable State law
+and administrative rules.
+ 12.70.050PROCEDURES
+CDC12.70:15Supp. No. 1
+3. The written notice of the public hearing on the pending application shall include the
+following information:
+a. The review authority for the application and the date, time, and place of the hearing;
+b. The case file number for the application, and the name and address of the applicant
+or the applicant's representative;
+c. A concise description of the nature of the proposed use or development and the
+specific approvals requested;
+d. A vicinity map and description of the subject site reasonably sufficient to inform the
+reader of its location, including Assessor's Tax Map, Tax Lot number, and site
+address if available;
+e. A list of the applicable approval criteria by Code section number;
+f. The location and hours where copies of the application and all evidence and
+documents submitted by or on behalf of the applicant are available for review, and
+a statement that copies thereof can be obtained at reasonable cost;
+g. A statement that the staff report will be available for inspection at no cost at least 7
+days prior to the hearing, and that copies will be provided at reasonable cost;
+h. The name and telephone number of the City representative to contact about the
+application;
+i. A brief summary of the decision-making process for the application;
+j. A general explanation of the requirements to submit testimony and the procedure
+for conducting public hearings;
+k. A statement that all interested persons may appear and provide testimony at the
+public hearing, and that only those participating at the hearing, or in writing, are
+entitled to appeal; and
+l. A statement that failure to raise an issue at the hearing, in person or by letter, or
+failure to provide sufficient specificity to enable the review authority to respond to
+the issue, precludes an appeal based on that issue.
+4. Public notices for Type III applications shall be mailed a minimum of 20 days prior to the
+hearing.
+5. An affidavit of mailing of the public notice, including the notice, the mailing date and a list
+of parties to whom the notice was mailed, shall be prepared and made a part of the case
+file.
+G. Published Notice of Public Hearing for Certain Applications. Notice of the public hearing for
+certain Conditional Use, Planned Unit Development, and Zone Change applications shall be
+published 1 time in a newspaper of general circulation in the City, at least 14 days before the
+public hearing. Notice of any public hearing for a Comprehensive Plan Map Amendment
+12.70.050 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:16Supp. No. 1
+application shall be published 2 times in a newspaper of general circulation in the City not less
+than 10 days nor more than 21 days before the public hearing. The newspaper's affidavit of
+publication of the notice shall be included in the case file.
+H. Decision Authority. Table 12.70.020-1 identifies the decision authority for each Type III
+application.
+I. Public Hearing Procedure. The public hearing shall be conducted in accordance with the
+requirements and procedures in Section 12.70.160.
+J. Notice of Decision.
+1. Following a decision on the application by the Review Authority, a written decision in the
+form of an Order or Minute Order shall be prepared by the Community Development
+Department or the Review Authority. The Order or Minute Order shall include the
+following information:
+a. The decision to deny or to approve the application and if approved, any conditions
+of approval necessary to ensure compliance with applicable criteria;
+b. A list of the applicable approval criteria by Code section number;
+c. A statement or summary of the facts upon which the Review Authority relied to
+determine whether the application satisfied or failed to satisfy the applicable
+approval criteria; and to justify any conditions of approval. The Review Authority
+may adopt or incorporate by reference a staff report or written findings prepared by
+any party to the proceeding into the Order to satisfy this requirement; and
+d. A statement of conclusions based on the facts and findings.
+2. The Notice of Decision including the full Order shall be mailed to the applicant and to all
+parties of record within 7 days of the date of the decision. The decision is final for
+purposes of appeal on the date the notice is mailed. Failure of any person to receive
+mailed notice shall not invalidate the decision, provided that a good faith effort was made
+to mail the notice.
+3. The Notice of Decision shall contain the following information:
+a. A summary of the Decision and a list of any conditions of approval;
+b. A description of the subject site reasonably sufficient to inform the reader of its
+location, including Assessor's Tax Map, Tax Lot number, and site address if
+available;
+c. A statement that the decision of the review authority is final unless appealed as
+provided in Section 12.70.180;
+d. The requirements for filing an appeal of the Decision, including a statement of the
+date and time by which an appeal must be filed; and
+e. A statement noting that only those persons who made an appearance of record are
+entitled to appeal the decision.
+ 12.70.050PROCEDURES
+CDC12.70:17Supp. No. 1
+4. Notice of Action on Comprehensive Plan Map Amendment, Zone Change, and PUD.
+Notices of Action on a Comprehensive Plan Map Amendment, Zone Change, and
+Planned Unit Development shall state that the Planning and Zoning Hearings Board
+Order or the Planning Commission Order is a recommendation to the City Council and is
+not subject to appeal. A person who participated or appeared before the Hearings Board
+or Planning Commission may request that the City Council hold a public hearing on the
+Comprehensive Plan Map Amendment, Zone Change, or Planned Unit Development. If
+the City Council chooses to hold a public hearing upon the request of a party of record, the
+City Council public hearing shall follow the requirements and procedures in Section
+12.70.160 and notice of the hearing shall be provided pursuant to the notice requirements
+in subsections F. and G.
+K. Appeal.
+1. The decision of the Review Authority may be appealed to the City Council. Only the
+applicant or persons who made an appearance of record at the public hearing before the
+Review Authority have standing to appeal.
+2. The appeal shall follow the requirements and procedures in Section 12.70.180.
+3. The City Council decision shall be the final local decision on all appeals. Any further
+appeal shall be made to the Land Use Board of Appeals.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6250 § 1, 2017; Ord. 6120 § 1,
+2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.060  Type IV Procedure.
+A. General Description. Type IV procedures apply to "legislative" matters. Legislative decisions
+are made by an elected or appointed Review Authority and involve the adoption or amendment
+of policy by ordinance. Legislative decisions may also apply to applications involving a large
+geographic area containing many properties. A final decision to approve or deny a legislative
+matter is not required. Type IV procedures require general public notice and a public hearing.
+In addition, a Comprehensive Plan Major Amendment requires adherence to the adopted
+Public Communications and Engagement Plan, pursuant to Section 12.70.062.
+B. When Applicable. Table 12.70.020-1 identifies Type IV applications. Applications not listed on
+Table 12.70.020-1 may be identified as Type IV by the Director based on the General
+Description in this section.
+C. Pre-Application Conference. Pre-application conferences are not required for Type IV appli-
+cations.
+D. Neighborhood Meeting. Neighborhood meetings are not required for Type IV applications.
+E. Application Requirements. Type IV applications may be initiated only by Commission Order or
+City Council Order. Unlike Type I, II or III applications, Type IV applications cannot be initiated
+by a private party. Type IV applications are not subject to payment of a fee or to the
+completeness review procedures in Section 12.70.110.
+12.70.050 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:18Supp. No. 1
+F. Mailed Notice of Public Hearing.
+1. Notice to DLCD. Notice of the public hearing on a proposed Type IV application shall be
+mailed to DLCD on the forms provided by that Department in compliance with applicable
+State law and administrative rules. A copy of the DLCD notice, including the mailing date,
+shall be made a part of the case file.
+2. Measure 56 Notice. Notice of the public hearing on a proposed Type IV application shall
+be mailed to the owner of record of property within the City if the proposed amendment
+would, in the Director's opinion, limit or prohibit Uses previously allowed on the property.
+The notice shall be mailed at least 20 but no more than 40 days before the public hearing.
+To send this notice, the Community Development Department shall use the most recent
+property tax assessment roll of the Washington County Department of Assessment and
+Taxation to determine the property owner(s) of record. The notice of the public hearing on
+a proposed Type IV application shall include the following information:
+a. The date, time, and location of the hearing;
+b. The case file number or title of the proposed application and the name and
+telephone number of a city representative to contact about the amendment;
+3. Notice to Other Parties. Notice of public hearings for certain applications shall also be
+mailed to the following parties: the State, county and City agencies or individuals who
+request such notice.
+G. Published Notice of Public Hearing. Notice of the public hearing for proposed Type IV
+applications shall be published 2 times in a newspaper of general circulation in the City, at least
+10 days but not more than 21 days before any public hearing. The newspaper's affidavit of
+publication of the notice shall be included in the case file. Any such notice shall contain:
+1. A summary of the application.
+2. The time, date and place of the hearing.
+3. The location(s) at which copies of the application summary may be obtained.
+4. A statement that all interested persons may appear and provide testimony or submit
+comments in writing, and that only those persons who appear or submit written testimony
+may appeal the determination of the decision authority.
+5. A general explanation of the requirements for submission of testimony and the procedure
+for conduct of the hearing.
+H. Public Hearing Procedure. The Planning Commission shall conduct the public hearing on a
+proposed Type IV application pursuant to the public hearing requirements and procedures in
+Section 12.70.160. In addition to the public hearing held by the Planning Commission, the City
+Council shall conduct a public hearing on a proposed Comprehensive Plan Major Amendment-
+Plan Revision application.
+ 12.70.060PROCEDURES
+CDC12.70:19Supp. No. 1
+I. Recommendation Authority.
+1. Following receipt of testimony and deliberation at the public hearing, the Planning
+Commission shall provide a recommendation to the City Council for all proposed Type IV
+applications. The Planning Commission may recommend that the City Council reject or
+adopt the amendments with or without certain changes. The Planning Commission's
+recommendation shall be issued as an Order, and shall include findings supporting the
+recommendation, based on public testimony and the amendment's satisfaction or failure
+to satisfy the applicable criteria.
+2. Following the adoption of the Planning Commission Order of recommendation, the
+Community Development Department shall mail a Notice of Action to parties of record
+who appeared orally or in writing before the Planning Commission prior to the closing of
+the public record. The notice shall contain at least the following information:
+a. The case file number of the proposed amendment and the Order number of the
+Planning Commission recommendation;
+b. A summary of the Planning Commission recommendation for approval, denial, or
+modification;
+c. The date, time, and location of the City Council's consideration of the proposed
+amendment. The notice shall be mailed not less than 7 days prior to the date of the
+Council's consideration;
+d. A statement that a copy of the proposed Type IV application and the staff report are
+available for inspection at no cost, and a copy will be provided at reasonable cost;
+e. The telephone number of a city representative to contact about the order; and
+f. A statement that the Planning Commission's decision is a recommendation which
+cannot be appealed, but that interested parties may request that the City Council
+hold its own evidentiary hearing on the proposed Type IV application.
+J. Decision Authority.
+1. Upon receiving the Planning Commission's Order of recommendation, the City Council
+shall hold a hearing on a proposed Comprehensive Plan Major Amendment-Plan Revi-
+sion application. For all other Type IV applications, the City Council may choose whether
+to hold its own evidentiary public hearing upon receiving the Commission's Order of
+recommendation. If the Council holds a public hearing, the hearing shall be conducted
+pursuant to the public hearing requirements and procedures in Section 12.70.160 and
+published notice of the hearing shall be provided pursuant to the notice requirements in
+subsection G.
+K. Notice of Decision.
+1. Not more than 5 days after the date the City Council approves or denies a proposed Type
+IV application, the Director shall mail a Notice to DLCD on the forms provided by that
+Department.
+12.70.060 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:20Supp. No. 1
+2. Not more than 7 days after the date the City Council approves or denies a proposed Type
+IV application, the Director shall mail a Notice of Decision to persons of record who
+appeared orally or in writing before either the Planning Commission or the City Council.
+The City Council's decision is final for purposes of appeal on the date the notice is mailed.
+L. Appeal. The final decision of the City Council to approve or deny a Type IV amendment may be
+appealed to the Land Use Board of Appeals (LUBA) only when such appeal is authorized under
+applicable State law.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6294 § 1, 2019; Ord. 6250 § 1, 2017; Ord. 6120 § 1,
+2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.062  Public Communications and Engagement Plan.
+A. General Description. The Public Communications and Engagement Plan is intended to
+encourage public notice and involvement processes appropriate to the scale and type of
+certain Type IV applications. The Public Communications and Engagement Plan is coordi-
+nated with and approved by the Public Engagement Committee, which is responsible for
+fulfilling the duties of a committee for citizen involvement, as described in Statewide Goal 1.
+The purpose of the Public Communication and Engagement Plan is to ensure the community
+is provided opportunities to discuss and inform a proposed Comprehensive Plan Major
+Amendment application, identify issues, and possibly revise the proposal to address the issues
+identified.
+B. When Applicable. Compliance with the Public Communications and Engagement Plan, as
+approved by the Public Engagement Committee, is required for all Comprehensive Plan Major
+Amendment applications.
+C. Public Communications and Engagement Plan Procedures.
+1. With the advice and assistance of the Public Engagement Committee, establish and
+conduct a citizen involvement program which provides for public involvement and input
+into the proposed revision or amendment which complies with Statewide Goal 1 require-
+ments. At a minimum, such a public involvement program shall provide for adequate
+notice on citizen involvement activities; advanced information on matters under consid-
+eration; and opportunities for public involvement in all phases of the process applicable to
+the proposed Comprehensive Plan Major Amendment as determined by the Public
+Engagement Committee.
+2. Identify issues to be addressed and related information and data to be collected,
+reviewed and made available for public review. The public shall be informed of these
+issues; and provided opportunity for public access to the related information and data;
+and for public input on these issues.
+3. Notify affected government agencies of activities and invite their review and comment.
+4. Collect relevant information and data.
+ 12.70.062PROCEDURES
+CDC12.70:21Supp. No. 1
+5. Analyze each issue and identify proposed actions which address the issue sufficiently. As
+part of the public involvement program for the Comprehensive Plan Major Amendment:
+a. Compile and combine the issue, relevant data and information and actions into text
+format and make copies of such text available for review and comments by
+community members and affected government agencies.
+b. Compile comments received from community members and affected government
+agencies for consideration by the Planning Commission. The Community Develop-
+ment Department shall prepare written responses to comments and make the
+responses available for public review and to the Planning Commission during its
+consideration of the proposed Comprehensive Plan Major Amendment.
+6. Conduct a Planning Commission public hearing on a Comprehensive Plan Major Amend-
+ment application after completion of the tasks set forth in paragraphs 1 through 5 above
+and the Public Communications and Engagement Plan established by the Public En-
+gagement Committee.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6250 § 1, 2017; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.70.070  Initiation of an Application.
+A. A Type I, II or III application may be initiated by either the owner or the contract purchaser of the
+subject property, or any person authorized in writing to act as agent of the owner or contract
+purchaser. A Type III Zone Change or Comprehensive Plan Map Amendment application may
+also be initiated by the Planning Commission or the City Council.
+B. A Type IV application can be initiated only by Planning Commission Order or City Council
+Order. A Comprehensive Plan Major Amendment-Plan Revision can be initiated only by City
+Council Order.
+(Ord. 6401 § 1, 2022; Ord. 6322 § 1, 2019; Ord. 6250 § 1, 2017)
+12.70.080  Withdrawal of an Application.
+A. An applicant may withdraw an application at any time prior to adoption of a final city decision if
+the Director determines that:
+1. The property owners or contract purchasers have consented in writing to withdraw the
+application; and
+2. The application is not intended to correct an identified CDC violation on the subject
+property which would remain unresolved were the application withdrawn.
+B. The Director may withdraw a City-initiated application at any time.
+C. If a Type II or Type III application is withdrawn after the required public notice has been mailed,
+the Director shall send a written notice of the application's withdrawal to all parties who were
+sent the original public notice.
+12.70.062 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:22Supp. No. 1
+D. If a Type III application is withdrawn within 5 days of the scheduled public hearing, written
+notice shall not be mailed. Instead, the withdrawal shall be posted on the City's website and at
+the public hearing venue, and the Review Authority shall announce at the beginning of the
+meeting that the application has been withdrawn.
+E. If an applicant requests a refund of application fees following withdrawal of the application, the
+amount of the refund shall be determined by the Community Development Department based
+on a calculation of the unexpended portion of the fee. Reasonable costs incurred to notify
+affected parties of the withdrawal shall be included in the calculation as expended.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6250 § 1, 2017; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.70.090  Pre-Application Conference.
+A. Purpose. The purposes of pre-application conferences are:
+1. To acquaint the applicant or representative with the requirements of this Code, including
+relevant approval criteria, standards and procedures;
+2. To advise the applicant or representative of previous land use applications or earlier
+issues associated with the site; and
+3. To provide opportunity for the applicant and City staff to identify and resolve potential
+concerns at the earliest opportunity in the development process.
+B. Pre-application conferences are strongly advised for all applications.
+C. Pre-application conferences are intended to be advisory only, and are specifically not intended
+to be an exhaustive review of all potential issues. Participation in a pre-application conference
+does not absolve an applicant of any responsibility for legal or technical due diligence
+investigation.
+D. Participation in a pre-application conference does not bind the City to provision of any level of
+service or approval, nor does it preclude the City from enforcing all applicable regulations or
+from applying regulations differently than may have been indicated at the pre-application
+conference.
+E. Pre-Application Conference Guidelines.
+1. Applicants should provide any available plans for the proposed development, including
+but not limited to: intended Uses; site plans; building elevations; site circulation plans;
+preliminary infrastructure plans; and phasing plans if applicable. Any plans provided to
+the City before, during, or after during the pre-application conference may be considered
+public information.
+2. The Director or the Director's designee should coordinate attendance by City staff
+responsible for development review, infrastructure and building construction require-
+ments, and natural or cultural resource protection as applicable.
+3. Pre-application conferences are not open to the general public.
+ 12.70.090PROCEDURES
+CDC12.70:23Supp. No. 1
+4. Either the City or the applicant may provide a checklist or brief written summary of the
+pre-application conference. The purpose of the written summary is to provide a prelimi-
+nary assessment of a proposal and shall not to be construed as a final recommendation
+by the City or by any other outside agency or service provider on the merits of the
+proposal.
+5. The applicant or the City may request additional pre-application conferences to identify
+and address issues arising from preparation of more detailed development plans, or to
+discuss concerns arising since the earlier conference.
+F. Pre-Application Conference Validity Period.
+1. If an application for a proposed development action is not submitted within 12 months of
+a pre-application conference on that development, or if the applicant chooses to modify
+a proposed development in such a way that additional Code sections may be applicable,
+the applicant should schedule a new pre-application conference.
+2. Participation in a pre-application conference does not vest an application against amend-
+ments to this Code made after the pre-application conference but prior to the submittal of
+the application under Section 12.70.110.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.100  Neighborhood Meetings.
+A. Purpose. Neighborhood meetings encourage citizen participation early in the development
+process. They provide an opportunity for the applicant, surrounding neighbors and interested
+parties to meet, review a development proposal, identify issues, and possibly revise the
+application to address the issues prior to application submittal, in a manner consistent with the
+City's requirements. Neighborhood meetings are intended to encourage submittal of applica-
+tions that are more responsive to neighborhood concerns, thereby expediting the review
+process and reducing continuances and appeals.
+B. Applicability. Neighborhood meetings are encouraged for all Type II and Type III applications,
+but are required only for those Type III applications so specified in Table 12.70.020-1.
+C. Neighborhood Meeting Procedures.
+1. Neighborhood meetings shall be held in person at a location accessible to the partici-
+pants in the closest practicable proximity (not to exceed 2 miles radius) to the subject site.
+The meeting shall be held on a weekday evening after 6:00 p.m. or on weekends between
+9:00 a.m. and 8:00 p.m. and shall not be held on a national holiday. Applicants may
+provide a virtual component for participants to join in the meeting. The virtual component
+shall not be done in lieu of the in-person requirement. Only 1 neighborhood meeting per
+development proposal is required, but more meetings may be held at the applicant's
+discretion.
+2. Mailed notice of the meeting shall be provided by the applicant to the surrounding
+neighborhood between 7 and 30 days prior to the meeting, to the same notification radius
+required by the City for that type of application. The applicant shall also post notice of the
+12.70.090 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:24Supp. No. 1
+neighborhood meeting on the site or on an access easement to the site within clear view
+of a public street at least 7 days before the meeting. The sign shall be provided to the
+applicant by the City and shall be placed in compliance with HMC Section 11.32.090.
+3. At the neighborhood meeting, the applicant shall provide preliminary details of the major
+elements of the development, including number and type of dwellings if applicable,
+proposed uses, street, lotting, and parking layouts, approximate building locations and
+heights, and approximate locations for open space and natural resource preservation as
+applicable. The applicant shall also note if the development proposal includes multiple or
+consolidated applications. Opportunity shall be provided for attendees to ask questions
+regarding the proposal. The applicant shall prepare meeting notes of major points,
+issues, and responses concerning the development proposal that were discussed at the
+meeting. If no one arrives within 30 minutes of the scheduled start time for the neighbor-
+hood meeting, the applicant may close the meeting and this requirement will be consid-
+ered met upon the applicant's submittal of documentation to that effect.
+D. Neighborhood Meetings Materials Submitted with Application. The neighborhood meeting
+notes, list of parties notified, affidavits of mailing and posting notices, copies of all materials
+provided by the applicant at the meeting, and a signature sheet of attendees shall be included
+with the development application upon submittal. If the development proposal is revised after
+the neighborhood meeting, with the addition of 1 or more tax lots or the substantial revision of
+major elements as cited in paragraph C.3. above, a second neighborhood meeting with a new
+notice shall be required before the revised application is submitted.
+E. Neighborhood Meeting Validity Period. Applications shall be submitted to the City within 180
+days of the neighborhood meeting. If an application is not submitted in this time frame, the
+applicant shall be required to hold a new neighborhood meeting.
+F. Compliance with Requirements. Compliance with the provisions of Section 12.70.100 is a
+requirement of this Code. Applications shall not be submitted without this documentation, or
+submitted prior to the neighborhood meeting. If submitted, such applications shall be deemed
+incomplete under Subsection 12.70.110.F.
+(Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.110  Application Submittal and Completeness Review.
+A. Application Forms and Checklists.
+1. Forms for the submittal of all land use applications shall be available in the Community
+Development Department. The City shall assure that these forms comply with applicable
+standards in State law and this Code.
+2. Land use applications shall include checklists or information sheets detailing specific
+information and plans to be contained in that application, including document formats and
+number of copies.
+ 12.70.110PROCEDURES
+CDC12.70:25Supp. No. 1
+B. Fees. A fee schedule for land use applications and other Community Development Department
+services provided by the City shall be set by resolution of the City Council. Required fees shall
+be paid at the time of application submittal or at the time of request for a particular service.
+Payment of the appropriate application fee is a jurisdictional requirement of this Code.
+C. Application Submittal. Land use applications or permits required under this Code shall be
+submitted on the appropriate forms from the Community Development Department. Submittal
+of a land use application on the appropriate form, signed by the property owner, is a
+jurisdictional requirement of this Code.
+D. Application Materials. All of the following items must be submitted to initiate the 30 day
+completeness review of the application. All information supplied on the application form and
+accompanying the application shall be complete and correct as to the applicable facts:
+1. Completed application form, including the signature of the property owner;
+2. Payment in full of the appropriate land use application or permit fee(s), based on the fee
+schedule in effect on the date of application submittal;
+3. Documentation of compliance with neighborhood meeting procedures, if required by
+Table 12.70.020-1 for that application;
+4. A written narrative listing the criteria and development standards applicable and relevant
+to the application and stating the evidence demonstrating the application's compliance
+with the each criterion and standard. If compliance with a criterion or standard is stated to
+be demonstrated in a plan, drawing, or technical study in the application, the citation in
+the narrative to the demonstration must be sufficiently specific to allow convenient
+reference;
+5. Required plans and drawings for the particular type of application as noted on the
+application checklist. Such plans generally include, but are not limited to, the following:
+a. Existing site conditions plan,
+b. Site development plan, showing building footprints and on-site circulation,
+c. Building elevations and floor plan(s),
+d. Landscaping plan,
+e. Fencing and lighting plan,
+f. Grading and erosion control plan, and
+g. On-site and adjacent infrastructure plan;
+6. Required technical reports for the particular type of application as noted on the applica-
+tion checklist (e.g., transportation study, floodplain or wetland delineation, significant
+natural resource report, tree survey, noise study, etc.). Minimum specifications for
+transportation studies are listed in Sections 12.70.200 through 12.70.230. The Commu-
+nity Development Department shall make every effort to advise the applicant of required
+technical reports at a pre-application conference;
+12.70.110 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:26Supp. No. 1
+7. If expedited review is requested pursuant to Subsection 12.70.110.E., a copy of the
+covenant appurtenant that restricts the owner and each successive owner of the
+development or a dwelling unit within the development from selling or renting any
+dwelling unit described in Subsection 12.70.110.E.8.c. as housing that is not affordable to
+households with incomes equal to or less than 80% of the median family income for
+Washington County or for the State, whichever is greater, for a period of 30 years from the
+date of the certificate of occupancy;
+8. Within 14 days after the submittal of an application, the Director may require an applicant
+to submit additional technical reports upon a determination by the Director that:
+a. The scale of the development would likely require traffic safety and other public
+facility or development site improvements,
+b. The proposal could have significant adverse impacts on Goal 5 resources identified
+by the Comprehensive Plan,
+c. The proposal would be located on, or could have significant adverse impacts upon
+natural hazard areas identified by the Comprehensive Plan, or
+d. The proposal would likely result in significant adverse impacts with respect to noise,
+toxic or noxious matter, vibrations, odors, heat, glare, air pollution, wastes or other
+objectionable effects within the development site or immediate surrounding areas;
+9. Upon written request by the applicant prior to application submittal, the Director may
+waive non-jurisdictional application submittal requirements that in the Director's opinion
+are not necessary to document the application's compliance with applicable and relevant
+criteria and development standards. The Director may also modify application require-
+ments based on the nature of the proposed application, development, site, or other
+factors. Any such waiver must be specifically approved by the Director in writing prior to
+submittal.
+E. Determination of Completeness and Commencement of Review.
+1. To be deemed complete, an application must include all materials, information and fees
+listed in Subsections 12.70.110.D.1. through 8., unless a specific waiver has been
+granted by the Director under Subsection 12.70.110.D.9.
+2. The Community Development Department shall review the application submittal and
+advise the applicant in writing whether the application is complete or incomplete within 30
+days after the City receives the submittal.
+3. If the application is deemed complete, the completeness notice shall advise the applicant
+of the commencement of application review and the date of the public hearing if required
+by the particular application.
+4. Determination that an application is complete indicates only that the application is ready
+for review on its merits, not that the City will make a favorable decision on the application.
+ 12.70.110PROCEDURES
+CDC12.70:27Supp. No. 1
+5. If an application was complete when first submitted, approval or denial of the application
+shall be based on the Code standards and criteria that were in effect at the time the
+application was first submitted, except as otherwise permitted in Subsection 12.70.110.G.
+6. Pursuant to ORS 227.178, the City will reach a final decision on an application within 120
+days from the date the application is determined to be or deemed complete unless the
+applicant agrees to extend the 120 day time line or unless State law provides otherwise.
+7. Pursuant to ORS 227.178, the 120 day timeline may be extended at the written request
+of the applicant. The total of all extensions may not exceed 245 days beyond the first 120
+day extension, or 365 days from the date the application was deemed complete.
+8. At the written request of the applicant, notwithstanding Subsections 12.70.110.E.6. and
+7., the City will reach a final decision on an application qualifying under paragraphs a
+through d of this subsection within 100 days from the date the application is determined
+to be or deemed complete unless the applicant agrees to extend the 100 day time line or
+unless State law provides otherwise. An application qualifies for final action within the
+timeline described above if:
+a. The application is submitted to the City under ORS 227.175;
+b. The application is for development of a multiple dwelling structure containing 5 or
+more dwelling units;
+c. At least 50% of the dwelling units included in the development will be sold or rented
+as housing that is affordable to households with incomes equal to or less than 80%
+of the median family income for the county in which the development is built or for
+the State, whichever is greater; and
+d. The development is subject to a covenant appurtenant that restricts the owner and
+each successive owner of the development or a dwelling unit within the develop-
+ment from selling or renting any dwelling unit described in paragraph c. of this
+subsection as housing that is not affordable to households with incomes equal to or
+less than 80% of the median family income for the county in which the development
+is built or for the state, whichever is greater, for a period of 30 years from the date
+of the certificate of occupancy.
+F. Determination of Incompleteness.
+1. If an application is determined to be incomplete, that determination shall be based solely
+on failure to pay required fees, failure of the applicant's narrative to address the relevant
+approval criteria or development standards, or failure to supply the required information
+listed on the application checklist. A determination of incompleteness shall not be based
+on differences of opinion as to the quality or accuracy of the application.
+2. If an application is deemed incomplete, the incompleteness notice shall list what infor-
+mation is missing and allow the applicant to submit the missing information. The
+incompleteness notice shall also include a statement to the applicant of the need to
+indicate to the Director whether or not the applicant intends to amend or supplement the
+application.
+12.70.110 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:28Supp. No. 1
+3. If an application is deemed incomplete upon initial submittal, it shall be deemed complete
+for purposes of this section when the City receives the following:
+a. All of the missing information listed in the completeness notice; or
+b. Some of the missing information, together with written notice from the applicant that
+no other information will be provided; and a request to proceed with review of the
+application; or
+c. Written notice from the applicant that none of the missing information will be
+provided, and a request to proceed with review of the application.
+4. If the applicant submits the additional information within 180 days of the date the
+application was first submitted, approval or denial of the application shall be based on the
+Code standards and criteria that were in effect at the time the application was first
+submitted, except as otherwise permitted in Subsection 12.70.110.G.
+5. The application will be deemed void if it has been on file with the City for more than 180
+days and the applicant has not submitted, pursuant to paragraph 3. above, some or all of
+the required additional information and/or a request to proceed with application review.
+G. Request for Change to updated Code Standards and Criteria.
+1. For an application related to the development of housing, an applicant may request that
+the application be reviewed based upong the Code standards and criteria that are
+operative at the time of the request. For the purposes of this section, any applicable
+timelines for completeness review and final decisions restart as if a new application were
+submitted on the date of the request.
+2. For the purposes of this section and ORS 197A.470, the application is not deemed
+com-plete until:
+a. The City determines that additional information is not required under Subsection
+12.70.110.F.2; or
+b. The applicant makes a submission in response to the City's request under Subsec-
+tion 12.70.11.F.2.
+3. The City may deny the request under Subsection 12.70.110.G.1 if:
+a. The City has issued a public notice of the application; or
+b. A request under 12.70.110.G.1 has previously been made.
+4. No additional application fee is required. The City cannot request a new application or
+duplicative information unless the request affects or changes information in other
+locations in the application or additional narrative is needed to understand the request in
+context.
+5. The City cannot repeat redundant processes or hearings that are inapplicable to the
+change in standards or criteria.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6275 § 1, 2018; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+ 12.70.110PROCEDURES
+CDC12.70:29Supp. No. 1
+12.70.120  Conditions of Approval.
+A. Imposition of Conditions. The Review Authority may impose conditions on approvals of any
+Type I, II, or III land use applications, on approvals of any Zoning Review application, or on
+approvals of any preliminary subdivision plats for ELD and MHLD applications. The conditions
+of approval are to ensure that the proposal complies with the relevant approval criteria and the
+relevant standards of this Code, including standards set out in City overlay districts, master
+plans, and adopted design standards, and to mitigate the impacts of the development. Such
+conditions may include, but are not limited to, the following depending on the type of
+application.
+1. Type I Land Use Applications which are subject to conditions of approval are specified in
+each application section in 12.80.
+2. All Type II, III Land Use Applications, Zoning Review Applications, and ELD Preliminary
+Subdivision/Partition Plat Applications.
+a. Landscaping;
+b. Screening or fencing;
+c. Off-street parking;
+d. Joint use/access agreement;
+e. Access limitations;
+f. Street dedication abutting/within the development area;
+g. Street improvements abutting/within the development area;
+h. Utility easements;
+i. Improvement agreements for the installation of necessary on-site public facilities;
+j. Storm drainage improvements;
+k. Off-site public improvements when the proposed development or redevelopment
+will contribute to the need for such off-site public improvements;
+l. Financial assurances;
+m. Payment of fee-in-lieu of improvements of public infrastructure, if approved by the
+Review Authority; and/or
+n. Waiver of remonstrance against the formation of a local improvement district, where
+the review authority deems such a waiver necessary to provide needed improve-
+ments to serve the proposed development.
+3. MHLD Preliminary Partition/Subdivision Plat Applications.
+a. Separate utilities for each dwelling unit and associated utility easements;
+b. Pedestrian access easements to private or public roads;
+c. Access easements for common use areas, shared building elements, and dedi-
+cated driveways or parking;
+12.70.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:30Supp. No. 1
+d. Street dedication and/or improvements abutting a resulting child lot or parcel per
+Subsection 12.80.099.D.1.d.;
+e. Storm drainage improvements;
+f. Require that notations appear on the final plat indicating all of the following:
+i. The approval was given under ORS Chapter 92,
+ii. The type of middle housing approved on the subject site and noting that this
+middle housing type shall not be altered by the MHLD,
+B. Request for Conditions by Applicant. In addition to the conditions imposed pursuant to
+subsection A. above, an applicant may request conditions of approval from the Review
+Authority. Conditions requested by the applicant are valid and enforceable when the applicant
+accepts the condition by:
+1. Requesting the condition in the Record (as defined in Section 12.01.500) before the
+Review Authority;
+2. Consenting to the condition in writing or on the Record;
+3. Submitting plans or other application materials reflecting compliance with the condition
+that are reviewed and approved by the Review Authority; or
+4. Allowing the decision to become final without appealing the requested condition.
+C. Nexus and Proportionality of Conditions. All conditions imposed by the Review Authority must
+have a clear nexus with the development's impacts. Certain conditions must also be propor-
+tional to the development's impacts if the conditions affect interests in real property.
+D. Challenge to Condition(s). If an applicant asserts that they cannot legally be required, as a
+condition of land use approval, to provide improvements or real property interests at the level
+required by this Code, the applicant shall provide a "development impact analysis" report,
+prepared by a qualified civil or traffic engineer, as appropriate, showing:
+1. The estimated extent to which the improvements will be used by persons served by the
+building or development, whether the use is for safety or for convenience;
+2. The estimated level of improvements needed to meet the estimated extent of use by
+persons served by the building or development;
+3. The estimated impact of the building or development on the public infrastructure system
+of which the improvements will be a part; and
+4. The estimated level of improvements needed to mitigate the estimated impact on the
+public infrastructure system.
+E. Development Impact Analysis Consideration. The development impact analysis shall be
+considered by the Review Authority in making a determination whether the condition(s) and
+required improvements are reasonably related and roughly proportional to the impacts of the
+proposed development.
+ 12.70.120PROCEDURES
+CDC12.70:31Supp. No. 1
+F. Assurance of Compliance with Conditions. A bond, cash deposit, or other security in an amount
+sufficient to ensure compliance with a condition of approval, and in a form acceptable to the
+City, may be required from the applicant. Such security shall be posted prior to the issuance of
+the appropriate construction permit. The City may also require an applicant to sign or accept a
+legal and enforceable covenant, contract, dedication, easement, performance guarantee, or
+other document, which shall be approved in form by the City Attorney.
+G. Modification of Conditions. Modification of conditions of approval may be sought by any of the
+following methods:
+1. Upon appeal of the original application, pursuant to Subsection 12.70.180.E.;
+2. In the case of a Planned Unit Development, Development Review, or a Land Division,
+through application for a modification of the conditions of approval pursuant to Section
+12.80.100; or
+3. As a new development application, processed through the same procedure which
+imposed the original conditions.
+H. Violation of Conditions of Approval. Failure to fulfill any conditions of approval within any time
+limits provided shall constitute a violation of this Code and the subject approval will be subject
+to code enforcement proceedings. Enforcement proceedings may include revocation of the
+approval.
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.130  Effective Date of Decision.
+A. Land use action and permit decisions shall become effective the day after the appeal period
+expires if no appeal is filed. For purposes of this section, Type IV legislative amendments are
+not considered a land use action or a permit.
+B. If an appeal is filed on a land use action or permit decision, the decision shall become final and
+effective upon the date of the written decision of the final local appeal body.
+C. Each land use action or permit shall specify the approval granted or development authorized
+and shall be subject to the standards and conditions set forth in this Code, together with any
+conditions imposed by the Review Authority, excepting only those variances or exceptions
+authorized by the review authority.
+D. Type IV legislative actions shall become effective on the date specified in the adopting
+ordinance.
+(Ord. 6401 § 1, 2022; Ord. 6120 § 1, 2015)
+12.70.140  Expiration of Decision.
+A. Unless a different period of time is established within the Decision, or under subsection D.
+below, a land use action or permit granted pursuant to this subchapter expires and becomes
+void automatically as provided under Table 12.70.140-1 unless one of the following circum-
+stances has occurred:
+1. With the exception of a land use decision that includes a preliminary plat, substantial
+construction has begun in compliance with the land use action, permit approval, or
+Zoning Review approval; or
+12.70.120 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:32Supp. No. 1
+2. The approved land use has begun and is continuing operation in compliance with any
+applicable conditions of approval; or
+3. An approved partition or subdivision plat has been recorded prior to the expiration date of
+the approved preliminary plat or application with consolidated preliminary plat; or
+4. A first or second extension application has been filed pursuant to Section 12.70.150; or
+5. A multi-phase project extension has been approved pursuant to Section 12.70.150; or
+6. A modification decision has been approved prior to expiration of the primary decision
+which changes the expiration date of the primary decision. This option is available if a
+change to the expiration date is secondary to the primary purpose of the modification
+decision.
+B. If multiple applications are processed concurrently, the Review Authority shall specify in the
+Notice of Decision a uniform expiration period for the concurrent applications.
+C. If a final local decision is on appeal, the effective date of the decision and corresponding valid
+period before expiration shall begin when the final decision is issued on the appeal.
+D. Exceptions.
+1. A Zone Change or Comprehensive Plan Amendment processed under Section 12.80.160
+is not subject to expiration or extension.
+2. Approval of a Zoning Review application processed under Section 12.80.170 is valid for
+a period of 1 year.
+3. Approval of a preliminary plat for an ELD or MHLD processed under Subsections
+12.80.099.C. and D. is valid for a period of 3 years.
+  Table 12.70.140-1:
+Expiration and Extension of Land Use Action and Permit Decisions
+  Decision
+Expiration1  First Extension  Second
+Extension
+ Multi-Phase
+Project
+Extensions
+Approval Criteria Varies See Subsection
+12.70.150.B.
+See Subsection
+12.70.150.C.
+See Subsection
+12.70.150.D.
+Review Authority Varies Director Director Same as Original
+Review Authority
+Decision
+Type I 2 years Not permitted
+Zoning Review 1 year Not eligible for extension per CDC Section 12.70.150.E.
+Middle Housing
+Land Division 2 years Not eligible for extension per CDC Section 12.70.150.E.
+Expedited Land
+Division 3 years Not eligible for extension per CDC Section 12.70.150.E.
+Type II 2 years 2 years 2 years Varies
+Type III 2 years 2 years 2 years Varies
+Modification Prior
+to Complete
+Implementation of
+Decision
+Not Applicable Modification subject to original approval's expiration date unless
+otherwise conditioned within Modification decision.
+Modification
+Post-Implementation
+of Decision
+2 years 2 years 2 years Varies
+ 12.70.140PROCEDURES
+CDC12.70:33Supp. No. 1
+1 Calculated from the effective date of decision as specified in Section 12.70.130.
+(Ord. 6465 § 2, 2024; Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6250 § 1, 2017; Ord. 6149 § 1,
+2015; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.150  Extension of Decision.
+A. Written Request for Extension Required. A written request to extend the expiration date of a
+decision made pursuant to this Code must be filed before the decision expires.
+B. First and Second Extensions. A maximum of 2 extension requests may be granted by the
+Review Authority for the applicable periods of time as specified in Table 12.70.140-1. If granted,
+an extension is vested against any Code changes adopted since the original decision. The first
+and second extensions are subject to the following approval criteria:
+1. The extension is necessary because it is not practicable to complete development, or
+record the final plat, within the allowed time for reasons beyond the applicant's reason-
+able control; and
+2. There have been no significant changes in the development or traffic patterns in the
+immediate vicinity of the project site since the initial approval; and
+3. There have been no changes in regulations or statutes that would result in major
+modifications to the project or conditions of approval if reviewed under the current
+regulations.
+C. Extensions for Multi-Phase Projects. Extension requests may be granted by the Review
+Authority as specified in Table 12.70.140-1. At the discretion of the Review Authority, a phasing
+extension may be vested against Code changes adopted since approval of the original
+decision. The extension is subject to the following approval criteria:
+1. The extension is necessary because it is not practicable to complete development, or
+record the final plat(s), within the allowed time for reasons beyond the applicant's
+reasonable control; and
+2. The previous land use decision will not be modified in design, use, or conditions of
+approval; and
+3. There have been no changes in circumstances, applicable regulations or statutes likely to
+necessitate modification of the previous land use decision or conditions of approval since
+the effective date of the previous land use decision; and
+4. The revised phasing schedule demonstrates there is less than 10 years between the
+original approval date and the revised expiration date of the final phase.
+D. Exceptions. Decisions for the following applications are not eligible for extension:
+1. Zoning Review.
+2. Preliminary plat for Expedited Land Division.
+12.70.140 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:34Supp. No. 1
+3. Preliminary plat for Middle Housing Land Division.
+(Ord. 6465 § 2, 2024; Ord. 6451 § 1, 2023; Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6149 § 1,
+2015)
+12.70.160  Public Hearings.
+A. Purposes. The purposes of this section are:
+1. To describe rules of conduct, order of proceedings, and action required for legislative and
+quasi-judicial hearings; and
+2. To provide clear and consistent rules to ensure the legal rights of individual property
+owners and the general public are protected.
+B. Applicability. The provisions of this section shall apply to all proceedings on land use applica-
+tions requiring public hearings under the procedures of this subchapter.
+C. Responsibilities of the Director for Public Hearings. For all land use applications requiring
+public hearings, the Director shall:
+1. Schedule the land use application for review and public hearing before the appropriate
+review authority as required by Table 12.70.020-1;
+2. Provide public notice of the public hearing or appeal hearing as provided in Subsections
+12.70.050.F. and G.; 12.70.060.F. and G.; or 12.70.180.E.;
+3. Prepare and make available to the public a staff report summarizing the proposal, the
+relevant criteria and issues, and any comments received prior to the public hearing;
+4. Mail notice of the decision to those entitled to such notice as specified for the particular
+application procedure type;
+5. Maintain a record of the proceedings; and
+6. Prepare minutes of the proceedings, including the decision on the matter heard.
+D. Provision of Public Notice. Notice of public hearings issued by mail, by site posting, and/or by
+publication in a newspaper of general circulation in the City shall be provided for Type II, III, or
+IV applications or appeals as specified in the applicable section of this Code, based on the
+procedure type.
+E. Compliance with Notice Requirements.
+1. Mailed notice shall be deemed to have been provided upon the date the notice is
+deposited in the mail or personally delivered, whichever occurs first. Failure of the
+addressee to receive such notice shall not invalidate the proceedings if it can be
+demonstrated by affidavit that such notice was given.
+2. Published notice shall be deemed to have been provided on the date when the notice
+appears within a newspaper of general circulation within the City of Hillsboro.
+F. Rules of Procedure. Public hearings shall be conducted in accordance with the rules of
+procedure adopted by the applicable Review Authority, if any, and with applicable State law.
+ 12.70.160PROCEDURES
+CDC12.70:35Supp. No. 1
+G. Procedural Rights. Subject to the specific standards and limitations set forth in this Code, the
+following procedural rights shall be provided at the public hearing:
+1. A reasonable opportunity for those persons participating in the decision to present and
+rebut evidence; and
+2. An impartial review authority.
+H. Review Authority Disclosures. Prior to the beginning of a public hearing, the Review Authority
+members shall disclose any ex parte contacts, biases or conflicts of interest.
+1. Review Authority members shall disclose the substance of any significant pre-hearing
+ex-parte contacts regarding the application as early as reasonably possible during the
+public hearing on the application, so that persons wishing to participate in the hearing
+have an opportunity to respond. The member shall state whether the contact has
+impaired his/her impartiality or ability to vote on the matter and shall participate or abstain
+accordingly.
+2. A member of the Review Authority shall not participate in any proceeding or action in
+which member has an actual conflict of interest as defined in State law. Any actual or
+potential conflicts of interest shall be disclosed at the meeting of the Review Authority
+where the action is being taken.
+3. A review authority member may be disqualified due to actual conflicts of interest or actual
+bias based on a motion if a majority of the review authority members present and voting
+approve such a motion. The member who is the subject of the motion may not vote.
+I. Presentations.
+1. The Review Authority may set reasonable time limits for oral presentations. The Review
+Authority may choose not to receive cumulative, repetitious, immaterial, derogatory or
+abusive testimony. Persons may be required to submit written testimony in lieu of oral
+testimony.
+2. No testimony shall be accepted after the close of the public hearing unless the Review
+Authority sets a deadline for receipt of such testimony and provides an opportunity for
+review and rebuttal prior to making a decision.
+3. Counsel for the Review Authority may be consulted on legal or procedural issues without
+reopening the public hearing. Objections alleging that counsel is discussing or testifying
+as to factual matters shall be heard at the discretion of the Review Authority.
+4. Staff may confer with the Review Authority after the close of the record on technical
+review or procedural matters, but may not engage in argument or present additional
+evidence.
+5. The presiding officer shall preserve order at all public hearings and shall decide questions
+of order subject to a majority vote of the Review Authority. Persons who become
+disruptive or abusive may be removed from the hearing.
+12.70.160 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:36Supp. No. 1
+J. Continuance of Public Hearing. Public hearings may be continued in accordance with the rules
+of procedure adopted by the applicable Review Authority, if any, and with applicable State law.
+K. Evidence and Argument. Evidence and argument shall be received and reviewed in accor-
+dance with the rules of procedure adopted by the applicable Review Authority and with
+applicable State law.
+L. Burden of Proof. Except for Type IV legislative proceedings, the applicant shall bear the burden
+of proof that the proposal complies with all applicable approval criteria and development
+standards.
+M. Action by Review Authority Following Public Hearing.
+1. An action of the Review Authority on a land use application or appeal may be to:
+a. Approve the application as submitted or uphold the appeal;
+b. Approve the application with conditions or uphold the appeal with conditions;
+c. Approve the application with modified conditions or approve the appeal with
+modified conditions; or
+d. Deny the application or the appeal.
+2. Findings in support of any decision shall be made in accordance with the Review
+Authority's adopted rules of procedure and with applicable State law.
+N. Record.
+1. Absent mechanical failure or inadvertent error, a verbatim written or mechanical record of
+the hearing shall be made. In addition, written minutes accurately citing the statements of
+the participants shall be taken. Such minutes may substitute for a verbatim record in the
+event of mechanical failure or inadvertent error.
+2. An interested party may request a verbatim transcript of the recorded proceedings before
+the Planning Commission or the Planning and Zoning Hearings Board on the matter.
+Requests for transcripts shall be accompanied by a deposit separate from the appeal fee,
+as specified in the adopted fee schedule. The City shall maintain an accurate record of
+the costs of the transcript preparation, and any unexpended portion of the deposit or
+additional amount due shall be refunded to or payable by the interested party.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.170  Public Hearings on Cases Remanded from LUBA.
+A. The procedures in this section shall be used for hearings involving cases either voluntarily or
+involuntarily remanded from the Land Use Board of Appeals (LUBA).
+B. Upon receipt of the remand Opinion, the Director shall present the Opinion directly to the City
+Council. The Director shall inform the City Council of the nature of the remand, and the Council
+shall make a formal decision regarding procedures prior to any hearing to decide the matter.
+The Council may decide to do any of the following:
+1. Send the matter to a lower review authority (e.g., Planning and Zoning Hearings Board or
+Planning Commission); or
+ 12.70.170PROCEDURES
+CDC12.70:37Supp. No. 1
+2. Set a date to decide the matter without re-opening the public hearing on the case; or
+3. Set a hearing date and re-open the public hearing for consideration.
+C. When considering a remand, the Review Authority may consider the case in whole or in part.
+D. Procedures for public notice and order of proceedings for remands shall comply with Section
+12.70.160. In cases where a public hearing is held, required notices shall be mailed a minimum
+of 20 days in advance of any public hearing on the remand.
+E. If requested by the applicant, City of Hillsboro decisions remanded from LUBA shall be heard
+and decided within the time frame required by State law.
+(Ord. 6401 § 1, 2022; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.180  Appeals.
+A. In General. Table 12.70.020-1 identifies the decision authority and appeal authority for each
+application type. A decision on a Type I permit may be appealed only by the applicant. A
+decision on a Type II or certain Type III application may be appealed as provided in Table
+12.70.020-1. There is no local appeal of Type IV, and certain Type III decisions. Appeal
+provisions for applications subject to alternative review procedures are specified in Section
+12.70.025.
+B. Notice of Appeal. Where the appeal authority is the City, Notices of Appeal shall be filed with the
+Director within 15 days of the mailing date of the written Notice of Decision. At a minimum, the
+Notice of Appeal shall include the following items:
+1. Identification of the decision being appealed, including the case file number, the Review
+Authority which made the decision, and the date of the Decision;
+2. Documentation that the appellant was a party to the initial proceedings;
+3. A detailed statement on the basis of the appeal, including which approval criteria,
+development standards, or conditions of approval were allegedly improperly evaluated or
+applied to the decision; and
+4. Payment of the appropriate fee, as established by City Council resolution.
+C. Failure to File Notice of Appeal. Failure to file a notice of appeal that fully complies with
+subsection B. above, by 5:00 p.m. on the due date, with the fee specified in the fee schedule,
+shall be a jurisdictional defect.
+D. Request for Transcript. Pursuant to Subsection 12.70.160.N.2., the appellant or any interested
+party may request a verbatim transcript of the recorded proceedings before the Planning
+Commission or the Planning and Zoning Hearings Board on the matter.
+E. General Procedures Applicable to All Appeals.
+1. Public Hearing Required for Appeals. Appeal hearings before the appropriate review
+body as specified in Table 12.70.020-1 shall be conducted in accordance with the public
+hearing provisions in applicable State law and in Section 12.70.160 of this Code.
+12.70.170 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:38Supp. No. 1
+2. Notice of Public Hearing on Appeal. Notices of appeal hearings shall be sent in accor-
+dance with the notification requirements for the procedure type of the application under
+appeal, in Subsection 12.70.040.F. for Type II applications and Subsection 12.70.050.F.
+for Type III applications.
+3. Staff Report. At least 7 days before the date of the appeal hearing, the Director shall
+prepare and make available to the public a copy of the staff report regarding the appeal.
+A copy of the staff report and recommendation shall be provided to the appeal body, the
+applicant and to the appellant. Copies of the staff report shall also be provided at
+reasonable cost to the public upon request to the Community Development Department.
+4. Action of Appeal Body. At the conclusion of the hearing on the appeal, the appeal body
+shall take 1 of the following actions:
+a. Reverse or affirm the decision under appeal at the conclusion of the initial appeal
+hearing, with or without conditions or changes; or
+b. Continue the appeal hearing to a date, time, and location certain, which shall be
+announced by the presiding officer. Notice of the date, time, and location certain of
+the continued hearing is not required to be mailed or published;
+c. Continue the appeal hearing without announcing a date, time and location certain,
+in which case notice of the continued hearing shall be provided as was the notice for
+the initial hearing;
+d. Provisions for continuing an appeal hearing or holding the record open as set forth
+in Subsection 12.70.160.J. shall apply under this Code in a manner consistent with
+State law.
+5. Written Decision of Appeal Body. After the public record on the appeal closes, a written
+decision regarding the appeal shall be prepared. The written decision shall contain the
+following:
+a. A statement of the facts relied upon by the appeal body, which demonstrate the
+reasons why the decision under appeal is reversed or affirmed based on the
+applicable criteria and/or standards;
+b. A statement of conclusions based on the findings; and
+c. An explanation of the basis for any changes in the earlier decision:
+i. Denial reversed to approval; with or without conditions;
+ii. Approval changed to denial; or
+iii. Additions, deletions or revisions to conditions of approval.
+6. Mailing Notice of Decision. Following the adoption of a decision by the appeal authority,
+the Community Development Department shall mail the signed and dated decision to the
+appellant, the applicant, and any other persons who appeared orally or in writing in the
+record of the appeal.
+ 12.70.180PROCEDURES
+CDC12.70:39Supp. No. 1
+F. Specific Provisions for Appeal of a Type I Decision.
+1. A Type I decision may be appealed only by the applicant.
+2. The Director shall mail written notice of the appeal hearing to the applicant/appellant not
+less than 20 days prior to the appeal hearing.
+3. The appeal hearing shall be "de novo," meaning new evidence and argument can be
+introduced in writing and/or orally.
+4. The scope of the appeal hearing shall be limited to the approval criteria and/or the
+conditions of approval, and reasons why a finding and/or condition of approval are or are
+not in error as a matter of fact and/or law.
+5. The decision of the designated appeal body for appeal of a Type I decision is the final City
+decision.
+G. Specific Provisions for Appeal of a Type II Decision.
+1. A Type II decision may be appealed by the applicant or any person who submitted written
+comments prior to the decision by the Director, pursuant to Table 12.70.020-1 and
+Subsection 12.70.040.F.
+2. The Director shall mail written notice of the appeal hearing to the parties listed in
+Subsection 12.70.040.F. at least 20 days before the appeal hearing.
+3. The appeal hearing shall be "de novo," meaning new evidence and argument can be
+introduced in writing and/or orally.
+4. The decision of the designated appeal body for the appeal of a Type II decision is the final
+City decision.
+H. Specific Provisions for Appeal of a Type III Decision.
+1. A Type III decision may be appealed by the applicant or any person who participated by
+providing either oral or written evidence on the record leading to the decision by the
+Review Authority. Appeals of Type III decisions may be heard by either the City Council or
+by the Land Use Board of Appeals: see Table 12.70.020-1.
+2. Unless a de novo hearing is requested and accepted under paragraphs 3. and 4. below,
+the appeal hearing of a Type III decision shall be "on the record," meaning a review of the
+record with the right of argument, but without submittal of new evidence. The record shall
+include the following information:
+a. A factual report prepared by the Community Development Department;
+b. All exhibits, materials, pleadings, memoranda, stipulations, and motions submitted
+by any party and reviewed or considered in reaching the decision under review; and
+c. The minutes and/or transcript (if any) of the hearing below and a detailed summary
+of the evidence; and
+d. A recommendation by the Director.
+12.70.180 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:40Supp. No. 1
+3. A party to an appeal, or the Director, may request that the City Council conduct a de novo
+hearing on the appeal. If made by the appellant, the request must be included in the
+Notice of Appeal pursuant to Subsection 12.70.180.B. If made by any other party
+including the Director, the request must be made no more than 7 days after the deadline
+for filing the notice of appeal has expired. A request for a de novo hearing on appeal must
+indicate the reasons for the request without addressing the merits of the land use action.
+When practicable, the party requesting the de novo hearing shall advise the other parties
+to the appeal and attempt to gain their consent to the de novo hearing.
+4. A request for a de novo appeal hearing shall be decided by the City Council as a
+non-public hearing item. The City Council may grant the request upon findings that:
+a. A de novo hearing is necessary to fully and properly evaluate a significant issue
+relevant to the proposed development action;
+b. The substantial rights of the parties will not be significantly prejudiced; and
+c. The request is not necessitated by improper or unreasonable conduct of the
+requesting party or by a failure to present evidence that was available at the time of
+the initial Type III public hearing.
+5. The Director shall mail written notice of the appeal hearing to the parties listed in
+Subsection 12.70.050.F. at least 20 days prior to the appeal hearing. The written notice
+shall include the date, time and place of the public hearing, and shall specify whether the
+hearing on appeal will be on the record or de novo.
+6. The decision of the City Council on the appeal of a Type III decision shall be the final City
+decision.
+I. Withdrawal of an Appeal.
+1. At any time before the close of an appeal hearing held by any Review Authority, any
+appellant may withdraw his/her appeal. Withdrawal of the appeal is subject to the
+following:
+a. If requested before the hearing, the withdrawal must be submitted in writing;
+b. Any unexpended portion of the appeal fee will be refunded only if the withdrawal is
+received before the public notice of the hearing has been sent; and
+c. Where multiple people or parties sign and file a single Notice of Appeal, all the
+parties must consent to the withdrawal of the appeal.
+2. A withdrawn appeal cannot be re-filed by any party.
+3. If all appeals in a matter are withdrawn, no decision by the Review Authority is necessary.
+4. If all appeals are withdrawn, the Community Development Department shall issue a
+Notice of Appeal Withdrawal to the applicant, the appellant, and the parties listed in
+Subsection 12.70.050.F. The Notice of Appeal Withdrawal shall specify the new effective
+date of the original decision to be the date of the withdrawal of the appeal(s).
+(Ord. 6401 § 1, 2022; Ord. 6294 § 1, 2019; Ord. 6250 § 1, 2017; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+ 12.70.180PROCEDURES
+CDC12.70:41Supp. No. 1
+12.70.200  Transportation Studies.
+A. Purposes. This Section establishes procedures for traffic management plans, traffic impact
+analyses, and Transportation Rule Compliance Studies. These procedures are necessary to:
+1. Evaluate the identified traffic impacts of proposed development, including traffic capacity
+and traffic safety;
+2. Identify potentially adverse impacts; and
+3. Determine the need for transportation services and improvements related to the devel-
+opment.
+B. Applicability. Land use applications shall provide the analyses listed below (or limited elements
+thereof) as required by the Review Authority and/or an affected Road Authority. Such analyses
+shall be provided prior to a land use application being deemed complete under Section
+12.70.110, unless approved otherwise by the City Engineer.
+1. For Traffic Management Plans: Subsection 12.70.210.A.;
+2. For Traffic Impact Analyses: Subsection 12.70.220.A.; and
+3. For Transportation Rule Compliance Studies: Section 12.70.230.
+4. In the South Hillsboro Plan District (Subchapter 12.65), the standards of this section may
+be superseded by the standards in Section 12.65.910 as specified in that section.
+C. Terminology and Acronyms. Terms used in this section are defined in the Highway Capacity
+Manual 7th Edition and in Section 12.01.500. As used in this section, "within" means any street,
+alley, bikeway, intersection, site access, or pedestrian facility interior to the project site, and
+"adjacent" means any such facility which borders on or abuts any portion of the site and may
+be impacted as a result of the development. Acronyms used in this section are listed in Section
+12.01.600.
+D. Transportation Studies in General. To comply with the requirements of this section, transpor-
+tation studies shall meet the following standards:
+1. Study Components. The analyses listed in subsection B. above shall distinguish between
+the following:
+a. Traffic safety improvements found necessary due to the impacts of the project (or
+phase thereof); and
+b. Roadway capacity improvements necessary because of the traffic volume gener-
+ated by the project (or phase thereof).
+2. Software Parameters. The traffic analysis software parameters for signalized, unsignal-
+ized, and roundabout intersection performance evaluation shall be in compliance with the
+Oregon Department of Transportation's Analysis Procedures Manual unless specified by
+the City Engineer.
+3. Intersection Capacity Determination. Intersection capacity and delay performance shall
+be determined for the peak hour as a 60-minute period with a peak hour factor of 1.00
+12.70.200 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:42Supp. No. 1
+using the Highway Capacity Manual 7th Edition. Identification of 50th and 95th percentile
+queue requirements shall be determined for the peak 15-minute period using the
+Highway Capacity Manual 7th Edition unless determined by the City Engineer that traffic
+simulation would provide more accurate results.
+4. When Intersection Simulation Required. When downstream deficiencies impact up-
+stream operations during the peak 15-minutes of peak hour operations, evaluation of
+upstream operational performance shall include traffic simulation analysis utilizing SimTraf-
+fic, Vissim or alternate software and methodology as approved by the City Engineer.
+Simulation analysis shall be undertaken to determine intersection movement delays, and
+average and 95th percentile queue length to determine turn lane storage and channel-
+ization requirements, unless otherwise approved by the City Engineer.
+5. Alternative Analysis Permitted. An alternative intersection analysis method may be
+approved for use at the sole discretion of the City Engineer when the applicant demon-
+strates that the alternative method will achieve the objectives of this subchapter.
+6. Safety Improvements Evaluation. Transportation safety mitigation improvements shall be
+identified based upon an evaluation of the past 5-year available crash history for
+recurrent deficiencies and an assessment of potential future safety deficiencies including
+but not limited to an evaluation of traffic signal warrants, turn lane warrants, enhanced
+pedestrian crossing warrants, and turn lane storage lengths required to accommodate
+the Highway Capacity Manual calculated 50th and 95th percentile queues or the average
+and 95th percentile queues from simulation.
+7. County/State Roads Included. Upon written request by the County Engineer or ODOT
+Region 1 Engineer or their designee(s), any off-site improvements identified by the study
+as affecting a County road and/or the State highway system shall be included under the
+discretion of the City Engineer.
+8. Proportionality Estimate Required. The transportation study shall include an analysis of
+the rough proportionality of the estimated impact of the project (or phase thereof) as
+compared to the safety and capacity improvements identified as required to comply with
+the standards of this section.
+E. Signalized Intersection Analysis: Procedures and Standards.
+1. Signal Timing. Signal timing and phasing assumptions in the study shall be included in the
+study, and are subject to the approval of the Road Authority with management respon-
+sibility for the signalized intersection. Signal progression shall also be considered in the
+analysis.
+2. Standards for Signalized Intersections. The impacts of development on a signalized
+intersection shall identify mitigation necessary to maintain the following standards:
+a. The peak hour Volume-to-Capacity (V/C) ratio for each lane group shall be no
+greater than 0.99 unless approved otherwise by the City Engineer. If the intersec-
+ 12.70.200PROCEDURES
+CDC12.70:43Supp. No. 1
+tion is under County or ODOT jurisdiction, the V/C ratio shall not exceed the
+standards imposed by that jurisdiction or the City standards, whichever is more
+restrictive.
+b. Peak hour intersection control delay shall be maintained at 80 seconds per vehicle
+or less, using a signal cycle length not to exceed 120 seconds, unless a greater
+cycle length is approved by the Road Authority with management responsibility for
+the signalized intersection.
+c. In the event existing control delay or V/C ratio of an intersection exceeds the
+standards of this subsection, the impacts of development shall be mitigated to
+maintain or reduce the respective control delay or V/C ratio to pre-development
+conditions, unless approved otherwise by the City Engineer.
+3. Limitations on Mitigation. Intersection mitigation improvements shall not assume lane
+improvements by approach greater than 2 left turn lanes, 2 through lanes, and 2 right turn
+lanes unless otherwise approved by the Road Authority. Use of supplemental auxiliary
+lanes may be considered with approval of the Road Authority where operational analysis
+identifies their need to facilitate safe and efficient traffic operations.
+F. Unsignalized Intersection Analysis: Procedures and Standards.
+1. Signal Warrant Analysis. If the existing control delay or V/C ratio is greater than the
+standards in Subsection 12.70.200.F.2., a gap availability study, an alternative access
+route study, and/or signal warrant analysis shall be completed to establish the appropri-
+ateness of intersection signalization.
+2. Standards for Unsignalized Intersections. The impacts of development on a unsignalized
+intersection shall identify mitigation necessary to maintain the following standards:
+a. Peak hour V/C ratio for each lane group shall be no greater than 0.99 unless
+otherwise approved by the City Engineer. If the intersection is under County or
+ODOT jurisdiction, the V/C ratio shall not exceed the standards imposed by that
+jurisdiction or the City standards, whichever is more restrictive.
+b. Peak hour control delay by the intersection leg approach shall be maintained at 50
+seconds per vehicle or less, unless approved otherwise by the City Engineer.
+c. In the event existing control delay or V/C ratio of an intersection exceeds the
+standards of this subsection, the impacts of development shall be mitigated to
+maintain or reduce the respective control delay or V/C ratio to pre-development
+conditions, unless approved otherwise by the City Engineer.
+G. Roundabout Intersection Analysis: Procedures and Standards.
+1. Determining Control Delay. Roundabout control delay shall be determined utilizing a
+methodology approved by the City Engineer and as more particularly described in
+Oregon Department of Transportation's Analysis Procedures Manual.
+2. Capacity for Each Lane Group to be Identified. The V/C ratio for each lane group shall be
+identified and considered in the determination of intersection performance.
+12.70.200 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:44Supp. No. 1
+3. Standards for Roundabout Intersections. The impacts of development on a roundabout
+intersection shall identify mitigation necessary to maintain the following standards:
+a. Peak hour control delay by lane group at 50 seconds per vehicle or less, unless
+otherwise approved by the City Engineer.
+b. Peak hour V/C ratio for each lane group at 0.99 or less unless otherwise approved
+by the City Engineer. If the intersection is under County or ODOT jurisdiction, the
+V/C ratio shall not exceed the standards imposed by that jurisdiction or the City
+standards, whichever is more restrictive.
+c. In the event existing control delay or V/C ratio of a roundabout exceeds the
+standards of this subsection, the impacts of development shall be mitigated to
+maintain or reduce the respective control delay or V/C ratio to pre-development
+conditions, unless approved otherwise by the City Engineer.
+H. Transportation Studies as Basis for Mitigation. The Review Authority shall require appropriate
+safety, capacity, and roadway improvements within or adjacent to the project (or phase thereof)
+if the Traffic Management Plan, Traffic Impact Analyses, Transportation Rule Compliance
+Study, or analysis performed by the City Engineer or their designee indicates that on- or off-site
+mitigation is necessary to meet the standards listed below.
+1. On-Site and Adjacent Mitigation. Appropriate safety, capacity, and roadway improve-
+ments within or adjacent to the project or phase of a project if the Transportation Study
+indicates that any of the following thresholds are met as determined by the City Engineer
+or Road Authority:
+a. The project or phase of a project will cause unsafe conditions at site accesses or on
+the roadways or at intersections within or adjacent to the project or phase of a
+project;
+b. The required peak hour V/C ratio or required delay for an approach lane group will
+be exceeded for any impacted site access, intersection, or roadway within or
+adjacent to the project;
+c. The proposed off-street parking is insufficient and will increase off-site parking in
+adjacent neighborhoods or on the adjacent road or street system; or
+d. Traffic calming measures beyond those proposed by the applicant are necessary to
+address safety concerns.
+2. Off-Site Mitigation. Appropriate safety, capacity, and roadway improvements not within or
+adjacent to the project or phase of a project if the Transportation Study or analysis
+performed by the City Engineer or their designee indicates that any of the following
+thresholds are met:
+a. The project or phase of a project will contribute toward the need for safety
+improvements at intersections or on the roadway system other than within or
+adjacent to the project (known as the "off-site impact area"), or
+ 12.70.200PROCEDURES
+CDC12.70:45Supp. No. 1
+b. The peak hour V/C ratio or control delay for any such impacted intersection or
+roadway segment within the off-site impact area is projected to exceed the stan-
+dards defined in subsections E., F., and G. as a result of the project or phase of a
+project.
+3. Construction of Off-Site Improvements Required.
+a. The Review Authority may condition approval of the land use application to require
+either the construction of, or payment of a proportionate financial share towards
+construction of, off-site capacity and/or safety improvements necessary to eliminate
+the unsafe condition identified in the study and return the street/roadway segment
+and/or intersection to compliance with required performance standards defined in
+subsections E., F. or G. above.
+b. Upon written request by the County Engineer or ODOT Region 1 Engineer or their
+designee(s), off-site improvements identified by the study as affecting a County
+road and/or the State highway system may be made a part of the Review Authority's
+conditions of approval.
+I. Approval or Denial on Basis of Off-Site Mitigation Construction.
+1. If any of the following circumstances exist, the Review Authority shall either deny the land
+use application or condition the approval as specified in paragraphs 2. through 4. below:
+a. Construction of the identified off-site improvements within the Study Area will not be
+guaranteed by the applicant or by the City and/or the County as provided in
+paragraph H.3. above;
+b. A traffic safety hazard is created or exacerbated on any street, roadway segment, or
+intersection within the impact area as a direct result of the project (or phase thereof);
+or
+c. The V/C ratio exceeds the standards in subsections E., F., or G. on any street,
+roadway segment, or intersection within the impact area as a direct result of the
+project (or phase thereof).
+2. If any of the circumstances cited in paragraph 1. above exist, approval of the land use
+application(s) may include a condition or conditions stipulating that only the portion or
+phase(s) of the proposed project which can be constructed without exceeding the
+acceptable performance standard may be built under the current approval.
+3. In the case of transportation facilities that are already failing, any improvements shall
+either mitigate back to pre-project levels, or shall only be allowed to build that portion of
+the or phase(s) of the project that can be mitigated back to pre-project levels.
+4. If the Review Authority restricts construction under paragraph 2. or 3. above, an applicant
+may apply for approval of additional portions or subsequent phases of the project when
+traffic and street conditions have changed to the degree where the remainder of the
+project or phase of a project can meet the safety and performance standards cited in this
+12.70.200 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:46Supp. No. 1
+Section. Any such application shall be accompanied by the appropriate transportation
+study as otherwise required in this subsection, and will be processed in the same manner
+as the original application.
+J. Applicant's Election to Provide Transportation Mitigation.
+1. On their own initiative, an applicant may propose (either alone or in conjunction with other
+parties) to construct and/or finance the construction of identified off-site improvements
+beyond the limits described in subsection I. above if such improvements would mitigate
+identified traffic safety hazards or achieve an acceptable V/C ratio.
+2. If such a proposal is made by the applicant, the Review Authority may approve the
+application provided the off-site improvements are guaranteed by methods acceptable to
+the City Attorney and to the City Engineer and are completed prior to any occupancy
+within the project (or phase thereof).
+(Ord. 6414 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6294 § 1, 2019; Ord. 6110 § 9,
+2015; Ord. No. 6505, § 1 (Exh. A), 8-19-2025; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.210  Traffic Management Plan.
+A. Threshold.
+1. Where a proposed development would add 20 or more trips in any hour onto a classified
+residential neighborhood route or residential local road, but does not trigger the need for
+a Traffic Impact Analysis, a Traffic Management Plan acceptable to the City Engineer
+shall be included in the application submittal; or
+2. Where a proposed development that has special events generating more than 50
+additional peak hour vehicle trips than the site average peak hour traffic generation onto
+any classified streets and these events occur less than or equal to 90 days within
+calendar year a Traffic Management Plan acceptable to the City Engineer shall be
+included in the application submittal.
+B. Engineering Certification. The Traffic Management Plan shall be prepared and certified by a
+traffic engineer or civil engineer licensed in the State of Oregon.
+C. Study Area. The Traffic Management Plan Study Area shall include:
+1. Site access points;
+2. Intersections and roadway links along the site frontage(s) (both sides of the street) and
+extending out to the nearest intersection with a collector or arterial; and
+3. The City Engineer may identify additional locations for study if existing traffic operation,
+safety, or performance is marginal or substandard.
+ 12.70.210PROCEDURES
+CDC12.70:47Supp. No. 1
+D. Plan Components. For each development application for which a Traffic Management Plan is
+required, the plan shall identify:
+1. Description of Proposed Development. The Traffic Management Plan shall provide a
+comprehensive project description including but not limited to the following:
+a. Vicinity map;
+b. Site plan;
+c. Project phasing; and
+d. Time schedule.
+2. Existing Conditions. The Traffic Management Plan shall provide an evaluation of existing
+conditions and include maps and/or tables displaying the following information for the
+Study Area and any additional locations previously identified by the City Engineer:
+a. Street system including street names and functional classifications;
+b. Pavement and shoulder widths; and
+c. Multi-use paths, sidewalks, and accessways.
+3. The hours during which the added trips from the development in Subsections A.1 or A.2.
+4. The existing volume of trips on the streets during each of those same hours.
+5. The volume of trips that the development is forecast to add on the streets during each of
+those same hours.
+6. An estimate of existing and proposed Average Daily Traffic and peak hour traffic on
+roadway Links between the development site and the nearest Collector or Arterial
+roadway.
+7. The recommended travel and traffic management strategies designed to City standards
+to mitigate the multi-modal traffic safety impacts of the increased trips attributed to the
+development. Potential traffic management strategies include, but are not limited to, any
+combination:
+a. For residential streets actions such as curb extensions, intersection treatments,
+pedestrian and bike facility improvements, street improvements, and traffic control
+devices.
+b. For arterial and collector actions in handling special events such as temporary
+traffic control plans and signal timing changes.
+(Ord. 6401 § 1, 2022; Ord. No. 6505, § 1 (Exh. A), 8-19-2025; Ord. No. 6508, § 1 (Exh. A), 11-4-2025)
+12.70.220  Traffic Impact Analysis.
+A. Thresholds. For each development proposal that exceeds any of the analysis thresholds listed
+below, the land use application for land use or design review approval shall include a Traffic
+12.70.210 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:48Supp. No. 1
+Impact Analysis, based on the type and intensity of the proposed land use change or
+development and its estimated level of impact to the existing and future local and regional
+transportation systems.
+1. 1. A Traffic Impact Analysis is required when the proposed land use change or develop-
+ment will generate an average more than 50 peak hour vehicle trips to or from the site on
+an average weekday after trip deductions for previous use that operated on the site,
+internal capture trips, and trips utilizing transit, walking, or bicycling; or
+2. 2. A Traffic Impact Analysis is required for a site with special events that will generate
+more than 50 additional peak hour vehicle trips after trip deductions than the site average
+peak hour traffic generation if these events occur more than 90 days within a calendar
+year; or
+3. A Traffic Impact Analysis or some elements of a Traffic Impact Analysis may be required
+when the volume thresholds under paragraph 1. above are not met, but the City Engineer
+finds that the traffic impacts attributable to the development have the potential to
+significantly impact the safe and efficient operation of the existing public transportation
+system.
+B. Engineer Certification. The Traffic Impact Analysis shall be prepared, certified, stamped, and
+signed (wet ink or digital) by a traffic engineer or civil engineer licensed in the State of Oregon.
+C. Scoping Memorandum. Prior to preparation of the Traffic Impact Analysis, the applicant shall
+obtain from the City Engineer a list of In-Process developments and associated trip generation
+where available for consideration in the Traffic Impact Analysis. The applicant shall submit a
+memorandum to the City Engineer and affected Road Authorities detailing the proposed scope
+of the analysis including the proposed Study Area, development and phasing schedule, trip
+generation, trip reduction assumptions, trip distribution, trip assignments, and analysis meth-
+odology. The City Engineer in consultation with the affected Road Authorities shall determine
+whether the scope of the analysis, analysis methodology, and associated Traffic Impact
+Analysis assumptions are adequate.
+D. Study Area. The Traffic Impact Analysis Study Area for land use change or developments shall
+analyze the following intersections/access points:
+1. Site access points;
+2. Public intersections along the site frontage(s) (both sides of the street) and extending out
+from the site on fronting streets to a distance of 600 feet;
+3. Any contiguous or non-contiguous road link at an Arterial, Collector, or Neighborhood
+Route intersection where traffic generated by the proposed development equals or
+exceeds 10% of the Background Traffic, as defined in Section 12.01.500; and
+4. The City Engineer may identify additional locations for study if existing traffic operation,
+safety, or performance is marginal or substandard.
+ 12.70.220PROCEDURES
+CDC12.70:49Supp. No. 1
+E. Contents of the Traffic Impact Analysis. The Traffic Impact Analysis shall contain the following
+information organized in a logical format:
+1. Executive Summary. An Executive Summary of no more than 4 single-sided pages shall
+be included at the beginning of the Traffic Impact Analysis report. The Executive
+Summary shall summarize the analysis and conclusions and identify recommended
+transportation improvements.
+2. Description of Proposed Development. The Traffic Impact Analysis shall provide a
+comprehensive project description including but not limited to the following:
+a. Vicinity map;
+b. Site plan;
+c. Project phasing;
+d. Time schedule;
+e. Intended use of the site, including the range of uses allowed without additional
+land-use approvals; and
+f. Intensity of use.
+3. Existing Conditions. The Traffic Impact Analysis shall provide a complete evaluation of
+existing conditions and include maps and/or tables displaying the following information
+for the Study Area and any additional locations previously identified by the City Engineer:
+a. Street system including street names and functional classifications;
+b. Bicycle facility surface condition, type, and widths;
+c. Multi-use paths, sidewalks, and accessways widths and conditions;
+d. Striping and channelization;
+e. Driveways (both sides of streets for site frontage plus 600 feet minimum in each
+direction);
+f. Designated Freight Routes;
+g. Intersections;
+h. Traffic volumes;
+i. Existing traffic shall be measured within 12 months prior to the land use
+application submittal date for the morning and afternoon peak periods. Mid-
+day period shall also be provided if the peak traffic period for the existing
+street, the proposed development, or the composite of both is greater than the
+morning and afternoon peak periods.
+ii. Traffic volumes shall be based on data from a typical Tuesday through
+Thursday weekday of a week without holidays and during which public
+schools are in session, unless otherwise approved by the City Engineer. In
+addition, data shall be provided for weekends if weekends are the peak traffic
+period for either the existing adjacent street or the proposed development.
+12.70.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:50Supp. No. 1
+iii. Seasonal variations in traffic volumes shall be considered if required by an
+effected Road Authority.
+i. Existing intersection performance indicators including Volume to Capacity (V/C)
+ratio, control delay, and 95th percentile queue length;
+j. Transit information including existing stop and shelter locations, route numbers,
+headways, pull outs, and times of service; planned transit routes and service
+frequency; and
+k. Crash data for the most recent 5-year period, including but not limited to Safety
+Priority Index System (SPIS) data, for which reported collision data is available.
+4. Traffic Forecasts. The Traffic Impact Analysis shall provide forecasts of future traffic
+within the Study Area and any additional locations previously identified by the City
+Engineer. Traffic forecasts shall be provided for the Buildout Year as defined in Subsec-
+tion 12.70.220.E.4.a. The report shall include complete documentation of trip generation
+calculations including Institute of Transportation Engineers (ITE) Trip Generation (12th
+Edition) use code(s) or an alternative basis of trip generation approved by the City
+Engineer, and the rationale for using the alternative.
+a. Build-Out Year Analysis. Buildout Year forecasts shall be based upon Total Traffic at
+the time of anticipated completion and occupancy of each phase of the develop-
+ment and at the time of completion and occupancy of the entire development. The
+City shall provide traffic information on other developments to consider in the
+calculation of In-Process Traffic.
+b. Traffic Forecast Analysis Assumptions.
+i. Trip Generation. Estimates of the proposed development's trip generation
+shall be made for peak period traffic. Selection of the peak period used in the
+analysis shall be justified and shall consider, at a minimum, the peak period for
+the proposed development and the peak period for surrounding streets. The
+City Engineer may require review of other time periods based on known or
+anticipated marginal or substandard traffic capacity or traffic safety. Trip
+generation estimates shall be based on ITE's Trip Generation 12th Edition.
+The City Engineer may approve different trip generation rates when trip
+generation rates are not available in ITE's Trip Generation or different rates
+are justified. Consideration of trip generation rate reductions due to alternative
+mode use, mixed land use interaction, and transportation demand manage-
+ment methods shall be approved by the Review Authority.
+ii. Trip Distribution and Assignment. Traffic generated by the proposed develop-
+ment shall be logically distributed and assigned according to professional
+accepted practice to the street system within the Study Area and any addi-
+tional locations previously identified by the City Engineer. Trip distribution and
+assignment shall be based on trip distribution information from Washington
+ 12.70.220PROCEDURES
+CDC12.70:51Supp. No. 1
+County, ODOT, Metro, analysis of local traffic patterns based on data less than
+12 months old, or on an alternative data source approved by the City
+Engineer.
+c. Intersection and Highway Interchange Analysis. Intersection and highway inter-
+change analysis shall conform to the method for operations analysis described in
+the Highway Capacity Manual 7th Edition published by the Transportation Re-
+search Board and as further described in the requirements of Subsection 12.70.200.C.
+The analysis shall evaluate the impacts of queuing from adjacent intersections or
+traffic restrictions and shall consider existing and planned interconnected signal
+system effects. Analysis of weave and merge conditions may also be required at the
+sole discretion of the Road Authority.
+5. Traffic Impacts. The Traffic Impact Analysis shall evaluate access, safety, operation,
+capacity, circulation, level of service, and performance of the transportation system within
+the Study Area of the proposed development and any additional locations previously
+identified by the City Engineer for both the Build-Out Year and any phases thereof.
+Performance analysis shall be based on the methodology requirements and intersection
+performance standards of Subsection 12.70.200.D. through G.
+a. Safety considerations shall be evaluated. Potential safety problems resulting from
+conflicting turning movements between and among driveways, intersections, and
+internal traffic shall be addressed. Distance to the nearest driveways on both sides
+of streets fronting the site and in both directions from site access points shall be
+shown. On-Site driveway queuing impacts shall be assessed. The potential for
+shared access with adjacent development shall be assessed.
+b. Geometric design and operational improvements including but not limited to accel-
+eration lanes, deceleration lanes, turning lanes, traffic signals, roundabouts, chan-
+nelization, and on-site vehicular circulation design shall be considered, evaluated,
+and recommended when determined necessary by standards and practices ad-
+opted by ODOT, Washington County, the City, and as described in Section 12.70.200,
+or approved by the City Engineer.
+c. Adequacy of sight distance shall be addressed at the proposed road access point(s)
+for both the existing road configuration and for the ultimate road configuration based
+on improvements planned for the development and improvements identified in the
+City's Transportation System Plan and adopted by the Comprehensive Plan. Sight
+distance shall meet City standards as defined in the City of Hillsboro Design and
+Construction Standards.
+d. The analysis shall also identify and evaluate related impacts on bicycle, pedestrian,
+and transit access, circulation, and facilities.
+e. Other operational, circulation, safety, and capacity issues shall be evaluated and
+addressed as required by this Code and by the City Engineer.
+12.70.220 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:52Supp. No. 1
+6. Mitigation Identification. In order to protect the public transportation system from poten-
+tially adverse impacts of the proposed development, to fulfill an identified need for public
+services within the Study Area related to the development, or both, the Traffic Impact
+Analysis shall identify methods of mitigating on-site and off-site deficiencies for present
+and proposed phases of the development. The analysis shall make recommendations for
+improvements necessary for safe and efficient traffic flow and bicycle, pedestrian, and
+transit movement, and access. Build-Out Year and project phasing impacts shall be
+considered. The proportional share of impact at all Study Area intersections shall be
+identified in the Traffic Impact Analysis. Mitigation shall be consistent with improvements
+identified in the City's Transportation System Plan and adopted by the Comprehensive
+Plan, unless approved otherwise by the City Engineer or Road Authority. At a minimum,
+the Traffic Impact Analysis shall consider ultimate planned rights-of-way and additional
+streets, bicycle, and pedestrian connections and extensions and intersection improve-
+ments that are identified in the City's Transportation System Plan. Mitigation measures
+may also include, but are not limited to, additional street connections and street exten-
+sions, turn lanes, signalization, signal modifications, roundabouts, traffic calming mea-
+sures, installation of medians, shared access and other access management strategies,
+geometric improvements such as lane geometry improvements, intersection realign-
+ments, and transportation demand management methods. Where unsignalized intersec-
+tions or roundabouts do not meet the minimum intersection performance standards of
+Section 12.70.200.F., alternative measures shall be evaluated including, but not limited
+to, signalization, additional street connections or street extensions.
+7. Recommendations. The Traffic Impact Analysis report shall clearly state the mitigation
+measures recommended by the analysis to address safety deficiencies and measures
+recommended to address capacity deficiencies, shall summarize how the recommended
+mitigation measures address the identified impacts, and shall address the rough propor-
+tionality and estimated costs of the recommended improvements as compared to the
+identified traffic impacts. The recommended street and highway safety and capacity
+mitigation measures shall be shown on a scaled drawing or as a reasonably scaled
+overlay to an aerial base drawing that depicts existing and recommended improvements.
+(Ord. 6414 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6294 § 1, 2019; Ord. 6250 § 1,
+2017; Ord. 6110 § 9, 2015; Ord. No. 6505, § 1 (Exh. A), 8-19-2025; Ord. No. 6508, § 1 (Exh. A),
+11-4-2025)
+12.70.230  Transportation Planning Rule Compliance Analysis.
+A. Applicability. Compliance with Transportation Planning Rule (TPR) Oregon Administrative Rule
+(OAR) 660-012-0060 shall be analyzed for any of the following:
+1. Zone Change applications;
+2. Planned Unit Development applications in which increases in residential density or
+non-residential intensity (as measured by increased lot coverage or building height
+above the standards of the underlying zone) are proposed;
+ 12.70.230PROCEDURES
+CDC12.70:53Supp. No. 1
+3. Community Development Code (CDC) Text Changes affecting uses permitted in a base
+zone, which may affect future traffic generation from sites in that zone; and
+4. Comprehensive Plan Amendment applications.
+If the proposed application meets the criteria for exemption from TPR analysis as cited in the
+OAR 660-012-0060, TPR Analysis is not required.
+B. Analysis Components. The TPR Analysis must include a comparison for the Forecast Year of
+the reasonable worst case scenario under existing zoning for the subject property or properties
+to the reasonable worst case scenario for the proposed Comprehensive Plan Map designation,
+Zone, Planned Unit Development, or change in permitted uses. The Forecast Year shall be the
+Forecast Year of the City's Transportation System Plan, or 15 years from the date of the
+analysis, whichever is greater, or an alternate year approved by the City Engineer.
+C. Transportation Planning Rule (TPR) Analysis Threshold. If the Trip Generation Analysis of a
+proposed land use designation or zoning indicates that the trip generation of a proposed
+Comprehensive Plan Amendment, Zone Change, Planned Unit Development, or CDC Text
+Change is under the thresholds of Section 12.70.220.A. when compared to the current
+designations for the site, a TPR Analysis is not required unless Section 12.70.220.A.3. is met.
+If the proposed Comprehensive Plan Amendment, Zone Change, Planned Unit Development,
+or CDC Text Change will result in an increase in trip generation over the existing designations
+that meet or exceed the thresholds of Section 12.70.22.A., a TPR Analysis is required. If
+required, the TPR Analysis shall follow the requirements of Section 12.70.220, except for
+Subsections 12.70.220.E.3.b, E.3.i, E.3.k, E.5.a, and E.5.c, and shall include the following:
+1. An evaluation of whether the development or any phase thereof would change the timing
+and and/or scope of any long-range transportation needs projected for the Forecast Year
+in the City's Transportation System Plan or alternative timeframe as approved by the City
+Engineer; and
+2. The extent to which traffic from the proposed development contributes to the long-range
+improvement needs.
+D. Mitigation Improvements. If the TPR Analysis identified the need for on- or off-site mitigation,
+such mitigation may be required by the Review Authority, subject to the approval of the City
+Engineer, as a condition of approval pursuant to Subsections 12.70.200.H. and I.
+E. Urban Reserves Assessment. If the proposed Comprehensive Plan Amendment is adjacent to
+an Urban Reserve as defined by OAR 660-021-0010, an Urban Reserve Assessment is
+required to ensure the proposed Comprehensive Plan Amendment does not preclude future
+transportation needs. The Urban Reserves Assessment shall study the same intersections as
+the TPR Analysis with the projected Urban Reserve trip assignments provided by the City
+Engineer onto the TPR Analysis total traffic volumes. The analysis shall identify improvements
+needed to meet the capacity performance criteria in Section 12.70.200. If a TPR analysis is
+determined not needed by Section 12.70.230.B., a roadway segment level of analysis will be
+12.70.230 HILLSBORO COMMUNITY DEVELOPMENT CODE
+CDC12.70:54Supp. No. 1
+needed unless directed differently by the City Engineer. The Urban Reserves Assessment will
+recommend a proportionality of the recommended improvement in the Urban Reserve Assess-
+ment. The City Engineer will determine whether the proportionality is reasonable.
+(Ord. 6414 § 1, 2022; Ord. 6401 § 1, 2022; Ord. 6393 § 1, 2021; Ord. 6250 § 1, 2017)
+ 12.70.230PROCEDURES
+CDC12.70:55Supp. No. 1
