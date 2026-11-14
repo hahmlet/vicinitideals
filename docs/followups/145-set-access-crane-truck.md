@@ -80,3 +80,7 @@ frame+beam on single picks too?; truck load offset past lot line; upper-wall sta
 straight-off-truck picks allowed?; pad max slope; street setup allowed; any cap below chart.
 Chart needs: model, outrigger setup, counterweight, hook-block weight, deductions, capacity by
 radius per boom length. Factory list to be redrawn for 20 x 25.
+
+## Steph 2026-11-14: crane guide delivered
+Guide: Factory-Sim repo docs/research/S3f-crane-28t-vs-45t.md (28 t Manitex 2892C = current plan, pick panels off the parked trailer; 45 t National NBT45-2 = whole trailer loads lifted off, then set from the ground). Load charts, outrigger spreads, pad sizes (~26x42 / ~28x42), piece weights for the 20x25 pod (heaviest panel 863 lb, container ~4,100-4,600 lb), truck turning (est) all in it. Supersedes the 11-11 piece list (30x80 pod).
+Steph asked the cost of evaluating BOTH cranes. Answer given: the solver is the main cost either way; a second crane adds roughly a fifth to a quarter more build (charts as data + 360 vs rear-only swing) PLUS ground landing spots for the 4 whole loads (the real extra); scan time grows only on lots where the 28 t fails if run "28 t first, 45 t only on a miss". Offered: build both that way. Still open: colour of a failed check (YELLOW proposed), street setup allowed by default?
