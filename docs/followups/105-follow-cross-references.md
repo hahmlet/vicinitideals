@@ -69,3 +69,5 @@ Read, not encoded (possible false GREENs, each needs a mechanism or data; listed
 - Cornelius Type I middle housing site review (18.100.030 (A)(2)): ministerial, GREEN tier; no change.
 - Beaverton 70.20.10.6.2 / 70.15.25.1 trace (item 1): not done this round; the hold stands.
 - Lake Oswego 50.06.001.5: not fetched (layer switched off, zero lots).
+
+Round 5 2026-11-14: flats/crossref-5 672d164b (cut from rel9, rides rel10). Gresham 9.0700, Hillsboro 12.70, ZDO 825, ORS 197.360 (now renumbered) read; nothing binds the pod; Gresham future-street reservation recorded as refusal (judgement, GREEN+flag at most). Hand-off ../vicinitideals-worktrees/crossref-5.handoff.md. Tigard figure images not fetched (site blocks bots; text stored).
