@@ -15,3 +15,5 @@ STILL OPEN for Steph (no ruling yet):
     -- built on the text (more RED); which governs?
 (2) Ask a Tualatin planner whether a flat roof's edge overhang counts as one of the list items (else every Tualatin lot with a flat roof is RED)?
 (3) Ask Wilsonville Planning for the Villebois Pattern Book (not online)?
+
+Steph 2026-11-14: no city contact ("I don't want to ask any cities"), ruling 2026-11-14-no-city-contact. (1) text governs, (2) Tualatin flat roof stays RED, (3) Villebois stays YELLOW. All three closed.
