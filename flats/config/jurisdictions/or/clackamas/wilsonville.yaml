@@ -3679,17 +3679,6 @@ zones:
 # (crossrefs ledger, flats/encode/crossrefs.py).
 crossrefs:
   # FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer.
-  "4.155.03":
-    outcome: read
-    note: >-
-      4.155 is held (4/4.155.txt) and its parking-area landscaping is read in the definitions block
-      (4.planning.txt#4.155); 4.176 counts that ten percent inside the fifteen percent lot
-      landscaping (4/4.176.txt#L97), which is encoded.
-  "4.131.05":
-    outcome: other_building
-    note: >-
-      The uses "typically permitted" in the PDC zone (4/4.131.txt#L14), held: commercial uses. The
-      PDC zone is closed to the pod by its own use list.
   "2.190":
     outcome: procedure
     note: >-

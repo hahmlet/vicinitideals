@@ -186,6 +186,17 @@ def test_a_suffix_letter_belongs_to_the_section_not_to_the_sentence(
 # -- reading too tightly ----------------------------------------------------
 
 
+def _numbers(headings: set[str]) -> set[str]:
+    """The printed section numbers, without the resolver's own markers.
+
+    :func:`_headings` also returns what a document says about itself --
+    "held:33.110.250", "full:33.110.", "Table 18.320.1" (FOLLOWUPS 105 item 4,
+    tested in test_crossref_resolver.py) -- and none of those opens with a
+    digit.
+    """
+    return {h for h in headings if h[:1].isdigit()}
+
+
 def test_a_wrapped_reference_does_not_answer_for_itself() -> None:
     """The trap that makes this whole check worth writing carefully.
 
@@ -227,7 +238,7 @@ def test_a_reference_that_wrapped_across_a_column_is_not_a_heading() -> None:
         "33.110.250 Additional Development Standards for Garages\n"
     )
 
-    assert _headings(wrapped, {"33"}, {"33.110"}) == {"33.110.250"}
+    assert _numbers(_headings(wrapped, {"33"}, {"33.110"})) == {"33.110.250"}
 
 
 def test_a_held_chapter_still_answers_for_its_own_sections() -> None:
@@ -243,7 +254,7 @@ def test_a_held_chapter_still_answers_for_its_own_sections() -> None:
         "33.110.250 Additional Development Standards for Garages\n"
     )
 
-    assert _headings(text, {"33"}, {"33.110"}) == {"33.110.250"}
+    assert _numbers(_headings(text, {"33"}, {"33.110"})) == {"33.110.250"}
 
 def test_a_whole_title_answers_for_every_section_inside_it(
     layers: dict[str, Layer]

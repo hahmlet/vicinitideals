@@ -69,6 +69,7 @@ from flats.encode.crossrefs import (
     _doc_ids,
     _held_ids,
     _headings,
+    _mention_caption,
     _resolves,
 )
 from flats.provenance.store import ProvenanceStore
@@ -361,7 +362,7 @@ def redirects(layer: Layer, store: ProvenanceStore | None = None) -> list[Routin
                     continue
                 seen.add(ref)
                 # Already counted, once, as a chapter we cannot open.
-                if not _resolves(ref, ids, headings):
+                if not _resolves(ref, ids, headings, _mention_caption(pointed, m)):
                     continue
                 # "The standards of this section" -- a sentence naming its own
                 # home sends nobody anywhere.

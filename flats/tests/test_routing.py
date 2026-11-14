@@ -237,6 +237,47 @@ def rows() -> list[Routing]:
 #: multi-dwelling standards of 33.120.280. The pod is a primary structure;
 #: the pointer reaches a shed or a garage this screen never places.
 OPEN = {
+    # 2026-11-13 (FOLLOWUPS 105 item 4, the resolver gap): these targets used
+    # to read as unfetched in the crossrefs ledger, because the store prints
+    # them only as a local "14." / "D." under a held section or as a table
+    # caption. Now they resolve, so each pointer is a redirect into a held
+    # section nothing cites inside. Each was read:
+    # - 16.23.010D, Happy Valley RCMU: the master-plan standards
+    #   (16.23.010.txt#L162-L172), already quoted in RCMU's
+    #   quadplex_allowed: false. A process, in a zone that is closed.
+    "or/clackamas/happy-valley 16.23.010 -> 16.23.010D",
+    # - 50.04.003.10, Lake Oswego: the exceptions to minimum density. They lift
+    #   a floor, so they can only admit (the old crossrefs ruling, narrows_only).
+    #   The layer is switched off.
+    "or/clackamas/lake-oswego 50.04.001.1 -> 50.04.003.10",
+    "or/clackamas/lake-oswego 50.04.001.2 -> 50.04.003.10",
+    # - 60.50.25.14, Beaverton: Vehicle Camping, a use the pod is not.
+    "or/washington/beaverton 20.05.20 -> 60.50.25.14",
+    "or/washington/beaverton 20.10.20 -> 60.50.25.14",
+    "or/washington/beaverton 20.15.20 -> 60.50.25.14",
+    "or/washington/beaverton 20.20.20 -> 60.50.25.14",
+    "or/washington/beaverton 20.22.20 -> 60.50.25.14",
+    # - 60.05.25.13, the landscape buffers. Table 60.05.25.13.D's Middle
+    #   Housing row reads N/A (the beaverton.yaml crossrefs ruling, read).
+    "or/washington/beaverton 60.05.25 -> 60.05.25.13",
+    # - 60.30.10.11, compact cars. Residential stalls stay at the standard size
+    #   of 60.30.10.7, which this layer encodes (60.30.10.txt#L413-L415).
+    "or/washington/beaverton 60.30.10 -> 60.30.10.11",
+    # - 70.15.10.5, Downtown's reduced minimum density for small pre-1999
+    #   sites. It lowers a floor (narrows_only).
+    "or/washington/beaverton 70.15.10 -> 70.15.10.5",
+    # - Tigard Table 18.660.4, the Triangle use table. TMU's quadplex_allowed
+    #   cites it at 18.660.060.txt#L55, but a caption has no section span for
+    #   a citation to land in, so the row cannot close as followed.
+    "or/washington/tigard 18.660.060 -> 18.660.4",
+    # - Table 18.660.6 allows 1 driveway per street frontage up to 300 ft
+    #   (18.660.070.txt#L264-L284). The pod's plan draws one drive
+    #   (flats/score/screen.py#L333-L334).
+    "or/washington/tigard 18.660.070 -> 18.660.6",
+    # - Table 18.660.8 sets window shares (residential: 30% of the first
+    #   storey, 20% above; 18.660.080.txt#L117-L122). Facade glazing is a
+    #   design matter that the screen does not grade.
+    "or/washington/tigard 18.660.080 -> 18.660.8",
     # 2026-11-08 (FOLLOWUPS 140): Johnson Creek Basin's South, Springwater and
     # floodplain sections each send tree removal to 33.537.125. Followed on
     # 2026-11-01 while the hold quoted it; Steph's ruling
