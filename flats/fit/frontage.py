@@ -366,36 +366,109 @@ def street_lines_to_curve_ft(edges: LotEdges) -> tuple[float, ...]:
     out: list[float] = []
     for c, chain in enumerate(chains):
         total = sum(e.length_ft for e in chain)
-        others = [o for k, o in enumerate(chains) if k != c and o]
-        if not chain or not others:
-            out.append(total)
-            continue
-        longest = max(chain, key=lambda e: e.length_ft).bearing_deg
-        street = [b for b in bearings if along(chain, b)]
-
-        def turns(e: Edge) -> bool:
-            dev = bearing_delta(e.bearing_deg, longest)
-            for b in street:
-                dev = min(dev, bearing_delta(e.bearing_deg, b))
-            return dev > CURVE_TOL_DEG
-
-        head = _point(chain[0], end=False)
-        tail = _point(chain[-1], end=True)
-        meets_head = any(_touches(head, _point(o[-1], end=True)) for o in others)
-        meets_tail = any(_touches(tail, _point(o[0], end=False)) for o in others)
-        cut: set[int] = set()
-        if meets_head:
-            for i, e in enumerate(chain):
-                if not turns(e):
-                    break
-                cut.add(i)
-        if meets_tail:
-            for i in range(len(chain) - 1, -1, -1):
-                if not turns(chain[i]):
-                    break
-                cut.add(i)
+        cut = _corner_pieces(chains, c, bearings)
         out.append(total - sum(chain[i].length_ft for i in cut))
     return tuple(out)
+
+
+def _corner_pieces(
+    chains: Sequence[Sequence[Edge]], c: int, bearings: Sequence[float]
+) -> set[int]:
+    """Which pieces of street ``c`` are the rounded corner it shares with
+    another street: from each end that meets another street, every piece
+    that turns more than :data:`CURVE_TOL_DEG` off the street's own
+    direction, up to the first piece that runs along it
+    (:func:`street_lines_to_curve_ft`). Empty for a street that meets none."""
+    chain = chains[c]
+    others = [o for k, o in enumerate(chains) if k != c and o]
+    if not chain or not others:
+        return set()
+    longest = max(chain, key=lambda e: e.length_ft).bearing_deg
+    street = [b for b in bearings if along(chain, b)]
+
+    def turns(e: Edge) -> bool:
+        dev = bearing_delta(e.bearing_deg, longest)
+        for b in street:
+            dev = min(dev, bearing_delta(e.bearing_deg, b))
+        return dev > CURVE_TOL_DEG
+
+    head = _point(chain[0], end=False)
+    tail = _point(chain[-1], end=True)
+    meets_head = any(_touches(head, _point(o[-1], end=True)) for o in others)
+    meets_tail = any(_touches(tail, _point(o[0], end=False)) for o in others)
+    cut: set[int] = set()
+    if meets_head:
+        for i, e in enumerate(chain):
+            if not turns(e):
+                break
+            cut.add(i)
+    if meets_tail:
+        for i in range(len(chain) - 1, -1, -1):
+            if not turns(chain[i]):
+                break
+            cut.add(i)
+    return cut
+
+
+#: How far a piece of a street's straight run may turn off the run's longest
+#: piece, degrees (:func:`two_straight_streets`). A county lot line follows a
+#: straight street in pieces a degree or two apart; a run whose pieces turn
+#: farther than this may be a curve, and a curve can make a corner lot of
+#: every lot along it (Gresham's "inside curve of a street with a delta angle
+#: ... of 60 degrees or more", 3/3.0103.txt#L570).
+STRAIGHT_TOL_DEG = 5.0
+
+#: A piece of street line shorter than this, feet, is digitising, not a turn.
+STRAIGHT_PIECE_MIN_FT = 2.0
+
+
+def two_straight_streets(edges: LotEdges | None) -> bool:
+    """Whether the lot's street lines are exactly two streets, each straight,
+    meeting at the one rounded corner between them -- the plain corner lot.
+
+    Then a townhouse plat's home lots set side by side along either street
+    front that one straight street alone, except the end lot at the corner:
+    they are interior lots, "a lot other than a corner lot, with frontage
+    only on one street" (Gresham 3/3.0103.txt#L579-L580), and none abuts a
+    curve (FOLLOWUPS 191, :func:`flats.score.screen._home_lots`). False on
+    anything else -- one street, a through lot, a third street, a street
+    that bends or curves along the lot, two streets that never meet, or a
+    lot nothing measured -- and False is the question, never the answer."""
+    if edges is None or not two_streets(edges.front_bearings):
+        return False
+    ring = edges.edges
+    if through_lot(
+        [(e.x1, e.y1, e.x2, e.y2, STREET_CLASS if e.cls in _STREET and not e.alley else "") for e in ring],
+        edges.front_bearings,
+    ):
+        return False
+    chains = street_chains(edges)
+    if len(chains) != 2 or not all(chains):
+        return False
+    bearings = [float(b) for b in edges.front_bearings[:2]]
+    for c, chain in enumerate(chains):
+        if not _meets(chains, c):
+            return False
+        cut = _corner_pieces(chains, c, bearings)
+        run = [e for i, e in enumerate(chain) if i not in cut and e.length_ft >= STRAIGHT_PIECE_MIN_FT]
+        if not run:
+            return False
+        longest = max(run, key=lambda e: e.length_ft).bearing_deg
+        if any(bearing_delta(e.bearing_deg, longest) > STRAIGHT_TOL_DEG for e in run):
+            return False
+    return True
+
+
+def _meets(chains: Sequence[Sequence[Edge]], c: int) -> bool:
+    """Whether street ``c`` meets another of the lot's streets end to end."""
+    chain = chains[c]
+    head = _point(chain[0], end=False)
+    tail = _point(chain[-1], end=True)
+    return any(
+        _touches(head, _point(o[-1], end=True)) or _touches(tail, _point(o[0], end=False))
+        for k, o in enumerate(chains)
+        if k != c and o
+    )
 
 
 def street_runs(
@@ -566,4 +639,5 @@ __all__ = [
     "street_chains",
     "street_runs",
     "street_shares",
+    "two_straight_streets",
 ]

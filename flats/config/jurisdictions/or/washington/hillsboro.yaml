@@ -535,7 +535,9 @@ defaults:
 # L679-L684,L700-L702). A quadplex on one flag lot is allowed. Every zone
 # below that states a minimum frontage under 25 feet carries a
 # `flag_lot` variant of 25; a zone whose table states no frontage row does
-# not, which is a doubt.
+# not, which is a doubt. The UC zones carry none: 12.40.160 B creates flag
+# lots only in standard and light-rail zones (L7-L8, L10), and a UC zone is
+# neither (12.01.200.txt#L5; FOLLOWUPS 191 removed three untied 25s).
 # AmberGlen's 12.64.550 D, "Flag lots are Not Permitted", reaches UC-RM, UC-MU,
 # UC-AC, UC-NC and UC-OR through 12.64.520 A, and those five refuse a flag lot
 # on quadplex_allowed (2026-11-09).
@@ -3957,11 +3959,11 @@ zones:
       value: 18
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Lot Dimensions, frontage, quadplex
       quote: "or/washington/hillsboro/12.24/12.24.560.txt#L4,L15,L25,L30-L31"
-      variants:
-        - value: 25
-          when: [flag_lot]
-          cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
-          quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+      # No flag-lot variant: 12.40.160 B lets flag lots be created only in
+      # standard and light-rail zones (12.40.160.txt#L7-L8,L10), and a UC zone
+      # is neither (12.01.200.txt#L5); 12.64.550 D refuses the flag lot
+      # outright (quadplex_allowed above). The 25 ft once held here had no
+      # passage sending it to this zone (FOLLOWUPS 191, 2026-11-13).
     setback_front_ft:
       value: 0
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Setbacks, front to residential structure None
@@ -4092,11 +4094,11 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Lot Dimensions, lot frontage None
       quote: "or/washington/hillsboro/12.24/12.24.660.txt#L4,L15,L18"
-      variants:
-        - value: 25
-          when: [flag_lot]
-          cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
-          quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+      # No flag-lot variant: 12.40.160 B lets flag lots be created only in
+      # standard and light-rail zones (12.40.160.txt#L7-L8,L10), and a UC zone
+      # is neither (12.01.200.txt#L5); 12.64.550 D refuses the flag lot
+      # outright (quadplex_allowed above). The 25 ft once held here had no
+      # passage sending it to this zone (FOLLOWUPS 191, 2026-11-13).
     setback_front_ft:
       value: 0
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Setbacks, front None
@@ -4241,11 +4243,11 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.760-1, Minimum Lot Dimensions, lot frontage None
       quote: "or/washington/hillsboro/12.24/12.24.760.txt#L4,L15,L18"
-      variants:
-        - value: 25
-          when: [flag_lot]
-          cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
-          quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+      # No flag-lot variant: 12.40.160 B lets flag lots be created only in
+      # standard and light-rail zones (12.40.160.txt#L7-L8,L10), and a UC zone
+      # is neither (12.01.200.txt#L5); 12.64.550 D refuses the flag lot
+      # outright (quadplex_allowed above). The 25 ft once held here had no
+      # passage sending it to this zone (FOLLOWUPS 191, 2026-11-13).
     setback_front_ft:
       value: 0
       cite: Hillsboro CDC Table 12.24.760-1, Minimum Setbacks, front yard None

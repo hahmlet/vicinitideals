@@ -89,6 +89,7 @@ from flats.fit.frontage import (
     street_chains,
     street_lines_to_curve_ft,
     street_runs,
+    two_straight_streets,
 )
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
@@ -2080,6 +2081,9 @@ def lot_from_row(
         # Two streets that really are two: the side street may take the
         # driveway (:func:`flats.score.paper.side_street_fed`).
         corner=is_corner(edges),
+        # Two straight streets meeting at one corner: a townhouse plat's
+        # middle home lots are interior lots (FOLLOWUPS 191).
+        two_straight_streets=two_straight_streets(edges),
         # The shortest street's line: what a cap on a share of "any street
         # lot line" is read against (FOLLOWUPS 84), not the summed frontage.
         street_line_min_ft=street_line_min_ft(edges),

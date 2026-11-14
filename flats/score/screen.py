@@ -730,6 +730,19 @@ DRIVE_STREET = "drive_street"
 #: pass, and never a red while some reading clears it.
 FRONTAGE_LINE = "min_frontage_line"
 
+#: Which home lots of a townhouse plat on a corner parcel are corner lots,
+#: where the zone states one townhouse-lot number for a corner lot and
+#: another for an interior lot (Gresham Table 4.0130 E.1/E.2 and G.1/G.2,
+#: 4.0430 note 11, 4.1130, 4.1230, 4.1415, 4.1508) and the lot's streets are
+#: not plainly two straight streets meeting at one corner
+#: (:attr:`LotFacts.two_straight_streets`): on a curve, or on a lot whose
+#: street lines nothing measured, a middle home lot may be a corner lot too.
+#: Raised only where a home lot clears one of the two numbers and not the
+#: other. Joins ``_checks``'s ``unmeasured``, so it reports as
+#: ``FACT_UNOBSERVED``: a question, never a pass, and never a red while one
+#: reading clears it (FOLLOWUPS 191).
+CORNER_HOME_LOT = "corner_home_lot"
+
 #: The drawn building against a stated maximum front setback
 #: (``setback_front_max_ft``, FOLLOWUPS 147), in a zone that asks no building
 #: share of the frontage (where one is asked, :func:`_building_frontage`
@@ -895,6 +908,14 @@ class LotFacts:
     #: (:func:`flats.score.paper.side_street_fed`). False where nothing
     #: measured the lot, which keeps the lane beside the building.
     corner: bool = False
+    #: The lot's street lines are exactly two straight streets meeting at one
+    #: corner (:func:`flats.fit.frontage.two_straight_streets`): a townhouse
+    #: plat's middle home lots, and the end lot away from the corner, front
+    #: one straight street only and are interior lots (FOLLOWUPS 191,
+    #: :func:`_home_lots`). False where nothing measured the lot, or the
+    #: streets are anything else, which leaves which home lot is the corner
+    #: unsettled (:data:`CORNER_HOME_LOT`).
+    two_straight_streets: bool = False
     #: Street along two opposite lines (:func:`flats.geom.corner.through_lot`).
     #: Read only where the code names the street the front doors face
     #: (:data:`ENTRANCE_STREET`). False where nothing measured the lot; the
@@ -1800,7 +1821,7 @@ def _checks(
         min_front, front_answered = lot_standard(
             rules, "min_frontage_ft", per_unit=per_unit, lots=design.units
         )
-        min_front = _row_of_home_lots(rules, design, "min_frontage_ft", min_front)
+        min_front = _row_of_home_lots(rules, design, "min_frontage_ft", min_front, lot=lot)
         # Owed on ONE street where the code says so (PCC 33.120.206.C.1, "at
         # least 90 feet of frontage on a street"): the longest of the lot's
         # streets, not their sum, and unchecked where they went unmeasured.
@@ -1961,7 +1982,7 @@ def _checks(
     min_width, width_answered = lot_standard(
         rules, "min_lot_width_ft", per_unit=per_unit, lots=design.units
     )
-    min_width = _row_of_home_lots(rules, design, "min_lot_width_ft", min_width)
+    min_width = _row_of_home_lots(rules, design, "min_lot_width_ft", min_width, lot=lot)
     if lot.lot_width_ft is not None and width_answered:
         lot_check("min_lot_width_ft", lot.lot_width_ft, min_width)
     else:
@@ -1976,7 +1997,7 @@ def _checks(
     min_avg, avg_answered = lot_standard(
         rules, "min_average_lot_width_ft", per_unit=per_unit, lots=design.units
     )
-    min_avg = _row_of_home_lots(rules, design, "min_average_lot_width_ft", min_avg)
+    min_avg = _row_of_home_lots(rules, design, "min_average_lot_width_ft", min_avg, lot=lot)
     if lot.avg_lot_width_ft is not None and avg_answered:
         lot_check("min_average_lot_width_ft", lot.avg_lot_width_ft, min_avg)
     else:
@@ -2008,7 +2029,7 @@ def _checks(
     else:
         unchecked.append("max_lot_depth_ratio")
     if per_unit:
-        _home_lots(rules, lot, design, check, unchecked)
+        _home_lots(rules, lot, design, check, unchecked, unmeasured)
 
     # The pavement this plan lays: what the leftover checks below take off
     # the lot. Its driveway alone -- no stalls -- is what a code that
@@ -3304,23 +3325,76 @@ def _side_yard(rules: ZoneResolution) -> float:
     return max(got, default=0.0)
 
 
+def _corner_split(
+    rules: ZoneResolution, lot: LotFacts | None
+) -> tuple[ZoneResolution | None, str]:
+    """How a townhouse plat on this parcel splits into corner and interior
+    home lots (FOLLOWUPS 191).
+
+    Returns the zone as an interior home lot reads it
+    (:attr:`ZoneResolution.interior`) and the layout: ``"corner"`` where every
+    home lot answers to the corner number -- a through lot, whose home lots
+    each run from one street to the other, and a code (Gresham's, "a lot that
+    has frontage on two or more streets", 3/3.0103.txt#L568-L569) that makes
+    each a corner; ``"interior"`` where the parcel is plainly two straight
+    streets meeting at one corner (:attr:`LotFacts.two_straight_streets`), so
+    only the end lot at that corner is one; ``"unsettled"`` otherwise
+    (:data:`CORNER_HOME_LOT`). ``(None, "corner")`` where the parcel is not a
+    corner or the zone states nothing apart for one: the resolution's own
+    numbers are every home lot's.
+
+    A code that prints a townhouse row for corner lots and another for
+    interior lots means the lot each home stands on: Gresham's Table 4.0130
+    E heads them "Width at building line: Interior lot" and "Corner lot"
+    (4/4.0130.txt#L40,L47), and an interior lot is "a lot other than a
+    corner lot, with frontage only on one street" (3/3.0103.txt#L579-L580).
+    """
+    interior = rules.interior if "corner_lot" in rules.conditions else None
+    if interior is None or lot is None or lot.through_lot:
+        return None, "corner"
+    return interior, "interior" if lot.two_straight_streets else "unsettled"
+
+
 def _row_of_home_lots(
-    rules: ZoneResolution, design: Design, name: str, parent: float | None
+    rules: ZoneResolution,
+    design: Design,
+    name: str,
+    parent: float | None,
+    *,
+    lot: LotFacts | None = None,
 ) -> float | None:
     """What a width standard asks of the parcel when the townhouse form cuts it
     into home lots side by side along the street: the middle lots one home wide
     each, and the two end lots each a home and the side yard on its outer line
     -- or the standard, where that is wider. Never less than ``parent``, the
     four-lots-abreast reading :func:`lot_standard` gives. Where the standard is
-    not one the zone states for townhouse lots, ``parent`` unchanged."""
+    not one the zone states for townhouse lots, ``parent`` unchanged.
+
+    On a corner parcel (:func:`_corner_split`) only the end lot at the corner
+    takes the corner number, the other end lot the interior one; where which
+    end is the corner is unsettled, each end takes the stricter of the two."""
     if parent is None or design.plat is not Plat.unit_lots:
         return parent
     each = home_lot_standard(rules, name, lots=design.units)
-    if each is None:
+    interior, layout = _corner_split(rules, lot)
+    inner = home_lot_standard(interior, name, lots=design.units) if interior is not None else each
+    if each is None and inner is None:
         return parent
     home = design.unit_width_ft
-    end = max(each, home + _side_yard(rules))
-    return max(parent, (design.units - 2) * home + 2 * end)
+    side = home + _side_yard(rules)
+
+    def end(*figures: float | None) -> float:
+        return max([side, *(f for f in figures if f is not None)])
+
+    if layout == "interior":
+        ends = end(each) + end(inner)
+    elif layout == "unsettled":
+        ends = 2 * end(each, inner)
+    else:
+        if each is None:
+            return parent
+        ends = 2 * end(each)
+    return max(parent, (design.units - 2) * home + ends)
 
 
 def _home_lots(
@@ -3329,6 +3403,7 @@ def _home_lots(
     design: Design,
     check: Callable[..., None],
     unchecked: list[str],
+    unmeasured: set[str] | None = None,
 ) -> None:
     """The townhouse form's middle home lots against the zone's townhouse-lot
     standards, one lot at a time (Steph 2026-10-15: "'Townhomes' will have
@@ -3341,35 +3416,72 @@ def _home_lots(
     being larger does not widen it. The end lots, which carry the side yards,
     are what :func:`_row_of_home_lots` asks of the parcel's own width.
 
+    On a corner parcel a middle home lot is an interior lot and takes the
+    zone's interior townhouse number, not the corner lot's (FOLLOWUPS 191,
+    :func:`_corner_split`): Gresham's MDR-24 asks a corner townhouse lot for
+    25 ft of frontage and an interior one for 16 (4/4.0130.txt#L78-L79,L81-L82,L142).
+    Where the parcel's streets leave unsettled which home lots are corners, a
+    home lot that clears one number and not the other is a question
+    (:data:`CORNER_HOME_LOT`), never a pass; one that clears both passes and
+    one that clears neither fails.
+
     Only standards the zone states for townhouse lots
     (:func:`flats.score.paper.home_lot_standard`); a middle housing land
     division's children inherit none (ORS 92.031(2)(b)), and nothing is
     checked for them here."""
     lots = design.units
     home = design.unit_width_ft
+    interior, layout = _corner_split(rules, lot)
+
+    def ask(name: str, field: str, observed: float, *, is_maximum: bool) -> None:
+        each = home_lot_standard(rules, field, lots=lots)
+        if interior is None:
+            if each is not None:
+                check(name, observed, each, is_maximum=is_maximum)
+            return
+        inner = home_lot_standard(interior, field, lots=lots)
+        if layout == "interior" or inner == each:
+            if inner is not None:
+                check(name, observed, inner, is_maximum=is_maximum)
+            return
+        readings = [f for f in (each, inner) if f is not None]
+        clears = [
+            f is None or (observed <= f if is_maximum else observed >= f) for f in (each, inner)
+        ]
+        if all(clears):
+            check(name, observed, (min if is_maximum else max)(readings), is_maximum=is_maximum)
+        elif not any(clears):
+            check(name, observed, (max if is_maximum else min)(readings), is_maximum=is_maximum)
+        else:
+            unchecked.append(name)
+            if unmeasured is not None:
+                unmeasured.add(CORNER_HOME_LOT)
+
     for name, field in (
         (HOME_LOT_WIDTH, "min_lot_width_ft"),
         (HOME_LOT_AVERAGE_WIDTH, "min_average_lot_width_ft"),
         (HOME_LOT_FRONTAGE, "min_frontage_ft"),
     ):
-        each = home_lot_standard(rules, field, lots=lots)
-        if each is not None:
-            check(name, home, each, is_maximum=False)
-    area = home_lot_standard(rules, "min_lot_sqft", lots=lots)
-    if area is not None:
+        ask(name, field, home, is_maximum=False)
+    stated = (rules,) if interior is None else (rules, interior)
+    if any(home_lot_standard(r, "min_lot_sqft", lots=lots) is not None for r in stated):
         deep = lot.lot_depth_ft
         if deep is None and lot.lot_width_ft:
             deep = lot.lot_sqft / lot.lot_width_ft
         if deep is None:
             unchecked.append(HOME_LOT_AREA)
         else:
-            check(HOME_LOT_AREA, home * deep, area, is_maximum=False)
-    ratio = home_lot_standard(rules, "max_lot_depth_ratio", lots=lots)
-    if ratio is not None:
+            ask(HOME_LOT_AREA, "min_lot_sqft", home * deep, is_maximum=False)
+    if any(home_lot_standard(r, "max_lot_depth_ratio", lots=lots) is not None for r in stated):
         if lot.lot_depth_ft is None:
             unchecked.append(HOME_LOT_DEPTH_RATIO)
         else:
-            check(HOME_LOT_DEPTH_RATIO, lot.lot_depth_ft / home, ratio, is_maximum=True)
+            ask(
+                HOME_LOT_DEPTH_RATIO,
+                "max_lot_depth_ratio",
+                lot.lot_depth_ft / home,
+                is_maximum=True,
+            )
 
 
 def fit_for(
@@ -4671,6 +4783,7 @@ _MEASURED_FLAG: dict[str, str] = {
     ENTRANCE_STREET: "ENTRANCE-STREET",
     ENTRANCE_DRAWN: "ENTRANCE-DRAWN",
     STREET_DIRECTION: "MEASURE-STREET-DIRECTION",
+    CORNER_HOME_LOT: "MEASURE-CORNER-HOME-LOT",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on

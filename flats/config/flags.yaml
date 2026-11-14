@@ -747,6 +747,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-CORNER-HOME-LOT:
+    description: "The zone asks a corner townhouse lot for one width or frontage and an interior one for another; this corner parcel's streets are not plainly two straight streets meeting at one corner, so which of the plat's home lots are corner lots is unsettled, and a home lot clears one number and not the other"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Measure whether a curve (Gresham: a street curve of 60 degrees or more, 3.0103) or a further street makes a middle home lot a corner lot, from the lot's street lines and the plat's curve data (FOLLOWUPS 191)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-WALL-OPENINGS:
     description: "Gresham asks for clear glass on every wall that does not face a street, and the building code bans windows within 3 ft of a side or rear lot line; no fitting building was drawn to measure how far its walls stand from those lines"
     kind: categorical
