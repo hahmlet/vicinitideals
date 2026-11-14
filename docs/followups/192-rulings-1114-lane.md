@@ -54,3 +54,5 @@ rides rel10:
 - **Q19 Gresham bent/curved corners:** programmatic fix offered -- draw the
   home-lot lines ourselves and test which home lot touches the second street
   (Gresham: corner lot = frontage on two or more streets). Waits on Steph's yes.
+
+BUILT 2026-11-14: flats/rulings-1114 98fe014b (cut from corner-th-191, rides rel10). Hand-off ../vicinitideals-worktrees/rulings-1114.handoff.md. Expected moves not counted (bound counts). Gresham item 3 turned out a tightening: the 16 ft alley row already fired, also for a side-line alley; now needs an alley along the whole rear line. New Steph question (sheet Q20): Hillsboro engineer-set DRIVEWAY sight area -- GREEN+flag like corners?

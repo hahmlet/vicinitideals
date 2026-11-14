@@ -63,7 +63,7 @@ the full one.)
 188. [Claude] [scan: YES -- toward yellow] **Lots cut by a district boundary pass untested** (S/E Hillsboro, Portland map areas) -- found 11-12; count + sample, then split-zone-yellow rule. [file](followups/188-cut-district-untested.md)
 189. [Claude] [scan: YES -- toward green only] **rel7 move-read fix-forwards: pdx-9ft cases not moved, Thorville bulb unmeasured, Clackamas R10 51.2% share red** -- none a false GREEN. F5/F6 (ingest cert, recipe root) done 766dd02d. [file](followups/189-rel7-fix-forwards.md)
 191. [Claude] [scan: YES -- toward green only] **Middle townhouse lots asked for the corner lot's 25 ft frontage (false RED); drop 3 untied Hillsboro UC entries** -- BUILT flats/corner-th-191 3652cfa6 (rides rel10 with pagecheck-34); ~40 Gresham RED->YELLOW, 0 GREEN; Hillsboro UC entries deleted. [file](followups/191-corner-townhouse-false-red.md)
-192. [Claude] [Steph: Q1 Q2 Q7 Q9-Q11 Q19 info asked] [scan: YES -- mostly moot today] **Steph's 11-14 answers: encode Fairview all corners, OC/Hillsboro engineer sight GREEN+flag, Gresham MDR-24 alley 16 ft, King City per-side buffer** -- rulings recorded; lane not built (rel10). [file](followups/192-rulings-1114-lane.md)
+192. [Claude] [Steph: Q1 Q2 Q7 Q9-Q11 Q19 info asked] [scan: YES -- mostly moot today] **Steph's 11-14 answers: encode Fairview all corners, OC/Hillsboro engineer sight GREEN+flag, Gresham MDR-24 alley 16 ft, King City per-side buffer** -- rulings recorded 4cb7d85a; lane BUILT flats/rulings-1114 98fe014b (rides rel10). New Steph Q: Hillsboro driveway engineer-set sight area same as corners? [file](followups/192-rulings-1114-lane.md)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
