@@ -162,6 +162,14 @@ class StreetEdges:
         src[use_width] = Source.width
         return out, src
 
+    def width_beside(self, feet: np.ndarray, lines: Sequence[BaseGeometry]) -> np.ndarray:
+        """The narrowest recorded pavement width running beside each
+        centreline foot (``lines[i]`` the centreline of ``feet[i]``); NaN
+        where none is recorded. What :mod:`flats.fit.set_access` reads to
+        say whether a crane's pad fits in the street."""
+        feet = np.asarray(feet, dtype=float).reshape(-1, 2)
+        return self._width(feet, np.asarray(lines, dtype=object))
+
     def _crossed(self, points: np.ndarray, feet: np.ndarray, gap: np.ndarray) -> np.ndarray:
         """The distance from each point to the curb its line to the
         centreline crosses nearest the centreline; NaN where none."""

@@ -1,301 +1,313 @@
-# Set access: where a mobile crane can set up on a lot and whether it can make
-# every lift of the pod (FOLLOWUPS 145; flats/fit/set_access.py).
+# Set access: can the panel truck and a mobile crane reach, set up and lift
+# the pod on this lot (FOLLOWUPS 145; flats/fit/set_access.py).
 #
-# HUMAN-OWNED. Every product figure below is Steph's, stored AS PRINTED in
-# docs/followups/145-set-access-crane-truck.md ("Steph 2026-11-11"); the
-# loader parses the printed text (8'1" -> 8.083 ft, "711-724" -> 711..724 lb)
-# and takes the HIGH end of every range. An agent does not move one without a
-# new ruling quoted here. A field left null is UNMEASURED: the solver reports
-# it and never passes on it.
+# A REPORT, NOT A SCREEN CHECK (Steph 2026-11-14: "Don't flag any lots by
+# color yet, we're just starting something from scratch"). Nothing here
+# reaches the colour, a reason code, a flag or the bound. The entry point is
+# flats.fit.set_access.report(); scripts/flats_set_access_sample.py runs it
+# over a sample of a finished bridge run.
 #
-# NOT WIRED. Nothing here reaches the colour, the bound or a reason word yet:
-# Steph has not set a colour policy and no load chart is in. The hook point is
-# flats/ingest/quadfit.py slope_checked(), after the site grade is read (the
-# drawing's building and court are final there and the Terrain is open):
-# call flats.fit.set_access.solve(Site(...), grade_of=...) on the drawing.
+# HUMAN-OWNED. Every product figure below is stored AS PRINTED in Steph's
+# crane guide, Factory-Sim docs/research/S3f-crane-28t-vs-45t.md (2026-11-13,
+# "the guide"; delivered 2026-11-14), with the guide's own label:
+# [vendor] = maker or dealer document, [calc] = worked from those, [est] =
+# estimate. The loader parses the printed text (8 ft 6 in -> 8.5 ft,
+# "556-723" -> 556..723 lb) and takes the HIGH end of every range. An agent
+# does not move one without a new ruling quoted here. A field left null is
+# UNMEASURED: the report says so and never answers "works" on it.
+#
+# Supersedes slice 1's figures (Steph 2026-11-11: one 28 x 40 ft pad, the
+# piece list drawn for a 30 ft deep pod).
 #
 # ---------------------------------------------------------------------------
-# Conventions the solver relies on (prior art searched 2026-11-11: no open-
-# source crane lift-planning library worth adopting -- four unlicensed hobby
-# repos and paid tools only -- so these are taken from the standards and
-# built here):
+# Conventions the solver relies on (prior art searched 2026-11-11: nothing
+# worth adopting, so these are taken from the standards and built here):
 #
 # * RADIUS is the horizontal distance from the crane's axis of rotation to the
-#   centre of the hoist line with the load on it, i.e. over the load's centre
-#   of gravity. ASME B30.5-2004 5-1.1.1(b)(2)
-#   https://law.resource.org/pub/us/cfr/ibr/002/asme.b30.5.2004.pdf
-#   The axis of rotation is taken at the centre of the setup pad unless a
-#   chart's crane says otherwise (crane.rotation_offset_ft).
-# * A load's radius is the LONGEST one at which it is handled: ASME B30.5
-#   5-3.2.1.1(c), "the weight of the load does not exceed the crane ratings at
-#   the maximum radius at which the load is to be handled". So each load's
-#   governing radius = max(pick-up radius, set radius), over every piece of
-#   that load.
-# * GROSS LOAD = piece + rigging + hook block + whatever the chart says to
-#   deduct (a stowed jib, a headache ball). ASME B30.5 5-1.1.1(b)(4): "The
-#   weight of all auxiliary handling devices such as lower load block, hooks,
-#   and slings shall be considered as part of the load."
+#   hoist line over the load's centre of gravity. ASME B30.5-2004
+#   5-1.1.1(b)(2). The axis is taken at the centre of the set-up pad (the
+#   guide gives no turntable position; crane.<id>.rotation_offset_ft).
+# * A load's radius is the LONGEST one at which it is handled (ASME B30.5
+#   5-3.2.1.1(c)): each piece's governing radius = max(pick-up, set).
+# * GROSS LOAD = piece + rigging + whatever the chart says to deduct. The
+#   guide (section 3): "The figures include everything on the hook (hook
+#   block, slings, lifting beam, frame)." Its rigging figures (below) include
+#   the hook block.
 # * BETWEEN TWO LISTED RADII the capacity is the NEXT LONGER radius's row,
-#   never an interpolation: manufacturers' chart notes ("For a load radius not
-#   shown, use rated load of next longer listed radius", P&H; "use the next
-#   longer radius", US Army TM 5-3810-307-10,
-#   https://constructioncranes.tpub.com/TM-5-3810-307-10/0776290152.htm --
-#   both seen in search results, not opened; NCCCO rigger study guide "do not
-#   create a higher interpolated capacity",
-#   https://open-exam-prep.com/study-guides/nccer-rigger/complex-lift-planning-multi-crane/reading-mobile-crane-load-charts).
-#   Past the last listed radius the capacity is zero. Closer than the first
-#   listed radius the chart says nothing: the lift is unmeasured.
-# * RATED CAPACITY is the ceiling: 29 CFR 1926.1417(o)(1), "The equipment
-#   must not be operated in excess of its rated capacity."
-#   https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.1417
+#   never an interpolation. The guide (section 3): "Between the listed
+#   reaches, use the next longer reach." Past the last listed radius the
+#   capacity is zero; closer than a column's first listed radius that column
+#   says nothing (if no column covers it, the lift is unmeasured). The best
+#   boom column at the radius is taken (the operator picks the boom length).
+# * RATED CAPACITY is the ceiling: 29 CFR 1926.1417(o)(1).
 #   lifts.max_pct_of_chart lowers it for planning (null = 100).
-#   1926.1417(o)(3)(ii) requires the load's weight be VERIFIED when it is over
-#   75% of the rated capacity at the longest radius used: such lifts are
-#   marked verify_weight, not failed. No federal "critical lift" definition
-#   exists (USACE EM 385-1-1 16.H.01 and DOE-STD-1090-2020 2.1.2(E) use 75%).
-# * OVERHEAD POWER LINES: 29 CFR 1926.1408 (20 ft for lines up to 350 kV under
-#   (a)(2)(ii); Table A by voltage). Not checked in this slice -- the line and
-#   pole layers are FOLLOWUPS 144. Reported unmeasured.
-#   https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.1408
-# * GROUND: 1926.1402 wants ground "firm, drained, and graded" to the
-#   manufacturer's specification. Steph: raw dirt OK. The slope limit is
-#   crane.max_pad_slope_pct, unset until Steph or a chart gives it.
-#   https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.1402
+#   1926.1417(o)(3)(ii): a lift over 75% of the rated capacity has its weight
+#   verified -- marked verify_weight, not failed.
+# * OVERHEAD POWER LINES are NOT checked (Steph 2026-11-14: "another job
+#   depending on the results of the on-site load"). Every plan that sets the
+#   crane up in the street, or lifts off a truck parked in the street,
+#   carries the note "power lines not checked".
+# * GROUND: guide section 2, "level, firm, drained; mats under the pads"
+#   (OSHA 1926.1402). No slope limit is printed: the pad's fall is reported
+#   where the elevation model is read, and the check stays unmeasured.
 # ---------------------------------------------------------------------------
 
-version: 1
-source: "Steph 2026-11-11 (docs/followups/145-set-access-crane-truck.md)"
-pieces_status: "drawn for 30 ft depth; to be superseded"
+version: 2
+source: "Factory-Sim docs/research/S3f-crane-28t-vs-45t.md (2026-11-13), Steph 2026-11-14"
 
-crane:
-  # Steph 2026-11-11: "100 in (8.33 ft) wide, 40 ft long".
-  body: {width_in: 100, length_ft: 40}
-  # Steph 2026-11-11: "28 x 40 ft setup pad (raw dirt OK) near the home".
-  # Width x length; the crane body lies along the pad's 40 ft length.
-  pad: "28 x 40"
-  surface: raw dirt OK
-  # Steph 2026-11-11: "may enter/leave temporarily from any side with room,
-  # setbacks ignored; must be able to leave once the pod is up". The path is
-  # as wide as the body (8.33 ft) and is checked with the building in place.
-  setbacks_ignored: true
-  # Pad and drive on the street right of way (a street-use permit). Steph to
-  # decide (FOLLOWUPS 145 "Open for Steph"); off until then.
-  street_setup_allowed: false
-  # Steepest ground a pad may stand on, percent. UNSET: no figure from Steph
-  # or a chart yet, so the pad's slope is reported and its check unmeasured.
-  max_pad_slope_pct: null
-  # Axis of rotation relative to the pad centre, along / across the pad's
-  # length. 0/0 until a crane's spec says otherwise.
-  rotation_offset_ft: {along: 0, across: 0}
+# Tried in this order (Steph 2026-11-14: "28 t first, 45 t only where the 28 t
+# misses"). On-site set-ups rank before street ones (Steph 2026-11-14), so a
+# crane's street set-up is tried only where no crane in this list works from
+# on site: 28 t site -> 45 t site -> 28 t street -> 45 t street.
+order: [manitex_2892c, national_nbt45_2]
+
+cranes:
+  manitex_2892c:
+    label: 28 t Manitex 2892C
+    # Guide section 1: "Length travelling 37 ft 5 in to 38 ft 6 in [vendor]";
+    # "Width travelling 8 ft 6 in [est: crane fits a legal truck width]".
+    body: {length: "37 ft 5 in-38 ft 6 in", width: "8 ft 6 in"}
+    # Guide section 2: "Set-up pad to plan about 26 x 42 ft [est]". Width x
+    # length; the truck lies along the pad's 42 ft length.
+    pad: "26 x 42"
+    # Guide section 2: "Over the rear only (180 deg) unless a front bumper
+    # stabilizer is fitted [vendor]". The guide gives no turntable position,
+    # so every pick and set point must lie behind the pad's REAR END (the
+    # farthest back the turntable can be: the strictest reading). Set
+    # rear_line_from_axis_ft once the crane company gives the turntable's
+    # place; null = the pad's rear end.
+    swing: rear_180
+    rear_line_from_axis_ft: null
+    # Guide intro: "Panels are picked one by one off the parked trailer".
+    method: off_trailer
+    rotation_offset_ft: {along: 0, across: 0}
+    chart:
+      source: "guide section 3, 28 t Manitex 2892C, over the rear, lb [vendor]"
+      configuration: "outriggers fully out, over the rear"
+      # Guide section 3: "Take off 250 lb if a folded jib rides on the boom
+      # [vendor]". Whether the unit carries one is not known: taken off
+      # (conservative).
+      deductions_lb: {folded_jib_if_fitted: 250}
+      # Columns: boom length ft; rows [reach ft, lb]. "-" cells left out.
+      booms:
+        - boom_ft: 28
+          rows: [[10, 34520], [15, 25430], [20, 20130], [25, 15630]]
+        - boom_ft: 47
+          rows: [[10, 22500], [15, 22310], [20, 17540], [25, 14500], [30, 12120],
+                 [35, 9040], [40, 6990], [45, 5510]]
+        - boom_ft: 62
+          rows: [[15, 20960], [20, 16290], [25, 13340], [30, 11290], [35, 9200],
+                 [40, 7150], [45, 5700], [50, 4600], [55, 3750], [60, 3050]]
+        - boom_ft: 77
+          rows: [[15, 15920], [20, 13540], [25, 11710], [30, 10160], [35, 8830],
+                 [40, 7240], [45, 5780], [50, 4690], [55, 3840], [60, 3160],
+                 [65, 2610], [70, 2140]]
+        - boom_ft: 92
+          rows: [[20, 10700], [25, 9290], [30, 8330], [35, 7320], [40, 6460],
+                 [45, 5730], [50, 4740], [55, 3890], [60, 3210], [65, 2660],
+                 [70, 2200]]
+  national_nbt45_2:
+    label: 45 t National NBT45-2
+    # Guide section 1: "37 ft 4 in (127 ft boom) to 40 ft 3 in (142 ft boom)
+    # [vendor]"; "100.3 in (8 ft 4 in) [vendor]".
+    body: {length: "37 ft 4 in-40 ft 3 in", width: "100.3 in"}
+    # Guide section 2: "about 28 x 42 ft [est]".
+    pad: "28 x 42"
+    # Guide section 2: "All the way round (360 deg); the front stabilizer is
+    # standard [vendor]".
+    swing: full_360
+    rear_line_from_axis_ft: null
+    # Guide intro: "It also lifts a whole trailer load off in one go, so the
+    # truck can leave and the stack is set from the ground". Where no truck
+    # spot on the lot holds a load (the landing spot, below), it picks piece
+    # by piece off the parked trailer like the 28 t.
+    method: whole_load
+    rotation_offset_ft: {along: 0, across: 0}
+    chart:
+      source: "guide section 3, 45 t National NBT45-2 (NBT45127-2, 4,000 lb counterweight), 360 deg, lb [vendor]"
+      configuration: "outriggers fully out, 4,000 lb counterweight, 360 deg"
+      deductions_lb: {}
+      booms:
+        - boom_ft: 31
+          rows: [[10, 71100], [15, 53350], [20, 37150], [25, 27600]]
+        - boom_ft: 43
+          rows: [[10, 41800], [15, 41800], [20, 38250], [25, 28750], [30, 22500],
+                 [35, 18050]]
+        - boom_ft: 55
+          rows: [[10, 41800], [15, 38350], [20, 34500], [25, 28950], [30, 22700],
+                 [35, 18300], [40, 15000], [45, 12450], [50, 10150]]
+        - boom_ft: 67
+          rows: [[10, 37500], [15, 33200], [20, 28900], [25, 25600], [30, 23000],
+                 [35, 18900], [40, 15600], [45, 13000], [50, 10550], [55, 8710],
+                 [60, 7220]]
+        - boom_ft: 79
+          rows: [[15, 29300], [20, 25850], [25, 22850], [30, 20500], [35, 18600],
+                 [40, 15800], [45, 13300], [50, 10950], [55, 9100], [60, 7630]]
+        - boom_ft: 91
+          rows: [[15, 22950], [20, 20750], [25, 18650], [30, 16600], [35, 14850],
+                 [40, 13400], [45, 12100], [50, 10950], [55, 9140], [60, 7660]]
 
 search:
-  # Solver choices, not product figures (agent, 2026-11-11). Pads are tried
-  # on a square grid this fine, at every angle this step from the building's
-  # long axis. Landing spots likewise.
+  # Solver choices, not product figures (agent). Pads on a square grid this
+  # fine, at every angle this step off the building's long axis; truck spots
+  # and the container's spot likewise.
   pad_grid_ft: 4
   pad_angle_step_deg: 15
-  landing_grid_ft: 2
-  landing_angle_step_deg: 15
-  # Only this many pads -- those whose truck and set radii (which no landing
-  # spot can shorten) are least, straight drives first -- get the landing
-  # search and an envelope. The best pad is chosen among them.
+  spot_grid_ft: 2
+  spot_angle_step_deg: 15
+  # Only this many pads per crane -- straight drives first, then the
+  # shortest farthest set radius -- get the truck-spot search.
   pads_kept: 40
   # A straight drive along the pad's length from a street lot line is a
-  # MEASURED way in and out. A path that exists only with bends is
-  # unmeasured: the 40 ft vehicle's turning search (flats/fit/turning.py) is
-  # minutes to an hour per shape and is not run here (TODO).
+  # MEASURED way in and out. A way that exists only with bends is
+  # unmeasured: the turning search is not run here (guide section 1 gives
+  # turning only as an estimate, "~36-37 ft curb radius [est]").
   bends: unmeasured
+  # Street set-ups: pad centres this far apart along each street lot line.
+  street_step_ft: 4
 
 pod:
-  # Steph confirmed 2026-11-11 (via the coordinator): the pod stays 80 x 25,
-  # homes 20 x 25, as in flats/config/pods/pod80x25.yaml. The solver reads the
-  # pod's length and depth (and any height) off the PLACED design, never from
-  # here or from the piece list; only the home count is taken from here.
-  # (Steph's first note, "30 x 80 ft, 4 homes 20 x 30", is superseded.)
+  # The pod is read off the PLACED design (the drawing's building): length,
+  # depth. Only the home count is taken from here. Guide: "the 20 x 25 pod
+  # (80 x 25 ft, DECISIONS N-25x20)"; rulings.yaml
+  # 2026-11-12-single-design-80x25-20ft.
   homes: 4
 
 truck:
-  # Where a load stands on the delivery truck: on the street, at the street
-  # lot line point nearest the crane, this far out past the lot line (the
-  # sidewalk/planter strip plus half the truck's width). UNSET: with null the
-  # radius is measured AT the lot line, which is the least it can be -- a lift
-  # that fails there fails; one that passes there is unmeasured.
-  bed_centre_past_lot_line_ft: null
+  # The delivery truck. Guide section 1: "The 53 ft delivery trailer needs
+  # more room to turn than either crane". Its width is not printed; the
+  # guide's legal truck width (section 1, "8 ft 6 in [est: crane fits a legal
+  # truck width]") is used.
+  trailer_length_ft: 53
+  width: "8 ft 6 in"
+  # Where the truck stands while it is unloaded:
+  # * BACKED ONTO THE LOT: straight in from a street lot line, square to it,
+  #   on open ground clear of the building and the crane's pad. Steph
+  #   2026-11-14: "consider the location of the truck that backs up as a
+  #   valid landing spot. It'll be fairly level, and the size of the load."
+  #   The load is taken to ride at the BACK of the trailer (the end that
+  #   backs in), so the rest of the trailer and the tractor stand between it
+  #   and the street (agent assumption; Steph to confirm).
+  # * AT THE CURB in front of the lot, parallel to it, where the street's
+  #   near curb is measured (flats/geom/curbs.py). Lifting from there swings
+  #   the boom over the street: "power lines not checked".
+  places: [lot, curb]
 
-landing:
-  # Stacks come off the truck to a landing spot on open ground on the lot
-  # (not the building, not the pad); single pieces are picked from there.
-  # The spot chosen is the one whose FARTHEST corner is nearest the crane:
-  # a piece may sit anywhere in its stack, so the pick radius is taken to the
-  # stack's far corner (conservative), the stack's own set radius to its
-  # centre. A stack's plan footprint is its two longest printed dimensions
-  # (it may lie either way). Stacks land one after another, so one spot may
-  # serve several.
-  rule: nearest_far_corner
-  # Where no spot on the lot holds a stack: null = that stack's lifts are
-  # unmeasured; "truck" = the pieces are picked straight off the parked truck.
-  # Steph to decide.
-  fallback_when_no_room: null
+# The load on the truck, and its landing footprint where the 45 t sets a
+# whole load down (Steph 2026-11-14: "the size of the load"). The guide
+# prints no stack size for the 20 x 25 pod: the length is its longest piece
+# ("25 ft" cassettes, section 4) and the width the truck's (a load rides
+# within the trailer's width) [calc]. The liftable frame under each load is
+# "not yet designed" (guide section 6), so its size is not added.
+load_footprint: "25 x 8 ft 6 in"
 
 rigging:
-  # Steph 2026-11-11: "Rigging per lift: lifting frame 1,000-1,500 lb, long
-  # beam 800-1,100 lb, plus hook." The HIGH figure is used (conservative).
-  # The hook block's weight comes with each chart (charts.*.hook_block_lb).
-  frame_lb: "1,000-1,500"
-  beam_lb: "800-1,100"
+  # Guide section 4, hardest single pick: "front wall, 798 lb, plus 800-1,300
+  # lb of rigging [est]" -- the guide's chart-use figures (51-66% at the 77 ft
+  # boom's 60 ft row) include the hook block in it. Used for every single
+  # piece and the site container (the guide gives the container no rigging
+  # of its own; Steph to confirm).
+  single_pick_lb: "800-1,300"
+  # Guide section 4, whole trailer loads: "frame 1,000-1,500 lb + spreader
+  # ~1,100 lb + hook block ~500 lb added [est]".
+  whole_load_lb: {frame: "1,000-1,500", spreader: "~1,100", hook_block: "~500"}
   use: high
-  # Which rigging rides on which lift. Steph gave it per lift for the stacks
-  # (his totals, 14,500-15,000 walls and 7,000-8,500 cassettes, are the stack
-  # plus frame plus beam). For single picks and the site container he did not
-  # say: both are charged (conservative), Steph to confirm.
-  per_lift: [frame, beam]
 
 lifts:
-  # Planning ceiling as a percent of the chart's rated capacity. null = 100
-  # (1926.1417(o)(1)). Steph may lower it (75 is the common critical-lift line).
+  # Planning ceiling as a percent of the chart. null = 100 (1926.1417(o)(1)).
   max_pct_of_chart: null
   # Above this percent of the chart a lift is marked verify_weight
   # (1926.1417(o)(3)(ii)).
   verify_weight_over_pct: 75
 
-# THE PIECE LIST BELOW IS STEPH'S 2026-11-11 FIGURES, DRAWN FOR A 30 FT DEEP
-# DESIGN; TO BE SUPERSEDED. The factory is redrawing it for the 25 ft pod and
-# the sizes and weights will change. Sizes here feed only landing footprints
-# and the cassette end inset (a piece's WIDTH); no set point is derived from a
-# piece's length -- set points come from the placed design's footprint.
-#
-# Whole-stack loads: truck -> landing spot. `size` and `weight_lb` as printed
-# (length x width x height, feet and inches). `with` lists what Steph said
-# ships with the stack; it is charged to the stack's lift (conservative --
-# Steph to confirm it is lifted together), and a part with no weight makes the
-# stack's gross a lower bound. `count` is how many identical stacks.
-stacks:
-  ground_walls:
-    label: Ground-floor walls
-    count: 1
-    size: 40 x 8'1" x 6'1"
-    weight_lb: "12,074"
-  floor_cassettes_h12:
-    label: Floor cassettes, homes 1-2
-    count: 1
-    size: 30 x 4'4" x 7'9"
-    weight_lb: "4,414"
-  floor_cassettes_h34:
-    label: Floor cassettes, homes 3-4
-    count: 1
-    size: 30 x 4'4" x 7'9"
-    weight_lb: "4,414"
-    with:
-      - {label: stair kits, count: 4, each_lb: "508"}
-      - {label: loose trusses, count: 1, each_lb: null}
-  upper_walls:
-    label: Upper-floor walls
-    count: 1
-    # Steph gave no size for this stack; the ground-wall stack's is used for
-    # its landing footprint (same pieces, one storey up).
-    size: null
-    size_like: ground_walls
-    weight_lb: "11,625"
-  roof_cassettes:
-    label: Roof cassettes
-    count: 2
-    size: 30 x 6'4" x 7'9"
-    weight_lb: "5,895"
-  # Steph: "+ site container ~4,100 lb lifted separately" -- off the truck to
-  # its own spot, not one of the six stacks.
-  site_container:
-    label: Site container
-    count: 1
-    size: 10 x 8 x 8.5
-    weight_lb: "~4,100"
-    whole_stack: false
-# Steph 2026-11-11: "+6 in blocking" per stack. Height only; it moves no
-# radius and Steph gave no weight for it.
-blocking_in_per_stack: 6
-
-# Single picks: landing spot (`from`, the stack they ship in) -> final place.
-# `set_at` says where in the pod the piece's centre ends up:
-#   long_walls   one per home on each long wall, at the wall line;
-#   short_walls  each home's two short walls, on the pod's centreline;
-#   centreline   anywhere along the pod's long centreline, spanning the depth
-#                (cassettes: inset half the narrowest printed width from each
-#                end -- which home a stack serves is not used, conservative);
+# Single pieces, guide section 4 ("What we lift"). `set_at` says where the
+# hook ends up in the pod (centres of the pieces), read off the placed
+# building:
+#   long_walls   one per home on each long wall, at the wall line (the front
+#                is not told apart from the back: both, conservative);
+#   walls        long_walls plus each home's two short walls (end and party
+#                walls) on the pod's centreline;
+#   centreline   along the pod's long centreline, spanning the depth, inset
+#                half the printed width from each end (no width printed:
+#                no inset, conservative);
 #   footprint    anywhere in the building (taken at its corners).
-singles:
-  ground_long_walls:
-    label: Front/back wall, ground
-    count: 8
-    size: 20 x 8'1"
-    weight_lb: "774"
-    from: ground_walls
-    set_at: long_walls
-  ground_short_walls:
-    label: Wall between homes, ground
-    count: 8
-    size: 29'1" x 8'1"
-    weight_lb: "725"
-    from: ground_walls
-    set_at: short_walls
-  upper_long_walls:
-    label: Front/back wall, upper
-    count: 8
-    size: 20 x 8'1"
-    weight_lb: "711-724"
-    from: upper_walls
-    set_at: long_walls
-  upper_short_walls:
-    label: Wall between homes, upper
-    count: 8
-    size: 29'1" x 8'1"
-    weight_lb: "725"
-    from: upper_walls
-    set_at: short_walls
-  floor_cassettes_h12:
-    label: Floor cassette, homes 1-2
-    count: 6
-    size: 30 x 4'-4'3.5" x 15.5"
-    weight_lb: "648-786"
-    from: floor_cassettes_h12
+# Stair kits and truss bundles have no printed place in the pod. The guide
+# (section 4): "The farthest pieces are the front walls of the two end
+# homes" -- so they are set no farther than the walls (`walls`; agent
+# reading of that sentence, Steph to confirm).
+# Hand check (guide section 4): from 25 ft behind the back wall, centred,
+# the end homes' front walls are sqrt(30^2 + 50^2) = 58.3 ft away and the
+# end cassettes about 54 ft -- the guide's "about 58-60 ft" and "about 54 ft".
+pieces:
+  roof_cassette_stair:
+    label: Roof cassette, stair side
+    size: "25 x 8"
+    weight_lb: "863"
+    count: 4
     set_at: centreline
-  floor_cassettes_h34:
-    label: Floor cassette, homes 3-4
-    count: 6
-    size: 30 x 4'-4'3.5" x 15.5"
-    weight_lb: "648-786"
-    from: floor_cassettes_h34
+  ground_front_wall:
+    label: Ground front wall, 20 ft
+    size: "20"
+    weight_lb: "798"
+    count: 4
+    set_at: long_walls
+  other_walls:
+    label: Other walls (back, upper, end, party)
+    size: null
+    weight_lb: "556-723"
+    count: 24
+    set_at: walls
+  other_cassettes:
+    label: Other floor and roof cassettes, 25 ft
+    size: "25"
+    weight_lb: "642-736"
+    count: 20
     set_at: centreline
   stair_kits:
     label: Stair kit
-    count: 4
     size: null
-    weight_lb: "508"
-    from: floor_cassettes_h34
-    set_at: footprint
-  roof_cassettes:
-    label: Roof cassette
-    count: 12
-    # Stair-side cassettes are 6'3.5" wide.
-    size: 30 x 4-6'
-    weight_lb: "864-1,194"
-    from: roof_cassettes
-    set_at: centreline
+    weight_lb: "486"
+    count: 4
+    set_at: walls
+  # Guide section 4: "700 lb of closing trusses, 640 lb of stair pieces, in
+  # bundles", "~3 bundles". The split into bundles is not printed: each kind
+  # is taken as ONE pick of its whole printed weight (an upper bound).
+  closing_trusses:
+    label: Closing trusses (bundled)
+    size: null
+    weight_lb: "700"
+    count: 1
+    set_at: walls
+  stair_pieces:
+    label: Stair pieces (bundled)
+    size: null
+    weight_lb: "640"
+    count: 1
+    set_at: walls
 
-# Load charts, one per crane configuration. EMPTY until Steph supplies them;
-# with none, every lift is unmeasured. Never write a chart here that is not a
-# manufacturer's printed chart. Schema (all figures as printed on the chart):
-#
-#   <chart_id>:                      # e.g. grove_tms9000e_ob_full_360
-#     crane: "<make model>"
-#     source: "<document, page>"     # where the chart is printed
-#     configuration: "<outriggers fully extended, 360 deg, counterweight ...>"
-#     hook_block_lb: <lb>            # required; null = gross a lower bound
-#     deductions_lb: {<item>: <lb>}  # anything the chart says to deduct
-#                                    # (stowed jib, headache ball)
-#     max_pct_of_chart: <pct>        # optional, overrides lifts.max_pct_of_chart
-#     booms:                         # one per boom-length column
-#       - boom_ft: <ft>
-#         rows: [[<radius_ft>, <capacity_lb>], ...]   # gross rated capacity
-#
-# The capacity at a radius is the best boom column's next-longer row. A
-# column's capacity may not rise with radius (the loader refuses it).
-charts: {}
+# Guide section 4: "Site container, 10 ft, packed ~4,100-4,600 lb [est]
+# (heaviest single item, set close to the crane)". Lifted off the truck on
+# its own and set on open ground near the crane. Plan size: "10 ft" (guide)
+# by 8 ft (Steph 2026-11-11, "site container 10 x 8 x 8.5 ft").
+container:
+  label: Site container
+  size: "10 x 8"
+  weight_lb: "4,100-4,600"
+
+# Whole trailer loads (guide section 4, option E, 4 a pod): lifted by the 45 t
+# off the trailer and set down where the trailer stood, then set piece by
+# piece from the ground. `stack_lb` is the guide's "Stack" column (the gross
+# adds whole_load rigging: guide "Gross pick ~12,900-13,400 lb" for load 1).
+whole_loads:
+  ground_walls:
+    label: "1 Ground walls (container lifted on its own)"
+    stack_lb: "10,339"
+  floor_cassettes:
+    label: "2 Floor cassettes + stair kits + loose trusses"
+    stack_lb: "11,120"
+  upper_walls:
+    label: "3 Upper walls"
+    stack_lb: "10,273"
+  roof_cassettes:
+    label: "4 Roof cassettes + loose trusses"
+    stack_lb: "10,186"
