@@ -456,6 +456,7 @@ ASSESSOR = (
     ("PROP_CODE", "prop_code", "str"),
     ("STATECLASS", "state_class", "str"),
     ("LANDUSE", "land_use", "str"),
+    ("TAXCODE", "tax_code", "str"),
 )
 
 

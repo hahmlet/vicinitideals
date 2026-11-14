@@ -119,6 +119,7 @@ ASSESSOR_FIELDS = (
     "PROP_CODE",
     "STATECLASS",
     "LANDUSE",
+    "TAXCODE",
 )
 
 #: Below this share of the lot's area under its majority zone, the lot is

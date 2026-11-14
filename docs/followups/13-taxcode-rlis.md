@@ -11,3 +11,8 @@
    probe report `registry_changed` and turns the Lots banner red until a
    new copy is taken -- make the edit as the first step of the November
    RLIS refresh, not before.
+   STATUS 2026-11-13: BUILT on branch flats/rlis-taxcode (TAXCODE declared in
+   `rlis_taxlots` fields, carried by normalize into `lots.parquet`, loaded as
+   `facts["assessor"]["tax_code"]`; no migration -- facts is JSONB; no colour
+   moves). It takes effect with the RLIS 2026_11 refresh: the first county copy
+   whose snapshot carries TAXCODE. Steps in rlis-nov-prep.handoff.md.
