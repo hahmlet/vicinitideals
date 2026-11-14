@@ -425,6 +425,24 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [SIGHT_CORNER_PARKING]
+  SIGHT-CORNER-ENGINEER:
+    description: "The building, or the parking court or drive where the city keeps cars out of the area, stands where the corner clear-vision area might reach; the city engineer sets that area's size case by case (Oregon City 10.32.020, Hillsboro DCS 230.5.1), so it was drawn at its largest plausible size. Steph 2026-11-14: GREEN with this flag"
+    kind: categorical
+    risk: unlikely
+    # Steph 2026-11-14 ("Green", rulings.yaml 2026-11-14-oregon-city-/
+    # hillsboro-engineer-sight-area-green): below the yellow line, so a lot
+    # otherwise GREEN stays GREEN with the flag beside it.
+    severity: 2
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot, design]
+    path: "At permit: the city engineer sets the corner's clear-vision area from the street's speed; place the building, court and drive outside it"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_CORNER_ENGINEER]
   SIDE-YARD-PARKING-SILENT:
     description: "The fit depends on side-yard parking the code neither allows nor forbids; Steph's silent-code ruling keeps the lot yellow"
     kind: categorical
@@ -1364,6 +1382,21 @@ types:
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-ABUTS-LOWER-DENSITY-ZONE:
     description: "Whether a lot line abuts a lower-density zone"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the zoning layer per lot line"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ABUTS-COMMERCIAL-ZONE:
+    description: "Whether a lot line abuts a commercial zone (King City 16.124.110 C.3's ten-foot buffer; FOLLOWUPS 192)"
     kind: categorical
     risk: possible
     severity: 5

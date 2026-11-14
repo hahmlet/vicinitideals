@@ -257,6 +257,7 @@ from flats.score.screen import (
     FRONT_MAX_DRAWN_TOL_FT,
     COURT_SHAPED,
     PARKING_SETBACK_DOUBT,
+    SIGHT_CORNER_ENGINEER,
     STEEP_GROUND,
     STREET_RANK_UNKNOWN,
     STREET_UNCONFIRMED,
@@ -3754,7 +3755,10 @@ def sight_corner_court_checked(
     largest (``high``: the curb at the lot line, the largest figure, the
     alley corners). Never RED: the court's and the drive's place is not
     searched for it, and the curb may stand back. A plan RED both ways is
-    not read."""
+    not read. Where the city engineer sizes the area (``engineer_set``,
+    Steph 2026-11-14) the reach is flagged on a GREEN instead
+    (``sight_corner_doubt`` = :data:`~flats.score.screen.SIGHT_CORNER_ENGINEER`),
+    never held."""
     from shapely.geometry import Polygon
 
     from flats.geom import sight_triangle as sight
@@ -3782,6 +3786,21 @@ def sight_corner_court_checked(
             if ring and len(ring) >= 4 and sight.reaches(areas.high, Polygon(ring), lot.lot_geom):
                 held = True
                 break
+    if areas is not None and areas.reason == SIGHT_CORNER_ENGINEER:
+        # The engineer-set area flags, never holds: the court or drive in it
+        # raises the area's own flag (the building's, if it stands there).
+        if not held or s.facts.sight_corner_doubt == SIGHT_CORNER_ENGINEER:
+            return s
+        facts = dataclasses.replace(
+            s.facts,
+            sight_corner_doubt=s.facts.sight_corner_doubt or SIGHT_CORNER_ENGINEER,
+            sight_cite=s.facts.sight_cite or areas.cite or None,
+        )
+        result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+        shadow = _if_signed(
+            s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+        )
+        return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
     if held == s.facts.sight_corner_parking:
         return s
     facts = dataclasses.replace(s.facts, sight_corner_parking=held)

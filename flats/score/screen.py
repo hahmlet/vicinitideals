@@ -487,11 +487,22 @@ SIGHT_CORNER_ALLEY = "SIGHT_CORNER_ALLEY"
 #: court's and drive's place is not searched for this, so YELLOW with a
 #: flag, never RED (:attr:`LotFacts.sight_corner_parking`).
 SIGHT_CORNER_PARKING = "SIGHT_CORNER_PARKING"
+#: The building (or, where the area keeps parked cars or driveways out, the
+#: drawn court or drive) stands where the corner clear-vision area might
+#: reach, and the code leaves that area's size to the city engineer case by
+#: case (Oregon City 10.32.020, Hillsboro DCS 230.5.1 / HCC 12.50.260): so
+#: no map or table can settle it. GREEN with a flag below the yellow line
+#: (Steph 2026-11-14, rulings.yaml 2026-11-14-oregon-city-engineer-sight-
+#: area-green and 2026-11-14-hillsboro-engineer-sight-area-green: "Green"),
+#: as for other judgement-only rules. Set only by an ``engineer_set`` rule;
+#: every other sight rule (a drive's, another city's) still holds.
+SIGHT_CORNER_ENGINEER = "SIGHT_CORNER_ENGINEER"
 SIGHT_RULINGS = {
     SIGHT_CORNER_ALLEY: "2026-11-09-sight-triangle-corner-check",
     SIGHT_CORNER_PARKING: "2026-11-09-sight-triangle-corner-check",
     SIGHT_CORNER_CURB: "2026-11-09-curb-position-middle-way",
     SIGHT_CORNER_UNSETTLED: "2026-11-09-sight-triangle-corner-check",
+    SIGHT_CORNER_ENGINEER: "2026-11-14-oregon-city-engineer-sight-area-green",
     SIGHT_DRIVEWAY: "2026-11-09-curb-position-middle-way",
     SIGHT_DRIVEWAY_NOTE: "2026-11-09-portland-driveway-clear-zone-note",
 }
@@ -1204,7 +1215,8 @@ class LotFacts:
     #: where nothing was traced, or nothing cut.
     drawn_cut: tuple[str, ...] = ()
     #: Why the corner clear-vision area holds this lot out of GREEN
-    #: (:data:`SIGHT_CORNER_CURB` or :data:`SIGHT_CORNER_UNSETTLED`), set by
+    #: (:data:`SIGHT_CORNER_CURB` or :data:`SIGHT_CORNER_UNSETTLED`; or flags
+    #: it on a GREEN, :data:`SIGHT_CORNER_ENGINEER`), set by
     #: the bridge when the fit stands only on the smaller of the two areas
     #: (:mod:`flats.geom.sight_triangle`). None: clear, or not checked.
     sight_corner_doubt: str | None = None
@@ -4069,7 +4081,8 @@ def screen(
         closer = (*closer, PARKING_SETBACK_DOUBT)
     if stated_fit_fails:
         closer = (*closer, SIDE_YARD_PARKING_SILENT)
-    if lot.sight_corner_doubt:
+    if lot.sight_corner_doubt and lot.sight_corner_doubt != SIGHT_CORNER_ENGINEER:
+        # The engineer-set area is a flag below the yellow line, not a hold.
         closer = (*closer, lot.sight_corner_doubt)
     if lot.sight_driveway_doubt:
         closer = (*closer, SIGHT_DRIVEWAY)
@@ -4916,6 +4929,7 @@ def _account(
         SIGHT_CORNER_CURB: "SIGHT-CORNER-CURB",
         SIGHT_CORNER_UNSETTLED: "SIGHT-CORNER-UNSETTLED",
         SIGHT_CORNER_ALLEY: "SIGHT-CORNER-ALLEY",
+        SIGHT_CORNER_ENGINEER: "SIGHT-CORNER-ENGINEER",
     }
     if lot.sight_corner_doubt in sight:
         flag(
@@ -5186,6 +5200,7 @@ __all__ = [
     "SIGHT_DRIVEWAY_NOTE",
     "SIGHT_CORNER_ALLEY",
     "SIGHT_CORNER_PARKING",
+    "SIGHT_CORNER_ENGINEER",
     "ALLEY_COURT_OFF_STRETCH",
     "ALLEY_COURT_OFF_STRETCH_RULING",
     "COURT_GROUND_UNREAD",

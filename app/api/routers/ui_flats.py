@@ -2973,6 +2973,7 @@ _REASON_WORDS = {
     "SIGHT_DRIVEWAY": "the building stands inside the clear-vision area the city keeps where the drive meets the street, at least if the curb is at the lot line; the drive's place or the curb's may clear it",
     "SIGHT_CORNER_ALLEY": "the building stands where the city's clear-vision triangle at the corner of a street and an alley may reach; where the alley's paving runs is not mapped, so check it",
     "SIGHT_CORNER_PARKING": "the parking court or the drive as drawn reaches the corner's clear-vision triangle, which the city keeps parked cars or driveways out of; placing them elsewhere may clear it",
+    "SIGHT_CORNER_ENGINEER": "the building, or its parking where the city keeps cars out, stands where the corner's clear-vision area might reach; the city engineer sets that area's size case by case, so the lot stays green with this note",
     "SIGHT_DRIVEWAY_NOTE": "Portland's driveway clear zone may reach the building; a note for the street permit, the colour is unchanged",
     "COURT_GROUND_UNREAD": "the lot's yards could not be read from the lot lines, so it is not known whether the parking court stays out of the front and side yards",
     "PARKING_STRIP_UNCONFIRMED": "fits only without the planted strip the city keeps between parking and the lot lines; whether a townhome project owes that strip is still open",

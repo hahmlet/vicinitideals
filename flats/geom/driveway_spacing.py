@@ -61,6 +61,14 @@ cross classes beside which the code adds such a rule (Sherwood's standing
 queues at a Neighborhood Route, collector or arterial; Fairview's controlled
 intersections): a driveway within :data:`UNREAD_CROSS_REACH_FT` of one, by the
 rule's basis, is never shown clear, and never fails on that ground alone.
+
+**Every corner held** (an entry's ``corner_unread``). Fairview sends a
+driveway near a controlled intersection (four-way stop or signal) to a TSP
+not held, and stop signs are not mapped; Steph ruled every corner lot held,
+not only corners by a busier street (rulings.yaml
+``2026-11-14-fairview-hold-every-corner``). A lot with two street directions
+(a corner, or one street bending: either may be one) is never shown clear
+there, and never fails on that ground alone.
 """
 
 from __future__ import annotations
@@ -165,6 +173,16 @@ class Applies:
 
 
 @dataclass(frozen=True)
+class CornerHold:
+    """A code whose corner rule nothing measures, held on every corner lot
+    by a ruling (``corner_unread``): see the module docstring."""
+
+    cite: str
+    quote: str
+    ruling: str
+
+
+@dataclass(frozen=True)
 class IndustrialStreets:
     """Where a code has industrial streets no map classes: the zoning map
     (registry dataset ``zoning``, its polygons of ``city``) whose
@@ -199,6 +217,8 @@ class SpacingRules:
     #: Classes whose frontage the code holds to a rule nothing measures
     #: (``figure_ft`` None): every frontage on one is unread.
     unread: Mapping[str, FrontageRule] = field(default_factory=dict)
+    #: Every corner lot held unread (Fairview); None elsewhere.
+    corner_hold: CornerHold | None = None
 
     def quotes(self) -> list[tuple[str, float | None, str]]:
         """Every ``(quote, printed figure or None, cite)`` the entry holds."""
@@ -224,6 +244,8 @@ class SpacingRules:
         if self.industrial is not None:
             out.append((self.industrial.quote, None, self.industrial.cite))
             out.append((self.industrial.street_quote, None, self.industrial.cite))
+        if self.corner_hold is not None:
+            out.append((self.corner_hold.quote, None, self.corner_hold.cite))
         return out
 
     def class_of_rank(self, rank: int | None, spec: ClassSpec | None) -> str | None:
@@ -302,6 +324,10 @@ def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
             str(i["zoning"]), str(i["city_field"]), str(i["city"]), frozenset(i["zones"]),
             float(i["reach_ft"]), str(i["cite"]), str(i["quote"]), str(i["street_quote"]),
         )
+    corner_hold = None
+    if raw.get("corner_unread"):
+        c = raw["corner_unread"]
+        corner_hold = CornerHold(str(c["cite"]), str(c["quote"]), str(c["ruling"]))
     return SpacingRules(
         layer=layer,
         map=raw.get("map"),
@@ -313,6 +339,7 @@ def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
         map_ruling=raw.get("map_ruling"),
         industrial=industrial,
         unread=unread,
+        corner_hold=corner_hold,
     )
 
 
@@ -715,6 +742,10 @@ def read_lot(
         answers.append(got)
         why.append(f"{cls}: {got} ({len(junctions)} intersection(s) in reach)")
     text = "; ".join(why)
+    if CLEAR in answers and rules.corner_hold is not None and len(bearings) >= 2:
+        # Two street directions: a corner (or a bend that may be one). The
+        # code's controlled-intersection rule is not measured; held by ruling.
+        return UNREAD, text + f"; corner lot: {rules.corner_hold.cite} (ruling {rules.corner_hold.ruling})"
     if CLEAR in answers:
         return CLEAR, text
     if all(a == BLOCKED for a in answers):

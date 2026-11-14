@@ -270,13 +270,15 @@ notes:
   - quote: "or/multnomah/gresham/4/4.0130.txt#L139"
     digest: "f9d282159d16"
     state: encoded
-    encoded_as: "MDR-24 min_lot_width_ft variants, when [unit_lots, corner_lot] 25 ft and with abuts_alley 16 ft"
+    encoded_as: "MDR-24 min_lot_width_ft variants, when [unit_lots, corner_lot] 25 ft and with alley_at_rear 16 ft"
     reason: >-
       the corner townhouse width cell in MDR-24 reads "See table note 8", and
       the note states three numbers by access; 25 is the one that binds until
-      an alley is observed, because the townhouse plat's one drive to the rear
-      court is a shared access (the reading note 7 is dismissed on). It was
-      42, the no-access number, until Steph's page check 2026-10-20
+      an alley is observed along the rear line (16 then: Steph 2026-11-14,
+      rulings 2026-11-14-gresham-mdr24-alley-corner-width-16), because the
+      townhouse plat's one drive to the rear court is a shared access (the
+      reading note 7 is dismissed on). It was 42, the no-access number, until
+      Steph's page check 2026-10-20
 
   - quote: "or/multnomah/gresham/4/4.0130.txt#L142"
     digest: "c39eff4953c2"

@@ -4974,12 +4974,15 @@ clear_vision:
       The speed is not mapped: the wedge is drawn at 500 ft, AASHTO''s figure at 45 mph (the AASHTO table
       held at gmc-17.54-clear-vision.txt#L77), the design speed of a Hillsboro arterial (DCS Table 210.2,
       dcs-2025-combined.txt#L2272-L2276); it was 450 (read 2026-11-13). (B)(1)(a)(ii) reaches ''the intersections
-      of a street and an alley'' (L9). Unsettled: the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check):
-      the area bars buildings at its largest plausible size; a corner lot it reaches is YELLOW, never GREEN
-      and never RED on it.'
+      of a street and an alley'' (L9). Unsettled: the area is drawn at its largest plausible size (rulings.yaml
+      2026-11-09-sight-triangle-corner-check), never RED on it. The engineer evaluates it (engineer_set): a
+      corner lot held by it alone, building or parking court, is GREEN with flag SIGHT-CORNER-ENGINEER (Steph
+      2026-11-14, rulings.yaml 2026-11-14-hillsboro-engineer-sight-area-green: "Green"). The drive''s own
+      sight area (driveway, below) still holds YELLOW: the ruling named the corner area.'
     # Parked vehicles (FOLLOWUPS 161): 12.50.260(C)(3) 'plantings, walls, structures, or temporary or permanent obstructions' -- a parked car read as a temporary obstruction (judgement).
     vehicles: true
     vehicles_quote: or/washington/hillsboro/12.50/12.50.260.txt#L19
+    engineer_set: 2026-11-14-hillsboro-engineer-sight-area-green
     ruling: 2026-11-09-sight-triangle-corner-check
   driveway:
     status: unsettled

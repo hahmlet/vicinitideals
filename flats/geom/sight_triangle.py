@@ -22,7 +22,10 @@ Two areas are drawn per corner (:class:`SightAreas`):
   (rulings.yaml 2026-11-09-sight-triangle-corner-check) keep nothing for
   sure: ``low`` is empty and the lot is never RED on it.
 
-A fit in between is YELLOW with the area's reason.
+A fit in between is YELLOW with the area's reason -- except where the code
+leaves the area's size to the city engineer and a ruling makes that GREEN
+with a flag (``SightRule.engineer_set``; Oregon City, Hillsboro, Steph
+2026-11-14): there the fit in between is GREEN with SIGHT-CORNER-ENGINEER.
 
 Where a street meets an ALLEY (an alley lot line, :attr:`flats.geom.edges.
 Edge.alley`) the corner is drawn too (:func:`alley_corners`), at the code's
@@ -113,7 +116,8 @@ class SightAreas:
     low: BaseGeometry
     high: BaseGeometry
     #: :data:`flats.score.screen.SIGHT_CORNER_CURB` or ``..._UNSETTLED``:
-    #: why a fit between the two is held YELLOW.
+    #: why a fit between the two is held YELLOW; ``..._ENGINEER``: the city
+    #: engineer sizes the area, and a fit between is GREEN with a flag.
     reason: str
     cite: str
 
@@ -317,6 +321,7 @@ def corner_areas(
     from flats.score.screen import (
         SIGHT_CORNER_ALLEY,
         SIGHT_CORNER_CURB,
+        SIGHT_CORNER_ENGINEER,
         SIGHT_CORNER_UNSETTLED,
     )
 
@@ -362,6 +367,11 @@ def corner_areas(
             reason = SIGHT_CORNER_ALLEY
     if high.is_empty or high.area < OVERLAP_SQFT:
         return None
+    if rule.status == "unsettled" and getattr(rule, "engineer_set", None):
+        # The city engineer sizes the whole area, its alley corners too
+        # ("street" includes alley): a lot held by it alone is GREEN with a
+        # flag (rulings.yaml 2026-11-14-*-engineer-sight-area-green).
+        reason = SIGHT_CORNER_ENGINEER
     return SightAreas(low=low, high=high, reason=reason, cite=rule.cite or "")
 
 

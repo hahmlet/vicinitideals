@@ -4808,8 +4808,17 @@ zones:
         - value: 25
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54-L55,L139"
+        # Note 8's alley figure, 16, where the alley is observed along the
+        # whole rear line (`alley_at_rear`, which the bridge holds only where
+        # the alley's cover vouches for the whole line): every home lot runs
+        # street to rear, so the corner home lot abuts it. An alley down a
+        # side line runs beside the far end lot, not the corner one, so it
+        # keeps the shared-access 25 (was `abuts_alley` until 2026-11-14).
+        # Steph 2026-11-14, rulings.yaml 2026-11-14-gresham-mdr24-alley-corner-
+        # width-16: the 2026-10-20 ruling's "whether or not an alley is
+        # observed" no longer hides the alley case.
         - value: 16
-          when: [unit_lots, corner_lot, abuts_alley]
+          when: [unit_lots, corner_lot, alley_at_rear]
           quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54-L55,L139"
     orientation_constraint:
       # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall

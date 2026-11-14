@@ -2054,7 +2054,7 @@ _SIGHT_KEYS = frozenset({
     "eye_back_ft", "basis", "except_zones", "unsettled_zones", "exempt_no_setback",
     "exempt_at_lot_line", "note_only", "quote", "says", "source", "cite", "ruling", "note",
     "zone_legs_ft", "vehicles", "driveways", "vehicles_quote", "alley", "alley_legs_ft",
-    "alley_quote", "class_map", "class_rank_min",
+    "alley_quote", "class_map", "class_rank_min", "engineer_set",
 })
 _SIGHT_KINDS = {"corner": ("triangle", "asymmetric", "wedge"), "driveway": ("edge", "apex", "wedge")}
 
@@ -2188,6 +2188,13 @@ def _parse_sight_rule(raw: object, *, at: str, which: str, problems: list[str]) 
         return None
     if cmap is not None:
         extras["class_map"], extras["class_rank_min"] = cmap, cmin
+    engineer = raw.get("engineer_set")
+    if engineer is not None:
+        # The ruling that makes the engineer-set area a flag (Steph 2026-11-14).
+        if which != "corner" or status != "unsettled" or not isinstance(engineer, str) or not engineer.strip():
+            problems.append(f"{at}.engineer_set: a ruling id, on an unsettled corner rule only")
+            return None
+        extras["engineer_set"] = engineer.strip()
     zone_legs: dict[str, tuple[float, ...]] = {}
     for z, v in (raw.get("zone_legs_ft") or {}).items():
         got = _feet(v)

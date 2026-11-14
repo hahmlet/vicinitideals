@@ -950,6 +950,18 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "abuts_commercial_zone",
+        "site_fact",
+        "A lot line that is not a street lot line abuts a commercial zone. "
+        "King City 16.124.110 C asks a multi-family property for five feet of "
+        "buffer beside a single-family zone (C.2, `abuts_lower_density_zone`) "
+        "and ten beside a commercial one (C.3), so the two neighbours are two "
+        "facts. True when ANY line has such a zone across it. Assumed "
+        "unknown, which leaves the ten feet binding.",
+        evidence="jurisdiction zoning polygons, adjacency on the shared edge",
+        assume=None,
+    ),
+    ConditionDef(
         "faces_residential_zone_across_street",
         "site_fact",
         "A STREET lot line has a residential zone on the far side of the "
@@ -2059,6 +2071,7 @@ NEIGHBOUR_ZONE_CONDITIONS: tuple[str, ...] = (
     "abuts_residential_zone",
     "abuts_lower_density_zone",
     "abuts_nonresidential_zone",
+    "abuts_commercial_zone",
 )
 
 #: The site facts about what open land lies across the lot lines, answered

@@ -3395,3 +3395,147 @@
     out cannot make a false GREEN. An affordability filter is a later feature
     (check in with Steph first).
   source: Steph 2026-10-19 (chat, Gresham page check)
+- id: 2026-11-14-portland-driveway-9ft-county-pockets
+  kind: ruling
+  date: 2026-11-14
+  scope:
+    county: multnomah
+    city: _unincorporated
+    zones: [R20, R10, R7, R5, RF]
+  question: >-
+    The 9 ft driveway ruling (2026-11-10-portland-driveway-9ft) was made for
+    Portland. The unincorporated county pockets inside Portland follow
+    Portland's code (Title 33) and already use it. Does the ruling cover them?
+  ruling: '"yes"'
+  effect: >-
+    The Portland-administered county pockets take the 9 ft driveway, as they
+    already do. No change to the screen; this records the scope.
+  source: Steph 2026-11-14 (chat, question sheet item 13), ../vicinitideals-worktrees/pagecheck-34.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/multnomah/_unincorporated.yaml]
+- id: 2026-11-14-fairview-hold-every-corner
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: multnomah, city: fairview}
+  question: >-
+    Fairview 19.162.020 sends driveways near a controlled intersection (stop
+    sign or signal) to its transportation plan, which was not found, and stop
+    signs are not mapped. Hold every corner lot as unsure, or only corners next
+    to a collector or arterial (as built in drive-spacing)?
+  ruling: '"follow your rec" (hold every corner lot)'
+  effect: >-
+    Every Fairview corner lot is held YELLOW for the driveway-near-intersection
+    check, not only those next to a busier street. Fairview has no GREEN lots
+    today, so nothing moves now. To encode on a rel10 lane (FOLLOWUPS 192).
+  source: Steph 2026-11-14 (chat, question sheet item 3), ../vicinitideals-worktrees/drive-spacing.handoff.md
+  encoded_in: [flats/config/driveway_spacing.yaml, flats/geom/driveway_spacing.py]
+- id: 2026-11-14-oregon-city-engineer-sight-area-green
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: clackamas, city: oregon-city}
+  question: >-
+    The corner sight area here is set case by case by the city engineer, so it
+    cannot be measured. Keep YELLOW, or GREEN with a flag?
+  ruling: '"Green"'
+  effect: >-
+    A lot held only by the engineer-set corner sight area is GREEN with a flag
+    (the city engineer sizes the sight area), as for other judgement-only
+    rules (2026-10-15 ORS 197A.400). Any measured sight rule still binds. Moot
+    today. To encode on a rel10 lane (FOLLOWUPS 192).
+  source: Steph 2026-11-14 (chat, question sheet item 4), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/clackamas/oregon-city.yaml, flats/geom/sight_triangle.py, flats/score/screen.py, flats/ingest/quadfit.py]
+- id: 2026-11-14-hillsboro-engineer-sight-area-green
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: washington, city: hillsboro}
+  question: >-
+    The corner sight area here is set case by case by the city engineer, so it
+    cannot be measured. Keep YELLOW, or GREEN with a flag?
+  ruling: '"Green"'
+  effect: >-
+    A lot held only by the engineer-set corner sight area is GREEN with a flag
+    (the city engineer sizes the sight area), as for other judgement-only
+    rules (2026-10-15 ORS 197A.400). Any measured sight rule still binds. Moot
+    today. To encode on a rel10 lane (FOLLOWUPS 192).
+  source: Steph 2026-11-14 (chat, question sheet item 4), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/geom/sight_triangle.py, flats/score/screen.py, flats/ingest/quadfit.py]
+- id: 2026-11-14-parked-cars-obstruct-sight
+  kind: ruling
+  date: 2026-11-14
+  scope: {}
+  question: >-
+    Do parked cars count as "obstructions" in a corner clear-vision or sight
+    area (so the pod's parking may not sit in it)?
+  ruling: '"yes"'
+  effect: >-
+    Parking stalls and parked cars may not sit in a corner sight area wherever
+    a code bars obstructions there. Already how the screen reads it; no change.
+  source: Steph 2026-11-14 (chat, question sheet item 5), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+- id: 2026-11-14-milwaukie-sight-45mph-500
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: clackamas, city: milwaukie}
+  question: >-
+    The sight-distance table steps from 450 ft to 500 ft around 45 mph. Which
+    figure does a 45 mph street take?
+  ruling: '"500"'
+  effect: >-
+    A 45 mph street takes the 500 ft sight distance. Already encoded that way;
+    no change. Moot today.
+  source: Steph 2026-11-14 (chat, question sheet item 6), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+- id: 2026-11-14-clackamas-sight-45mph-500
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    The sight-distance table steps from 450 ft to 500 ft around 45 mph. Which
+    figure does a 45 mph street take?
+  ruling: '"500"'
+  effect: >-
+    A 45 mph street takes the 500 ft sight distance. Already encoded that way;
+    no change. Moot today.
+  source: Steph 2026-11-14 (chat, question sheet item 6), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+- id: 2026-11-14-wilsonville-sight-45mph-500
+  kind: ruling
+  date: 2026-11-14
+  scope: {city: wilsonville}
+  question: >-
+    The sight-distance table steps from 450 ft to 500 ft around 45 mph. Which
+    figure does a 45 mph street take?
+  ruling: '"500"'
+  effect: >-
+    A 45 mph street takes the 500 ft sight distance. Already encoded that way;
+    no change. Moot today.
+  source: Steph 2026-11-14 (chat, question sheet item 6), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+- id: 2026-11-14-gresham-mdr24-alley-corner-width-16
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: multnomah, city: gresham, zones: [MDR-24]}
+  question: >-
+    An MDR-24 corner townhouse lot backing onto an alley: Gresham allows 16 ft
+    wide; the 2026-10-20 ruling (2026-10-20-gresham-pod-drive-is-shared-access)
+    holds 25 ft "whether or not an alley is observed". Which?
+  ruling: >-
+    "If it isn't that big of a deal, stay with 25. What I don't like about
+    that is in the future if we can work into MDR-24 we have an invisible
+    error. So a low-priority fix, but a fix."
+  effect: >-
+    25 ft stays until the fix ships; the fix gives an MDR-24 corner townhouse
+    lot with an observed alley the code's alley figure, so the 2026-10-20
+    ruling's "whether or not an alley" no longer hides it. No lot depends on it
+    today. Low priority (FOLLOWUPS 192).
+  source: Steph 2026-11-14 (chat, question sheet item 8), ../vicinitideals-worktrees/gresham-4-1152.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/multnomah/gresham.yaml]
+- id: 2026-11-14-no-city-contact
+  kind: ruling
+  date: 2026-11-14
+  scope: {}
+  question: >-
+    Ask cities to settle readings (Hillsboro downtown roof rule text vs map,
+    Tualatin flat-roof edge, Wilsonville Villebois Pattern Book)?
+  ruling: '"I don''t want to ask any cities"'
+  effect: >-
+    No city is contacted. Each reading stays at its cautious default:
+    Hillsboro's roof rule follows the text (whole Downtown Plan District);
+    Tualatin flat roofs stay RED; Villebois lots without the Pattern Book stay
+    YELLOW. FOLLOWUPS 181 questions closed.
+  source: Steph 2026-11-14 (chat, question sheet B), docs/followups/181-roof-sweep-clackamas.md
