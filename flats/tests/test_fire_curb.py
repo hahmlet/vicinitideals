@@ -373,3 +373,20 @@ def test_the_bridge_refuses_a_snapshot_without_the_curbs_and_widths(tmp_path) ->
     with pytest.raises(Exception) as past:
         quadfit.run(tmp_path / "out", **kw)
     assert "fire truck" not in str(past.value)
+
+def test_the_clear_vision_curb_reads_a_per_place_road_network() -> None:
+    # rel7 bound crash 2026-11-11: the worker's roads became a fire_roads
+    # Network (per-place dead-end lengths) while the drive's clear-vision
+    # read still took the old tuple -- ``len(Network)`` raised in a worker.
+    from types import SimpleNamespace
+
+    from flats.ingest.quadfit import _curb_ft
+
+    edges = StreetEdges.build(curbs=[street(-12.0)])
+    tree, geoms = roads(street(-30.0))
+    net = SimpleNamespace(
+        at=lambda layer_id: SimpleNamespace(tree=tree, geoms=geoms), edges=edges
+    )
+    assert _curb_ft(0.0, 0.0, (tree, geoms, edges)) == pytest.approx(12.0)
+    assert _curb_ft(0.0, 0.0, net, "any-place") == pytest.approx(12.0)
+

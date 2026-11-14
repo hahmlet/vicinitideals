@@ -552,8 +552,11 @@ def _whole(lines: Sequence[str], start: int, first: str) -> str:
     the codifier's apparatus starts, or the page does.
     """
     body = [first]
-    for raw in lines[start : start + MAX_BODY_LINES]:
+    window = lines[start : start + MAX_BODY_LINES]
+    for k, raw in enumerate(window):
         stripped = raw.strip()
+        if not stripped and _bridged(body[-1], window[k + 1 : k + 2]):
+            continue
         if not stripped or FURNITURE.match(stripped) or APPARATUS.match(stripped):
             break
         opens = ENTRY.match(stripped)
@@ -563,6 +566,23 @@ def _whole(lines: Sequence[str], start: int, first: str) -> str:
             break
         body.append(stripped)
     return _collapse(" ".join(body))
+
+
+def _bridged(above: str, below: Sequence[str]) -> bool:
+    """One blank line inside a sentence, which a page break leaves behind.
+
+    Portland's 11/1/26 reprint extracts Corner Lot as "... has frontage on
+    more than", a blank line, then "one intersecting street, ...": the page
+    break sits mid-clause (33.910.definitions.txt#L714-L718). Ending the body
+    at the blank filed half a definition, the 120-degree curve rule lost
+    (2026-11-10). A blank is stepped over only when the line above stops on a
+    word with no sentence ended and the line below opens in lower case, so a
+    blank between two entries, or after a finished sentence, still ends it.
+    """
+    if not below:
+        return False
+    nxt = below[0].strip()
+    return bool(above) and above[-1].isalpha() and bool(nxt) and nxt[0].islower()
 
 
 #: Where no sentence ends: a comma, or a conjunction, article or preposition

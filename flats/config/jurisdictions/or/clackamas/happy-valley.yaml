@@ -175,19 +175,18 @@ readings:
     queue: missed
     outcome: not_here
     note: >-
-      Forty-seven statements and the largest card in this queue, and all of it is the
-      non-residential body of Table 16.43.030-1 plus its credits. Offices at three per thousand
-      square feet, medical and dental at four, preschools at two and a half per thousand, high
-      schools and colleges at a fifth of a space per thousand, retail at four and a half, grocery
-      at 2.9, restaurants with a drive-through at 11.4 and without at 11.5, sports clubs at 4.3,
-      service stations, banks with drive-throughs at 4.3, manufacturing at 1.6, warehousing by
-      floor area band, wholesale at 0.8 -- with the maximum and the bicycle column beside each.
-      The three statements that are not ratios are all in the permissive direction: on-street
-      parking within three hundred feet of a frontage may be counted toward the minimum, required
-      parking may sit off site within two thousand feet, and units smaller than 750 square feet or
-      meeting the affordable-housing definitions are exempt from minimum parking altogether. The
-      residential rows of the same table are already encoded.
-    fingerprint: 9f36a913f3982014
+      Re-read 2026-11-09 after Ord. 603 (8/18/2026; FOLLOWUPS 166). The card is still the
+      non-residential body of Table 16.43.030-1 and its credits, re-printed with new ratios:
+      general and government offices at 2.7 per thousand square feet (maximum 3.4 and 4.1),
+      medical and dental at 3.9, restaurants with a drive-through at 9.9 and without at 15.3,
+      manufacturing at 1.6, wholesale at 0.8 -- with the maximum and bicycle columns beside each.
+      The statements that are not ratios stay permissive or belong to other buildings: required
+      parking may sit off site within 2,000 feet, single-room occupancy, units under 750 square
+      feet and affordable housing are exempt from minimum parking, and the electric-vehicle
+      capacity rule reaches only new buildings of five or more dwellings and leaves townhouses
+      out. The residential rows of the same table are encoded (minimum 1 per dwelling, maximum 2.0
+      per non-studio unit for the quadplex row).
+    fingerprint: b094257ca8f87afb
   "16.22.residential.txt#16.22.010":
     queue: missed
     outcome: not_here
@@ -525,6 +524,41 @@ crossrefs:
       this layer already encodes as land_division_parent_standards, from these same table notes.
       The chapter behind it governs how the split is approved, which is a path no pod declares.
 
+  # --- FOLLOWUPS 105 (2026-11-08): the binding references left open, followed ---
+  "16.71":
+    outcome: other_path
+    note: >-
+      Variances: "All of the applicable development standards contained in the underlying zoning
+      district, except where the applicant has obtained variances pursuant to Chapter 16.71"
+      (16.25.005.txt#L96). A relief by application, never taken.
+  "16.49":
+    outcome: other_building
+    note: >-
+      Note [6] of Tables 16.23.010-1 and 16.23.030-1, "Pursuant to Chapter 16.49", carried by the
+      Marijuana retailing and Psilocybin service center rows (16.23.010.txt#L59, L64, L119). A use
+      the pod is not.
+  "16.69.030":
+    outcome: other_building
+    note: >-
+      Note [5] of Tables 16.23.010-1 and 16.23.030-1, "Pursuant to Section 16.69.030", carried by
+      the Mobile food units row (16.23.010.txt#L61, L118). A use the pod is not.
+  "16.62":
+    outcome: other_path
+    note: >-
+      Land Use and Design Review, cited by the commercial districts' own sentences: "New
+      development in the district shall be subject to Chapter 16.62" (16.23.010.txt#L438;
+      16.23.030.txt#L222). Those districts are MUC, RCMU, CCC and MCC, whose use tables have no
+      row for a four-unit building (multifamily is five or more; residential only upper-floor or
+      tied to nonresidential use) and which this layer encodes quadplex_allowed false on the
+      tables themselves. A review the pod cannot reach.
+  "16.46":
+    outcome: other_path
+    note: >-
+      Happy Valley Style Design Standards, cited beside 16.62 by the same commercial-district
+      sentence (16.23.030.txt#L222) and by the Rock Creek PMU master-plan text
+      (16.31.030.txt#L80-L81). Neither district's use table admits a four-unit building (see
+      16.62). Where the pod is permitted, the residential districts state their own roof and
+      design rules, encoded (VTH min_roof_pitch_in_12).
 definitions:
   # "Corner lot. A lot bounded entirely by streets, or a lot which adjoins the
   # point of intersection of two or more streets and which the interior angle
@@ -550,10 +584,15 @@ definitions:
     test: intersecting_frontages
     count: 2
     max_intersection_angle_deg: 135.0
-    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1064-L1066"
+    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1081-L1083"
     cite: "HV LDC 16.12.030, Corner lot"
 
 code:
+- id: "16.72.nonconforming"
+  url: https://ecode360.com/print/HA4934?guid=43529984
+  title: "HV LDC Chapter 16.72 - Nonconforming Uses, Structures and Lots"
+  # One section, so the thinness guard would read it as a landing page.
+  allow_thin: true
 - id: 16.12.definitions
   url: https://ecode360.com/print/HA4934?guid=43529904
   title: HV LDC Chapter 16.12 - Definitions
@@ -660,35 +699,52 @@ code:
   # table; this screen places a dwelling.
 
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Happy Valley HVMC 16.44.010 design standards reach multifamily housing only; the 16.22.050 rowhouse orientation reaches attached single-family dwellings in VTH, not a quadplex on one lot (whole-document grep) (FOLLOWUPS 153)"
+    url: https://ecode360.com/print/HA4934?guid=43529967
+    retrieved: '2026-10-15'
+    quote: "or/clackamas/happy-valley/16.44/16.44.010.txt#L1,L9"
   # PARKING, read 2026-08-27. Happy Valley is the first city in this corpus to
   # answer the whole question in one chapter: it requires parking, dimensions
   # it, and says where it may not go, all in LDC 16.43.030.
   #
-  # Table 16.43.030-1 puts this building on the row "Single-family attached
-  # (townhome), duplex, triplex, quadplex, cottage cluster" and asks 1 space
-  # per dwelling -- four for the pod -- against a maximum column reading "None
-  # required". The row is the same whether the pod sits on one lot or four, so
-  # nothing here turns on `unit_lots`, which makes Happy Valley the opposite
-  # of Oregon City two files over.
+  # Table 16.43.030-1 put this building on the row "Single-family attached
+  # (townhome), duplex, triplex, quadplex, cottage cluster" until Ord. 603
+  # (8/18/2026; re-fetched 2026-11-09, FOLLOWUPS 166). The ordinance split
+  # that row: "Single-family attached (townhome), duplex, triplex" keeps
+  # "1 per dwelling[1]" against a maximum of "None required", and the
+  # quadplex moved to "Multifamily dwellings containing five or more
+  # units[4], quadplex, and cottage cluster", which asks "1 per dwelling[1,3]"
+  # for studio and non-studio units alike. Both rows ask one space per
+  # dwelling -- four for the pod -- so the minimum is the same whether the
+  # pod sits on one lot (a quadplex) or four (townhomes).
   parking_min_per_unit:
     value: 1
-    cite: HV LDC 16.43.030.B.12, Table 16.43.030-1, Residential row (townhome/duplex/triplex/quadplex/cottage cluster)
+    cite: HV LDC 16.43.030.B.4, Table 16.43.030-1, Residential rows (townhome/duplex/triplex; multifamily/quadplex/cottage cluster) (Ord. 603, 8/18/2026)
     url: https://ecode360.com/print/HA4934?guid=43529966
-    retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L209-L210"
-  # The maximum column of the same row. Its header says so twice over --
-  # "Maximum Parking Spaces (if nothing is noted, there is no maximum)" -- and
-  # footnote 4 confirms it from the other side: maximums "apply only to
-  # multifamily units in town centers, regional centers, and the transit
-  # areas", which is a different row of this table and a place this building
-  # is not.
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L187-L188,L209-L210,L217,L224-L225"
+  # The maximum is where the split shows. Until Ord. 603 the quadplex's row
+  # printed "None required" in both maximum columns and footnote 4 limited
+  # maximums to multifamily units in centres and transit areas: exempt. Now
+  # the quadplex row prints a maximum in both columns (inside and outside the
+  # areas subject to OAR 660-012-0440 and the Town Center): "1.2[4]" for a
+  # studio unit and "2.0[4]" for a non-studio one, and the new footnote 4
+  # only lets "Non-surface parking, such as tuck-under parking ... be
+  # exempted from the calculations". The pod's units are not studios, so
+  # 2.0 per unit: eight spaces on four homes, twice what the pod parks, so
+  # it binds nothing. A pod on four unit lots is townhomes, whose row still
+  # prints "None required"; the quadplex figure is held for both because it
+  # is the one that can bind (FOLLOWUPS 166, 2026-11-09).
   parking_max_per_unit:
-    exempt: true
-    cite: HV LDC Table 16.43.030-1, Maximum Parking Spaces column, and footnote 4
+    value: 2.0
+    cite: HV LDC Table 16.43.030-1, Maximum Parking Spaces columns, multifamily/quadplex/cottage cluster row, non-studio units, and footnote 4 (Ord. 603, 8/18/2026)
     url: https://ecode360.com/print/HA4934?guid=43529966
-    retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L186-L190,L209-L211,L452-L453"
-  # Table 16.43.030-2, "Off-Street Parking Matrix Required Space and Aisle
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L189-L190,L195-L196,L217,L224-L227,L463-L464"
+  # Table 16.43.030-2 (16.43.030.E.2 since Ord. 603 relettered the section;
+  # the table did not change), "Off-Street Parking Matrix Required Space and Aisle
   # Dimensions in Feet", standard-size vehicles at 90 degrees: stall width
   # 9.0, stall depth 18.5, aisle width 24.0, module width 61.0, bumper
   # overhang 2.5. The module figure is the check on the reading -- 18.5 plus
@@ -700,67 +756,78 @@ defaults:
   # is screened against. One aisle figure, not two.
   parking_stall_width_ft:
     value: 9
-    cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
+    cite: HV LDC 16.43.030.E.2, Table 16.43.030-2, standard vehicle at 90 degrees (F.2 before Ord. 603)
     url: https://ecode360.com/print/HA4934?guid=43529966
-    retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624"
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L539-L544,L594-L599"
   parking_stall_depth_ft:
     value: 18.5
-    cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
+    cite: HV LDC 16.43.030.E.2, Table 16.43.030-2, standard vehicle at 90 degrees (F.2 before Ord. 603)
     url: https://ecode360.com/print/HA4934?guid=43529966
-    retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624"
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L539-L544,L594-L599"
   parking_aisle_one_way_ft:
     value: 24
-    cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
+    cite: HV LDC 16.43.030.E.2, Table 16.43.030-2, standard vehicle at 90 degrees (F.2 before Ord. 603)
     url: https://ecode360.com/print/HA4934?guid=43529966
-    retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624"
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L539-L544,L594-L599"
   parking_aisle_two_way_ft:
     value: 24
-    cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
+    cite: HV LDC 16.43.030.E.2, Table 16.43.030-2, standard vehicle at 90 degrees (F.2 before Ord. 603)
     url: https://ecode360.com/print/HA4934?guid=43529966
-    retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624"
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L539-L544,L594-L599"
   #
-  # NOT ENCODED, and this is the one that would change a site plan: LDC
-  # 16.43.030.E.4, Parking Location. "Parking areas shall be set back from a
-  # lot line adjoining a street the same distance as the required building
-  # setbacks. Regardless of other provisions, a minimum setback of ten feet
-  # shall be provided along the property fronting on a public street." A
-  # parking setback equal to the building setback is not a placement rule this
-  # screen has a field for, and in Happy Valley's residential zones the front
-  # setback is twenty feet, so the effect is that no stall may sit in the
-  # front yard at all -- not capped at half of it the way Milwaukie and
-  # Wilsonville cap it, banned. E.1 adds "No off-street parking shall be
-  # allowed in the landscaped yard areas of any lot", and E.3 sends a parking
-  # area abutting a residential district to that district's setback, which is
-  # a neighbour's standard applying to our lot. (or/clackamas/happy-valley/16.43/16.43.030.txt#L513,L521,L525-L527)
+  # PARKING LOCATION, 16.43.030.D since Ord. 603 (8/18/2026; re-fetched
+  # 2026-11-09, FOLLOWUPS 166). The old E.4 ("set back from a lot line
+  # adjoining a street the same distance as the required building setbacks",
+  # with a ten-foot floor) and E.3 (a parking area abutting a residential
+  # district takes that district's setback) are gone. D now reads: "1. No
+  # off-street parking shall be allowed in the landscaped yard areas of any
+  # lot. 2. Parking areas shall be setback a minimum of 10 feet from the
+  # public right-of-way and abutting properties." And 16.43.030.H exempts
+  # this building from all of it: "Single-family detached, attached,
+  # duplexes, triplexes, quadplexes, cottage clusters, and accessory dwelling
+  # units are exempt from subsections C through E, except Section
+  # 16.43.030E.1 and 16.43.030E.2 for cottage clusters." The street half of
+  # D.2 is still held on the zones (`parking_street_setback_ft`, 10), a
+  # number the code prints that binds nothing -- every Happy Valley front
+  # setback is ten feet or more. The "abutting properties" half is not
+  # encoded as `parking_lot_line_buffer_ft`: H takes the pod out of D, and a
+  # ten-foot strip off every side and rear line is a rule the pod is not
+  # subject to, not a conservative reading of one it is. (or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L502,L655-L657)
   #
-  # NOT ENCODED: LDC 16.43.030.F.5, Backing and Maneuvering. "Except for a
-  # single-family dwelling or two-family dwelling, groups of more than three
-  # parking spaces shall be provided with adequate aisles or turnaround areas
-  # so that all vehicles enter the right-of-way (except for alleys) in a
-  # forward manner." Four stalls is more than three and a quadplex is neither
-  # exception, so forward entry is required on every Happy Valley lot without
-  # an alley -- the third city to state it (Milwaukie 19.607.1.E.2, Gresham's
-  # hard-coded rear court) and the first to state it as a flat rule rather
-  # than one conditioned on street class. F.3 adds that no vehicle may project
-  # over a property line or right-of-way, and allows a five-foot-clear
-  # overhang across an internal sidewalk. (or/clackamas/happy-valley/16.43/16.43.030.txt#L633-L637,L645-L647)
+  # NOT ENCODED: LDC 16.43.030.F, Backing and Maneuvering (F.5 before Ord.
+  # 603). "Except for a single-family dwelling or two-family dwelling, groups
+  # of more than three parking spaces shall be provided with adequate aisles
+  # or turnaround areas so that all vehicles enter the right-of-way (except
+  # for alleys) in a forward manner." Four stalls is more than three and a
+  # quadplex is neither exception, so forward entry is required on every
+  # Happy Valley lot without an alley -- the third city to state it
+  # (Milwaukie 19.607.1.E.2, Gresham's hard-coded rear court) and the first
+  # to state it as a flat rule rather than one conditioned on street class.
+  # Until Ord. 603 the middle-housing exemption ran "C through F" and so
+  # reached this too; it now stops at E, so F reaches the pod in its own
+  # right. The court this screen draws already turns on its own aisle. E.4.c
+  # adds that no vehicle may project over a property line or right-of-way,
+  # and E.4.d allows a five-foot-clear overhang across an internal sidewalk
+  # (both inside the C-E exemption). (or/clackamas/happy-valley/16.43/16.43.030.txt#L623-L629,L644-L648)
   #
   # NOT ENCODED: three ways the minimum above can fall to zero, all of them
-  # site facts nothing measures. 16.43.030.B.12 exempts a lot within
-  # three-quarters of a mile of a rail transit stop, within half a mile of a
-  # frequent transit corridor as defined by OAR 660-012-0710, or within a
-  # quarter mile of the Clackamas Regional Center or Happy Valley Town Center.
-  # Footnote 5 exempts "residential units smaller than 750 square feet",
-  # affordable housing under OAR 660-039-0010 and publicly supported housing
-  # under ORS 456.250 -- this pod's units are about a thousand square feet
-  # each, so the size limb does not reach it, and affordability is elective.
-  # Footnote 3 exempts housing-type conversions, which is not new
-  # construction. Encoding any of them would forgive a requirement that
-  # really applies. (or/clackamas/happy-valley/16.43/16.43.030.txt#L148-L175,L450-L455)
+  # site facts nothing measures. 16.43.030.B.4 (B.12 before Ord. 603) exempts
+  # a lot within three-quarters of a mile of a rail transit stop, within half
+  # a mile of a frequent transit corridor (OAR 660-012-0710 priority
+  # corridors, or bus service at four an hour, or the community's most
+  # frequent route at one an hour), or containing land within, or within a
+  # quarter mile of, the Clackamas Regional Center or Happy Valley Town
+  # Center. Footnote 1 (footnote 5 before) exempts "residential units smaller
+  # than 750 square feet", affordable housing under OAR 660-039-0010 and
+  # publicly supported housing under ORS 456.250 -- this pod's units are
+  # about a thousand square feet each, so the size limb does not reach it,
+  # and affordability is elective. Footnote 3 exempts housing-type
+  # conversions, which is not new construction. Encoding any of them would
+  # forgive a requirement that really applies. (or/clackamas/happy-valley/16.43/16.43.030.txt#L146-L177,L445-L446,L457-L458)
   #
   # DRIVEWAY, read 2026-08-27 out of Chapter 16.41 once it was fetched.
   # 16.41.030.B.1: "A driveway to an off-street parking area shall be improved
@@ -836,18 +903,39 @@ defaults:
   # the rear court, and this is what will let it try a side court where the
   # code allows one (FOLLOWUPS 5).
   #
-  # 16.43.030.E, Parking Location, is the whole of what Happy Valley says: no
-  # parking in landscaped yard areas (E.1), a parking area abutting a
-  # residential district meets that district's setback (E.3), and parking set
-  # back from a street lot line by the building setback (E.4). A setback from
-  # a neighbour is not a ban on the yard, and no sentence names the side yard
-  # (whole-document grep, 2026-09-19: nothing). Exempt.
+  # 16.43.030.D, Parking Location (E until Ord. 603, 8/18/2026), is the
+  # whole of what Happy Valley says: no parking in landscaped yard areas
+  # (D.1), and parking set back ten feet from the right-of-way and abutting
+  # properties (D.2; before Ord. 603, the building setback from a street and
+  # a residential neighbour's setback). A setback from a neighbour is not a
+  # ban on the yard, and no sentence names the side yard (whole-document
+  # grep, 2026-09-19 and again on the copy re-fetched 2026-11-09: nothing).
+  # And 16.43.030.H takes middle housing out of D altogether. Exempt.
   parking_side_prohibited:
     exempt: true
-    cite: HV LDC 16.43.030.E.1, E.3 and E.4, which set parking back from a street and from a residential neighbour and ban it in landscaped yards, naming no side yard
+    cite: HV LDC 16.43.030.D.1 and D.2, which ban parking in landscaped yards and set it back from the right-of-way and abutting properties, naming no side yard, and 16.43.030.H, which exempts middle housing from D (Ord. 603, 8/18/2026)
     url: https://ecode360.com/print/HA4934?guid=43529966
-    retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L513,L521,L525-L527"
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L494-L502,L657"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 16.43.030.E (no parking in
+  # landscaped yards; abutting-residential setback) is exempted for
+  # middle housing by 16.43.030.I (since Ord. 603: D, exempted by H,
+  # re-fetched 2026-11-09, FOLLOWUPS 166), and 16.42.020 exempts it from most
+  # landscaping (16.42/16.42.020.txt#L4). Whole-folder grep finds the
+  # cottage-cluster rule (16.44.130) and nothing else for an interior
+  # side. Silent.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: HVMC 16.43.030.H, middle housing exempt from subsections C through E except E.1 (and E.2 for cottage clusters), so the parking-location rules of D do not reach the pod (Ord. 603, 8/18/2026)
+    url: https://ecode360.com/print/HA4934?guid=43529966
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L502,L655-L657"
+  parking_side_yard_stated:
+    value: none
+    cite: HVMC 16.43.030.H exemption leaves no interior-side-yard parking rule for middle housing (Ord. 603, 8/18/2026)
+    url: https://ecode360.com/print/HA4934?guid=43529966
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L655-L657"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -890,24 +978,26 @@ defaults:
     value: owner
     cite: HV LDC 16.12, Lot line, front, the applicant or property owner chooses on a corner lot
     url: https://ecode360.com/print/HA4934?guid=43529904
-    retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1031-L1035"
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1049-L1053"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
   #
   # 16.12: "On a through lot the applicant or property owner can choose which
-  # lot line is to be the front lot line and which lot line is to be the rear
-  # lot line, regardless of whether the street lot lines are of equal or
-  # unequal length." The far street line takes the REAR setback -- 15 ft
+  # street lot line is to be the front lot line and which lot line is to be
+  # the rear lot line, regardless of whether the street lot lines are of equal
+  # or unequal length." ("street" inserted by Ord. 603, codified on eCode360
+  # by 2026-11-09, FOLLOWUPS 166: the choice is between the street lines,
+  # which is what this encoding already assumed; value unchanged.) The far street line takes the REAR setback -- 15 ft
   # against a 10 ft front in SFA, MURA and VTH, where both-fronts had been
   # the lenient reading.
   front_lot_line_through:
     value: owner
     cite: HV LDC 16.12, Lot line, front, on a through lot the applicant or property owner chooses the front and the rear lot line
     url: https://ecode360.com/print/HA4934?guid=43529904
-    retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1032-L1035"
+    retrieved: '2026-11-09'
+    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1050-L1053"
   #
   # NOT ENCODED: a driveway approach width, because Happy Valley states none.
   # The sentence above ends "not less than the full width of the standard
@@ -922,11 +1012,19 @@ defaults:
   # clearance, and shared driveways where the City Engineer requires them.
   # (or/clackamas/happy-valley/16.41/16.41.030.txt#L40-L89)
   #
-  # ENCODED PER ZONE, not here: LDC 16.43.030.E.4, Parking Location. "Parking
-  # areas shall be set back from a lot line adjoining a street the same
-  # distance as the required building setbacks. Regardless of other
-  # provisions, a minimum setback of ten feet shall be provided along the
-  # property fronting on a public street."
+  # ENCODED PER ZONE, not here: LDC 16.43.030.D.2 since Ord. 603 (8/18/2026;
+  # re-fetched 2026-11-09, FOLLOWUPS 166), "Parking areas shall be setback a
+  # minimum of 10 feet from the public right-of-way and abutting
+  # properties." Each zone holds the ten as printed. 16.43.030.H exempts
+  # middle housing from subsections C through E, so the pod is not bound by
+  # it at all; the ten is kept because it is the figure the code prints and
+  # it cannot bind (every front setback below is ten feet or more).
+  #
+  # WHAT THE CODE SAID UNTIL ORD. 603 (16.43.030.E.4), and why the zones held
+  # `same_as` until 2026-11-09: "Parking areas shall be set back from a lot
+  # line adjoining a street the same distance as the required building
+  # setbacks. Regardless of other provisions, a minimum setback of ten feet
+  # shall be provided along the property fronting on a public street."
   #
   # The sentence states no number of its own. It points at a number, and the
   # number it points at is different in every district -- twenty-two in the
@@ -953,16 +1051,15 @@ defaults:
   # encoded because it is the law and because the next city may print a bigger
   # number, not because it moves a lot here.
   #
-  # Two neighbours in the same subsection stay refused, and for the old
-  # reason. E.1, "No off-street parking shall be allowed in the landscaped
-  # yard areas of any lot" -- a landscaped yard AREA is not a yard, no field
-  # holds where a lot's landscaping is, and min_landscaped_pct is a share of
-  # the lot rather than a place on it. E.3 sends a parking area abutting a
-  # residential district to "the setback of the most restrictive adjoining
-  # residential zoning district", which is the NEIGHBOUR'S standard applying
-  # to our lot: `same_as` reaches another field in this zone, not another
-  # zone's field, and what would answer it is the zoning of the parcel next
-  # door. (or/clackamas/happy-valley/16.43/16.43.030.txt#L513,L521)
+  # Two neighbours in the same subsection stayed refused, and for the old
+  # reason. E.1 (D.1 now, same words), "No off-street parking shall be
+  # allowed in the landscaped yard areas of any lot" -- a landscaped yard
+  # AREA is not a yard, no field holds where a lot's landscaping is, and
+  # min_landscaped_pct is a share of the lot rather than a place on it. E.3
+  # sent a parking area abutting a residential district to "the setback of
+  # the most restrictive adjoining residential zoning district"; Ord. 603
+  # replaced it with D.2's flat ten feet from "abutting properties", which H
+  # does not apply to the pod (see the PARKING LOCATION note above). (or/clackamas/happy-valley/16.43/16.43.030.txt#L494-L502)
   #
   # NOT ENCODED: any private open space standard, and the trail runs cold in a
   # way worth writing down. Two of the zone tables in Chapter 16.22 carry a
@@ -1089,17 +1186,15 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L189"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     min_lot_sqft:
       value: 40000
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L175"
@@ -1116,6 +1211,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L176"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 100
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178"
@@ -1310,17 +1414,15 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L189"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     min_lot_sqft:
       value: 20000
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L175"
@@ -1337,6 +1439,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L176"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 80
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178"
@@ -1529,17 +1640,15 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L189"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     min_lot_sqft:
       value: 15000
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L175"
@@ -1556,6 +1665,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L176"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 70
       quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178"
@@ -1738,17 +1856,15 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L186"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     min_lot_sqft:
       value: 10000
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L170"
@@ -1765,6 +1881,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L171"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173"
@@ -1948,17 +2073,15 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L186"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     min_lot_sqft:
       value: 8500
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L170"
@@ -1975,6 +2098,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L171"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173"
@@ -2158,17 +2290,15 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L186"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L170"
@@ -2185,6 +2315,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L171"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173"
@@ -2404,17 +2543,15 @@ zones:
     setback_street_side_ft:
       value: 8
       quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L166"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L148"
@@ -2431,6 +2568,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L149"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       value: 40
       quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L152"
@@ -2615,6 +2761,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L149"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L37"
@@ -2655,17 +2810,15 @@ zones:
     setback_street_side_ft:
       value: 8
       quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L166"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -2714,6 +2867,15 @@ zones:
     min_lot_sqft:
       value: 2000
       quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L271-L272"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       # The cell reads "None". A stated absence is an answered standard,
       # not a missing one.
@@ -2750,17 +2912,15 @@ zones:
     setback_street_side_ft:
       value: 8
       quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L300-L301"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     setback_garage_entrance_ft:
       # "Garage and carport entrances -- entrances not facing an alley: 22
       # feet." The alley row is a two-part standard (22 feet to the base
@@ -2874,6 +3034,15 @@ zones:
         - per_dwelling: 1500
           when: [unit_lots]
           quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L352-L357"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       # The cell reads "None". A stated absence is an answered standard,
       # not a missing one.
@@ -2910,17 +3079,15 @@ zones:
     setback_street_side_ft:
       value: 8
       quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L300,L302"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     setback_garage_entrance_ft:
       # "Garage and carport entrances -- entrances not facing an alley: 22
       # feet." The alley row is a two-part standard (22 feet to the base
@@ -3028,7 +3195,7 @@ zones:
       # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: HV LDC 16.12, dwelling, multiple-family (five or more families); 16.22.050(B)(2), attached single-family dwellings only
-      quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L624-L628"
+      quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L642-L646"
       variants:
         - value: 1
           when: [unit_lots]
@@ -3037,6 +3204,15 @@ zones:
     min_lot_sqft:
       value: 2000
       quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L271,L274"
+    lot_of_record_relief:
+      # 16.72.040: a single vacant lot of record at the code's adoption may miss
+      # area, width or depth (not frontage). The date is parcel history we do not
+      # hold. YELLOW, not GREEN.
+      value: lot_area_width_depth
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/happy-valley/16.72.nonconforming.txt#L123"
     min_lot_width_ft:
       # The cell reads "None". A stated absence is an answered standard,
       # not a missing one.
@@ -3072,17 +3248,15 @@ zones:
     setback_street_side_ft:
       value: 5
       quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L300,L303"
-    # 16.43.030.E.4, stated as equal to the building setback -- see the note
-    # in `defaults:`. `same_as` resolves against the row above, the printed
-    # ten-foot floor is the only figure the sentence carries, and neither
-    # number is typed here.
+    # 16.43.030.D.2 (Ord. 603): ten feet from the right-of-way, as printed --
+    # see the note in `defaults:`. Until 2026-11-09 this was `same_as` the
+    # building setback (the old E.4).
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     setback_front_max_ft:
       # A maximum, not a minimum: "Setback (maximum from street
       # right-of-way or designated accessway) -- 18 feet". SFA and MUR-A
@@ -3368,12 +3542,11 @@ zones:
       value: 15
       quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L101,L105"
     parking_street_setback_ft:
-      same_as: setback_front_ft
-      floor_ft: 10
-      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      value: 10
+      cite: HV LDC 16.43.030.D.2, parking areas set back a minimum of 10 feet from the public right-of-way (Ord. 603, 8/18/2026); 16.43.030.H exempts middle housing from D
       url: https://ecode360.com/print/HA4934?guid=43529966
-      retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L492-L494,L500-L502"
     min_lot_sqft:
       # "Average lot size (minimum) 10 acres": one lot's average is the lot.
       # The state path caps a quadplex's minimum at the
@@ -3426,9 +3599,12 @@ zones:
       # one lacks. Notes 2 and 3 say where the multifamily goes: upper
       # floors of mixed use buildings, or freestanding "when nonresidential
       # uses occupy the street side(s) of the parcel" with a footprint
-      # capped at 25 percent of the parcel. 33 lots.
+      # capped at 25 percent of the parcel -- 50 percent since Ord. 603
+      # (8/18/2026; re-fetched 2026-11-09, FOLLOWUPS 166), which still needs
+      # the nonresidential street side and so still refuses a building that
+      # is all dwelling. 33 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L32,L34-L36,L81-L88,L111,L113-L116"
+      quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L32,L34-L36,L81-L88,L111,L115-L120"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.010-1. Refused on the row before
       the note: the building is not multifamily by this code's own
@@ -3468,7 +3644,7 @@ zones:
       # mixed use area and is subject to the master plan requirements of
       # Chapter 16.65"), which is a process, not a row. 20 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L32,L34-L36,L81-L88,L111-L112"
+      quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L32,L34-L36,L81-L88,L111,L113-L114"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.010-1, RCMU column. See MUC.
   VC:
@@ -3526,12 +3702,14 @@ zones:
       # du/acre (10-34 du/acre) may be permitted in the CCC zone when
       # nonresidential uses occupy the street side(s) of the parcel. The
       # footprint of such freestanding residential uses ... may not exceed
-      # 25% of the CCC zoned area of the parcel". A four-unit building on
+      # 25% of the CCC zoned area of the parcel" (50% since Ord. 603,
+      # 8/18/2026; re-fetched 2026-11-09, FOLLOWUPS 166; the street-side
+      # condition is unchanged). A four-unit building on
       # its own lot occupies the whole parcel and its street side, so the
       # condition cannot be met, and "may be permitted" is a discretion this
       # screen never presumes. 38 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L38,L40-L47,L105-L111"
+      quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L38,L40-L47,L105,L107-L112"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.030-1, CCC column. The row is a
       density band, not a building type, and every way through it needs a
@@ -3551,9 +3729,11 @@ zones:
       # of such freestanding residential uses ... may not exceed 25% of the
       # MCC zoned area of the parcel". In conjunction with a nonresidential
       # use on the parcel, and at most a quarter of it -- a stand-alone
-      # four-unit building is neither. 18 lots.
+      # four-unit building is neither. 18 lots. (Ord. 603 raised the CCC and
+      # MUC caps to 50 percent and left this one at 25; re-fetched
+      # 2026-11-09, FOLLOWUPS 166.)
       value: false
-      quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L38,L40-L47,L105-L107,L112-L113"
+      quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L38,L40-L47,L105,L107-L109,L119-L121"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.030-1, MCC column. See CCC; this
       column's door is the same shape without the discretion.
@@ -3571,7 +3751,9 @@ zones:
       # heading at all. Whole-document grep of 16.24 for dwelling,
       # residential, housing: the trailer row's "nearby rental housing" and
       # a tower setback from "any residential property line". 119 lots --
-      # the schools and parks of the city, and the largest of the 23.
+      # the schools and parks of the city, and the largest of the 23. Ord.
+      # 603 (re-fetched 2026-11-09, FOLLOWUPS 166) added "Ancillary uses such
+      # as mobile food units permitted" to the parks row; still no dwelling.
       value: false
       quote: "or/clackamas/happy-valley/16.24/16.24.010.txt#L11,L13,L15-L57"
     notes: >-
@@ -3614,9 +3796,10 @@ zones:
       # ... occupy no more than 80% of the overall interior square footage
       # of the site." Upstairs, or at most four-fifths of a site that is
       # otherwise employment; a building that is all dwelling is 100
-      # percent of its site. 22 lots.
+      # percent of its site. 22 lots. Re-fetched 2026-11-09 (FOLLOWUPS 166):
+      # note 1's words are unchanged; the notes now print as a table.
       value: false
-      quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L72,L74,L76-L80,L138-L141"
+      quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L72,L74,L76-L80,L139,L143-L146"
     notes: >-
       Encoded 2026-09-20 from Table 16.25.010-1, EC column. The row reads
       P and the note takes the P back for a stand-alone residential
@@ -3755,13 +3938,39 @@ zone_rulings:
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: true
-  quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1939-L1941"
+  quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1956-L1958"
   says: "A public right-of-way or private tract"
   cite: "HVMC 16.12.020 (Street; Private street; Front lot line; Corner lot)"
   note: >-
     A street is "a public right-of-way or private tract that is intended for
     motor vehicle ... access to abutting property"; front lot line (L883) and
-    corner lot (L908) read "street", and the front property line is any line
-    "separating the lot from a public or private road" (L712). A shared driveway
+    corner lot (L908) read "street"; the front property line, which until Ord. 603 was
+    any line "separating the lot from a public or private road" (L712), now reads "See
+    lot line, front" (16.12.030, re-fetched 2026-11-09, FOLLOWUPS 166), which also reads
+    "street", so the answer does not change. A shared driveway
     on an easement is not a tract: s4 reads it as a drive on other land,
     screened both ways.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 25
+    basis: lot_line
+    source: data/flats/books/sight-manuals/happy-valley/edm.txt#L1642-L1646
+    cite: Happy Valley EDM; HVMC 16.50
+    note: '''the triangular area beginning at the intersection of the projected right-of-way lines and
+      extending 25 feet along each leg''; ''No fence, berm, wall, vehicle, hedge or other planting or
+      structure''. Not in the stored code: the manual is held in data/flats/books.'
+  driveway:
+    status: read
+    kind: wedge
+    sight_ft:
+    - 280
+    eye_back_ft: 14.5
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/happy-valley/edm.txt#L1959-L1983
+    cite: Happy Valley EDM ISD
+    note: 'Intersection sight distance at driveways, 280 ft at 25 mph, the eye 14.5 ft from the edge of
+      the nearest travel lane. The near lane''s edge is not mapped: the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way

@@ -54,8 +54,11 @@ What is read per lot, off the acquire snapshot (``flats/config/pipeline.yaml``):
 of 33.415's development regulations reach the pod, and each turns on a
 *transit street* -- a street the Transportation System Plan classes as a
 Major Transit Priority, Transit Access or Community Transit Street (33.910).
-No snapshot holds that classification, so every street of the lot is taken as
-one, the worst case, and a miss is YELLOW (the street may not be one), never
+Since 2026-11-08 the city's own map of that classification answers it per lot
+line (:mod:`flats.geom.pdx_transit`): a rule whose transit street the map
+rules out raises nothing, and a street the map cannot settle -- and every
+street of a lot the map does not read (the unincorporated pockets, a lot off
+its extent) -- is still taken as one, the worst case. A miss is YELLOW, never
 RED:
 
 * 33.415.300.B bars "Houses, attached houses, and duplexes" within 100 ft of
@@ -63,14 +66,17 @@ RED:
   out. The townhouse form is four homes each on its own lot -- attached
   houses, unless the lots come from a middle housing land division (33.910's
   definition carves those out), and which way the plat goes is not known, so
-  the townhouse form on an "m" lot carries :data:`MAIN_STREET_TRANSIT_FLAG`.
+  the townhouse form on an "m" lot carries :data:`MAIN_STREET_TRANSIT_FLAG`
+  unless the drawn houses (the lot, with nothing drawn) lie surely beyond
+  100 ft of every transit street.
 * 33.415.330.B caps the frontage "used for vehicle areas" (33.910: "All the
   area on a site where vehicles may circulate or park including parking
   areas, driveways") on any transit street: 30 % in the Inner pattern area,
   50 % in the Eastern and Western. The lane and the court of the drawn plan
-  are laid against every street the way :func:`flats.fit.frontage.street_runs`
-  reads parking; a share over the cap, or no drawing, raises
-  :data:`MAIN_STREET_VEHICLE_FLAG`. River and Central City state no cap.
+  are laid against every street the map does not rule out, the way
+  :func:`flats.fit.frontage.street_runs` reads parking; a share over the cap,
+  or no drawing, raises :data:`MAIN_STREET_VEHICLE_FLAG`. River and Central
+  City state no cap.
 * 33.415.320 (Inner pattern area only): at least 70 % of the length of the
   ground level street-facing facade (33.910: the wall planes "at an angle of
   45 degrees or less from a street lot line") must meet the base zone's
@@ -78,6 +84,21 @@ RED:
   ``setback_front_max_ft`` on every street; a miss, no drawing, or a zone
   whose maximum is not read raises :data:`MAIN_STREET_SETBACK_FLAG` -- the
   pod could be stood forward, so not RED.
+* 33.415.200: on a site with frontage on a transit street, 25 % of the ground
+  level floor area within 100 ft of it must be a non-residential active use
+  (retail, office, daycare, ...). The pod is Household Living from the
+  ground up and never meets it. "Development that includes a residential use
+  is exempt from this standard until January 1, 2029" (:data:`ACTIVE_USE_FROM`;
+  33.415.340's 60 % ground floor windows wait for the same day). A screen
+  under the law of an earlier day says so on every "m" lot below the yellow
+  line, as an adopted change not yet in force is said (rulings.yaml
+  2026-08-06-portland-ricap11-ci1-housing). From that day a lot the map
+  reads as fronting a transit street is RED (:data:`ACTIVE_USE_CHECK`: the
+  four homes fail the standard, and rulings.yaml 2026-10-02-no-variances
+  takes no adjustment), and a lot whose streets the map cannot settle is
+  YELLOW with :data:`MAIN_STREET_ACTIVE_USE_FLAG`. The date is a run-key input
+  (:func:`dated_in_force`), so a cache kept under the old law is not replayed.
+  FOLLOWUPS 78's last main street item.
 
 **Historic and Conservation Districts (33.445, the 2026-10-14 review
 tiers).** Building a new structure in a Historic District or a Conservation
@@ -127,6 +148,7 @@ import dataclasses
 import json
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -182,6 +204,14 @@ SETBACK_FACADE_PCT = 70.0
 FACADE_ANGLE_DEG = 45.0
 #: Drawn rings are rounded to a tenth of a foot.
 DRAWN_TOL_FT = 0.5
+#: 33.415.200: "Development that includes a residential use is exempt from
+#: this standard until January 1, 2029" (33.415.340's 60 % windows likewise).
+ACTIVE_USE_FROM = date(2029, 1, 1)
+#: The active-use flag's severity on a lot screened under earlier law: said
+#: on the lot page, below the yellow line (``colour.yaml``).
+ACTIVE_USE_NOTICE_SEVERITY = 2
+#: The run-key label of the day the exemption ends (:func:`dated_in_force`).
+ACTIVE_USE_LAW = "portland:m:33.415.200-residential-exemption-ends-2029-01-01"
 
 #: Map 415-1's label for the Central City, read as the plan district.
 CENTRAL_CITY = "Central City"
@@ -208,6 +238,7 @@ DESIGN_REVIEW_REASON = "PDX_DESIGN_REVIEW"
 MAIN_STREET_TRANSIT_REASON = "PDX_MAIN_STREET_TRANSIT"
 MAIN_STREET_VEHICLE_REASON = "PDX_MAIN_STREET_VEHICLE_AREA"
 MAIN_STREET_SETBACK_REASON = "PDX_MAIN_STREET_SETBACK"
+MAIN_STREET_ACTIVE_USE_REASON = "PDX_MAIN_STREET_ACTIVE_USE"
 COMMUNITY_DESIGN_REASON = "PDX_COMMUNITY_DESIGN_STANDARDS"
 DESIGN_STANDARDS_REASON = "PDX_DESIGN_STANDARDS"
 REASONS: tuple[str, ...] = (
@@ -218,6 +249,7 @@ REASONS: tuple[str, ...] = (
     MAIN_STREET_TRANSIT_REASON,
     MAIN_STREET_VEHICLE_REASON,
     MAIN_STREET_SETBACK_REASON,
+    MAIN_STREET_ACTIVE_USE_REASON,
     COMMUNITY_DESIGN_REASON,
     DESIGN_STANDARDS_REASON,
 )
@@ -226,25 +258,29 @@ MIN_FAR_CHECK = "pdx_min_far"
 PROTECTED_RESOURCE_CHECK = "pdx_protected_resource"
 HISTORIC_REVIEW_CHECK = "pdx_historic_review"
 DESIGN_REVIEW_CHECK = "pdx_design_review"
+ACTIVE_USE_CHECK = "pdx_active_use"
 CHECKS: tuple[str, ...] = (
-    MIN_FAR_CHECK, PROTECTED_RESOURCE_CHECK, HISTORIC_REVIEW_CHECK, DESIGN_REVIEW_CHECK
+    MIN_FAR_CHECK, PROTECTED_RESOURCE_CHECK, HISTORIC_REVIEW_CHECK, DESIGN_REVIEW_CHECK, ACTIVE_USE_CHECK
 )
 _BIND_REASON: Mapping[str, str] = {
     MIN_FAR_CHECK: MIN_FAR_REASON,
     PROTECTED_RESOURCE_CHECK: PROTECTED_RESOURCE_REASON,
     HISTORIC_REVIEW_CHECK: HISTORIC_REVIEW_REASON,
     DESIGN_REVIEW_CHECK: DESIGN_REVIEW_REASON,
+    ACTIVE_USE_CHECK: MAIN_STREET_ACTIVE_USE_REASON,
 }
 #: The flag types (``flats/config/flags.yaml``), each with its reason.
 MAIN_STREET_TRANSIT_FLAG = "PDX-MAIN-STREET-TRANSIT"
 MAIN_STREET_VEHICLE_FLAG = "PDX-MAIN-STREET-VEHICLE-AREA"
 MAIN_STREET_SETBACK_FLAG = "PDX-MAIN-STREET-SETBACK"
+MAIN_STREET_ACTIVE_USE_FLAG = "PDX-MAIN-STREET-ACTIVE-USE"
 COMMUNITY_DESIGN_FLAG = "PDX-COMMUNITY-DESIGN-STANDARDS"
 DESIGN_STANDARDS_FLAG = "PDX-DESIGN-STANDARDS"
 FLAGS: Mapping[str, str] = {
     MAIN_STREET_TRANSIT_FLAG: MAIN_STREET_TRANSIT_REASON,
     MAIN_STREET_VEHICLE_FLAG: MAIN_STREET_VEHICLE_REASON,
     MAIN_STREET_SETBACK_FLAG: MAIN_STREET_SETBACK_REASON,
+    MAIN_STREET_ACTIVE_USE_FLAG: MAIN_STREET_ACTIVE_USE_REASON,
     COMMUNITY_DESIGN_FLAG: COMMUNITY_DESIGN_REASON,
     DESIGN_STANDARDS_FLAG: DESIGN_STANDARDS_REASON,
 }
@@ -255,146 +291,160 @@ FLAGS: Mapping[str, str] = {
 CITES: Mapping[str, tuple[str, str, str]] = {
     "min_far_inner": (
         "PCC 33.415.310.A",
-        "or/multnomah/portland/33.415.txt#L79-L81",
+        "or/multnomah/portland/33.415.txt#L71",
         "In the Inner Pattern Area the minimum floor area ratio (FAR) for all new development is 0.5",
     ),
     "min_far_outer": (
         "PCC 33.415.310.B",
-        "or/multnomah/portland/33.415.txt#L82-L83",
+        "or/multnomah/portland/33.415.txt#L73-L74",
         "In the Eastern and Western Pattern Area the minimum floor area ratio (FAR) for all new",
     ),
     "historic_district": (
         "PCC 33.445.200.E.1",
-        "or/multnomah/portland/33.445.txt#L1184-L1185",
+        "or/multnomah/portland/33.445.txt#L1058-L1059",
         "of a contributing resource in a Historic District is subject to demolition review",
     ),
     "conservation_district": (
         "PCC 33.445.210.E.1",
-        "or/multnomah/portland/33.445.txt#L1593-L1594",
+        "or/multnomah/portland/33.445.txt#L1400-L1401",
         "of a contributing resource in a Conservation District is subject to demolition review",
     ),
     "nr_district": (
         "PCC 33.445.220.E.1",
-        "or/multnomah/portland/33.445.txt#L1697-L1699",
+        "or/multnomah/portland/33.445.txt#L1491-L1493",
         "of a contributing resource in a National Register District is subject to demolition",
     ),
     "nr_district_approval": (
         "PCC 33.445.220.E.3",
-        "or/multnomah/portland/33.445.txt#L1743-L1744",
+        "or/multnomah/portland/33.445.txt#L1528-L1529",
         "If the review body approves demolition of the resource",
     ),
     "split_site": (
         "PCC 33.700.070.F",
-        "or/multnomah/portland/33.700.txt#L385-L386",
+        "or/multnomah/portland/33.700.txt#L329-L330",
         "When a site is in more than one zone, the development standards of each zone apply to "
         "the portion of the site in that zone",
     ),
     "historic landmark": (
         "PCC 33.445.100.E.1",
-        "or/multnomah/portland/33.445.txt#L360-L362",
+        "or/multnomah/portland/33.445.txt#L353-L355",
         "of a Historic Landmark and demolition of a contributing resource is subject to",
     ),
     "conservation landmark": (
         "PCC 33.445.110.E.1",
-        "or/multnomah/portland/33.445.txt#L654-L656",
+        "or/multnomah/portland/33.445.txt#L595-L597",
         "of a Conservation Landmark and demolition of a contributing resource is subject to",
     ),
     "national register landmark": (
         "PCC 33.445.120.E.1",
-        "or/multnomah/portland/33.445.txt#L754-L756",
+        "or/multnomah/portland/33.445.txt#L683-L685",
         "of a National Register Landmark and demolition of a contributing resource is subject",
     ),
     # --- the rest of the Centers Main Street overlay (FOLLOWUPS 109) -------
     "transit_ban": (
         "PCC 33.415.300.B",
-        "or/multnomah/portland/33.415.txt#L73-L77",
-        "The following development is prohibited within 100 feet of a transit street : "
+        "or/multnomah/portland/33.415.txt#L67-L69",
+        "The following development is prohibited within 100 feet of a transit street: "
         "A. Drive-through facilities; and B. Houses, attached houses, and duplexes.",
     ),
     "attached_house": (
         "PCC 33.910 (Residential Structure Types)",
-        "or/multnomah/portland/33.910.definitions.txt#L1072-L1073",
+        "or/multnomah/portland/33.910.definitions.txt#L1086-L1087",
         "Attached House. Except for individual dwelling units on lots created through a middle "
         "housing land division, a dwelling unit, located on its own lot",
     ),
     "transit_street": (
         "PCC 33.910 (Street Types)",
-        "or/multnomah/portland/33.910.definitions.txt#L1378-L1379",
+        "or/multnomah/portland/33.910.definitions.txt#L1393-L1394",
         "Transit Street. A street that is classified in the Transportation System Plan as:",
     ),
     "vehicle_area_inner": (
         "PCC 33.415.330.B.1",
-        "or/multnomah/portland/33.415.txt#L105-L106",
+        "or/multnomah/portland/33.415.txt#L94-L95",
         "In the Inner Pattern area, no more than 30 percent of any transit street frontage may "
         "be used for vehicle areas",
     ),
     "vehicle_area_outer": (
         "PCC 33.415.330.B.2",
-        "or/multnomah/portland/33.415.txt#L107-L108",
+        "or/multnomah/portland/33.415.txt#L96-L97",
         "In the Eastern and Western Pattern areas, no more than 50 percent of any transit "
         "street frontage may be used for vehicle areas",
     ),
     "vehicle_areas": (
         "PCC 33.910 (Vehicle Areas)",
-        "or/multnomah/portland/33.910.definitions.txt#L1490-L1491",
+        "or/multnomah/portland/33.910.definitions.txt#L1505-L1506",
         "Vehicle Areas. All the area on a site where vehicles may circulate or park including "
         "parking areas, driveways",
     ),
     "max_setback": (
         "PCC 33.415.320",
-        "or/multnomah/portland/33.415.txt#L86-L87",
+        "or/multnomah/portland/33.415.txt#L77",
         "of the building must meet the maximum building setback standard of the base zone.",
+    ),
+    "active_use": (
+        "PCC 33.415.200",
+        "or/multnomah/portland/33.415.txt#L47-L49",
+        "On sites with frontage on a transit street, at least 25 percent of the ground level "
+        "floor area located within 100 feet of the transit street must be in one of the "
+        "following active uses. Development that includes a residential use is exempt from "
+        "this standard until January 1, 2029.",
+    ),
+    "active_use_windows": (
+        "PCC 33.415.340",
+        "or/multnomah/portland/33.415.txt#L103-L104",
+        "Until January 1, 2029, the increase to 60 percent for 33.130.230.B.2.a(1) does not "
+        "apply to development that includes a residential use.",
     ),
     "street_facing_facade": (
         "PCC 33.910 (Street-facing Facade)",
-        "or/multnomah/portland/33.910.definitions.txt#L1324-L1325",
+        "or/multnomah/portland/33.910.definitions.txt#L1338-L1339",
         "All the wall planes of a structure as seen from one side or view that are at an "
         "angle of 45 degrees or less from a street lot line.",
     ),
     # --- Historic and Conservation Districts --------------------------------
     "historic_district_review": (
         "PCC 33.445.200.D.1.b",
-        "or/multnomah/portland/33.445.txt#L868-L872",
+        "or/multnomah/portland/33.445.txt#L787-L790",
         "following proposals in a Historic District are subject to historic resource review: "
         "a. Exterior alterations; b. Building a new structure;",
     ),
     "conservation_district_review": (
         "PCC 33.445.210.D",
-        "or/multnomah/portland/33.445.txt#L1282-L1290",
+        "or/multnomah/portland/33.445.txt#L1142-L1148",
         "When historic resource review is required, the Community Design Standards may be used "
         "as an alternative for some proposals.",
     ),
     "historic_compatibility": (
         "PCC 33.846.060.G.8",
-        "or/multnomah/portland/33.846.txt#L887-L888",
+        "or/multnomah/portland/33.846.txt#L814-L815",
         "Architectural compatibility. New additions, exterior alterations, or new construction "
         "will be compatible with the massing, size, scale, and",
     ),
     "community_design_standards": (
         "PCC 33.445.500",
-        "or/multnomah/portland/33.445.txt#L2000-L2001",
+        "or/multnomah/portland/33.445.txt#L1768-L1769",
         "The Community Design Standards provide a clear and objective alternative to historic "
         "resource review",
     ),
     "community_design_central_city": (
         "PCC 33.445.510.A",
-        "or/multnomah/portland/33.445.txt#L2019-L2021",
+        "or/multnomah/portland/33.445.txt#L1788-L1790",
         "Proposals affecting a Conservation Landmark or Conservation District in the Central City "
         "plan district are not eligible to use the Community Design Standards",
     ),
     "community_design_setback": (
         "PCC 33.218.100.B",
-        "or/multnomah/portland/33.218.txt#L102-L109",
+        "or/multnomah/portland/33.218.txt#L93-L100",
         "In any case, the structure may not be set back from the front lot line more than 25 feet.",
     ),
     "community_design_alley": (
         "PCC 33.218.100.F.1",
-        "or/multnomah/portland/33.218.txt#L165-L165",
+        "or/multnomah/portland/33.218.txt#L155",
         "If the site is served by an alley, access for motor vehicles must be from the",
     ),
     "nr_district_no_review": (
         "PCC 33.445.220.D",
-        "or/multnomah/portland/33.445.txt#L1682-L1683",
+        "or/multnomah/portland/33.445.txt#L1476-L1477",
         "Historic resource review is not required for development within the boundary of a "
         "National Register District",
     ),
@@ -413,7 +463,7 @@ CITES: Mapping[str, tuple[str, str, str]] = {
     ),
     "design_exempt_zones": (
         "PCC 33.420.045.A.2.d",
-        "or/multnomah/portland/33.420.txt#L85-L85",
+        "or/multnomah/portland/33.420.txt#L85",
         "d. The site is not zoned RX, EX, or CX;",
     ),
     "design_not_in_districts": (
@@ -424,22 +474,22 @@ CITES: Mapping[str, tuple[str, str, str]] = {
     ),
     "design_standards_central_city": (
         "PCC 33.420.050.B.1",
-        "or/multnomah/portland/33.420.txt#L255-L256",
+        "or/multnomah/portland/33.420.txt#L256-L257",
         "1. In the Central City plan district.",
     ),
     "design_standards_residential": (
         "PCC 33.420 Table 420-1 note [1]",
-        "or/multnomah/portland/33.420.txt#L253-L253",
+        "or/multnomah/portland/33.420.txt#L254",
         "There are no maximum limits for proposals where any of the floor area is in residential use.",
     ),
     "design_standards_gateway": (
         "PCC 33.420.050.B.2.a",
-        "or/multnomah/portland/33.420.txt#L258-L259",
+        "or/multnomah/portland/33.420.txt#L259-L260",
         "any portion of the new development or alteration exceeds 35 feet in height",
     ),
     "design_standards_height": (
         "PCC 33.420.050.B.3",
-        "or/multnomah/portland/33.420.txt#L267-L268",
+        "or/multnomah/portland/33.420.txt#L268-L269",
         "New buildings or additions when any portion of the new building or addition exceeds "
         "75 feet in height",
     ),
@@ -456,12 +506,12 @@ CITES: Mapping[str, tuple[str, str, str]] = {
     ),
     "cx_design": (
         "PCC 33.130.030.F",
-        "or/multnomah/portland/33.130.txt#L163-L164",
+        "or/multnomah/portland/33.130.txt#L158-L159",
         "The Design overlay zone is applied to this zone.",
     ),
     "gateway_open_area": (
         "PCC 33.526.240.C",
-        "or/multnomah/portland/33.526.txt#L362-L363",
+        "or/multnomah/portland/33.526.txt#L338-L339",
         "The requirements of this section apply to sites 5 acres or more in area.",
     ),
 }
@@ -973,12 +1023,15 @@ def _ring_of(drawing: Mapping[str, Any] | None, name: str) -> Any | None:
     return g if g.is_valid else g.buffer(0)
 
 
-def vehicle_share(lot: Any, edges: Any, drawing: Mapping[str, Any] | None) -> tuple[float, float] | None:
+def vehicle_share(
+    lot: Any, edges: Any, drawing: Mapping[str, Any] | None, only: Sequence[bool] | None = None
+) -> tuple[float, float] | None:
     """``(percent, feet)`` of the worst street frontage the drawn plan's
     vehicle areas -- its lane and its court (33.910: "parking areas,
     driveways") -- face, read as :func:`flats.fit.frontage.street_runs`
-    reads parking. ``(0, 0)`` for a plan with no vehicle area; None where
-    there is no lot, no street, or no drawn building."""
+    reads parking, on the streets ``only`` keeps (every street when None).
+    ``(0, 0)`` for a plan with no vehicle area; None where there is no lot,
+    no street, or no drawn building."""
     from flats.fit.frontage import street_chains, street_runs
 
     building = building_of(drawing)
@@ -992,7 +1045,7 @@ def vehicle_share(lot: Any, edges: Any, drawing: Mapping[str, Any] | None) -> tu
     rows = shapely.union_all(areas).intersection(lot)
     if rows.is_empty:
         return 0.0, 0.0
-    runs = street_runs(lot, edges, rows, building)
+    runs = street_runs(lot, edges, rows, building, only=only)
     if not runs:
         return None
     return max(p for p, _ in runs), max(f for _, f in runs)
@@ -1062,11 +1115,19 @@ def flags_for(
     lot: Any,
     edges: Any,
     drawing: Mapping[str, Any] | None,
+    on: date | None = None,
+    transit: Any = None,
+    frontage: Any = None,
 ) -> tuple[flag_plan.Flag, ...]:
     """The open questions the reading leaves on one design: the main
     street's transit-street rules, a Conservation District's Community
     Design Standards, and the design overlay's standards track. ``plat`` is
-    the design's plat (``unit_lots`` for the townhouse form)."""
+    the design's plat (``unit_lots`` for the townhouse form); ``on`` the day
+    whose law the screen applies (:func:`flats.rules.loader.law_on` when
+    omitted); ``transit`` the city's transit street map
+    (:class:`flats.geom.pdx_transit.TransitMap`) where it reads the lot --
+    None takes every street as a transit street; ``frontage`` its reading of
+    the lot, where the caller has it (:func:`flats.geom.pdx_transit.read`)."""
     if reading is None:
         return ()
     out: list[flag_plan.Flag] = []
@@ -1074,9 +1135,18 @@ def flags_for(
     def flag(code: str, source: str, severity: int | None = None) -> None:
         out.append(flag_plan.Flag(code, flag_plan.LOT, FLAGS[code], source=source, severity=severity))
 
-    unheld = f"no map of transit streets is held, so every street is taken as one ({CITES['transit_street'][0]})"
+    from flats.geom import pdx_transit
+
+    unheld = f"no map of transit streets reads the lot, so every street is taken as one ({CITES['transit_street'][0]})"
+    if frontage is None and reading.main_street:
+        frontage = pdx_transit.read(transit, lot, edges, building_of(drawing))
+    if frontage is not None:
+        unheld = f"{frontage.words()} ({CITES['transit_street'][0]})"
+    fronts = frontage is None or frontage.fronts != pdx_transit.CLEAR
     if reading.main_street:
-        if plat == "unit_lots":
+        if fronts and active_use_bind(reading, frontage, on) is None:
+            flag(*active_use(on, unheld))
+        if plat == "unit_lots" and (frontage is None or frontage.near != pdx_transit.CLEAR):
             flag(
                 MAIN_STREET_TRANSIT_FLAG,
                 f"{CITES['transit_ban'][0]}: houses, attached houses and duplexes are barred within "
@@ -1086,10 +1156,20 @@ def flags_for(
             )
         stated = [VEHICLE_AREA_CAP_PCT[p] for p in reading.pattern_areas if p in VEHICLE_AREA_CAP_PCT]
         cap = min(stated) if stated else (None if reading.pattern_areas else VEHICLE_AREA_CAP_UNMEASURED)
-        if cap is not None:
+        if cap is not None and fronts:
             cite = CITES["vehicle_area_inner" if cap <= 30.0 else "vehicle_area_outer"][0]
-            got = vehicle_share(lot, edges, drawing)
-            if got is None:
+            only = None
+            if frontage is not None:
+                only = [k != pdx_transit.CLEAR for k in frontage.streets]
+            got = vehicle_share(lot, edges, drawing, only) if only is None or any(only) else None
+            if only is not None and not any(only):
+                flag(
+                    MAIN_STREET_VEHICLE_FLAG,
+                    f"{cite}: vehicle areas may use at most {cap:.0f}% of any transit street "
+                    f"frontage; a line of the lot the map leaves open is not read as a street "
+                    f"line, so nothing measures the plan against it; {unheld}",
+                )
+            elif got is None:
                 flag(
                     MAIN_STREET_VEHICLE_FLAG,
                     f"{cite}: vehicle areas may use at most {cap:.0f}% of any transit street "
@@ -1151,11 +1231,89 @@ def flags_for(
     return tuple(out)
 
 
-def checked(s: Any, reading: Reading | None) -> Any:
+def transit_map(jurisdiction: object) -> Any:
+    """The city's transit street map where it reads a lot of ``jurisdiction``
+    (:data:`flats.geom.pdx_transit.SERVES`), else None."""
+    from flats.geom import pdx_transit
+
+    return pdx_transit.load() if jurisdiction == pdx_transit.SERVES else None
+
+
+def _law_day(on: date | None) -> date:
+    if on is not None:
+        return on
+    from flats.rules.loader import law_on
+
+    return law_on()
+
+
+def active_use(on: date | None, unheld: str) -> tuple[str, str, int | None]:
+    """33.415.200's required ground floor active use, as a flag's code, source
+    and severity: below the yellow line before :data:`ACTIVE_USE_FROM` (the
+    exemption for residential development), the type's own after it."""
+    rule = (
+        f"{CITES['active_use'][0]}: on a site with frontage on a transit street, 25% of the "
+        f"ground level floor area within 100 ft of it must be a non-residential active use, and "
+        f"the four homes have none"
+    )
+    windows = f"{CITES['active_use_windows'][0]}'s 60% ground floor windows apply from the same day"
+    if _law_day(on) < ACTIVE_USE_FROM:
+        return (
+            MAIN_STREET_ACTIVE_USE_FLAG,
+            f"{rule}; development that includes a residential use is exempt until "
+            f"{ACTIVE_USE_FROM:%B} {ACTIVE_USE_FROM.day}, {ACTIVE_USE_FROM.year}, so a permit "
+            f"after that day owes it ({windows}); {unheld}",
+            ACTIVE_USE_NOTICE_SEVERITY,
+        )
+    return (
+        MAIN_STREET_ACTIVE_USE_FLAG,
+        f"{rule}; the exemption for residential development ended on "
+        f"{ACTIVE_USE_FROM:%B} {ACTIVE_USE_FROM.day}, {ACTIVE_USE_FROM.year} ({windows}); {unheld}",
+        None,
+    )
+
+
+def active_use_bind(reading: Reading | None, frontage: Any, on: date | None) -> flag_plan.Bind | None:
+    """33.415.200's RED: from :data:`ACTIVE_USE_FROM`, on a main street lot
+    the city's map reads as fronting a transit street (``frontage``,
+    :func:`flats.geom.pdx_transit.read`). The four homes have no active use,
+    and rulings.yaml ``2026-10-02-no-variances`` takes no adjustment. None
+    before the day, off the overlay, or where the map does not settle it
+    (the flag of :func:`active_use` then asks)."""
+    from flats.geom import pdx_transit
+
+    if reading is None or not reading.main_street or _law_day(on) < ACTIVE_USE_FROM:
+        return None
+    if frontage is None or frontage.fronts != pdx_transit.TRANSIT:
+        return None
+    return flag_plan.Bind(
+        ACTIVE_USE_CHECK,
+        None,
+        None,
+        None,
+        source=(
+            f"{CITES['active_use'][0]}: on a site with frontage on a transit street, 25% of the ground "
+            f"level floor area within 100 ft of it must be a non-residential active use, and the four "
+            f"homes have none; the exemption for residential development ended on "
+            f"{ACTIVE_USE_FROM:%B} {ACTIVE_USE_FROM.day}, {ACTIVE_USE_FROM.year}; {frontage.words()} "
+            f"(Steph 2026-10-02: no variances, a confirmed miss is red)"
+        ),
+    )
+
+
+def dated_in_force(on: date) -> list[str]:
+    """The dated provisions this module applies on ``on``, for the run key
+    (:func:`flats.ingest.batch.run_key`'s ``law``): two runs either side of
+    the day screen an "m" lot differently, so their caches must differ."""
+    return [ACTIVE_USE_LAW] if on >= ACTIVE_USE_FROM else []
+
+
+def checked(s: Any, reading: Reading | None, on: date | None = None) -> Any:
     """Apply the reading's binds and flags, including the minimum-FAR room test.
 
-    Adds nothing twice, so a screen that runs again over its own answer is
-    unchanged.
+    ``on`` is the day whose law the screen applies (today in Oregon when
+    omitted). Adds nothing twice, so a screen that runs again over its own
+    answer is unchanged.
     """
     if reading is None:
         return s
@@ -1169,6 +1327,17 @@ def checked(s: Any, reading: Reading | None) -> Any:
         zone=zone,
         height_ft=design.height_ft,
     )
+    from flats.geom import pdx_transit
+
+    transit = transit_map(getattr(s.lot, "jurisdiction", None)) if reading.main_street else None
+    frontage = (
+        pdx_transit.read(transit, getattr(s.lot, "lot_geom", None), getattr(s.lot, "edges", None), building_of(s.drawing))
+        if transit is not None
+        else None
+    )
+    shop = active_use_bind(reading, frontage, on)
+    if shop is not None:
+        binds = (*binds, shop)
     min_far_bind = next((b for b in binds if b.check == MIN_FAR_CHECK), None)
     min_far_flag = None
     if min_far_bind is not None and not _min_far_cannot_fit(
@@ -1205,6 +1374,9 @@ def checked(s: Any, reading: Reading | None) -> Any:
         lot=getattr(s.lot, "lot_geom", None),
         edges=getattr(s.lot, "edges", None),
         drawing=s.drawing,
+        on=on,
+        transit=transit,
+        frontage=frontage,
     )
     if min_far_flag is not None:
         flags = (*flags, min_far_flag)
@@ -1300,6 +1472,7 @@ __all__ = [
     "load",
     "missing",
     "read",
+    "transit_map",
     "vehicle_share",
     "with_overlays",
 ]

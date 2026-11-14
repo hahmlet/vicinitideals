@@ -2362,61 +2362,61 @@ notes:
 
 # --- ZDO 510 Table 510-2 notes, ruled 2026-10-08 with the SCMU and PMU1-3 blocks ---
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1509"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1510"
     digest: "055cbd40b11d"
     state: dismissed
     reason: >-
       governs NC land designated Low Density Residential, a column this note's marker is printed on and SCMU and PMU are not
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1511-L1512"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1512-L1513"
     digest: "e1efd08a5ffc"
     state: dismissed
     reason: >-
       limits the minimum lot size to subdivisions, partitions and line adjustments; SCMU takes its 7,000 square feet from 845.01 rather than the table's half acre, so the limit does not change the value, and an undersized lot of record is allowed anyway
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1514"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1515"
     digest: "a6b3cdbb838b"
     state: dismissed
     reason: >-
       relieves a lot developed only with a dwelling that is a nonconforming use; the pod is a new building and not that
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1516"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1517"
     digest: "6b60a95509ee"
     state: dismissed
     reason: >-
       relieves a lot developed only with a townhouse down to 2,000 square feet; relief that is not taken (the stricter 845.01 figure stands), and it can only loosen
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1518-L1521"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1519-L1522"
     digest: "859de02f76bb"
     state: dismissed
     reason: >-
       limits the minimum street frontage to land divisions; no frontage value is encoded for SCMU or PMU and the note can only loosen
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1523-L1524"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1524-L1525"
     digest: "8a91c9945d92"
     state: dismissed
     reason: >-
       makes the maximum front setback conditional on 1005.02(H); no maximum front setback is encoded for SCMU or PMU, which is the conservative direction for a ceiling the screen does not yet read
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1526-L1530"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1527-L1531"
     digest: "77c59910e266"
     state: dismissed
     reason: >-
       qualifies the maximum front setback, which is not encoded for SCMU or PMU (Main Streets of Map X-CRC-3 are not a lot fact); recorded in the PMU1 zone note
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1532-L1533"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1533-L1534"
     digest: "e87b46ce17fd"
     state: dismissed
     reason: >-
       lets a design review applicant on 25 acres or more propose its own setbacks, judged "equally effective ... in establishing a visual image, sense of place": a relaxation decided case by case (Steph 2026-10-14, a one-off decision is not a standard), so the regular setbacks hold
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1535"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1536"
     digest: "526324659ff3"
     state: dismissed
     reason: >-
       removes the minimum front setback on a Main Street frontage; PMU1 front minimum is already 0, so it cannot lower the value held
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1537"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1538"
     digest: "19581a1c2f4d"
     state: dismissed
     reason: >-
@@ -2424,31 +2424,31 @@ notes:
       this layer declares no abuts_residential_zone fact to condition it on; the note can
       only loosen the value held, so nothing is encoded under it
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1539"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1540"
     digest: "d0270af8258f"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1541-L1543"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1542-L1544"
     digest: "1944e5f7002f"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies; its step-up applies above 35 feet and the pod is 26
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1545"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1546"
     digest: "06a704e969f0"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1547-L1549"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1548-L1550"
     digest: "d29a18d3c2e1"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies; its step-up applies above 35 feet and the pod is 26
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1551"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1552"
     digest: "676d5f4495cb"
     state: dismissed
     reason: >-
@@ -2456,62 +2456,90 @@ notes:
       this layer declares no abuts_residential_zone fact to condition it on; the note can
       only loosen the value held, so nothing is encoded under it
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1553-L1555"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1554-L1556"
     digest: "7e0978759fbb"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies; its step-up applies above 35 feet and the pod is 26
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1557"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1558"
     digest: "2644d9dba9e4"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1559"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1560"
     digest: "d9ed395b46f8"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1561"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1562"
     digest: "5d90417c4d4b"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1563"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1564"
     digest: "5798907f9515"
     state: dismissed
     reason: >-
       a note on a column of Table 510-2 other than SCMU and the PMU sites (NC, C-2, RCC, RTL, CC, C-3, OA, OC or RCO); none of the SCMU or PMU values encoded on 2026-10-08 sits under its marker. Those zones are red by ruling and carry no value that this note qualifies
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1565"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1566"
     digest: "8ca01cef5823"
     state: dismissed
     reason: >-
       governs floor area ratio calculation; no minimum floor area ratio field exists and none is encoded for SCMU or PMU
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1567"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1568"
     digest: "c48872b2c321"
     state: dismissed
     reason: >-
       phased floor area ratio through a master plan; a master plan is the red-by-ruling path for PMU and nothing here encodes the ratio
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1569"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1570"
     digest: "8c623fba3df1"
     state: dismissed
     reason: >-
       defines office uses for the floor area ratio and the Table 510-3 site totals; neither is encoded for SCMU or PMU
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1571"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1572"
     digest: "accb4d91fdf1"
     state: dismissed
     reason: >-
       says how net acreage is figured for minimum density; the density minimums of SCMU and PMU2 and PMU3 are not encoded (no net-area definition in this layer to measure on)
 
-  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1573-L1574"
+  - quote: "or/clackamas/_unincorporated/510/510.05.txt#L1574-L1575"
     digest: "2d1606545c4d"
     state: dismissed
     reason: >-
       bonus density raises a maximum density; no maximum density is encoded for SCMU or PMU
+
+  # --- Table 1001-1, Applicability of Section 1000 (fg4-fixes, 2026-11-10) ---
+  # The table is cited for one thing: its R/VR middle-housing row leaves the 1009
+  # column blank. Its four notes, read whole; none reaches that cell.
+
+  - quote: "or/clackamas/_unincorporated/zdo.1001.txt#L126"
+    digest: "c7a11d5d0161"
+    state: dismissed
+    reason: >-
+      says how a ticked section is read (review it for which subsections apply); the 1009 exemption rests on a blank cell in the R/VR middle-housing row, which this note does not reach, and every ticked section's encoded values were read from that section itself
+
+  - quote: "or/clackamas/_unincorporated/zdo.1001.txt#L129"
+    digest: "626487842e4d"
+    state: dismissed
+    reason: >-
+      governs stormwater facilities, utility cabinets, utility facilities in rights-of-way and utility lines, none of which the pod is
+
+  - quote: "or/clackamas/_unincorporated/zdo.1001.txt#L132"
+    digest: "63ec16f53bf0"
+    state: dismissed
+    reason: >-
+      governs level one to three mobile vending units, not a use the pod is
+
+  - quote: "or/clackamas/_unincorporated/zdo.1001.txt#L134"
+    digest: "b5bf3777f9cd"
+    state: dismissed
+    reason: >-
+      extends Subsection 1002.09 to accessory structures; the pod is the primary dwelling and 1002 is not what the 1009 exemption rests on

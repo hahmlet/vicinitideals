@@ -2307,7 +2307,7 @@ async def test_a_triage_mention_links_to_text_that_resolves(
 
     # Portland 33.100 has no page map — the document that produced the bare
     # error page — and its stored lines come back regardless.
-    lines, error = _cited_lines("or/multnomah/portland/33.100.txt#L229")
+    lines, error = _cited_lines("or/multnomah/portland/33.100.txt#L230")
     assert not error
     assert lines
 
@@ -3216,6 +3216,19 @@ async def test_portland_overlay_reasons_are_said_in_words() -> None:
         assert code in _REASON_WORDS, code
     assert "floor area" in _CHECK_WORDS[pdx_overlays.MIN_FAR_CHECK]
     assert "historic" in _CHECK_WORDS[pdx_overlays.PROTECTED_RESOURCE_CHECK]
+    for check in pdx_overlays.CHECKS:
+        assert check in _CHECK_WORDS, check
+
+
+async def test_historic_list_reasons_are_said_in_words() -> None:
+    """FOLLOWUPS 87: a listed landmark outside Portland, and a listing not yet
+    settled, read as sentences, never as their codes."""
+    from app.api.routers.ui_flats import _CHECK_WORDS, _REASON_WORDS
+    from flats.geom import historic_lists
+
+    for code in historic_lists.REASONS:
+        assert code in _REASON_WORDS, code
+    assert "historic" in _CHECK_WORDS[historic_lists.LISTED_CHECK]
 
 
 async def test_institutional_land_is_said_in_words() -> None:

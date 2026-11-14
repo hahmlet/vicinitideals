@@ -193,7 +193,7 @@ notes:
   # neither, so the only thing they reach is the width of their own block's
   # region. Ruled rather than left unread because an unread note is a claim
   # that nobody has looked, and somebody has.
-  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L366"
+  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L374"
     digest: "f95296254a7d"
     state: dismissed
     reason: >-
@@ -203,21 +203,21 @@ notes:
       zone is encoded, and the note widens what may be built rather than
       narrowing it
 
-  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L371"
+  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L379"
     digest: "4c9baa0192c1"
     state: dismissed
     reason: >-
       note 2 sets the siting criteria for adult entertainment businesses.
       Not the use being placed
 
-  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L378"
+  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L386"
     digest: "230419440ff3"
     state: dismissed
     reason: >-
       note 3 requires trade school activities to be conducted indoors. Not
       the use being placed
 
-  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L381"
+  - quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L389"
     digest: "3830bba1eac0"
     state: dismissed
     reason: >-
@@ -311,3 +311,31 @@ notes:
       a note to Table 19.402.15 (vegetated corridor width off a protected
       water feature); it governs no value FLATS encodes -- the Willamette
       Greenway use rule in 19.401 sits in its region only by the sweep
+
+  # --- Tables 19.309.2 and 19.310.2, the M and BI use tables (Ord. 2265) ---
+  #
+  # Ord. 2265 (9/1/2026; re-fetched 2026-11-09, FOLLOWUPS 166) recast both
+  # industrial zones' uses as tables with notes. Both zones refuse the pod on
+  # the closed list (19.309.2.G, 19.310.2.F: not listed = prohibited) and no
+  # row is residential, so each note narrows a use that is not ours.
+  - quote: "or/clackamas/milwaukie/19.309/19.309.2.txt#L167-L168"
+    digest: "0bd29becad24"
+    state: dismissed
+    reason: >-
+      note 1 to Table 19.309.2 caps a limited (retail or eating) use at 4,000
+      square feet and five such establishments per site. Not the use being
+      placed, and it admits no dwelling
+
+  - quote: "or/clackamas/milwaukie/19.310/19.310.2.txt#L179"
+    digest: "fe9554236bcb"
+    state: dismissed
+    reason: >-
+      note 1 to Table 19.310.2 keeps trade-school activity indoors. Not the
+      use being placed
+
+  - quote: "or/clackamas/milwaukie/19.310/19.310.2.txt#L180"
+    digest: "f482ba3176de"
+    state: dismissed
+    reason: >-
+      note 2 to Table 19.310.2 prohibits outdoor storage of waste or recycling
+      materials. Not the use being placed

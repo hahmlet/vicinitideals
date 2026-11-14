@@ -141,6 +141,12 @@ private_drives:
     (L223), and it does not reach the residential districts.
 
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Durham DDC 3.4.2.2 and 3.5.1.7 principal-entrance rules reach the OP and IP districts only (whole-document grep) (FOLLOWUPS 153)"
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/ddc.3.site-design.txt#L215,L237,L245,L271"
   # PARKING COUNT. Table 3.7.5: "Single Dwelling and Middle Housing,
   # Attached or Detached 1 / No maximum" (L436-L437). The pod is Middle
   # Housing by 12.2.22. One stall per unit; the state layer's lot-size bands
@@ -254,6 +260,32 @@ defaults:
     url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
     retrieved: '2026-09-29'
     quote: "or/washington/durham/3/3.1.txt#L12-L13"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). Whole-folder grep: the only
+  # interior-line parking rules are cottage clusters (7.11.23) and the
+  # townhouse rear-yard rule (7.12.9). The code defines no yard or setback.
+  # Silent.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: DDC 3.1.3 and 3.1.6, the side setback is a residential structure's; no section places quadplex parking in or out of an interior side yard
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/3/3.1.txt#L12,L21"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: DDC 7.12.9, townhouse parking accessed from the back facade or in the rear yard
+        quote: "or/washington/durham/7/7.12.txt#L23"
+  parking_side_yard_stated:
+    value: none
+    cite: DDC 3.1 states no interior-side-yard parking rule
+    url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/durham/3/3.1.txt#L12,L21"
+    variants:
+      - value: none
+        when: [unit_lots]
+        cite: DDC 7.12.9 names the rear yard only
+        quote: "or/washington/durham/7/7.12.txt#L23"
   # WHICH STREET THE DRIVEWAY USES. 3.7.1 asks only for paved access to
   # "public right of way" (L314-L318) and names no street; `any`. The
   # townhouse section names one, 7.12.9 Option 1: "A townhouse project that
@@ -486,6 +518,11 @@ zones:
       value: 35
       cite: Durham Development Code 3.1.4, maximum building height 35 feet above average grade
       quote: "or/washington/durham/3/3.1.txt#L16-L17"
+    # 3.1.5 "The minimum lot frontage on a public or private street": owed on one
+    # street, any of them (FOLLOWUPS 175; the Portland 33.120.206 reading).
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/durham/3/3.1.txt#L19"
     min_frontage_ft:
       value: 20
       cite: Durham Development Code 3.1.5, minimum lot frontage on a public or private street, all residential uses
@@ -626,3 +663,10 @@ zones:
     notes: >-
       DRAFT. Refuses: uses only as part of a Planned Residential Development
       of three acres or more.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: none
+    cite: Durham (landscaping in the right of way)
+    note: 'Durham''s sight rule governs landscaping in the right of way only: nothing kept off the lot.'

@@ -12,6 +12,411 @@ ingest:
   juris_city_codes:
   - UNINCORPORATED
   - ''
+crossrefs:
+  # FOLLOWUPS 105 round 4 (2026-11-09): binding since entrance_faces_street was encoded.
+  # Read in CDC publication 3090 (data/flats/books/3a6be7e1266dc607.pdf, PDF pages 627-628).
+  "403-3":
+    outcome: procedure
+    note: >-
+      Additional Standards Inside the UGB: "all Master Plan and Site Analysis applications shall
+      address the requirements of Sections 404-419, 421-423, 427 and 429", and 403-3.1 lets a
+      Type III development be denied on property values, character and public interest. Middle
+      housing is a Type I or II use here, and 403-3.4 A excludes "Type I or II applications
+      reviewed at a Type III proceeding" from 403-3.1. The sections it lists are the ones this
+      layer already reads one by one (413, 418, 419 among them).
+  # FOLLOWUPS 105 (2026-11-08): every binding reference in this layer followed one layer
+  # down, read in CDC publication 3090 (the PDF this layer is sliced from). Several targets
+  # are HELD (431-8, 431-3.8, 407-6, 407-1.6, 307-7.5): crossrefs.py credits a document only
+  # for dotted children and the CDC numbers with a hyphen, so they read as unfetched. Ruled
+  # here on what they say; the resolver gap is listed in item 105.
+  "430-1.6":
+    outcome: narrows_only
+    note: >-
+      Heat Pumps and Air Conditioners: "may be located within a required interior side yard as
+      long as they comply with State Building Code requirements." A permission to put equipment
+      inside a yard; it takes nothing from the envelope.
+  "430-1":
+    outcome: other_building
+    note: >-
+      Accessory Uses and Structures: uses "subordinate to the use of a site" -- sheds, garages,
+      dishes, wind and solar equipment. The pod is the primary use.
+  "430-1.1":
+    outcome: other_building
+    note: >-
+      Residential accessory uses and structures; the citing note gives them a 15 ft height cap
+      (375-10). Not the pod.
+  "430-1.2":
+    outcome: other_building
+    note: >-
+      Commercial and institutional accessory uses. Not the pod.
+  "430-2":
+    outcome: other_building
+    note: >-
+      Accessory Dwelling Unit, Urban: a unit subordinate to a detached house. The pod is four
+      primary units.
+  "430-2.1":
+    outcome: other_building
+    note: >-
+      Urban ADUs "in conjunction with a Single Detached Dwelling"; every mention is the ADU-above-
+      a-garage setback sentence in the 30x-7 tables.
+  "430-46":
+    outcome: later
+    note: >-
+      Flag Lot: "Creation of a flag lot shall be subject to the following" -- a 15 ft access strip
+      for one flag lot, 20 ft for two, the pole left out of lot area. 430-46.1 reaches Middle
+      Housing only for lots "to be considered flag lot(s) for Middle Housing purposes", i.e. lots
+      a middle housing land division makes. Lot creation: every existing taxlot is a lot of record
+      (ruling 2026-10-21-lots-are-legal) and no pod declares plat: unit_lots, so it binds the day
+      one does.
+  "430-37.1":
+    outcome: procedure
+    note: >-
+      Single Detached Dwelling on Lot of Record, Middle Housing Duplex, and Type II Middle
+      Housing. A: Type I design features for a house or duplex (not the pod). B: what a Type II
+      middle-housing plan must show -- that it "will not preclude feasible future development ...
+      to the minimum density of the district", with a plan of feasible future lots. That is the
+      Type II review this layer already flags REVIEW-CONDITIONS (207-5); a plan to show, not
+      ground the pod gives up.
+  "430-37":
+    outcome: procedure
+    note: >-
+      The heading of 430-37 (see 430-37.1): Type I house/duplex design and the Type II middle-
+      housing feasibility plan, already the REVIEW-CONDITIONS path here.
+  "430-37.2":
+    outcome: other_building
+    note: >-
+      Accessory Farm Dwelling in conjunction with a farm use (EFU/AF districts). Not the pod.
+  "431-12":
+    outcome: other_path
+    note: >-
+      On-street parking exception inside 431 (held); not reached by middle housing
+      (375-10.txt#L255).
+  "403-3.1":
+    outcome: other_path
+    note: >-
+      Application of Section 431 to a house or duplex outside a land division, reviewed Type III
+      if it misses 431's design principles. Not the pod's path; middle housing takes 430-84.
+  "421":
+    outcome: narrows_only
+    note: >-
+      Floodplain and Drainage Hazard Area Development. Cited from density arithmetic and 430-84's
+      list, it subtracts floodplain from the area density is computed on -- middle housing density
+      is exempt, so it can only lower a floor. The floodplain itself is screened on its mapped
+      layer on every zone that permits the pod.
+  "422-7":
+    outcome: other_building
+    note: >-
+      Tree removal in Significant Habitat is a listed use ("Tree removal in areas identified ...
+      as Significant Habitat, subject to Section 422-7"). The habitat itself is screened on its
+      mapped layer.
+  "422-9":
+    outcome: other_building
+    note: >-
+      Tree removal in Significant Habitat as a listed Type II use (see 422-7).
+  "422-11":
+    outcome: other_building
+    note: >-
+      Tree removal in Significant Habitat as a listed Type III use (see 422-7).
+  "427-4":
+    outcome: other_building
+    note: >-
+      Solar Balance Point Standard: applies "For any detached dwelling or manufactured dwelling
+      ... and their accessory structures". The pod is attached.
+  "404-4.5":
+    outcome: other_path
+    note: >-
+      Required open space in a planned development; cited for the bonus density ranges of the
+      mixed-use districts. A density bonus path this screen does not take.
+  "408-6":
+    outcome: other_building
+    note: >-
+      Review standards for development on neighborhood routes, cited from the North Bethany
+      arterial access-management sentence. Streets and access a land division lays out, not the
+      pod's lot.
+  "413-8.6":
+    outcome: other_path
+    note: >-
+      Parking for a use not listed takes the most similar listed use. The pod's use is listed.
+  "414-3":
+    outcome: other_building
+    note: >-
+      Signs in the Pedestrian-Oriented Mixed-Use Districts.
+  "307-7.5":
+    outcome: other_path
+    note: >-
+      Required Outdoor Area of 307-7.2 "Other housing ... (residential development that does not
+      meet the definition of Middle Housing)" -- held in 307-7.txt; the middle-housing half is
+      307-7.1, which this layer reads.
+  "430-13":
+    outcome: other_path
+    note: >-
+      Attached Dwelling Units "when proposal is not consistent with the Middle Housing definition
+      in Section 106 and provisions of 430-84". The pod is middle housing.
+  "430-13.3":
+    outcome: other_building
+    note: >-
+      A Duplex on an Approved Duplex Lot -- a two-unit building on a lot approved for one; the pod
+      is four units under 430-84.
+  "430-72":
+    outcome: other_path
+    note: >-
+      Infill review, "not including Middle Housing" in the citing sentence itself.
+  "430-147":
+    outcome: other_path
+    note: >-
+      Zero Lot Line Development, a detached-house development form.
+  "207-5":
+    outcome: procedure
+    note: >-
+      Conditions of Approval: "The Review Authority may impose conditions on any Type II or III
+      development". The Type II/III middle-housing paths already carry REVIEW-CONDITIONS here on
+      this sentence.
+  "201":
+    outcome: procedure
+    note: >-
+      Development Permit -- who needs one. A process.
+  "201-2":
+    outcome: procedure
+    note: >-
+      Exclusions from Permit Requirement. A process.
+  "202-2.2":
+    outcome: procedure
+    note: >-
+      Type II procedure: notice, decision and appeal steps. A process, no ground taken.
+  "610-1.1":
+    outcome: procedure
+    note: >-
+      Property Line Adjustment procedure. Moving a lot line is a process the screen never takes.
+  "606":
+    outcome: later
+    note: >-
+      Middle Housing Land Division. Lot creation; no pod declares plat: unit_lots.
+  "601":
+    outcome: later
+    note: >-
+      Land divisions (Article VI). Lot creation; see 606.
+  # --- a use the pod is not, named in the citing sentence (district use lists) ---
+  "430":
+    outcome: other_building
+    note: >-
+      Special Use Standards, the whole section; each mention names a use with its own subsection.
+      The pod's own subsection, 430-84 Middle Housing, is held and read. A use-list entry named in
+      the citing sentence; the pod is four attached dwelling units under 430-84.
+  "430-109":
+    outcome: other_building
+    note: >-
+      Telecommunication Facilities. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-109.2":
+    outcome: other_building
+    note: >-
+      Small Wireless Facilities. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-109.3":
+    outcome: other_building
+    note: >-
+      Telecommunication facilities exempt from review. A use-list entry named in the citing
+      sentence; the pod is four attached dwelling units under 430-84.
+  "430-109.5":
+    outcome: other_building
+    note: >-
+      Telecommunication facilities. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-190":
+    outcome: other_building
+    note: >-
+      Co-location on existing communication towers. A use-list entry named in the citing sentence;
+      the pod is four attached dwelling units under 430-84.
+  "430-97":
+    outcome: other_building
+    note: >-
+      Parks. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-135":
+    outcome: other_building
+    note: >-
+      Temporary Use. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-135.1":
+    outcome: other_building
+    note: >-
+      Type I temporary uses and structures. A use-list entry named in the citing sentence; the pod
+      is four attached dwelling units under 430-84.
+  "430-135.2":
+    outcome: other_building
+    note: >-
+      Temporary Use. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-63.1":
+    outcome: other_building
+    note: >-
+      Home Occupation. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-63.2":
+    outcome: other_building
+    note: >-
+      Home Occupation. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-76":
+    outcome: other_building
+    note: >-
+      Manufactured Home on an existing lot. A use-list entry named in the citing sentence; the pod
+      is four attached dwelling units under 430-84.
+  "430-77":
+    outcome: other_building
+    note: >-
+      Manufactured Dwelling Park. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-77.14":
+    outcome: other_building
+    note: >-
+      Access to a manufactured dwelling park. A use-list entry named in the citing sentence; the
+      pod is four attached dwelling units under 430-84.
+  "430-79":
+    outcome: other_building
+    note: >-
+      Manufactured Dwelling Subdivision. A use-list entry named in the citing sentence; the pod is
+      four attached dwelling units under 430-84.
+  "430-53":
+    outcome: other_building
+    note: >-
+      Group Care. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-53.1":
+    outcome: other_building
+    note: >-
+      Group Care. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-53.2":
+    outcome: other_building
+    note: >-
+      Day Care Facility. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-53.3":
+    outcome: other_building
+    note: >-
+      Group Care. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-53.5":
+    outcome: other_building
+    note: >-
+      Retirement Housing Community. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-113":
+    outcome: other_building
+    note: >-
+      Recycle Drop Box. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-19":
+    outcome: other_building
+    note: >-
+      Boarding House, including Bed and Breakfast. A use-list entry named in the citing sentence;
+      the pod is four attached dwelling units under 430-84.
+  "430-80":
+    outcome: other_building
+    note: >-
+      Marijuana Facilities. A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-81":
+    outcome: other_building
+    note: >-
+      Mobile Food Site (Large). A use-list entry named in the citing sentence; the pod is four
+      attached dwelling units under 430-84.
+  "430-9.1":
+    outcome: other_building
+    note: >-
+      Ambulance Service. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-121":
+    outcome: other_building
+    note: >-
+      Schools. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-55":
+    outcome: other_building
+    note: >-
+      Guest House. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-91":
+    outcome: other_building
+    note: >-
+      Parking not in conjunction with a permitted use. A use-list entry named in the citing
+      sentence; the pod is four attached dwelling units under 430-84.
+  "430-23":
+    outcome: other_building
+    note: >-
+      Bus Shelter. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-8.1":
+    outcome: other_building
+    note: >-
+      Alteration or replacement of a lawfully established dwelling (rural). A use-list entry named
+      in the citing sentence; the pod is four attached dwelling units under 430-84.
+  "430-8.2":
+    outcome: other_building
+    note: >-
+      Alteration or replacement of a lawfully established dwelling (rural). A use-list entry named
+      in the citing sentence; the pod is four attached dwelling units under 430-84.
+  "430-103":
+    outcome: other_building
+    note: >-
+      Public Building. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-3":
+    outcome: other_building
+    note: >-
+      Accessory Dwelling Unit, Rural. A use-list entry named in the citing sentence; the pod is
+      four attached dwelling units under 430-84.
+  "430-102":
+    outcome: other_building
+    note: >-
+      Processing facility for farm products. A use-list entry named in the citing sentence; the
+      pod is four attached dwelling units under 430-84.
+  "430-85.3":
+    outcome: other_building
+    note: >-
+      Nonfarm Dwelling. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-59":
+    outcome: other_building
+    note: >-
+      Heliport. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-41":
+    outcome: other_building
+    note: >-
+      Drive-in or drive-up establishment. A use-list entry named in the citing sentence; the pod
+      is four attached dwelling units under 430-84.
+  "430-65":
+    outcome: other_building
+    note: >-
+      Hospital. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "430-21":
+    outcome: other_building
+    note: >-
+      Boarding (stabling) of horses. A use-list entry named in the citing sentence; the pod is
+      four attached dwelling units under 430-84.
+  "430-35":
+    outcome: other_building
+    note: >-
+      Convenience Grocery. A use-list entry named in the citing sentence; the pod is four attached
+      dwelling units under 430-84.
+  "430-47":
+    outcome: other_building
+    note: >-
+      Forest products, temporary portable processing. A use-list entry named in the citing
+      sentence; the pod is four attached dwelling units under 430-84.
+  "414":
+    outcome: other_building
+    note: >-
+      Signs. A use-list entry named in the citing sentence; the pod is four attached dwelling
+      units under 430-84.
+  "428-3":
+    outcome: other_building
+    note: >-
+      Forest structure siting and fire safety standards in the forest districts. A use-list entry
+      named in the citing sentence; the pod is four attached dwelling units under 430-84.
 code:
 # Municode client 11326, publication 3090 ("Community Development Code",
 # updated 2026-09-08). The unsigned publication endpoint, per
@@ -186,6 +591,17 @@ code:
   start: "356-1 Intent and Purpose"
   end: "373-1 Intent and Purpose"
   extraction: plain
+# Declared 2026-11-09 (FOLLOWUPS 166 drift sweep): stored 2026-11-01 with no
+# `code:` entry, so the corpus watch never re-fetched it. These markers
+# reproduce the stored text byte for byte from the current PDF.
+- id: "cdc.373.historic-cultural-resource-overlay"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 373 - Historic and Cultural Resource Overlay District"
+  start: "373-1 Intent and Purpose"
+  end: "375-1 Intent and Purpose"
+  extraction: plain
+  # The CDC writes "373-2.1", which fetch._SECTION_NO does not count.
+  allow_thin: true
 - id: "cdc.375.transit-oriented"
   url: https://api.municode.com/PublicationPdfDownload/3090
   title: "CDC Section 375 - Transit Oriented Districts"
@@ -229,6 +645,38 @@ code:
   start: "392-1 Intent and Purpose"
   end: "ARTICLE IV"
   extraction: plain
+# Declared 2026-11-09 (FOLLOWUPS 166 drift sweep): 407 and 411 were stored
+# 2026-11-05 (FOLLOWUPS 146) with no `code:` entry, so the corpus watch never
+# re-fetched them although 407-6.4 is cited. These markers reproduce the
+# stored text byte for byte from the current PDF; 407 was stored from the
+# layout extraction, so its markers carry the layout's spacing.
+- id: "cdc.407.landscape-design"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 407 - Landscape Design"
+  start: "407-1        Minimum Landscape Standards"
+  end: "408           NEIGHBORHOOD CIRCULATION"
+  extraction: layout
+  # The CDC writes "407-6.4", which fetch._SECTION_NO does not count.
+  allow_thin: true
+# Fetched 2026-11-09 (FOLLOWUPS 105 round 4, Steph's standing download OK of
+# 2026-11-09): the alley width and pavement standards 430-84 cites for an
+# improved alley (409-3.3 A rows 10-11).
+- id: "cdc.409.private-streets"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 409 - Private Streets"
+  start: "409-1 Intent and Purpose"
+  end: "410-1 General Provisions"
+  extraction: plain
+  # The CDC writes "409-3.3", which fetch._SECTION_NO does not count.
+  allow_thin: true
+- id: "cdc.411.screening-buffering"
+  url: https://api.municode.com/PublicationPdfDownload/3090
+  title: "CDC Section 411 - Screening and Buffering"
+  start: "411-1 Applicability"
+  end: "413 PARKING AND LOADING"
+  extraction: plain
+  # The CDC writes "411-5", which fetch._SECTION_NO does not count.
+  allow_thin: true
 - id: "cdc.413.parking"
   url: https://api.municode.com/PublicationPdfDownload/3090
   title: "CDC Section 413 - Parking and Loading"
@@ -492,6 +940,34 @@ private_drives:
     (106-71.1, L508-L510).
 
 defaults:
+  # AN IMPROVED ALLEY (FOLLOWUPS 105, coordinator 2026-11-08). 430-84 lets
+  # middle housing take access from an alley only where it is "improved
+  # (defined as meeting alley width and pavement standards under Section
+  # 409-3.3 A)". 409-3.3 A (held 2026-11-09) prints an alley of 1-8 units at
+  # a minimum pavement width of 16 ft, curbs only where drainage needs them
+  # and no sidewalks (cdc.409.private-streets.txt#L75,L106-L111,L117). The
+  # alley's width is measured and its paving is not, so a lot whose court is reached
+  # from its alley carries ALLEY-IMPROVEMENT-UNCONFIRMED, below the yellow
+  # line. Today the screen sends the court to the alley only where
+  # parking_alley_access_required holds (the East Hillsboro overlay rows).
+  alley_improved_required:
+    value: true
+    cite: "Washington County CDC 430-84, lots or parcels abutting an improved alley (alley width and pavement standards under Section 409-3.3 A) may take access from the alley"
+    quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L231-L234"
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+  entrance_faces_street:
+    value: required
+    cite: "Washington County CDC 430-84 middle housing entry orientation (townhouse L306-L318): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L156-L171"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Washington County CDC 430-84 middle housing entry orientation (townhouse L306-L318): \"(ii) Be at an angle of up to 45 degrees from the street (see\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L163"
   # WHOSE STREET CLASSES. 302-2.14 C(1) and its 303 to 306 twins state the
   # dedication by the county's own street classes ("Local street ...
   # Neighborhood route ... Collector ... Arterial"), which are the
@@ -703,7 +1179,8 @@ defaults:
 #   (community-plan.raleigh-hills-garden-home.txt#L1218-L1223); ASC M's one
 #   point on Raab Road (#L971-L972); the Type 1 landscape buffer
 #   of the commercial-strip ASCs (E, H, K, L) on the residential lots inside
-#   them that abut the highway (#L764-L766, CDC 411 not stored); ASC U's
+#   them that abut the highway (#L764-L766; CDC 411, held since 2026-11-06,
+#   exempts Middle Housing at 411-1.3 B, so the plan's buffer is the only one); ASC U's
 #   continuing Case #74-96C conditions, not held (#L1084-L1085); the lots of
 #   two Map 5.1 outlines whose letter the sheet does not print -- the one at
 #   Walker Road and Highway 217 is ASC C by the text, its access limited to
@@ -771,8 +1248,8 @@ defaults:
 # shall be maintained", Raleigh Hills design element 2's R-15/R-24
 # transition, Bull Mountain ASC 4's buffers and views) -- GREEN with a flag
 # inside the UGB, 2026-10-15; buffering and noise "as required in the CDC"
-# (Raleigh Hills Subarea 1 design element 2; Section 411 is not stored and
-# reaches every district, not these plans alone); hillside grading and
+# (Raleigh Hills Subarea 1 design element 2; Section 411, held since
+# 2026-11-06, exempts Middle Housing at 411-1.3 B); hillside grading and
 # vegetation on Bull Mountain's slopes (the slope screen measures the
 # ground); CDC 422 natural resource sites (ASC C, M, N,
 # P, S, T); partitions only (Bull Mountain ASC 2: a quadplex divides
@@ -947,6 +1424,14 @@ zones:
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.450-1 (R-6), minimum density, the highest of the Low Density Residential zones (read on the whole lot, which can only ask more of a floor than net acres would)"
           quote: "or/washington/hillsboro/12.21/12.21.450.txt#L4,L16"
           via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      unless: [east_hillsboro_city_standards]
+      cite: Washington County CDC 302-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/302/302-7.txt#L2-L3"
     min_lot_sqft:
       # 302-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1119,12 +1604,6 @@ zones:
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC Table 12.21.150-1 (R-10), Maximum Lot Coverage, corner lot, the lowest of the Low Density Residential zones"
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L42,L49-L50"
           via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
-    parking_lot_line_buffer_ft:
-      value: 4
-      only_when: [east_hillsboro_city_standards]
-      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138): Hillsboro CDC 12.50.360.F.1 and Table 12.50.360-1, perimeter planter strip 4 ft at any perimeter location not on a street"
-      quote: "or/washington/hillsboro/12.50/12.50.360.txt#L70-L72,L88,L92"
-      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_max_per_unit:
       value: 2
       only_when: [east_hillsboro_city_standards]
@@ -1159,6 +1638,54 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 15 front / 5 side / 8 street side / 15 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4 (FOLLOWUPS 146, 2026-11-06; Sections 407 and
+    # 411 now stored). SILENT. 106-205: "Structures do not include paved areas",
+    # and 106-221 keeps a yard clear of "buildings or other structures", so
+    # paving is not barred. No section says parking MAY sit there, though:
+    # 430-84 bars only the front yard, and 413-4.9 reaches parking not
+    # associated with a structure. YELLOW at best (ruling
+    # 2026-11-05-side-yard-parking-silent-codes).
+    #
+    # THE FIVE-FOOT STRIP. 407-6.4: "A minimum 5-foot landscape strip shall be
+    # created along any parking lot boundary, including access roads", which
+    # names the lane too. Section 411 does NOT reach here (411-1.3 excludes
+    # Middle Housing). 407-6 does, by way of 413: 430-84 lists Section 413, and
+    # 413-4.10 says "All parking lots shall be landscaped as required by Section
+    # 407-6". 430-84 lists only 407-7 from 407 itself, so this is a judgement:
+    # unsure reach, conservative answer, and a planted strip goes YELLOW (ruling
+    # 2026-10-04-planted-strips-yellow). It replaces the East Hillsboro 4 ft:
+    # that overlay takes the stricter of county and city, and the county's 5 is
+    # now the stricter.
+    #
+    # R-6 NB and R-15 NB take all this through `like`, rightly: 390-7 sends their
+    # parking to Section 413, and 390-8 and 390-10 state nothing else on it.
+    # The non-Middle-Housing districts the pod may use (R-9 NB, R-24 NB, NMU,
+    # CCMU) reach 413 directly (390-7, 392-9.7 A), so they carry the strip too
+    # (FOLLOWUPS 105 round 4); the rest refuse the pod. Those four are also
+    # under Section 411 (411-1.3 exempts only Middle Housing): see each zone.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      variants:
+        - value: lane
+          when: [east_hillsboro_city_standards, unit_lots]
+          cite: "East Hillsboro Community Plan overlay, the stricter of county and city (ruling 2026-10-31-east-hillsboro-city-standards-are-an-overlay): Hillsboro CDC 12.50.350.C.1, on the townhouse path driveways may serve parking in side-yard setbacks"
+          quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   R-6:
     cite_default:
       cite: Washington County CDC 303 (R-6 District), 303-7.1 Middle Housing dimensional requirements
@@ -1225,6 +1752,13 @@ zones:
       exempt: true
       cite: Washington County CDC 303-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/303/303-6.txt#L2-L3,L14,L16"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      cite: Washington County CDC 303-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/303/303-7.txt#L2-L3"
     min_lot_sqft:
       # 303-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1291,6 +1825,12 @@ zones:
       value: 35
       cite: Washington County CDC 303-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
       quote: "or/washington/_unincorporated/303/303-7.txt#L44,L46"
+    # "Minimum frontage on a public or private street": owed on one street, any
+    # of them (FOLLOWUPS 175; the Portland 33.120.206 reading). Not set in R-5 or
+    # R-24, whose east-Hillsboro rows are Hillsboro's front-line frontage.
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/_unincorporated/303/303-7.txt#L49-L50"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 303-7.1 E(2), all other Middle Housing - no minimum
@@ -1304,6 +1844,25 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 15 front / 5 side / 8 street side / 15 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   R-9:
     cite_default:
       cite: Washington County CDC 304 (R-9 District), 304-7.1 Middle Housing dimensional requirements
@@ -1376,6 +1935,13 @@ zones:
       exempt: true
       cite: Washington County CDC 304-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/304/304-6.txt#L2-L3,L14,L16"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      cite: Washington County CDC 304-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/304/304-7.txt#L2-L3"
     min_lot_sqft:
       # 304-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1438,6 +2004,12 @@ zones:
       value: 35
       cite: Washington County CDC 304-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
       quote: "or/washington/_unincorporated/304/304-7.txt#L46,L48"
+    # "Minimum frontage on a public or private street": owed on one street, any
+    # of them (FOLLOWUPS 175; the Portland 33.120.206 reading). Not set in R-5 or
+    # R-24, whose east-Hillsboro rows are Hillsboro's front-line frontage.
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/_unincorporated/304/304-7.txt#L51-L52"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 304-7.1 E(2), all other Middle Housing - no minimum
@@ -1451,6 +2023,25 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 12 front / 5 side / 8 street side / 15 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   R-15:
     cite_default:
       cite: Washington County CDC 305 (R-15 District), 305-7.1 Middle Housing dimensional requirements
@@ -1522,6 +2113,13 @@ zones:
       exempt: true
       cite: Washington County CDC 305-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/305/305-6.txt#L2-L3,L14,L16"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      cite: Washington County CDC 305-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/305/305-7.txt#L2-L3"
     min_lot_sqft:
       # 305-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1588,6 +2186,12 @@ zones:
       value: 35
       cite: Washington County CDC 305-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
       quote: "or/washington/_unincorporated/305/305-7.txt#L47,L49"
+    # "Minimum frontage on a public or private street": owed on one street, any
+    # of them (FOLLOWUPS 175; the Portland 33.120.206 reading). Not set in R-5 or
+    # R-24, whose east-Hillsboro rows are Hillsboro's front-line frontage.
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/_unincorporated/305/305-7.txt#L52-L53"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 305-7.1 E(2), all other Middle Housing - no minimum
@@ -1601,6 +2205,25 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 10 front / 5 side / 8 street side / 12 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   R-24:
     cite_default:
       cite: Washington County CDC 306 (R-24 District), 306-7.1 Middle Housing dimensional requirements
@@ -1724,6 +2347,14 @@ zones:
               - "hazardous areas where occupancy is not permitted"
               - "required stormwater treatment and detention facilities"
               - "land dedicated to the City for parks or greenways"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      unless: [east_hillsboro_city_standards]
+      cite: Washington County CDC 306-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/306/306-7.txt#L2-L4"
     min_lot_sqft:
       # 306-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -1884,12 +2515,6 @@ zones:
           cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC Table 12.22.250-1 (MR-2), Maximum Lot Coverage, townhouse on individual lot"
           quote: "or/washington/hillsboro/12.22/12.22.250.txt#L44,L47,L50"
           via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
-    parking_lot_line_buffer_ft:
-      value: 4
-      only_when: [east_hillsboro_city_standards]
-      cite: "East Hillsboro Community Plan Reedville / TV Highway overlay (FOLLOWUPS 138), the lot mapped RH, which MR-2 implements (Hillsboro CDC 12.22.020 B): Hillsboro CDC 12.50.360.F.1 and Table 12.50.360-1, perimeter planter strip 4 ft at any perimeter location not on a street"
-      quote: "or/washington/hillsboro/12.50/12.50.360.txt#L70-L72,L88,L92"
-      via: "or/washington/_unincorporated/community-plan.east-hillsboro.txt#L854,L883"
     parking_max_per_unit:
       value: 2
       only_when: [east_hillsboro_city_standards]
@@ -1924,6 +2549,30 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 10 front / 5 side / 8 street side / 12 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip, which replaces the East Hillsboro 4 ft.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+      variants:
+        - value: lane
+          when: [east_hillsboro_city_standards, unit_lots]
+          cite: "East Hillsboro Community Plan overlay, the stricter of county and city (ruling 2026-10-31-east-hillsboro-city-standards-are-an-overlay): Hillsboro CDC 12.50.350.C.1, on the townhouse path driveways may serve parking in side-yard setbacks"
+          quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   R-25+:
     cite_default:
       cite: Washington County CDC 307 (R-25+ District), 307-7.1 Middle Housing dimensional requirements
@@ -1998,6 +2647,13 @@ zones:
       exempt: true
       cite: Washington County CDC 307-6.1 A (plexes) and C(2) (townhouses), minimum density does not apply
       quote: "or/washington/_unincorporated/307/307-6.txt#L2-L3,L14,L16"
+    min_lot_sqft_before_dedication:
+      # The parent lot's minimum is read on the lot before the road strip
+      # (row_to_centerline_*) is handed over; the townhouse lots of A(5) are
+      # not under the clause and are measured as drawn (FOLLOWUPS 77).
+      value: true
+      cite: Washington County CDC 307-7.1 A, "lot" means the parent lot based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/307/307-7.txt#L2-L3"
     min_lot_sqft:
       # 307-7.1 A measures the parent lot before any right-of-way
       # dedication. Townhouse lots are an average, not a floor on each lot;
@@ -2057,6 +2713,12 @@ zones:
       value: 35
       cite: Washington County CDC 307-7.1 D(2), Duplex, Triplex, Quadplex, Townhouse
       quote: "or/washington/_unincorporated/307/307-7.txt#L44,L46"
+    # "Minimum frontage on a public or private street": owed on one street, any
+    # of them (FOLLOWUPS 175; the Portland 33.120.206 reading). Not set in R-5 or
+    # R-24, whose east-Hillsboro rows are Hillsboro's front-line frontage.
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/_unincorporated/307/307-7.txt#L49-L50"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 307-7.1 E(2), all other Middle Housing - no minimum
@@ -2070,6 +2732,25 @@ zones:
       DRAFT. Middle Housing district: Quadplex permitted (Type I or II),
       7,000 sq ft parent lot, density not a consideration, max four units;
       yards 10 front / 5 side / 8 street side / 12 rear; 35 ft.
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   # --- North Bethany (Section 390) ---------------------------------------
   #
   # 390-3 makes the North Bethany Subarea Plan (Chapter 2 of the Bethany
@@ -2100,6 +2781,12 @@ zones:
   # Reserves (L2673-L2677). Both are drawn on the plan's maps; no map is
   # held. Overlay work.
   R-6 NB:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
     cite_default:
       cite: Washington County CDC 390-8 (R-6 North Bethany District)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -2165,6 +2852,12 @@ zones:
       DRAFT. North Bethany R-6: the Middle Housing uses and density of
       390-8, the dimensions of R-6 (303-7) by 390-8.7.
   R-9 NB:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
     cite_default:
       cite: Washington County CDC 390-9 (R-9 North Bethany District), 304-7.2 by 390-9.6
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -2257,11 +2950,19 @@ zones:
       cite: Washington County CDC 304-7.2 B(4) (by 390-9.6), five-foot side yard
       quote: "or/washington/_unincorporated/304/304-7.txt#L54,L68"
       via: "or/washington/_unincorporated/390/390-9.txt#L153-L154"
+      qualified_by:
+        fact: washington_county_411_buffer
+        cite: "Washington County CDC 304-7.2 B(8) (by 390-9.6) and 411-1.2, 411-3.1, 411-5: additional setbacks under Section 411; the 411-5 matrix names no North Bethany district, so this one falls to its Other row, to be determined by the Review Authority -- held until that buffer is known (FOLLOWUPS 105 round 4)"
+        quote: "or/washington/_unincorporated/304/304-7.txt#L84-L85"
     setback_rear_ft:
       value: 15
       cite: Washington County CDC 304-7.2 B(5) (by 390-9.6), fifteen-foot rear yard
       quote: "or/washington/_unincorporated/304/304-7.txt#L54,L75-L76"
       via: "or/washington/_unincorporated/390/390-9.txt#L153-L154"
+      qualified_by:
+        fact: washington_county_411_buffer
+        cite: "Washington County CDC 304-7.2 B(8) (by 390-9.6) and 411-1.2, 411-3.1, 411-5: additional setbacks under Section 411; the 411-5 matrix names no North Bethany district, so this one falls to its Other row, to be determined by the Review Authority -- held until that buffer is known (FOLLOWUPS 105 round 4)"
+        quote: "or/washington/_unincorporated/304/304-7.txt#L84-L85"
     max_height_ft:
       # C(1)'s 35 feet is for "detached dwelling units and attached dwelling
       # units on individual lots"; attached units sharing a lot are "all
@@ -2276,6 +2977,16 @@ zones:
           cite: Washington County CDC 304-7.2 C(1), attached dwelling units on individual lots
           quote: "or/washington/_unincorporated/304/304-7.txt#L86-L87"
           via: "or/washington/_unincorporated/390/390-9.txt#L153-L154"
+    parking_lot_line_buffer_ft:
+      # 390-7 sends North Bethany parking to Section 413 (390/390-7.txt#L2).
+      # 413-4.10: "All parking lots shall be landscaped as required by
+      # Section 407-6" (413/413-4.txt#L22), and 407-6.4 is the 5-foot strip.
+      # Added FOLLOWUPS 105 round 4 (2026-11-09).
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 390-7 and 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
     notes: >-
       DRAFT. North Bethany R-9, read as other housing (Attached Dwelling
       Units, Type II): 7 to 9 units per acre, yards 12 front / 5 side /
@@ -2283,6 +2994,12 @@ zones:
       Housing path is open only on lots a subdivision approved for a
       detached house.
   R-15 NB:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
     cite_default:
       cite: Washington County CDC 390-10 (R-15 North Bethany District)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -2372,6 +3089,12 @@ zones:
       DRAFT. North Bethany R-15: the Middle Housing uses and density of
       390-10, the dimensions of R-15 (305-7) by 390-10.6.
   R-24 NB:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 390 North Bethany: A primary building entrance that is oriented to, and visible from, the street, on multi-dwelling buildings; whether it reaches a quadplex is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L3237,L3280-L3282"
     cite_default:
       cite: Washington County CDC 390-11 (R-24 North Bethany District), 306-7.2 by 390-11.6
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -2476,6 +3199,10 @@ zones:
           when: [north_bethany_special_setbacks]
           cite: North Bethany Subarea Plan General Design Element 7 (CDC 390-3 A(5)), on the Special Setbacks Map segments the build-to rear yard is 12 ft in R-24 NB
           quote: "or/washington/_unincorporated/community-plan.north-bethany-subarea.txt#L842-L846,L849-L853"
+      qualified_by:
+        fact: washington_county_411_buffer
+        cite: "Washington County CDC 306-7.2 B(5) (by 390-11.6) and 411-1.2, 411-3.1, 411-5: additional setbacks under Section 411; the 411-5 matrix names no North Bethany district, so this one falls to its Other row, to be determined by the Review Authority -- held until that buffer is known (FOLLOWUPS 105 round 4)"
+        quote: "or/washington/_unincorporated/306/306-7.txt#L124-L125"
     setback_side_ft:
       # Seven feet for two stories, "or 10-foot when adjacent to lower
       # density district", and (vii) ten feet on every yard when the site
@@ -2487,6 +3214,10 @@ zones:
       cite: Washington County CDC 306-7.2 B(4)(d)(ii) and (vii) (by 390-11.6), side yard
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L111,L115-L117,L122-L123"
       via: "or/washington/_unincorporated/390/390-11.txt#L62-L63"
+      qualified_by:
+        fact: washington_county_411_buffer
+        cite: "Washington County CDC 306-7.2 B(5) (by 390-11.6) and 411-1.2, 411-3.1, 411-5: additional setbacks under Section 411; the 411-5 matrix names no North Bethany district, so this one falls to its Other row, to be determined by the Review Authority -- held until that buffer is known (FOLLOWUPS 105 round 4)"
+        quote: "or/washington/_unincorporated/306/306-7.txt#L124-L125"
     setback_street_side_ft:
       value: 10
       cite: Washington County CDC 306-7.2 B(4)(d)(vi) (by 390-11.6), street side yard
@@ -2502,6 +3233,16 @@ zones:
       cite: Washington County CDC 306-7.2 C(3) (by 390-11.6), all other structures
       quote: "or/washington/_unincorporated/306/306-7.txt#L54,L127,L130"
       via: "or/washington/_unincorporated/390/390-11.txt#L62-L63"
+    parking_lot_line_buffer_ft:
+      # 390-7 sends North Bethany parking to Section 413 (390/390-7.txt#L2).
+      # 413-4.10: "All parking lots shall be landscaped as required by
+      # Section 407-6" (413/413-4.txt#L22), and 407-6.4 is the 5-foot strip.
+      # Added FOLLOWUPS 105 round 4 (2026-11-09).
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 390-7 and 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
     notes: >-
       DRAFT. North Bethany R-24 is not a Middle Housing district; the pod is
       Attached Dwelling Units (Type II): 19 to 24 units per acre, yards
@@ -2619,11 +3360,18 @@ zones:
   # facade, window and entry details (a design checklist, Steph 2026-10-14).
   # A flat roof with a parapet and cornice is allowed in every TO residential
   # district but TO:R9-12 (431-5.3 B(11)(e)), which is Middle Housing only and
-  # outside 431. Section 411 is not stored. B(2) prints "None" for the
+  # outside 431. Section 411 (held since 2026-11-06) exempts Middle Housing
+  # (411-1.3 B), so TO:R9-12 to TO:R18-24 owe it nothing. B(2) prints "None" for the
   # frontage minimum in TO:R24-40 and TO:R40-80; other yard questions remain
   # owed because the footnotes refer to Section 418 and Sections 411 and 431
   # (L1025, L1030-L1032).
   TO:R9-12:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 431-5.2 B(2) transit-oriented entrance standard; whether a building turned end-on meets it is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-10-22'
+      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L518-L529"
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -2689,6 +3437,13 @@ zones:
       exempt: true
       cite: Washington County CDC 375 Table C(1), density requirement N/A for plexes, Townhouses minimum N/A
       quote: "or/washington/_unincorporated/375/375-10.txt#L367-L370,L376"
+    min_lot_sqft_before_dedication:
+      # Table B footnote *: parent lot minimums before the right-of-way
+      # dedication of 375-7 Table A 30; townhouse lot averages "regardless
+      # of any right-of-way dedication" are measured as drawn (FOLLOWUPS 77).
+      value: true
+      cite: Washington County CDC 375 Table B footnote *, parent lot minimums apply based on lot size prior to any right-of-way dedications
+      quote: "or/washington/_unincorporated/375/375-10.txt#L301"
     min_lot_sqft:
       # B(1) measures the parent lot before any right-of-way dedication
       # (footnote *). Townhouse lots are an average.
@@ -2700,6 +3455,11 @@ zones:
           when: [unit_lots]
           cite: Washington County CDC 375 Table B(1), Townhouses minimum average 1,500 sq ft in TO:R9-12 and TO:R12-18
           quote: "or/washington/_unincorporated/375/375-10.txt#L278-L282"
+    # "Minimum frontage on a public or private street": owed on one street, any
+    # of them (FOLLOWUPS 175; the Portland 33.120.206 reading).
+    min_frontage_one_street:
+      value: true
+      quote: "or/washington/_unincorporated/375/375-10.txt#L288-L291"
     min_frontage_ft:
       exempt: true
       cite: Washington County CDC 375 Table B(1), minimum frontage N/A for plexes
@@ -2742,7 +3502,8 @@ zones:
     # note (H) says "No minimum interior yard setback is required for
     # transit oriented district" (L1030-L1032). What (H) keeps -- the
     # screening and buffering of Sections 411 and 431 and the building code
-    # -- is not stored and not held; a known unknown, not a hold.
+    # -- 411 exempts Middle Housing (411-1.3 B, held since 2026-11-06), and
+    # 431 is outside the Middle Housing path; not a hold.
     setback_side_ft:
       exempt: true
       cite: Washington County CDC 375 Table B(1) (no side yard row) + Table B(2) note (H), no minimum interior yard (Steph ruling 2026-09-29)
@@ -2756,7 +3517,34 @@ zones:
       (Type I or II), 7,000 sq ft parent lot, max four units, front yard 10 to
       15 ft, 35 ft held. No side or rear yard (the Middle Housing table
       states none; Steph 2026-09-29).
+    # SIDE-YARD PARKING, ROUND 4: as R-5, silent with the 407-6.4 strip. 431-6.1 B(2) keeps parking off
+    # facades, to the side or rear of buildings, and states no interior-side rule. TO:R12-18 and
+    # TO:R18-24 take this through `like`.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Washington County CDC 106-205 and 106-221, a yard is clear of buildings or other structures and structures do not include paved areas
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-29'
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L1076-L1080,L1165-L1168,L1192-L1193"
+    parking_side_yard_stated:
+      value: none
+      cite: Washington County CDC 430-84, townhouse parking barred only from the front yard; no section places parking in an interior side yard
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.430-84.middle-housing.txt#L396-L397"
+    parking_lot_line_buffer_ft:
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
   TO:R12-18:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 431-5.2 B(2) transit-oriented entrance standard; whether a building turned end-on meets it is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-10-22'
+      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L518-L529"
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -2778,6 +3566,12 @@ zones:
     notes: >-
       DRAFT. As TO:R9-12 (one Middle Housing table for the three districts).
   TO:R18-24:
+    entrance_faces_street:
+      value: unclear
+      cite: "Washington County CDC 431-5.2 B(2) transit-oriented entrance standard; whether a building turned end-on meets it is unsettled (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-10-22'
+      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L518-L529"
     cite_default:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3178,7 +3972,31 @@ zones:
   # (392-8.txt#L29-L30,L37-L39). Zero needs "does not abut
   # a residential district", a negation `when:` cannot say, and the abutting
   # district's yard is a number from another zone.
+  #
+  # SECTION 411 (read FOLLOWUPS 105 round 4, 2026-11-09). When these yards are
+  # encoded they must also carry the 411 buffer: the pod here is Attached
+  # Dwelling Units, not Middle Housing (411-1.3 B exempts only that), and 411
+  # is "inclusive of the setback requirements in the ... mixed-use ...
+  # districts" (cdc.411.screening-buffering.txt#L2-L4), so the yard is the
+  # larger of the two. The 411-5 matrix (#L104-L130, developed neighbour) and
+  # the 411-6 minimum additional setbacks (#1 and #2 5 ft, #3 10, #4 15, #5
+  # 25, #6 40; #L149-L205) give, beside a developed R-5/R-6, R-9/R-15/TO:R9-12,
+  # R-24/R-25+/TO:R12-18, NC/OC/NMU, CBD/CCMU and IND/TO:R40-80 district:
+  #   NMU (row 4 4 3 0 0 3): 15, 15, 10, 0, 0, 10 ft.
+  #   CCMU (row 5 4 4 0 0 1): 25, 15, 15, 0, 0, 5 ft.
+  # Beside vacant land the first developer gives the smaller vacant column
+  # (411-3.2 A); none across a street (411-3.2 C); the buffer is void of
+  # parking (411-4); beside the UGB, a city line, the Institutional District
+  # or any district the matrix does not name (the NB districts), the Review
+  # Authority sets it (footnote 1, #L132-L133). 418-2's future right-of-way
+  # also reaches both districts, on TSP widths not held.
   NMU:
+    entrance_faces_street:
+      value: required
+      cite: "Washington County CDC 392 mixed-use: Buildings must have at least one primary entrance door facing a public sidewalk (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L336-L338"
     cite_default:
       cite: Washington County CDC 392 (Pedestrian-Oriented Mixed-Use Districts), NMU
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3247,6 +4065,16 @@ zones:
       value: 25
       cite: Washington County CDC 392-7, not in conjunction with a commercial use, NMU
       quote: "or/washington/_unincorporated/392/392-7.txt#L1,L5-L10"
+    parking_lot_line_buffer_ft:
+      # 392-9.7 A sends this district's parking to Section 413 (392/392-9.txt#L151).
+      # 413-4.10: "All parking lots shall be landscaped as required by
+      # Section 407-6" (413/413-4.txt#L22), and 407-6.4 is the 5-foot strip.
+      # Added FOLLOWUPS 105 round 4 (2026-11-09).
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 392-9.7 A and 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
     parking_front_prohibited:
       value: true
       cite: Washington County CDC 392-9.7 B(1), surface parking to the side or rear of buildings
@@ -3298,6 +4126,12 @@ zones:
       of every street frontage it owes (392-8); facade design standards not
       held.
   CCMU:
+    entrance_faces_street:
+      value: required
+      cite: "Washington County CDC 392 mixed-use: Buildings must have at least one primary entrance door facing a public sidewalk (FOLLOWUPS 153)"
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-09-28'
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L336-L338"
     cite_default:
       cite: Washington County CDC 392 (Pedestrian-Oriented Mixed-Use Districts), CCMU
       url: https://api.municode.com/PublicationPdfDownload/3090
@@ -3363,6 +4197,16 @@ zones:
       value: 40
       cite: Washington County CDC 392-7, not in conjunction with a commercial use, CCMU
       quote: "or/washington/_unincorporated/392/392-7.txt#L1,L5-L8,L11-L12"
+    parking_lot_line_buffer_ft:
+      # 392-9.7 A sends this district's parking to Section 413 (392/392-9.txt#L151).
+      # 413-4.10: "All parking lots shall be landscaped as required by
+      # Section 407-6" (413/413-4.txt#L22), and 407-6.4 is the 5-foot strip.
+      # Added FOLLOWUPS 105 round 4 (2026-11-09).
+      value: 5
+      cite: Washington County CDC 407-6.4, minimum 5-foot landscape strip along any parking lot boundary, including access roads; reached through 392-9.7 A and 413-4.10
+      url: https://api.municode.com/PublicationPdfDownload/3090
+      retrieved: '2026-11-05'
+      quote: "or/washington/_unincorporated/cdc.407.landscape-design.txt#L304-L306"
     parking_front_prohibited:
       value: true
       cite: Washington County CDC 392-9.7 B(1), surface parking to the side or rear of buildings
@@ -4021,3 +4865,18 @@ drawn_areas:
       #L1376-L1380); their lands reach R-24 and R-25+ lots too, so the hold
       sits on those front yards as well. Much of the land their maps shade
       has been divided and built since; it is held all the same.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 20
+    basis: pavement_edge
+    quote: or/washington/_unincorporated/cdc.418-419.setbacks-height.txt#L57-L70
+    says: a distance of 20 feet along each street side
+    cite: CDC 418-3
+    note: '''street corner is defined as that point where the extended edge of the road surface of two
+      intersecting streets meet''; ''Sight obstructions include ... structures''. Pavement-edge basis:
+      the middle way. 418-4.2''s driveway square bars fences only, and not for middle housing: no driveway
+      check.'
+    ruling: 2026-11-09-curb-position-middle-way

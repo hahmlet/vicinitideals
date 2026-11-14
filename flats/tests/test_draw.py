@@ -166,3 +166,65 @@ def test_the_court_is_drawn_on_the_ground_the_fit_passed_it_on() -> None:
         assert (fit.slack_ft - 10.0 >= 0) is fits
         if fits:
             assert ground.buffer(1e-6).contains(got.court)
+
+
+@pytest.mark.parametrize("side", [False, True])
+@pytest.mark.parametrize("angle", [0.0, 179.94, 180.0])
+def test_a_corner_building_stands_in_the_corner_at_either_scan_order(angle, side) -> None:
+    # rel4 move-read finding 3 (1N1E29DD  -05600, Portland CM2): a 100 x
+    # 131.6 ft corner lot fronting north and east. Every window flush with
+    # the north street ties at nought, so the scan order picked one -- and
+    # the fit angle turning half a turn (0.0 -> 179.94) left the building
+    # 8 ft off the east street, past the zone's maximum front setback.
+    # Equally near a street, the window nearest both streets wins -- the
+    # east line a second front, or (``side``, Portland's shortest-line
+    # front, 33.910) a side street the building is not set back from.
+    lot = shapely.box(0, 0, 100, 131.6)
+    north = (0.0, 141.6, 100.0, 141.6)
+    east = (110.0, 0.0, 110.0, 131.6)
+    fitter = Fitter(lot, angles=(angle,))
+    fit = fitter.fit(80.0, 30.0, allow_flip=False, placement=False, lane_ft=12.0)
+    streets = dict(street=(north,), side_streets=(east,)) if side else dict(street=(north, east))
+    got = draw(fitter, fit, width_ft=80.0, depth_ft=30.0, lane_ft=12.0, court_depth_ft=43.0,
+               court_beyond_ft=0.0, **streets)
+    assert got is not None and got.fits
+    b = got.building.bounds
+    assert b[3] == pytest.approx(131.6, abs=0.6)
+    assert b[2] == pytest.approx(100.0, abs=0.6)
+
+
+def test_a_through_lot_keeps_its_one_street_direction() -> None:
+    # Two parallel fronts are one street direction: nothing to spread over,
+    # the building still stands at the nearer of them.
+    lot = shapely.box(0, 0, 60, 120)
+    fitter = Fitter(lot, angles=(0.0,))
+    fit = fitter.fit(36.0, 40.0, allow_flip=False, placement=False, lane_ft=12.0)
+    got = draw(fitter, fit, width_ft=36.0, depth_ft=40.0, lane_ft=12.0, court_depth_ft=30.0,
+               court_beyond_ft=10.0, street=SOUTH + NORTH)
+    assert got is not None and got.fits
+    b = got.building.bounds
+    assert b[1] == pytest.approx(0.0, abs=0.6) or b[3] == pytest.approx(120.0, abs=0.6)
+
+
+@pytest.mark.parametrize("alley_x", [-5.0, 65.0])
+def test_a_side_alley_column_stands_along_the_alley(alley_x) -> None:
+    """FOLLOWUPS 5: a column of stalls along a side alley is drawn as a
+    strip on the alley's side of the room, as wide as one stall plus the
+    back-out shortfall -- not as a row across the room behind the building."""
+    fitter = Fitter(ENVELOPE, angles=(0.0,))
+    fit = fitter.fit(36.0, 40.0, allow_flip=False, placement=False, lane_ft=12.0)
+    alley = ((alley_x, 0.0, alley_x, 120.0),)
+    got = draw(fitter, fit, width_ft=36.0, depth_ft=40.0, lane_ft=12.0, court_depth_ft=40.0,
+               court_beyond_ft=10.0, street=SOUTH, column_across_ft=18.0, alley_lines=alley)
+    assert got is not None and got.fits
+    room, court = got.room.bounds, got.court.bounds
+    assert court[2] - court[0] == pytest.approx(18.0)
+    assert court[1] == pytest.approx(got.building.bounds[3])
+    if alley_x < 0:
+        assert court[0] == pytest.approx(room[0])
+    else:
+        assert court[2] == pytest.approx(room[2])
+    # Without the alley's side the court keeps the room's whole width.
+    plain = draw(fitter, fit, width_ft=36.0, depth_ft=40.0, lane_ft=12.0, court_depth_ft=40.0,
+                 court_beyond_ft=10.0, street=SOUTH, column_across_ft=18.0)
+    assert plain.court.bounds[2] - plain.court.bounds[0] == pytest.approx(fit.across_ft)

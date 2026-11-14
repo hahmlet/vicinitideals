@@ -78,7 +78,11 @@ class Unbanned:
         self._rules = rules
 
     def get(self, name: str) -> object:
-        return None if name == FIELD else self._rules.get(name)
+        return (
+            None
+            if name in (FIELD, "parking_side_yard_allowed")
+            else self._rules.get(name)
+        )
 
     def __getattr__(self, name: str) -> object:
         return getattr(self._rules, name)

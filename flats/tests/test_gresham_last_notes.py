@@ -179,4 +179,8 @@ def test_the_layers_that_state_a_parking_ceiling_are_the_six_that_state_one() ->
         # 12.50.320-1 "Quadplex 2" only on the 17 East Hillsboro overlay lots
         # (only_when) -- eight stalls, above the pod's four, as in Hillsboro.
         "or/washington/_unincorporated",
+        # 2026-11-10 (drift-clack, FOLLOWUPS 166; rel7 assembly): Happy Valley Ord. 603
+        # rewrote Table 16.43.030-1, which now prints 2.0 a non-studio unit for a
+        # quadplex (footnote 4) where it printed None -- eight stalls, above the pod's four.
+        "or/clackamas/happy-valley",
     }

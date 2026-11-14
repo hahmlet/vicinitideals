@@ -7,7 +7,8 @@ are which (loader), and the two guards that keep the reading honest:
   with the footnote's other number never written down; and
 * Portland's OS on the true_for side is wrong for a CI home lot (33.150
   gives it ten feet against a park), which is safe only while both CI zones
-  are capped and never certify.
+  are capped and never certify -- or, from RICAP 11 (2026-11-01), while no
+  CI value the screen resolves relaxes on the list at all.
 
 The reading meets the lot on the conservative side: ANY line settles the
 tightening answer, and the relaxing answer needs EVERY line fully read.
@@ -41,7 +42,7 @@ def rule(condition: str, true_for: tuple[str, ...], false_for: tuple[str, ...]) 
         condition=condition,
         true_for=true_for,
         false_for=false_for,
-        quote="or/multnomah/portland/33.130.txt#L869-L875",
+        quote="or/multnomah/portland/33.130.txt#L829-L835",
         note="a test list, long enough to pass for a ruling's argument",
     )
 
@@ -190,7 +191,7 @@ BLOCK = (
     "  abuts_nonresidential_zone:\n"
     "    true_for: [OS, CM2]\n"
     "    false_for: [R5, RM1]\n"
-    '    quote: "or/multnomah/portland/33.130.txt#L869-L875"\n'
+    '    quote: "or/multnomah/portland/33.130.txt#L829-L835"\n'
     "    cite: PCC 33.130.215.B.2\n"
     "    note: >-\n"
     "      The commercial chapter's two rows, none against OS and the C zones,\n"
@@ -214,7 +215,7 @@ def test_the_block_loads_as_the_layers_lists(root: Path) -> None:
         (("    false_for: [R5, RM1]\n", ""), "false_for: a non-empty list"),
         (("    false_for: [R5, RM1]\n", "    false_for: []\n"), "false_for: a non-empty list"),
         (("    false_for: [R5, RM1]\n", "    false_for: [R5, CM2]\n"), "on both sides of the line: CM2"),
-        (('    quote: "or/multnomah/portland/33.130.txt#L869-L875"\n', ""), "a quote of the sentence"),
+        (('    quote: "or/multnomah/portland/33.130.txt#L829-L835"\n', ""), "a quote of the sentence"),
         (
             (
                 "      The commercial chapter's two rows, none against OS and the C zones,\n"
@@ -261,6 +262,8 @@ def test_the_layers_that_read_their_lot_lines(corpus: dict) -> None:
         ("or/multnomah/troutdale", "abuts_nonresidential_zone"),
         ("or/multnomah/fairview", "abuts_nonresidential_zone"),
         ("or/clackamas/oregon-city", "abuts_residential_zone"),
+        # 2026-11-08: R-2 Table 17.12.040 note 1 (FOLLOWUPS 2(a)).
+        ("or/clackamas/oregon-city", "abuts_lower_density_zone"),
         ("or/clackamas/_unincorporated", "abuts_lower_density_zone"),
         ("or/clackamas/canby", "abuts_lower_density_zone"),
         ("or/clackamas/milwaukie", "abuts_residential_zone"),
@@ -270,6 +273,9 @@ def test_the_layers_that_read_their_lot_lines(corpus: dict) -> None:
         # SDC 17.98.50 A and TDC 9.095 A (FOLLOWUPS 150).
         ("or/clackamas/sandy", "abuts_lower_density_zone"),
         ("or/multnomah/troutdale", "abuts_lower_density_zone"),
+        # 2026-11-09: BDC 10.25 Residential Districts; Downtown 70.15.10 (FOLLOWUPS 2(c)).
+        ("or/washington/beaverton", "abuts_residential_zone"),
+        ("or/washington/beaverton", "abuts_nonresidential_zone"),
     }
 
 
@@ -306,6 +312,78 @@ def test_clackamas_charges_ten_feet_of_side_yard_against_a_low_density_neighbour
     assert observed_neighbours(lines_ugb, corpus[lid].neighbours, juris) == {}
 
 
+def test_oregon_city_r2_keeps_ten_feet_clear_against_a_single_family_neighbour(corpus: dict) -> None:
+    """OCMC Table 17.12.040 note 1 (FOLLOWUPS 2(a), 2026-11-08): an R-2 lot
+    abutting R-10, R-8 or R-6 owes a ten-foot landscaped yard on that side,
+    so ten feet of side yard for the building and a ten-foot strip no court
+    may pave, on both plats. It was a cap on every R-2 value; it is the two
+    variants now, and nothing in R-2 leans on the fact through a cap."""
+    lid = "or/clackamas/oregon-city"
+    r = corpus[lid].neighbours["abuts_lower_density_zone"]
+    assert set(r.true_for) == {"R-10", "R-8", "R-6"}
+    assert {"R-5", "R-3.5", "R-2", "MUC-1"} <= set(r.false_for)
+
+    rules = RuleSet(corpus)
+    for field, r_ in rules.resolve(lid, "R-2").values.items():
+        assert "abuts_lower_density_zone" not in caps_for(r_.layer, r_.via or "R-2").get(field, ()), field
+
+    def got(*held: str) -> tuple[float, float]:
+        v = rules.resolve(lid, "R-2", set(held)).values
+        strip = v.get("parking_lot_line_buffer_ft")
+        return v["setback_side_ft"].value, None if strip is None else strip.value
+
+    assert got() == (5, 5)
+    assert got("abuts_lower_density_zone") == (10, 10)
+    assert got("unit_lots") == (5, None)  # 17.52.010: no townhouse strip
+    assert got("unit_lots", "abuts_lower_density_zone") == (10, 10)
+    assert "abuts_lower_density_zone" in rules.resolve(lid, "R-2").values["setback_side_ft"].levers
+
+    juris = "oregon_city"
+    beside_r8 = [Line(zones=((juris, "R-8"),), unresolved=0), Line(zones=((juris, "R-2"),), unresolved=0)]
+    beside_r5 = [Line(zones=((juris, "R-5"),), unresolved=0), Line(zones=((juris, "C"),), unresolved=0)]
+    one_unread = [Line(zones=((juris, "R-5"),), unresolved=0), Line(zones=(), unresolved=1)]
+    assert observed_neighbours(beside_r8, corpus[lid].neighbours, juris)["abuts_lower_density_zone"] is True
+    assert observed_neighbours(beside_r5, corpus[lid].neighbours, juris)["abuts_lower_density_zone"] is False
+    assert "abuts_lower_density_zone" not in observed_neighbours(one_unread, corpus[lid].neighbours, juris)
+
+
+def test_beaverton_reads_its_lot_lines_against_the_10_25_classification(corpus: dict) -> None:
+    """FOLLOWUPS 2(c), 2026-11-09: Beaverton's commercial, Cooper Mountain and
+    Downtown yards turned on the two facts with no lists, so 1,754 lots leaned
+    on an unknown. The six Residential Districts of BDC 10.25 are residential
+    (20.22 note 9 says so in terms); the High Density Residential districts are
+    Multiple Use Districts there, and on neither side of Downtown's relaxing
+    list, which Chapter 70 does not define."""
+    lid = "or/washington/beaverton"
+    n = corpus[lid].neighbours
+    res, nonres = n["abuts_residential_zone"], n["abuts_nonresidential_zone"]
+    assert set(res.true_for) == {"MR", "CM-MR", "RMA", "RMB", "RMC", "CM-RM"}
+    assert {"RC-DT", "SC-HDR", "TC-HDR", "CM-HDR", "CS", "GC"} <= set(res.false_for)
+    # Downtown's 0 needs every line clear of residential AND of RC-DT.
+    assert set(res.true_for) | {"RC-DT"} == set(nonres.false_for)
+    for code in ("RC-DT", "SC-HDR", "TC-HDR", "CM-HDR", "ROW", "WAcnty"):
+        assert code not in nonres.true_for, code
+    for code in ("ROW", "WAcnty"):
+        assert code not in res.true_for and code not in res.false_for, code
+
+    rules = RuleSet(corpus)
+    assert rules.resolve(lid, "NS", {"abuts_residential_zone"}).values["setback_rear_ft"].value == 15
+    assert rules.resolve(lid, "RC-BC").values["setback_side_ft"].value == 10
+    assert rules.resolve(lid, "RC-BC", {"abuts_nonresidential_zone"}).values["setback_side_ft"].value == 0
+
+    j = "beaverton"
+    beside_rmc = [Line(zones=((j, "RMC"),), unresolved=0), Line(zones=((j, "CS"),), unresolved=0)]
+    beside_shops = [Line(zones=((j, "CS"),), unresolved=0), Line(zones=((j, "RC-OT"),), unresolved=0)]
+    beside_dt = [Line(zones=((j, "RC-BC"),), unresolved=0), Line(zones=((j, "RC-DT"),), unresolved=0)]
+    beside_hdr = [Line(zones=((j, "RC-BC"),), unresolved=0), Line(zones=((j, "SC-HDR"),), unresolved=0)]
+    county = [Line(zones=((j, "CS"),), unresolved=0), Line(zones=(("washington_unincorporated", "R-5"),), unresolved=0)]
+    assert observed_neighbours(beside_rmc, n, j) == {"abuts_residential_zone": True, "abuts_nonresidential_zone": False}
+    assert observed_neighbours(beside_shops, n, j) == {"abuts_residential_zone": False, "abuts_nonresidential_zone": True}
+    assert observed_neighbours(beside_dt, n, j) == {"abuts_residential_zone": False, "abuts_nonresidential_zone": False}
+    assert observed_neighbours(beside_hdr, n, j) == {"abuts_residential_zone": False}
+    assert observed_neighbours(county, n, j) == {}
+
+
 def test_every_neighbour_quote_resolves_and_every_code_is_the_layers_own(corpus: dict) -> None:
     store = ProvenanceStore()
     for lid, name, r in declared(corpus):
@@ -338,11 +416,46 @@ def test_portlands_os_on_the_relaxing_side_is_safe_only_while_ci_never_certifies
     """33.150 Table 150-2 gives a CI lot ten feet against an OS lot where the
     commercial chapters give none. One layer-wide list cannot say both, so
     OS sits on the relaxing side and the CI zones must stay capped on
-    site_specific_limitation until CI gets a list of its own."""
+    site_specific_limitation until CI gets a list of its own. CI1 left the
+    list when RICAP 11 put its homes on RM1's standards (33.150.200, codified
+    2026-11-09): it states no setback of its own any more."""
     r = corpus["or/multnomah/portland"].neighbours["abuts_nonresidential_zone"]
     if "OS" not in r.true_for:
         return
-    for zone in ("CI1", "CI2"):
+    for zone in ("CI2",):
         capped = caps_for("or/multnomah/portland", zone)
         for field in ("setback_side_ft", "setback_rear_ft"):
             assert "site_specific_limitation" in capped.get(field, ()), (zone, field)
+
+
+def test_no_ci_value_the_screen_resolves_turns_on_the_shared_list_uncapped(corpus: dict) -> None:
+    """The guard above reads the caps ledger, keyed by the zone block; since
+    2026-11-01 RICAP 11 puts CI1 on RM1's standards (33.150.200, like: RM1;
+    an `amended:` entry until the 11/1/26 reprint) and Table 150-2's caps do not
+    follow it (FOLLOWUPS 2(d), checked 2026-11-08). So resolve both CI zones
+    the way the screen does, on the law in force on each side of that date,
+    and require what the guard is for: no CI value may relax on
+    `abuts_nonresidential_zone` unless the cap still holds it too.
+
+    After RICAP 11 a CI1 home takes RM1's setbacks (10/5/5), which carry no
+    neighbour lever at all -- Table 150-2's OS row no longer reaches it -- so
+    the OS problem is CI2's alone."""
+    from datetime import date
+
+    from flats.rules.loader import law_in_force
+
+    lid = "or/multnomah/portland"
+    for on in (date(2026, 10, 31), date(2026, 11, 1), date.today()):
+        rules = RuleSet(law_in_force(corpus, on))
+        for zone in ("CI1", "CI2"):
+            for field, r in rules.resolve(lid, zone).values.items():
+                if "abuts_nonresidential_zone" in r.levers:
+                    assert "site_specific_limitation" in r.levers, (on, zone, field)
+    after = RuleSet(law_in_force(corpus, date(2026, 11, 1))).resolve(lid, "CI1").values
+    assert after["quadplex_allowed"].value is True
+    assert not any("abuts_nonresidential_zone" in r.levers for r in after.values())
+    assert {f: after[f].value for f in ("setback_front_ft", "setback_side_ft", "setback_rear_ft")} == {
+        "setback_front_ft": 10,
+        "setback_side_ft": 5,
+        "setback_rear_ft": 5,
+    }

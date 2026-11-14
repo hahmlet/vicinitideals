@@ -115,6 +115,7 @@
             {% if row.binding == 'min_lot_sqft' %}minimum lot size
             {% elif row.binding == 'max_coverage_pct' %}coverage cap
             {% elif row.binding == 'envelope' %}the building and its yards
+            {% elif row.binding == 'leftover' %}open space or landscaping left over
             {% else %}—{% endif %}
           </td>
           <td class="muted" style="font-size:11px">

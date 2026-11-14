@@ -313,7 +313,9 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     table started governing values. Table 510-3's two stay unread.
     """
     ruled = list(dispositions(CLACKAMAS))
-    assert len(ruled) == 314
+    # 314 -> 318 on 2026-11-10 (flats/fg4-fixes): ZDO 1001's Table 1001-1, stored for the
+    # R/VR 1009 exemption, brings four notes, all ruled (dismissed).
+    assert len(ruled) == 318
     unread = sorted((n.doc.rsplit("/", 1)[-1], n.line) for n in ruled if n.state == "unread")
     # Every unread note in this layer is in a dimensional table of a district
     # that refuses the building -- Tables 510-2 and 510-3 of ZDO 510, 513-2
@@ -323,7 +325,9 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     # which is the property the old `not unread` assertion had and a bare
     # number would lose.
     assert unread == (
-        [("510.05.txt", n) for n in (1606, 1608)]
+        # 1606/1608 until 2026-11-09, when the county repaired Table 510-2's header (SCMU added,
+        # one line above both notes; FOLLOWUPS 166).
+        [("510.05.txt", n) for n in (1607, 1609)]
         + [("513.04.txt", n) for n in (313, 318, 321, 323, 325, 327, 329, 331)]
         + [("513.04.txt", n) for n in (346, 349, 352, 355, 357, 359, 361, 363)]
         + [("602.05.txt", n) for n in (415, 418, 420, 422, 424, 426, 430)]

@@ -12,6 +12,7 @@ it is the difference.
 
 from __future__ import annotations
 
+import dataclasses
 import json
 import math
 
@@ -282,7 +283,7 @@ def test_the_outdoor_square_is_measured_beside_the_court_beside(corpus, monkeypa
     """A plan with its court beside the building leaves its outdoor square
     around THAT court (FOLLOWUPS 4(a) x 7(b1)). Drawn as the court behind
     the building it does not have, the same lot showed a 40 ft square where
-    the real plan leaves 21."""
+    the real plan leaves 19 (21 before the rel4 draw tie)."""
     import dataclasses
 
     from flats.ingest import quadfit
@@ -304,7 +305,10 @@ def test_the_outdoor_square_is_measured_beside_the_court_beside(corpus, monkeypa
     # own numbers for unit lots, so the townhouse form is screened after it
     # (Steph 2026-10-15) and measures its own.
     beside, square, a, k = seen[0]
-    assert beside is True and square == pytest.approx(21.0, abs=0.5)
+    # 21 -> 19 on 2026-11-08 (rel4 move-read finding 3): the draw now breaks a
+    # tie at the street distance by the window nearest every street, which
+    # stands the building 2 ft differently; the zone asks 12, still met.
+    assert beside is True and square == pytest.approx(19.0, abs=0.5)
     shape = next(c for c in s.screening.checks if c.check == "open_space_shape")
     assert shape.observed == pytest.approx(square)
     behind = measure(*a[:3], dataclasses.replace(a[3], beside=False), *a[4:], **k)
@@ -350,7 +354,26 @@ def test_a_court_beside_the_building_has_to_reach_the_street(corpus, monkeypatch
             corpus.layers,
         )
 
-    kw = dict(rules=corpus, policy=slack.load_policy(), relief=relief.load_policy(), step_deg=1.0)
+    class WithoutSideYard:
+        def __init__(self, base) -> None:
+            self._base = base
+
+        def resolve(self, *args, **kwargs):
+            resolved = self._base.resolve(*args, **kwargs)
+            values = dict(resolved.values)
+            values.pop("parking_side_yard_allowed", None)
+            values.pop("parking_side_yard_stated", None)
+            return dataclasses.replace(resolved, values=values)
+
+        def __getattr__(self, name):
+            return getattr(self._base, name)
+
+    kw = dict(
+        rules=WithoutSideYard(corpus),
+        policy=slack.load_policy(),
+        relief=relief.load_policy(),
+        step_deg=1.0,
+    )
     (s,) = screen_lot(lot(), [pod()], **kw)
     assert s.fit.beside is False
     assert s.signed.triage.value != "green"

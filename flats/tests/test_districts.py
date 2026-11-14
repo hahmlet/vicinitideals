@@ -399,6 +399,18 @@ RULINGS: dict[str, dict[str, str]] = {
             "not-a-zone: the North Milwaukie Innovation Area Plan, named at "
             "MMC 19.312.1.A as what MUTSA and NME implement."
         ),
+        # 2026-11-09 (FOLLOWUPS 166): two tokens Ord. 2265 printed when it
+        # recast the M and BI zones as tables.
+        "ACC": (
+            "not-a-zone: the legend code \"ACC = Accessory\" under Tables "
+            "19.309.2 and 19.310.2 (19.309.2.txt L163, 19.310.2.txt L176), "
+            "a use-table cell value, not a district."
+        ),
+        "D.E.Q": (
+            "not-a-zone: the Oregon Department of Environmental Quality, "
+            "named in MMC 19.309.4 (L41) as the agency whose nuisance "
+            "definitions an M-zone use must not breach."
+        ),
     },
     "or/clackamas/oregon-city": {
         # Four rulings stood here until 2026-09-08 -- MUC-1, MUC-2, MUD and
@@ -703,10 +715,31 @@ RULINGS: dict[str, dict[str, str]] = {
         "HOA": "not-a-zone: home owners association, 390/390-19.txt#L19.",
         "HOUSING": "not-a-zone: a table heading word, 375/375-10.txt#L363.",
         "MEASURE": "not-a-zone: a parking table column head, 413/413-6.txt#L10.",
+        # 2026-11-09 (FOLLOWUPS 105 round 4): CDC 409 fetched.
+        "PAVEMENT": "not-a-zone: a column head of the private street standards table (MIN. PAVEMENT WIDTH), cdc.409.private-streets.txt#L80.",
         "MIDDLE": "not-a-zone: a table heading word (Middle Housing), 375/375-10.txt#L362.",
         "ORS 527": "not-a-zone: the Forest Practices Act, named in 342/342-1.txt#L9.",
         "SDC": "not-a-zone: system development charge, 501/501-10.txt#L117.",
         "TDT": "not-a-zone: Transportation Development Tax, 501/501-2.txt#L11.",
+        # 2026-11-05 side-yard chapters fetched (FOLLOWUPS 146): CDC 411-5's
+        # matrix surfaced combined zoning labels and a category heading.
+        "R-9/R-15": (
+            "not-a-zone: a combined matrix label in CDC 411-5, not a single "
+            "zoning designation (cdc.411.screening-buffering.txt#L69, L88, L108)."
+        ),
+        "NC/OC": (
+            "not-a-zone: a combined matrix label in CDC 411-5, not a single "
+            "zoning designation (cdc.411.screening-buffering.txt#L73, L114)."
+        ),
+        "CBD/GC": (
+            "not-a-zone: a combined matrix label in CDC 411-5, not a single "
+            "zoning designation (cdc.411.screening-buffering.txt#L76, L118)."
+        ),
+        "OTHER1": (
+            "not-a-zone: a category heading in the CDC 411-5 screening and "
+            "buffering matrix, not a zoning designation "
+            "(cdc.411.screening-buffering.txt#L85)."
+        ),
         # All 42 districts on the county's zoning layer are encoded as zone
         # blocks (2026-09-29, draft); what the harvest still prints is below.
         "ASC 2": (
@@ -1057,6 +1090,14 @@ RULINGS: dict[str, dict[str, str]] = {
             "not-a-zone: average daily traffic, the count Table 18.910.1's "
             "right-of-way ranges are decided by "
             "(tdc.18.910.improvement-standards L177)."
+        ),
+    },
+    "or": {
+        # 2026-11-06, FOLLOWUPS 87: OAR 660-023-0200 stored at the state root.
+        "PL 89-665": (
+            "not-a-zone: Public Law 89-665, the National Historic Preservation "
+            "Act of 1966, cited in the rule's definition of a National Register "
+            "Resource (oar.660-023-0200.txt#L26)."
         ),
     },
 }

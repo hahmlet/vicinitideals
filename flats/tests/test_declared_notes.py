@@ -167,11 +167,15 @@ def test_the_multi_dwelling_chapter_leaves_the_other_table_its_own_notes(
     between them, because a headed block's region runs back to the previous
     block. The tighter region wins, so the housing-types table keeps the two
     notes that are actually printed under it."""
+    # 2026-11-10 (a): line pins moved onto the 11/1/26 reprint (RICAP 11,
+    # FOLLOWUPS 165): the limitations head 197 -> 199, the Notes head
+    # 416 -> 407, regions (331, 385) -> (321, 376) and (0, 415) -> (0, 406).
+    # Same two blocks, same nesting.
     got = _chapter(store, "33.120")
-    declared = next(b for b in got.blocks if b.head == 197)
-    headed = next(b for b in got.blocks if b.head == 416)
-    assert declared.region == (331, 385)
-    assert headed.region == (0, 415)
+    declared = next(b for b in got.blocks if b.head == 199)
+    headed = next(b for b in got.blocks if b.head == 407)
+    assert declared.region == (321, 376)
+    assert headed.region == (0, 406)
     assert declared.region[1] - declared.region[0] < headed.region[1] - headed.region[0]
 
 
@@ -197,7 +201,18 @@ def test_the_use_table_limitation_that_decides_two_zones(
 
 
 def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
-    """A hundred and forty-seven notes, all of them ruled, none blocking.
+    """A hundred and forty-two notes, all of them ruled, none blocking.
+
+    Five fewer since the 11/1/26 reprint (RICAP 11, FOLLOWUPS 165; counted
+    2026-11-10 against rel6's 147): Table 120-1 deleted its Daycare note and
+    renumbered its brackets [6]-[9], but 33.120.100.B's paragraphs still
+    print "[7]" ... "[10]", so the census pairs none of the five old notes 6-10
+    (daycare, radio frequency, basic utilities, agriculture, RMP retail); and
+    Table 120-8 no longer prints its note [5] (33.120.275). One came in:
+    Table 266-4's new note [3] (detached accessory structures), dismissed.
+    None of the six reaches Household Living; the city's slip is pinned in
+    test_page_frame. The count falls because the city's text changed, not
+    because a note went unread: the unread and blocking checks below stand.
 
     The last two came with Central City (33.510), stored 2026-11-04 for
     FOLLOWUPS 109 part 2 batch B: Table 510-2's notes on how its parking
@@ -238,7 +253,7 @@ def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
     Household Living row starts at five units on site. See
     test_portland_parking_max."""
     ruled = list(dispositions(PORTLAND))
-    assert len(ruled) == 147
+    assert len(ruled) == 142
     assert [row for row in ruled if row.state == "unread"] == []
     assert not [row for row in qualified() if row.blocking]
 
@@ -253,9 +268,14 @@ def test_and_not_one_encoded_number_moved() -> None:
     from flats.rules.resolver import RuleSet
 
     rules = RuleSet(load_rules())
-    for zone in ("EG1", "EG2", "IG1", "IG2", "IH", "OS", "CI1"):
+    # 2026-11-10 (b): CI1 moved to the allowed list. RICAP 11 (in force
+    # 2026-11-01, codified by the 11/1/26 reprint, FOLLOWUPS 165) made CI1
+    # Household Living "Y" on RM1's standards (rulings.yaml
+    # 2026-08-06-portland-ricap11-ci1-housing); that is the use table
+    # itself changing, not a note moving a number.
+    for zone in ("EG1", "EG2", "IG1", "IG2", "IH", "OS"):
         assert rules.resolve(PORTLAND, zone).values["quadplex_allowed"].value is False
-    for zone in ("CM1", "CM2", "CM3", "CX", "CE", "CR", "CI2", "IR"):
+    for zone in ("CM1", "CM2", "CM3", "CX", "CE", "CR", "CI1", "CI2", "IR"):
         assert rules.resolve(PORTLAND, zone).values["quadplex_allowed"].value is True
 
 

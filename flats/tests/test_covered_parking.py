@@ -12,8 +12,9 @@ as a garage or carport", for a triplex or quadplex. The townhouse rules in
 (3) carry no such sentence -- (3)(e) even prices a covered requirement in
 height -- so the city's sentence stands on the unit-lot path. Cornelius is
 inside Metro, a Large City. So: False on the one-lot quadplex in the four
-residential zones, True on the townhouse path; True outright in GMU, where
-detached houses are prohibited and the state rule does not reach.
+residential zones, True on the townhouse path. GMU asked the same on every
+path until Ordinance 2026-06 struck its sentence (in force 2026-09-08, read
+2026-11-09); it now asks nothing.
 """
 
 from __future__ import annotations
@@ -117,14 +118,12 @@ def test_the_quadplex_is_spared_and_the_townhouse_path_is_not(corpus, zone: str)
     assert townhouse.prov.url.startswith("https://ecode360.com/"), zone
 
 
-def test_gmu_requires_it_on_every_path(corpus) -> None:
+def test_gmu_no_longer_requires_it(corpus) -> None:
+    """Ordinance 2026-06 struck old 18.75.065 whole, its covered-parking
+    sentence with it, and 070 (A) sends parking to 18.145 unadjusted."""
     for conditions in ((), ("unit_lots",)):
-        assert corpus.resolve(CORNELIUS, "GMU", conditions).get(FIELD) is True
-    held = load_rules()[CORNELIUS].zones["GMU"].values[FIELD]
-    assert held.variants == ()
-    assert "One covered parking space shall be provided for each dwelling unit" in (
-        _text(held.prov.quote)
-    )
+        assert corpus.resolve(CORNELIUS, "GMU", conditions).get(FIELD) is None
+    assert FIELD not in load_rules()[CORNELIUS].zones["GMU"].values
 
 
 def test_the_townhouse_path_fails_on_it_in_cornelius(corpus) -> None:

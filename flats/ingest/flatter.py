@@ -257,6 +257,8 @@ def flatter_checked(
             fire_route_ft=None,
             fire_route_tried=False,
             fire_route_curb_ft=None,
+            fire_route_freed_ft=None,
+            fire_route_row_ft=None,
             site_grade_pct=None,
             site_grade_source=None,
             site_grade_tried=False,

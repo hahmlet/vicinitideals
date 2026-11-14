@@ -2,16 +2,26 @@
 
 Two constructions, chosen by how much the edge classification can be trusted.
 
-*Per-edge strips.* Buffer each lot line inward by its own setback and subtract
-the union. Square caps run each strip past its endpoints so the wedge in every
-corner is covered by one neighbour or the other — the result is never larger
-than the legal envelope, and the error is confined to corner wedges and bounded
-by the difference between adjacent setbacks.
+*Per-edge strips.* Take from the lot every point nearer a lot line than that
+line's setback, and keep the rest. Each strip is exactly that ground for one
+line (:func:`_strip`): the band either side of the line, closed at each end by
+the half-disc around the endpoint -- the ground near the end of a line is near
+the line. So the envelope is the legal one: a building point is kept only if
+it is at least each line's setback from that line. The half-disc is drawn as
+a polygon around the circle, never inside it, so the strip never falls short
+of the setback (by at most ``ARC_SPLITS``' sag, a few hundredths of a foot,
+it reaches past). Until 2026-11-09 the strips had square caps, which ran each
+one a full setback past its ends; at an inward bend in a line that took a
+sliver up to a setback deep beyond the bend (Tigard 2S103BA00137, a 4.5 deg
+front bend, pushed the building to 21.08 ft against a 20 ft front maximum).
 
 *Uniform inward buffer.* For irregular and flag-shaped lots, shrink the whole
 lot by the largest setback. Strictly smaller than the truth, often by a lot, and
 that is the point: on a shape where naming the front is guesswork, an envelope
 that might be too big would produce false GREENs on the least reviewable lots.
+An Eastern Pattern Area depth-proportional rear setback is added only along the
+rear edge(s) farthest from the front; every other rear edge keeps its ordinary
+rear setback.
 
 Corner lots take the stricter of the front and street-side setback on every
 street edge, because geometry cannot say which street line is legally the
@@ -87,13 +97,19 @@ import math
 from dataclasses import dataclass
 
 import shapely
-from shapely.geometry import LineString, MultiPolygon
+from shapely.geometry import LineString, MultiPolygon, Point, Polygon
 from shapely.geometry.base import BaseGeometry
 
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier
 
 #: Envelope fragments below this hold nothing worth rasterizing.
 MIN_PART_SQFT = 200.0
+
+#: Chords per half-disc at a strip's end (:func:`_strip`). Even, so a chord's
+#: midpoint (not a corner) sits straight off the line's end and the strip
+#: stays inside the old square cap. 32 chords overshoot the circle by
+#: ``1/cos(pi/64) - 1`` = 0.12% of the setback (0.024 ft at 20 ft).
+ARC_SPLITS = 32
 
 
 @dataclass(frozen=True, slots=True)
@@ -103,6 +119,9 @@ class Setbacks:
     front_ft: float = 0.0
     side_ft: float = 0.0
     rear_ft: float = 0.0
+    #: A depth-proportional rear setback applied only on the rear edge(s)
+    #: farthest from the front lot line (Portland's Eastern Pattern Area).
+    depth_rear_ft: float | None = None
     #: The side setback along a second street. None means the code does not
     #: distinguish it, in which case a corner lot uses the front setback.
     street_side_ft: float | None = None
@@ -176,6 +195,12 @@ class Setbacks:
         says where along this one the neighbour's yard begins.
         """
         return self._plain(edge) + edge.dedication_ft
+
+    def for_far_rear_edge(self, edge: Edge) -> float:
+        """The setback on a rear edge farthest from the front lot line."""
+        if self.depth_rear_ft is None or edge.cls is not EdgeClass.rear:
+            return self.for_edge(edge)
+        return self.depth_rear_ft + edge.dedication_ft
 
     def _plain(self, edge: Edge) -> float:
         """:meth:`for_edge` before any right-of-way is given up."""
@@ -277,11 +302,12 @@ def _pieces(edge: Edge, setbacks: Setbacks) -> list[tuple[Segment, float]]:
     neighbour, and a city that calls the alley line a rear lot line (the
     bridge's ``max(side, rear)``) is not relaxed by a stretch it did not
     measure. The rear line is cut the same way: the alley's rear where the
-    rays found it, the larger of it and the ordinary rear elsewhere. Square
-    caps run each piece's strip past its ends, so an
-    uncovered piece bites a few feet into the covered one: never larger
-    than the legal envelope. A cover of ``""`` (none on record) vouches for
-    no stretch, and the whole line takes the larger number.
+    rays found it, the larger of it and the ordinary rear elsewhere. Each
+    piece's strip is closed by the half-disc round its end (:func:`_strip`),
+    so an uncovered piece bites into the covered one as far as its own
+    setback reaches: never larger than the legal envelope. A cover of ``""``
+    (none on record) vouches for no stretch, and the whole line takes the
+    larger number.
     """
     whole_edge: Segment = (edge.x1, edge.y1, edge.x2, edge.y2)
     d = setbacks.for_edge(edge)
@@ -319,6 +345,60 @@ def _pieces(edge: Edge, setbacks: Setbacks) -> list[tuple[Segment, float]]:
     return out
 
 
+def _strip(x1: float, y1: float, x2: float, y2: float, d: float) -> Polygon:
+    """Every point within ``d`` of the segment, and no more than a sag beyond.
+
+    The band ``d`` either side of the segment, closed at each end by a
+    half-disc of radius ``d`` round the endpoint, drawn with
+    :data:`ARC_SPLITS` chords that touch the circle at their midpoints:
+    the polygon holds the whole circle (never short of the setback) and sits
+    inside the old square cap (never more than it took). A segment of no
+    length is the disc.
+    """
+    dx, dy = x2 - x1, y2 - y1
+    length = math.hypot(dx, dy)
+    ux, uy = (dx / length, dy / length) if length > 0 else (1.0, 0.0)
+    nx, ny = -uy, ux  # the left normal
+    step = math.pi / ARC_SPLITS
+    corner = d / math.cos(step / 2)
+
+    def arc(cx: float, cy: float, sx: float, sy: float, fx: float, fy: float):
+        # The half-disc from side s round through forward f to -s: a
+        # tangent point, the chord corners, a tangent point.
+        pts = [(cx + d * sx, cy + d * sy)]
+        for i in range(ARC_SPLITS):
+            t = (i + 0.5) * step
+            c, si = math.cos(t), math.sin(t)
+            pts.append((cx + corner * (c * sx + si * fx), cy + corner * (c * sy + si * fy)))
+        pts.append((cx - d * sx, cy - d * sy))
+        return pts
+
+    return Polygon(arc(x2, y2, nx, ny, ux, uy) + arc(x1, y1, -nx, -ny, -ux, -uy))
+
+
+def _farthest_rear_edges(edges: LotEdges) -> frozenset[int]:
+    """Indices of rear edges whose midpoints are farthest from the front."""
+    fronts = [
+        LineString([(edge.x1, edge.y1), (edge.x2, edge.y2)])
+        for edge in edges.edges
+        if edge.cls is EdgeClass.front
+    ]
+    rears = [
+        (i, edge)
+        for i, edge in enumerate(edges.edges)
+        if edge.cls is EdgeClass.rear
+    ]
+    if not fronts or not rears:
+        return frozenset()
+    front = shapely.union_all(fronts)
+    distances = {
+        i: front.distance(Point((edge.x1 + edge.x2) / 2, (edge.y1 + edge.y2) / 2))
+        for i, edge in rears
+    }
+    farthest = max(distances.values())
+    return frozenset(i for i, distance in distances.items() if math.isclose(distance, farthest))
+
+
 def buildable(
     lot: BaseGeometry,
     edges: LotEdges,
@@ -347,26 +427,54 @@ def buildable(
         setbacks = setbacks.on_a_corner()
 
     use_strips = edges.tier in (Tier.clean, Tier.corner) and bool(edges.edges)
+    far_rear = _farthest_rear_edges(edges) if setbacks.depth_rear_ft is not None else frozenset()
     if not use_strips:
         # Irregular, flag, or unclassifiable: shrink uniformly by the worst
         # setback. Conservative on purpose — see the module docstring.
         # A right-of-way strip (:attr:`Edge.dedication_ft`) is given up on top
         # of the largest yard, on the deepest street line.
         shrink = setbacks.largest_ft + max((e.dedication_ft for e in edges.edges), default=0.0)
+        if far_rear:
+            ordinary_largest = max(
+                setbacks.front_ft,
+                setbacks.side_ft,
+                setbacks.rear_ft,
+                setbacks.street_side_ft or 0.0,
+                setbacks.alley_rear_ft or 0.0,
+            )
+            shrink = ordinary_largest + max(
+                (e.dedication_ft for e in edges.edges), default=0.0
+            )
+            env = lot.buffer(-shrink) if shrink > 0 else lot
+            strips = []
+            for i in far_rear:
+                edge = edges.edges[i]
+                extra = max(0.0, setbacks.depth_rear_ft + edge.dedication_ft - shrink)
+                if extra:
+                    strips.append(
+                        LineString([(edge.x1, edge.y1), (edge.x2, edge.y2)]).buffer(
+                            extra, cap_style="square", join_style="mitre"
+                        )
+                    )
+            if strips:
+                env = env.difference(shapely.union_all(strips))
+            env = _by_bearing(lot, env, edges, setbacks)
+            return _clean(_less(env, less), min_part_sqft)
         env = lot.buffer(-shrink) if shrink > 0 else lot
         env = _by_bearing(lot, env, edges, setbacks)
         return _clean(_less(env, less), min_part_sqft)
 
     strips = []
-    for edge in edges.edges:
-        for (x1, y1, x2, y2), d in _pieces(edge, setbacks):
+    for i, edge in enumerate(edges.edges):
+        pieces = (
+            [((edge.x1, edge.y1, edge.x2, edge.y2), setbacks.for_far_rear_edge(edge))]
+            if i in far_rear
+            else _pieces(edge, setbacks)
+        )
+        for (x1, y1, x2, y2), d in pieces:
             if d <= 0:
                 continue
-            strips.append(
-                LineString([(x1, y1), (x2, y2)]).buffer(
-                    d, cap_style="square", join_style="mitre"
-                )
-            )
+            strips.append(_strip(x1, y1, x2, y2, d))
     env = lot.difference(shapely.union_all(strips)) if strips else lot
     env = _by_bearing(lot, env, edges, setbacks)
     return _clean(_less(env, less), min_part_sqft)

@@ -14,6 +14,7 @@ import json
 from pathlib import Path
 
 import pandas as pd
+import pytest
 import shapely
 from shapely.geometry import LineString, Point, box
 
@@ -93,12 +94,48 @@ def test_the_fact_is_registered_with_no_assumption() -> None:
     assert STREET_END_FACT in OBSERVABLE
 
 
-def test_greshams_end_of_street_note_caps_on_the_street_end_not_the_class() -> None:
+def test_greshams_end_of_street_note_no_longer_caps_with_no_number() -> None:
+    # FOLLOWUPS 37 (iii), 2026-11-08: note 5 is encoded, so it caps nothing.
     caps.reload()
-    for zone in ("LDR-5", "LDR-7", "TLDR", "TR", "MDR-12", "MDR-24", "OFR"):
+    for zone in ("LDR-5", "LDR-7", "TLDR", "TR", "MDR-12", "MDR-24", "OFR", "CMF"):
         fields = caps.caps_for("or/multnomah/gresham", zone)
-        assert STREET_END_FACT in fields["setback_front_ft"], zone
+        assert all(STREET_END_FACT not in facts for facts in fields.values()), zone
         assert all("local_street" not in facts for facts in fields.values()), zone
+
+
+@pytest.fixture(scope="module")
+def corpus():
+    from flats.rules.loader import load_rules
+    from flats.rules.resolver import RuleSet
+
+    return RuleSet(load_rules())
+
+
+@pytest.mark.parametrize("zone", ["LDR-5", "LDR-7", "TLDR", "TR"])
+def test_note_five_holds_its_25_ft_maximum_on_the_true_answer_only(corpus, zone: str) -> None:
+    lot = {"lot_sqft": 10_000}
+    at_end = corpus.resolve("or/multnomah/gresham", zone, (STREET_END_FACT,), lot=lot)
+    assert at_end.get("setback_front_max_ft") == 25
+    # No street named: unheld, so every street line at the True answer.
+    assert at_end.get("setback_front_max_streets") is None
+    # The table's minimums stand on both answers (note 5's 5 ft is looser).
+    away = corpus.resolve("or/multnomah/gresham", zone, (), lot=lot)
+    assert away.get("setback_front_max_ft") is None
+    assert "setback_front_max_ft" in away.exempted
+    assert at_end.get("setback_front_ft") == away.get("setback_front_ft") == 10
+    # The fact is a lever the bound can try, not an unencoded cap.
+    assert STREET_END_FACT in away.levers
+    assert STREET_END_FACT not in away.unencoded
+    assert STREET_END_FACT not in at_end.unencoded
+
+
+@pytest.mark.parametrize("zone", ["MDR-12", "MDR-24", "OFR", "CMF"])
+def test_note_five_adds_nothing_where_a_stricter_maximum_is_held(corpus, zone: str) -> None:
+    lot = {"lot_sqft": 10_000}
+    at_end = corpus.resolve("or/multnomah/gresham", zone, (STREET_END_FACT,), lot=lot)
+    away = corpus.resolve("or/multnomah/gresham", zone, (), lot=lot)
+    assert at_end.get("setback_front_max_ft") == away.get("setback_front_max_ft") == 20
+    assert STREET_END_FACT not in at_end.levers | away.levers
 
 
 def test_the_bridge_answers_false_only_on_a_lot_no_street_ends_near() -> None:

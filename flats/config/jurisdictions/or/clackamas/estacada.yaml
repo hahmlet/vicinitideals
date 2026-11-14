@@ -23,6 +23,14 @@ ingest:
   strip_lowercase_suffix: false
 
 code:
+- id: "emc.16.84.040"
+  url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+  title: "EMC 16.84.040 Nonconforming Lots Of Record"
+  start: "16.84.040 Nonconforming Lots Of Record"
+  end: "Chapter 16.88 CONDITIONAL USES"
+  nth: 2
+  # One section, so the thinness guard would read it as a landing page.
+  allow_thin: true
 - id: "emc.16.08"
   url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
   title: "EMC Chapter 16.08 Definitions"
@@ -80,6 +88,76 @@ code:
   end: "Chapter 16.136 ENFORCEMENT"
   allow_thin: true
 
+crossrefs:
+  # FOLLOWUPS 105 round 4 (2026-11-09): binding since entrance_faces_street was encoded.
+  "16.72":
+    outcome: other_building
+    note: >-
+      Signs: "Signs shall comply with requirements of EMC 16.72 Signs" (16.26/16.26.050.txt and
+      the 16.34, 16.35, 16.38 twins). A sign is not the building.
+  "377":
+    outcome: other_building
+    note: >-
+      ORS Chapter 377, highway signs: "If visible from Hwy 224, signs may require ODOT approval
+      per ORS Chapter 377" (same four files). Signs only.
+  "16.80":
+    outcome: other_building
+    note: >-
+      Temporary dwellings: "Each structure containing a dwelling unit, except temporary dwellings
+      approved pursuant to EMC 16.80, shall include at least three (3) of the following"
+      (16.16/16.16.040.txt#L80). The exception is for a temporary dwelling; the pod is not one, so
+      the design list applies to it as encoded.
+  # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
+  "8.12.050":
+    outcome: design
+    note: >-
+      "Fences ... subject to clear vision regulations of EMC 16.60.010 and EMC 8.12.050 limiting the
+      use of barbed wire and electrical fences" (16.16/16.16.040.txt#L53). A fence material rule;
+      takes no ground.
+  "13.08.010":
+    outcome: other_path
+    note: >-
+      Roof and impervious-surface water "shall be disposed of in accordance with EMC 13.08.010"
+      (16.16/16.16.040.txt#L57), the stormwater title, ruled like Portland 17.38 and Oregon City
+      13.12: a drainage design discharged off the envelope, which the screen does not size.
+  "16.68.030":
+    outcome: procedure
+    note: >-
+      A geotechnical analysis where the property is a listed geological hazard area or has slope of
+      33 percent or more (16.16/16.16.040.txt#L77). A study, no number. The slope screen already
+      takes ground over 15 percent off the building and court, so a lot cannot reach a green with
+      33 percent ground under the pod; the mapped-hazard half has no map FLATS holds (layer
+      refusals, 16.68.030).
+  "16.61.060":
+    outcome: other_building
+    note: >-
+      Accessory dwelling units' exceptions to rear setbacks (16.16/16.16.040.txt#L45, L74).
+  "16.61":
+    outcome: other_building
+    note: >-
+      Accessory dwelling units (16.16/16.16.020.txt#L37).
+  "16.62":
+    outcome: other_building
+    note: >-
+      Short-term rentals (16.16/16.16.020.txt#L33).
+  "16.65":
+    outcome: other_building
+    note: >-
+      Marijuana retailing and cannabis production (16.28/16.28.030.txt#L29).
+  "16.66":
+    outcome: other_building
+    note: >-
+      Food carts, "No more than two food carts on a lot of record" (16.26/16.26.020.txt#L50).
+  "16.74":
+    outcome: later
+    note: >-
+      "All land divisions shall comply with EMC 16.74" (16.116/16.116.010.txt#L19). Lot creation;
+      binds only when a pod declares a plat.
+  "92":
+    outcome: later
+    note: >-
+      ORS Chapter 92, named in the definition of a partition (16.08/16.08.010.txt#L354). Lot
+      creation.
 definitions:
   # Read 2026-10-07 from EMC 16.08, on disk.
   #
@@ -117,6 +195,12 @@ private_drives:
     drive the lot abuts is a street for the yards. A doubt.
 
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Estacada EMC 16.16.040 structure and facade design: an entrance facing the street is one item on a design menu, not a requirement; the C-2 (16.32) and CMU (16.37) chapters state no entrance standard (whole-document grep) (FOLLOWUPS 153)"
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/emc.16.zones.txt#L288,L308"
   # PARKING COUNT. 16.76.010 table: triplex and fourplex 1.5 for each dwelling
   # unit rounded up (L77-L78); commonwall 2 for each commonwall dwelling
   # (L80-L81). The one-building pod is six stalls; four townhouse lots eight.
@@ -152,6 +236,23 @@ defaults:
     url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
     retrieved: '2026-10-07'
     quote: "or/clackamas/estacada/16.08/16.08.010.txt#L275-L277"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). Whole-folder grep: 16.76.010
+  # asks a six-foot screen where parking adjoins a residential zone, no
+  # width (16.76/16.76.010.txt#L37-L38); 16.16.040's "no yard ... for
+  # one use shall be used as the required ... for another use" is about
+  # two uses sharing. Silent.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: EMC 16.08.010 Setback, measured to the nearest point of a structure; no section places parking in or out of an interior side yard
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/16.08/16.08.010.txt#L474"
+  parking_side_yard_stated:
+    value: none
+    cite: EMC 16.76.010, screening only; no interior-side-yard parking rule
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/16.76/16.76.010.txt#L37-L38"
   # WHICH STREET THE DRIVEWAY USES. 16.116.010 (D)(3): a lot on two or more
   # streets of different classes connects its access point to "the road of
   # the lesser classification", unless topography or natural features make
@@ -224,6 +325,20 @@ zones:
           when: [unit_lots]
           cite: Estacada EMC 16.32.040 (A), commonwall dwellings 2,500 square feet per lot for each dwelling unit
           quote: "or/clackamas/estacada/16.32/16.32.040.txt#L9"
+    lot_of_record_relief:
+      # 16.84.040: a lot of record may miss the dimensional or area requirements;
+      # under the single-family minimum it holds only a house, duplex or commonwall
+      # dwelling. Here the row is an area per dwelling, which also sets how many
+      # homes the lot holds, and the code does not say the lift reaches that. Held
+      # at YELLOW (MEASURE-LOT-OF-RECORD), not GREEN.
+      value: lot_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
+    lot_of_record_floor_sqft:
+      value: 5000
+      quote: "or/clackamas/estacada/16.32/16.32.040.txt#L7"
+    lot_of_record_condition:
+      value: per_dwelling_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
     min_lot_width_ft:
       exempt: true
       cite: Estacada EMC 16.32.040, the C-2 standards print no minimum lot width
@@ -289,6 +404,20 @@ zones:
           when: [unit_lots]
           cite: Estacada EMC 16.37.060 (A), commonwall dwellings 2,500 square feet per lot for the first five dwelling units
           quote: "or/clackamas/estacada/16.37/16.37.060.txt#L9"
+    lot_of_record_relief:
+      # 16.84.040: a lot of record may miss the dimensional or area requirements;
+      # under the single-family minimum it holds only a house, duplex or commonwall
+      # dwelling. Here the row is an area per dwelling, which also sets how many
+      # homes the lot holds, and the code does not say the lift reaches that. Held
+      # at YELLOW (MEASURE-LOT-OF-RECORD), not GREEN.
+      value: lot_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
+    lot_of_record_floor_sqft:
+      value: 4000
+      quote: "or/clackamas/estacada/16.37/16.37.060.txt#L7"
+    lot_of_record_condition:
+      value: per_dwelling_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
     min_density_du_per_acre:
       # EMC 16.60.070 binds "residential subdivisions" (four or more lots,
       # 16.08) and new multi-family (five or more units on one lot). The
@@ -386,6 +515,18 @@ zones:
           when: [unit_lots]
           cite: Estacada EMC 16.24.040 (A)(1), commonwall dwellings 2,500 square feet per lot for each dwelling unit
           quote: "or/clackamas/estacada/16.24/16.24.040.txt#L10"
+    lot_of_record_relief:
+      # 16.84.040: a lot of record may miss the dimensional or area requirements;
+      # under the single-family minimum it holds only a house, duplex or commonwall
+      # dwelling. Here the row is an area per dwelling, which also sets how many
+      # homes the lot holds, and the code does not say the lift reaches that. Held
+      # at YELLOW (MEASURE-LOT-OF-RECORD), not GREEN.
+      # 16.24.040 prints no single-family minimum, so no floor can be read.
+      value: lot_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
+    lot_of_record_condition:
+      value: per_dwelling_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
     min_lot_width_ft:
       exempt: true
       cite: Estacada EMC 16.24.040, the R-3 standards print no minimum lot width
@@ -500,6 +641,20 @@ zones:
           when: [unit_lots]
           cite: Estacada EMC 16.25.050 (A), commonwall dwellings 2,500 square feet per lot for the first five dwelling units
           quote: "or/clackamas/estacada/16.25/16.25.050.txt#L9"
+    lot_of_record_relief:
+      # 16.84.040: a lot of record may miss the dimensional or area requirements;
+      # under the single-family minimum it holds only a house, duplex or commonwall
+      # dwelling. Here the row is an area per dwelling, which also sets how many
+      # homes the lot holds, and the code does not say the lift reaches that. Held
+      # at YELLOW (MEASURE-LOT-OF-RECORD), not GREEN.
+      value: lot_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
+    lot_of_record_floor_sqft:
+      value: 5000
+      quote: "or/clackamas/estacada/16.25/16.25.050.txt#L7"
+    lot_of_record_condition:
+      value: per_dwelling_area
+      quote: "or/clackamas/estacada/emc.16.84.040.txt#L3,L5"
     min_lot_width_ft:
       exempt: true
       cite: Estacada EMC 16.25.050, the NCR standards print no minimum lot width
@@ -550,6 +705,12 @@ zones:
       there (conservative). Doubts: Currin Creek 70 ft buffer (L894) not
       carved; parking may not front Eagle Creek Rd (L872) not drawn.
   D:
+    entrance_faces_street:
+      value: required_named
+      cite: "Estacada EMC 16.26.050(6) Downtown building entrances: Primary entrances shall face the street likely to have the greatest pedestrian traffic, as the Design Review Committee determines; development abutting Broadway Street shall orient to it (FOLLOWUPS 153)"
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+      quote: "or/clackamas/estacada/16.26/16.26.050.txt#L92-L98"
     cite_default:
       cite: Estacada EMC Chapter 16.26 (Downtown, D)
       url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
@@ -868,3 +1029,18 @@ drawn_areas:
       kept (29 of them small enough, at or under 10,890 sq ft, for four
       homes to reach sixteen an acre). Lots touching Currin or Acacia are
       dropped for 16.26.040 (H)(2), whose access plan is not stored.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 15
+    basis: unstated
+    quote: or/clackamas/estacada/16.08/16.08.010.txt#L99
+    says: two sides of which are lines measured from the corner intersection to a distance of fifteen
+      (15) feet
+    cite: EMC 16.08.010; 16.60.010
+    note: '16.60.010(2) (16.60/16.60.010.txt#L5): ''no planting, fence, wall, sign, banner, structure''
+      over 2.5 ft. ''The corner intersection'' is not said to be of the lot lines or the curbs: read both
+      ways, the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way

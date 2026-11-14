@@ -58,8 +58,8 @@ notes:
   #
   # Five notes, all of them grandfathering or measurement. They govern the
   # single-dwelling zones' `quadplex_allowed`, which is read a page earlier.
-  - quote: "or/multnomah/portland/33.110/33.110.202.txt#L45"
-    digest: "e209d90b8439"
+  - quote: "or/multnomah/portland/33.110/33.110.202.txt#L39"
+    digest: "c2c45f6a0253"
     state: dismissed
     reason: >-
       a primary structure stays allowed on a lot that met Table 110-3 until a
@@ -70,29 +70,29 @@ notes:
       was printed under; Portland's frame is recognised now -- this one
       ended on the page stamp "110-8"
 
-  - quote: "or/multnomah/portland/33.110/33.110.202.txt#L48"
-    digest: "00088d83a572"
+  - quote: "or/multnomah/portland/33.110/33.110.202.txt#L42"
+    digest: "738fe4739951"
     state: dismissed
     reason: >-
       the R5 minimums for adjusted lots and lot remnants approved through a
       property line adjustment -- 36 ft wide and 1,600 sq ft. A relaxation, and
       one that attaches to a lot's paperwork history rather than to the lot
 
-  - quote: "or/multnomah/portland/33.110/33.110.202.txt#L49"
+  - quote: "or/multnomah/portland/33.110/33.110.202.txt#L43"
     digest: "f3ac38f83c8d"
     state: dismissed
     reason: >-
       grandfathering in R20 for lots made non-conforming solely by the zone
       change of 24 May 2018. A relaxation with a date on it
 
-  - quote: "or/multnomah/portland/33.110/33.110.202.txt#L50"
+  - quote: "or/multnomah/portland/33.110/33.110.202.txt#L44"
     digest: "4af25bbc8812"
     state: dismissed
     reason: >-
       grandfathering for lots separated through a lot confirmation finalised
       before 11 September 2020. A relaxation with a date on it
 
-  - quote: "or/multnomah/portland/33.110/33.110.202.txt#L51"
+  - quote: "or/multnomah/portland/33.110/33.110.202.txt#L45"
     digest: "bf24d1f629bf"
     state: dismissed
     reason: >-
@@ -104,21 +104,21 @@ notes:
       false, which is where that gap is carried
 
   # --- 33.110, the summary of development standards -----------------
-  - quote: "or/multnomah/portland/33.110/33.110.205.txt#L52"
+  - quote: "or/multnomah/portland/33.110/33.110.205.txt#L53"
     digest: "30417624949c"
     state: dismissed
     reason: >-
       "including any site with a congregate housing facility". A different
       building, and the row it marks is not one this layer encodes
 
-  - quote: "or/multnomah/portland/33.110/33.110.205.txt#L53"
+  - quote: "or/multnomah/portland/33.110/33.110.205.txt#L54"
     digest: "04194567b465"
     state: dismissed
     reason: >-
       "including accessory dwelling units" -- a counting rule for the density
       row, saying an ADU counts toward the units allowed. The pod has none
 
-  - quote: "or/multnomah/portland/33.110/33.110.205.txt#L54-L55"
+  - quote: "or/multnomah/portland/33.110/33.110.205.txt#L55-L56"
     digest: "527b8487fca1"
     state: dismissed
     reason: >-
@@ -134,7 +134,7 @@ notes:
   # community centre -- may build in a residential zone. They are not this
   # pod's standards and are not encoded. Each note is dismissed on that scope,
   # with what it actually says recorded so the dismissal is checkable.
-  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L86-L87"
+  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L82-L83"
     digest: "95476b5293ee"
     state: dismissed
     reason: >-
@@ -145,7 +145,7 @@ notes:
       table is encoded here -- an institution in a residential zone is a
       conditional use, and the pod is not one
 
-  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L88-L89"
+  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L84-L86"
     digest: "019d85304fe5"
     state: dismissed
     reason: >-
@@ -153,36 +153,36 @@ notes:
       setbacks supersede Table 110-4's only at the campus perimeter. An
       institutional standard, on a table this layer does not encode
 
-  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L92"
+  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L88-L89"
     digest: "614f56b5c613"
     state: dismissed
     reason: >-
       towers, spires, elevator equipment and stairwell enclosures may exceed
       the height limit. A relaxation, on the institutional table's height
 
-  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L95"
+  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L91"
     digest: "d66aa950a2c5"
     state: dismissed
     reason: >-
       required landscaping counts toward the landscaped area standard. A
       relaxation of the institutional table's minimum landscaped area
 
-  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L96"
-    digest: "f5fe0824e9ba"
+  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L92"
+    digest: "87c2a41f08cd"
     state: dismissed
     reason: >-
       vehicle areas are subject to the parking lot setback and landscaping
       standards of Chapter 33.266. A cross-reference on the institutional
       table; what 33.266 requires of this pod is encoded from 33.266 itself
 
-  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L98"
+  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L93"
     digest: "8e5edafcda00"
     state: dismissed
     reason: >-
       setbacks for structures accessory to recreational fields for organized
       sports are in Chapter 33.279. A different chapter for a different use
 
-  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L99"
+  - quote: "or/multnomah/portland/33.110/33.110.270.txt#L94"
     digest: "26ae2529f3ab"
     state: dismissed
     reason: >-
@@ -193,7 +193,7 @@ notes:
       this pod's; reading 33.110.270.C for the single-dwelling zones is
       encoding work, not a footnote ruling
 
-  - quote: "or/multnomah/portland/33.120/33.120.275.txt#L54-L55"
+  - quote: "or/multnomah/portland/33.120/33.120.275.txt#L64-L67"
     digest: "ac6afd806e59"
     state: dismissed
     reason: >-
@@ -201,7 +201,7 @@ notes:
       setbacks supersede Table 120-4's only at the campus perimeter. The
       multi-dwelling half of the same institutional table
 
-  - quote: "or/multnomah/portland/33.120/33.120.275.txt#L58"
+  - quote: "or/multnomah/portland/33.120/33.120.275.txt#L68"
     digest: "80780ca626c8"
     state: dismissed
     reason: >-
@@ -213,7 +213,7 @@ notes:
 
   # --- 33.120 Table 120-1, the use table ----------------------------
   - quote: "or/multnomah/portland/33.120/33.120.200.txt#L31"
-    digest: "a9ffcddba0a4"
+    digest: "50d13b9a608b"
     state: dismissed
     reason: >-
       the only multi-dwelling development allowed in RMP is manufactured
@@ -229,7 +229,7 @@ notes:
       screen does not place
 
   # --- 33.120 Table 120-6, the FAR bonus table ----------------------
-  - quote: "or/multnomah/portland/33.120/33.120.211.txt#L35"
+  - quote: "or/multnomah/portland/33.120/33.120.211.txt#L36"
     digest: "6451e19699cf"
     state: dismissed
     reason: >-
@@ -238,15 +238,15 @@ notes:
       figure from the summary of development standards, and a transfer can
       only raise it
 
-  - quote: "or/multnomah/portland/33.120/33.120.211.txt#L36"
-    digest: "05356b149648"
+  - quote: "or/multnomah/portland/33.120/33.120.211.txt#L37"
+    digest: "2c947f98e074"
     state: dismissed
     reason: >-
       names the other bonuses -- Inclusionary Housing, Three-Bedroom Units,
       Visitable Units. A definition inside the bonus table, and every bonus
       raises a ceiling
 
-  - quote: "or/multnomah/portland/33.120/33.120.211.txt#L37"
+  - quote: "or/multnomah/portland/33.120/33.120.211.txt#L38"
     digest: "bc6bd50b2144"
     state: dismissed
     reason: >-
@@ -258,7 +258,7 @@ notes:
       bonus figure and not left to a ruling
 
   # --- 33.266 Table 266-1/-2, maximum allowed parking spaces --------
-  - quote: "or/multnomah/portland/33.266/33.266.115.txt#L36"
+  - quote: "or/multnomah/portland/33.266/33.266.115.txt#L35"
     digest: "83a3c1f59710"
     state: dismissed
     reason: >-
@@ -268,7 +268,7 @@ notes:
       layer encodes from the chapter is the absence of any minimum, read from
       the chapter's own section list
 
-  - quote: "or/multnomah/portland/33.266/33.266.115.txt#L37"
+  - quote: "or/multnomah/portland/33.266/33.266.115.txt#L36"
     digest: "f7ef893b01f9"
     state: dismissed
     reason: >-
@@ -281,7 +281,7 @@ notes:
   #
   # Three notes, and the first is the only one in this whole ledger that turns
   # out to be a standard rather than a pointer to one.
-  - quote: "or/multnomah/portland/33.130/33.130.210.txt#L127"
+  - quote: "or/multnomah/portland/33.130/33.130.210.txt#L114"
     digest: "eb2d154becf6"
     state: encoded
     encoded_as: >-
@@ -303,8 +303,8 @@ notes:
       Gresham's downtown chapter and three in Troutdale, so the noise
       stays
 
-  - quote: "or/multnomah/portland/33.130/33.130.212.txt#L37"
-    digest: "b05a55a3a9f8"
+  - quote: "or/multnomah/portland/33.130/33.130.212.txt#L35"
+    digest: "85df9ba20ec5"
     state: dismissed
     reason: >-
       bonus height in CM2 is allowed only inside a Historic District,
@@ -313,7 +313,7 @@ notes:
       height from Table 130-2; declining a bonus can only cost a site that
       would have qualified for one
 
-  - quote: "or/multnomah/portland/33.130/33.130.212.txt#L40"
+  - quote: "or/multnomah/portland/33.130/33.130.212.txt#L37"
     digest: "677f0dfe063a"
     state: dismissed
     reason: >-
@@ -337,7 +337,7 @@ notes:
       was printed under; Portland's frame is recognised now -- this one
       ended on "Title 33, Planning and Zoning"
 
-  - quote: "or/multnomah/portland/33.140/33.140.245.txt#L67"
+  - quote: "or/multnomah/portland/33.140/33.140.245.txt#L69"
     digest: "6e74a267a5f1"
     state: dismissed
     reason: >-
@@ -345,7 +345,7 @@ notes:
       landscaping standard. It tells a reader how to parse a cell, and the
       cell is in 33.140.235 Screening, which this layer does not encode
 
-  - quote: "or/multnomah/portland/33.140/33.140.245.txt#L68"
+  - quote: "or/multnomah/portland/33.140/33.140.245.txt#L70"
     digest: "66da0ed46ddd"
     state: dismissed
     reason: >-
@@ -353,7 +353,7 @@ notes:
       and the street. Exterior storage is not a fourplex, and screening is not
       encoded
 
-  - quote: "or/multnomah/portland/33.140/33.140.245.txt#L69"
+  - quote: "or/multnomah/portland/33.140/33.140.245.txt#L71"
     digest: "330298c96374"
     state: dismissed
     reason: >-
@@ -366,8 +366,8 @@ notes:
   # Five notes, and one of them breaks this ledger's clean record: note [3] is
   # a mapped condition that makes a standard TIGHTER, which is the shape every
   # other Portland note has managed to avoid.
-  - quote: "or/multnomah/portland/33.150.txt#L565"
-    digest: "0f6941d0781c"
+  - quote: "or/multnomah/portland/33.150.txt#L571"
+    digest: "e5d7f2951fa8"
     state: dismissed
     reason: >-
       for Colleges and Medical Centers the entire CI zone counts as one site
@@ -378,8 +378,8 @@ notes:
       lot's standards off a campus perimeter is what this note exists to let
       a campus do
 
-  - quote: "or/multnomah/portland/33.150.txt#L569"
-    digest: "8e4715494aec"
+  - quote: "or/multnomah/portland/33.150.txt#L575"
+    digest: "6582bd74cbbd"
     state: dismissed
     reason: >-
       maximum FAR inside the Legacy Good Samaritan campus boundary on Map
@@ -387,10 +387,19 @@ notes:
       nothing here reads; declining it can only cost a site that sits inside
       it
 
-  - quote: "or/multnomah/portland/33.150.txt#L571"
-    digest: "b0b1dfa3fbb5"
+  - quote: "or/multnomah/portland/33.150.txt#L577"
+    digest: "01136b941dc7"
     state: unmeasured
     fact: site_specific_limitation
+    # Narrowed 2026-11-09 (pdx-drift, FOLLOWUPS 165). The [3] prints in the
+    # CI2 column only (33.150.txt#L539-L541); IR is kept under it as before,
+    # the side that cannot open a lot. CI1 is taken out: since RICAP 11 a CI1
+    # home is on RM1's standards (33.150.200, `like: RM1`), so no Table 150-2
+    # figure reaches it, and its Table 150-1 Y carries no bracket. Left
+    # unnarrowed, the notes block put this cap on CI1's use permission once
+    # that permission was quoted from the reprinted chapter rather than the
+    # RICAP 11 exhibit -- a cap the note's words do not reach.
+    zones: [CI2, IR]
     reason: >-
       maximum FAR inside the PCC Sylvania campus boundary on Map 150-5 is
       .75 to 1, not 3 to 1 -- a quarter of the zone's own ceiling, and the
@@ -401,7 +410,7 @@ notes:
       line on a map this screen does not hold, so the note caps rather than
       resolves
 
-  - quote: "or/multnomah/portland/33.150.txt#L573"
+  - quote: "or/multnomah/portland/33.150.txt#L579"
     digest: "22c261d2f980"
     state: dismissed
     reason: >-
@@ -412,7 +421,7 @@ notes:
       this building, which is a different reason for dismissing it than the
       usual one and worth writing down as such
 
-  - quote: "or/multnomah/portland/33.150.txt#L574"
+  - quote: "or/multnomah/portland/33.150.txt#L580"
     digest: "ecb44e00d391"
     state: dismissed
     reason: >-
@@ -425,7 +434,7 @@ notes:
 
   # --- 33.100, the Open Space zone's use table, answered in prose ---
 
-  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L12"
+  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L12-L13"
     digest: "7a86539b3603"
     state: dismissed
     reason: >-
@@ -447,7 +456,7 @@ notes:
       governed here because Table 100-1's cells are quoted for the
       permission, and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L27"
+  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L26"
     digest: "4a520d974b28"
     state: dismissed
     reason: >-
@@ -457,7 +466,7 @@ notes:
       100-1's cells are quoted for the permission, and the note sits on
       another row of the same table
 
-  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L34"
+  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L32"
     digest: "1f8dd5da57eb"
     state: dismissed
     reason: >-
@@ -467,8 +476,8 @@ notes:
       100-1's cells are quoted for the permission, and the note sits on
       another row of the same table
 
-  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L37"
-    digest: "780e5351d9ab"
+  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L35"
+    digest: "3b864c63ca4a"
     state: dismissed
     reason: >-
       note 5 treats Basic Utilities serving a development site as
@@ -479,7 +488,7 @@ notes:
       quoted for the permission, and the note sits on another row of the
       same table
 
-  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L44"
+  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L41"
     digest: "af31c620b101"
     state: dismissed
     reason: >-
@@ -489,7 +498,7 @@ notes:
       governed here because Table 100-1's cells are quoted for the
       permission, and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L48"
+  - quote: "or/multnomah/portland/33.100/33.100.100.txt#L44"
     digest: "0a0fc1f1992e"
     state: dismissed
     reason: >-
@@ -517,8 +526,8 @@ notes:
       are quoted for the permission, and the note sits on another row of
       the same table
 
-  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L23-L24"
-    digest: "8127f5b36788"
+  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L21-L23"
+    digest: "3117b87f2052"
     state: dismissed
     reason: >-
       note 2 makes Utility Scale Energy Production and Industrial
@@ -528,8 +537,8 @@ notes:
       for the permission, and the note sits on another row of the same
       table
 
-  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L34-L35"
-    digest: "ae45d4cf52a5"
+  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L32-L34"
+    digest: "ff1d6fb5d5cc"
     state: dismissed
     reason: >-
       note 3 sends Self-Service Storage to the special regulations in
@@ -538,8 +547,8 @@ notes:
       permission, and the note sits on another row of the same table
       Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words name Chapter 33.284, Self-Service Storage; still that use only.
 
-  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L38-L39"
-    digest: "1e44764605fa"
+  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L36-L38"
+    digest: "178ab4196c5d"
     state: dismissed
     reason: >-
       note 4 prohibits exterior display or storage of industrial
@@ -549,8 +558,8 @@ notes:
       are quoted for the permission, and the note sits on another row of
       the same table
 
-  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L41"
-    digest: "a7096be65790"
+  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L39"
+    digest: "3acb4fa50b2c"
     state: dismissed
     reason: >-
       note 5 allows most Community Service uses by right and sends
@@ -559,7 +568,7 @@ notes:
       quoted for the permission, and the note sits on another row of the
       same table
 
-  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L45"
+  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L43-L44"
     digest: "ef3a86512be9"
     state: dismissed
     reason: >-
@@ -569,18 +578,18 @@ notes:
       130-1's cells are quoted for the permission, and the note sits on
       another row of the same table
 
-  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L48"
-    digest: "0d8fc2144aec"
+  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L46"
+    digest: "afed80017c95"
     state: dismissed
     reason: >-
-      note 7 makes public safety facilities carrying transmission
-      equipment a conditional use, treats small scale energy production
-      as accessory within limits, and allows all other Basic Utilities.
-      a limitation on a use this screen does not place. It is governed
+      note 7 sends public safety facilities carrying transmission
+      equipment to Chapter 33.274 (a conditional use before the 11/1/26
+      reprint), treats small scale energy production as accessory within
+      limits, and allows all other Basic Utilities. a limitation on a use this screen does not place. It is governed
       here because Table 130-1's cells are quoted for the permission,
       and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L56"
+  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L53-L54"
     digest: "c244c50dd7e1"
     state: dismissed
     reason: >-
@@ -592,7 +601,7 @@ notes:
       governed here because Table 130-1's cells are quoted for the
       permission, and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L66-L67"
+  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L63-L65"
     digest: "79a2ca2b4bff"
     state: dismissed
     reason: >-
@@ -601,7 +610,7 @@ notes:
       It is governed here because Table 130-1's cells are quoted for the
       permission, and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L69-L70"
+  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L66-L67"
     digest: "0bbc2768113d"
     state: dismissed
     reason: >-
@@ -611,8 +620,8 @@ notes:
       for the permission, and the note sits on another row of the same
       table
 
-  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L74-L75"
-    digest: "3f24d3ba0562"
+  - quote: "or/multnomah/portland/33.130/33.130.100.txt#L71-L74"
+    digest: "2b2105aea66d"
     state: dismissed
     reason: >-
       note 11 makes outdoor Agriculture a conditional use in CM3 and CE
@@ -643,7 +652,7 @@ notes:
       Group Living use are prohibited." New construction is not a
       conversion, so a pod is prohibited outright
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L23-L24"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L23-L25"
     digest: "02809b866030"
     state: encoded
     encoded_as: >-
@@ -658,8 +667,8 @@ notes:
       walk through, which is why the value is a settled false rather
       than a conditional
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L28-L29"
-    digest: "1387a31d0e82"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L27-L28"
+    digest: "5eb67cc6d307"
     state: dismissed
     reason: >-
       note 3 caps Retail Sales And Service in the EG zones at 20,000
@@ -669,7 +678,7 @@ notes:
       Table 140-1's cells are quoted for the permission, and the note
       sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L38-L39"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L35-L36"
     digest: "d5c6b4c663c2"
     state: dismissed
     reason: >-
@@ -679,7 +688,7 @@ notes:
       for the permission, and the note sits on another row of the same
       table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L55-L56"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L50-L51"
     digest: "e4986d532489"
     state: dismissed
     reason: >-
@@ -688,7 +697,7 @@ notes:
       here because Table 140-1's cells are quoted for the permission,
       and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L68-L69"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L63-L64"
     digest: "1db9c888e19b"
     state: dismissed
     reason: >-
@@ -697,8 +706,8 @@ notes:
       quoted for the permission, and the note sits on another row of the
       same table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L83-L84"
-    digest: "b120be263ba1"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L78-L80"
+    digest: "1ed84bd59cc3"
     state: dismissed
     reason: >-
       note 7 sends Self-Service Storage to its special regulations. a
@@ -707,8 +716,8 @@ notes:
       and the note sits on another row of the same table
       Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words name Chapter 33.284, Self-Service Storage; still that use only.
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L87-L88"
-    digest: "ad4ea777fa0d"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L82-L83"
+    digest: "9a179d59bf65"
     state: dismissed
     reason: >-
       note 8 makes Waste-Related uses conditional unless Metro has
@@ -718,7 +727,7 @@ notes:
       here because Table 140-1's cells are quoted for the permission,
       and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L94-L95"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L89-L92"
     digest: "553fe2eed2a2"
     state: dismissed
     reason: >-
@@ -728,8 +737,8 @@ notes:
       cells are quoted for the permission, and the note sits on another
       row of the same table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L163-L164"
-    digest: "057df714bf5d"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L159-L160"
+    digest: "58f6158ea2dd"
     state: dismissed
     reason: >-
       note 10 prohibits short term and mass shelters in the I zones and
@@ -739,7 +748,7 @@ notes:
       permission, and the note sits on another row of the same table
       Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words send outdoor shelters to Chapter 33.285 and allow Daycare and Community Service up to 3,000 sq ft; still those uses only.
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L171-L172"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L167-L169"
     digest: "59753b578b50"
     state: dismissed
     reason: >-
@@ -749,7 +758,7 @@ notes:
       Table 140-1's cells are quoted for the permission, and the note
       sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L175-L176"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L171-L173"
     digest: "b8a35e03934e"
     state: dismissed
     reason: >-
@@ -759,7 +768,7 @@ notes:
       140-1's cells are quoted for the permission, and the note sits on
       another row of the same table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L184"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L179"
     digest: "eb527b275d14"
     state: dismissed
     reason: >-
@@ -768,7 +777,7 @@ notes:
       governed here because Table 140-1's cells are quoted for the
       permission, and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L188"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L182-L183"
     digest: "4029f89b83d7"
     state: dismissed
     reason: >-
@@ -778,7 +787,7 @@ notes:
       140-1's cells are quoted for the permission, and the note sits on
       another row of the same table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L191"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L185"
     digest: "a64cf143b92d"
     state: dismissed
     reason: >-
@@ -787,7 +796,7 @@ notes:
       here because Table 140-1's cells are quoted for the permission,
       and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L194"
+  - quote: "or/multnomah/portland/33.140/33.140.100.txt#L188"
     digest: "5f8d2a3bc634"
     state: dismissed
     reason: >-
@@ -801,8 +810,8 @@ notes:
 
   # --- 33.150, the campus institutional table, answered in prose ---
 
-  - quote: "or/multnomah/portland/33.150.txt#L178"
-    digest: "2b114eefe29b"
+  - quote: "or/multnomah/portland/33.150.txt#L179"
+    digest: "2eeae802b25c"
     state: dismissed
     reason: >-
       note 1 allows up to 10,000 square feet of Retail Sales And Service
@@ -811,7 +820,7 @@ notes:
       cells are quoted for the permission, and the note sits on another
       row of the same table
 
-  - quote: "or/multnomah/portland/33.150.txt#L181"
+  - quote: "or/multnomah/portland/33.150.txt#L182"
     digest: "d46e2b2d0939"
     state: dismissed
     reason: >-
@@ -822,8 +831,8 @@ notes:
       here because Table 150-1's cells are quoted for the permission,
       and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.150.txt#L193"
-    digest: "5556aba78db6"
+  - quote: "or/multnomah/portland/33.150.txt#L194"
+    digest: "44fe099e096e"
     state: dismissed
     reason: >-
       note 3 treats site-serving Basic Utilities and small scale energy
@@ -833,7 +842,7 @@ notes:
       cells are quoted for the permission, and the note sits on another
       row of the same table
 
-  - quote: "or/multnomah/portland/33.150.txt#L205"
+  - quote: "or/multnomah/portland/33.150.txt#L206"
     digest: "fac0f7293e93"
     state: dismissed
     reason: >-
@@ -844,7 +853,7 @@ notes:
       sits on another row of the same table
       Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words allow most Community Service by right in CI2 and send shelters to Chapter 33.285; still Community Service only.
 
-  - quote: "or/multnomah/portland/33.150.txt#L213"
+  - quote: "or/multnomah/portland/33.150.txt#L214"
     digest: "1b688cae01de"
     state: dismissed
     reason: >-
@@ -854,7 +863,7 @@ notes:
       150-1's cells are quoted for the permission, and the note sits on
       another row of the same table
 
-  - quote: "or/multnomah/portland/33.150.txt#L226"
+  - quote: "or/multnomah/portland/33.150.txt#L227"
     digest: "911f7316ede1"
     state: dismissed
     reason: >-
@@ -864,7 +873,7 @@ notes:
       cells are quoted for the permission, and the note sits on another
       row of the same table
 
-  - quote: "or/multnomah/portland/33.150.txt#L230"
+  - quote: "or/multnomah/portland/33.150.txt#L236"
     digest: "e273c8934747"
     state: dismissed
     reason: >-
@@ -873,7 +882,7 @@ notes:
       here because Table 150-1's cells are quoted for the permission,
       and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.150.txt#L238"
+  - quote: "or/multnomah/portland/33.150.txt#L239"
     digest: "ad723b0ff780"
     state: dismissed
     reason: >-
@@ -882,7 +891,7 @@ notes:
       governed here because Table 150-1's cells are quoted for the
       permission, and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.150.txt#L241"
+  - quote: "or/multnomah/portland/33.150.txt#L242"
     digest: "c722458b0ff6"
     state: dismissed
     reason: >-
@@ -894,8 +903,8 @@ notes:
       their own kitchens are Household Living, which Table 150-1 gives
       IR as a bare Y with no bracket on it
 
-  - quote: "or/multnomah/portland/33.150.txt#L247"
-    digest: "aae2b91755b4"
+  - quote: "or/multnomah/portland/33.150.txt#L248"
+    digest: "9d50e085663a"
     state: dismissed
     reason: >-
       note 10 allows Retail Sales And Service and Office uses on an
@@ -905,7 +914,7 @@ notes:
       is governed here because Table 150-1's cells are quoted for the
       permission, and the note sits on another row of the same table
 
-  - quote: "or/multnomah/portland/33.150.txt#L293"
+  - quote: "or/multnomah/portland/33.150.txt#L294"
     digest: "fe0d31da4507"
     state: dismissed
     reason: >-
@@ -917,7 +926,7 @@ notes:
 
   # --- 33.110, the single-dwelling use table, answered in prose ---
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L13-L14"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L12-L14"
     digest: "ed9025100182"
     state: dismissed
     reason: >-
@@ -931,7 +940,7 @@ notes:
       permission for a four-unit building is read from Table 110-3's lot
       dimensions and 33.110.100.A rather than from this table
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L17"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L15-L17"
     digest: "fedd1cf2deee"
     state: dismissed
     reason: >-
@@ -943,7 +952,7 @@ notes:
       Table 110-3's lot dimensions and 33.110.100.A rather than from
       this table
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L20"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L18-L19"
     digest: "dd396178a8a4"
     state: dismissed
     reason: >-
@@ -955,8 +964,8 @@ notes:
       permission for a four-unit building is read from Table 110-3's lot
       dimensions and 33.110.100.A rather than from this table
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L23"
-    digest: "d010b0bf0016"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L21"
+    digest: "3f429e864cc7"
     state: dismissed
     reason: >-
       note 4 treats site-serving Basic Utilities and small scale energy
@@ -967,7 +976,7 @@ notes:
       unit building is read from Table 110-3's lot dimensions and
       33.110.100.A rather than from this table
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L33"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L30-L31"
     digest: "be92919b2c47"
     state: dismissed
     reason: >-
@@ -979,7 +988,7 @@ notes:
       Table 110-3's lot dimensions and 33.110.100.A rather than from
       this table
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L38"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L33-L35"
     digest: "5cdd0e003953"
     state: dismissed
     reason: >-
@@ -992,19 +1001,19 @@ notes:
       unit building is read from Table 110-3's lot dimensions and
       33.110.100.A rather than from this table
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L52-L53"
-    digest: "fcc9556e5d4e"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L44-L45"
+    digest: "bfb21b1f52f9"
     state: dismissed
     reason: >-
       note 7 allows Daycare by right inside a building that contains or
-      contained a College, Medical Center, School, Religious Institution
-      or Community Service use. a limitation on a use this screen does
+      contained a College, Medical Center, School, Religious Institution,
+      Daycare (added in the 11/1/26 reprint) or Community Service use. a limitation on a use this screen does
       not place. Table 110-1's Household Living row carries no bracket
       at all in the zones this layer holds, and the permission for a
       four-unit building is read from Table 110-3's lot dimensions and
       33.110.100.A rather than from this table
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L54-L55"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L46-L49"
     digest: "8ab14e2b19c6"
     state: dismissed
     reason: >-
@@ -1015,7 +1024,7 @@ notes:
       for a four-unit building is read from Table 110-3's lot dimensions
       and 33.110.100.A rather than from this table
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L58-L59"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L50-L53"
     digest: "a1da410d347c"
     state: dismissed
     reason: >-
@@ -1026,7 +1035,7 @@ notes:
       building is read from Table 110-3's lot dimensions and
       33.110.100.A rather than from this table
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L64-L65"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L56-L58"
     digest: "b086a75a5830"
     state: dismissed
     reason: >-
@@ -1037,7 +1046,7 @@ notes:
       building is read from Table 110-3's lot dimensions and
       33.110.100.A rather than from this table
 
-  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L67"
+  - quote: "or/multnomah/portland/33.110/33.110.100.txt#L59-L60"
     digest: "c103856b4371"
     state: dismissed
     reason: >-
@@ -1051,7 +1060,7 @@ notes:
 
   # --- 33.120, the multi-dwelling use table, answered in prose ---
 
-  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L14-L15"
+  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L15-L16"
     digest: "1f548218deb3"
     state: dismissed
     reason: >-
@@ -1063,7 +1072,7 @@ notes:
       building is read from Table 120-2, the housing types table, which
       is what this layer quotes rather than from this table
 
-  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L34"
+  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L34-L35"
     digest: "fd53b30524dd"
     state: dismissed
     reason: >-
@@ -1077,7 +1086,7 @@ notes:
       Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words point Commercial Parking to Chapter 33.510 inside the Central City and keep ground-floor retail rules on that use; still nothing on Household Living.
 
   - quote: "or/multnomah/portland/33.120/33.120.100.txt#L39"
-    digest: "24d89d6f33ea"
+    digest: "7739bf1299b3"
     state: dismissed
     reason: >-
       note 3 sends most Community Service and Schools uses in RX to
@@ -1089,7 +1098,7 @@ notes:
       types table, which is what this layer quotes rather than from this
       table
 
-  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L52-L53"
+  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L50-L52"
     digest: "3435a0581088"
     state: dismissed
     reason: >-
@@ -1101,8 +1110,8 @@ notes:
       from this table
       Re-read whole 2026-10-30 (FOLLOWUPS 123): the restored words send shelters to Chapter 33.285; still Community Service only.
 
-  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L58"
-    digest: "2b225d2cb75d"
+  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L55-L57"
+    digest: "81771c9e39ba"
     state: dismissed
     reason: >-
       note 5 allows Parks And Open Areas by right and sends its
@@ -1113,19 +1122,13 @@ notes:
       housing types table, which is what this layer quotes rather than
       from this table
 
-  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L69-L70"
-    digest: "af5bce71564e"
-    state: dismissed
-    reason: >-
-      note 6 allows Daycare by right inside a building that contains or
-      contained a College, Medical Center, School, Religious Institution
-      or Community Service use. a limitation on a use this screen does
-      not place. Table 120-1's Household Living row carries no bracket
-      at all in the zones this layer holds, and the permission for a
-      four-unit building is read from Table 120-2, the housing types
-      table, which is what this layer quotes rather than from this table
+  # Note 6 (Daycare) was deleted from 33.120.100.B by the 11/1/26 reprint
+  # (RICAP 11); its dismissal went with it (pdx-drift, 2026-11-09). The
+  # paragraphs after it renumber (6 Radio Frequency, 7 Basic Utilities, 8
+  # Agriculture, 9 Retail Sales and Service in RMP) and Table 120-1's
+  # brackets with them, though the paragraphs still print the old [7]-[10].
 
-  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L82"
+  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L66"
     digest: "610421903227"
     state: dismissed
     reason: >-
@@ -1136,7 +1139,7 @@ notes:
       building is read from Table 120-2, the housing types table, which
       is what this layer quotes rather than from this table
 
-  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L86"
+  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L69"
     digest: "5c5aab108799"
     state: dismissed
     reason: >-
@@ -1148,7 +1151,7 @@ notes:
       unit building is read from Table 120-2, the housing types table,
       which is what this layer quotes rather than from this table
 
-  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L95-L96"
+  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L79-L80"
     digest: "36c85dc20797"
     state: dismissed
     reason: >-
@@ -1159,7 +1162,7 @@ notes:
       from Table 120-2, the housing types table, which is what this
       layer quotes rather than from this table
 
-  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L97-L98"
+  - quote: "or/multnomah/portland/33.120/33.120.100.txt#L81-L82"
     digest: "0c4280ed5862"
     state: dismissed
     reason: >-
@@ -1173,19 +1176,14 @@ notes:
 
   # --- the notes behind Portland's page frame ---------------------------
 
-  - quote: "or/multnomah/portland/33.120/33.120.275.txt#L62"
-    digest: "429aa9a284ea"
-    state: dismissed
-    reason: >-
-      note 5 sends vehicle areas to the parking lot setback and
-      landscaping standards of Chapter 33.266. It is marked on the two
-      Buffering rows of Table 120-3, at L1929 and L1930, and this layer
-      encodes no buffering field; the one thing it reads from 33.266 is
-      the statement at L10-L17 that no parking is required. The note was
-      unreadable until the page break stopped ending the block
+  # Table 120-3 note [5] (vehicle areas to 33.266's parking lot setback and
+  # landscaping standards) is no longer printed under the table in the
+  # 11/1/26 reprint, though the two Buffering rows still carry the [5]
+  # marker; its dismissal went with it (pdx-drift, 2026-11-09). This layer
+  # encodes no buffering field, so nothing turned on it.
 
-  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L140-L141"
-    digest: "a844d11adf13"
+  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L143-L145"
+    digest: "493542bc9c36"
     state: dismissed
     reason: >-
       the driveway and parking area green features standard, which
@@ -1194,8 +1192,8 @@ notes:
       court, an order of magnitude under the threshold, so the tree
       canopy and pervious paving options it offers never come into play
 
-  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L161"
-    digest: "1e60cb016760"
+  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L164"
+    digest: "b4fc574e6c9a"
     state: dismissed
     reason: >-
       33.266.130's paragraph 6, large parking areas in R, C, E, IR and CI
@@ -1205,7 +1203,10 @@ notes:
       than 125,000 square feet. Same reason as paragraph 5's 21,780 square
       foot threshold: the pod parks four stalls, orders of magnitude under
       either, so it can never govern a pod lot (coordinator ruling
-      2026-10-29, on paragraph 5's precedent)
+      2026-10-29, on paragraph 5's precedent). RICAP 11's reprint (11/1/26)
+      splits it into new areas of 125,000 square feet or more and expansions
+      past that size, and adds the elements as a list; the threshold, and so
+      the answer, is unchanged
 
   # --- 33.266, the parking chapter's last thirteen ----------------------
   #
@@ -1232,8 +1233,8 @@ notes:
   # letting a resident keep the bicycle indoors; Portland states that too, at
   # L1125, and does not need it here.
 
-  - quote: "or/multnomah/portland/33.266/33.266.115.txt#L135"
-    digest: "abfcd5ca687c"
+  - quote: "or/multnomah/portland/33.266/33.266.115.txt#L136"
+    digest: "ff45ce858b18"
     state: dismissed
     reason: >-
       note 1 on the maximum-parking table lets a use subject to Conditional
@@ -1243,7 +1244,7 @@ notes:
       screens is Household Living permitted by right in every zone where the
       cap it governs is encoded, so none of the three reviews is triggered
 
-  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L86"
+  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L87"
     digest: "45aa949ab301"
     state: dismissed
     reason: >-
@@ -1254,7 +1255,7 @@ notes:
       vehicle areas subject to the standards of 33.266.120", and 33.266.120.B
       lists fourplexes and attached houses among the structures it governs
 
-  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L87"
+  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L88"
     digest: "3a4333ea84cc"
     state: dismissed
     reason: >-
@@ -1263,7 +1264,18 @@ notes:
       reach a fourplex: 33.266.130.B hands residential vehicle areas to
       33.266.120
 
-  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L130"
+  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L89"
+    digest: "d9acaf4878d0"
+    state: dismissed
+    reason: >-
+      note 3, new in the 11/1/26 reprint (RICAP 11), exempts detached
+      accessory structures from the same vehicle-area location table. A
+      relief, and on a table that does not reach this building for the same
+      reason as notes 1 and 2: 33.266.130.B still applies its standards to all
+      vehicle areas "except for residential vehicle areas subject to the
+      standards of 33.266.120" (33.266.130.txt#L25)
+
+  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L133"
     digest: "151190f32738"
     state: dismissed
     reason: >-
@@ -1274,15 +1286,15 @@ notes:
       266-4's 90 degree stall is 8 feet 6 inches wide, so a rear court laid
       out against this note would be half a foot per stall too narrow
 
-  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L131"
-    digest: "522db176f1ba"
+  - quote: "or/multnomah/portland/33.266/33.266.130.txt#L134"
+    digest: "404939938cec"
     state: dismissed
     reason: >-
       note 2 on Table 266-4 sends the reader to 33.266.130.F.3 for accessible
       parking spaces. Same table, same exclusion: 33.266.130 governs all other
       development, and a fourplex's parking is 33.266.120's
 
-  - quote: "or/multnomah/portland/33.266/33.266.200.txt#L117"
+  - quote: "or/multnomah/portland/33.266/33.266.200.txt#L120"
     digest: "46edca87ae02"
     state: dismissed
     reason: >-
@@ -1292,8 +1304,8 @@ notes:
       site", so a four-unit pod is below the row and the note has no cell of
       this building's to resolve
 
-  - quote: "or/multnomah/portland/33.266/33.266.200.txt#L118"
-    digest: "a378f5e47a61"
+  - quote: "or/multnomah/portland/33.266/33.266.200.txt#L121-L122"
+    digest: "5f8adb5855ee"
     state: dismissed
     reason: >-
       note 2 defines the restricted-tenancy Group Living units that get a
@@ -1301,7 +1313,7 @@ notes:
       Bureau letter and covenant that prove it. Group Living is not the use
       this screen places, and the table does not reach a four-unit building
 
-  - quote: "or/multnomah/portland/33.266/33.266.200.txt#L123"
+  - quote: "or/multnomah/portland/33.266/33.266.200.txt#L126"
     digest: "efea4d660e2e"
     state: dismissed
     reason: >-
@@ -1309,7 +1321,7 @@ notes:
       facility under ten vehicle spaces. Another use, and one this screen does
       not place
 
-  - quote: "or/multnomah/portland/33.266/33.266.200.txt#L124"
+  - quote: "or/multnomah/portland/33.266/33.266.200.txt#L127"
     digest: "b5716135a0f9"
     state: dismissed
     reason: >-
@@ -1321,7 +1333,7 @@ notes:
       a dwelling unit at L1125, so even above the threshold this asks for no
       ground
 
-  - quote: "or/multnomah/portland/33.266/33.266.200.txt#L125"
+  - quote: "or/multnomah/portland/33.266/33.266.200.txt#L128"
     digest: "26a9d89b19b2"
     state: dismissed
     reason: >-
@@ -1329,15 +1341,15 @@ notes:
       January 2029, and falls the same way -- the Household Living row starts
       at five units on site
 
-  - quote: "or/multnomah/portland/33.266/33.266.210.txt#L43"
-    digest: "7411e1099f71"
+  - quote: "or/multnomah/portland/33.266/33.266.210.txt#L46"
+    digest: "53154af02f50"
     state: dismissed
     reason: >-
       note 1 on the bicycle parking space dimensions table points at Figures
       266-8 through 266-14. No bicycle parking is required for a four-unit
       building, so there is no space for the figures to dimension
 
-  - quote: "or/multnomah/portland/33.266/33.266.210.txt#L44"
+  - quote: "or/multnomah/portland/33.266/33.266.210.txt#L47"
     digest: "c849e5edb9e3"
     state: dismissed
     reason: >-
@@ -1345,7 +1357,7 @@ notes:
       parking spaces. A standard for a rack this building is not required to
       have
 
-  - quote: "or/multnomah/portland/33.266/33.266.210.txt#L45"
+  - quote: "or/multnomah/portland/33.266/33.266.210.txt#L48"
     digest: "cbc945c3bc01"
     state: dismissed
     reason: >-
@@ -1355,7 +1367,7 @@ notes:
   # Table 610-2, read 2026-09-30 for one cell: RF's minimum lot area for "All
   # other lots", which the state's middle housing path carries as the
   # fourplex's (FOLLOWUPS 21(b)). None of its three notes reaches that cell.
-  - quote: "or/multnomah/portland/33.610/33.610.200.txt#L40"
+  - quote: "or/multnomah/portland/33.610/33.610.200.txt#L114"
     digest: "c2b0081db48f"
     state: dismissed
     reason: >-
@@ -1363,14 +1375,14 @@ notes:
       attached houses. RF prints NA in that row, and the value encoded is
       the "All other lots" row, which the note does not mark
 
-  - quote: "or/multnomah/portland/33.610/33.610.200.txt#L41"
+  - quote: "or/multnomah/portland/33.610/33.610.200.txt#L115"
     digest: "5481b46763e8"
     state: dismissed
     reason: >-
       note 2 limits the cottage-cluster maximum lot area row. A maximum lot
       area is a land-division standard and RF prints NA in that row
 
-  - quote: "or/multnomah/portland/33.610/33.610.200.txt#L42"
+  - quote: "or/multnomah/portland/33.610/33.610.200.txt#L116"
     digest: "27c6bbd64af6"
     state: dismissed
     reason: >-
@@ -1383,7 +1395,7 @@ notes:
   # limit the pod never meets; the rest are procedure-table notes (which Type
   # of review runs, and how a change to an approved review is processed).
 
-  - quote: "or/multnomah/portland/33.420.txt#L253"
+  - quote: "or/multnomah/portland/33.420.txt#L254"
     digest: "6c342a8c99aa"
     state: dismissed
     reason: >-
@@ -1419,73 +1431,73 @@ notes:
     reason: >-
       a change to an approved review keeps the original procedure. Nothing is approved for a new pod, so the note never reaches it
 
-  - quote: "or/multnomah/portland/33.846.txt#L320"
+  - quote: "or/multnomah/portland/33.846.txt#L303"
     digest: "a300ab9fa043"
     state: dismissed
     reason: >-
       an affordable housing project may choose a lighter review procedure (Type II or Ix) and must then hold a design advice request first. It changes which procedure runs, not whether the review is judged on guidelines or compatibility, and the screen answers as market rate (Steph 2026-10-19). The review itself is red in flats/geom/pdx_overlays.py
 
-  - quote: "or/multnomah/portland/33.846.txt#L330"
+  - quote: "or/multnomah/portland/33.846.txt#L313"
     digest: "ec5cddda264f"
     state: dismissed
     reason: >-
       the procedure for a change to an already approved review. The screen asks about a new building with no approval, so the note never reaches it
 
-  - quote: "or/multnomah/portland/33.846.txt#L337"
+  - quote: "or/multnomah/portland/33.846.txt#L320"
     digest: "4f4c2f2af9a2"
     state: dismissed
     reason: >-
       a change to an approved review keeps the original procedure. Nothing is approved for a new pod, so the note never reaches it
 
-  - quote: "or/multnomah/portland/33.846.txt#L382"
+  - quote: "or/multnomah/portland/33.846.txt#L364"
     digest: "2170e935c6a6"
     state: dismissed
     reason: >-
       an affordable housing project may choose a lighter review procedure (Type II or Ix) and must then hold a design advice request first. It changes which procedure runs, not whether the review is judged on guidelines or compatibility, and the screen answers as market rate (Steph 2026-10-19). The review itself is red in flats/geom/pdx_overlays.py
 
-  - quote: "or/multnomah/portland/33.846.txt#L389"
+  - quote: "or/multnomah/portland/33.846.txt#L371"
     digest: "ec5cddda264f"
     state: dismissed
     reason: >-
       the procedure for a change to an already approved review. The screen asks about a new building with no approval, so the note never reaches it
 
-  - quote: "or/multnomah/portland/33.846.txt#L401"
+  - quote: "or/multnomah/portland/33.846.txt#L383"
     digest: "4f4c2f2af9a2"
     state: dismissed
     reason: >-
       a change to an approved review keeps the original procedure. Nothing is approved for a new pod, so the note never reaches it
 
-  - quote: "or/multnomah/portland/33.846.txt#L448"
+  - quote: "or/multnomah/portland/33.846.txt#L425"
     digest: "a300ab9fa043"
     state: dismissed
     reason: >-
       an affordable housing project may choose a lighter review procedure (Type II or Ix) and must then hold a design advice request first. It changes which procedure runs, not whether the review is judged on guidelines or compatibility, and the screen answers as market rate (Steph 2026-10-19). The review itself is red in flats/geom/pdx_overlays.py
 
-  - quote: "or/multnomah/portland/33.846.txt#L458"
+  - quote: "or/multnomah/portland/33.846.txt#L440"
     digest: "ec5cddda264f"
     state: dismissed
     reason: >-
       the procedure for a change to an already approved review. The screen asks about a new building with no approval, so the note never reaches it
 
-  - quote: "or/multnomah/portland/33.846.txt#L465"
-    digest: "2b27167b7fdb"
+  - quote: "or/multnomah/portland/33.846.txt#L447"
+    digest: "d2aa3970e896"
     state: dismissed
     reason: >-
       a change to an approved review keeps the original procedure. Nothing is approved for a new pod, so the note never reaches it. Its tail (item 4, run into the note by the page) sends Conservation District proposals that are not exempt to Table 846-4 for their procedure -- again which procedure, not whether; the Conservation District answer is in flats/geom/pdx_overlays.py
 
-  - quote: "or/multnomah/portland/33.846.txt#L508"
+  - quote: "or/multnomah/portland/33.846.txt#L491"
     digest: "38aafaf4766b"
     state: dismissed
     reason: >-
       an affordable housing project may choose a lighter review procedure (Type II or Ix) and must then hold a design advice request first. It changes which procedure runs, not whether the review is judged on guidelines or compatibility, and the screen answers as market rate (Steph 2026-10-19). The review itself is red in flats/geom/pdx_overlays.py
 
-  - quote: "or/multnomah/portland/33.846.txt#L515"
+  - quote: "or/multnomah/portland/33.846.txt#L498"
     digest: "ec5cddda264f"
     state: dismissed
     reason: >-
       the procedure for a change to an already approved review. The screen asks about a new building with no approval, so the note never reaches it
 
-  - quote: "or/multnomah/portland/33.846.txt#L522"
+  - quote: "or/multnomah/portland/33.846.txt#L505"
     digest: "372b3bafeab6"
     state: dismissed
     reason: >-
@@ -1501,16 +1513,16 @@ notes:
   # stand here against the chapter's original wording too. Same sentences,
   # same reasons; nothing new is ruled.
 
-  - quote: "or/multnomah/portland/33.266.txt#L528"
-    digest: "dad3f678cd04"
+  - quote: "or/multnomah/portland/33.266.txt#L542"
+    digest: "b42dc9f80786"
     state: dismissed
     reason: >-
       note 2 on Table 266-4 sends the reader to 33.266.130.F.3 for accessible
       parking spaces. Same table, same exclusion: 33.266.130 governs all other
       development, and a fourplex's parking is 33.266.120's
 
-  - quote: "or/multnomah/portland/33.266.txt#L540"
-    digest: "3cdabb102d7d"
+  - quote: "or/multnomah/portland/33.266.txt#L554"
+    digest: "eb962a7248a0"
     state: dismissed
     reason: >-
       the driveway and parking area green features standard, which
@@ -1519,7 +1531,7 @@ notes:
       court, an order of magnitude under the threshold, so the tree
       canopy and pervious paving options it offers never come into play
 
-  - quote: "or/multnomah/portland/33.266.txt#L943"
+  - quote: "or/multnomah/portland/33.266.txt#L969"
     digest: "1961196e6db7"
     state: dismissed
     reason: >-
@@ -1530,44 +1542,44 @@ notes:
   # FOLLOWUPS 109 Portland plan districts part 2 batch A (2026-11-03): the
   # notes in the chapters moved from pending to docs.
 
-  - quote: "or/multnomah/portland/33.521.txt#L434"
+  - quote: "or/multnomah/portland/33.521.txt#L431"
     digest: "2c8743e94b62"
     state: dismissed
     reason: >-
       relaxes East Corridor's landscaping of exterior display areas, a use the pod does not have
 
-  - quote: "or/multnomah/portland/33.521.txt#L436"
+  - quote: "or/multnomah/portland/33.521.txt#L433"
     digest: "f8650dd564bb"
     state: dismissed
     reason: >-
       relaxes East Corridor's landscaping of exterior storage areas, a use the pod does not have
 
-  - quote: "or/multnomah/portland/33.530.txt#L36"
+  - quote: "or/multnomah/portland/33.530.txt#L37"
     digest: "165b61e16baa"
     state: dismissed
     reason: >-
       drops the common-wall side setback to zero for attached houses only; the pod is a fourplex on one lot, so Glendoveer's 10 ft side setback stands on both sides
 
-  - quote: "or/multnomah/portland/33.550.txt#L110"
+  - quote: "or/multnomah/portland/33.550.txt#L104"
     digest: "0df1a139a31d"
     state: dismissed
     reason: >-
       points at Chapter 33.930 for how a wall plane is measured; Macadam's wall-plane setbacks are not measured here and every Macadam lot sits in the plan_district_unmeasured hold
 
-  - quote: "or/multnomah/portland/33.595.txt#L363"
+  - quote: "or/multnomah/portland/33.595.txt#L364"
     digest: "1edb11f8489b"
     state: dismissed
     reason: >-
       a bonus height reachable only through a Planned Development; the pod is under every base height in Table 595-3
 
-  - quote: "or/multnomah/portland/33.510.txt#L2639"
+  - quote: "or/multnomah/portland/33.510.txt#L2642"
     digest: "2569fabf912b"
     state: dismissed
     reason: >-
       the ratios in Table 510-2 are per 1,000 sq ft of building except where the table says otherwise, and Household Living's row says 1.2 per dwelling unit; the pod's 4 stalls for 4 homes is 1.0, under the maximum, and every Central City lot sits in the plan_district_unmeasured hold
 
-  - quote: "or/multnomah/portland/33.510.txt#L2640"
-    digest: "18ae44687221"
+  - quote: "or/multnomah/portland/33.510.txt#L2643"
+    digest: "a2e35e0394b7"
     state: dismissed
     reason: >-
       defines anchor retail (a store over 50,000 sq ft) and lists who may apply for Preservation parking; neither is a home, and the pod's parking is under the Household Living maximum

@@ -1,46 +1,45 @@
 {
-  "sha256": "612a6ef9abd152e4b7a0424be0219077b0b769f3020c5866175708bd8d5cdfb7",
-  "extractor": "flats-html-text/8",
-  "source_sha256": "ca4135fed1a274c01b2f69083cfbab763fe43c4209e03daed3dff76ade37ab9f",
+  "sha256": "4cbab4eb4620ad24bc14a1ce45b7fb395fb3d2a109229905f0d78fbcc283c6f1",
+  "extractor": "flats-html-text/9",
+  "source_sha256": "c681f35d15a596a250b2f3532c6b61d8305db6acdec45eb0e6ab06409d10a3ad",
   "pages": [
     {
       "n": 1,
-      "line": 1,
-      "label": "610-1"
+      "line": 1
     },
     {
       "n": 2,
-      "line": 48,
+      "line": 46,
       "label": "610-1"
     },
     {
       "n": 3,
-      "line": 98,
+      "line": 95,
       "label": "610-3"
     },
     {
       "n": 4,
-      "line": 150,
-      "label": "610-4"
+      "line": 190,
+      "label": "610-2"
     },
     {
       "n": 5,
-      "line": 201,
+      "line": 332,
       "label": "610-5"
     },
     {
       "n": 6,
-      "line": 252,
+      "line": 378,
       "label": "610-6"
     },
     {
       "n": 7,
-      "line": 300,
+      "line": 417,
       "label": "610-7"
     },
     {
       "n": 8,
-      "line": 320,
+      "line": 443,
       "label": "610-8"
     }
   ]

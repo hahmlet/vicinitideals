@@ -307,8 +307,8 @@ CLASS_MAPS: dict[str, ClassSpec] = {
     # Hall Blvd (an arterial the TSP's Figure 11 draws apart), Principal
     # Arterial (99W, Barbur Blvd), Freeway. "Other" / "OTHER" (streets the
     # city does not class, most outside it) and a blank rank nothing: the
-    # deepest distance. Read for the dedication only (``access``); no Tigard
-    # driveway rule reads a class.
+    # deepest distance. Read for the dedication (``access``) and for
+    # 18.920.030.I's driveway spacing (flats/geom/driveway_spacing.py).
     #
     # PRIVATE (:data:`PRIVATE_RANK`): a private street is not a "street" for
     # the chapter's widths (18.910.020.E: "the term 'streets' shall mean
@@ -423,6 +423,8 @@ _TYPES: dict[str, str] = {
     "BOULEVARD": "BLVD",
     "COURT": "CT",
     "DRIVE": "DR",
+    # Milwaukie Table 19.501.2.A's "Milwaukie Expressway", Metro's EXPY.
+    "EXPRESSWAY": "EXPY",
     "HIGHWAY": "HWY",
     "LANE": "LN",
     "PARKWAY": "PKWY",
@@ -503,11 +505,15 @@ def build(
     )
 
 
-def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMap, ...]:
+def load_class_maps(
+    sources: Path, pipeline: Any | None = None, specs: Mapping[str, ClassSpec] | None = None
+) -> tuple[ClassMap, ...]:
     """Every TSP class map the snapshot at ``sources`` holds, per the registry.
 
     A dataset missing from the snapshot is skipped and its cities' lots stay
     unasked. The snapshot's RLIS streets near each map are loaded with it.
+    ``specs`` reads other maps than :data:`CLASS_MAPS` (the driveway-spacing
+    maps, :mod:`flats.geom.driveway_spacing`, which feed no other rule).
     """
     from shapely.geometry import shape
     from shapely.ops import unary_union
@@ -524,7 +530,7 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
     osm_lines: list[Any] | None = None
     osm_classes: list[str] = []
     out: list[ClassMap] = []
-    for key, spec in CLASS_MAPS.items():
+    for key, spec in (CLASS_MAPS if specs is None else specs).items():
         ds = pipeline.datasets.get(key)
         path = _dataset_path(sources, manifest, key)
         if ds is None or not path.is_file():

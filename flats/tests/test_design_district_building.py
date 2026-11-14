@@ -233,6 +233,19 @@ def test_a_lot_inside_each_area_is_inside_and_one_far_away_is_not(layers, condit
         ("or/clackamas/west-linn", "R-10", ["willamette_historic_district"], 6),
         ("or/clackamas/west-linn", "R-5", ["willamette_historic_district"], 6),
         ("or/clackamas/wilsonville", "OTR", [], 4),
+        # Roof sweep, 2026-11-10 (false-green round 4): Wood Village 210.375 /
+        # 220.355 B(3), 5:12, flat or shed roofs not permitted, on both paths.
+        ("or/multnomah/wood-village", "LR 7.5", [], 5),
+        ("or/multnomah/wood-village", "LR 12", ["unit_lots"], 5),
+        ("or/multnomah/wood-village", "MR 2", [], 5),
+        ("or/multnomah/wood-village", "MR 4", ["unit_lots"], 5),
+        # Hillsboro 12.61.800 (SCR-DNC; the other downtown zones only inside
+        # the plan district) and 12.62.400 (SCR-OTC): 4/12 hipped is the least.
+        ("or/washington/hillsboro", "SCR-DNC", [], 4),
+        ("or/washington/hillsboro", "SCR-OTC", ["unit_lots"], 4),
+        ("or/washington/hillsboro", "SCR-LD", ["hillsboro_downtown_plan_district"], 4),
+        ("or/washington/hillsboro", "SCR-MD", ["hillsboro_downtown_plan_district"], 4),
+        ("or/washington/hillsboro", "SCR-HD", ["hillsboro_downtown_plan_district"], 4),
     ],
 )
 def test_each_roof_rule_resolves_to_its_printed_pitch(corpus, layer, zone, conditions, pitch) -> None:
@@ -246,6 +259,12 @@ def test_each_roof_rule_resolves_to_its_printed_pitch(corpus, layer, zone, condi
     [
         ("or/clackamas/west-linn", "R-10"),
         ("or/clackamas/happy-valley", "VTH"),
+        # Town Center: 235.440.E allows a flat roof with a cornice, and the
+        # `like: MR 2` pointer must not hand it MR 2's 5:12.
+        ("or/multnomah/wood-village", "TC"),
+        # Outside the (untraced) Downtown Plan District no roof form is set.
+        ("or/washington/hillsboro", "SCR-LD"),
+        ("or/washington/hillsboro", "SCR-HD"),
     ],
 )
 def test_a_roof_rule_scoped_to_a_district_or_a_form_stays_off_elsewhere(corpus, layer, zone) -> None:
@@ -295,3 +314,24 @@ def test_readiness_reads_a_roof_rule_in_the_code_s_own_words() -> None:
     line = "footprints over one thousand two\nhundred square feet"
     assert quotes_the_number(line, 1200)
     assert not quotes_the_number(line, 1300)
+
+
+def test_hillsboro_downtown_roof_holds_an_unmeasured_lot_off_green() -> None:
+    """SCR-LD/MD/HD sit inside and outside the Downtown Plan District, whose
+    boundary is only a figure; the fact is registered and never assumed."""
+    from flats.rules.conditions import CONDITIONS
+
+    fact = CONDITIONS["hillsboro_downtown_plan_district"]
+    assert fact.kind == "site_fact" and fact.assume is None
+    assert "hillsboro_downtown_plan_district" not in DRAWN_CONDITIONS
+
+
+@pytest.mark.parametrize("zone", ["LDR-5", "LDR-7", "TLDR", "TR", "LDR-PV"])
+def test_gresham_flag_lot_caps_a_flat_roof_at_22_feet(corpus, zone) -> None:
+    """Gresham 4.0136.A.3.a: a flag lot's structure with a roof pitched under
+    1 in 4 stands no taller than 22 ft; the flat 26 ft pod fails it."""
+    rs = RuleSet(corpus)
+    assert rs.resolve("or/multnomah/gresham", zone).get("max_height_ft") == 35
+    for conditions in (["flag_lot"], ["flag_lot", "unit_lots"]):
+        assert rs.resolve("or/multnomah/gresham", zone, conditions).get("max_height_ft") == 22
+    assert run(facts(), rules(max_height_ft=22)).colour is Colour.red

@@ -220,7 +220,9 @@ def test_bridge_uses_the_measured_cross_street_half_width(tmp_path) -> None:
         path,
     )
     (clearance,) = _durham_apron_clearance_column([row], path)
-    assert clearance == pytest.approx(105.0)
+    # 105 ft with the apron at the frontage's far end; 100 once it keeps the
+    # 5 ft from adjacent property (3.7.1.7, 2026-11-08).
+    assert clearance == pytest.approx(100.0)
 
 
 def test_a_103_foot_corner_frontage_fails_the_apron_rule(corpus, policies) -> None:
@@ -235,12 +237,31 @@ def test_a_103_foot_corner_frontage_fails_the_apron_rule(corpus, policies) -> No
     lot = lot_from_row(row, corpus.layers)
     assert lot.observed[FACT] is True
     failed = _screen(corpus, policies, lot)
-    assert failed.signed.colour is flag_plan.Colour.red
     assert DRIVEWAY_NEAR_INTERSECTION_100FT in failed.signed.reasons
+    assert "ACCESS-DRIVEWAY-SPACING" in {f.code for f in failed.signed.flags}
     apron_check = next(
         c for c in failed.signed.checks if c.check == DRIVEWAY_NEAR_INTERSECTION_100FT
     )
     assert apron_check.verdict.value == "fail"
+
+
+def test_an_apron_miss_alone_is_yellow_with_the_flag_not_red(corpus, policies) -> None:
+    """A lot whose only problem is the apron's 100 ft is YELLOW with the
+    call-the-city flag, never RED on this ground alone (Steph 2026-11-09,
+    rulings.yaml 2026-11-09-busy-road-driveway-spacing-yellow)."""
+    row = _durham_midblock(w=95.0, d=300.0)
+    roads = [
+        LineString(((X0 - 500, Y0 - 20), (X0 + 500, Y0 - 20))),
+        LineString(((X0 - 20, Y0 - 100), (X0 - 20, Y0 + 100))),
+    ]
+    row = _measured(row, roads)
+    assert row["durham_apron_clearance_ft"] < DURHAM_APRON_MIN_CLEARANCE_FT
+    lot = lot_from_row(row, corpus.layers)
+    got = _screen(corpus, policies, lot)
+    assert got.signed.colour is flag_plan.Colour.yellow
+    assert got.signed.reasons == (DRIVEWAY_NEAR_INTERSECTION_100FT,)
+    assert "ACCESS-DRIVEWAY-SPACING" in {f.code for f in got.signed.flags}
+    assert DRIVEWAY_NEAR_INTERSECTION_100FT not in {b.check for b in got.signed.binds}
 
 
 def test_centerline_only_clearance_between_bounds_keeps_the_flag(
@@ -341,3 +362,86 @@ def test_unmeasurable_intersection_geometry_keeps_the_flag(corpus, policies) -> 
     assert FLAG in flags
     assert held.signed.colour is not flag_plan.Colour.green
     assert held.signed.colour is flag_plan.Colour.yellow
+
+
+# --- moveread F1 and the 5 ft from adjacent property (FOLLOWUPS 118) ---------
+
+
+def _peters_lot() -> list[list[object]]:
+    return [
+        [X0, Y0, X0 + 200, Y0, "F"],
+        [X0 + 200, Y0, X0 + 200, Y0 + 100, "R"],
+        [X0 + 200, Y0 + 100, X0, Y0 + 100, "R"],
+        [X0, Y0 + 100, X0, Y0, "R"],
+    ]
+
+
+def test_a_same_named_leg_meeting_the_frontage_street_is_an_intersection() -> None:
+    # SW Peters Rd at x 7621171: its east-west leg meets a north-south leg also
+    # named Peters Rd, a real three-way intersection the name test never saw.
+    streets = StreetNetwork.build(
+        [
+            LineString(((X0 - 500, Y0 - 20), (X0 + 190, Y0 - 20))),
+            LineString(((X0 + 190, Y0 - 20), (X0 + 700, Y0 - 20))),
+            LineString(((X0 + 190, Y0 - 20), (X0 + 190, Y0 - 400))),
+        ],
+        ["SW PETERS RD", "SW PETERS RD", "SW PETERS RD"],
+    )
+    # Junction at station 190: the centreline clears 160 ft, the allowances
+    # leave 85 -- unproven, so the flag stays. Before, no junction: 100 by rule.
+    assert maximum_clearance_ft(_peters_lot(), [0.0], streets, 30.0) is None
+
+
+def test_a_same_named_leg_teeing_into_an_unbroken_street_is_an_intersection() -> None:
+    streets = StreetNetwork.build(
+        [
+            LineString(((X0 - 500, Y0 - 20), (X0 + 700, Y0 - 20))),
+            LineString(((X0 + 190, Y0 - 20), (X0 + 190, Y0 - 400))),
+        ],
+        ["SW PETERS RD", "SW PETERS RD"],
+    )
+    assert maximum_clearance_ft(_peters_lot(), [0.0], streets, 30.0) is None
+
+
+def test_one_street_bending_end_to_end_is_not_an_intersection() -> None:
+    # Peters Rd's jog with nothing else meeting it there: a bend, not a junction.
+    streets = StreetNetwork.build(
+        [
+            LineString(((X0 - 500, Y0 - 20), (X0 + 205, Y0 - 20))),
+            LineString(((X0 + 205, Y0 - 20), (X0 + 205, Y0 - 400))),
+        ],
+        ["SW PETERS RD", "SW PETERS RD"],
+    )
+    assert maximum_clearance_ft(_peters_lot(), [0.0], streets, 30.0) == pytest.approx(
+        DURHAM_APRON_MIN_CLEARANCE_FT
+    )
+
+
+def test_the_apron_keeps_5_ft_from_adjacent_property_before_it_passes() -> None:
+    # A junction at the frontage's start, 75 ft of allowances: the apron passes
+    # only by standing at the far end, which 3.7.1.7's 5 ft from adjacent
+    # property (ddc.3.site-design.txt#L356) forbids.
+    best = durham_apron._best_clearance_with_allowances
+    assert best(205.0, [(0.0, 75.0)], 30.0) == pytest.approx(100.0)
+    assert best(205.0, [(0.0, 75.0)], 30.0, inset=5.0) == pytest.approx(95.0)
+    assert best(39.0, [], 30.0, inset=5.0) == 0.0
+    assert durham_apron.APRON_PROPERTY_SETBACK_FT == 5.0
+
+
+def test_the_5_ft_from_property_only_holds_a_pass_back_never_fails_a_lot() -> None:
+    # 205 ft of frontage, a cross street at its start: the centreline clears
+    # 175 ft, the allowances leave 95 once the apron is 5 ft off the neighbour.
+    edges = [
+        [X0, Y0, X0 + 205, Y0, "F"],
+        [X0 + 205, Y0, X0 + 205, Y0 + 100, "R"],
+        [X0 + 205, Y0 + 100, X0, Y0 + 100, "R"],
+        [X0, Y0 + 100, X0, Y0, "R"],
+    ]
+    streets = StreetNetwork.build(
+        [
+            LineString(((X0 - 500, Y0 - 20), (X0 + 700, Y0 - 20))),
+            LineString(((X0, Y0 - 400), (X0, Y0 - 20))),
+        ],
+        ["front", "cross"],
+    )
+    assert maximum_clearance_ft(edges, [0.0], streets, 30.0, {"CROSS": 40.0}) is None

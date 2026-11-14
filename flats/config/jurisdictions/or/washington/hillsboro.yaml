@@ -24,7 +24,61 @@ ingest:
   geoid: null
   juris_city_codes:
   - HILLSBORO
+crossrefs:
+  # FOLLOWUPS 105 (2026-11-08): every binding reference in this layer followed.
+  "0.4":
+    outcome: misread
+    note: >-
+      Not a reference: "Minimum FAR 0.4" (12.21.750) is a floor-area-ratio figure that the dotted-
+      number pattern reads as a section number.
+  "1.00":
+    outcome: misread
+    note: >-
+      Not a reference: "Minimum FAR 1.00" (12.24.660) is a floor-area-ratio figure that the
+      dotted-number pattern reads as a section number.
+  "15.50.715":
+    outcome: other_building
+    note: >-
+      "Subsection 15.50.715.E.4." (12.21.450), cited for cottage cluster height. There is no Title
+      15 of the zoning code; the text intends 12.50.715 (cottage clusters). A cottage cluster is
+      detached cottages around a common court, not the pod's attached fourplex.
+  "12.70.040":
+    outcome: procedure
+    note: >-
+      Type II procedure ("either a Type II procedure as described in Section 12.70.040 or a Type
+      I", 12.80.100). Notice, decision and appeal steps; the tier the review lands in is already
+      carried by review_discretion.
+  "12.70.110":
+    outcome: procedure
+    note: >-
+      Application submittal requirements ("More specific submittal requirements are provided on
+      application forms and checklists as authorized in Section 12.70.110"). What to file, not
+      ground the building gives up.
+  "12.70.120":
+    outcome: procedure
+    note: >-
+      Conditions of approval: "Pursuant to Section 12.70.120, the Review Authority may impose
+      conditions on the approval" (12.80.099). The conditions tier is already carried by
+      review_discretion.
+  "12.70.140":
+    outcome: procedure
+    note: >-
+      "Refer to Section 12.70.140" (12.80.096): Expiration of a Decision (12.80, "J. Expiration of
+      a Decision"). When an approval lapses; a process, no ground taken.
+  "12.70.150":
+    outcome: procedure
+    note: >-
+      "Refer to Section 12.70.150" (12.80.096): Extension of a Decision (12.80, "K. Extension of a
+      Decision"). How an approval is extended; a process, no ground taken.
 code:
+- id: "cdc.12.30.300.lots-of-record"
+  url: https://api.municode.com/PublicationPdfDownload/4450
+  title: "CDC 12.30.300 A - Non-conforming Lots of Record"
+  start: "12.30.300  Exceptions"
+  end: "B. Exceptions Regarding Incomplete"
+  extraction: plain
+  # One section, so the thinness guard would read it as a landing page.
+  allow_thin: true
 # Municode client Hillsboro, publication 4450 ("Community Development
 # Code"). The unsigned publication endpoint, per flats/provenance/municode.py;
 # the signed blob URL it returns expires. Plain extraction throughout: the
@@ -253,6 +307,29 @@ private_drives:
     these.
 
 defaults:
+  # MINIMUM FRONTAGE LINE (FOLLOWUPS 175). 12.01.500: "Frontage. The length of
+  # the front lot line of a lot ... which abuts a public street", and
+  # 12.50.110 D.1 sends "lot frontage" there: the front line, never the
+  # streets added together. A corner lot has two front lot lines here, so
+  # its shortest street passes it and only its longest is a question.
+  min_frontage_line:
+    value: front
+    cite: Hillsboro CDC 12.01.500, Frontage ("The length of the front lot line"); 12.50.110 D.1
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/12.01/12.01.500.txt#L220"
+  entrance_faces_street:
+    value: required
+    cite: "Hillsboro CDC 12.50.710.C.1.b, housing types with individual entries: at least one main entrance to a dwelling unit no further than 8 feet behind the longest street-facing wall, and facing the street, at no more than 45 degrees from it, or opening to a porch with an entry facing the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L11-L14,L40-L53"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Hillsboro CDC 12.50.710.C.1.b.ii: \"The entry shall either, face the street, be at an angle of no more than 45 / degrees from the street, or open to a porch.\" -- the angle the main entrance may stand off the street (FOLLOWUPS 158; missed by rel4 move-read finding 2)"
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L46-L47"
   # PARKING COUNT. 12.50.310 A.2: "The City of Hillsboro does not have
   # standards which require mandate the provision of parking" (the doubled
   # verb is the code's). Encoded as zero rather than left out, because an
@@ -280,6 +357,28 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/4450
     retrieved: '2026-09-29'
     quote: "or/washington/hillsboro/12.50/12.50.360.txt#L70-L72,L88,L92"
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: Hillsboro CDC 12.50.350.C.1 permits surface parking in side-yard setbacks, subject to its location rule
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: Hillsboro CDC 12.50.350.C.1, driveways may serve parking in side-yard setbacks
+        quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+  parking_side_yard_stated:
+    value: lane_and_court
+    cite: Hillsboro CDC 12.50.350.C.1, side-yard parking is allowed subject to its location rule
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: Hillsboro CDC 12.50.350.C.1 and 12.50.715.C.1.c, townhouse side-yard parking location
+        quote: "or/washington/hillsboro/12.50/12.50.350.txt#L14"
   # PARKING MAXIMUM. Table 12.50.320-1 prints "Quadplex 2" in the Zone A
   # column and nothing in the Zone B column, where every neighbouring row
   # prints "None". 12.50.320 D puts a whole site in Zone A if any part of it
@@ -430,6 +529,9 @@ defaults:
 # below that states a minimum frontage under 25 feet carries a
 # `flag_lot` variant of 25; a zone whose table states no frontage row does
 # not, which is a doubt.
+# AmberGlen's 12.64.550 D, "Flag lots are Not Permitted", reaches UC-RM, UC-MU,
+# UC-AC, UC-NC and UC-OR through 12.64.520 A, and those five refuse a flag lot
+# on quadplex_allowed (2026-11-09).
 #
 # NOT ENCODED: variation of lot areas, widths and yards "permitted in some
 # subdivisions" (12.50.110, 12.50.130 E). A land-division proceeding, not a
@@ -466,8 +568,11 @@ defaults:
 # NOT STORED: Subchapter 12.30 (nonconforming situations, 12.30.900 drive-
 # throughs) and 12.70 (procedures: Types I to IV, hearings, appeals and the
 # transportation studies of 12.70.200-230). Neither is a base-zone
-# standard; a question for the reviewer only if a later reading finds 12.30
-# reaching new middle housing.
+# standard. 12.30.300 A does reach new middle housing on an existing lot, so
+# that one section is stored (cdc.12.30.300.lots-of-record.txt) and taken as
+# lot_of_record_relief (Steph 2026-10-21; FOLLOWUPS 108). SCR-OTC is left out:
+# 12.62.300 A.1, its own rule for lots under 7,500 sq ft, is dated August 15,
+# 1996 and holds them to fewer homes than the pod.
 #
 # PROHIBITION GREP (checklist step 10), over all 23 stored documents for
 # "quadplex", "plex" and "middle housing": what reaches a four-unit
@@ -516,6 +621,12 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.150-1, townhouse lots average minimum lot size
           quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L7-L8"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 3.5
       cite: Hillsboro CDC Table 12.21.150-1, Minimum Density
@@ -614,6 +725,12 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.250-1, townhouse lots average minimum lot size
           quote: "or/washington/hillsboro/12.21/12.21.250.txt#L4,L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 4
       cite: Hillsboro CDC Table 12.21.250-1, Minimum Density
@@ -715,6 +832,12 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.350-1, townhouse lots average minimum lot size
           quote: "or/washington/hillsboro/12.21/12.21.350.txt#L4,L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 5.0
       cite: Hillsboro CDC Table 12.21.350-1, Minimum Density
@@ -815,6 +938,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.450-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.21/12.21.450.txt#L4,L7,L14"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 6000
+      quote: "or/washington/hillsboro/12.21/12.21.450.txt#L12"
     min_density_du_per_acre:
       value: 6.0
       cite: Hillsboro CDC Table 12.21.450-1, Minimum Density
@@ -919,6 +1051,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.550-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.21/12.21.550.txt#L4,L7,L13"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 4500
+      quote: "or/washington/hillsboro/12.21/12.21.550.txt#L10"
     min_density_du_per_acre:
       value: 8.0
       cite: Hillsboro CDC Table 12.21.550-1, Minimum Density
@@ -1072,6 +1213,25 @@ zones:
       cite: Hillsboro CDC 12.21.600 (SCR-LD Station Community Residential - Low Density), Tables 12.21.620-1 and 12.21.650-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Roof sweep (roof-ban, 2026-11-10). Inside the Downtown Plan District
+      # (12.61.200 lists this zone among its five), 12.61.800 binds "new
+      # residential construction" within Figure 12.61.200-A's boundary: "Flat
+      # roofs are not permitted as the primary roof form", minimum pitch 4/12
+      # hipped and 6/12 gabled. The flat pod fails it (rulings.yaml
+      # 2026-10-21-pod-roof-flat). The zone also lies outside downtown, where no
+      # Hillsboro chapter sets a roof form for this building (12.50.710's 6/12
+      # hip is one menu choice of nine). The boundary is only on the figure and
+      # is not traced, so `hillsboro_downtown_plan_district` is unmeasured and
+      # holds every lot here off GREEN until it is.
+      exempt: true
+      cite: "Hillsboro CDC 12.61.200 and 12.61.800.A.1: the roof rule applies only inside the Downtown Plan District"
+      quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2-L7"
+      variants:
+        - value: 4
+          when: [hillsboro_downtown_plan_district]
+          cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
+          quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.21.620-1, Housing Types Permitted in the SCR-LD Zone (Quadplex P)
@@ -1085,6 +1245,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.650-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.21/12.21.650.txt#L4,L7,L12"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 3600
+      quote: "or/washington/hillsboro/12.21/12.21.650.txt#L8-L9"
     min_density_du_per_acre:
       value: 9.0
       cite: Hillsboro CDC Table 12.21.650-1, Minimum Density
@@ -1167,6 +1336,18 @@ zones:
       cite: Hillsboro CDC 12.21.700 (SCR-OTC Station Community Residential - Orenco Townsite Conservation), Tables 12.21.720-1 and 12.21.750-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Roof sweep (roof-ban, 2026-11-10). 12.62.400 applies "to new
+      # construction in the SCR-OTC zone" (A.1): "Flat roofs are not permitted
+      # as the primary roof form" (B.7.a), "Roof pitch shall be a minimum of
+      # 4/12 for hipped roofs and 6/12 for gabled roofs" (B.7.b). The least
+      # pitch allowed is 4; the flat pod fails it (rulings.yaml
+      # 2026-10-21-pod-roof-flat). Detached houses are bound too, so OAR
+      # 660-046-0225(1)(c) lets it stand. The A.3 adjustment is a variance.
+      value: 4
+      cite: "Hillsboro CDC 12.62.400.A.1 and B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
+      retrieved: '2026-11-10'
+      quote: "or/washington/hillsboro/12.62/12.62.400.txt#L3,L7,L31-L36"
     quadplex_allowed:
       # "Alley frontage not permitted without street frontage on the same
       # lot; flag lots not permitted (see Subsection 12.62.400.I)", and
@@ -1320,6 +1501,21 @@ zones:
       cite: Hillsboro CDC 12.21.800 (SCR-DNC Station Community Residential - Downtown Neighborhood Conservation), Tables 12.21.820-1 and 12.21.850-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Roof sweep (roof-ban, 2026-11-10). 12.61.700.A: "All new development is
+      # subject to the Architectural Conservation Standards in Section
+      # 12.61.800", whose 7.a says "Flat roofs are not permitted as the primary
+      # roof form" and 7.b "Roof pitch shall be a minimum of 4/12 for hipped
+      # roofs and 6/12 for gabled roofs". The least pitch allowed is 4. The pod's
+      # roof is flat (rulings.yaml 2026-10-21-pod-roof-flat), so RED. It binds
+      # "new residential construction" (B), detached houses included, so OAR
+      # 660-046-0225(1)(c) lets a Large City apply it to middle housing. The
+      # adjustment it offers (A.3) is a variance (no variances, 2026-10-02).
+      value: 4
+      cite: "Hillsboro CDC 12.61.700.A and 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
+      retrieved: '2026-11-10'
+      quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
+      via: "or/washington/hillsboro/12.61/12.61.700.txt#L3"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.21.820-1, Housing Types Permitted in the SCR-DNC Zone (Quadplex P)
@@ -1337,6 +1533,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.21.850-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.21/12.21.850.txt#L5,L8,L12"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 3000
+      quote: "or/washington/hillsboro/12.21/12.21.850.txt#L9"
     min_density_du_per_acre:
       # Within 1,300 feet of an LRT station 15 du/na, beyond it 9, banded
       # on the measured distance to a MAX station (flats.geom.transit). A
@@ -1420,9 +1625,26 @@ zones:
       value: 10
       cite: Hillsboro CDC Table 12.21.850-1, Minimum Setbacks, rear yard to structure
       quote: "or/washington/hillsboro/12.21/12.21.850.txt#L57,L67-L69"
+    setback_side_max_ft:
+      # RULED 2026-11-10 (Steph, rulings.yaml 2026-11-10-hillsboro-scr-dnc-side-
+      # max-both; FOLLOWUPS 176(b)): BOTH side walls, as SCR-MD/HD's 5 ft
+      # maximum (2026-11-09-hillsboro-scr-side-max-both). Parking-encroach check
+      # first, 2026-11-10: nothing here lets a driveway or parking stand in the
+      # side yard past it. The SCR-DNC table and its Downtown Plan District
+      # sections (12.21.850, 12.21.860, 12.61.700, 12.61.800) give no parking
+      # siting relief: 12.61.700 F.6 (12.61.700.txt#L23-L24) is residential-
+      # business parking "inside, beside or behind" and moves no setback;
+      # 12.61.700 G.4 (L35) keeps the zone's side yards; 12.61.800 B.1 (L8) is
+      # a garage offset. The citywide routes are as SCR-MD's: 12.50.130 I.5
+      # corner lots only, "may approve"; an Adjustment (12.21.860, 12.80.158
+      # B-C); 12.50.715 D.2.c no townhouse parking in a side yard. So a lot the
+      # drawn pod fits only with one side wall within 15 ft is YELLOW, never
+      # RED on this alone (flats.score.screen._side_max).
+      value: 15
+      cite: Hillsboro CDC Table 12.21.850-1, Maximum Setbacks, side yard
+      quote: "or/washington/hillsboro/12.21/12.21.850.txt#L57,L73,L79"
     setback_front_max_ft:
-      # NOT ENCODED: the 15-foot maximum side yard (L2213), no field; the
-      # front-yard averaging of 12.61.700.E, a relief.
+      # NOT ENCODED: the front-yard averaging of 12.61.700.E, a relief.
       value: 25
       cite: Hillsboro CDC Table 12.21.850-1, Maximum Setbacks, front yard
       quote: "or/washington/hillsboro/12.21/12.21.850.txt#L57,L73-L74"
@@ -1490,6 +1712,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.22.150-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.22/12.22.150.txt#L4,L7,L13"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 4500
+      quote: "or/washington/hillsboro/12.22/12.22.150.txt#L10"
     min_density_du_per_acre:
       value: 11
       cite: Hillsboro CDC Table 12.22.150-1, Minimum Density
@@ -1667,6 +1898,12 @@ zones:
       per_dwelling: 2000
       cite: Hillsboro CDC Table 12.22.250-1, Minimum Lot Size, 2,000 sq. ft. per dwelling unit
       quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4-L9"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 17
       cite: Hillsboro CDC Table 12.22.250-1, Minimum Density
@@ -1860,6 +2097,12 @@ zones:
       value: 6000
       cite: Hillsboro CDC Table 12.22.350-1, Minimum Lot Size
       quote: "or/washington/hillsboro/12.22/12.22.350.txt#L4-L9"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 23
       cite: Hillsboro CDC Table 12.22.350-1, Minimum Density
@@ -2032,6 +2275,25 @@ zones:
       cite: Hillsboro CDC 12.22.400 (SCR-MD Station Community Residential - Medium Density), Tables 12.22.420-1 and 12.22.460-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Roof sweep (roof-ban, 2026-11-10). Inside the Downtown Plan District
+      # (12.61.200 lists this zone among its five), 12.61.800 binds "new
+      # residential construction" within Figure 12.61.200-A's boundary: "Flat
+      # roofs are not permitted as the primary roof form", minimum pitch 4/12
+      # hipped and 6/12 gabled. The flat pod fails it (rulings.yaml
+      # 2026-10-21-pod-roof-flat). The zone also lies outside downtown, where no
+      # Hillsboro chapter sets a roof form for this building (12.50.710's 6/12
+      # hip is one menu choice of nine). The boundary is only on the figure and
+      # is not traced, so `hillsboro_downtown_plan_district` is unmeasured and
+      # holds every lot here off GREEN until it is.
+      exempt: true
+      cite: "Hillsboro CDC 12.61.200 and 12.61.800.A.1: the roof rule applies only inside the Downtown Plan District"
+      quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2-L7"
+      variants:
+        - value: 4
+          when: [hillsboro_downtown_plan_district]
+          cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
+          quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.22.420-1, Housing Types Permitted in the SCR-MD Zone (Quadplex P)
@@ -2045,6 +2307,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.22.460-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.22/12.22.460.txt#L4,L7,L11"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 2000
+      quote: "or/washington/hillsboro/12.22/12.22.460.txt#L8"
     min_density_du_per_acre:
       # The 7.0 du/na limit within 100 feet of a developed standard-zone
       # neighborhood (L1035-L1041) is for single detached dwellings and
@@ -2108,24 +2379,29 @@ zones:
       value: 10
       cite: Hillsboro CDC Table 12.22.460-1, Minimum Setbacks, rear yard to dwelling
       quote: "or/washington/hillsboro/12.22/12.22.460.txt#L63,L69-L71"
+    setback_side_max_ft:
+      # RULED 2026-11-09 (Steph, rulings.yaml 2026-11-09-hillsboro-scr-side-max-both;
+      # FOLLOWUPS 170): BOTH side walls. Read 2026-10-14 (FOLLOWUPS 80(b)) as one
+      # wall, on 12.50.130 C.3.a "at least 1 façade" (12.50.130.txt#L33-L34); but
+      # "façade" is a wall "facing the street" (12.01.500.txt#L170), so C.3.a
+      # meets a front maximum, and the townhouse common-wall exemption in the
+      # same cell can only matter if every side wall counts. First checked
+      # 2026-11-09, by whole-chapter grep, that no clause lets a driveway or
+      # parking stand in the side yard so the building may stand farther off:
+      # the exceptions to maximum setbacks (12.50.130.txt#L98-L113) reach
+      # parking only on corner lots and only as the Review Authority "may
+      # approve" (L99, L112); an increase otherwise needs an Adjustment under
+      # 12.80.158.B-C (12.80.158.txt#L13-L25) on a Development Review or PUD;
+      # three-plus townhouses not on an alley or front drives keep parking out
+      # of the side yard (12.50.715.txt#L47-L49); the light rail parking rules
+      # (12.50.350.txt#L19-L47) reach non-residential parking. So a lot the
+      # drawn pod fits only with one side wall within 5 ft is YELLOW (asked of
+      # the city), never GREEN, never RED on this alone
+      # (flats.score.screen._side_max).
+      value: 5
+      cite: Hillsboro CDC Table 12.22.460-1, Maximum Setbacks, side yard (all structures)
+      quote: "or/washington/hillsboro/12.22/12.22.460.txt#L63,L75,L86"
     setback_front_max_ft:
-      # The 5-foot maximum side setback for all structures (L1132).
-      # READ 2026-10-14 (FOLLOWUPS 80(b)), held as ONE WALL WITHIN 5 FT: the
-      # table says "Side Yard (all structures) 5 feet", and 12.50.130 C.3.a says a
-      # maximum setback "is considered met" for middle housing "where at least 1
-      # facade, including a porch, is located no farther from the property line
-      # than the setback specified" (12.50.130.txt#L32-L34).
-      # The search that did not settle it: for BOTH side walls, "(all
-      # structures)", the exemption for townhouse common walls (a wall that
-      # could only matter if both sides counted), other Hillsboro zones that
-      # limit the side maximum to street sides, and the 12.22 drawings; for ONE
-      # wall, C.3.a's "at least 1 facade" and Carlie Court (PUD-007-18), a
-      # middle-housing plan that needed no side adjustment. The research lean was
-      # both walls, at moderate confidence; nothing in the text decides it, so by
-      # the instruction for this case the one-wall reading stands: the pod can
-      # always stand one side wall within 5 ft of a side line, so no lot moves
-      # and no field is needed. If the city reads it as both walls, nearly every
-      # SCR-MD and SCR-HD green is red.
       value: 13
       cite: Hillsboro CDC Table 12.22.460-1, Maximum Setbacks, front yard, middle housing
       quote: "or/washington/hillsboro/12.22/12.22.460.txt#L63,L75-L76,L82"
@@ -2155,6 +2431,25 @@ zones:
       cite: Hillsboro CDC 12.22.500 (SCR-HD Station Community Residential - High Density), Tables 12.22.520-1 and 12.22.560-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Roof sweep (roof-ban, 2026-11-10). Inside the Downtown Plan District
+      # (12.61.200 lists this zone among its five), 12.61.800 binds "new
+      # residential construction" within Figure 12.61.200-A's boundary: "Flat
+      # roofs are not permitted as the primary roof form", minimum pitch 4/12
+      # hipped and 6/12 gabled. The flat pod fails it (rulings.yaml
+      # 2026-10-21-pod-roof-flat). The zone also lies outside downtown, where no
+      # Hillsboro chapter sets a roof form for this building (12.50.710's 6/12
+      # hip is one menu choice of nine). The boundary is only on the figure and
+      # is not traced, so `hillsboro_downtown_plan_district` is unmeasured and
+      # holds every lot here off GREEN until it is.
+      exempt: true
+      cite: "Hillsboro CDC 12.61.200 and 12.61.800.A.1: the roof rule applies only inside the Downtown Plan District"
+      quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2-L7"
+      variants:
+        - value: 4
+          when: [hillsboro_downtown_plan_district]
+          cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
+          quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.22.520-1, Housing Types Permitted in the SCR-HD Zone (Quadplex P)
@@ -2174,6 +2469,12 @@ zones:
       per_dwelling: 1500
       cite: Hillsboro CDC Table 12.22.560-1, Minimum Lot Size, 1,500 sq. ft. per unit
       quote: "or/washington/hillsboro/12.22/12.22.560.txt#L4-L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 24
       cite: Hillsboro CDC Table 12.22.560-1, Minimum Density
@@ -2261,24 +2562,16 @@ zones:
       quote: "or/washington/hillsboro/12.22/12.22.560.txt#L15,L47,L55-L57"
     # NOT ENCODED: the maximum front setback. The rows are Duplex 13,
     # Townhouse 13 and Multiple dwelling structure 15 (L1410-L1423), with no
-    # row for a triplex or quadplex; a doubt. The 5-foot maximum side
-    # setback (L1424):
-    # READ 2026-10-14 (FOLLOWUPS 80(b)), held as ONE WALL WITHIN 5 FT: the
-    # table says "Side Yard (all structures) 5 feet", and 12.50.130 C.3.a says a
-    # maximum setback "is considered met" for middle housing "where at least 1
-    # facade, including a porch, is located no farther from the property line
-    # than the setback specified" (12.50.130.txt#L32-L34).
-    # The search that did not settle it: for BOTH side walls, "(all
-    # structures)", the exemption for townhouse common walls (a wall that
-    # could only matter if both sides counted), other Hillsboro zones that
-    # limit the side maximum to street sides, and the 12.22 drawings; for ONE
-    # wall, C.3.a's "at least 1 facade" and Carlie Court (PUD-007-18), a
-    # middle-housing plan that needed no side adjustment. The research lean was
-    # both walls, at moderate confidence; nothing in the text decides it, so by
-    # the instruction for this case the one-wall reading stands: the pod can
-    # always stand one side wall within 5 ft of a side line, so no lot moves
-    # and no field is needed. If the city reads it as both walls, nearly every
-    # SCR-MD and SCR-HD green is red.
+    # row for a triplex or quadplex; a doubt.
+    setback_side_max_ft:
+      # The 5-foot maximum side setback, BOTH side walls, as SCR-MD's above
+      # (Steph 2026-11-09; FOLLOWUPS 170). The SCR-HD minimum side row's
+      # "Adjustments to side setbacks permitted for townhouses allowed under
+      # Table 12.21.520-1" (L54) points at R-4.5's housing-type table and
+      # reaches the minimum, not this maximum.
+      value: 5
+      cite: Hillsboro CDC Table 12.22.560-1, Maximum Setbacks, side yard (all structures)
+      quote: "or/washington/hillsboro/12.22/12.22.560.txt#L61,L64,L77"
     min_building_height_stories:
       value: 2
       cite: Hillsboro CDC Table 12.22.560-1, Minimum Building Height
@@ -2465,6 +2758,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.23.460-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.23/12.23.460.txt#L4-L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       # Free-standing: 30 du/na within 1,300 feet of an LRT station, 24
       # beyond, banded on the measured distance to a MAX station.
@@ -2608,6 +2907,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.23.560-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.23/12.23.560.txt#L4-L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 15
       cite: Hillsboro CDC Table 12.23.560-1, Minimum Density, free-standing
@@ -2759,6 +3064,15 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.24.160-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.24/12.24.160.txt#L4,L7,L17"
+    lot_of_record_relief:
+      # 12.30.300 A: a lot of record missing the dimensional or area requirements
+      # may be developed. Under the zone's single-detached minimum it holds only
+      # a house, duplex or townhouse, so the floor is that minimum.
+      value: lot_standards
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
+    lot_of_record_floor_sqft:
+      value: 4000
+      quote: "or/washington/hillsboro/12.24/12.24.160.txt#L8,L11"
     min_density_du_per_acre:
       # 12 du/na on a lot fronting an Arterial, 8 on a lot fronting a local
       # or Collector street. The 12 binds and is the base; the 8 is a
@@ -2921,6 +3235,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.260-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.24/12.24.260.txt#L4-L5,L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       # The free-standing row; the 12 applies to upper floors of vertical
       # mixed-use buildings, which the pod is not.
@@ -3080,6 +3400,12 @@ zones:
           when: [unit_lots]
           cite: Hillsboro CDC Table 12.24.360-1, Minimum Lot Size, Townhouse (average)
           quote: "or/washington/hillsboro/12.24/12.24.360.txt#L4,L7,L11"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     # NOT ENCODED: density. "Within the South Hillsboro Plan District, see
     # Table 12.24.360-2" (L1223-L1227), and that table states minimum and
     # maximum dwelling-unit COUNTS for all mixed-use land north and south
@@ -3317,6 +3643,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.460-1, Minimum Lot Size, triplex, quadplex ... None
       quote: "or/washington/hillsboro/12.24/12.24.460.txt#L4-L5,L7,L9-L10"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       # 24 within 1,300 feet of an LRT station, 15 to 2,600 feet, 7 beyond,
       # banded on the measured distance to a MAX station. The table writes
@@ -3431,6 +3763,18 @@ zones:
       value: true
       cite: Hillsboro CDC Table 12.24.520-1, Housing Types Permitted in the UC-RM Zone (Quadplex P)
       quote: "or/washington/hillsboro/12.24/12.24.520.txt#L4-L5,L11"
+      variants:
+        # AmberGlen: "D. Flag lots are Not Permitted." (12.64.550 D), and
+        # 12.64.520 A applies 12.64.500, which lists 12.64.550, to all
+        # development in UC-RM, UC-MU, UC-AC, UC-NC and UC-OR. Read as
+        # SCR-OTC's and MU-VTC's are: reaching a flag lot that already
+        # exists, the stricter reading, so the flag lot refuses (2026-11-09,
+        # FOLLOWUPS 112 page-check finding; it took 12.40.160's 25 ft or no
+        # flag rule at all before).
+        - value: false
+          when: [flag_lot]
+          cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
+          quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -3440,6 +3784,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.24/12.24.560.txt#L4-L5,L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 24
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Residential Density
@@ -3561,6 +3911,18 @@ zones:
       value: true
       cite: Hillsboro CDC Table 12.24.620-1, Housing Types Permitted in the UC-MU Zone (Quadplex P)
       quote: "or/washington/hillsboro/12.24/12.24.620.txt#L4-L5,L10"
+      variants:
+        # AmberGlen: "D. Flag lots are Not Permitted." (12.64.550 D), and
+        # 12.64.520 A applies 12.64.500, which lists 12.64.550, to all
+        # development in UC-RM, UC-MU, UC-AC, UC-NC and UC-OR. Read as
+        # SCR-OTC's and MU-VTC's are: reaching a flag lot that already
+        # exists, the stricter reading, so the flag lot refuses (2026-11-09,
+        # FOLLOWUPS 112 page-check finding; it took 12.40.160's 25 ft or no
+        # flag rule at all before).
+        - value: false
+          when: [flag_lot]
+          cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
+          quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -3570,6 +3932,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.24/12.24.660.txt#L4-L5,L7"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 43
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Residential Density
@@ -3698,6 +4066,17 @@ zones:
           when: [inside_mapped_use_area]
           cite: Hillsboro CDC Table 12.24.720-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
           quote: "or/washington/hillsboro/12.24/12.24.720.txt#L4-L5,L9"
+        # AmberGlen: "D. Flag lots are Not Permitted." (12.64.550 D), and
+        # 12.64.520 A applies 12.64.500, which lists 12.64.550, to all
+        # development in UC-RM, UC-MU, UC-AC, UC-NC and UC-OR. Read as
+        # SCR-OTC's and MU-VTC's are: reaching a flag lot that already
+        # exists, the stricter reading, so the flag lot refuses (2026-11-09,
+        # FOLLOWUPS 112 page-check finding; it took 12.40.160's 25 ft or no
+        # flag rule at all before).
+        - value: false
+          when: [inside_mapped_use_area, flag_lot]
+          cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
+          quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -3825,6 +4204,17 @@ zones:
           when: [inside_mapped_use_area]
           cite: Hillsboro CDC Table 12.24.820-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
           quote: "or/washington/hillsboro/12.24/12.24.820.txt#L4-L5,L9"
+        # AmberGlen: "D. Flag lots are Not Permitted." (12.64.550 D), and
+        # 12.64.520 A applies 12.64.500, which lists 12.64.550, to all
+        # development in UC-RM, UC-MU, UC-AC, UC-NC and UC-OR. Read as
+        # SCR-OTC's and MU-VTC's are: reaching a flag lot that already
+        # exists, the stricter reading, so the flag lot refuses (2026-11-09,
+        # FOLLOWUPS 112 page-check finding; it took 12.40.160's 25 ft or no
+        # flag rule at all before).
+        - value: false
+          when: [inside_mapped_use_area, flag_lot]
+          cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
+          quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -3946,6 +4336,17 @@ zones:
           when: [inside_mapped_use_area]
           cite: Hillsboro CDC Table 12.24.920-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
           quote: "or/washington/hillsboro/12.24/12.24.920.txt#L4-L5,L9"
+        # AmberGlen: "D. Flag lots are Not Permitted." (12.64.550 D), and
+        # 12.64.520 A applies 12.64.500, which lists 12.64.550, to all
+        # development in UC-RM, UC-MU, UC-AC, UC-NC and UC-OR. Read as
+        # SCR-OTC's and MU-VTC's are: reaching a flag lot that already
+        # exists, the stricter reading, so the flag lot refuses (2026-11-09,
+        # FOLLOWUPS 112 page-check finding; it took 12.40.160's 25 ft or no
+        # flag rule at all before).
+        - value: false
+          when: [inside_mapped_use_area, flag_lot]
+          cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
+          quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -4060,6 +4461,12 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.1060-1, Minimum Lot Size None
       quote: "or/washington/hillsboro/12.24/12.24.1060.txt#L3-L4,L6"
+    lot_of_record_relief:
+      # 12.30.300 A: width, depth and frontage are lifted. The area stays: this
+      # zone's row is, or prints no figure beneath it for, the single-detached
+      # minimum that 12.30.300 A holds a four-unit building to.
+      value: lot_shape
+      quote: "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8"
     min_density_du_per_acre:
       value: 18
       cite: Hillsboro CDC Table 12.24.1060-1, Minimum Residential Density, triplex and quadplex
@@ -4377,3 +4784,34 @@ drawn_areas:
       unanswered: held out of GREEN on hillsboro_center_core. The figure is
       illustrative and the final boundary is set at the PUD, so every
       MU-VTC lot, inside or out, carries HILLSBORO-CENTER-CORE-ILLUSTRATIVE.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: unsettled
+    kind: wedge
+    sight_ft:
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/hillsboro/dcs-2025-combined.txt#L3013-L3031
+    cite: Hillsboro DCS 230.5.1, Figure 230.3
+    note: '''The Engineer shall evaluate safe intersection sight distance using ... AASHTO'', applying
+      ''to the placement of any object located within or behind the public right-of-way''; nothing over
+      30 in. Figure 12.50.360-A unread. The wedge at 450 ft contains Figure 230.3''s 25 ft corner. Unsettled:
+      the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings
+      at its largest plausible size, measured with the curb at the lot line; a corner lot it reaches is
+      YELLOW, never GREEN and never RED on it, until the rule is read.'
+    ruling: 2026-11-09-sight-triangle-corner-check
+  driveway:
+    status: unsettled
+    kind: wedge
+    sight_ft:
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/hillsboro/dcs-2025-combined.txt#L3013-L3031
+    cite: Hillsboro DCS 230.5.1
+    note: '230.5.1(A) applies ''to the design of new streets and driveways'': AASHTO, unread. Largest
+      plausible.'
+    ruling: 2026-11-09-sight-triangle-corner-check

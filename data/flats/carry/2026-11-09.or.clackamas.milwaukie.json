@@ -1,0 +1,22 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "e1767d83a3b08cc306cf57832b0ac8d84270a4d020d6ccbef7b9db286bfb1b11",
+  "new_quote": "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L374-L378",
+  "old_fingerprint": "e179ea5756d261675e8aeee7d8f91665e13eb5cb5df8158619429f201cba475d",
+  "old_quote": "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L366-L370",
+  "when_key": "",
+  "zone": "MUTSA"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "7fe8d0db70a2f3c1a5f9c8cf78c57440d787010679a2f391f4b7968309c2de6d",
+  "new_quote": "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L374-L378",
+  "old_fingerprint": "1ef058a14f1debf62eca4ae5405f9b0412d3134c82fe6939b04e397f3940792b",
+  "old_quote": "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L366-L370",
+  "when_key": "",
+  "zone": "NME"
+ }
+]

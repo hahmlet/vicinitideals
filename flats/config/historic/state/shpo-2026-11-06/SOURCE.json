@@ -1,0 +1,27 @@
+{
+  "source": "https://maps.prd.state.or.us/arcgis/rest/services/Cultural/HistSites_GIS_FeaturesOnly/FeatureServer/0",
+  "holds": "Oregon State Historic Preservation Office Historic Sites: an inventory, not a designation list",
+  "where": "county IN ('Clackamas','Multnomah','Washington')",
+  "fields": "OBJECTID,RESOURCE_ID,propName,address,city,county,origUse,elig,nrStat,HistDist",
+  "raw_rows": 28447,
+  "raw_bytes": 12969676,
+  "retrieved": "2026-11-06",
+  "kept_rows": 6555,
+  "kept_by_class": {
+    "surveyed-eligible": 5268,
+    "nr-district-contributing": 626,
+    "surveyed-undetermined": 256,
+    "nr-district-noncontributing": 224,
+    "nr-individual": 160,
+    "nr-object": 14,
+    "determined-eligible": 7
+  },
+  "left_out": {
+    "city FLATS does not screen": 984,
+    "delisted": 6,
+    "surveyed-not-eligible": 6098,
+    "demolished": 272,
+    "multnomah point in Portland (its map answers)": 14532
+  },
+  "bytes_kept": 924589
+}

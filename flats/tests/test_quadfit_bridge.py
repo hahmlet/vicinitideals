@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import math
 from pathlib import Path
 
 import pandas as pd
@@ -749,6 +750,15 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
         run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, curbs=curbs, log=log.append)
     for key in ("osm_land_use", "rlis_orca"):
         (curbs / f"{key}.geojson").write_text('{"type": "FeatureCollection", "features": []}', encoding="utf-8")
+    # And which streets a fire truck can stand on is read off the taxlot
+    # fabric beside s4, and a run without it is refused: every mapped
+    # street would be a truck road (FOLLOWUPS 168).
+    with pytest.raises(FileNotFoundError, match="taxlot fabric"):
+        run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, curbs=curbs, institutional=curbs,
+            log=log.append)
+    pd.DataFrame({"TLID": pd.Series([], dtype=str), "wkb": pd.Series([], dtype=object)}).to_parquet(
+        s4.parent / "s1_lots.parquet"
+    )
     written = run(
         out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, curbs=curbs, institutional=curbs,
         log=log.append,
@@ -762,6 +772,8 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
     meta = json.loads((out / "meta.json").read_text(encoding="utf-8"))
     assert meta["lots"] == 2 and meta["rows"] == len(frame) and meta["step_deg"] == 30.0
     assert meta["roads"] == str(s4.parent / "s1_streets.parquet")
+    assert meta["fabric"] == str(s4.parent / "s1_lots.parquet")
+    assert (out / "fire_roads.parquet").exists()
     assert "fire_route_ft" in frame.columns
     assert meta["dem"] == str(raw)
     assert meta["institutional"] == str(out / "institutional.parquet") and meta["institutional_skipped"] == 0
@@ -982,7 +994,9 @@ def test_a_side_alley_waiver_reaches_only_the_stretch_the_alley_runs() -> None:
     # abutting an alley"; where the alley runs the front half of the east
     # line and stops, the rear half faces the neighbour and keeps its 5 ft.
     # Rays 2.5 ft in and 5 ft apart: the last one on the alley is 47.5 ft
-    # up the line, and the 5 ft strip beyond it runs a square cap 5 ft back.
+    # up the line, and the 5 ft strip beyond it ends in a 5 ft half-disc
+    # (2026-11-09, envelope-caps: was a square cap, which also took the
+    # 25 * (1 - pi/4) sq ft corner more than 5 ft from the strip).
     waived = Rules(setback_front_ft=10, setback_side_ft=5, setback_rear_ft=15, setback_alley_side_ft=0)
 
     def area(cover: str | None) -> float:
@@ -990,7 +1004,9 @@ def test_a_side_alley_waiver_reaches_only_the_stretch_the_alley_runs() -> None:
         return envelope_for(lot, waived).sqft  # type: ignore[arg-type]
 
     assert area(BESIDE_WHOLE) == pytest.approx(45 * 75)
-    assert area(BESIDE_STUB) == pytest.approx(45 * (42.5 - 10) + 40 * (85 - 42.5))
+    assert area(BESIDE_STUB) == pytest.approx(
+        45 * (42.5 - 10) + 40 * (85 - 42.5) + 25 * (1 - math.pi / 4), abs=0.1
+    )
     # Nothing measured the stretch: none of it is vouched for.
     assert area(None) == pytest.approx(40 * 75)
     # A city with no alley-side number (the alley line is a rear lot line)
@@ -1213,8 +1229,8 @@ def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None
     # the 50 x 100 lot with its alley along a side line: the code sends the
     # driveway to the alley (33.266.120.C.3), and the court behind the pod
     # meets that alley at its end, so the envelope is searched at the pod's
-    # own side in whichever orientation won -- not that side plus a 12 ft
-    # lane, as it is with no alley.
+    # own side in whichever orientation won -- not that side plus the
+    # unoverlapped part of the 12 ft lane, as it is with no alley.
     def screened(lot):
         (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
         return s
@@ -1229,7 +1245,7 @@ def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None
     def side(s) -> float:
         return 56.0 if s.fit.orientation is Orientation.width_facing else 36.0
 
-    assert street.fit.across_ft - side(street) == pytest.approx(12.0)
+    assert street.fit.across_ft - side(street) == pytest.approx(7.0)
     assert beside.fit.across_ft == pytest.approx(side(beside))
     assert "fit_across_ft" not in beside.screening.unchecked
 
@@ -1259,7 +1275,7 @@ def test_a_side_alley_that_stops_halfway_along_the_line_keeps_the_street_lane(co
         assert lot.facts.alley_at_side is False and lot.facts.alley is None
         s = screened(lot)
         assert s.fit.column is False
-        assert s.fit.across_ft - side(s) == pytest.approx(12.0), "the lane down the flank is back"
+        assert s.fit.across_ft - side(s) == pytest.approx(7.0), "the side-yard lane overlap is accounted for"
 
 
 # --- which street is the front of a corner lot (FOLLOWUPS 4(e)) ----------------
@@ -1306,7 +1322,8 @@ def test_a_portland_corner_lot_fronts_its_shorter_street_and_parks_off_the_other
         (50 - street_side - yards.side_ft) * (100 - yards.front_ft - yards.rear_ft)
     )
     side = 56.0 if s.fit.orientation is Orientation.width_facing else 36.0
-    assert s.fit.across_ft == pytest.approx(max(side, s.screening.stalls_charged * 9.0))
+    # 2026-11-03: Portland's stated 8.5 ft minimum sets the court cells.
+    assert s.fit.across_ft == pytest.approx(max(side, s.screening.stalls_charged * 8.5))
     got = row_for(s)
     assert got["front_deg"] == 0.0 and got["side_street_lane"] is True
     assert [c for c in got if c not in BRIDGE_ONLY_COLUMNS] == list(ROW_COLUMNS)

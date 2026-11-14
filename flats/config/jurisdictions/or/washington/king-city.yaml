@@ -26,6 +26,19 @@ ingest:
 # cut those footers are page furniture, out of the readable text, and their
 # rulings went with them. The rest name chapters the pod's path does not reach.
 crossrefs:
+  # FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer.
+  "18.106.050":
+    outcome: other_path
+    note: >-
+      Angle parking aisles "as determined by interpolation of the table in Section 18.106.050.B"
+      (16.132/16.132.050.txt#L24), the older numbering of the citywide parking chapter's own table.
+      Chapter 16.132 does not reach the pod: the Kingston Terrace zones, the only ones open to it,
+      replace it with 16.114.130 ("Parking and Loading 16.132 Exempt. Superseded by Section
+      16.114.130", 16.114/16.114.020.txt#L16-L17), whose 90-degree row is encoded.
+  "16.44.030":
+    outcome: procedure
+    note: >-
+      The application form and information an applicant submits (16.114/16.114.080.txt#L43).
   "8.04.130":
     outcome: other_building
     note: >-
@@ -149,6 +162,16 @@ code:
   # Table 16.114-4 glues its note markers to the figures: "1,50016" is
   # 1,500 with note 16, "2017" is 20 with note 17 (L233-L234).
   glued_markers: true
+# Declared 2026-11-09 (FOLLOWUPS 166 drift sweep): stored 2026-11-05 with no
+# `code:` entry, so the corpus watch never re-fetched it. Stored from the
+# layout extraction; these markers reproduce it byte for byte from the
+# current PDF.
+- id: "kcc.16.124.landscaping"
+  url: https://api.municode.com/PublicationPdfDownload/3913
+  title: "KCMC Chapter 16.124 - Landscaping"
+  start: "Chapter 16.124                                  16.124.020    Administration."
+  end: "16.132.020"
+  extraction: layout
 - id: "kcc.16.132.parking"
   url: https://api.municode.com/PublicationPdfDownload/3913
   title: "KCMC Chapter 16.132 - Parking and Loading"
@@ -270,14 +293,19 @@ defaults:
   # page." No lot moves on 99W today: every district that fronts it (LC,
   # CBD, INST, the older residential districts) refuses the pod. Before one
   # of them opens, ODOT's figure has to be found, not approximated.
+  # The three "between X and Y" stretches (c, e, f) are held in brackets
+  # after the street, the code's words otherwise as printed: a line read
+  # off its stretch takes "All other city streets", 25 feet; one the bridge
+  # cannot place stays at the row's figure (FOLLOWUPS 77,
+  # flats/geom/dedication.py stretch_of).
   row_to_centerline_named_ft:
     value:
       - [Pacific Highway, null]
       - [Beef Bend Road, 33]
-      - [131st Avenue, 33]
+      - [131st Avenue (between Beef Bend Road and Fischer Road), 33]
       - [Fischer Road, 33]
-      - [116th Avenue, 30]
-      - [Royalty Parkway, 30]
+      - [116th Avenue (between Queen Elizabeth and Pacific Highway), 30]
+      - [Royalty Parkway (between Pacific Highway and 116th Avenue), 30]
     cite: King City KCC 16.80.060 A.2.a-f, right-of-way from centerline by street (Pacific Highway as determined by ODOT, no figure printed)
     url: https://api.municode.com/PublicationPdfDownload/3913
     retrieved: '2026-09-29'
@@ -338,6 +366,34 @@ defaults:
   parking_front_prohibited:
     value: true
     cite: King City KCMC 16.114.130 C.4.c, surface parking to the side or rear of buildings
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/16.114/16.114.130.txt#L49,L53"
+  # SIDE-YARD PARKING, ROUND 4 (FOLLOWUPS 146, 2026-11-06; Chapter 16.124 now
+  # stored). SILENT. A setback runs from "the wall or foundation of a building"
+  # (16.24), and no chapter places parking in or out of an interior side yard:
+  # 16.132 names no yard, and 16.114.130 C.4.c puts surface parking "to the
+  # side or rear of buildings" without saying a required yard may hold it.
+  # YELLOW at best (ruling 2026-11-05-side-yard-parking-silent-codes).
+  #
+  # NO STRIP. 16.124.110 B bars parking from a BUFFER, and a buffer is owed only
+  # where 16.124.110 requires one: its C names commercial and multi-family
+  # property abutting another zone, and its F (Kingston Terrace) names parking
+  # that serves "dwelling, multi", mixed-use, commercial or institutional
+  # development. 16.24 starts "dwelling, multi" at five units, so a fourplex and
+  # a single-family attached row are neither. A zone-based reading of C could
+  # reach a townhouse row in a denser zone abutting a lesser one; that turns on
+  # the neighbouring zone line by line, which this field cannot say. Left out;
+  # FOLLOWUPS 146 round 4 hand-off.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: King City KCMC 16.24, a setback runs from the wall or foundation of a building; no chapter bars parking from an interior side yard
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.24.definitions.txt#L595-L598,L1102-L1105"
+  parking_side_yard_stated:
+    value: none
+    cite: King City KCMC 16.114.130 C.4.c, surface parking to the side or rear of buildings; it does not say a required side yard may hold it
     url: https://api.municode.com/PublicationPdfDownload/3913
     retrieved: '2026-09-29'
     quote: "or/washington/king-city/16.114/16.114.130.txt#L49,L53"
@@ -422,8 +478,9 @@ defaults:
 # Road, 131st Avenue and Fischer Road, 30 on 116th Avenue and Royalty
 # Parkway, 25 on "All other city streets" (16.80.060.txt#L1-L12).
 # Encoded in the defaults as row_to_centerline_named_ft and _other_ft. The
-# "between X and Y" stretches of 131st, 116th and Royalty are not read: the
-# distance holds along the whole street, which can only push a yard back.
+# "between X and Y" stretches of 131st, 116th and Royalty are read where the
+# bridge can place a lot line on or off them (FOLLOWUPS 77); where it cannot,
+# the distance holds along the whole street, which can only push a yard back.
 # Pacific Highway (99W) is "as determined by the Oregon Department of
 # Transportation", which states no number; held as a row with no figure
 # (null), read like a street the screen cannot name: the deepest figure the
@@ -770,6 +827,10 @@ zones:
       value: 80
       cite: King City KCMC 16.84.040 Table, R-12 column, Maximum coverage of buildings and impervious surfaces (16.24.020 counts driveways and parking)
       quote: "or/washington/king-city/16.84/16.84.040.txt#L4-L6,L34-L36"
+    # 200, as printed: checked 2026-11-09 against the adopted PDF
+    # (PublicationPdfDownload/3913, page 174.68, King City Supp. No. 13,
+    # 1-22), whose text layer is set type, not OCR. No "1,200" appears
+    # anywhere in the stored code (FOLLOWUPS 112 page-check finding).
     open_space_min_sqft:
       per_dwelling: 200
       cite: King City KCMC 16.94.050, Required outdoor area, single-family attached (200 sq ft contiguous rear or side yard on each lot)
@@ -2094,3 +2155,33 @@ zone_rulings:
       kept on annexed land under 16.80.050 A (kcc.16.80.general.txt L84-L99);
       no King City district has the code. See the comment above
       zone_rulings.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: unsettled
+    legs_ft:
+    - 15
+    - 20
+    - 35
+    basis: curb
+    quote: or/washington/king-city/kcc.16.144.vision-clearance.txt#L21-L28
+    says: formed using the curb line or pavement edge
+    cite: KCC 16.144.030
+    note: '15 ft (35 on six named streets, 20 in Kingston Terrace) from the curb or pavement edge; (B)
+      bars a ''vehicle, hedge, planting, fence, wall, sign or any similar permanent obstruction'', (C)
+      names buildings only on curves: whether a building is barred is unclear. Unsettled: the conservative
+      default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings at its largest
+      plausible size, measured with the curb at the lot line; a corner lot it reaches is YELLOW, never
+      GREEN and never RED on it, until the rule is read.'
+    ruling: 2026-11-09-sight-triangle-corner-check
+  driveway:
+    status: unsettled
+    kind: edge
+    legs_ft: 15
+    basis: curb
+    quote: or/washington/king-city/kcc.16.144.vision-clearance.txt#L21-L28
+    says: or a driveway pro-
+    cite: KCC 16.144.030(A)(3)
+    note: 15 ft at a driveway; whether a building is barred is unclear, as at corners.
+    ruling: 2026-11-09-sight-triangle-corner-check

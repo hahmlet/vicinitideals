@@ -19,7 +19,6 @@ IPU
 Commercial—Retail Uses
 Commercial—Retail Uses
 Commercial daycare facilities
-C
 Institutional
 Institutional
 Cemeteries, mortuaries and funeral homes
@@ -30,7 +29,8 @@ Schools, public or private
 P
 Service district functions and operations, including but not limited to fire district facilities, water district facilities, radio and television station production facilities, sanitary sewer and stormwater management facilities and road building and maintenance facilities, not to include fuel or other liquid or non-solid combustible material storage
 P
-Parks, public or private, but not including commercial recreation facilities
+Parks, public or private, but not including commercial recreation facilities.
+Ancillary uses such as mobile food units permitted.
 P
 Public buildings, functions or operations, including stand-alone parking lots and all military uses or activities
 P
@@ -45,10 +45,10 @@ P
 Temporary use of a trailer, mobile home or other building for a use incidental to construction work, provided that:
 The maximum time period is six months, with a maximum extension for another six months;
 The trailer, mobile home or other building is connected to an approved sewage disposal system;
-C
 A building permit for a permanent structure has been issued;
 The temporary home or building shall be removed upon completion or abandonment of construction; and
 No reasonable alternative, such as the availability of nearby rental housing, exists.
+C
 Wireless communication facilities subject to Section 16.44.020
 C
 Any permitted use which will include the storage of fuel or any form of combustible materials which exists in a liquid or non-solid form
@@ -56,9 +56,9 @@ C
 Helipad[2]
 C
 
-NOTES:
-[1] The base of towers or other antennae may not be closer to any residential property line or street right-of-way than a distance equal to the height of the tower.
-[2] Subject to applicable FAA rules and regulations.
+NOTES:  NOTES:
+[1]     The base of towers or other antennae may not be closer to any residential property line or street right-of-way than a distance equal to the height of the tower.
+[2]     Subject to applicable FAA rules and regulations.
 
 C.
 
@@ -81,4 +81,4 @@ Building height (maximum)[1]                              50 ft.
 NOTES:
 [1] Building height is measured pursuant to Chapter 16.12, Definitions.
 
-(Ord. 389 § 1(Exh. A), 2009; Ord. 433 § 1, 2013; Ord. 446 § 1, 2014; Ord. 556 § 1, 2021; Ord. 592, 6/3/2025)
+(Ord. 389 § 1(Exh. A), 2009; Ord. 433 § 1, 2013; Ord. 446 § 1, 2014; Ord. 556 § 1, 2021; Ord. 592, 6/3/2025; Ord. 603, 8/18/2026)

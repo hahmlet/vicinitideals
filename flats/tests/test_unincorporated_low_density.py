@@ -201,6 +201,13 @@ def test_the_larger_zone_states_its_dimensions_once_the_state_opens_it(uninc: La
         "max_coverage_pct": 35,
         "min_lot_width_ft": 70,
         "min_frontage_ft": 30,
+        # Which line the 30 ft is measured on (corner-min-frontage, FOLLOWUPS 175;
+        # rel7 assembly, 2026-11-10).
+        "min_frontage_line": "front",
+        # MCC 39.3140, taken 2026-11-06 (FOLLOWUPS 108).
+        "lot_of_record_relief": "lot_area_frontage",
+        "lot_of_record_floor_sqft": 3000,
+        "lot_of_record_condition": "creation_date",
     }
     assert "two-unit dwelling" in (uninc.zones["LR10"].notes or "")
     assert "Part 7" in (uninc.zones["LR10"].notes or "")

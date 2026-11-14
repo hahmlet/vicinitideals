@@ -115,8 +115,10 @@ def test_the_reference_worth_chasing_was_chased(
     # (58.central-tualatin-overlay.txt L286-L287). The same ruling.
     # Six since 2026-10-08: 34.400, the already-ruled retirement-housing section, binds four
     # more times with the Tualatin zones encoded that day; the standing ruling covers it.
+    # Chapter 35 left the queue on 2026-11-06 (FOLLOWUPS 108): 35.040 Nonconforming
+    # Lots is stored and taken; the rest of the chapter is existing situations.
     assert max(d.binding for d in tualatin.values()) <= 6
-    assert tualatin["35"].ruling
+    assert tualatin["32"].ruling
 
 
 def test_binding_is_what_orders_the_queue() -> None:
@@ -151,9 +153,9 @@ def test_a_table_cell_is_not_a_citation(tualatin: dict[str, Dangling]) -> None:
 def test_a_spelled_out_word_may_still_take_a_bare_number(
     tualatin: dict[str, Dangling]
 ) -> None:
-    """"See TDC Chapter 35" is a reference and there is nothing else it could
+    """"See TDC Chapter 32" is a reference and there is nothing else it could
     be, so the strictness is on the abbreviation and not on the number."""
-    assert "35" in tualatin
+    assert "32" in tualatin
 
 
 def test_state_law_is_counted_somewhere_else(
@@ -182,6 +184,17 @@ def test_a_suffix_letter_belongs_to_the_section_not_to_the_sentence(
 
 
 # -- reading too tightly ----------------------------------------------------
+
+
+def _numbers(headings: set[str]) -> set[str]:
+    """The printed section numbers, without the resolver's own markers.
+
+    :func:`_headings` also returns what a document says about itself --
+    "held:33.110.250", "full:33.110.", "Table 18.320.1" (FOLLOWUPS 105 item 4,
+    tested in test_crossref_resolver.py) -- and none of those opens with a
+    digit.
+    """
+    return {h for h in headings if h[:1].isdigit()}
 
 
 def test_a_wrapped_reference_does_not_answer_for_itself() -> None:
@@ -225,7 +238,7 @@ def test_a_reference_that_wrapped_across_a_column_is_not_a_heading() -> None:
         "33.110.250 Additional Development Standards for Garages\n"
     )
 
-    assert _headings(wrapped, {"33"}, {"33.110"}) == {"33.110.250"}
+    assert _numbers(_headings(wrapped, {"33"}, {"33.110"})) == {"33.110.250"}
 
 
 def test_a_held_chapter_still_answers_for_its_own_sections() -> None:
@@ -241,7 +254,7 @@ def test_a_held_chapter_still_answers_for_its_own_sections() -> None:
         "33.110.250 Additional Development Standards for Garages\n"
     )
 
-    assert _headings(text, {"33"}, {"33.110"}) == {"33.110.250"}
+    assert _numbers(_headings(text, {"33"}, {"33.110"})) == {"33.110.250"}
 
 def test_a_whole_title_answers_for_every_section_inside_it(
     layers: dict[str, Layer]
@@ -609,7 +622,9 @@ def test_the_fields_are_carried_into_the_ledger(
     # the rear-setback citation it stood beside spans two sections, so it
     # stays on the proof copy and 7/7.0410.txt holds no value near it.
     row = next(r for r in back if r["ref"] == "10.0420")
-    assert row["fields"] == "quadplex_allowed min_frontage_ft min_lot_width_ft"
+    # min_frontage_line joined 2026-11-10 (corner-min-frontage, FOLLOWUPS 175:
+    # which line the frontage minimum is measured on; rel7 assembly).
+    assert row["fields"] == "quadplex_allowed min_frontage_ft min_frontage_line min_lot_width_ft"
     assert row["slack_fields"] == "min_frontage_ft min_lot_width_ft"
     assert row["outcome"] == "other_building"
 
@@ -713,6 +728,9 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         "or/clackamas/tualatin/appendix-b.figures.txt",
         # An ordinance's adopted exhibit, cited by page, not a codified chapter.
         "or/multnomah/portland/amended/ricap11.txt",
+        # Ordinance 192241, stored by rf-farm-land (FOLLOWUPS 173) for the RF
+        # farm-land reading; an ordinance, not a codified chapter (rel7, 2026-11-10).
+        "or/multnomah/portland/amended/ord192241.txt",
         "or/clackamas/gladstone/amended/ord1545.txt",
         # Ordinance 1539, which adopts the Gladstone Town Center map
         # (districts chunk 5, 2026-10-29); cited for its Section 1 and the
@@ -737,6 +755,9 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         # section numbers.
         "or/washington/_unincorporated/community-plan.raleigh-hills-garden-home.txt",
         "or/washington/_unincorporated/community-plan.bull-mountain.txt",
+        # West Linn's historic landmarks web page, stored 2026-11-06 (FOLLOWUPS
+        # 87) for its list of 25 addresses: a city page, no section numbers.
+        "or/clackamas/west-linn/historic-landmarks.city-page.txt",
         # Aloha - Reedville - Cooper Mountain, Cedar Hills - Cedar Mill and
         # Sunset West, stored 2026-10-31 for the chunk 6 re-read (FOLLOWUPS
         # 135): subareas, design elements and ASCs, no section numbers.
@@ -750,6 +771,10 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         "or/washington/_unincorporated/community-plan.west-tigard.txt",
         "or/washington/_unincorporated/community-plan.east-hillsboro.txt",
         "or/washington/_unincorporated/community-plan.sherwood.txt",
+        # Canby Fire District's Conditions of Construction, stored 2026-11-10
+        # for its dead-end length (FOLLOWUPS 168): a fire district's guide,
+        # numbered by the fire code it applies, not by any Canby section.
+        "or/clackamas/canby/cfd.conditions-of-construction.txt",
     }
     assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 

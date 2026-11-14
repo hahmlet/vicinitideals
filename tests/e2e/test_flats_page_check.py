@@ -84,11 +84,12 @@ def test_a_zone_tied_to_its_page_by_a_line_on_that_page_is_boxed_in_purple_there
     page.goto(
         f"{base_url}/flats/check/or/clackamas/tualatin?zone=RH/HR&field=max_density_du_per_acre&when="
     )
-    # The CI instance holds no Tualatin book pages, so no sheet is drawn and
-    # only the borrowed note carries data-via-here there (daily CI 42820833624).
-    # Against the live site it must hold.
+    # The purple box is drawn off the book's PDF. The CI instance holds no
+    # Tualatin book, so its card still shows neighbouring page images but no
+    # page carries the passage (daily CI 42820833624, 43025494504). Against the
+    # live site it must hold.
     expect(page.locator("[data-answer]").first).to_be_visible()
-    if page.locator(".check-sheet").count() == 0 and "localhost" in base_url:
+    if page.locator("#check-card .card[data-via-here]").count() == 0 and "localhost" in base_url:
         pytest.skip("this instance holds no pages for the Tualatin book")
     here = page.locator("#check-card .card[data-via-here]").first
     expect(here).to_contain_text("the passage that ties the zone to this page")

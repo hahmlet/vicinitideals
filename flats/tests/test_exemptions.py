@@ -172,7 +172,33 @@ pytestmark = pytest.mark.unit
 # exempt because note 18 applies only where 60.05.15.6 governs.
 # 471 -> 473 stated on 2026-11-05: TO:R24-40 and TO:R40-80 print None for the
 # frontage minimum in Table B(2) (375-10.txt#L342).
-EXPECTED = {"stated": 473, "numeric": 202, "marker": 0, "dash": 2, "silent": 8}
+# 473 -> 477 stated on 2026-11-08 (FOLLOWUPS 105 round 2): Beaverton RC-BC, RC-OT,
+# RC-MU and RC-DT state no ground-floor minimum off the streets of Figure
+# 70.20.10.6.2 (70.20.10.6.D.1, 70.20.10.txt#L486-L489); the 16 ft Type A floor is
+# the variant behind the unobserved beaverton_type_a_frontage fact -- a hold.
+# 477 -> 478 stated on 2026-11-08 (FOLLOWUPS 2(a), rel5 merge): Oregon City R-2 restates the layer's
+# 17.52.060.C parking strip so Table 17.12.040 note 1 can widen it, and the townhouse
+# plat's variant is exempt as the defaults' `unless` was -- 17.52.010 says the parking
+# chapter "does not apply to ... townhouses" (17.zoning.txt#L14791-L14797).
+# 202 -> 206 numeric on 2026-11-08 (FOLLOWUPS 37 iii, rel5 merge): Gresham LDR-5, LDR-7, TLDR and TR
+# owe no maximum front setback but Table 4.0131 note 5's, at the end of a Minor Access Street.
+# The exempt base quotes the table title ("Minimum Setbacks", L146) and note 5 (L179), whose
+# 25 is the variant's figure on at_street_end -- read, and not a standard somebody missed.
+# 206 -> 205 numeric on 2026-11-09 (pagecheck-findings): Gresham RTC's townhouse exemption
+# from the 7.0420(J)(1)(a) frontage share rested on 7.0431, which does not list RTC; removed.
+# 205 -> 215 numeric on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+# restate the city's exempt parent-lot bases for parking_maneuvering_max_width_ft and
+# parking_side_prohibited (5 x 2) so their townhouse variants can cite 4.1152 S13/S14.
+# rel6 2026-11-09, combining: the FOLLOWUPS 68 lines below (486 stated, 219 numeric) plus
+# flats/pagecheck-findings' net +9 numeric above (206 -> 215) = 486 stated, 228 numeric.
+# 206 -> 226 numeric on 2026-11-09 (FOLLOWUPS 112(b), Multnomah pockets on Title 33): R5, R7,
+# R10 and R20 each restate five county parking defaults as PCC 33.266.120 states them -- no
+# minimum (the chapter's section list, 33.266.txt#L8-L17), no aisle and no perimeter buffer
+# (120 never prints either; 130.B keeps Table 266-4 and 130's landscaping off this building,
+# L385-L386), and an open interior side yard (C.1.a(1)) -- read, and the same encoding the
+# Portland layer holds for the same sentences.
+# rel6 2026-11-09, combining: 486 stated / 228 numeric above plus multco-pockets' +20 numeric
+# (206 -> 226 on its base) = 486 stated, 248 numeric.
 # 185 -> 188 numeric on 2026-11-04 (FOLLOWUPS 147, round 2, South Hillsboro Center Cores):
 # MU-VTC takes the same three Active Use exemptions as MR-3 -- building share, band and
 # ground storey exempt off an Active Use Street (12.65/12.65.850.txt#L16), Table 12.65.850-1
@@ -183,6 +209,53 @@ EXPECTED = {"stated": 473, "numeric": 202, "marker": 0, "dash": 2, "silent": 8}
 # frontage on one (12.65/12.65.850.txt#L16), and the code grepped whole for "property line
 # coverage" and "building frontage" states no other share for these zones -- with Table
 # 12.65.850-1 and D.6 as variants behind the traced Figure 12.65.930-A's facts.
+# 470 -> 482 stated and 173 -> 186 numeric on 2026-11-01 (FOLLOWUPS 68, Portland Maps 120-2
+# and 120-3). Numeric: the 90 ft site frontage of RM1-RM4 (three exempt variants each: 160 ft
+# deep or less, 33.120.206.txt#L10; the C.2.b neighbour exception, #L15-L18, a fact nothing
+# measures; both) and RX's neighbour exception. Stated: the Eastern Pattern Area's 50% vehicle
+# share of the rear setback, exempt for corner lots and sites up to 100 ft deep
+# (33.120.220.txt#L28). Those variants are all gated by only_when, so none opens a lot outside
+# its map. Round 3 removes the four redundant corner-and-depth exemption variants, one per RM
+# zone: corners are exempt at every depth.
+# rel6 2026-11-09, combining two lanes: 478 -> 486 stated and 206 + 13 = 219 numeric --
+# rel5's 478/206 (above) plus flats/pdx-map-120's Maps 120-2/120-3 rows (+13 numeric; +8 stated:
+# its +12 less the four corner-and-depth variants its round 3 removed).
+# 248 -> 240 numeric on 2026-11-09 (pockets-parking, ruling 2026-11-09-multco-pockets-portland-
+# parking): R5, R7, R10 and R20's two exempt aisle fields (8) became Steph's 20 ft value.
+# 248 -> 253 numeric on 2026-11-10 (flats/rf-farm-land, FOLLOWUPS 173): Steph ruled RF farm
+# land outside the state middle-housing law, so the Portland-administered pockets' RF takes the
+# same Title 33 parking card as their R5-R20 -- five exemptions, as each of those zones carries:
+# no minimum (33.266 has no minimum section), no aisle one-way and two-way (33.266.130.B), no
+# side-yard ban (120.C.1.a(1)) and no perimeter buffer (130.B). RF refuses the pod at the use
+# gate, so none of them is reached by a screen.
+# 240 + 5 = 245 numeric on 2026-11-10 (rel7 assembly): both lanes above land together, the
+# pockets-parking -8 and rf-farm-land +5 from rel6's 248.
+# 486 -> 485 stated and 248 -> 249 numeric on 2026-11-09 (FOLLOWUPS 166, drift-wash):
+# Cornelius Ordinance 2026-06 struck GMU's "There is no maximum density" (old 18.75.065 (C)),
+# so max_density is held exempt on the chapter's silence (grepped whole) and quoted from
+# 020 (I)'s "at least 14 dwelling units per acre": a numeral in the quote, so numeric.
+# 485 stated / 246 numeric: rel6 486/248, pockets-parking -8, rf-farm-land +5, drift-wash -1 stated +1 numeric (rel7 assembly, 2026-11-10, with drift-wash).
+# 8 -> 7 silent on 2026-11-09 (FOLLOWUPS 166, drift-clack). Happy Valley Ord. 603
+# printed a parking maximum for the quadplex row (2.0 per non-studio unit), so
+# parking_max_per_unit is a value now, not an exemption (one fewer `stated`), and
+# parking_side_prohibited re-cites 16.43.030.D/H, whose words now state the
+# subject, moving it from `silent` to `stated` (one more): stated nets to 486.
+# 485 / 246 / silent 7: the sum above plus drift-clack's silent 8 -> 7 (stated nets to zero) (rel7 assembly, 2026-11-10, with drift-clack).
+# 2026-11-10 (flats/pdx-drift, FOLLOWUPS 165): stated 486 -> 485. CI1's own "no minimum lot
+# size" exemption (33.150.202) left with the reprint; CI1 now reads as RM1 (33.150.200) and
+# takes RM1's 4,000 sq ft minimum -- one exemption fewer, the conservative direction.
+# 484 / 246 / silent 7: the sum above plus pdx-drift's stated -1 (CI1 reads as RM1) (rel7 assembly, 2026-11-10, with pdx-drift).
+# 246 -> 250 numeric on 2026-11-10 (flats/roof-ban, false-green round 4): min_roof_pitch_in_12
+# exempt: true in Wood Village TC (235.440.E allows a flat roof with a cornice; stops the
+# `like: MR 2` 5:12) and Hillsboro SCR-LD, SCR-MD, SCR-HD (no roof form outside the Downtown
+# Plan District; the 4/12 sits in a variant under hillsboro_downtown_plan_district).
+# 246 -> 255 numeric on 2026-11-10 (flats/fg4-fixes, rel7 reader D note 4a): Clackamas R5, R7,
+# R8.5, R10, R15, R20, R30, VR45 and VR57 hold the ZDO 1009.03(B)(1) parking strip exempt.
+# Table 1001-1's row for middle housing in those districts leaves the 1009 column blank where
+# the all-other-districts row ticks it (zdo.1001.txt#L31-L32,L94,L99-L105, read by column
+# position). The quoted lines print section numbers, so numeric; a blank cell states nothing.
+# rel7 add-ons 2026-11-10: roof-ban (+4) and fg4-fixes 4a (+9) land together: 246 -> 259 numeric.
+EXPECTED = {"stated": 484, "numeric": 259, "marker": 0, "dash": 2, "silent": 7}
 # 171 -> 173 numeric on 2026-10-30 (FOLLOWUPS 131, Tualatin CO): Table 50-2 prints no density,
 # floor or ceiling (50/50.300.txt#L4-L35, and Chapter 50 grepped whole for "densit"), so both
 # CO density rows are exempt off Block 1; Table 58-7's 16-25 du/ac stands as the Block 1 variant.

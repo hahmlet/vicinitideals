@@ -333,7 +333,6 @@ datasets:
       column (18,258 polygons, Forest Grove to Canby); the where clause keeps
       Gladstone's 35. Without it the first acquire snapshot (2026-09-18) took
       312 MB of other cities' zoning under Gladstone's name.
-    notes: >-
       Oregon City hosts this on Gladstone's behalf and the service is
       countywide. Gladstone lots pick their own polygons in the majority-area
       join because they sit inside the city.
@@ -739,7 +738,13 @@ datasets:
       where Metro types it a minor residential street. For CDC 501-8.5 B's
       access gates (corner_access_street: lowest_class). Also read, in every
       Washington County layer, for the county's road dedication
-      (row_to_centerline_*, CDC 302-2.14 C(1)) on county-zoned land.
+      (row_to_centerline_*, CDC 302-2.14 C(1)) on county-zoned land, and on
+      county-zoned land for CDC 501-8.5 access spacing
+      (flats/config/driveway_spacing.yaml, FOLLOWUPS 169). Cornelius also
+      reads it there, for that check's busy-or-local question only (Steph
+      2026-11-10, 2026-11-10-cornelius-county-street-map); it is
+      deliberately not in `serves`, so no other reader takes it up in
+      Cornelius.
 
   street_class_sherwood:
     kind: arcgis
@@ -787,9 +792,47 @@ datasets:
       and by position alone only where neither names the street. PRIVATE
       takes the Local row where Metro calls the street public; where Metro
       types it private the line gives up nothing (18.910.020.E: "streets"
-      means public streets). Read only for 18.210.030.A.1's
-      ultimate right-of-way (flats/geom/dedication.py, FOLLOWUPS 81); no
-      driveway rule reads its ranks.
+      means public streets). Read for 18.210.030.A.1's ultimate
+      right-of-way (flats/geom/dedication.py, FOLLOWUPS 81) and for
+      18.920.030.I's driveway spacing (flats/config/driveway_spacing.yaml,
+      FOLLOWUPS 169).
+
+  street_class_clackamas:
+    kind: arcgis
+    label: Clackamas County road inventory functional class
+    provides: streets
+    url: https://services3.arcgis.com/I2eWXOndpF9m8oKC/arcgis/rest/services/ROAD_NETWORK_WFL1/FeatureServer/4
+    geometry: polyline
+    fields: [RoadName, Class]
+    serves: [or/clackamas/_unincorporated]
+    notes: >-
+      The county's road inventory ("Functional Class (RIMS)", edited
+      2024-07-01, scouted 2026-11-09): county roads only, Class LOCAL,
+      CONNECTOR, COLLECTOR, MINOR ARTERIAL, MAJOR ARTERIAL (Roadway
+      Standards Table 2-1's classes). State highways and city streets are
+      not drawn: a street the map leaves out ranks local only where Metro
+      and OpenStreetMap both call it residential. Read only for Roadway
+      Standards 220.3's access spacing (flats/config/driveway_spacing.yaml,
+      FOLLOWUPS 169), through flats/geom/driveway_spacing.py's own map
+      list, so no corner-lot or dedication reading moves with it.
+
+  street_class_tualatin:
+    kind: arcgis
+    label: Tualatin street functional classification
+    provides: streets
+    url: https://services7.arcgis.com/cw66lBk1O7OM8APn/arcgis/rest/services/Tualatin_Street_Explorer/FeatureServer/83
+    geometry: polyline
+    fields: [STREET_NAM, TYPE]
+    serves: [or/clackamas/tualatin]
+    notes: >-
+      Tualatin Street Explorer's functional classification layer (177
+      lines, edited 2024-12, scouted 2026-11-09): classified streets only,
+      TYPE MAJOR / MINOR ARTERIAL, MAJOR / MINOR COLLECTOR, CONNECTOR
+      COMMERCIAL INDUSTRIAL, CONNECTOR DOWNTOWN CORE. It predates the 2045
+      TSP (Ord. 1451-25, 2025-08-11), which adds Neighborhood Routes; a
+      street it leaves out ranks local only where Metro and OpenStreetMap
+      both call it residential. Read only for TDC 75.030 Table 75-1's
+      access spacing (flats/config/driveway_spacing.yaml, FOLLOWUPS 169).
 
   street_class_gresham:
     kind: arcgis

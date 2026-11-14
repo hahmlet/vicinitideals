@@ -24,6 +24,13 @@ ingest:
 # way that moves a figure the layer holds; the floodplain chapter is the
 # one that can take ground from a lot, and it only narrows.
 crossrefs:
+  "16.134.090":
+    outcome: narrows_only
+    note: >-
+      Floodplain non-elevation design requirements, named in the definition of a lowest floor
+      (16.10/16.10.020.txt#L252). Like 16.134.020, they reach only land inside the floodplain and
+      can only take ground or permission away; the screen's hazard constraints are read from their
+      own layers (FOLLOWUPS 105 round 3, 2026-11-08).
   "16.46":
     outcome: other_building
     note: >-
@@ -33,15 +40,6 @@ crossrefs:
       (sdc.16.14.residential-design.txt L37). A park of manufactured homes
       is not a factory-built quadplex on one lot; it ranked beside the
       height and lot rows only because the use table sits above them.
-  "16.68.020A":
-    note: >-
-      In the store. "the development conforms to Section 16.68.020A, above"
-      (16.68.020.txt L19) points at the same slice: 16.68.020 is
-      printed at L19, and its A is the landscape plan an undersized infill
-      lot owes before a building permit. The ledger did not match the
-      letter to the heading. The reduction the sentence allows (16.68.020 B,
-      lot dimensions below the zone's minimum through a land division) is a
-      relief the layer does not take, a layer-wide NOT ENCODED comment.
   "46":
     outcome: preempted
     note: >-
@@ -351,6 +349,18 @@ private_drives:
     L170); a drive through the lot itself is screened both ways anyway.
 
 defaults:
+  entrance_faces_street:
+    value: required
+    cite: "Sherwood SZCDC 16.14 residential design: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.14.residential-design.txt#L70-L104"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Sherwood SZCDC 16.14 residential design: \"b. Be at an angle of up to 45 degrees from the street;\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.14.residential-design.txt#L88"
   # ADDITIONAL SETBACK FROM THE CENTRE LINE (16.106.030 D; see the
   # right-of-way note above the zones). The street's class comes from the
   # city's TSP web map (registry street_class_sherwood, Kittelson's
@@ -619,6 +629,11 @@ zones:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
+    min_frontage_line:
+      value: front
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
     min_frontage_ft:
       value: 25
       cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
@@ -708,6 +723,11 @@ zones:
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
       via: "or/washington/sherwood/16.40/16.40.050.txt#L12"
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
+    min_frontage_line:
+      value: front
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
     min_frontage_ft:
       value: 25
       cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
@@ -791,6 +811,11 @@ zones:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
+    min_frontage_line:
+      value: front
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
     min_frontage_ft:
       value: 25
       cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
@@ -868,6 +893,11 @@ zones:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
+    min_frontage_line:
+      value: front
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
     min_frontage_ft:
       value: 25
       cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
@@ -945,6 +975,11 @@ zones:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
+    min_frontage_line:
+      value: front
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
     min_frontage_ft:
       value: 25
       cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
@@ -1021,6 +1056,11 @@ zones:
       exempt: true
       cite: Sherwood SZCDC 16.12.010 F.1, maximum density not applied to quadplexes
       quote: "or/washington/sherwood/sdc.16.12.residential.txt#L88-L92"
+    # "Minimum Lot width at front property line": the front line, never the
+    # streets added together (FOLLOWUPS 175).
+    min_frontage_line:
+      value: front
+      quote: "or/washington/sherwood/sdc.16.12.residential.txt#L178-L179"
     min_frontage_ft:
       value: 25
       cite: Sherwood SZCDC 16.12.030 C, Minimum Lot width at front property line
@@ -1482,3 +1522,27 @@ zone_rulings:
       (16.04.010.txt L3-L18). Unannexed land is regulated under
       the Urban Planning Area Agreement by 16.04.040 (L50-L59); nothing
       here zones it.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 20
+    basis: lot_line
+    exempt_no_setback: true
+    quote: or/washington/sherwood/sdc.16.58.vision-clearance.txt#L4-L26
+    says: In all zones, the minimum distance shall be twenty (20) feet.
+    cite: SDC 16.58.010
+    note: '''two (2) sides of which are lot lines'', extended on a rounded corner; no ''structure'' over
+      2.5 ft; ''Where no setbacks are required, buildings may be constructed within the clear vision area.'''
+  driveway:
+    status: read
+    kind: edge
+    legs_ft: 20
+    basis: lot_line
+    exempt_no_setback: true
+    quote: or/washington/sherwood/sdc.16.58.vision-clearance.txt#L4-L26
+    says: alley or private driveway
+    cite: SDC 16.58.010(A)
+    note: 16.58.010(A) keeps the same 20 ft area at a private driveway; the 25 ft corner-to-driveway spacing
+      is not checked here.

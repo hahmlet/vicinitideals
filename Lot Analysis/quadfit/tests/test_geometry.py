@@ -1135,3 +1135,97 @@ def test_majority_zone_split_lot():
     zones, fracs = assign_majority_zone([lot], [za, zb], ["A", "B"])
     assert zones[0] == "A"
     assert fracs[0] == pytest.approx(0.6, abs=0.01)
+
+
+# ---------------------------------------------------------------------------
+# s4 -- a street line is a street line only where the street is (FOLLOWUPS 172)
+# ---------------------------------------------------------------------------
+
+
+def _stub_lot(neighbour=True, tract=False):
+    """A 100 x 100 lot on a street to the south, with a street stub to the
+    west whose right-of-way meets the west line along its southern 6 ft and
+    whose centreline ends 12 ft out, within reach of the line's midpoint
+    (48.5 ft).
+    The rest of the west line borders a neighbour (or, with ``tract``, a
+    private road tract the stub's centreline runs through)."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    south = LineString([(-200, -30), (300, -30)])
+    stub = LineString([(-200, 3), (-12, 3)]) if not tract else LineString([(-200, 50), (-1, 50)])
+    lots = [shapely.box(-100, 6, 0, 106)] if neighbour else []
+    return lot, [south, stub], lots
+
+
+def test_a_line_a_street_end_touches_for_a_few_feet_is_a_street_line_only_there():
+    """1N2E35DC -09200's shape: a centreline ending near a lot line made the
+    whole line a street line from its midpoint, and the drive was drawn
+    across the neighbour beside the street's end. With the fabric the line
+    is cut: 6 ft of street, 94 ft of side line along the neighbour, and the
+    frontage is the street's 100 plus the 6."""
+    lot, streets, lots = _stub_lot()
+    bare = _classify(lot, streets)
+    assert [e[4] for e in bare["edges"] if e[0] == e[2] == 0] == ["F"]
+    r = _classify_with_fabric(lot, streets, [LineString([(-500, -500), (-490, -500)])], lots)
+    west = [e for e in r["edges"] if e[0] == e[2] == 0]
+    lengths = {e[4]: 0.0 for e in west}
+    for e in west:
+        lengths[e[4]] += abs(e[3] - e[1])
+    assert lengths["F"] == pytest.approx(6, abs=1)
+    assert lengths["S"] == pytest.approx(94, abs=1)
+    assert r["frontage_ft"] == pytest.approx(106, abs=1)
+    # The neighbour stretch is asked what zone it abuts, like any side line.
+    assert [s is None for s in r["neighbour_samples"]] == [e[4] == "F" for e in r["edges"]]
+
+
+def test_a_street_line_with_the_street_all_along_it_is_left_exactly_as_it_was():
+    """No neighbour across the west line: the stub's right-of-way runs the
+    whole of it, and the line comes back uncut, coordinates and all."""
+    lot, streets, _ = _stub_lot(neighbour=False)
+    bare = _classify(lot, streets)
+    r = _classify_with_fabric(lot, streets, [LineString([(-500, -500), (-490, -500)])], [])
+    assert r["edges"] == bare["edges"]
+    assert r["frontage_ft"] == bare["frontage_ft"]
+
+
+def test_a_private_road_tract_the_street_runs_through_is_still_the_street():
+    """A private polygon a centreline crosses is the road's own tract (an HOA
+    street), not a neighbour: the line along it stays a street line."""
+    lot = Polygon([(0, 0), (100, 0), (100, 100), (0, 100)])
+    road = LineString([(-200, 50), (-10, 50)])
+    tract = shapely.box(-20, -50, 0, 150)
+    r = _classify_with_fabric(lot, [road], [LineString([(-500, -500), (-490, -500)])], [tract])
+    west = [e for e in r["edges"] if e[0] == e[2] == 0]
+    assert [e[4] for e in west] == ["F"]
+
+
+def test_a_street_end_touching_a_real_lot_line_at_state_plane_coordinates():
+    """1N2E35DC -09200, 13214 SE Ankeny Ct, Portland R5, at real coordinates
+    (EPSG:2913; the s1 fabric within 60 ft, streets within 150). The west
+    line is 30.7 ft and read a street line off the SE Ash St / 132nd end;
+    6.3 ft of it touches the right-of-way and 24.4 ft borders 13143 SE Ash St
+    (1N2E35CD -01400). Cut: about 6 ft of street and the rest a side line,
+    and the frontage is the bulb's 33.2 plus the touch, not 63.8."""
+    import json
+    from pathlib import Path
+
+    from s4_edges import classify_lot
+
+    d = json.loads((Path(__file__).parent / "fixtures" / "street_touch_1N2E35DC_09200.json").read_text())
+    lot = shapely.from_wkt(d["lot"])
+    sg = np.array([shapely.from_wkt(w) for w in d["streets"]], dtype=object)
+    lg = np.array([lot] + [shapely.from_wkt(f["wkt"]) for f in d["fabric"]], dtype=object)
+    private = np.array([True] + [f["private"] for f in d["fabric"]])
+    bare = classify_lot(lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL)
+    assert bare["frontage_ft"] == pytest.approx(63.8, abs=0.2)
+    r = classify_lot(
+        lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL,
+        lot_tree=STRtree(lg), lot_geoms=lg, lot_private=private,
+    )
+    west = [e for e in r["edges"] if min(e[0], e[2]) < 7_682_520]
+    west = [e for e in west if max(e[0], e[2]) < 7_682_520]
+    by = {}
+    for e in west:
+        by[e[4]] = by.get(e[4], 0.0) + math.hypot(e[2] - e[0], e[3] - e[1])
+    assert by["F"] == pytest.approx(6.3, abs=1.0)
+    assert by["S"] == pytest.approx(24.4, abs=1.0)
+    assert r["frontage_ft"] == pytest.approx(33.2 + 6.3, abs=1.0)

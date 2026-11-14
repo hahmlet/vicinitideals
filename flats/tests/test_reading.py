@@ -17,7 +17,10 @@ from flats.rules.loader import load_rules
 pytestmark = pytest.mark.unit
 
 PORTLAND = "or/multnomah/portland"
-CORNER = f"{PORTLAND}/33.910.definitions.txt#L701-L705"
+# 2026-11-10 (a): L701-L705 -> L714-L718 on the 11/1/26 reprint (RICAP 11,
+# FOLLOWUPS 165); the same five sentences, now with a blank line inside the
+# entry (L715) where the reprint's extraction broke the page.
+CORNER = f"{PORTLAND}/33.910.definitions.txt#L714-L718"
 
 
 def unmarked(text: str) -> str:
@@ -37,8 +40,8 @@ def test_the_city_text_is_returned_unedited() -> None:
 
 def test_the_line_numbers_are_the_quotes_line_numbers() -> None:
     shown = passage(CORNER, layer_id=PORTLAND)
-    assert shown.lines[0][0] == 701
-    assert [n for n, _ in shown.lines] == list(range(701, 701 + len(shown.lines)))
+    assert shown.lines[0][0] == 714
+    assert [n for n, _ in shown.lines] == list(range(714, 714 + len(shown.lines)))
 
 
 def test_the_words_this_city_defined_are_marked() -> None:
@@ -102,4 +105,4 @@ def test_the_rendering_puts_the_meanings_in_the_same_buffer_as_the_standard() ->
     text = passage(CORNER, layer_id=PORTLAND).render()
     assert "Defined by this jurisdiction" in text
     assert "120 degrees or less" in text
-    assert "701 |" in text
+    assert "714 |" in text

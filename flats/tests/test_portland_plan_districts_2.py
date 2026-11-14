@@ -96,8 +96,17 @@ def test_the_facts_are_drawn_site_facts_never_assumed(name: str) -> None:
 
 def test_each_area_answers_the_zones_that_carry_its_rule(portland) -> None:
     by_fact = {a.condition: a for a in portland.drawn_areas.values()}
-    # Batch B (2026-11-04) adds Northwest Map 562-2, test_portland_plan_districts_3.
-    assert set(by_fact) == set(FACTS) | set(PART_1) | set(MIN_FAR) | {"pdx_nw_residential_limited"}
+    # Batch B (2026-11-04) adds Northwest Map 562-2, test_portland_plan_districts_3;
+    # FOLLOWUPS 153 round 2 (2026-11-08) the Hayden Island and Lombard Subdistrict A
+    # main-entrance outlines, test_entrance_orientation.
+    # Maps 120-2 and 120-3 (FOLLOWUPS 68) are base-zone maps held beside them.
+    assert set(by_fact) == set(FACTS) | set(PART_1) | set(MIN_FAR) | {
+        "pdx_nw_residential_limited",
+        "pdx_hayden_island",
+        "pdx_lombard_subdistrict_a",
+        "pdx_eastern_pattern_area",
+        "pdx_min_site_frontage_area",
+    }
     for fact in FACTS:
         assert by_fact[fact].file == FILES[fact]
     assert set(by_fact[GLENDOVEER].zones) == {"R7"}
@@ -126,13 +135,22 @@ def test_the_numbers_and_the_hold_sit_where_the_code_puts_them(portland) -> None
             assert GLENDOVEER not in held, name
 
 
+#: Layers that hold the plan-district HOLD on their own drawn area: the
+#: Multnomah pockets (2026-11-09, FOLLOWUPS 112(b)) are on Title 33 under the
+#: county/city planning IGA, so Portland's plan districts reach them, held whole
+#: off plan-districts.geojson (test_multnomah_pockets_title33). Glendoveer stays
+#: Portland's alone.
+HOLD_ALSO = {"or/multnomah/_unincorporated"}
+
+
 def test_no_other_layer_carries_the_facts() -> None:
     for jid, layer in load_rules().items():
         if jid == PORTLAND:
             continue
         held = list(layer.defaults.values()) + [v for z in layer.zones.values() for v in z.values.values()]
+        allowed = {HOLD} if jid in HOLD_ALSO else set()
         for v in held:
-            assert v.qualified_by not in FACTS, jid
+            assert v.qualified_by not in set(FACTS) - allowed, jid
             assert not {c for var in v.variants for c in var.when} & set(FACTS), jid
 
 
@@ -169,16 +187,16 @@ def test_no_r7_figure_turns_on_the_flag_lot_fact() -> None:
 
 def test_the_quotes_say_what_the_rules_say() -> None:
     store = ProvenanceStore()
-    gl = store.quote("or/multnomah/portland/33.530.txt#L31,L33")
+    gl = store.quote("or/multnomah/portland/33.530.txt#L32,L34")
     assert "Front setback 30 feet" in gl
-    assert "Side setback 10 feet" in store.quote("or/multnomah/portland/33.530.txt#L31,L34,L36-L39")
-    assert "Rear setback 15 feet" in store.quote("or/multnomah/portland/33.530.txt#L31,L35")
-    assert "required setbacks are 15 feet" in store.quote("or/multnomah/portland/33.530.txt#L60-L61")
-    assert "flag lots is 25 feet" in store.quote("or/multnomah/portland/33.530.txt#L62")
-    assert "formerly zoned LR7.5" in store.quote("or/multnomah/portland/33.530.txt#L20-L23")
-    far = store.quote("or/multnomah/portland/33.521.txt#L127-L128")
+    assert "Side setback 10 feet" in store.quote("or/multnomah/portland/33.530.txt#L32,L35,L37-L40")
+    assert "Rear setback 15 feet" in store.quote("or/multnomah/portland/33.530.txt#L32,L36")
+    assert "required setbacks are 15 feet" in store.quote("or/multnomah/portland/33.530.txt#L61-L62")
+    assert "flag lots is 25 feet" in store.quote("or/multnomah/portland/33.530.txt#L63")
+    assert "formerly zoned LR7.5" in store.quote("or/multnomah/portland/33.530.txt#L21-L24")
+    far = store.quote("or/multnomah/portland/33.521.txt#L126-L127")
     assert "minimum floor area ratios (FAR) for all new development" in far and "Map 521-3" in far
-    hold = store.quote("or/multnomah/portland/33.595.txt#L89,L170-L173,L392-L396,L438-L449")
+    hold = store.quote("or/multnomah/portland/33.595.txt#L89,L171-L174,L393-L397,L438-L449")
     assert "Residential uses are prohibited in the Employment Focus Area" in hold
     assert "1.5 to 1" in hold and "30 percent" in hold and "25 percent of the total depth" in hold
 

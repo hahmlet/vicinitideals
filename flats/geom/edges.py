@@ -147,9 +147,17 @@ class Edge:
     #: How far the street's centreline runs from this street lot line, at
     #: the narrowest point measured (:func:`flats.geom.dedication.half_width_ft`).
     #: None -- the default, and the answer where too little of the line has a
-    #: centreline beside it -- is unmeasured. Read only where the lot's code
-    #: asks a dedication (:func:`flats.geom.dedication.depth_ft`).
+    #: centreline beside it -- is unmeasured. Negative where the centre line
+    #: runs on the lot's side of the line (a tax lot drawn over the road,
+    #: FOLLOWUPS 67 (b)). Read only where the lot's code asks a dedication
+    #: (:func:`flats.geom.dedication.depth_ft`).
     half_width_ft: float | None = None
+    #: Each stretch-limited row of a named-street table whose street this
+    #: line may be on, read for whether the line lies on the stretch, as
+    #: ``(printed row label, True / False / None)`` pairs
+    #: (:func:`flats.geom.dedication.stretch_readings`). Only a False lifts a
+    #: row; a row left out, or None, holds (FOLLOWUPS 77).
+    road_stretches: tuple[tuple[str, bool | None], ...] = ()
     #: The streets this line may be on, by name (:func:`flats.geom.dedication.street_key`),
     #: for a code that lists its distances by street; None where unread.
     road_names: tuple[str, ...] | None = None

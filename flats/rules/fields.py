@@ -91,6 +91,7 @@ _LABELS: dict[str, str] = {
     "driveway_min_width_one_way_ft": "min. driveway width (one-way)",
     "driveway_min_width_two_way_ft": "min. driveway width (two-way)",
     "driveway_one_lane_ft": "one-lane drive to the court, cars taking turns",
+    "driveway_lane_narrow_ft": "narrowest drive lane to the court the screen may try",
     "driveway_max_frontage_pct": "max. driveway share of frontage",
     "driveway_units_per_approach": "dwellings served by one driveway approach",
     "driveway_walkway_ft": "walkway beside the driveway",
@@ -98,6 +99,7 @@ _LABELS: dict[str, str] = {
     "max_building_width_ft": "max. building width",
     "max_mass_footprint_sqft": "max. footprint under one roof",
     "min_roof_pitch_in_12": "min. roof pitch (rise in 12)",
+    "flat_roof_cornice_min_in": "flat roof allowed with a cornice at least (inches)",
     "max_coverage_pct": "max. lot coverage %",
     "max_impervious_pct": "max. coverage of buildings and paving %",
     "max_density_du_per_acre": "max. density (units/acre)",
@@ -114,6 +116,8 @@ _LABELS: dict[str, str] = {
     "min_density_du_per_acre": "min. density (units/acre)",
     "min_density_trigger_lot_sqft": "lot size that triggers min. density",
     "min_frontage_ft": "min. frontage",
+    "min_frontage_one_street": "min. frontage is on one street",
+    "min_frontage_line": "which line the min. frontage is on",
     "min_landscaped_pct": "min. landscaping %",
     "min_lot_depth_ft": "min. lot depth",
     "min_average_lot_width_ft": "min. average lot width",
@@ -123,6 +127,7 @@ _LABELS: dict[str, str] = {
     "open_space_min_pct": "min. open space %",
     "open_space_min_sqft": "min. open space area",
     "orientation_constraint": "building orientation rule",
+    "entrance_faces_street": "front-door orientation rule",
     "parking_area_max_frontage_pct": "max. parking share of frontage",
     "parking_area_max_width_ft": "max. parking area width",
     "parking_area_frontage_any_street": "parking share capped on every street frontage",
@@ -138,19 +143,25 @@ _LABELS: dict[str, str] = {
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
     "parking_lot_line_buffer_doubt_ft": "possible stricter parking setback from other lot lines",
+    "parking_side_yard_allowed": "parking allowed in one side yard",
+    "parking_side_yard_stated": "parking side-yard reach stated by the code",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
     "fire_access_max_ft": "max. fire hose route to the farthest wall",
     "parking_front_prohibited": "parking banned in front of building",
+    "parking_front_share_allowed": "parking allowed in front of building within the frontage share",
     "parking_alley_access_required": "vehicle access must be from the alley",
     "parking_alley_backout_ft": "room to back out into the alley",
     "parking_side_prohibited": "parking banned beside the building",
     "parking_required_yard_prohibited": "parking banned in required yards",
     "parking_covered_required": "covered parking required",
     "solar_shade_limit": "height capped by shade on the lot to the north",
+    "alley_improved_required": "alley access only from an improved alley",
     "front_lot_line_corner": "which street is the front on a corner lot",
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
     "parking_front_yard_max_pct": "max. vehicle share of front yard",
+    "parking_rear_yard_max_pct": "max. vehicle share of rear setback",
+    "parking_side_street_yard_max_pct": "max. vehicle share of a corner's street-side yard",
     "parking_maneuvering_max_width_ft": "max. maneuvering-area width",
     "parking_max_per_unit": "max. parking per unit",
     "parking_min_per_unit": "min. parking per unit",
@@ -169,6 +180,7 @@ _LABELS: dict[str, str] = {
     "setback_rear_ft": "rear setback",
     "setback_side_ft": "interior side setback",
     "setback_side_total_ft": "combined side setbacks",
+    "setback_side_max_ft": "max. side setback",
     "setback_street_side_ft": "corner side yard (street side) setback",
     "setback_alley_side_ft": "alley-side setback",
     "setback_street_off_corridor_ft": "street setback off a mapped corridor",
@@ -185,6 +197,7 @@ _LABELS: dict[str, str] = {
     "row_to_centerline_class_by": "street classes for right-of-way, whose plan",
     "row_to_centerline_stated_as_width": "right-of-way stated as whole width",
     "row_to_centerline_by_designation": "right-of-way by class and plan designation",
+    "min_lot_sqft_before_dedication": "min. lot area measured before the road strip",
     "setback_north_ft": "setback from a lot line to the north (by bearing)",
     "setback_east_west_ft": "setback from a lot line to the east or west (by bearing)",
     "setback_north_street_credit_ft": "street credit toward the north setback",
@@ -231,6 +244,20 @@ _F: tuple[FieldDef, ...] = (
         "the floor says where the building may sit on what is left.",
         False,
         "side_setback",
+    ),
+    FieldDef(
+        "setback_side_max_ft",
+        "length_ft",
+        "MAXIMUM side setback, read as holding EVERY side wall to the side "
+        "lot line it faces: Hillsboro Tables 12.22.460-1 and 12.22.560-1, "
+        "\"Side Yard (all structures) 5 feet\" (SCR-MD, SCR-HD; Steph "
+        "2026-11-09, rulings.yaml 2026-11-09-hillsboro-scr-side-max-both), "
+        "and Table 12.21.850-1's 15 ft (SCR-DNC; Steph 2026-11-10). "
+        "The screen measures the drawn building's distance from each side lot "
+        "line: within it on every one passes; beyond it on any is held out "
+        "of GREEN (MEASURE-SIDE-MAX-BOTH), never failed, because the code may "
+        "yet be read as one wall (FOLLOWUPS 170). Absent, no side maximum.",
+        True,
     ),
     FieldDef("setback_rear_ft", "length_ft", "Minimum rear setback.", False, "rear_setback"),
     FieldDef(
@@ -400,6 +427,23 @@ _F: tuple[FieldDef, ...] = (
         choices=("washington_county", "sherwood", "oregon_city", "tigard"),
     ),
     FieldDef(
+        "min_lot_sqft_before_dedication",
+        "bool",
+        "True where the code measures the minimum lot area of the one-lot plan "
+        "on the lot BEFORE the right-of-way strip of the row_to_centerline_* "
+        "fields is handed over: Washington County 302-7.1 A to 307-7.1 A, "
+        "\"based on lot size prior to any right-of-way dedications\", and 375's "
+        "Table B footnote; Milwaukie 19.504.2, no lot area reduced below the "
+        "minimum \"except by dedication or conveyance for a public use\". "
+        "Absent, the strip comes off the lot area the minimum lot area and the "
+        "coverage cap are measured on (flats/geom/dedication.py strip_sqft), "
+        "the conservative side. Never read for the unit lots a plat makes: "
+        "those are measured as drawn, after the dedication (375's footnote: "
+        "\"based on actual proposed lot sizes regardless of any right-of-way "
+        "dedication\").",
+        None,
+    ),
+    FieldDef(
         "setback_north_ft",
         "length_ft",
         "Minimum distance from the building to a site line NORTH of it, "
@@ -519,6 +563,37 @@ _F: tuple[FieldDef, ...] = (
     ),
     FieldDef("min_frontage_ft", "length_ft", "Minimum street frontage.", False, "min_frontage"),
     FieldDef(
+        "min_frontage_one_street",
+        "bool",
+        "True where the frontage minimum is owed on ONE street, not summed "
+        "over every street the lot touches. PCC 33.120.206.C.1: \"unless the "
+        "site has at least 90 feet of frontage on a street\" -- a through lot "
+        "50 ft wide on each of two streets has 100 ft of frontage and 50 on "
+        "any street. The screen then reads `min_frontage_ft` against the "
+        "longest of the lot's streets (`LotFacts.street_lines_ft`), and "
+        "leaves it unchecked where the streets were not measured.",
+    ),
+    FieldDef(
+        "min_frontage_line",
+        "enum",
+        "Which line a minimum street frontage is owed on, where the code "
+        "says (FOLLOWUPS 175). On a lot with one street it changes nothing. "
+        "On a corner or through lot, unstated, the screen passes the lot "
+        "only on its SHORTEST street and holds it as a question where only "
+        "its streets added together clear the number. `front`: the front "
+        "lot line (MCC 39.4245 \"Minimum Front Lot Line Length\"; Hillsboro "
+        "12.01.500 \"the length of the front lot line\"), so never the sum: "
+        "the shortest street passes, the longest is a question, both short "
+        "fails -- and where `front_lot_line_corner` is `shortest` the "
+        "shortest is the answer. `radius_end`: one street, and on a corner "
+        "lot measured \"from the corner radius end point to the property "
+        "corner\" (Gresham Table 4.0130 G.2, 4.0430 notes 8 and 11, 4.1130) "
+        "-- each street without its share of the rounded corner "
+        "(`LotFacts.street_lines_curve_end_ft`).",
+        None,
+        choices=("front", "radius_end"),
+    ),
+    FieldDef(
         "min_lot_depth_ft",
         "length_ft",
         "Minimum lot depth, front line to rear line. Distinct from lot area: a "
@@ -544,13 +619,69 @@ _F: tuple[FieldDef, ...] = (
         "be developed anyway. `lot_area`: the minimum lot area (Gresham Table "
         "4.0130 note 2). `lot_dimensions`: minimum lot area, minimum frontage "
         "and the depth ratio, and a lot that misses any of them is then "
-        "exempt from the minimum density (Gresham 4.0431.C). Every existing "
-        "taxlot is taken as a lot of record (Steph 2026-10-21, rulings.yaml "
+        "exempt from the minimum density (Gresham 4.0431.C). `lot_standards`: "
+        "lot area, width, average width, depth, frontage and the depth ratio "
+        "(Milwaukie 19.501.1). `lot_shape`: the same without the area, where "
+        "an undersized lot of record may hold only a house (Troutdale 5.350). "
+        "`lot_area_frontage`: area and frontage (MCC 39.3140). "
+        "`lot_area_width_depth`: area, width and depth (Happy Valley "
+        "16.72.040). `lot_width`: width alone (Beaverton 30.15, Canby "
+        "16.08.080 C). None of these lifts a minimum density except "
+        "`lot_dimensions`. Every existing taxlot is taken as a lot of record "
+        "(Steph 2026-10-21, rulings.yaml "
         "2026-10-21-existing-taxlots-are-lots-of-record). Never reaches the "
         "unit-lots path, which makes new lots.",
         None,
-        choices=("none", "lot_area", "lot_dimensions"),
+        choices=(
+            "none",
+            "lot_area",
+            "lot_dimensions",
+            "lot_standards",
+            "lot_shape",
+            "lot_area_frontage",
+            "lot_area_width_depth",
+            "lot_width",
+        ),
         label="lot-of-record relief",
+    ),
+    FieldDef(
+        "lot_of_record_floor_sqft",
+        "area_sqft",
+        "The smallest lot `lot_of_record_relief` lets off the minimum lot "
+        "area, where the code prints one: Hillsboro 12.30.300 A and Estacada "
+        "16.84.040 hold a lot under the zone's single-dwelling minimum to a "
+        "house, a duplex or a townhouse, and MCC 39.3140 (B) stops at 3,000 "
+        "sq ft. Below it the area row stands. Touches nothing but the area.",
+        False,
+        label="lot-of-record relief floor",
+    ),
+    FieldDef(
+        "lot_of_record_relief_base_only",
+        "bool",
+        "True where the code's lot-of-record relief reaches only the zone's "
+        "own lot-size table, and a number a variant of the same field brings "
+        "in from another section still binds. PCC 33.120.205 C.3 lets a lot "
+        "of record off Table 120-3, and in RX that table's row is the 10 ft "
+        "front lot line (`min_frontage_ft`'s base); 33.120.206's 90 ft on "
+        "Map 120-2 sites is a variant of the same field and a separate "
+        "section C.3 does not reach. The screen then lets a lot off a "
+        "standard only where the base number was the one it was held to.",
+        label="lot-of-record relief reaches the table only",
+    ),
+    FieldDef(
+        "lot_of_record_condition",
+        "enum",
+        "What the code's lot-of-record relief depends on that the data does "
+        "not hold, where it does. `creation_date`: the lot's date or history "
+        "of creation. `adjoining_ownership`: who has owned the land beside "
+        "it. `per_dwelling_area`: whether a relief from the area requirement "
+        "reaches an area stated per dwelling, which also sets how many homes "
+        "a lot holds. A lot let off under such a relief is held at YELLOW "
+        "with MEASURE-LOT-OF-RECORD, never GREEN: Steph's 2026-10-21 ruling "
+        "says the lot is legal, not when it was made or who owned next door.",
+        None,
+        choices=("none", "creation_date", "adjoining_ownership", "per_dwelling_area"),
+        label="lot-of-record relief condition",
     ),
     FieldDef(
         "land_division_parent_standards",
@@ -625,6 +756,21 @@ _F: tuple[FieldDef, ...] = (
         "is to. So this would be a red flag\"), pitch 0, so it misses "
         "every instance (`roof_pitch`). A design that states no roof is not "
         "measured. Optional: absent means no roof rule was read.",
+        False,
+    ),
+    FieldDef(
+        "flat_roof_cornice_min_in",
+        "count",
+        "A pitched roof is the rule and a FLAT roof is allowed only with a "
+        "cornice at least this many INCHES tall, as printed: Tigard 18.280.040.J "
+        "\"a roof may be flat if ... The roof line includes a cornice that "
+        "extends at least six inches from the facade and is a minimum of 12 "
+        "inches in height\". The pod's roof is flat and its catalog states no "
+        "cornice, so a lot this reaches is YELLOW with ROOF-CORNICE (Steph "
+        "2026-11-10, rulings.yaml `2026-11-10-tigard-cornice-yellow`: "
+        "\"tigard, yellow with flag\"), never RED on it and never GREEN. Not "
+        "a pitch floor: a zone holding one is RED on `min_roof_pitch_in_12` "
+        "first. Optional: absent means no such rule was read.",
         False,
     ),
     FieldDef(
@@ -836,9 +982,12 @@ _F: tuple[FieldDef, ...] = (
         "True where the Type I path is open only on a lot \"approved for the "
         "construction of a Single Detached Dwelling Unit through a Standard "
         "Subdivision or Standard Partition\" (Washington County R-9, R-15, "
-        "R-24, R-25+, R-9 NB and the transit districts). Nothing here holds "
-        "how a lot was created, so every such lot carries REVIEW-CONDITIONS "
-        "(Steph 2026-10-14: unmeasured, the same yellow flag, not red).",
+        "R-24, R-25+, R-9 NB and the transit districts). How a lot was made "
+        "is read off the county's legal description (flats.ingest.plats, "
+        "FOLLOWUPS 83): a lot a plat older than middle housing land "
+        "divisions made passes; any other carries REVIEW-CONDITIONS "
+        "(Steph 2026-10-14: unmeasured or missed, the same yellow flag, "
+        "not red).",
     ),
     # --- parking and open space ----------------------------------------
     FieldDef("parking_min_per_unit", "ratio", "Required off-street stalls per unit.", False, "parking_min"),
@@ -992,6 +1141,21 @@ _F: tuple[FieldDef, ...] = (
         False,
     ),
     FieldDef(
+        "driveway_lane_narrow_ft",
+        "length_ft",
+        "The narrowest the drive to the rear court may be drawn, where the "
+        "code prints a driveway minimum below the pod's lane and a ruling "
+        "lets the pod use it. Not the lane: the pod's own lane (raised to "
+        "any two-way minimum) is screened first, and only a lot it misses "
+        "is screened again with the lane at this width, or at the narrowest "
+        "whole foot above it the screen's car can drive into every stall "
+        "from (flats.ingest.quadfit.narrow_lane_checked). Never on the "
+        "unit-lot form. Portland (and the pockets it administers): "
+        "33.266.120.D.2, \"The minimum driveway width on private property "
+        "is 9 feet\", ruled 2026-11-10 (\"9ft in Portland\").",
+        False,
+    ),
+    FieldDef(
         "driveway_walkway_ft",
         "length_ft",
         "A pedestrian way the code puts BESIDE the driveway, in addition to "
@@ -1115,6 +1279,29 @@ _F: tuple[FieldDef, ...] = (
         True,
     ),
     FieldDef(
+        "parking_rear_yard_max_pct",
+        "percent",
+        "Most of the required rear setback that may be vehicle area. PCC "
+        "33.120.220.B.2.a, in the Eastern Pattern Area: \"No more than 50 "
+        "percent of the Eastern Pattern Area rear setback can be vehicle "
+        "area.\" Everywhere else the rear court shares the rear yard whole "
+        "(`paper.behind_wall_ft`); here only this share of the yard's depth "
+        "may carry it, the rest standing behind the court. Read on depth, "
+        "not area, which is conservative: the court is taken to run the "
+        "yard's whole width.",
+        True,
+    ),
+    FieldDef(
+        "parking_side_street_yard_max_pct",
+        "percent",
+        "Most of the ground between a corner lot's side street lot line and "
+        "the side street building line that may be paved or used as vehicle "
+        "area: Portland 20 percent (33.266.120.C.1.b, the sentence after the "
+        "front yard's 40). Measured as the drive the court takes off the side "
+        "street against the lot's shortest street line (FOLLOWUPS 6(b)).",
+        True,
+    ),
+    FieldDef(
         "parking_front_prohibited",
         "bool",
         "True where the code bans PARKING between the primary building and "
@@ -1128,6 +1315,22 @@ _F: tuple[FieldDef, ...] = (
         "court and not the drive that reaches a rear one. A ban and a "
         "50-percent cap are not the same rule and cannot share a field: "
         "one of them a front-yard court can satisfy.",
+        None,
+    ),
+    FieldDef(
+        "parking_front_share_allowed",
+        "bool",
+        "True where the code PERMITS a parking court between the building "
+        "and a public street on conditions of its own, so the 2026-11-08 "
+        "ruling for silent codes (no court in the front yard) does not reach "
+        "it. Unincorporated Clackamas ZDO 845.02(D): allowed where a home "
+        "screens it from the street, or where its combined width stays "
+        "within `parking_area_max_frontage_pct` (50) of the frontage (Steph "
+        "2026-11-09, rulings.yaml "
+        "`2026-11-09-clackamas-front-parking-follow-zdo`). Only the width "
+        "limb is measured, on the final drawing, on every street; a line "
+        "not read as a public road keeps the hold. False on the townhouse "
+        "path (845.03(E)(2)(a)).",
         None,
     ),
     FieldDef(
@@ -1266,6 +1469,23 @@ _F: tuple[FieldDef, ...] = (
         None,
     ),
     FieldDef(
+        "alley_improved_required",
+        "bool",
+        "True where the code lets vehicle access come from an alley only "
+        "once the alley is improved -- built to the jurisdiction's alley "
+        "width and pavement standards. Washington County CDC 430-84 "
+        "(\"For lots or parcels abutting an improved alley (defined as "
+        "meeting alley width and pavement standards under Section 409-3.3 "
+        "A), access may be taken from the alley\"). The alley's width is "
+        "measured (quadfit s4) and its paving is not, so it never moves a "
+        "verdict: where True and the court is reached from the alley "
+        "(`parking_alley_access_required` on a lot with one), the screening "
+        "carries the ALLEY-IMPROVEMENT-UNCONFIRMED flag, below the yellow "
+        "line (coordinator 2026-11-08, FOLLOWUPS 105). Optional: absent "
+        "means no such rule was read.",
+        None,
+    ),
+    FieldDef(
         "corner_access_street",
         "enum",
         "Which street a lot with frontage on more than one takes its "
@@ -1347,6 +1567,30 @@ _F: tuple[FieldDef, ...] = (
         "encoded setback or parking buffer. Optional: absent means no "
         "additional doubt is held.",
         False,
+    ),
+    FieldDef(
+        "parking_side_yard_allowed",
+        "enum",
+        "Where parking and vehicle access areas may use one required side "
+        "yard: `none` keeps today's full setbacks; `lane` lets only the drive "
+        "lane overlap one side setback; `lane_and_court` also lets the "
+        "parking court and stalls overlap that same side setback. The building "
+        "keeps both full side setbacks, and `parking_lot_line_buffer_ft` "
+        "remains between the parking and the lot line. "
+        "`parking_side_prohibited` and `parking_required_yard_prohibited` "
+        "always override this permission. Optional: absent means `none`.",
+        None,
+        choices=("none", "lane", "lane_and_court"),
+    ),
+    FieldDef(
+        "parking_side_yard_stated",
+        "enum",
+        "The part of `parking_side_yard_allowed` the code actually states. "
+        "`none` records silence; `lane` records only the drive lane; "
+        "`lane_and_court` records both the lane and parking court. Optional: "
+        "absent means `none`.",
+        None,
+        choices=("none", "lane", "lane_and_court"),
     ),
     FieldDef(
         "parking_island_sqft_per_space",
@@ -1566,6 +1810,59 @@ _F: tuple[FieldDef, ...] = (
         None,
         "building_orientation",
         choices=("none", "entrance_only", "axis_required"),
+    ),
+    FieldDef(
+        "entrance_faces_street",
+        "enum",
+        "Whether the code's main-entrance standard lets the pod stand turned, "
+        "its 30 ft end to the street and every front door facing a side yard "
+        "(FOLLOWUPS 153; Steph 2026-11-08: \"Each muni will have a standard "
+        "typically\"). `required`: the entrance must face the street (or "
+        "within the angle it prints, `entrance_angle_max_deg`) and nothing "
+        "the turned building can do meets it, so a design whose doors are on "
+        "its long face is searched only with that face toward a street the "
+        "lot abuts -- the front, or a corner's side street -- and drawn "
+        "with it toward that street (flats.score.paper.door_limit; rel4 "
+        "move-read finding 2). `alternative`: required, "
+        "but the code offers a way the turned building meets with a design "
+        "detail -- a porch of a stated size, the end home's door within a "
+        "stated distance of the street wall -- which the pod can be adapted "
+        "to (rulings.yaml 2026-10-14-unchecked-design-details), so the turned "
+        "fit stands. Steph 2026-11-08 (rulings.yaml 2026-11-08-no-porch-end-door): "
+        "the pod takes no end-home porch door or street-end windows, so a code "
+        "whose only alternatives are those (or an angle a 90-degree turn cannot "
+        "meet) is `required`. `not_required`: no entrance standard reaches the pod. "
+        "`unclear`: one reaches it and whether a turned building meets it is "
+        "a reading nobody has settled. `unclear`, or absent, holds a turned "
+        "fit out of GREEN on ENTRANCE-TURNED and never fails it; a building "
+        "that also fits facing the street is read that way. Corner lots: "
+        "facing either street counts. `required_named`: `required`, and on "
+        "a lot with more than one street the code names which one the "
+        "entrance faces (the official address, the street with the most "
+        "foot traffic, a mapped access street) -- which nothing the screen "
+        "reads tells, so a corner or through lot, or one whose streets were "
+        "never measured, is held out of GREEN on ENTRANCE-STREET.",
+        None,
+        "building_orientation",
+        choices=("required", "required_named", "alternative", "not_required", "unclear"),
+        label="front-door orientation rule",
+    ),
+    FieldDef(
+        "entrance_angle_max_deg",
+        "count",
+        "The angle, in degrees, the main-entrance standard lets the entrance "
+        "stand off the street, where `entrance_faces_street` is `required` "
+        "or `required_named`: the Large Cities Model Code's \"be at an angle "
+        "of up to 45 degrees from the street\" and the codes copied from it "
+        "(OAR 660-046 Exhibit B C.2.b.ii; Portland 33.110.230.C, Milwaukie "
+        "19.508.4's \"'facing' means within 45 degrees of the street property "
+        "line\"). The fit may stand the door face up to this far off a street "
+        "the lot abuts (flats.score.paper.door_limit). Absent: nought, the "
+        "door face parallel to a street line -- the conservative reading of "
+        "a code that prints no angle. rel4 move-read finding 2, 2026-11-08.",
+        True,
+        "building_orientation",
+        label="max. entrance angle from the street",
     ),
     FieldDef(
         "front_lot_line_corner",
@@ -1886,6 +2183,9 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "row_to_centerline_class_by",
         "row_to_centerline_stated_as_width",
         "row_to_centerline_by_designation",
+        # Said only by a code that measures lot area before the road strip;
+        # silence keeps the conservative reading (the strip off the lot).
+        "min_lot_sqft_before_dedication",
         # Distances set by which way a lot line faces rather than by its
         # class. One code in the corpus writes them (Clackamas ZDO
         # 1005.02(L), in HDR, SHD and RCHDR), and a zone silent about them
@@ -1896,6 +2196,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",
+        # One city states a maximum side setback (Hillsboro SCR-MD, SCR-HD, SCR-DNC).
+        "setback_side_max_ft",
         "setback_front_max_ft",
         "setback_front_max_streets",
         "setback_front_max_facade_pct",
@@ -1918,6 +2220,9 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "max_lot_depth_ratio",
         # A relief, not a standard: a code that states none relieves nothing.
         "lot_of_record_relief",
+        "lot_of_record_floor_sqft",
+        "lot_of_record_condition",
+        "lot_of_record_relief_base_only",
         # One jurisdiction in the corpus caps building width, and only inside
         # a historic district. A zone that is silent about it is not an
         # incomplete zone.
@@ -1926,6 +2231,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # 3): a handful of districts state them and most zones state none.
         "max_mass_footprint_sqft",
         "min_roof_pitch_in_12",
+        "flat_roof_cornice_min_in",
         "land_division_parent_standards",
         "max_far",
         # A floor on the amount of building: Canby's Downtown Overlay alone.
@@ -1969,6 +2275,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "driveway_min_width_two_way_ft",
         # A ruling, not a row of a table: stated only where one was given.
         "driveway_one_lane_ft",
+        "driveway_lane_narrow_ft",
         "driveway_walkway_ft",
         "driveway_max_frontage_pct",
         # A requirement one city states (Oregon City 16.12.035.F); a zone or
@@ -1991,13 +2298,19 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "building_frontage_corner",
         "building_frontage_band_ft",
         "parking_front_yard_max_pct",
+        "parking_side_street_yard_max_pct",
         "parking_front_prohibited",
+        "parking_front_share_allowed",
         "parking_alley_access_required",
         "parking_alley_backout_ft",
         "parking_side_prohibited",
         "parking_required_yard_prohibited",
+        "parking_rear_yard_max_pct",
+        "min_frontage_one_street",
+        "min_frontage_line",
         "parking_covered_required",
         "solar_shade_limit",
+        "alley_improved_required",
         "corner_access_street",
         "front_lot_line_corner",
         # Same argument as the corner line above it: a definition, not a row
@@ -2008,6 +2321,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_building_buffer_ft",
         "parking_lot_line_buffer_ft",
         "parking_lot_line_buffer_doubt_ft",
+        "parking_side_yard_allowed",
+        "parking_side_yard_stated",
         "parking_island_sqft_per_space",
         "open_space_min_pct",
         "open_space_min_sqft",
@@ -2018,6 +2333,14 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "private_open_space_min_dimension_ft",
         "min_landscaped_pct",
         "orientation_constraint",
+        # Silence is not incomplete: an unread entrance standard holds a
+        # turned fit out of GREEN in the screen (ENTRANCE-TURNED) rather
+        # than counting the zone short of a required field.
+        "entrance_faces_street",
+        # Absent, the fit reads nought -- the door face parallel to a street
+        # line, the conservative reading of a code that prints no angle
+        # (flats.score.paper.door_limit; rel4 move-read finding 2).
+        "entrance_angle_max_deg",
         # The review path, not a dimension (Steph 2026-10-14, FOLLOWUPS 79).
         # A zone silent on it has a review on measurable standards, or none,
         # and is not incomplete.

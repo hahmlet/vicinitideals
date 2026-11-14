@@ -1,19 +1,19 @@
-# 181. Roof sweep: Clackamas unincorporated pitched-roof rule (lane roof-ban, 2026-11-10)
+# 181. Roof sweep: Clackamas pitched roof + four re-reads (2026-11-10)
 
-[Claude] [Steph] [scan: YES -- false greens only]
+[Claude] [Steph: 3 questions] [scan: YES -- false greens only]
 
-Lane roof-ban (flats/roof-ban, 2e675fee + f4072a52 Tigard cornice, off rel7)
-closed Wood Village (~108 G + 59 Y -> RED), Hillsboro downtown/Orenco (RED;
-3 downtown-edge zones YELLOW until the Downtown Plan District figure is traced),
-Gresham flag lots (22 ft flat-roof cap -> RED), Tigard rowhouse zones (YELLOW +
-cornice flag). Hand-off ../vicinitideals-worktrees/roof-ban.handoff.md.
-Coordinator: bump test_refusals 296->297; quadfit mirror roof pitch 11->17,
-cornice 7; two ledger tests flaked once in a combined run.
-Open for Steph:
-(a) Clackamas County unincorporated: 1-2 storey buildings must have pitched
-    roofs; flat allowed only as a roof garden / outdoor space; unclear if
-    county middle housing is exempt. RED (ban), YELLOW + flag (roof-garden way
-    out, like Tigard), or exempt?
-(b) Uncertain readings to re-read: Tualatin, Happy Valley VTH (maybe false RED
-    today), Wilsonville Villebois, Portland Conservation Districts.
-Follow-on: trace Hillsboro Downtown Plan District figure (removes wrong yellows).
+DONE and live: lane roof-ban (Wood Village, Hillsboro downtown/Orenco, Gresham flag lots, Tigard rowhouse cornice) -- 2e675fee, f4072a52.
+RULED 2026-11-11 (a): Clackamas unincorporated pitched roof -> YELLOW + flag, roof-garden way out (2026-11-11-clackamas-pitched-roof-yellow).
+BUILT, merged into flats/rel8, bound running 11-13:
+- (a) flats/clackamas-roof 4245abd9 (~385 G->Y, ROOF-GARDEN).
+- (b) flats/roof-rereads 0151a6c5: Tualatin roof elements G->Y (3 of 6 list items), Villebois built lots G->Y, Hillsboro Downtown Plan District traced (515 ac;
+  inside RED, line-cut YELLOW, outer SCR zones lose the hold), Happy Valley VTH no false red, Portland Conservation Districts flag wording only.
+  Hand-offs ../vicinitideals-worktrees/clackamas-roof.handoff.md, roof-rereads.handoff.md.
+
+STILL OPEN for Steph (no ruling yet):
+(1) Hillsboro: the text applies the roof rule to the whole Downtown Plan District, the map shades a smaller pink area "where design rules apply"
+    -- built on the text (more RED); which governs?
+(2) Ask a Tualatin planner whether a flat roof's edge overhang counts as one of the list items (else every Tualatin lot with a flat roof is RED)?
+(3) Ask Wilsonville Planning for the Villebois Pattern Book (not online)?
+
+Steph 2026-11-14: no city contact ("I don't want to ask any cities"), ruling 2026-11-14-no-city-contact. (1) text governs, (2) Tualatin flat roof stays RED, (3) Villebois stays YELLOW. All three closed.

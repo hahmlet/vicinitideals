@@ -157,7 +157,10 @@ def test_an_unmeasured_footnote_does_not_unsettle_a_prohibition() -> None:
     for layer, zone in (
         ("or/clackamas/oregon-city", "MUE"),
         ("or/clackamas/oregon-city", "I"),
-        ("or/multnomah/portland", "CI1"),
+        # Portland CI1 left this list 2026-11-10 (rel7 assembly): RICAP 11 made CI1
+        # Household Living "Y" (PCC Table 150-1, pdx-drift codified the reprint;
+        # ruling 2026-08-06-portland-ricap11-ci1-housing), so CI1 is no longer a
+        # prohibition for this test to hold. It resolves True with no levers.
     ):
         use = rules.resolve(layer, zone).values["quadplex_allowed"]
         assert use.value is False, (layer, zone)

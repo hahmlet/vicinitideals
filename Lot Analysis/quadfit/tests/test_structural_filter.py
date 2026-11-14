@@ -228,3 +228,47 @@ def test_the_hand_assigned_cornelius_lot_is_measured_under_its_own_zone(rules, l
     assert gone.loc["OTHER-AF5", "step"] == "zone_not_in_rules"
     k = kept.loc["1N335CD01200"]
     assert (k["jurisdiction"], k["zone_raw"], k["zone"], k["home_zone_raw"]) == ("cornelius", "R-10", "R-10", "AF-5")
+
+
+# -- s3: map spellings FLATS rules an alias --------------------------------
+
+
+def test_every_alias_ruling_resolves_where_quadfit_holds_its_target(rules, layers) -> None:
+    """FOLLOWUPS 84 / 10(a): a FLATS ``alias`` ruling (a map code that IS one
+    of the layer's zones under another spelling) must resolve in quadfit
+    wherever quadfit holds the zone it names, or s3 drops every lot so mapped
+    ``zone_not_in_rules`` and FLATS can only say LOT-NOT-MEASURED. The ported
+    blocks get ``zone_aliases`` from port_from_flats; a hand block has to
+    carry them itself. Fairview's FLX was the one miss."""
+    from flats.encode.port_quadfit import layer_id_for
+
+    missing = []
+    for slug, home in rules.jurisdictions.items():
+        try:
+            layer = layers.get(layer_id_for(slug))
+        except KeyError:
+            continue
+        if layer is None:
+            continue
+        for code, ruling in layer.zone_rulings.items():
+            if ruling.outcome != "alias" or ruling.of is None:
+                continue
+            target = home.rule_for(ruling.of)
+            if target is not None and home.rule_for(code) is not target:
+                missing.append((slug, code, ruling.of))
+    assert missing == []
+
+
+def test_the_fairview_flex_lot_is_measured_under_vc_and_keeps_its_code(rules, layers) -> None:
+    """1N3E33AB  -00500 (1700 NE Market Dr) is the only lot Metro maps FLX,
+    the "VC flex" area of FMC 19.135.030(A)(1)(e). s3 must keep it under VC's
+    row and leave ``zone_raw`` as printed: FLATS feeds the lot
+    ``inside_mapped_use_area`` off the FLX spelling (fairview.yaml
+    zone_rulings FLX ``observes``)."""
+    tlid = "1N3E33AB  -00500"
+    rows = [_lot(tlid, "fairview", "FLX", side=200.0)]
+    kept, _funnel, gone = _run(rows, rules, layers)
+    assert tlid not in gone.index
+    k = kept.loc[tlid]
+    assert (k["jurisdiction"], k["zone_raw"], k["zone"]) == ("fairview", "FLX", "VC")
+    assert rules.jurisdictions["fairview"].rule_for("FLX").quadplex_allowed

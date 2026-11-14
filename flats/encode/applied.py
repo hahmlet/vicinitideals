@@ -169,6 +169,7 @@ _FIGURES = (
     "from_top_degrees",
     "floor_ft",
     "pct_of_lot_width",
+    "pct_of_lot_depth",
     "reduce_pct",
     "before_step_back",
     "stories",

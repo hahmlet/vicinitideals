@@ -262,13 +262,17 @@ def test_a_total_miss_reports_the_width_it_fell_short_by() -> None:
     assert not fit.fits
     assert fit.best_depth_ft == 0.0
     assert fit.width_short_ft == pytest.approx(0.3, abs=0.11)
+    assert fit.depth_at_short_width_ft == pytest.approx(40.0, abs=0.11)
     far = fitter(LOT).fit(80, 20, allow_flip=False)
     assert far.width_short_ft == pytest.approx(20.0)
+    assert far.depth_at_short_width_ft == pytest.approx(40.0)
 
 
 def test_a_depth_that_was_found_leaves_no_width_to_report() -> None:
     assert fitter(LOT).fit(56, 44).width_short_ft is None
     assert fitter(LOT).fit(56, 36).width_short_ft is None
+    assert fitter(LOT).fit(56, 44).depth_at_short_width_ft is None
+    assert fitter(LOT).fit(56, 36).depth_at_short_width_ft is None
 
 
 def test_two_orientations_with_no_window_keep_the_nearer_miss() -> None:
@@ -278,7 +282,18 @@ def test_two_orientations_with_no_window_keep_the_nearer_miss() -> None:
 
     assert fit.best_depth_ft == 0.0
     assert fit.width_short_ft == pytest.approx(10.0)
+    assert fit.depth_at_short_width_ft == pytest.approx(40.0)
     assert fit.orientation is Orientation.width_facing
+
+
+def test_a_width_short_fit_records_depth_at_the_narrower_width() -> None:
+    lot = shapely.box(0, 0, 49.5, 60)
+
+    fit = fitter(lot).fit(50, 40, allow_flip=False)
+
+    assert not fit.fits
+    assert fit.best_depth_ft == 0.0
+    assert fit.depth_at_short_width_ft == pytest.approx(60.0, abs=0.11)
 
 
 def test_turning_the_pod_sideways_can_save_the_lot() -> None:

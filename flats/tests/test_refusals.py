@@ -382,7 +382,30 @@ pytestmark = pytest.mark.unit
 # 288 -> 287 comments on 2026-11-04 (hillsboro-active-streets round 2, FOLLOWUPS 147):
 # MU-VTC's minimum FAR (Table 12.24.360-1, 0.4 / 0.5) is encoded, held on the
 # 12.65.150.A doubt, so its NOT ENCODED comment goes.
-EXPECTED = {"notes": 165, "comments": 287, "tests": 18}
+# 2026-11-06 (FOLLOWUPS 146): comments +3, West Linn, Clackamas and Washington County side-yard strips.
+# 2026-11-07 (rescreen-1110): both together, 288 - 1 + 3 = 290.
+# 290 -> 292 comments on 2026-11-08 (FOLLOWUPS 105 round 3): Canby 16.41.060 and Gladstone 17.76
+# were fetched and read, so their crossref rulings became READ AND NOT ENCODED comments (+2);
+# Tigard's S-3 refusal is encoded (-1) and its 18.420.050 ruling became a comment (+1).
+# 165 -> 164 notes on 2026-11-09 (FOLLOWUPS 52): Clackamas SCMU's note no longer refuses the
+# front setback; Map 1005-1 is read and the front window (10-15 ft) is encoded.
+# 292 -> 294 comments on 2026-11-09 (FOLLOWUPS 105 round 4): West Linn Chapters 42 and 28 were
+# fetched and read, so their `fetch` crossref rulings became one READ AND NOT ENCODED block with two
+# NOT ENCODED readings (vision triangles, river protection).
+# 292 -> 293 comments on 2026-11-09 (pagecheck-findings): Wilsonville OTR's garage line is
+# the design book's (4 ft behind the front building line), which no field holds as printed,
+# so 4.113's 20 ft came out and a NOT ENCODED comment went in.
+# 293 -> 294 comments on 2026-11-09 (pagecheck-findings): Gresham Downtown's 4.1152 S13(a)(ii)
+# 15-foot townhouse-lot frontage gate is NOT ENCODED with the reading written down (it
+# conditions the front-access path the rear court does not take; unit-lot minimum is 16).
+# rel6 2026-11-09: notes 164 (FOLLOWUPS 52); comments 292 + 2 (FOLLOWUPS 105 round 4,
+# flats/crossref-follow-3) + 2 (FOLLOWUPS 112, flats/pagecheck-findings) = 296.
+# 2026-11-10 (flats/pdx-drift, FOLLOWUPS 165): notes 164 -> 163. The 11/1/26 reprint puts
+# CI1 household living under RM1's standards (33.150.200), so CI1 no longer carries its own
+# "NOT ENCODED, on purpose: Maps 150-1 through 150-5" note; CI2 and IR keep theirs.
+# 296 -> 297 comments on 2026-11-10 (rel7 add-ons, flats/roof-ban): Wood Village LR 7.5/LR 12/MR 2/MR 4
+# roof pitch -- 210.375 C(1) / 220.355 C(1) (a development set behind another dwelling) NOT ENCODED.
+EXPECTED = {"notes": 163, "comments": 297, "tests": 18}
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no

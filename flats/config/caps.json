@@ -1,6 +1,9 @@
 {
   "or/clackamas/_unincorporated": {
     "VA": {
+      "building_frontage_band_ft": [
+        "site_specific_limitation"
+      ],
       "max_height_ft": [
         "site_specific_limitation"
       ],
@@ -377,6 +380,12 @@
   },
   "or/clackamas/oregon-city": {
     "(defaults)": {
+      "entrance_angle_max_deg": [
+        "protected_water_feature"
+      ],
+      "entrance_faces_street": [
+        "protected_water_feature"
+      ],
       "front_lot_line_corner": [
         "utility_easement"
       ],
@@ -397,10 +406,20 @@
       "parking_front_prohibited": [
         "protected_water_feature"
       ],
+      "parking_lot_line_buffer_ft": [
+        "utility_easement"
+      ],
       "parking_maneuvering_max_width_ft": [
         "protected_water_feature"
       ],
       "parking_side_prohibited": [
+        "protected_water_feature"
+      ],
+      "parking_side_yard_allowed": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
+      "parking_side_yard_stated": [
         "protected_water_feature"
       ]
     },
@@ -671,14 +690,12 @@
     },
     "R-2": {
       "max_coverage_pct": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "max_density_du_per_acre": [
         "protected_water_feature"
       ],
       "max_height_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "max_mass_footprint_sqft": [
@@ -688,51 +705,40 @@
         "protected_water_feature"
       ],
       "min_landscaped_pct": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_lot_depth_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_lot_sqft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_lot_width_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_roof_pitch_in_12": [
         "protected_water_feature"
       ],
       "quadplex_allowed": [
-        "abuts_lower_density_zone",
         "protected_water_feature",
         "utility_easement"
       ],
       "setback_front_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "setback_front_max_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "setback_front_max_streets": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "setback_rear_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "setback_side_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "setback_street_side_ft": [
-        "abuts_lower_density_zone",
         "utility_easement"
       ]
     },
@@ -1020,7 +1026,6 @@
         "civic_corridor"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "civic_corridor",
         "sidewalk_easement",
         "through_lot"
@@ -1029,19 +1034,16 @@
         "civic_corridor"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "civic_corridor",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "civic_corridor",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "civic_corridor",
         "sidewalk_easement",
         "through_lot"
@@ -1063,6 +1065,9 @@
       "min_frontage_ft": [
         "north_of_marine_drive"
       ],
+      "min_frontage_line": [
+        "north_of_marine_drive"
+      ],
       "min_lot_depth_ft": [
         "north_of_marine_drive"
       ],
@@ -1073,27 +1078,22 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1124,27 +1124,22 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1172,27 +1167,22 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1210,6 +1200,9 @@
       "min_frontage_ft": [
         "north_of_marine_drive"
       ],
+      "min_frontage_line": [
+        "north_of_marine_drive"
+      ],
       "min_lot_sqft": [
         "north_of_marine_drive"
       ],
@@ -1217,27 +1210,22 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1268,27 +1256,22 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1309,6 +1292,9 @@
       "min_frontage_ft": [
         "north_of_marine_drive"
       ],
+      "min_frontage_line": [
+        "north_of_marine_drive"
+      ],
       "min_lot_sqft": [
         "north_of_marine_drive"
       ],
@@ -1316,27 +1302,22 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
@@ -1357,6 +1338,9 @@
       "min_frontage_ft": [
         "north_of_marine_drive"
       ],
+      "min_frontage_line": [
+        "north_of_marine_drive"
+      ],
       "min_lot_depth_ft": [
         "north_of_marine_drive"
       ],
@@ -1367,62 +1351,28 @@
         "north_of_marine_drive"
       ],
       "setback_front_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_garage_entrance_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_rear_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
-        "at_street_end",
         "sidewalk_easement",
         "through_lot"
       ]
     }
   },
   "or/multnomah/portland": {
-    "CI1": {
-      "max_coverage_pct": [
-        "site_specific_limitation"
-      ],
-      "max_far": [
-        "site_specific_limitation"
-      ],
-      "max_height_ft": [
-        "site_specific_limitation"
-      ],
-      "min_landscaped_pct": [
-        "site_specific_limitation"
-      ],
-      "min_lot_sqft": [
-        "site_specific_limitation"
-      ],
-      "quadplex_allowed": [
-        "site_specific_limitation"
-      ],
-      "setback_front_ft": [
-        "site_specific_limitation"
-      ],
-      "setback_rear_ft": [
-        "site_specific_limitation"
-      ],
-      "setback_side_ft": [
-        "site_specific_limitation"
-      ]
-    },
     "CI2": {
       "max_coverage_pct": [
         "site_specific_limitation"
@@ -1472,6 +1422,9 @@
         "site_specific_limitation"
       ],
       "min_lot_sqft": [
+        "site_specific_limitation"
+      ],
+      "parking_lot_line_buffer_ft": [
         "site_specific_limitation"
       ],
       "quadplex_allowed": [

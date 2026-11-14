@@ -1,8 +1,9 @@
 Title 33, Planning and Zoning  Chapter 33.595
-6/1/25  West Portland Multicultural Plan District
-33.595 West Portland Multicultural
-Plan District 595
+11/1/26  West Portland Multicultural Plan District
+595-1
 
+33.595 West Portland Multicultural Plan District
+595
 Sections:
 General
 33.595.010 Purpose
@@ -45,8 +46,7 @@ displacement;
 • Encourage new affordable and market rate multi-dwelling housing in formerly single dwelling
 areas to promote economic and racial integration.
 Chapter 33.595  Title 33, Planning and Zoning
-West Portland Multicultural Plan District   6/1/25
-
+West Portland Multicultural Plan District  11/1/26
 595-2
 
 • Promote heathy outcomes through development of green infrastructure and design of public
@@ -90,7 +90,9 @@ B. Additional prohibited uses.
 2. Self-Service Storage is prohibited within the plan district; and
 3. Quick Vehicle Servicing is prohibited within the plan district.
 Title 33, Planning and Zoning  Chapter 33.595
-6/1/25  West Portland Multicultural Plan District
+11/1/26  West Portland Multicultural Plan District
+595-3
+
 33.595.110 Retail Sales and Service
 A. Purpose. These regulations limit the size of Retail Sales And Service uses in order to promote
 smaller retail spaces that are less expensive than large spaces, accommodate the need for
@@ -131,8 +133,7 @@ Development that includes a residential use is exempt from the standard until Ja
 3. Industrial Service;
 4. Manufacturing and Production;
 Chapter 33.595  Title 33, Planning and Zoning
-West Portland Multicultural Plan District   6/1/25
-
+West Portland Multicultural Plan District  11/1/26
 595-4
 
 5. Community Service;
@@ -172,7 +173,9 @@ floor area ratio in the West Portland Multicultural plan district except in Subd
 shown on map 595-1, where the minimum required floor area ratio is 1.5 to 1. The minimum
 required floor area ratio does not apply within single-dwelling residential or RM1 zones.
 Title 33, Planning and Zoning  Chapter 33.595
-6/1/25  West Portland Multicultural Plan District
+11/1/26  West Portland Multicultural Plan District
+595-5
+
 D. Transfer of FAR. FAR may be transferred as follows. Until January 31, 2032, FAR may be
 transferred from one site to another within the plan district and from sites located inside the
 plan district to sites located outside the plan district, but may not be transferred from sites
@@ -218,8 +221,7 @@ a. FAR is transferred from a site in Subdistrict D; and
 b. All existing dwelling units on the sending site are being preserved as affordable
 housing per the requirements of Subparagraph D.1.b.
 Chapter 33.595  Title 33, Planning and Zoning
-West Portland Multicultural Plan District   6/1/25
-
+West Portland Multicultural Plan District  11/1/26
 595-6
 
 4. Covenants. The property owner must execute a covenant with the City that meets the
@@ -233,7 +235,6 @@ removed and replaced within a 12-month period. The trees must be determined to
 be dead, dying, or dangerous by the City Forester or a certified arborist. If a tree
 covered by the covenant is removed in violation of the requirements of this Section,
 or is dead, dying, or dangerous as the result of a violation, Tree Review is required.
-
 Table 595-1
 Transferable Floor Area for Tree Preservation in Multi-Dwelling Zones
 Diameter of Tree Preserved
@@ -265,10 +266,12 @@ addition to the bonus options allowed in 33.130.212. Proposals that include a Da
 Community Service use may increase maximum FAR. Floor area may be increased by 2
 square feet for each square foot of net building floor area provided on site for Daycare or
 Community Service use up to the maximum increment of additional floor area allowed for
-Title 33, Planning and Zoning  Chapter 33.595
-6/1/25  West Portland Multicultural Plan District
 affordable commercial space stated in Table 130-3. If the proposal includes residential
 uses, the proposal must comply with the inclusionary housing standards of 33.245.040 and
+Title 33, Planning and Zoning  Chapter 33.595
+11/1/26  West Portland Multicultural Plan District
+595-7
+
 33.245.050 in order to qualify for this bonus. The property owner must execute a
 covenant with the City that meets the requirements of Section 33.700.060. The covenant
 must ensure that the floor area dedicated for Daycare or Community Service use remains
@@ -311,13 +314,12 @@ allowances shown in Table 130-3 except for the planned development bonus. The in
 additional height allowed and the overall maximum height with bonus allowed for planned
 development bonus shown in Table 130-3 continue to apply when the planned development
 bonus described in 33.130.212.E is utilized.
-Chapter 33.595  Title 33, Planning and Zoning
-West Portland Multicultural Plan District   6/1/25
-
-595-8
-
 C. Bonus height. An increment of 10 feet of additional building height above the base height
 limits of the base zone is allowed in all commercial/mixed use zones in the plan district for each
+Chapter 33.595  Title 33, Planning and Zoning
+West Portland Multicultural Plan District  11/1/26
+595-8
+
 of the following. Base height is shown in Table 130-2 and Table 595-3. The 10-foot height
 increments allowed by this standard can be combined to provide multiple increments of 10
 feet of additional height. The maximum overall height with bonus is shown in Table 595-3.
@@ -348,7 +350,6 @@ total size and no part of the 1,000 square feet measures less than 30 feet in
 dimension;
 b. The native landscaping area standard described in 33.595.280.C.1 is met; or
 c. The space for large trees standard described in 33.595.280.C.2 is met.
-
 Table 595-3
 Summary of Subdistrict A and B Bonus Height
   CM1 CM2 CM3  CE
@@ -362,13 +363,13 @@ Maximum height with bonus   85 ft. 95 ft.
 75 ft. [1]
 [1] This overall maximum is only allowed through the Planned Development bonus option and required Planned Development
 Review. See 33.130.212.E.
-Title 33, Planning and Zoning  Chapter 33.595
-6/1/25  West Portland Multicultural Plan District
-595-9
-
 33.595.240 Required Affordable Commercial Space
 A. Purpose. This standard promotes an inclusive business district in West Portland’s
 commercial/mixed use zones that provides a diversity of business opportunities at a range of
+Title 33, Planning and Zoning  Chapter 33.595
+11/1/26  West Portland Multicultural Plan District
+595-9
+
 affordability levels. Diverse affordability levels in turn support pathways to opportunity,
 innovation, and long term social and economic resilience locally and regionally.
 B. Where this standard applies. The required affordable commercial space standard applies in
@@ -406,14 +407,13 @@ frontage at least 2 trees must be planted.
 standard.
 E. Ground floor windows. The ground floor window standards of the base zones apply, however
 the percentage of ground floor window required by 33.130.230.B.2.a(1) is increased to 60
-Chapter 33.595  Title 33, Planning and Zoning
-West Portland Multicultural Plan District   6/1/25
-
-595-10
-
 percent. Until January 1, 2029, the increase to 60 percent for 33.13.230.B.2.a(1) does not apply
 for development that includes a residential use.
 F. Entrances.
+Chapter 33.595  Title 33, Planning and Zoning
+West Portland Multicultural Plan District  11/1/26
+595-10
+
 1. Entrance frequency. At least one entrance is required for every 100 feet of building length
 for portions of buildings subject to the maximum street setback.
 2. Entrance design. Required entrances must be designed to meet the requirements of
@@ -451,14 +451,15 @@ C. Minimum freeway setback.
 1. Where the standard applies. The freeway setback and screening standard applies in
 subdistricts A and B. Properties that are less than 15,000 square feet or do not extend
 beyond 100 feet from the I-5 freeway right of way are exempt from this standard.
-Title 33, Planning and Zoning  Chapter 33.595
-6/1/25  West Portland Multicultural Plan District
 2. Minimum freeway setback. The minimum setback from a property line that abuts the I-5
 Freeway is 20 feet. The minimum freeway setback area must be landscaped with trees in
 the quantities required by the L3 standard. Trees provided to meet this standard must be
+Title 33, Planning and Zoning  Chapter 33.595
+11/1/26  West Portland Multicultural Plan District
+595-11
+
 large evergreen trees. Existing large trees that are not diseased or dying may be used to
 meet this standard. Large trees are defined in Section 33.248.030, Plant Materials.
-
 33.595.275 Design Standards for RM1 and RM2
 A. Purpose. These standards promote healthy, climate resilient and people-centered
 development through features that support opportunity for relationship with the outdoors,
@@ -491,16 +492,15 @@ with required outdoor common area with facades facing and within 10 feet of an o
 common area. To comply with this standard, the following must be met:
 1.  At least 15 percent of the façade that faces the outdoor common area must be windows;
 or doors leading to lobbies, tenant spaces or dwelling units; and
-Chapter 33.595  Title 33, Planning and Zoning
-West Portland Multicultural Plan District   6/1/25
-
-595-12
-
 2.  Pedestrian access must be provided between the outdoor common area and at least one
 entrance for a lobby, tenant space or dwelling unit.
 F.  Reflective Roof Structure. At least 90 percent of the roof area not covered by the following
 must meet the Energy Star requirements for solar reflectance:
 1.  Solar energy system;
+Chapter 33.595  Title 33, Planning and Zoning
+West Portland Multicultural Plan District  11/1/26
+595-12
+
 2.  Mechanical equipment, housing for mechanical equipment, and required access to, or
 clearance from, mechanical equipment;
 3.  Stairwell and elevator enclosures;
@@ -531,26 +531,28 @@ approved by the Bureau of Environmental Services as being in compliance with the
 Stormwater Management Manual’s Ecoroof Facility Design Criteria. Area covered by solar
 panels is exempt from the calculation.
 4.  Solar panels and reflective surfaces.
-a.  At least 40 percent, or 2,000 square feet whichever is greater, of the building roof area
-must be covered by a solar energy system; and
+a.  At least 40 percent, or 2,000 square feet whichever is greater, of the building roof
+area must be covered by a solar energy system; and
 b. Areas that are not covered by the following must be covered by a reflective surface
-meeting the Energy Star requirements for solar reflectance:
+meeting the Cool Roof Rating Council or other City recognized green building
+standard-setting organization requirements for solar reflectance:
 (1) Solar energy system;
-Title 33, Planning and Zoning  Chapter 33.595
-6/1/25  West Portland Multicultural Plan District
 (2) Mechanical equipment, housing for mechanical equipment, and required access
 to, or entrance from, mechanical equipment;
 (3) Stairwell and elevator enclosures;
 (4)  Vents; or
-(5)  Skylights.
+Title 33, Planning and Zoning  Chapter 33.595
+11/1/26  West Portland Multicultural Plan District
+595-13
 
+(5)  Skylights.
 33.595.290 Retaining Walls
 A. Purpose. The standards of this section help mitigate the potential negative effects of large
-retaining walls along street frontages. Without mitigation, such walls can create a fortress-like
+retaining walls along street frontages. Without mitigation, such walls can create a fortress‐like
 appearance and unwelcoming street environment. By requiring large walls to step back from
 the street and provide landscaping, the wall is both articulated and visually softened.
 B. Where these regulations apply.
-1. Generally. These regulations apply to the portions of street-facing retaining walls that are
+1. Generally. These regulations apply to the portions of street‐facing retaining walls that are
 in required setbacks along street lot lines. Where there is no required setback, or the
 setback is less than 10 feet, the regulations apply to the first 10 feet from the line.
 2. Exceptions. The following are not subject to the regulations of this section:
@@ -567,17 +569,23 @@ zone.
 C.  Standards.
 1.  Retaining walls are limited to 4 feet in height measured from the bottom of the footing, as
 shown in Figure 595-1.
-2.  Retaining walls must be set back at least 3 feet from other street-facing retaining walls, as
+2.  Retaining walls must be set back at least 3 feet from other street‐facing retaining walls, as
 shown in Figure 595-1. The 3 foot setback area must be landscaped to at least the L2
 standard, except that trees are not required. A wall or berm may not be substituted for
 the shrubs.
 Chapter 33.595  Title 33, Planning and Zoning
-West Portland Multicultural Plan District   6/1/25
-
+West Portland Multicultural Plan District  11/1/26
 595-14
 
 Figure 595-1
 Retaining Walls
 
 (Added by Ord. No. 191079, effective 3/31/23; Amended by Ord. No. 191609, effective 3/1/24; Ord. No.
-191942, effective 1/1/25; Ord. No. 192000, effective 6/1/25.)
+191942, effective 1/1/25; Ord. No. 192000, effective 6/1/25; Ord. 192213, effective 11/1/26.)
+
+The City of Portland is committed to providing meaningful access. To request translation, interpretation,
+modifications, accommodations, or other auxiliary aids or services, contact 311, Relay: 711.
+503-823-4000:  Traducción e Interpretación  |  Biên Dịch và Thông Dịch  |  अनुवादन तथा व्याख्या
+口笔译服务  |  Устный и письменный перевод  |  Turjumaad iyo Fasiraad
+Письмовий і усний переклад  |  Traducere și interpretariat  |   Chiaku me Awewen Kapas
+www.portland.gov/bps/accommodation

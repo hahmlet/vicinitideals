@@ -1682,6 +1682,16 @@ code:
   end: "Disclaimer:"
   extraction: plain
   allow_thin: true
+# Fetched 2026-11-08 with Steph's OK (FOLLOWUPS 105): the facade definitions
+# 16.41.050 (A)(4)(a) names. Prose guidelines and definitions; read in full.
+- id: "cmc.16.41.060"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39377
+  title: "CMC 16.41.060 DCO site and design review guidelines."
+  start: "16.41.060 DCO site and design review guidelines."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
 - id: "cmc.16.46.010"
   url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40043
   title: "CMC 16.46.010 Number of units in residential development."
@@ -1842,6 +1852,95 @@ code:
   end: "Disclaimer:"
   extraction: plain
   allow_thin: true
+# Canby Fire District's Conditions of Construction (rev 10.28), its guide to
+# the Oregon Fire Code as the district applies it. Read for one sentence: a
+# dead-end fire apparatus road may run 300 ft before it needs a turnaround,
+# where the state's OFC 503.2.5 says 150 ft. Steph 2026-11-10 (rulings.yaml
+# 2026-11-10-canby-fire-dead-end-300): Canby gets 300 ft
+# (flats/config/fire_roads.yaml, FOLLOWUPS 168).
+- id: "cfd.conditions-of-construction"
+  url: https://cfpd.specialdistrict.org/files/1b3c80534/CFD+Conditions+of+Construction+rev10.28.pdf
+  title: "Canby Fire District, Conditions of Construction (rev 10.28)"
+# READ AND NOT ENCODED (FOLLOWUPS 105, CMC 16.41.060 fetched 2026-11-08 with Steph's OK; was a
+# crossref ruling until it came into the store): 16.41.050 (A)(4)(a) keeps parking and maneuvering
+# from between a building and the street for "primary street facing facades and secondary street
+# facing facades, as defined in Sections 16.41.060.C" (cmc.16.41.050.txt#L78). 16.41.060.C.20 and .21
+# define them by street direction: an east-west street (99E, 1st to 4th Avenues) primary, a
+# north-south street (Birch to Locust) secondary. So on a TC corner lot both street faces carry the
+# ban. The screen already reads it so: on a corner lot it refuses a court beside the building
+# wherever parking_front_prohibited holds (paper.side_court), and the rear court stands behind the
+# rear wall, in front of no facade. A street on neither list owes no ban, which the encoded ban only
+# over-asks. The rest of 16.41.060 is objectives and design vocabulary.
+crossrefs:
+  # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
+  # Eight of them are the 1984 ordinance's own numbering printed in the history notes.
+  "10.3.05":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "(Ord. 740 section 10.3.05(B), 1984)"
+      (cmc.16.08.020.txt#L5), the 1984 code's numbering of this section.
+  "10.3.10":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "(Ord. 740 section 10.3.10(D), 1984)"
+      (cmc.16.10.040.txt#L3).
+  "10.3.18":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "Ord. 740 section 10.3.18" (cmc.16.16.010.txt#L59).
+  "10.3.20":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "(Ord. 740 sect. 10.3.20 (A), 1984)"
+      (cmc.16.18.010.txt#L7).
+  "10.3.21":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "Ord. 740 section 10.3.21(A), 1984"
+      (cmc.16.20.010.txt#L19).
+  "10.3.25":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "Ord. 740 section 10.3.25(C), 1984"
+      (cmc.16.24.030.txt#L29).
+  "10.3.33":
+    outcome: misread
+    note: >-
+      Not a reference: an ordinance history note, "(Ord. 740 section 10.3.33(A), 1984)"
+      (cmc.16.34.010.txt#L5).
+  "16.64.0400":
+    outcome: read
+    note: >-
+      The flag-lot exception to the residential access widths of 16.10.070(B)(8)
+      (cmc.16.10.070.txt#L132) prints "16.64.0400" for 16.64.040, which is held. Its flag-lot
+      standards (cmc.16.64.040.txt#L35-L47) ask an access strip at least twenty feet wide, paved
+      full width, the same 20 ft the encoded 3-to-19-unit access width already asks, and govern the
+      commission's creation of a flag lot.
+  "16.49.035":
+    outcome: procedure
+    note: >-
+      The Type II site and design review path (cmc.16.49.40.txt#L3). A process; see 16.49.040.
+  "12.32":
+    outcome: procedure
+    note: >-
+      The city tree ordinance, which decides an application to cut more trees than it allows
+      (cmc.16.49.40.txt#L29). Trees are ignored and entered per lot (Steph 2026-11-01).
+  "16.21.080":
+    outcome: other_building
+    note: >-
+      Cottage cluster development and design standards (cmc.16.16.010.txt#L7).
+  "16.44":
+    outcome: other_building
+    note: >-
+      Manufactured and mobile home parks (cmc.16.16.020.txt#L25).
+  "16.81":
+    outcome: other_building
+    note: >-
+      Duplex standards (cmc.16.16.010.txt#L5).
+  "16.89.030":
+    outcome: other_building
+    note: >-
+      The Type 1 procedure for an accessory dwelling (cmc.16.16.010.txt#L13).
 definitions:
   # Read 2026-10-07 from CMC 16.04, on disk section by section.
   #
@@ -1884,6 +1983,18 @@ private_drives:
     does not shrink a yard.
 
 defaults:
+  entrance_faces_street:
+    value: required
+    cite: "Canby CMC 16.21.040 middle housing entry orientation: main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38670
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.21.040.txt#L5-L11"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Canby CMC 16.21.040 middle housing entry orientation: \"2. Be at an angle up to 45 degrees from the street, or\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38670
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.21.040.txt#L9"
   # PARKING COUNT. 16.10.050 (A): single-family and two-family dwellings 2.00
   # spaces per dwelling unit (L14, L17); multi-family dwellings in complexes
   # with private internal driveways one space per studio or one-bedroom unit
@@ -1953,6 +2064,18 @@ defaults:
     url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38523
     retrieved: '2026-10-07'
     quote: "or/clackamas/canby/cmc.16.18.030.txt#L39"
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: Canby CMC 16.10.070 (B)(9)(h), driveway may be paved up to an adjacent property line subject to the stated entry separation
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.070.txt#L281"
+  parking_side_yard_stated:
+    value: lane
+    cite: Canby CMC 16.10.070 (B)(9)(h) states the driveway location, while CMC 16.04.680 defines a yard without a parking rule
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.070.txt#L281"
 
 # NOT ENCODED, read 2026-10-07:
 # - 16.49.030, site and design review (a Type III process) for new
@@ -2014,6 +2137,15 @@ zones:
           when: [unit_lots]
           cite: Canby CMC 16.18.030 (A)(2)(a), townhouse dwelling units, 3,000 square foot minimum lot size
           quote: "or/clackamas/canby/cmc.16.18.030.txt#L9,L11"
+    lot_of_record_relief:
+      # 16.08.080 C: on the ordinance's effective date. A width deficiency is
+      # lifted; an area deficiency holds only single-family, so the area stands.
+      # The date is parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
     min_lot_width_ft:
       value: 40
       cite: Canby CMC 16.18.030 (C), minimum width and frontage forty feet
@@ -2110,6 +2242,15 @@ zones:
       exempt: true
       cite: Canby CMC 16.20.030 (A)-(G), the R-2 development standards, print no minimum lot area (density, width, yards, height only)
       quote: "or/clackamas/canby/cmc.16.20.030.txt#L5,L7,L9"
+    lot_of_record_relief:
+      # 16.08.080 C: on the ordinance's effective date. A width deficiency is
+      # lifted; an area deficiency holds only single-family, so the area stands.
+      # The date is parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
     min_lot_width_ft:
       value: 20
       cite: Canby CMC 16.20.030 (C), minimum width and frontage twenty feet
@@ -2223,6 +2364,15 @@ zones:
       value: 60
       cite: Canby CMC 16.24.030 (B), minimum width and frontage sixty feet (stricter than R-1.5's forty)
       quote: "or/clackamas/canby/cmc.16.24.030.txt#L7"
+    lot_of_record_relief:
+      # 16.08.080 C: on the ordinance's effective date. A width deficiency is
+      # lifted; an area deficiency holds only single-family, so the area stands.
+      # The date is parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
     max_coverage_pct:
       value: 60
       cite: Canby CMC 16.24.030 (E), maximum lot coverage sixty percent
@@ -2278,6 +2428,15 @@ zones:
       exempt: true
       cite: Canby CMC 16.41.030 (A) sends the TC sub-area's housing to the R-2 standards, and 16.20.030 (A)-(G) print no minimum lot area
       quote: "or/clackamas/canby/cmc.16.20.030.txt#L5,L7,L9"
+    lot_of_record_relief:
+      # 16.08.080 C: on the ordinance's effective date. A width deficiency is
+      # lifted; an area deficiency holds only single-family, so the area stands.
+      # The date is parcel history we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
+    lot_of_record_condition:
+      value: creation_date
+      quote: "or/clackamas/canby/cmc.16.08.080.txt#L7"
     min_lot_width_ft:
       value: 20
       cite: Canby CMC 16.20.030 (C), minimum width and frontage twenty feet (R-2, by 16.41.030 (A))
@@ -2544,3 +2703,34 @@ zone_rulings:
     note: >-
       "M2", the regional zoning layer's spelling of Canby's M-2, Heavy
       Industrial (CMC 16.34), on 2026-10-07. The block is M-2.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 30
+    zone_legs_ft:
+      C-1: 15
+    basis: curb
+    quote: or/clackamas/canby/cmc.16.16.030.txt#L71
+    says: thirty feet from a street to any other street
+    cite: CMC 16.04.670; 16.16-16.34 .030; 16.22.030 (C-1)
+    note: '16.04.670 (cmc.16.04.670.txt#L3): measured ''from the corner intersection of the existing or
+      proposed curb lines'', extended on a rounded corner; ''No plantings, structures, or temporary or
+      permanent obstructions shall be located within a vision clearance area''. 30 ft in R-1/R-1.5/R-2
+      and the other zones (16.24-16.34 .030, 16.46.020); C-1 15 ft (cmc.16.22.030.txt#L27). Curb basis:
+      the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way
+  driveway:
+    status: read
+    kind: edge
+    legs_ft:
+    - 10
+    - 15
+    basis: curb
+    quote: or/clackamas/canby/cmc.16.16.030.txt#L71
+    says: ten feet from a street to an alley or a street to a driveway
+    cite: CMC 16.16.030; 16.28-16.34 .030
+    note: Residential zones 10 ft from a street to a driveway; 16.28-16.34 .030 say 15 ft 'from any alley
+      or driveway'. The larger is drawn (the driveway check is never RED).
+    ruling: 2026-11-09-curb-position-middle-way

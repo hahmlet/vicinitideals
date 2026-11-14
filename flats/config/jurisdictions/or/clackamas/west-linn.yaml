@@ -465,19 +465,33 @@ definitions:
     quote: "or/clackamas/west-linn/02/02.030.txt#L221"
     cite: "West Linn CDC 2.030, Corner lot"
 
+# READ AND NOT ENCODED (FOLLOWUPS 105 round 4, Chapters 42 and 28 fetched 2026-11-09 under Steph's
+# standing download OK; both were `fetch` crossref rulings until they came into the store).
+# - Chapter 42, Clear Vision Areas (42.clear-vision.txt). 42.020 keeps every structure over 3 ft out
+#   of the triangle (#L17-L19). 42.040: at a street corner, and where a street meets an accessway 24
+#   ft or wider, legs of 30 ft along the right-of-way or property lines from their intersection
+#   (#L27). 42.050: where a street meets an accessway under 24 ft wide, a base of 30 ft along the
+#   right-of-way each way from the accessway centreline and an apex "30 feet back from the property
+#   line on all other types of uses" -- every use but a single- or two-family house, so the pod
+#   (#L33). That second triangle sits beside the pod's own driveway: the building must stand where
+#   its depth behind the street line plus its offset from the drive centreline is at least 30 ft.
+#   Nothing in FLATS models a vision triangle (the corpus-wide gap, FOLLOWUPS 105 round 4 open
+#   list), so this is NOT ENCODED and recorded as a possible false GREEN on lots whose front
+#   setback plus the drive's half-width is under 30 ft.
+# - Chapter 28, Willamette and Tualatin River Protection (28.river-protection.txt). An overlay on
+#   the city's zoning map: the Willamette Greenway, 200 ft from the Tualatin's low water mark and its
+#   100-year floodplain (28.030.A, #L67-L75), none of it held. Where a lot is inside it and holds a
+#   Metro HCA, a protection area permit is a quasi-judicial (Chapter 99) review (28.060, #L173-L175)
+#   whose criteria are judgement ("avoided to the greatest degree possible", 28.110.A.2), with one
+#   measurable rule: houses and attached housing go on "Habitat and Impact Areas Not Designated as
+#   HCAs" first, and once on HCA land the house plus its impermeable surfaces may total 5,000 sq ft
+#   (28.110.B.1-2, #L239-L262). The Metro Title 13 map is not laid over West Linn (quadfit
+#   overlays.yaml carries it for Wood Village only), so a West Linn pod on HCA land is not caught.
+#   NOT ENCODED; recorded as a possible false GREEN beside the two rivers (a quadfit overlay change
+#   for the coordinator).
+#   The 28.040 crossref ruling (an exemption list inside Chapter 2's definition of Development,
+#   which can only narrow what counts as development) went with it: the chapter now resolves it.
 crossrefs:
-  "54.020": >-
-    Parking area landscaping, and it does not reach this building on two counts. The sentence is a
-    CREDIT rather than a requirement -- "Trees planted or preserved to meet parking area
-    landscaping requirements in CDC 54.020 may count toward the tree canopy cover percentage" --
-    so it lets one planting satisfy two standards and can only mean fewer trees, never more. And
-    the subsection it sits in is gated: 46.150.F opens "The following requirements apply to any
-    new development that includes more than one-half acre of new off-street surface parking". The
-    pod's whole court is four stalls and their aisle, on the order of two thousand square feet,
-    which is an order of magnitude under the threshold. It ranked binding because it sits eight
-    lines below the angle-parking table this layer draws its stall and aisle from -- proximity,
-    not content. What is NOT settled here is Chapter 54 itself: it may well ask a parking area for
-    landscaping somewhere, and this reference is simply not where it says so.
   "34": >-
     Accessory Structures, Accessory Dwelling Units, and Accessory Uses, and the twenty-two mentions
     are two sentences. Every zone chapter says "Accessory uses are allowed in this zone as provided by
@@ -511,14 +525,6 @@ crossrefs:
     an approved, active development order ... allowed in all zoning districts subject to conditional
     use approval and the additional criteria of CDC 60.090". A road, not a dwelling. Both binding
     mentions are inside Chapter 2''s definition of a transportation facility.
-  "28.040": >-
-    An exemption inside the definition of Development: within the Willamette and Tualatin River
-    Protection Areas the term also reaches change of use, grading and vegetation removal "unless
-    specifically exempted per CDC 28.040". An exemption list can only narrow what counts as
-    development, so reading it cannot add a standard to this building. What Chapter 28 states about
-    building inside a protection area is a separate gap and a real one -- the areas are boundaries
-    nothing here holds, which is why the river chapters are unencoded. This reference is not what
-    would close it.
   "66": >-
     Non-conforming Structures, and every one of the nineteen mentions is one of two sentences. Eight
     are the zone chapters' own list of related procedures ("2. Chapter 66 CDC, Non-conforming
@@ -527,6 +533,82 @@ crossrefs:
     structures permit. Neither reaches a new building on a lot, which is the only thing this screen
     places, so the chapter is not fetched.
 
+  # --- FOLLOWUPS 105 (2026-11-08): the binding references left open, followed ---
+  "55":
+    outcome: other_path
+    note: >-
+      Design Review. "The provisions of Chapter 55 CDC, Design Review, apply to all uses except
+      attached and/or detached single-family dwellings, cottage clusters, townhouses, manufactured
+      homes, accessory dwelling units, residential homes and residential facilities"
+      (08.090.txt#L25, repeated in each zone chapter), and this code defines both single-family
+      forms to include the pod: single-family attached and detached units "may be further defined
+      as a duplex, triplex, or quadplex" (02.030.txt#L1347-L1353), and 55.020(A)(10) (read live
+      2026-10-08, see MU) writes "single-family detached dwelling (including a duplex, triplex, or
+      quadplex)". The MU zone's Class I review is ruled in its zone note.
+  "55.100":
+    outcome: other_path
+    note: >-
+      Class II design review standards. Reached from Chapter 54 for "Residential uses (non-single-
+      family)" (54.landscaping.txt#L41) and from tree protection "if applicable" (L35); the pod is
+      a single-family form in this code's words (see 55), and in MU it takes the Class I
+      residential standards (55.020(A)(10), MU zone note).
+  "55.105":
+    outcome: narrows_only
+    note: >-
+      The mentions loosen: an optional subtraction from the density area "as measured in CDC
+      55.105(C)(2)(a)" (05.025.txt#L15), and an exclusion of 55.105(F)(1) from the MU zone's
+      Chapter 55 (59.070.txt#L73). Neither adds a standard.
+  "80":
+    outcome: procedure
+    note: >-
+      Similar unlisted uses: "If a use is not listed ... it may be held to be a similar unlisted
+      use under the provisions of Chapter 80 CDC" (08.020.txt#L4). The quadplex is listed
+      outright.
+  "60":
+    outcome: other_path
+    note: >-
+      Conditional Uses: "The approval of a conditional use (CDC 08.060) is discretionary with the
+      Planning Commission" (08.020.txt#L12-L13). The pod is a use permitted outright.
+  "99.060":
+    outcome: procedure
+    note: >-
+      Administrative procedures: "The Planning Director shall make the decision in the manner
+      provided by CDC 99.060(A)(2)" (08.020.txt#L8). A process, no ground taken.
+  "99.240":
+    outcome: procedure
+    note: >-
+      Appeals: "The decision may be appealed by the applicant to the Planning Commission as
+      provided by CDC 99.240(A)" (08.020.txt#L10). A process, no ground taken.
+  "52":
+    outcome: other_building
+    note: >-
+      Signs: the definitions "with regard to Chapter 52 CDC, Signs" (02.030.txt#L1212). Not the
+      pod.
+  "35":
+    outcome: other_building
+    note: >-
+      Temporary Structures and Uses (08.050.txt#L9; 08.090.txt#L7). Not the pod.
+  "57":
+    outcome: other_building
+    note: >-
+      "Wireless communication facilities, subject to the provisions of Chapter 57 CDC"
+      (09.050.txt#L14). A use the pod is not.
+  "37":
+    outcome: other_building
+    note: >-
+      "Home occupations, subject to the provisions of Chapter 37 CDC" (08.050.txt#L5). A use the
+      pod is not.
+  "66.070":
+    outcome: other_building
+    note: >-
+      Rebuilding cost of a damaged non-conforming single-family home, "per CDC 66.070(A)"
+      (19.060.txt#L43-L44). An existing building, not the pod.
+  "85.170":
+    outcome: procedure
+    note: >-
+      "A traffic analysis prepared by a qualified professional may be required"; its applicability
+      and standards are in CDC 85.170(B)(2) (48.025.txt#L9-L10). A study to file, not ground
+      taken.
 code:
   # The CDC gives every residential zone its own chapter, and Code
   # Publishing serves each chapter as one server-rendered HTML page —
@@ -536,6 +618,15 @@ code:
   - id: "25.willamette-historic"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
     title: "CDC Chapter 25 - Willamette and Willamette Falls Drive Historic Districts"
+  # Fetched 2026-11-09 (FOLLOWUPS 105 round 4, Steph's standing download OK):
+  # the two chapters every zone chapter lists among its applicable chapters.
+  - id: "42.clear-vision"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC42.html
+    title: "CDC Chapter 42 - Clear Vision Areas"
+    allow_thin: true
+  - id: "28.river-protection"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC28.html
+    title: "CDC Chapter 28 - Willamette and Tualatin River Protection"
   - id: "02.definitions"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
     title: CDC Chapter 2 - Definitions
@@ -657,6 +748,12 @@ code:
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC59.html
     title: "CDC Chapter 59 - Willamette Neighborhood Mixed Use Transitional Zone, MU"
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "West Linn CDC states no residential main-entrance orientation standard (whole-document grep: only historic primary facades and cottage walkways) (FOLLOWUPS 153)"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
+    retrieved: '2026-09-20'
+    quote: "or/clackamas/west-linn/46/46.070.txt#L18"
   # PARKING AND VEHICLE ACCESS, read 2026-08-27 out of Chapters 46 and 48,
   # which every one of the nine zone chapters lists under "OTHER APPLICABLE
   # DEVELOPMENT STANDARDS -- The following standards apply to all development
@@ -873,6 +970,46 @@ defaults:
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
     retrieved: '2026-08-27'
     quote: "or/clackamas/west-linn/46/46.150.txt#L7-L10,L193-L195,L200"
+  # SIDE-YARD PARKING, ROUND 4 (FOLLOWUPS 146, 2026-11-06; Chapters 54 and 38
+  # now stored). SILENT, not allowed outright. A yard is land clear of any
+  # structure "30 inches or more above the general ground level" (02.030), and
+  # Chapter 38, on yards, says nothing of parking: only recreation vehicles and
+  # the like in a FRONT yard (38.050). A grep of every stored chapter (46, 48,
+  # 54 and the zone chapters included) finds no rule on parking in an interior
+  # side yard. So the lane and court may use one side setback, YELLOW at best
+  # (ruling 2026-11-05-side-yard-parking-silent-codes).
+  #
+  # THE FIVE-FOOT STRIP. 54.020(B)(3)(h): "When a parking, loading, or service
+  # area or driveway is contiguous to an adjoining lot or parcel, there shall
+  # be an intervening five-foot-wide landscape strip". It names the driveway,
+  # so it holds the lane as well as the court. It is a limit, not an allowance.
+  # (B)(3)(d) keeps it on lots under ten spaces, and 11.090(A)(10) applies
+  # Chapter 54 "to all development including permitted uses". The heading
+  # limits (B)(3) to "residential uses (non-single-family)". Four unit lots are
+  # single-family attached by 02.030 (attached units on separate lots, which
+  # "may be further defined as a duplex, triplex, or quadplex"), so that path
+  # is out; a quadplex on one lot is in.
+  # NOT ENCODED: (h)'s 10-foot strip at a street, and (B)(1)'s 25 percent
+  # landscaped area (FOLLOWUPS 146 round 4 hand-off).
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: West Linn CDC 02.030, a yard is clear only of structures 30 inches or more above the ground; no chapter bars parking from a side yard
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
+    retrieved: '2026-09-20'
+    quote: "or/clackamas/west-linn/02.definitions.txt#L977,L1089,L1099"
+  parking_side_yard_stated:
+    value: none
+    cite: West Linn CDC 38.050, the only yard-storage rule, reaches recreation and commercial vehicles in a front yard; no section places parking in a side yard
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC38.html
+    retrieved: '2026-11-06'
+    quote: "or/clackamas/west-linn/38.yards.txt#L41-L43"
+  parking_lot_line_buffer_ft:
+    value: 5
+    unless: [unit_lots]
+    cite: West Linn CDC 54.020(B)(3)(h), intervening five-foot-wide landscape strip where a parking area or driveway is contiguous to an adjoining lot; (B)(3) reaches residential uses (non-single-family)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC54.html
+    retrieved: '2026-11-05'
+    quote: "or/clackamas/west-linn/54.landscaping.txt#L45,L61"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -2412,6 +2549,12 @@ zones:
       and the shortest reading.
 
   MU:
+    entrance_faces_street:
+      value: unclear
+      cite: "West Linn CDC 59 MU sends all uses to Chapter 55 design review, which is not stored (FOLLOWUPS 153)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC59.html
+      retrieved: '2026-09-20'
+      quote: "or/clackamas/west-linn/59.mu.txt#L235"
     section: ["59."]
     cite_default:
       cite: West Linn CDC 59.020(A), 59.030 (uses permitted outright), 59.070(A)
@@ -2479,12 +2622,18 @@ zones:
       value: 20
       quote: "or/clackamas/west-linn/59/59.070.txt#L49-L51"
     min_lot_sqft:
-      # The base row, 4,500 sf "Unless defined as an existing lot of record".
+      # The base row, 4,500 sf "Unless defined as an existing lot of record"
+      # (taken below, lot_of_record_relief; Steph 2026-10-21).
       # The townhouse-project row (average 1,500 sf per lot, L183-L186) is a
       # per-lot average on the split plat; a quadplex on one lot is held to
       # the base figure, which is the same conservative reading the other
       # West Linn zones take.
       value: 4500
+      quote: "or/clackamas/west-linn/59/59.070.txt#L9-L12"
+    lot_of_record_relief:
+      # The row prints "Unless defined as an existing lot of record" beside the
+      # 4,500. The width and depth rows carry no such words and stand.
+      value: lot_area
       quote: "or/clackamas/west-linn/59/59.070.txt#L9-L12"
     min_lot_width_ft:
       # "Minimum lot width at front lot line 35 ft; Does not apply to
@@ -2588,3 +2737,27 @@ private_drives:
     which is under private ownership" (L780). Front lot line (L626), exterior
     side lot line (L638) and corner lot (L177) read "street" other than an
     alley.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 30
+    basis: lot_line
+    source: data/flats/books/sight-manuals/west-linn/42.txt#L14-L16
+    cite: CDC 42.040; 42.020(B)
+    note: '''the triangular area formed by the right-of-way or property lines ... 30 feet distant from
+      the intersection of the right-of-way line''; 42.020(B) bars ''planting, fence, wall, structure''.
+      The 42.030 Willamette General Commercial exception is not applied (conservative).'
+  driveway:
+    status: read
+    kind: apex
+    base_ft: 30
+    depth_from: front_setback
+    basis: lot_line
+    source: data/flats/books/sight-manuals/west-linn/42.txt#L18
+    cite: CDC 42.050
+    ruling: 2026-11-09-west-linn-pod-single-family
+    note: 'Accessway under 24 ft: base 30 ft each way along the right-of-way line from the drive''s centre,
+      apex ''at the front setback line of a single-family and two-family residence''; the pod takes that
+      reading (rulings.yaml 2026-11-09-west-linn-pod-single-family).'

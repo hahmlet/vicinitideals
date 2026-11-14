@@ -444,7 +444,11 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
     # plan district's 15 ft rear (33.530.040.A) kept where an alley is at the
     # rear, because the base zone's alley sentence relaxes the base zone's
     # figure, not the plan district's. It tightens; nothing is waived.
-    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6 + 4 + 4 + 4 + 1
+    # - 5 on 2026-11-09 (pagecheck-findings): the Gresham Downtown townhouse rows
+    # (DCC, DTM, DMU, DEM, DCL) no longer take note 11's 10 ft rear against a
+    # lower-density district -- Table 4.1130 puts the marker on the other rows,
+    # not the townhouse row. The 3 ft alley rear stays, keyed to the rear line.
+    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2 + 6 + 4 + 4 + 4 + 1 - 5
 
 
 def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:
@@ -469,9 +473,12 @@ def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> Non
                 # Portland's alley sentence, in its section files since the cut
                 # (FOLLOWUPS 73, batch 6; proof copy L746 / L1053 before). The county
                 # pockets keep their own copy of 33.110 as fetched.
+                # 2026-11-10 (a): re-pointed onto the 11/1/26 reprint (FOLLOWUPS
+                # 165): 33.110.220 L102 -> L88, 33.120.220 L54 -> L57, pocket
+                # 33.110 L746 -> L710; each still reads "...abutting an alley".
                 assert "abutting an" in side_line.prov.quote or any(
                     tag in side_line.prov.quote
-                    for tag in ("33.110.220.txt#L102", "33.120.220.txt#L54", "33.110.txt#L746")
+                    for tag in ("33.110.220.txt#L88", "33.120.220.txt#L57", "33.110.txt#L710")
                 ), (lid, zname, side_line.prov.quote)
                 held_on_the_line.add((lid, zname))
             # The garage half is Portland's sentence only in the two layers
@@ -620,19 +627,24 @@ def test_the_portland_side_alley_ruling_quotes_lines_that_say_what_it_says() -> 
     alley line is not a street lot line, and the commercial chapter names
     the alley only in its step-down HEIGHT rule; EX, CI2/IR and OS never
     name it at all."""
+    # 2026-11-10 (a): line pins re-pointed onto the 11/1/26 reprint (RICAP 11,
+    # FOLLOWUPS 165); same words, new lines (defs L766/L767/L1375 -> L780/L781/
+    # L1390, 33.130 L552 -> L527).
     defs = _portland_doc("33.910.definitions.txt")
-    assert "Street lot line does" in defs[765]
-    assert "not include lot lines that abut an alley" in defs[766]
-    assert "street does not include alleys" in defs[1374]
+    assert "Street lot line does" in defs[779]
+    assert "not include lot lines that abut an alley" in defs[780]
+    assert "street does not include alleys" in defs[1389]
     c130 = _portland_doc("33.130.txt")
-    assert "alley from" in c130[551] and "residential zone" in c130[551]
+    assert "alley from" in c130[526] and "residential zone" in c130[526]
     assert sum("alley" in ln.lower() for ln in c130) == 2
     for chapter in ("33.140.txt", "33.150.txt", "33.100.txt"):
         assert not any("alley" in ln.lower() for ln in _portland_doc(chapter)), chapter
     yaml_text = (
         Path(__file__).resolve().parents[1] / "config/jurisdictions/or/multnomah/portland.yaml"
     ).read_text(encoding="utf-8")
-    # 33.910.definitions.txt#L766-L767 until the cut (FOLLOWUPS 73, batch 6).
-    assert "33.910.030.txt#L544-L547" in yaml_text
-    # 33.130.txt#L552-L556 until the cut (FOLLOWUPS 123).
-    assert "33.130.210.txt#L35-L39" in yaml_text
+    # 33.910.definitions.txt#L766-L767 until the cut (FOLLOWUPS 73, batch 6);
+    # 33.910.030.txt#L544-L547 until the 11/1/26 reprint (2026-11-10 (a)).
+    assert "33.910.030.txt#L559-L562" in yaml_text
+    # 33.130.txt#L552-L556 until the cut (FOLLOWUPS 123); 33.130.210.txt#L35-L39
+    # until the 11/1/26 reprint (2026-11-10 (a)).
+    assert "33.130.210.txt#L30-L33" in yaml_text

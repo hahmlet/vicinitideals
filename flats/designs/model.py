@@ -27,7 +27,7 @@ from __future__ import annotations
 import enum
 import math
 from pathlib import Path
-from typing import Any, Iterable, Iterator
+from typing import Any, Iterable, Iterator, Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -189,11 +189,11 @@ class Parking(BaseModel):
     city apply only clear and objective standards to housing, so a width nobody
     published is not a standard a court can fail against.
 
-    So the numbers here are the design's, the code's stated minimum raises them
-    where one exists, and the default is the assumption quadfit's site-plan
-    generator already draws to: 24 ft of two-way aisle at 90 degrees, from
-    ULI / National Parking Association via Iowa SUDAS 8B-1 Table 8B-1.02, at
-    the 85th-percentile design vehicle.
+    The design supplies dimensions where the code states none; a stated stall
+    width is drawn as given. The default aisle is the assumption quadfit's
+    site-plan generator already draws to: 24 ft of two-way aisle at 90 degrees,
+    from ULI / National Parking Association via Iowa SUDAS 8B-1 Table 8B-1.02,
+    at the 85th-percentile design vehicle.
     """
 
     model_config = ConfigDict(frozen=True)
@@ -206,11 +206,8 @@ class Parking(BaseModel):
     config: ParkingConfig
     #: Depth of one stall in the court. Raised by a code that asks for more.
     stall_depth_ft: float = Field(default=18.0, gt=0)
-    #: Width of one stall in the court, from the same SUDAS table at 90
-    #: degrees. Raised by a code that asks for more; a code that asks for less
-    #: (Gresham, 8.5) does not shrink it, for the same reason a narrower aisle
-    #: does not — the design is drawn to this and a smaller cell is a
-    #: different drawing.
+    #: Width of one stall, from the same SUDAS table at 90 degrees. The zone's
+    #: stated width replaces this for its court; otherwise this is used.
     stall_width_ft: float = Field(default=9.0, gt=0)
     #: Width of the drive aisle serving the court, two-way. Raised by a code
     #: that asks for more.
@@ -334,6 +331,15 @@ class Design(BaseModel):
     #: Adding it stated a fact about an unchanged building, so no version
     #: moved.
     roof_pitch_in_12: float | None = Field(default=None, ge=0)
+    #: Which face carries every front door: ``width`` is the face parallel
+    #: to the front lot line before any rotation (pod80x30: each home's door
+    #: on its 20 ft wall, all four along the 80 ft face; Steph 2026-11-08).
+    #: Read only by a code's main-entrance standard
+    #: (``entrance_faces_street``, FOLLOWUPS 153), which may bar the
+    #: building turned with its doors to a side yard. ``None`` is "not
+    #: stated", and the standard is left unread for the design. Adding it
+    #: stated a fact about an unchanged building, so no version moved.
+    door_face: Literal["width"] | None = None
     parking: Parking
     delivery: DeliverySpec
     #: Which plat path this entry is costed for. Defaults to the path the rule

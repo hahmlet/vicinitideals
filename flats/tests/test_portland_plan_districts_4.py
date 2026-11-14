@@ -132,8 +132,8 @@ def test_the_figures_are_drawn_read_and_unquoted(portland, zone: str) -> None:
     floor = portland.zones[zone].values["min_far"]
     assert floor.exempt
     assert floor.prov.quote in (
-        "or/multnomah/portland/33.526.txt#L196-L197",
-        "or/multnomah/portland/33.521.txt#L127-L128",
+        "or/multnomah/portland/33.526.txt#L179-L180",
+        "or/multnomah/portland/33.521.txt#L126-L127",
     )
     by_fact = {var.when: var for var in floor.variants}
     assert set(by_fact) == {(f,) for f in MIN_FAR}
@@ -149,8 +149,8 @@ def test_the_quoted_sentences_send_the_figure_to_the_map() -> None:
     from flats.provenance.store import ProvenanceStore
 
     store = ProvenanceStore()
-    gateway = " ".join(store.quote("or/multnomah/portland/33.526.txt#L196-L197").split())
-    corridor = " ".join(store.quote("or/multnomah/portland/33.521.txt#L127-L128").split())
+    gateway = " ".join(store.quote("or/multnomah/portland/33.526.txt#L179-L180").split())
+    corridor = " ".join(store.quote("or/multnomah/portland/33.521.txt#L126-L127").split())
     assert "minimum floor area ratio (FAR) for new development is shown on Map 526-3" in gateway
     assert "for all new development are shown on Map 521-3" in corridor
 

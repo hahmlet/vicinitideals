@@ -267,14 +267,14 @@ _C: tuple[ConditionDef, ...] = (
         "A public street ends at the lot: its centreline stops short of "
         "meeting another street, and the lot lies at that end. Gresham's "
         "Table 4.0131 note 5 gives a townhouse \"the end of a Minor Access "
-        "Street\" a 5 ft minimum and a 25 ft maximum setback, which the "
-        "corpus does not hold; a Minor Access Street end is a street end, so "
-        "a lot no public street ends near is answered False and the note "
-        "does not reach it. Never answered True: a street ending near the "
-        "lot does not say the lot is at that end, nor that the street is a "
-        "Minor Access Street, and the note's own numbers are not encoded, so "
-        "a True would lift the cap and screen the lot against the table row "
-        "the note replaces. Unknown everywhere else, which keeps the cap.",
+        "Street\" a 5 ft minimum and a 25 ft maximum setback; the maximum "
+        "is held on the True answer (every street line), the minimum never "
+        "being the stricter figure. A Minor Access Street end is a street "
+        "end, so a lot no public street ends near is answered False and the "
+        "note does not reach it. Never answered True: a street ending near "
+        "the lot does not say the lot is at that end, nor that the street is "
+        "a Minor Access Street. Unknown everywhere else, where the lot is "
+        "GREEN only if it clears at both answers.",
         evidence="quadfit s1 public street centrelines (RLIS TYPE not alley, private road, unnamed drive or unimproved): no end point within flats.geom.street_end.REACH_FT of the taxlot",
         assume=None,
     ),
@@ -504,6 +504,39 @@ _C: tuple[ConditionDef, ...] = (
         "Street; unanswered -- out of GREEN -- where the lot touches one but "
         "not on every street line alike (flats.geom.active_use).",
         evidence="Hillsboro CDC Figure 12.65.930-A (PDF page 889), traced onto RLIS centrelines, against the lot's s4 street lines",
+        assume=None,
+    ),
+    ConditionDef(
+        "beaverton_type_a_frontage",
+        "site_fact",
+        "The Beaverton Downtown lot fronts a Type A frontage of Figure "
+        "70.20.10.6.2 (Active Frontage Design Map), or is one of the Area C "
+        "or Area D tax lots 70.20.10.6.D.4 names, so the building facade on "
+        "it must meet the Non-residential Active Ground Floor Design, whose "
+        "S1.a asks a ground floor at least 16 feet floor to floor "
+        "(70.20.10.txt#L377-L378, L486-L496). The figure is not held (the "
+        "stored map PDF carries Figure 70.15.25.1, the use map, not this "
+        "one), so nothing observes the fact yet and every lot in a zone "
+        "that turns on it is unanswered -- out of GREEN -- until the figure "
+        "is traced (FOLLOWUPS 105).",
+        evidence="Beaverton BDC Figure 70.20.10.6.2 -- not held; needs fetching and tracing onto RLIS centrelines",
+        assume=None,
+    ),
+    ConditionDef(
+        "washington_county_411_buffer",
+        "site_fact",
+        "Washington County's Section 411 screening and buffering adds a "
+        "setback to the side and rear yards of a North Bethany R-9 NB or "
+        "R-24 NB lot. 304-7.2 B(8) and 306-7.2 B(5) (by 390-9.6 and "
+        "390-11.6) say additional setbacks may be required under 411, and "
+        "411 reaches every development permit that is not Middle Housing "
+        "(411-1.2, 411-1.3); the pod there is Attached Dwelling Units, not "
+        "Middle Housing. The 411-5 matrix names no North Bethany district, "
+        "so the lot falls to its Other row, \"to be determined by review "
+        "authority\" (cdc.411.screening-buffering.txt#L129-L130), and the "
+        "width is a number nobody has printed. Held out of GREEN until it "
+        "is known (FOLLOWUPS 105 round 4).",
+        evidence="the Review Authority's buffer for the North Bethany districts -- not printed in CDC 411-5",
         assume=None,
     ),
     ConditionDef(
@@ -1057,6 +1090,42 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "hillsboro_downtown_plan_district",
+        "site_fact",
+        "The lot lies inside Hillsboro's Downtown Plan District, whose "
+        "boundary is Figure 12.61.200-A and nothing else (CDC 12.61.200). The "
+        "SCR-LD, SCR-MD and SCR-HD zones lie both inside and outside it, and "
+        "inside it 12.61.800 binds new residential construction to a pitched "
+        "roof (\"Flat roofs are not permitted as the primary roof form\", "
+        "4/12 hipped, 6/12 gabled), which the flat-roofed pod fails. The city "
+        "publishes no plan-district layer (Community_Development FeatureServer "
+        "holds zoning, natural resources and the comprehensive plan only, "
+        "checked 2026-11-10), and the figure is not traced, so it is "
+        "unmeasured: a lot in those three zones stays off GREEN on it.",
+        evidence=(
+            "Figure 12.61.200-A, Downtown Plan District Boundaries -- to be "
+            "traced as Hillsboro's drawn_areas; not held yet"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "fairview_outside_storefront_district",
+        "site_fact",
+        "The lot lies in Fairview's Town Center Commercial (TCC) zone OUTSIDE "
+        "its Halsey Street storefront district, a subarea whose boundary is "
+        "Figure 19.65.030(B) and nothing else (FMC 19.65.030(A)-(B)). Inside "
+        "the district residential uses are permitted only as part of a mixed "
+        "use development (19.65.030(D)(1)); outside it Table 19.65.020(A) row "
+        "1.h permits Quadplexes outright. The city publishes no layer; the "
+        "area is the figure's unshaded ground within its frame, traced, so a "
+        "lot beyond the frame reads False.",
+        evidence=(
+            "Figure 19.65.030(B) traced and registered to the taxlots -- held "
+            "as Fairview's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "gladstone_town_center",
         "site_fact",
         "The lot lies inside the Gladstone Town Center adopted by Ordinance "
@@ -1405,16 +1474,48 @@ _C: tuple[ConditionDef, ...] = (
         "pdx_johnson_creek_unmeasured",
         "site_fact",
         "The site is one a Johnson Creek Basin rule reaches that the screen "
-        "does not measure: the tree removal limits of 33.537.125 (South "
-        "subdistrict, combined flood hazard area, within 20 ft of the "
-        "Springwater Corridor) or the Springwater Corridor's 20 ft landscaped "
-        "buffer and vehicle-area setback (33.537.130). Nothing records where "
-        "the trees stand or which lot line abuts the corridor, so the lot "
-        "stays in review. Assumed unknown: it decides the colour.",
+        "does not measure: the Springwater Corridor's 20 ft landscaped "
+        "buffer and vehicle-area setback (33.537.130), on either form of the "
+        "pod; and, on the townhouse form only, the South subdistrict's "
+        "slope-class density for land divisions (33.537.140.E) or the Flood "
+        "Risk Area's limits on land divisions (33.537.160), which "
+        "pdx_johnson_creek_land_division answers and configure() folds in "
+        "(LAND_DIVISION_FOLDS). The screen does not set the buffer on the "
+        "one lot line that abuts the corridor, and nothing records the slope "
+        "classes or the Flood Risk Area's share of the site, so the lot stays "
+        "in review. Assumed unknown: it decides the "
+        "colour.",
+        # 33.537.125 (tree removal) no longer holds a lot: Steph's ruling
+        # 2026-11-01-trees-ignored-entered-per-lot, FOLLOWUPS 140.
         evidence=(
-            "the Johnson Creek impervious tracing, the Flood Risk Area, and "
-            "every lot within 100 ft of the Springwater Corridor Trail line or "
-            "touching a taxlot the trail crosses -- held as Portland's "
+            "every lot that abuts, or lies within 25 ft of, the Springwater "
+            "Corridor parcel (Portland Parks property 679, Portland Maps "
+            "Parks_Misc layer 2, fetched 2026-11-09), and the corridor's own "
+            "lots -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_johnson_creek_land_division",
+        "site_fact",
+        "The site is one a Johnson Creek Basin land-division rule reaches: any "
+        "of it in the South subdistrict, whose land divisions and planned "
+        "developments take a density cut by the slope class of their land "
+        "(33.537.140.E), or in the Flood Risk Area, where a land division is "
+        "prohibited (the whole site) or must put that part in a tract "
+        "(33.537.160). Both rules govern land divisions and planned "
+        "developments only (33.537.010: density 'is limited by applying "
+        "special regulations to new land division proposals'), so they reach "
+        "the pod as four townhouses on four unit lots and not as one "
+        "building on the one lot it stands on (ruling "
+        "2026-10-15-townhomes-separate-lots). It holds no standard of its "
+        "own: on the townhouse form configure() folds it into "
+        "pdx_johnson_creek_unmeasured (LAND_DIVISION_FOLDS); on the one-lot "
+        "form it is not asked. Assumed unknown.",
+        evidence=(
+            "the South subdistrict and every lot touching it, the Flood Risk "
+            "Area and every lot touching it -- split 2026-11-08 (FOLLOWUPS 58) "
+            "from the Johnson Creek unmeasured tracing, held as Portland's "
             "drawn_areas"
         ),
         assume=None,
@@ -1430,6 +1531,20 @@ _C: tuple[ConditionDef, ...] = (
         evidence=(
             "the Laurelhurst and Eastmoreland plan district outlines (Portland "
             "Maps BPS zoning layer 0) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_min_site_frontage_area",
+        "site_fact",
+        "The parcel is in one of the Eastern Portland centres shown on Map "
+        "120-2, where a multi-dwelling site more than 160 ft deep may take "
+        "new homes only with at least 90 ft of frontage on a street (PCC "
+        "33.120.206). Assumed unknown: it decides the colour.",
+        evidence=(
+            "Zoning Code Map 120-2, the City's Minimum Required Site Frontage "
+            "Areas layer (Portland Maps COP_OpenData_ZoningCode layer 1278) -- "
+            "held as Portland's drawn_areas"
         ),
         assume=None,
     ),
@@ -1487,6 +1602,49 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_site_frontage_neighbour_exception",
+        "site_fact",
+        "Every lot that shares a side lot line with the site is zoned other "
+        "than multi-dwelling, or is multi-dwelling and meets its zone's "
+        "minimum density or holds at least three homes -- the exception PCC "
+        "33.120.206.C.2.b makes to the 90 ft frontage rule. Nothing here "
+        "counts the homes on the neighbouring lots, so a deep, narrow lot "
+        "inside Map 120-2 is held for review rather than refused. Assumed "
+        "unknown: it decides the colour.",
+        evidence=(
+            "nothing yet: the neighbouring lots' homes and density are not "
+            "read (the per-line neighbour zoning could answer the first test "
+            "alone)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_hayden_island",
+        "site_fact",
+        "The lot is in Portland's Hayden Island plan district. In its "
+        "commercial/mixed use zones at least one main entrance faces the "
+        "street or stands within 45 degrees of it, and on a site with more "
+        "than one street, the Island Core Access Street (33.532.250).",
+        evidence=(
+            "the Hayden Island plan district outline (Portland Maps BPS "
+            "zoning layer 0) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_lombard_subdistrict_a",
+        "site_fact",
+        "The lot is in Subdistrict A of Portland's Lombard Street plan "
+        "district. On RM2 sites there the main entrance of each primary "
+        "structure faces the street lot line; entrances facing a shared "
+        "landscaped courtyard are exempt (33.545.120.C.2).",
+        evidence=(
+            "the Lombard Street Subdistrict A outlines (Portland Maps BPS "
+            "zoning layer 1) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "pdx_nw_residential_limited",
         "site_fact",
         "The lot is CM3 land in the Northwest plan district's Residential "
@@ -1496,6 +1654,21 @@ _C: tuple[ConditionDef, ...] = (
         evidence=(
             "the Map 562-2 area as Portland Maps publishes it (Limited Use "
             "Areas, layer 157) -- held as Portland's drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_eastern_pattern_area",
+        "site_fact",
+        "The parcel is in Portland's Eastern Pattern Area (Map 120-3), where "
+        "the multi-dwelling zones' rear setback is a quarter of the site's "
+        "depth, no more than half of it vehicle area, on lots deeper than "
+        "100 ft that are not corner lots (PCC 33.120.220.B.2). Assumed "
+        "unknown: it decides the colour.",
+        evidence=(
+            "Zoning Code Map 120-3, the Eastern Neighborhoods polygon of the "
+            "City's Pattern Areas layer (Portland Maps COP_OpenData_ZoningCode "
+            "layer 1279) -- held as Portland's drawn_areas"
         ),
         assume=None,
     ),
@@ -1781,6 +1954,45 @@ def close_entailed(observed: Mapping[str, bool]) -> dict[str, bool]:
             out[child] = False
     return out
 
+#: Site facts that answer a rule reaching only a LAND DIVISION, each with the
+#: fact that holds the lot for it. A land-division rule does not reach the pod
+#: built as one building on the one lot it stands on; it reaches the pod as
+#: four townhouses on four unit lots, which is a land division (ruling
+#: 2026-10-15-townhomes-separate-lots). The child names no standard of its
+#: own: ``configure`` folds it into the parent on the townhouse form (the
+#: parent becomes True where either is, unknown where neither is True and
+#: either is unknown) and leaves it out on the one-lot form. The bridge
+#: screens the townhouse twin wherever a child is not answered False
+#: (``flats.ingest.quadfit._plat_matters``), so the twin's colour is its own.
+#: Johnson Creek's South subdistrict (33.537.140.E) and Flood Risk Area
+#: (33.537.160) are the case (FOLLOWUPS 58, 2026-11-08).
+LAND_DIVISION_FOLDS: dict[str, str] = {
+    "pdx_johnson_creek_land_division": "pdx_johnson_creek_unmeasured",
+}
+
+
+def fold_land_division(observed: Mapping[str, bool], *, unit_lots: bool) -> dict[str, bool]:
+    """``observed`` with each :data:`LAND_DIVISION_FOLDS` child folded into
+    its parent on the townhouse form, and dropped on the one-lot form.
+
+    A name absent from ``observed`` is unknown, as in ``configure``: on the
+    townhouse form a parent stays absent unless either fact is True or both
+    are False."""
+    out = dict(observed)
+    for child, parent in LAND_DIVISION_FOLDS.items():
+        kid = out.pop(child, None)
+        if not unit_lots:
+            continue
+        mum = out.get(parent)
+        if kid is True or mum is True:
+            out[parent] = True
+        elif kid is False and mum is False:
+            out[parent] = False
+        else:
+            out.pop(parent, None)
+    return out
+
+
 #: Conditions whose truth we assert rather than observe. A configuration
 #: leaning on one of these cannot be GREEN — it is our belief, not a fact.
 ASSUMED = frozenset(c.name for c in _C if c.kind == "site_fact" and c.assume is not None)
@@ -1813,6 +2025,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "bethany_asc_1a",
     "bethany_asc_3",
     "east_hillsboro_city_standards",
+    "fairview_outside_storefront_district",
     "gladstone_parking_exception_area",
     "gladstone_town_center",
     "hillsboro_center_core",
@@ -1826,10 +2039,15 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_south_end",
     "pdx_east_corridor_min_far_half",
     "pdx_east_corridor_min_far_one",
+    "pdx_eastern_pattern_area",
     "pdx_gateway_min_far",
     "pdx_glendoveer_lr75",
+    "pdx_hayden_island",
     "pdx_johnson_creek_impervious",
+    "pdx_johnson_creek_land_division",
     "pdx_johnson_creek_unmeasured",
+    "pdx_lombard_subdistrict_a",
+    "pdx_min_site_frontage_area",
     "pdx_nw_residential_limited",
     "pdx_plan_district_unmeasured",
     "pdx_special_building_setback",
@@ -1912,6 +2130,7 @@ __all__ = [
     "CONDITIONS",
     "DRAWN_CONDITIONS",
     "ENTAILS",
+    "LAND_DIVISION_FOLDS",
     "NEIGHBOUR_ZONE_CONDITIONS",
     "PARK_CONDITIONS",
     "ConditionDef",
@@ -1922,6 +2141,7 @@ __all__ = [
     "deepest",
     "design_facts",
     "electives",
+    "fold_land_division",
     "of_kind",
     "reliefs",
     "site_facts",

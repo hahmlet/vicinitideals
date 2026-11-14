@@ -526,6 +526,12 @@ defaults:
 # behind a reader. Each section the guide names is ruled here, read against
 # the guide's own restatement of it. Only 503.1.1 is screened.
 crossrefs:
+  "46":
+    outcome: read
+    note: >-
+      "Chapter 660, Division 46, Middle Housing in Medium and Large Cities" is OAR 660-046 itself
+      (oar.660-046.adopted-2026-08.txt#L42), held and encoded in this layer; the mentions are its own
+      page headers and title lines (FOLLOWUPS 105 round 3, 2026-11-08).
   "503.1.1":
     outcome: other_path
     note: >-
@@ -538,13 +544,29 @@ crossrefs:
     outcome: other_path
     note: >-
       Turnarounds on a dead-end fire road over 150 feet. The screen never
-      builds a fire road on a lot: a lot the street cannot reach is RED.
+      builds a fire road on a lot: a lot the street cannot reach is RED. It
+      reads the street the same way (FOLLOWUPS 168, flats.fit.fire_roads):
+      past 150 feet into a dead end whose right-of-way has no room to turn
+      the truck (no bulb, no hammerhead's room; L134, L137-L139), the truck
+      stays 150 feet from the intersection and the hose walks the rest --
+      or the length a city's adopted amendment states (Portland PCC
+      31.30.010.B, 300 feet; flats/config/fire_roads.yaml). A lot the hose
+      reaches only with such a dead end driven to its end is YELLOW with
+      FIRE-DEAD-END, the fire marshal's question (Steph 2026-11-10,
+      rulings.yaml 2026-11-10-fire-long-dead-end-yellow).
   "503.2.1":
     outcome: other_path
     note: >-
       Fire road width (20 ft) and clearance, for a fire road on the site. The
-      screen builds none; the 20 feet is used only to place the truck no
-      nearer the lot than half a minimum road (flats.fit.fire.HALF_ROAD_FT).
+      screen builds none; the 20 feet places the truck no nearer the lot
+      than half a minimum road (flats.fit.fire.HALF_ROAD_FT), and a street
+      less than 20 feet between its private lots is no road the truck can
+      stand on: the hose walks it from where the truck can (FOLLOWUPS 168,
+      flats.fit.fire_roads; L167-L171). One under 22 feet (the 20 feet, a
+      0.5 ft curb and a 0.5 ft strip behind it each side; fire_roads.yaml
+      narrow_row) with no paved width recorded holds a lot it alone reaches
+      YELLOW with FIRE-NARROW-STREET (Steph 2026-11-10, rulings.yaml
+      2026-11-10-narrow-street-fire-yellow).
   "503.2.4":
     outcome: other_path
     note: Turning radii on a fire road on the site -- the screen builds none.

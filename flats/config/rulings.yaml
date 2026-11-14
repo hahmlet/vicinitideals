@@ -188,8 +188,12 @@
   effect: >-
     The alley setback applies only to the stretch the alley covers; the rest
     of the line keeps the ordinary setback. A partial alley counts as the
-    court's travel lane only when the covered run is long enough.
+    court's travel lane only when the covered run is long enough, and only
+    for a court that stands against that covered run (FOLLOWUPS 3(c),
+    2026-11-08): where no window does, the court keeps its own aisle, and a
+    final drawing with the court off the stretch is held out of GREEN.
   source: Steph 2026-09-28 (memory feedback_partial_alley_ruling.md), commit 59533da1
+  encoded_in: [flats/geom/alley.py, flats/score/paper.py, flats/fit/draw.py, flats/ingest/quadfit.py]
 
 - id: 2026-09-29-stated-number-governs
   kind: ruling
@@ -904,11 +908,42 @@
     contributing resource in a Portland conservation district)?
   ruling: RED.
   effect: >-
-    A lot holding a protected historic resource is RED. Built so far from
-    Portland's historic resource map (Portland and Multnomah
-    unincorporated).
+    A lot holding a protected historic resource is RED. Built from Portland's
+    historic resource map (Portland and Multnomah unincorporated) and, since
+    FOLLOWUPS 87, from the lists in flats/config/historic: RED where the
+    code clearly protects a listed building (Gresham, West Linn, Troutdale)
+    and for a National Register building or a contributing one in a National
+    Register district, whose demolition OAR 660-023-0200(8) makes wait on a
+    hearing that can deny it; YELLOW with HISTORIC-LISTING-UNSETTLED where
+    that is not settled (Tigard, Washington County, objects, near-address
+    matches and see 2026-11-06-historic-surveyed-yellow).
   source: Steph 2026-10-14 (memory feedback_rulings_2026_10_14.md; flats/config/pipeline.yaml)
-  encoded_in: [flats/config/pipeline.yaml]
+  encoded_in:
+    - flats/config/pipeline.yaml
+    - flats/config/historic/protection.yaml
+    - flats/geom/historic_lists.py
+
+- id: 2026-11-06-historic-surveyed-yellow
+  kind: ruling
+  date: 2026-11-06
+  scope: {}
+  question: >-
+    The state's Historic Sites layer is an inventory, not a list of designations.
+    What colour is a lot holding a building the state only surveyed?
+  ruling: >-
+    Steph accepted that surveyed-only entries may hold some lots back. A surveyed-only
+    or doubtful entry on a lot gives YELLOW with a flag, never RED, and a covered
+    city's own list stays the authority.
+  effect: >-
+    Inventory entries are YELLOW with HISTORIC-LISTING-UNSETTLED where no city list is
+    held. Where one is held (Gresham, West Linn, Troutdale, Tigard) an entry the state
+    only surveyed adds nothing, and a National Register building the list does not carry
+    is YELLOW, except in Troutdale, whose own code reaches National Register resources.
+    Portland keeps its map.
+  source: Steph 2026-11-06, relayed by the coordinator on FOLLOWUPS 87
+  encoded_in:
+    - flats/config/historic/protection.yaml
+    - flats/geom/historic_lists.py
 
 - id: 2026-10-14-frontage-cap-any-street
   kind: ruling
@@ -987,14 +1022,32 @@
     lot-of-record relief it is encoded as lot_of_record_relief and applied on
     the one-lot path only: the unit-lots plat makes new lots, and they meet
     the lot standards. Gresham first (corridor CMF, SC, SC-RJ, CMU:
-    lot_dimensions; residential LDR-5, LDR-7, TLDR, TR, MDR-12: lot_area); the
-    other cities wait for their own sweep (docs/FOLLOWUPS.md item 108).
+    lot_dimensions; residential LDR-5, LDR-7, TLDR, TR, MDR-12: lot_area). The
+    sweep of every other layer (FOLLOWUPS 108, 2026-11-06) took Milwaukie,
+    Oregon City, West Linn MU, Hillsboro and Troutdale outright. The ruling
+    says a lot is legal, not when it was made or who owned next door: where a
+    relief asks either (Tualatin, Beaverton, Happy Valley, Canby, Portland's
+    multi-dwelling zones, MCC LR/MR) or leaves its reach open (Estacada's area
+    per dwelling), a lot let off it is YELLOW with MEASURE-LOT-OF-RECORD
+    (lot_of_record_condition).
   source: Steph 2026-10-21 (chat, via the FLATS coordinator), docs/FOLLOWUPS.md item 108
   encoded_in:
     - flats/rules/fields.py
     - flats/score/screen.py
     - flats/config/jurisdictions/or/multnomah/gresham.yaml
     - flats/config/footnotes/or/multnomah/gresham.yaml
+    - flats/config/jurisdictions/or/clackamas/milwaukie.yaml
+    - flats/config/jurisdictions/or/clackamas/oregon-city.yaml
+    - flats/config/jurisdictions/or/clackamas/west-linn.yaml
+    - flats/config/jurisdictions/or/washington/hillsboro.yaml
+    - flats/config/jurisdictions/or/multnomah/troutdale.yaml
+    - flats/config/jurisdictions/or/clackamas/estacada.yaml
+    - flats/config/jurisdictions/or/clackamas/tualatin.yaml
+    - flats/config/jurisdictions/or/washington/beaverton.yaml
+    - flats/config/jurisdictions/or/clackamas/happy-valley.yaml
+    - flats/config/jurisdictions/or/clackamas/canby.yaml
+    - flats/config/jurisdictions/or/multnomah/portland.yaml
+    - flats/config/jurisdictions/or/multnomah/_unincorporated.yaml
 
 - id: 2026-11-01-trees-ignored-entered-per-lot
   kind: ruling
@@ -2580,142 +2633,152 @@
     is carried into the several-pods-on-a-large-lot build (FOLLOWUPS 31).
     FOLLOWUPS 68.
   source: Steph 2026-11-05 (chat), docs/followups/68-portland-maps-120.md
-- id: 2026-11-09-sight-triangle-corner-check
+- id: 2026-11-07-national-register-district-contributing-red
   kind: ruling
-  date: 2026-11-09
+  date: 2026-11-07
   scope: {}
   question: >-
-    Cities keep a clear-vision triangle at street corners (and some beside
-    driveways) where no building may stand. The screen ignores them, so a
-    townhome drawn into a corner can show GREEN where the city would refuse it.
-    Build the corner check?
-  ruling: '"YES"'
+    Outside Portland, a house that is a contributing resource in a National
+    Register historic district (about 520 lots, nearly all Oak Hills,
+    unincorporated Washington County) but not individually listed: RED like
+    an individually listed building, or YELLOW?
+  ruling: '"red."'
   effect: >-
-    The corner clear-vision area is carved out of the buildable envelope before
-    the fit, per city figures (FOLLOWUPS 161). A city whose corner rule is not
-    yet read takes the conservative default (the triangle bars buildings), so
-    its corner lots near the zone are YELLOW, never GREEN, until read.
-  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
-- id: 2026-11-09-portland-driveway-clear-zone-note
+    A contributing resource in a National Register district is RED on a sure
+    match, the same as an individually listed National Register building
+    (OAR 660-023-0200(8)(a) protects National Register resources whether or
+    not the local government designated them). FOLLOWUPS 87.
+  source: Steph 2026-11-07 (chat), docs/followups/87-historic-outside-portland.md
+- id: 2026-11-06-estacada-lot-of-record-per-home-figure
   kind: ruling
-  date: 2026-11-09
-  scope: {county: multnomah, city: portland}
+  date: 2026-11-06
+  scope: {county: clackamas, city: estacada}
   question: >-
-    PBOT TRN-10.40 asks for a 15 ft x 15 ft clear zone each side of a
-    residential driveway, measured from the pavement edge. It sits outside the
-    zoning code and may not be enforced against buildings. Apply it fully, as
-    a warning, or ignore it?
-  ruling: '"Green with a note"'
+    Estacada EMC 16.84.040 lets an existing undersized lot be built on. Does
+    that relief also lift the 2,500 sq ft per home figure, which limits how
+    many homes fit? The code does not say. Stay yellow, go green, or ask the
+    city?
+  ruling: >-
+    "Stay yellow"
   effect: >-
-    The colour is not changed by the Portland driveway clear zone: a lot whose
-    drawn building reaches into it keeps its colour and carries a flag/note
-    (check PBOT TRN-10.40 before relying on the driveway). Portland corner
-    clear vision stays right-of-way only.
-  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
-- id: 2026-11-09-curb-position-middle-way
+    A lot that passes only through this relief (C-2, CMU, NCR, R-3) is YELLOW
+    with a flag, never GREEN, until the city answers. FOLLOWUPS 108.
+  source: Steph 2026-11-06 (chat), docs/followups/108-legal-lots.md
+- id: 2026-11-08-oregon-city-dedication-below-minimum
   kind: ruling
-  date: 2026-11-09
+  date: 2026-11-08
+  scope: {county: clackamas, city: oregon-city}
+  question: >-
+    When an existing Oregon City lot must give up a strip of land for the
+    road and is left smaller than the zone's minimum lot size, does it still
+    count as a lot that meets the minimum (existing-lot relief, OCMC
+    17.58.020)?
+  ruling: '"no"'
+  effect: >-
+    The lot area after the road strip is measured against the zone minimum
+    with no existing-lot relief for the shortfall the dedication causes; a
+    lot left below the minimum misses it. FOLLOWUPS 77.
+  source: Steph 2026-11-08 (chat), docs/followups/77-city-road-dedication.md
+- id: 2026-11-08-no-front-yard-parking-silent-codes
+  kind: ruling
+  date: 2026-11-08
   scope: {}
   question: >-
-    Clear-vision areas are measured from the curb or pavement edge; the maps
-    hold only property lines. Assume the curb at the lot line (worst case), a
-    normal sidewalk width, or a middle way?
-  ruling: '"Middle way"'
-  effect: >-
-    GREEN only if the lot is clear with the curb at the property line; RED only
-    if it is blocked even with a generous curb offset; anything between is
-    YELLOW with a "check where the curb is" flag. A real curb layer (e.g.
-    Portland PBOT curbs) replaces the assumption where it exists.
-  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
-- id: 2026-11-09-west-linn-pod-single-family
-  kind: ruling
-  date: 2026-11-09
-  scope: {county: clackamas, city: west-linn}
-  question: >-
-    West Linn starts the driveway clear-vision area at the front setback line
-    for single-family and two-family homes, but 30 ft back from the property
-    line for everything else. Does the 4-unit townhome count as single-family?
-  ruling: '"Single-Family"'
-  effect: >-
-    The pod takes the single-family/two-family apex (front setback line) for
-    the West Linn driveway clear-vision area (state middle-housing siting
-    parity).
-  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
-- id: 2026-11-09-multco-pockets-portland-parking
-  kind: ruling
-  date: 2026-11-09
-  scope: {county: multnomah, city: _unincorporated}
-  question: >-
-    The Portland-administered unincorporated pockets now take Portland Title
-    33. Should Steph's Portland parking rulings (20 ft aisle; the alley is the
-    aisle with 20 ft back-out) also cover the pockets?
-  ruling: '"Extend both"'
-  effect: >-
-    In the Portland-administered pockets the court is drawn with a 20 ft aisle
-    (as 2026-09-30-portland-aisle-20ft) and an alley-fed plan treats the alley
-    as the aisle with 20 ft back-out (as 2026-09-13-portland-alley-is-aisle).
-  source: Steph 2026-11-09 (chat), ../vicinitideals-worktrees/multco-pockets.handoff.md item 1
-- id: 2026-11-09-hillsboro-scr-side-max-both
-  kind: ruling
-  date: 2026-11-09
-  scope: {county: washington, city: hillsboro, zones: [SCR-MD, SCR-HD]}
-  question: >-
-    The 5 ft maximum side setback in Hillsboro's station-area zones: one wall
-    or both? Both turns nearly every non-alley SCR green red (~300 lots).
+    In a code that says nothing about it, may the parking court sit between
+    the building and the street (in the front yard)?
   ruling: >-
-    "I'd say it's both, but we should first check that parking can't
-    encroach. If they can't, I'm good with yellow and ask"
+    "no"
   effect: >-
-    Read as BOTH side walls. First check whether the code lets a driveway or
-    parking sit in the side area (an exception to the maximum). If it does not,
-    these lots are YELLOW with an "ask the city" flag (not GREEN, not RED)
-    until Hillsboro answers. FOLLOWUPS 170.
-  source: Steph 2026-11-09 (chat), docs/followups/170-hillsboro-side-max.md
-- id: 2026-11-10-hillsboro-scr-alley-lots-yellow
+    The court must not sit between the building and a front lot line (the
+    front yard: both ends of a through lot whose code makes each a front,
+    every street of a corner whose front is not named, a private road only
+    where the city counts it as a front lot line); where the code bans
+    parking between the building and the street (parking_front_prohibited),
+    every street line. A corner's street side yard is not a front yard, nor
+    a private road the yards ignore. Every placement prefers a clear court; a plan
+    whose final drawing still stands it there is held out of GREEN
+    (COURT_FRONT_YARD). FOLLOWUPS 142. Not unincorporated Clackamas, whose
+    code is not silent: 2026-11-09-clackamas-front-parking-follow-zdo.
+  source: Steph 2026-11-08 (chat), docs/followups/142-placement-and-stall-width.md
+  encoded_in: [flats/ingest/quadfit.py, flats/fit/draw.py]
+- id: 2026-11-08-washington-plat-age-check-yellow
   kind: ruling
-  date: 2026-11-10
-  scope: {county: washington, city: hillsboro, zones: [SCR-MD, SCR-HD]}
+  date: 2026-11-08
+  scope: {county: washington}
   question: >-
-    Under the both-walls reading of the 5 ft side maximum, an alley lot fits
-    only when it is exactly pod width + 10 ft, so most alley GREENs go YELLOW.
-    Keep alley lots to that strict measure, or keep them GREEN?
-  ruling: >-
-    "Yellow"
+    Washington County's Type I middle-housing gate needs a lot made by a
+    standard subdivision or partition plat, not a Middle Housing Land Division
+    (CDC 304-2.14 .. 307-2.13, 106-107). A plat's title need not say it was a
+    middle housing division, and those began in 2022, so a plat passes only
+    when provably older: a partition plat's year, or a named subdivision whose
+    houses were built in three or more different years before 2022. Tract
+    subdivisions built out in one or two years (917 pod-sized lots) cannot be
+    dated that way. Pass them, or keep them yellow?
+  ruling: '"yellow"'
   effect: >-
-    Alley lots in SCR-MD/SCR-HD are measured like every other lot against the
-    both-walls 5 ft side maximum; a lot that fits only with one wall inside
-    5 ft is YELLOW with the ask-the-city flag. FOLLOWUPS 176(a).
-  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
-- id: 2026-11-10-hillsboro-scr-dnc-side-max-both
+    No change: a plat the tax roll cannot date before 2022 is unread and the
+    lot keeps REVIEW-CONDITIONS (standard_plat), or CLEAR-OBJECTIVE where
+    ORS 197A.400 reaches it. FOLLOWUPS 83.
+  source: Steph 2026-11-08 (chat), docs/followups/83-standard-plat-gate.md
+  encoded_in: [flats/ingest/plats.py]
+- id: 2026-11-08-washington-whole-lots-and-vacated-street-platted
   kind: ruling
-  date: 2026-11-10
-  scope: {county: washington, city: hillsboro, zones: [SCR-DNC]}
+  date: 2026-11-08
+  scope: {county: washington}
   question: >-
-    SCR-DNC has a 15 ft maximum side setback with the same one-wall-or-both
-    question as SCR-MD/HD. Apply the both-walls reading there too?
-  ruling: >-
-    "Yes"
+    For the same gate, does a tax lot count as made by a plat when it is one
+    whole platted lot plus part of a vacated street, road or alley, or two or
+    more whole platted lots together?
+  ruling: '"yes to both"'
   effect: >-
-    The 15 ft SCR-DNC side maximum is read as both side walls, built the same
-    way as 2026-11-09-hillsboro-scr-side-max-both (parking-encroach check
-    first, then YELLOW + ask the city, never RED on this alone).
-    FOLLOWUPS 176(b).
-  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
-- id: 2026-11-10-canby-fire-dead-end-300
+    Both read as made by a plat (still subject to the pre-2022 plat-age
+    check). Part of a lot, a vacated tract, a tract and a second plat in the
+    description still do not pass. FOLLOWUPS 83.
+  source: Steph 2026-11-08 (chat), docs/followups/83-standard-plat-gate.md
+  encoded_in: [flats/ingest/plats.py]
+- id: 2026-11-08-single-design-80x30
   kind: ruling
-  date: 2026-11-10
-  scope: {county: clackamas, city: canby}
+  date: 2026-11-08
+  scope: {}
   question: >-
-    Canby Fire District's Conditions of Construction say a dead-end access road
-    may run 300 ft before a turnaround, but call it district practice, not an
-    adopted rule (the state fire code prints 150 ft). Give Canby lots 300 ft?
+    The screen tries every lot with two pod sizes (4 x 14 ft homes, 56 x 36,
+    and 4 x 20 ft homes, 80 x 25) and the sizing study measured five more.
+    Which building should FLATS screen?
   ruling: >-
-    "300"
+    One design only: 4 attached townhomes in a row, each 20 ft wide x 30 ft
+    deep (600 sq ft ground floor), 2 storeys, front door on each home's 20 ft
+    wall, so the building is 80 x 30 with every door along the 80 ft face.
+    Parking stays exactly as today. Retire every other size.
   effect: >-
-    Canby dead ends run 300 ft before a turnaround is needed, cited to the
-    Canby Fire District Conditions of Construction (rev 10.28). A few Canby
-    YELLOWs may go GREEN. FOLLOWUPS 176(h).
-  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+    New runs screen pod80x30 alone (flats/config/pods/pod80x30.yaml), with
+    pod80x25's height, storeys, roof and parking bands. pod56x36 and pod80x25
+    are archived: still loadable so results that name them read, never run.
+    The study sizes were never in the catalog. FOLLOWUPS 149.
+  encoded_in: [flats/config/pods/pod80x30.yaml, flats/ingest/quadfit.py]
+  source: Steph 2026-11-08 (chat, executive decision), docs/followups/149-pod-unit-width.md
+- id: 2026-11-08-no-porch-end-door
+  kind: ruling
+  date: 2026-11-08
+  scope: {}
+  question: >-
+    Most codes let the front doors face away from the street if one home's door
+    sits near the street end of the building and opens onto a covered porch (or
+    the end wall carries windows). Can the product take that change, so the
+    building can stand turned, its 30 ft end to the street?
+  ruling: >-
+    No. The building's doors stay on the 80 ft face; no end-home porch door or
+    street-end windows to meet an entrance-orientation alternative. Where a code
+    requires the main entrance to face the street (with or without a porch or
+    angle alternative), the turned placement fails.
+  effect: >-
+    Every place read as `alternative` (facing the street, up to 45 degrees, a
+    common open space or a porch: the Large Cities Model Code cities, Portland,
+    Gresham, Beaverton RMA/RMB/RMC/CM-RM and the rest) is `required`, and
+    Hillsboro's 12.50.710.C.1.b too: the pod is searched facing the street only,
+    and a lot that fit only turned no longer passes. An angle alternative of up
+    to 45 degrees cannot be met by a 90-degree turn. FOLLOWUPS 153.
+  source: Steph 2026-11-08 (chat), docs/followups/153-entrance-orientation.md
+  encoded_in: [flats/rules/fields.py, flats/score/paper.py]
 - id: 2026-11-10-side-door-fit-yellow
   kind: ruling
   date: 2026-11-10
@@ -2736,6 +2799,7 @@
     side; needs a street-facing end door (design change)" -- never GREEN, and
     not RED on this ground alone. FOLLOWUPS 177.
   source: Steph 2026-11-10 (chat), docs/followups/177-door-rule-green-loss.md
+  encoded_in: [flats/score/paper.py, flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
 - id: 2026-11-10-hillsboro-corner-side-parking-yellow
   kind: ruling
   date: 2026-11-10
@@ -2750,6 +2814,7 @@
     Corner lots that need the city's discretionary approval stay YELLOW.
     FOLLOWUPS 176(c).
   source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/score/screen.py]
 - id: 2026-11-10-cornelius-county-street-map
   kind: ruling
   date: 2026-11-10
@@ -2766,6 +2831,7 @@
     tell which streets are busy (collector/arterial) for the driveway-spacing
     check; it is used for nothing else in Cornelius. FOLLOWUPS 176(g).
   source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+  encoded_in: [flats/config/driveway_spacing.yaml, flats/geom/driveway_spacing.py]
 - id: 2026-11-10-portland-driveway-9ft
   kind: ruling
   date: 2026-11-10
@@ -2781,6 +2847,369 @@
     (9 ft, 33.266) wherever the code allows it for this building; elsewhere the
     plan's 12 ft stands. FOLLOWUPS 178(a).
   source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
+  encoded_in: [flats/config/jurisdictions/or/multnomah/portland.yaml, flats/config/jurisdictions/or/multnomah/_unincorporated.yaml]
+- id: 2026-11-09-clackamas-front-parking-follow-zdo
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    The 2026-11-08 front-yard ruling (no parking court between the building
+    and a street) was for codes that say nothing. Unincorporated Clackamas
+    ZDO 845.02(D) does say: parking may stand between a building and a
+    public street where a dwelling separates it from the street, or where
+    all of it together is no wider than half the street frontage. Apply the
+    blanket ban there anyway, or follow the county's rule?
+  ruling: >-
+    "Follow the county's rules."
+  effect: >-
+    In unincorporated Clackamas (parking_front_share_allowed), a court the
+    final drawing stands between the building and a front lot line is not
+    held COURT_FRONT_YARD where every such line is read as a public street
+    and the court, measured on that drawing, faces no more than 50 percent
+    of any street's frontage (845.02(D)(2), read on every street). The
+    dwelling-separates-it limb (845.02(D)(1)) is not measured and never
+    opens a lot. A line not read as a public street (a private road the
+    yards count, a street s4 did not read) or an unmeasured share keeps the
+    hold. The townhouse path (unit_lots) follows 845.03(E)(2)(a), "Off-street
+    parking areas shall not be located between a townhouse and a public
+    street": an outright ban (parking_front_prohibited) on EVERY public
+    street, a corner's side street included. Cities in Clackamas keep their
+    own rules.
+  source: Steph 2026-11-09 (chat)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/_unincorporated.yaml, flats/ingest/quadfit.py, flats/rules/fields.py]
+- id: 2026-11-09-sight-triangle-corner-check
+  kind: ruling
+  date: 2026-11-09
+  scope: {}
+  question: >-
+    Cities keep a clear-vision triangle at street corners (and some beside
+    driveways) where no building may stand. The screen ignores them, so a
+    townhome drawn into a corner can show GREEN where the city would refuse it.
+    Build the corner check?
+  ruling: '"YES"'
+  effect: >-
+    The corner clear-vision area is carved out of the buildable envelope before
+    the fit, per city figures (FOLLOWUPS 161). A city whose corner rule is not
+    yet read takes the conservative default (the triangle bars buildings), so
+    its corner lots near the zone are YELLOW, never GREEN, until read.
+  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+  encoded_in: [flats/geom/sight_triangle.py, flats/ingest/quadfit.py, flats/rules/loader.py]
+- id: 2026-11-09-portland-driveway-clear-zone-note
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: multnomah, city: portland}
+  question: >-
+    PBOT TRN-10.40 asks for a 15 ft x 15 ft clear zone each side of a
+    residential driveway, measured from the pavement edge. It sits outside the
+    zoning code and may not be enforced against buildings. Apply it fully, as
+    a warning, or ignore it?
+  ruling: '"Green with a note"'
+  effect: >-
+    The colour is not changed by the Portland driveway clear zone: a lot whose
+    drawn building reaches into it keeps its colour and carries a flag/note
+    (check PBOT TRN-10.40 before relying on the driveway). Portland corner
+    clear vision stays right-of-way only.
+  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+  encoded_in: [flats/config/jurisdictions/or/multnomah/portland.yaml, flats/ingest/quadfit.py, flats/config/flags.yaml]
+- id: 2026-11-09-curb-position-middle-way
+  kind: ruling
+  date: 2026-11-09
+  scope: {}
+  question: >-
+    Clear-vision areas are measured from the curb or pavement edge; the maps
+    hold only property lines. Assume the curb at the lot line (worst case), a
+    normal sidewalk width, or a middle way?
+  ruling: '"Middle way"'
+  effect: >-
+    GREEN only if the lot is clear with the curb at the property line; RED only
+    if it is blocked even with a generous curb offset; anything between is
+    YELLOW with a "check where the curb is" flag. A real curb layer (e.g.
+    Portland PBOT curbs) replaces the assumption where it exists.
+  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+  encoded_in: [flats/geom/sight_triangle.py, flats/ingest/quadfit.py]
+- id: 2026-11-09-west-linn-pod-single-family
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: clackamas, city: west-linn}
+  question: >-
+    West Linn starts the driveway clear-vision area at the front setback line
+    for single-family and two-family homes, but 30 ft back from the property
+    line for everything else. Does the 4-unit townhome count as single-family?
+  ruling: '"Single-Family"'
+  effect: >-
+    The pod takes the single-family/two-family apex (front setback line) for
+    the West Linn driveway clear-vision area (state middle-housing siting
+    parity).
+  source: Steph 2026-11-09 (chat), docs/followups/161-sight-triangles.md
+  encoded_in: [flats/config/jurisdictions/or/clackamas/west-linn.yaml]
+- id: 2026-11-09-multco-pockets-portland-parking
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: multnomah, city: _unincorporated, zones: [R5, R7, R10, R20]}
+  question: >-
+    The Portland-administered unincorporated pockets now take Portland Title
+    33. Should Steph's Portland parking rulings (20 ft aisle; the alley is the
+    aisle with 20 ft back-out) also cover the pockets?
+  ruling: '"Extend both"'
+  effect: >-
+    In the Portland-administered pockets the court is drawn with a 20 ft aisle
+    (as 2026-09-30-portland-aisle-20ft) and an alley-fed plan treats the alley
+    as the aisle with 20 ft back-out (as 2026-09-13-portland-alley-is-aisle).
+  source: Steph 2026-11-09 (chat), ../vicinitideals-worktrees/multco-pockets.handoff.md item 1
+  encoded_in: [flats/config/jurisdictions/or/multnomah/_unincorporated.yaml]
+- id: 2026-11-09-hillsboro-scr-side-max-both
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: washington, city: hillsboro, zones: [SCR-MD, SCR-HD]}
+  question: >-
+    The 5 ft maximum side setback in Hillsboro's station-area zones: one wall
+    or both? Both turns nearly every non-alley SCR green red (~300 lots).
+  ruling: >-
+    "I'd say it's both, but we should first check that parking can't
+    encroach. If they can't, I'm good with yellow and ask"
+  effect: >-
+    Read as BOTH side walls. First check whether the code lets a driveway or
+    parking sit in the side area (an exception to the maximum). If it does not,
+    these lots are YELLOW with an "ask the city" flag (not GREEN, not RED)
+    until Hillsboro answers. FOLLOWUPS 170.
+  source: Steph 2026-11-09 (chat), docs/followups/170-hillsboro-side-max.md
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/score/screen.py]
+- id: 2026-11-10-hillsboro-scr-alley-lots-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: hillsboro, zones: [SCR-MD, SCR-HD]}
+  question: >-
+    Under the both-walls reading of the 5 ft side maximum, an alley lot fits
+    only when it is exactly pod width + 10 ft, so most alley GREENs go YELLOW.
+    Keep alley lots to that strict measure, or keep them GREEN?
+  ruling: >-
+    "Yellow"
+  effect: >-
+    Alley lots in SCR-MD/SCR-HD are measured like every other lot against the
+    both-walls 5 ft side maximum; a lot that fits only with one wall inside
+    5 ft is YELLOW with the ask-the-city flag. FOLLOWUPS 176(a).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/score/screen.py]
+- id: 2026-11-10-hillsboro-scr-dnc-side-max-both
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: hillsboro, zones: [SCR-DNC]}
+  question: >-
+    SCR-DNC has a 15 ft maximum side setback with the same one-wall-or-both
+    question as SCR-MD/HD. Apply the both-walls reading there too?
+  ruling: >-
+    "Yes"
+  effect: >-
+    The 15 ft SCR-DNC side maximum is read as both side walls, built the same
+    way as 2026-11-09-hillsboro-scr-side-max-both (parking-encroach check
+    first, then YELLOW + ask the city, never RED on this alone).
+    FOLLOWUPS 176(b).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/score/screen.py]
+- id: 2026-11-10-canby-fire-dead-end-300
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: clackamas, city: canby}
+  question: >-
+    Canby Fire District's Conditions of Construction say a dead-end access road
+    may run 300 ft before a turnaround, but call it district practice, not an
+    adopted rule (the state fire code prints 150 ft). Give Canby lots 300 ft?
+  ruling: >-
+    "300"
+  effect: >-
+    Canby dead ends run 300 ft before a turnaround is needed, cited to the
+    Canby Fire District Conditions of Construction (rev 10.28). A few Canby
+    YELLOWs may go GREEN. FOLLOWUPS 176(h).
+  source: Steph 2026-11-10 (chat), docs/followups/176-lane-questions-1110.md
+  encoded_in: [flats/config/fire_roads.yaml, flats/provenance/sources.py]
+- id: 2026-11-10-tigard-cornice-yellow
+  kind: ruling
+  date: 2026-11-10
+  scope: {county: washington, city: tigard}
+  question: >-
+    Tigard allows a flat rowhouse roof only with a cornice at least 12 inches
+    tall. Can the pod carry one? If not, Tigard townhouse greens go RED under
+    the flat-roof ruling.
+  ruling: >-
+    "tigard, yellow with flag"
+  effect: >-
+    Tigard lots held only by the 12 in cornice requirement on a flat roof are
+    YELLOW with a flag that the pod needs a cornice at least 12 in tall (a
+    design detail to confirm), not RED. FOLLOWUPS 178(d).
+  source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
+  encoded_in:
+    - flats/score/screen.py
+    - flats/config/jurisdictions/or/washington/tigard.yaml
+- id: 2026-11-12-portland-commercial-windows-fourplex-exempt
+  kind: ruling
+  date: 2026-11-12
+  scope: {county: multnomah, city: portland}
+  question: >-
+    PCC 33.130.230 "Windows" (CM1, CM2, CM3, CE, CR, CX) holds both the 15%
+    street-facade window share (A) and the ground-floor window band (B).
+    B.2.b(1) says "Houses, attached houses, manufactured homes, duplexes,
+    attached duplexes, triplexes, and fourplexes are exempt from this
+    Section". Does that lift the 15% share too, or only the band it sits in?
+  ruling: >-
+    "If the 15% is in the 'window section' then I would say its exempt. It
+    depends on what the exemption is." The exemption is from "this Section",
+    and the section is 33.130.230 Windows, which contains the 15% (A.3).
+  effect: >-
+    In Portland's commercial/mixed-use zones (33.130) the pod, a fourplex or
+    attached houses, owes neither the 15% street-facade window share nor the
+    ground-floor window band. Design guidance only: the screen does not grade
+    window shares, so no lot moves. Building-code windows (escape, light) and
+    plan-district rules outside 33.130.230 still apply. FOLLOWUPS 187.
+  source: Steph 2026-11-12 (chat), ../vicinitideals-worktrees/glazing-pdx.findings.md
+- id: 2026-11-12-single-design-80x25-20ft
+  kind: ruling
+  date: 2026-11-12
+  scope: {}
+  question: >-
+    Since 2026-11-08 the screen has tested every lot with 20 x 30 homes (an
+    80 x 30 building, 26 ft tall, 12 ft ground storey), but Steph said
+    2026-11-11 "I really do want 25x20" and 2026-11-12 "We're gunna be 20ft
+    tall unless we go to a pitched roof". Switch the whole screen to 20 x 25
+    homes (80 x 25), 20 ft tall?
+  ruling: >-
+    "Yes: 20x25, 20 ft tall". Ground storey: "Each floor is 8' wall with
+    14" truss for either the ceiling of the ground floor or for the roof of
+    the top floor" -- 9 ft 2 in per storey, 18 ft 4 in of structure inside
+    the 20 ft height.
+  effect: >-
+    The single screened design becomes 4 attached townhomes, each 20 ft wide
+    x 25 ft deep, 2 storeys, flat roof, 80 x 25 with every door on the 80 ft
+    face, height 20 ft; each storey 9 ft 2 in (ground storey not 12 ft), so a
+    code minimum first-storey or storey height above that misses. Supersedes the 80 x 30
+    size in 2026-11-08-single-design-80x30 (parking, roof and door rules of
+    that ruling stand). Every lot is re-screened. FOLLOWUPS 185.
+  source: Steph 2026-11-12 (chat), docs/followups/185-pod-depth-30.md
+- id: 2026-11-12-height-measured-per-city
+  kind: ruling
+  date: 2026-11-12
+  scope: {}
+  question: >-
+    Is the pod's "20 ft" the height as the codes measure it? Four zones set a
+    20 ft MINIMUM height (Clackamas SCMU, Tualatin MUC, Tigard MU-CBD,
+    Washington County TO:BUS) and the screen passed them at exactly 20 ft.
+  ruling: >-
+    "Different cities measure height differently. Our 8' walls will be
+    secured to the slab and flooring will start on the slab"
+  effect: >-
+    The pod is slab-on-grade: 18 ft 4 in of structure (two 8 ft walls, two
+    14 in trusses) above the top of the slab, plus the slab's rise above the
+    ground, plus roofing, plus any parapet. Its height is measured by each
+    city's own definition (where grade is taken, roof vs parapet), not as one
+    fixed 20 ft. Until each definition is read and the slab rise, roofing and
+    parapet are known, a 20 ft MINIMUM is not shown as met (structure alone is
+    under 20 ft without a parapet), and a limit, plane or step-back starting
+    near 20 ft is tested at the tallest the pod could measure. FOLLOWUPS 185.
+  source: Steph 2026-11-12 (chat), docs/followups/185-pod-depth-30.md
+- id: 2026-11-12-pod-height-19ft-1in-no-parapet
+  kind: ruling
+  date: 2026-11-12
+  scope: {}
+  question: >-
+    For the code-measured height of the pod: how high does the slab sit above
+    the ground, how thick is the roofing above the truss cassette, and is
+    there a parapet?
+  ruling: >-
+    "Slab 8" above ground level"; "Roof is ~1" thick after the decking which
+    is already accounted for in the roof truss cassette"; "no parapet for now"
+  effect: >-
+    The pod measures 19 ft 1 in from the ground to the top of the roof on
+    flat ground (8 in slab + 18 ft 4 in structure + 1 in roofing), no
+    parapet. A code MINIMUM height above 19 ft 1 in is missed, the same as
+    the 25 ft minimums (the four 20 ft minimums: Clackamas SCMU, Tualatin
+    MUC, Tigard MU-CBD, Washington County TO:BUS). Limits, planes and
+    height-scaled setbacks stay tested at 20 ft, which is stricter and covers
+    a city measuring from the low side of a sloped lot. Revisit if a parapet
+    is added. FOLLOWUPS 185.
+  source: Steph 2026-11-12 (chat), docs/followups/185-pod-depth-30.md
+- id: 2026-11-12-gresham-glass-each-facade
+  kind: ruling
+  date: 2026-11-12
+  scope: {county: multnomah, city: gresham}
+  question: >-
+    Gresham 7.0420(I)(2) requires clear glass on "5 percent of all other
+    facades". Each non-street wall, or the total of them? Each reading puts
+    the pod's end wall under the 5% rule, and Oregon's residential code bans
+    openings in a wall under 3 ft from a side or rear lot line, so an end wall
+    that close cannot comply.
+  ruling: >-
+    "I agree each wall. Assuming there are no exceptions for the 3' back from
+    the lot line, that's fine to exclude."
+  effect: >-
+    In Gresham's 7.0420 zones every exposed non-street wall of the pod (the
+    end walls and the back wall; party walls are not facades) needs 5% clear
+    glass. A placement whose exposed end wall sits under 3 ft from a side or
+    rear lot line fails; if no placement keeps it 3 ft or more away, the lot
+    is RED. FOLLOWUPS 186.
+  source: Steph 2026-11-12 (chat), docs/followups/186-gresham-end-wall-glass.md
+- id: 2026-11-11-narrow-street-recorded-paving-trusted
+  kind: ruling
+  date: 2026-11-11
+  scope: {}
+  question: >-
+    A city pavement record says 20 ft of paving, but the whole public strip is
+    barely wider (SW 56th Ave, about 20.2 ft). Trust the record, or treat a
+    recorded width that fills the whole strip as doubtful (YELLOW)?
+  ruling: >-
+    "Trust the record"
+  effect: >-
+    A recorded paving width of 20 ft or more counts as measured paving for the
+    narrow-street fire check even where it fills the whole right-of-way; such
+    lots are not held YELLOW on that ground. FOLLOWUPS 180(a).
+  source: Steph 2026-11-11 (chat), docs/followups/180-narrow-row-questions.md
+- id: 2026-11-11-narrow-street-line-22ft
+  kind: ruling
+  date: 2026-11-11
+  scope: {}
+  question: >-
+    Below what right-of-way width is a street too narrow for a fire truck when
+    its paving is unmeasured: 22 ft (20 ft road plus the thinnest printed curb)
+    or 24 ft (Oregon City alley standard)?
+  ruling: >-
+    "Under 22 ft"
+  effect: >-
+    A right-of-way under 22 ft with no measured paving of 20 ft or more is a
+    narrow street (fire YELLOW + flag, ruling
+    2026-11-10-narrow-street-fire-yellow). FOLLOWUPS 180(b).
+  source: Steph 2026-11-11 (chat), docs/followups/180-narrow-row-questions.md
+- id: 2026-11-11-clackamas-pitched-roof-yellow
+  kind: ruling
+  date: 2026-11-11
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    Unincorporated Clackamas County requires pitched roofs on one- and
+    two-storey buildings; a flat roof is allowed only as a roof garden or
+    outdoor space (ZDO 1005.03). The pod has a flat roof. RED, YELLOW with a
+    flag, or exempt as middle housing?
+  ruling: >-
+    "Yellow + flag"
+  effect: >-
+    Unincorporated Clackamas lots held only by the pitched-roof requirement are
+    YELLOW with a flag that the flat roof must be built as a roof garden or
+    outdoor space (a design change to confirm), like Tigard's cornice ruling;
+    not RED, not exempt. FOLLOWUPS 181(a).
+  source: Steph 2026-11-11 (chat), docs/followups/181-roof-sweep-clackamas.md
+- id: 2026-11-11-sewer-pipe-in-street-yellow
+  kind: ruling
+  date: 2026-11-11
+  scope: {}
+  question: >-
+    A lot outside every sewer district or service area, but with a city sewer
+    main in its own street (about 148 lots, mostly the Lake Oswego edge):
+    RED, keep its colour with a note, or YELLOW with a flag (hook-up needs the
+    city's agreement or annexation)?
+  ruling: >-
+    "Yellow + flag"
+  effect: >-
+    Such a lot is YELLOW with a flag that sewer hook-up needs the provider's
+    agreement or annexation; it is not RED under
+    2026-11-10-no-public-sewer-red and never GREEN on that ground.
+    FOLLOWUPS 182.
+  source: Steph 2026-11-11 (chat), docs/followups/182-no-sewer-street-pipe.md
 - id: 2026-11-10-narrow-street-fire-yellow
   kind: ruling
   date: 2026-11-10
@@ -2798,6 +3227,7 @@
     is YELLOW with the fire-access flag (never GREEN on that route).
     FOLLOWUPS 178(b).
   source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
+  encoded_in: [flats/config/fire_roads.yaml, flats/fit/fire_roads.py, flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
 - id: 2026-11-10-no-public-sewer-red
   kind: ruling
   date: 2026-11-10
@@ -2811,21 +3241,6 @@
     A lot shown to lie outside public sewer service is RED. Where sewer
     service data is missing for a place, the lot is not RED on this ground
     (it carries an unmeasured-sewer flag instead). FOLLOWUPS 178(c).
-  source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
-- id: 2026-11-10-tigard-cornice-yellow
-  kind: ruling
-  date: 2026-11-10
-  scope: {county: washington, city: tigard}
-  question: >-
-    Tigard allows a flat rowhouse roof only with a cornice at least 12 inches
-    tall. Can the pod carry one? If not, Tigard townhouse greens go RED under
-    the flat-roof ruling.
-  ruling: >-
-    "tigard, yellow with flag"
-  effect: >-
-    Tigard lots held only by the 12 in cornice requirement on a flat roof are
-    YELLOW with a flag that the pod needs a cornice at least 12 in tall (a
-    design detail to confirm), not RED. FOLLOWUPS 178(d).
   source: Steph 2026-11-10 (chat), docs/followups/178-fg-round4-questions.md
 - id: 2026-11-09-busy-road-driveway-spacing-yellow
   kind: ruling
@@ -2846,6 +3261,7 @@
     frontage that passes takes its driveway there. Steph first said RED, then
     replaced it the same evening with this ruling. FOLLOWUPS 169.
   source: Steph 2026-11-09 (chat), docs/followups/169-arterial-driveway-spacing.md, ../vicinitideals-worktrees/hwy-driveway.findings.md
+  encoded_in: [flats/config/driveway_spacing.yaml, flats/geom/driveway_spacing.py, flats/score/screen.py]
 - id: 2026-11-09-rf-is-farm-land
   kind: ruling
   date: 2026-11-09
@@ -2861,6 +3277,32 @@
     or the Portland-administered pockets; the reason reads "the city treats RF
     as farm land, outside the state law". All 859 RF lots were red before and
     stay red. FOLLOWUPS 173.
+  encoded_in:
+    - flats/config/jurisdictions/or/multnomah/portland.yaml
+    - flats/config/jurisdictions/or/multnomah/_unincorporated.yaml
+    - flats/provenance/docs/or/multnomah/portland/amended/ord192241.txt
+  source: Steph 2026-11-09 (chat), docs/followups/173-rf-middle-housing.md, ../vicinitideals-worktrees/rf-middle-housing.findings.md
+- id: 2026-11-09-rf-is-farm-land-pockets
+  kind: ruling
+  date: 2026-11-09
+  scope: {county: multnomah, city: _unincorporated, zones: [RF]}
+  question: >-
+    Residential Farm/Forest (RF) in the Portland-administered unincorporated
+    pockets: can the state middle-housing (fourplex) route be used there, or is
+    it farm land outside that law?
+  ruling: '"farm land"'
+  effect: >-
+    The pocket half of 2026-11-09-rf-is-farm-land (one ruling; a zone scope
+    names one city file, so the register holds it twice). Pocket RF is
+    Portland's RF zone administered under Title 33: farm land outside ORS
+    197A.420 / HB 2138, no state middle-housing route, the reason reads "the
+    city treats RF as farm land, outside the state law". With the route closed
+    nothing keeps the county's chapter on it, so its parking and outdoor-area
+    card is Title 33's, as in the pockets' R5-R20. All pocket RF lots were red
+    before and stay red. FOLLOWUPS 173.
+  encoded_in:
+    - flats/config/jurisdictions/or/multnomah/_unincorporated.yaml
+    - flats/provenance/docs/or/multnomah/portland/amended/ord192241.txt
   source: Steph 2026-11-09 (chat), docs/followups/173-rf-middle-housing.md, ../vicinitideals-worktrees/rf-middle-housing.findings.md
 - id: 2026-11-09-corner-frontage-keep-split
   kind: ruling
@@ -2878,6 +3320,7 @@
     (e.g. Gresham corner minimum frontage to the radius end point). No
     "rounded corner" yellow. FOLLOWUPS 174.
   source: Steph 2026-11-09 (chat), docs/followups/174-corner-frontage.md, ../vicinitideals-worktrees/corner-frontage.findings.md
+  encoded_in: [flats/score/screen.py, flats/fit/frontage.py, flats/ingest/quadfit.py, flats/config/jurisdictions/or/multnomah/gresham.yaml]
 - id: 2026-11-10-fire-long-dead-end-yellow
   kind: ruling
   date: 2026-11-10
@@ -2896,6 +3339,7 @@
     GREEN. Lanes under 20 ft and other fire-reach failures are unchanged.
     FOLLOWUPS 168.
   source: Steph 2026-11-10 (chat), docs/followups/168-fire-road-width.md, ../vicinitideals-worktrees/fire-road.handoff.md
+  encoded_in: [flats/config/fire_roads.yaml, flats/fit/fire_roads.py, flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
 - id: 2026-11-10-milwaukie-clear-vision-aashto-held
   kind: ruling
   date: 2026-11-10
@@ -2912,6 +3356,7 @@
     25 mph, driver point 14.5 ft back), with the curb middle way
     (2026-11-09-curb-position-middle-way). No purchase. FOLLOWUPS 161.
   source: Steph 2026-11-10 (chat), docs/followups/161-sight-triangles.md
+  encoded_in: [flats/config/jurisdictions/or/clackamas/milwaukie.yaml]
 - id: 2026-10-19-page-check-market-rate
   kind: ruling
   date: 2026-10-19
@@ -2928,3 +3373,143 @@
     out cannot make a false GREEN. An affordability filter is a later feature
     (check in with Steph first).
   source: Steph 2026-10-19 (chat, Gresham page check)
+- id: 2026-11-14-portland-driveway-9ft-county-pockets
+  kind: ruling
+  date: 2026-11-14
+  scope:
+    county: multnomah
+    city: _unincorporated
+    zones: [R20, R10, R7, R5, RF]
+  question: >-
+    The 9 ft driveway ruling (2026-11-10-portland-driveway-9ft) was made for
+    Portland. The unincorporated county pockets inside Portland follow
+    Portland's code (Title 33) and already use it. Does the ruling cover them?
+  ruling: '"yes"'
+  effect: >-
+    The Portland-administered county pockets take the 9 ft driveway, as they
+    already do. No change to the screen; this records the scope.
+  source: Steph 2026-11-14 (chat, question sheet item 13), ../vicinitideals-worktrees/pagecheck-34.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/multnomah/_unincorporated.yaml]
+- id: 2026-11-14-fairview-hold-every-corner
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: multnomah, city: fairview}
+  question: >-
+    Fairview 19.162.020 sends driveways near a controlled intersection (stop
+    sign or signal) to its transportation plan, which was not found, and stop
+    signs are not mapped. Hold every corner lot as unsure, or only corners next
+    to a collector or arterial (as built in drive-spacing)?
+  ruling: '"follow your rec" (hold every corner lot)'
+  effect: >-
+    Every Fairview corner lot is held YELLOW for the driveway-near-intersection
+    check, not only those next to a busier street. Fairview has no GREEN lots
+    today, so nothing moves now. To encode on a rel10 lane (FOLLOWUPS 192).
+  source: Steph 2026-11-14 (chat, question sheet item 3), ../vicinitideals-worktrees/drive-spacing.handoff.md
+- id: 2026-11-14-oregon-city-engineer-sight-area-green
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: clackamas, city: oregon-city}
+  question: >-
+    The corner sight area here is set case by case by the city engineer, so it
+    cannot be measured. Keep YELLOW, or GREEN with a flag?
+  ruling: '"Green"'
+  effect: >-
+    A lot held only by the engineer-set corner sight area is GREEN with a flag
+    (the city engineer sizes the sight area), as for other judgement-only
+    rules (2026-10-15 ORS 197A.400). Any measured sight rule still binds. Moot
+    today. To encode on a rel10 lane (FOLLOWUPS 192).
+  source: Steph 2026-11-14 (chat, question sheet item 4), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+- id: 2026-11-14-hillsboro-engineer-sight-area-green
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: washington, city: hillsboro}
+  question: >-
+    The corner sight area here is set case by case by the city engineer, so it
+    cannot be measured. Keep YELLOW, or GREEN with a flag?
+  ruling: '"Green"'
+  effect: >-
+    A lot held only by the engineer-set corner sight area is GREEN with a flag
+    (the city engineer sizes the sight area), as for other judgement-only
+    rules (2026-10-15 ORS 197A.400). Any measured sight rule still binds. Moot
+    today. To encode on a rel10 lane (FOLLOWUPS 192).
+  source: Steph 2026-11-14 (chat, question sheet item 4), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+- id: 2026-11-14-parked-cars-obstruct-sight
+  kind: ruling
+  date: 2026-11-14
+  scope: {}
+  question: >-
+    Do parked cars count as "obstructions" in a corner clear-vision or sight
+    area (so the pod's parking may not sit in it)?
+  ruling: '"yes"'
+  effect: >-
+    Parking stalls and parked cars may not sit in a corner sight area wherever
+    a code bars obstructions there. Already how the screen reads it; no change.
+  source: Steph 2026-11-14 (chat, question sheet item 5), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+- id: 2026-11-14-milwaukie-sight-45mph-500
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: clackamas, city: milwaukie}
+  question: >-
+    The sight-distance table steps from 450 ft to 500 ft around 45 mph. Which
+    figure does a 45 mph street take?
+  ruling: '"500"'
+  effect: >-
+    A 45 mph street takes the 500 ft sight distance. Already encoded that way;
+    no change. Moot today.
+  source: Steph 2026-11-14 (chat, question sheet item 6), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+- id: 2026-11-14-clackamas-sight-45mph-500
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    The sight-distance table steps from 450 ft to 500 ft around 45 mph. Which
+    figure does a 45 mph street take?
+  ruling: '"500"'
+  effect: >-
+    A 45 mph street takes the 500 ft sight distance. Already encoded that way;
+    no change. Moot today.
+  source: Steph 2026-11-14 (chat, question sheet item 6), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+- id: 2026-11-14-wilsonville-sight-45mph-500
+  kind: ruling
+  date: 2026-11-14
+  scope: {city: wilsonville}
+  question: >-
+    The sight-distance table steps from 450 ft to 500 ft around 45 mph. Which
+    figure does a 45 mph street take?
+  ruling: '"500"'
+  effect: >-
+    A 45 mph street takes the 500 ft sight distance. Already encoded that way;
+    no change. Moot today.
+  source: Steph 2026-11-14 (chat, question sheet item 6), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+- id: 2026-11-14-gresham-mdr24-alley-corner-width-16
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: multnomah, city: gresham, zones: [MDR-24]}
+  question: >-
+    An MDR-24 corner townhouse lot backing onto an alley: Gresham allows 16 ft
+    wide; the 2026-10-20 ruling (2026-10-20-gresham-pod-drive-is-shared-access)
+    holds 25 ft "whether or not an alley is observed". Which?
+  ruling: >-
+    "If it isn't that big of a deal, stay with 25. What I don't like about
+    that is in the future if we can work into MDR-24 we have an invisible
+    error. So a low-priority fix, but a fix."
+  effect: >-
+    25 ft stays until the fix ships; the fix gives an MDR-24 corner townhouse
+    lot with an observed alley the code's alley figure, so the 2026-10-20
+    ruling's "whether or not an alley" no longer hides it. No lot depends on it
+    today. Low priority (FOLLOWUPS 192).
+  source: Steph 2026-11-14 (chat, question sheet item 8), ../vicinitideals-worktrees/gresham-4-1152.handoff.md
+- id: 2026-11-14-no-city-contact
+  kind: ruling
+  date: 2026-11-14
+  scope: {}
+  question: >-
+    Ask cities to settle readings (Hillsboro downtown roof rule text vs map,
+    Tualatin flat-roof edge, Wilsonville Villebois Pattern Book)?
+  ruling: '"I don''t want to ask any cities"'
+  effect: >-
+    No city is contacted. Each reading stays at its cautious default:
+    Hillsboro's roof rule follows the text (whole Downtown Plan District);
+    Tualatin flat roofs stay RED; Villebois lots without the Pattern Book stay
+    YELLOW. FOLLOWUPS 181 questions closed.
+  source: Steph 2026-11-14 (chat, question sheet B), docs/followups/181-roof-sweep-clackamas.md

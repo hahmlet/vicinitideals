@@ -1,5 +1,5 @@
 {
-  "digest": "414af72e4384432f92cf8d7828ca6a8680b75893230cb45796f4532813a3ce56",
+  "digest": "b2c7b3adbd0bfa960d7c0b6054cc997e0fb1aa4db13f98703b19cb5da98a8f57",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -16,15 +16,145 @@
       "gaps": []
     },
     "or/clackamas/canby": {
-      "section_unread": 6,
-      "misattributed": [],
+      "section_unread": 8,
+      "misattributed": [
+        {
+          "zone": "C-1",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22",
+          "found": "16.08.080",
+          "quote": "or/clackamas/canby/cmc.16.08.080.txt#L7",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "C-1",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22",
+          "found": "16.08.080",
+          "quote": "or/clackamas/canby/cmc.16.08.080.txt#L7",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "C-R",
+          "field": "lot_of_record_condition",
+          "claimed": "16.24",
+          "found": "16.08.080",
+          "quote": "or/clackamas/canby/cmc.16.08.080.txt#L7",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "C-R",
+          "field": "lot_of_record_relief",
+          "claimed": "16.24",
+          "found": "16.08.080",
+          "quote": "or/clackamas/canby/cmc.16.08.080.txt#L7",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-1.5",
+          "field": "lot_of_record_condition",
+          "claimed": "16.18",
+          "found": "16.08.080",
+          "quote": "or/clackamas/canby/cmc.16.08.080.txt#L7",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-1.5",
+          "field": "lot_of_record_relief",
+          "claimed": "16.18",
+          "found": "16.08.080",
+          "quote": "or/clackamas/canby/cmc.16.08.080.txt#L7",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-2",
+          "field": "lot_of_record_condition",
+          "claimed": "16.20",
+          "found": "16.08.080",
+          "quote": "or/clackamas/canby/cmc.16.08.080.txt#L7",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-2",
+          "field": "lot_of_record_relief",
+          "claimed": "16.20",
+          "found": "16.08.080",
+          "quote": "or/clackamas/canby/cmc.16.08.080.txt#L7",
+          "kind": "heading_other_file"
+        }
+      ],
       "label": "Canby",
       "counts": {},
       "gaps": []
     },
     "or/clackamas/estacada": {
       "section_unread": 0,
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "C-2",
+          "field": "lot_of_record_condition",
+          "claimed": "16.32",
+          "found": "16.84.040",
+          "quote": "or/clackamas/estacada/emc.16.84.040.txt#L3,L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "C-2",
+          "field": "lot_of_record_relief",
+          "claimed": "16.32",
+          "found": "16.84.040",
+          "quote": "or/clackamas/estacada/emc.16.84.040.txt#L3,L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMU",
+          "field": "lot_of_record_condition",
+          "claimed": "16.37",
+          "found": "16.84.040",
+          "quote": "or/clackamas/estacada/emc.16.84.040.txt#L3,L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "CMU",
+          "field": "lot_of_record_relief",
+          "claimed": "16.37",
+          "found": "16.84.040",
+          "quote": "or/clackamas/estacada/emc.16.84.040.txt#L3,L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "NCR",
+          "field": "lot_of_record_condition",
+          "claimed": "16.25",
+          "found": "16.84.040",
+          "quote": "or/clackamas/estacada/emc.16.84.040.txt#L3,L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "NCR",
+          "field": "lot_of_record_relief",
+          "claimed": "16.25",
+          "found": "16.84.040",
+          "quote": "or/clackamas/estacada/emc.16.84.040.txt#L3,L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-3",
+          "field": "lot_of_record_condition",
+          "claimed": "16.24",
+          "found": "16.84.040",
+          "quote": "or/clackamas/estacada/emc.16.84.040.txt#L3,L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-3",
+          "field": "lot_of_record_relief",
+          "claimed": "16.24",
+          "found": "16.84.040",
+          "quote": "or/clackamas/estacada/emc.16.84.040.txt#L3,L5",
+          "kind": "heading_other_file"
+        }
+      ],
       "label": "Estacada",
       "counts": {},
       "gaps": []
@@ -47,7 +177,184 @@
     },
     "or/clackamas/happy-valley": {
       "section_unread": 0,
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "MURA",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.050 16.22.050 16.22.050",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MURA",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.050 16.22.050 16.22.050",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MURS",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.040",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MURS",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.040",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R10",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.030 16.22.030",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R10",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.030 16.22.030",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R15",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.020 16.22.020",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R15",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.020 16.22.020",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R20",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.020 16.22.020",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R20",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.020 16.22.020",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R40",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.020 16.22.020",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R40",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.020 16.22.020",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R5",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.040 16.22.040",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R5",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.040 16.22.040",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R7",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.030 16.22.030",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R7",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.030 16.22.030",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R8.5",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.030 16.22.030",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R8.5",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.030 16.22.030",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SFA",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.050 16.22.050 16.22.050",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SFA",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.050 16.22.050 16.22.050",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "VTH",
+          "field": "lot_of_record_condition",
+          "claimed": "16.22.050 16.22.050 16.22.050",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "VTH",
+          "field": "lot_of_record_relief",
+          "claimed": "16.22.050 16.22.050 16.22.050",
+          "found": "16.72.040",
+          "quote": "or/clackamas/happy-valley/16.72.nonconforming.txt#L123",
+          "kind": "heading_other_file"
+        }
+      ],
       "label": "Happy Valley",
       "counts": {
         "unmapped": 1
@@ -78,14 +385,38 @@
       "gaps": []
     },
     "or/clackamas/milwaukie": {
-      "section_unread": 0,
+      "section_unread": 3,
       "misattributed": [
+        {
+          "zone": "DMU",
+          "field": "lot_of_record_relief",
+          "claimed": "19.304 19.304.2 19.304.4",
+          "found": "19.501 19.501.1",
+          "quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "GMU",
+          "field": "lot_of_record_relief",
+          "claimed": "19.303 19.303.2 19.303.3",
+          "found": "19.501 19.501.1",
+          "quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21",
+          "kind": "heading_other_file"
+        },
         {
           "zone": "GMU",
           "field": "setback_front_ft [abuts_residential_zone]",
           "claimed": "19.504.4",
           "found": "19.301.4",
           "quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L99",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "NMU",
+          "field": "lot_of_record_relief",
+          "claimed": "19.303 19.303.2 19.303.3",
+          "found": "19.501 19.501.1",
+          "quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21",
           "kind": "heading_other_file"
         },
         {
@@ -103,6 +434,30 @@
           "found": "19.301.4",
           "quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L99",
           "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-HD",
+          "field": "lot_of_record_relief",
+          "claimed": "19.302 19.302.4",
+          "found": "19.501 19.501.1",
+          "quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-MD",
+          "field": "lot_of_record_relief",
+          "claimed": "19.301 19.301.4 19.301.2",
+          "found": "19.501 19.501.1",
+          "quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SMU",
+          "field": "lot_of_record_relief",
+          "claimed": "19.303 19.303.2 19.303.3",
+          "found": "19.501 19.501.1",
+          "quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21",
+          "kind": "heading_other_file"
         }
       ],
       "label": "Milwaukie",
@@ -111,7 +466,56 @@
     },
     "or/clackamas/oregon-city": {
       "section_unread": 0,
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "R-10",
+          "field": "lot_of_record_relief",
+          "claimed": "17.08.020 17.08.020 17.08.040 17.16.060",
+          "found": "17.58.020",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "R-2",
+          "field": "lot_of_record_relief",
+          "claimed": "17.12.020 17.12.040 17.12.050 17.16.060",
+          "found": "17.58.020",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "R-3.5",
+          "field": "lot_of_record_relief",
+          "claimed": "17.10.020 17.10.040 17.16.060",
+          "found": "17.58.020",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "R-5",
+          "field": "lot_of_record_relief",
+          "claimed": "17.10.020 17.10.040 17.16.060",
+          "found": "17.58.020",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "R-6",
+          "field": "lot_of_record_relief",
+          "claimed": "17.08.020 17.08.020 17.08.040 17.16.060",
+          "found": "17.58.020",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "R-8",
+          "field": "lot_of_record_relief",
+          "claimed": "17.08.020 17.08.020 17.08.040 17.16.060",
+          "found": "17.58.020",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296",
+          "kind": "heading_same_file"
+        }
+      ],
       "label": "Oregon City",
       "counts": {},
       "gaps": []
@@ -124,7 +528,7 @@
       "gaps": []
     },
     "or/clackamas/sandy": {
-      "section_unread": 10,
+      "section_unread": 11,
       "misattributed": [
         {
           "zone": "(defaults)",
@@ -140,14 +544,14 @@
       "gaps": []
     },
     "or/clackamas/tualatin": {
-      "section_unread": 2,
+      "section_unread": 16,
       "misattributed": [],
       "label": "Tualatin",
       "counts": {},
       "gaps": []
     },
     "or/clackamas/west-linn": {
-      "section_unread": 0,
+      "section_unread": 1,
       "misattributed": [],
       "label": "West Linn",
       "counts": {},
@@ -161,8 +565,16 @@
       "gaps": []
     },
     "or/multnomah/_unincorporated": {
-      "section_unread": 17,
+      "section_unread": 21,
       "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "entrance_faces_street",
+          "claimed": "39.4969 39.4990",
+          "found": "39.4975",
+          "quote": "or/multnomah/_unincorporated/39/39.4975.txt#L1-L3",
+          "kind": "heading_other_file"
+        },
         {
           "zone": "CFU",
           "field": "quadplex_allowed",
@@ -170,6 +582,126 @@
           "found": "39.4060 39.4065 39.4075",
           "quote": "or/multnomah/_unincorporated/39.cfu.txt#L85-L86,L92-L93,L115-L116,L130-L137,L386",
           "kind": "header_or_xref"
+        },
+        {
+          "zone": "EFU",
+          "field": "min_frontage_line",
+          "claimed": "39.4215 39.4225 39.4265",
+          "found": "39.4245",
+          "quote": "or/multnomah/_unincorporated/39/39.4245.txt#L7,L13",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR10",
+          "field": "lot_of_record_condition",
+          "claimed": "39.4870 39.4872 39.4876",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L6-L12",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR10",
+          "field": "lot_of_record_floor_sqft",
+          "claimed": "39.4870 39.4872 39.4876",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L14",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR10",
+          "field": "lot_of_record_relief",
+          "claimed": "39.4870 39.4872 39.4876",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L23",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR10",
+          "field": "min_frontage_line",
+          "claimed": "39.4870 39.4872 39.4876",
+          "found": "39.4878",
+          "quote": "or/multnomah/_unincorporated/39/39.4878.txt#L6",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR5",
+          "field": "lot_of_record_condition",
+          "claimed": "39.4820 39.4826 39.4828 39.4830",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L6-L12",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR5",
+          "field": "lot_of_record_floor_sqft",
+          "claimed": "39.4820 39.4826 39.4828 39.4830",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L14",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR5",
+          "field": "lot_of_record_relief",
+          "claimed": "39.4820 39.4826 39.4828 39.4830",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L23",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR7",
+          "field": "lot_of_record_condition",
+          "claimed": "39.4848 39.4856 39.4862",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L6-L12",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR7",
+          "field": "lot_of_record_floor_sqft",
+          "claimed": "39.4848 39.4856 39.4862",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L14",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LR7",
+          "field": "lot_of_record_relief",
+          "claimed": "39.4848 39.4856 39.4862",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L23",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MR4",
+          "field": "lot_of_record_condition",
+          "claimed": "39.4970 39.4975 39.4990",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L6-L12",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MR4",
+          "field": "lot_of_record_floor_sqft",
+          "claimed": "39.4970 39.4975 39.4990",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L14",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MR4",
+          "field": "lot_of_record_relief",
+          "claimed": "39.4970 39.4975 39.4990",
+          "found": "39.3140",
+          "quote": "or/multnomah/_unincorporated/39.3140.lot-of-record.txt#L13-L23",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "RR",
+          "field": "min_frontage_line",
+          "claimed": "39.4350",
+          "found": "39.4375",
+          "quote": "or/multnomah/_unincorporated/39/39.4375.txt#L10,L15",
+          "kind": "heading_other_file"
         }
       ],
       "label": "Multnomah Unincorporated",
@@ -321,9 +853,9 @@
           "zone": "DCC",
           "field": "orientation_constraint [unit_lots]",
           "claimed": "4.1100 4.1120 4.1130 7.0420",
-          "found": "7.0431",
-          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
-          "kind": "heading_same_file"
+          "found": "4.1152",
+          "quote": "or/multnomah/gresham/4/4.1152.txt#L3,L7,L286-L290,L310",
+          "kind": "heading_other_file"
         },
         {
           "zone": "DCC",
@@ -425,9 +957,9 @@
           "zone": "DTM",
           "field": "orientation_constraint [unit_lots]",
           "claimed": "4.1100 4.1120 4.1130 7.0420",
-          "found": "7.0431",
-          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
-          "kind": "heading_same_file"
+          "found": "4.1152",
+          "quote": "or/multnomah/gresham/4/4.1152.txt#L3,L7,L286-L290,L310",
+          "kind": "heading_other_file"
         },
         {
           "zone": "DTM",
@@ -436,6 +968,38 @@
           "found": "4.1142",
           "quote": "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37",
           "kind": "heading_other_file"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "setback_front_max_ft",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L146,L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "setback_front_max_ft [at_street_end]",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "setback_front_max_ft",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L146,L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "setback_front_max_ft [at_street_end]",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L179",
+          "kind": "unlocated"
         },
         {
           "zone": "MDR-12",
@@ -607,27 +1171,11 @@
         },
         {
           "zone": "RTC",
-          "field": "building_frontage_min_pct [unit_lots]",
-          "claimed": "7.0420",
-          "found": "7.0431",
-          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "RTC",
           "field": "building_frontage_min_pct [rockwood_design_district+unit_lots]",
           "claimed": "7.0420",
           "found": "7.0512",
           "quote": "or/multnomah/gresham/7/7.0512.txt#L3,L323-L330,L346",
           "kind": "heading_other_file"
-        },
-        {
-          "zone": "RTC",
-          "field": "orientation_constraint [unit_lots]",
-          "claimed": "4.0400 4.0420 4.0430 4.0433 7.0512 7.0420",
-          "found": "7.0431",
-          "quote": "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458",
-          "kind": "heading_same_file"
         },
         {
           "zone": "SC",
@@ -684,6 +1232,38 @@
           "found": "4.1508 4.1532 4.1534",
           "quote": "or/multnomah/gresham/4.1500.springwater.txt#L304-L309,L314,L816-L818,L829-L831",
           "kind": "heading_same_file"
+        },
+        {
+          "zone": "TLDR",
+          "field": "setback_front_max_ft",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L146,L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "TLDR",
+          "field": "setback_front_max_ft [at_street_end]",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "TR",
+          "field": "setback_front_max_ft",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L146,L179",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "TR",
+          "field": "setback_front_max_ft [at_street_end]",
+          "claimed": "4.0131",
+          "found": "4.0130",
+          "quote": "or/multnomah/gresham/4/4.0130.txt#L179",
+          "kind": "unlocated"
         }
       ],
       "label": "Gresham",
@@ -703,9 +1283,9 @@
         {
           "zone": "CI2",
           "field": "min_far",
-          "claimed": "33.150 33.150.100 33.150.200 33.150.215 33.150.220 33.150.240",
+          "claimed": "33.150 33.150.100 33.150.202 33.150.215 33.150.220 33.150.240",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -713,7 +1293,7 @@
           "field": "min_far",
           "claimed": "33.130 33.130.100 33.130.200 33.130.215 33.130.220 33.130.225 33.130.250",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -721,7 +1301,7 @@
           "field": "min_far",
           "claimed": "33.130 33.130.100 33.130.200 33.130.215 33.130.220 33.130.225 33.130.250",
           "found": "33.521.220",
-          "quote": "or/multnomah/portland/33.521.txt#L127-L128",
+          "quote": "or/multnomah/portland/33.521.txt#L126-L127",
           "kind": "heading_other_file"
         },
         {
@@ -729,7 +1309,7 @@
           "field": "min_far",
           "claimed": "33.130 33.130.100 33.130.200 33.130.215 33.130.220 33.130.225 33.130.250",
           "found": "33.521.220",
-          "quote": "or/multnomah/portland/33.521.txt#L127-L128",
+          "quote": "or/multnomah/portland/33.521.txt#L126-L127",
           "kind": "heading_other_file"
         },
         {
@@ -737,7 +1317,7 @@
           "field": "min_far",
           "claimed": "33.130 33.130.100 33.130.200 33.130.215 33.130.220 33.130.225 33.130.250",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -745,15 +1325,15 @@
           "field": "min_far",
           "claimed": "33.140 33.140.100 33.140.100 33.140.200",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
           "zone": "IR",
           "field": "min_far",
-          "claimed": "33.150 33.150.100 33.150.200 33.150.215 33.150.220 33.150.240",
+          "claimed": "33.150 33.150.100 33.150.202 33.150.215 33.150.220 33.150.240",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -761,7 +1341,7 @@
           "field": "min_far",
           "claimed": "33.110 33.110.265",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -769,7 +1349,7 @@
           "field": "min_far",
           "claimed": "33.110 33.110.265",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -777,7 +1357,7 @@
           "field": "min_far",
           "claimed": "33.110 33.110.265",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         },
         {
@@ -785,7 +1365,7 @@
           "field": "min_far",
           "claimed": "33.120 33.120.200 33.120.205 33.120.206 33.120.210 33.120.215 33.120.220 33.120.225 33.120.235",
           "found": "33.521.220",
-          "quote": "or/multnomah/portland/33.521.txt#L127-L128",
+          "quote": "or/multnomah/portland/33.521.txt#L126-L127",
           "kind": "heading_other_file"
         },
         {
@@ -793,7 +1373,7 @@
           "field": "min_far",
           "claimed": "33.120 33.120.200 33.120.205 33.120.206 33.120.210 33.120.215 33.120.220 33.120.225 33.120.235",
           "found": "33.521.220",
-          "quote": "or/multnomah/portland/33.521.txt#L127-L128",
+          "quote": "or/multnomah/portland/33.521.txt#L126-L127",
           "kind": "heading_other_file"
         },
         {
@@ -801,7 +1381,7 @@
           "field": "min_far",
           "claimed": "33.120 33.120.200 33.120.205 33.120.206 33.120.210 33.120.215 33.120.220 33.120.225 33.120.235",
           "found": "33.521.220",
-          "quote": "or/multnomah/portland/33.521.txt#L127-L128",
+          "quote": "or/multnomah/portland/33.521.txt#L126-L127",
           "kind": "heading_other_file"
         },
         {
@@ -809,7 +1389,7 @@
           "field": "min_far",
           "claimed": "33.120 33.120.200 33.120.205 33.120.206 33.120.210 33.120.215 33.120.220 33.120.225 33.120.235",
           "found": "33.526.220",
-          "quote": "or/multnomah/portland/33.526.txt#L196-L197",
+          "quote": "or/multnomah/portland/33.526.txt#L179-L180",
           "kind": "heading_other_file"
         }
       ],
@@ -820,6 +1400,14 @@
     "or/multnomah/troutdale": {
       "section_unread": 0,
       "misattributed": [
+        {
+          "zone": "HDR",
+          "field": "lot_of_record_relief",
+          "claimed": "3.120 3.130",
+          "found": "5.350",
+          "quote": "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5",
+          "kind": "heading_other_file"
+        },
         {
           "zone": "HDR",
           "field": "min_lot_depth_ft [troutdale_town_center]",
@@ -907,6 +1495,54 @@
           "found": "3.235",
           "quote": "or/multnomah/troutdale/3/3.235.txt#L24-L25,L27",
           "kind": "heading_other_file"
+        },
+        {
+          "zone": "LDR-1",
+          "field": "lot_of_record_relief",
+          "claimed": "3.120 3.130 3.130 8.120",
+          "found": "5.350",
+          "quote": "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "LDR-2",
+          "field": "lot_of_record_relief",
+          "claimed": "3.120 3.130 3.130 8.120",
+          "found": "5.350",
+          "quote": "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MDR",
+          "field": "lot_of_record_relief",
+          "claimed": "3.120 3.130 3.130 8.120",
+          "found": "5.350",
+          "quote": "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MU-1",
+          "field": "lot_of_record_relief",
+          "claimed": "3.220 3.230 3.235",
+          "found": "5.350",
+          "quote": "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MU-2",
+          "field": "lot_of_record_relief",
+          "claimed": "3.220 3.230 3.235",
+          "found": "5.350",
+          "quote": "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MU-3",
+          "field": "lot_of_record_relief",
+          "claimed": "3.220 3.230 3.230 3.235",
+          "found": "5.350",
+          "quote": "or/multnomah/troutdale/5.350.nonconforming-lot.txt#L2-L5",
+          "kind": "heading_other_file"
         }
       ],
       "label": "Troutdale",
@@ -914,14 +1550,14 @@
       "gaps": []
     },
     "or/multnomah/wood-village": {
-      "section_unread": 3,
+      "section_unread": 4,
       "misattributed": [],
       "label": "Wood Village",
       "counts": {},
       "gaps": []
     },
     "or/washington/_unincorporated": {
-      "section_unread": 17,
+      "section_unread": 28,
       "misattributed": [
         {
           "zone": "(defaults)",
@@ -1153,7 +1789,7 @@
       "gaps": []
     },
     "or/washington/beaverton": {
-      "section_unread": 36,
+      "section_unread": 60,
       "misattributed": [
         {
           "zone": "CC",
@@ -1225,8 +1861,17 @@
       "gaps": []
     },
     "or/washington/cornelius": {
-      "section_unread": 4,
-      "misattributed": [],
+      "section_unread": 8,
+      "misattributed": [
+        {
+          "zone": "GMU",
+          "field": "quadplex_allowed [inside_mapped_use_area+unit_lots]",
+          "claimed": "18.75.020 18.75.045 18.75.045",
+          "found": "18.75.020 18.75.040",
+          "quote": "or/washington/cornelius/ord.2026-06.18.75.txt#L24,L47-L48,L99-L107",
+          "kind": "header_or_xref"
+        }
+      ],
       "label": "Cornelius",
       "counts": {},
       "gaps": []
@@ -1249,7 +1894,176 @@
     },
     "or/washington/hillsboro": {
       "section_unread": 0,
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "MR-1",
+          "field": "lot_of_record_relief",
+          "claimed": "12.22.100 12.22.120 12.22.150",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MR-2",
+          "field": "lot_of_record_relief",
+          "claimed": "12.22.200 12.22.220 12.22.250",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MR-3",
+          "field": "lot_of_record_relief",
+          "claimed": "12.22.300 12.22.320 12.22.350",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MU-C",
+          "field": "lot_of_record_relief",
+          "claimed": "12.24.200 12.24.220 12.24.260",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MU-N",
+          "field": "lot_of_record_relief",
+          "claimed": "12.24.100 12.24.120 12.24.160",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "MU-VTC",
+          "field": "lot_of_record_relief",
+          "claimed": "12.24.300 12.24.320 12.24.360",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-10",
+          "field": "lot_of_record_relief",
+          "claimed": "12.21.100 12.21.120 12.21.150",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-4.5",
+          "field": "lot_of_record_relief",
+          "claimed": "12.21.500 12.21.520 12.21.550",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-6",
+          "field": "lot_of_record_relief",
+          "claimed": "12.21.400 12.21.420 12.21.450",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-7",
+          "field": "lot_of_record_relief",
+          "claimed": "12.21.300 12.21.320 12.21.350",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "R-8.5",
+          "field": "lot_of_record_relief",
+          "claimed": "12.21.200 12.21.220 12.21.250",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SCC-MM",
+          "field": "lot_of_record_relief",
+          "claimed": "12.23.500 12.23.520 12.23.560",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SCC-SC",
+          "field": "lot_of_record_relief",
+          "claimed": "12.23.400 12.23.420 12.23.460",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SCR-DNC",
+          "field": "lot_of_record_relief",
+          "claimed": "12.21.800 12.21.820 12.21.850",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SCR-HD",
+          "field": "lot_of_record_relief",
+          "claimed": "12.22.500 12.22.520 12.22.560",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SCR-LD",
+          "field": "lot_of_record_relief",
+          "claimed": "12.21.600 12.21.620 12.21.650",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SCR-MD",
+          "field": "lot_of_record_relief",
+          "claimed": "12.22.400 12.22.420 12.22.460",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "SCR-V",
+          "field": "lot_of_record_relief",
+          "claimed": "12.24.400 12.24.420 12.24.460",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "UC-MU",
+          "field": "lot_of_record_relief",
+          "claimed": "12.24.600 12.24.620 12.24.660",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "UC-RM",
+          "field": "lot_of_record_relief",
+          "claimed": "12.24.500 12.24.520 12.24.560",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "UC-RP",
+          "field": "lot_of_record_relief",
+          "claimed": "12.24.1000 12.24.1020 12.24.1060",
+          "found": "12.30.300",
+          "quote": "or/washington/hillsboro/cdc.12.30.300.lots-of-record.txt#L2-L8",
+          "kind": "heading_other_file"
+        }
+      ],
       "label": "Hillsboro",
       "counts": {},
       "gaps": []

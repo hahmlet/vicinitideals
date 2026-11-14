@@ -181,7 +181,7 @@ readings:
     fingerprint: 3fff08ddf77729c4
   "19.501.1.txt#19.501.1":
     queue: condition
-    outcome: cant_tell
+    outcome: applies
     note: >-
       CORRECTED 2026-09-10 -- this card previously read `never`, on the reason that 19.501.1
       "applies to a single detached dwelling on a lot created after June 3, 2022" and so could not
@@ -201,16 +201,12 @@ readings:
       -- are excepted by right, and the pod is held only by the building standards. Milwaukie's
       version is BROADER than the same provision elsewhere: Gresham Table 4.0130 note 2 and
       Clackamas ZDO 315/316 note 1 except the minimum lot SIZE alone, where "area or dimensional
-      requirements" here reaches width, depth and frontage too. Ruled cant_tell rather than
-      applies, and NOT encoded, because the qualifier is "legal lot or lot of record" -- whether a
-      given tax lot was lawfully created is parcel history this pipeline holds nothing about.
-      Almost every parcel we screen is one; almost is not a measurement, and this is the
-      fourth-footnote-state shape (read, waiting on data) that transit, corner, alley and sewer
-      already sit in. Leaving it unencoded is the conservative direction and matches Gresham's
-      recorded reason there -- "a relief nobody can select is better left out than assumed" -- so
-      the exposure is possible false REDs in Milwaukie, never a false GREEN. What changes is the
-      record: the old reason was checkable and wrong, and a wrong reason on a closed card is the
-      failure this queue exists to prevent.
+      requirements" here reaches width, depth and frontage too. RE-RULED 2026-11-06 (FOLLOWUPS
+      108): this card stood at cant_tell, unencoded, because whether a tax lot was lawfully created
+      is parcel history. Steph answered that on 2026-10-21: every taxlot is taken as legal
+      (rulings.yaml 2026-10-21-existing-taxlots-are-lots-of-record), and this relief asks nothing
+      else about the lot. Encoded as lot_of_record_relief lot_standards on R-MD, R-HD, DMU, NMU,
+      GMU and SMU. The density is not lifted.
     fingerprint: f22b7f0d8fd35357
   "19.502.3.txt#19.502.3":
     queue: condition
@@ -583,24 +579,18 @@ readings:
       A floorplate cap on office space in the Downtown Mixed Use zone -- a zone this layer does
       not carry, and a use the pod does not contain.
     fingerprint: 2729cb577f401c14
-  "19.309.6.txt#19.309.6":
-    queue: nofield
-    outcome: other_building
-    note: >-
-      The MANUFACTURING ZONE M's development standards: front 20 feet with no side setback, corner
-      side 10 feet with no rear, a 45-foot height, and one curb cut of up to 45 feet per 150 feet
-      of street frontage. An industrial zone, which does not permit dwellings and is not among the
-      two zones this layer carries. The curb-cut allowance is also the loosest access rule in this
-      corpus and would be an amnesty rather than a constraint if it were ever borrowed sideways.
-    fingerprint: 5d069548e056b148
   "19.310.4.txt#19.310.4":
     queue: nofield
     outcome: other_building
     note: >-
-      "Maximum floor area for a limited use shall be 4,000 sq ft" in the Business Industrial Zone
-      BI -- a cap on how large a secondary use may be inside an industrial district. A different
-      zone and a different building, and a maximum in any case.
-    fingerprint: b949ffd0dcff5c79
+      The Business Industrial Zone BI's development standards, re-printed by Ord. 2265 (9/1/2026;
+      re-fetched 2026-11-09, FOLLOWUPS 166) as Table 19.310.4: no minimum lot size or frontage,
+      front 20 feet, street side 10 feet, side and rear 10 feet against a residential zone and
+      none otherwise, a 45-foot height and 15 percent landscaping. An industrial zone whose use
+      table (19.310.2.F) prohibits anything not listed, and it lists no dwelling, so the layer
+      refuses the zone and these numbers govern no building FLATS places. (This key held the
+      limited-use floor-area cap before Ord. 2265; that is now 19.310.3.)
+    fingerprint: d1d62affb4ba09bb
   "19.300.base-zones.txt#19.500":
     queue: nofield
     outcome: design
@@ -714,7 +704,74 @@ readings:
       rather than a footprint, and the county's MCC 39.4782(G) exempts chimneys and antennae from
       the height maximum outright for the same reason. Nothing here dimensions a dwelling.
     fingerprint: 1dd4f5232ee58a48
+  "19.309.3.txt#19.309.3":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The MANUFACTURING ZONE M's development standards, re-printed by Ord. 2265 (9/1/2026;
+      re-fetched 2026-11-09, FOLLOWUPS 166) as Table 19.309.3 (formerly 19.309.6): front 20 feet,
+      no side yard, street side 10 feet, no rear yard (a yard abutting a residential district
+      matches that district's), a 45-foot height and 15 percent vegetation. An industrial zone
+      whose use table (19.309.2.G) prohibits anything not listed, and it lists no dwelling, so the
+      layer refuses the zone and these numbers govern no building FLATS places. The old
+      one-curb-cut-per-150-feet allowance is no longer in this table.
+    fingerprint: c9df20dc615a1b59
+  "19.310.3.txt#19.310.3":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "The maximum floor area for a limited use is 4,000 sq ft" in the Business Industrial Zone BI
+      (19.310.4 before Ord. 2265, 9/1/2026; re-fetched 2026-11-09, FOLLOWUPS 166) -- a cap on how
+      large a secondary use may be inside an industrial district. A different zone and a different
+      building, and a maximum in any case.
+    fingerprint: 7986e09682f5f655
 crossrefs:
+  # --- FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer ---
+  "19.911":
+    outcome: other_path
+    note: >-
+      Variances (Type II and III): "Variances of lot area, lot width, and lot depth standards for
+      flag lots are subject to a Type III variance per Section 19.911" (19.504/19.504.6.txt#L35).
+      The screen takes no variances (Steph 2026-10-02).
+  "19.911.6":
+    outcome: other_path
+    note: >-
+      Building height variance in the Downtown Mixed Use zone (19.304/19.304.4.txt#L64). A relief
+      above the stated height; the two-storey pod never needs it.
+  "19.911.7":
+    outcome: other_path
+    note: >-
+      Building height variance in the General Mixed Use zone, for a fifth storey or more
+      (19.303/19.303.4.txt#L79, L97). The two-storey pod never needs it.
+  "19.800":
+    outcome: other_path
+    note: >-
+      Nonconforming uses and development (19.309/19.309.2.txt#L39). The pod is new development.
+  "19.906":
+    outcome: procedure
+    note: >-
+      Development review, the process for altering a nonconforming use closer to compliance
+      (19.303/19.303.2.txt#L15) and for industrial development near residential zones
+      (19.309/19.309.4.txt#L18). A process; neither path is the pod's.
+  "19.907":
+    outcome: procedure
+    note: >-
+      Downtown design review. 19.508.3.A lets an applicant meeting every downtown design standard
+      take the administrative Type I review (19.508/19.508.3.txt#L3-L11); only a project that does
+      not meet them goes to the discretionary Type II or III. Ruled in the DMU block (the Type I path
+      is the by-right one and its standards are objective). 19.907 itself, the procedure, is not
+      held.
+  "14.16.060":
+    outcome: other_building
+    note: >-
+      Title 14 sign code, Downtown Zones (19.304/19.304.4.txt#L129; signs on awnings,
+      19.508/19.508.4.txt#L1017).
+  "27":
+    outcome: other_building
+    note: >-
+      Oregon Fire Code Chapter 27, hazardous materials: uses that store or manufacture them
+      (19.312/19.312.3.txt#L3; 19.309.2 dropped the chapter number in Ord. 2265, re-fetched
+      2026-11-09).
 
   # --- four references out of the use table, none of them this building ----
   "19.903":
@@ -852,16 +909,31 @@ code:
     allow_thin: true
 
 defaults:
+  entrance_faces_street:
+    value: required
+    cite: "Milwaukie MMC 19.505.1 middle housing main entrance: facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.505/19.505.1.txt#L55-L58,L228-L255"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Milwaukie MMC 19.505.1 middle housing main entrance: \"Face the street, be at an angle of up to 45 degrees from the street, or open onto a porch.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.505/19.505.1.txt#L238"
   # ADDITIONAL YARD ON MAJOR STREETS. 19.501.2.A: "buildings along certain
   # major streets are subject to additional yard requirements ... the
   # minimum distance from the center line of the right-of-way to the closest
   # point of any building is the distance listed in Table 19.501.2.A plus
   # the yard requirement of the underlying zone" (#L33-L67). Held by street
-  # name as printed; the stretch in brackets is not read, so the distance
-  # holds along the whole street, and Harrison Street, listed at 40 and at
-  # 30 for two stretches, takes 40 everywhere. A street the table leaves out
-  # takes none. A street line whose street cannot be named takes the
-  # deepest, 40 feet (flats/geom/dedication.py).
+  # name as printed, the stretch in brackets with it. A line the bridge
+  # reads OFF a row's stretch (both end streets found crossing the street
+  # once, the line wholly past one by more than 60 ft along it) is free of
+  # that row; anywhere else the row holds along the whole street, and
+  # Harrison Street, listed at 40 and at 30 for two stretches, takes 40
+  # unless read off the first (FOLLOWUPS 77, flats/geom/dedication.py
+  # stretch_of). A street the table leaves out takes none. A street line
+  # whose street cannot be named takes the deepest, 40 feet.
   row_to_centerline_named_ft:
     value:
       - ["Firwood Street (55th Ave. to Stanley Ave.)", 25]
@@ -897,6 +969,18 @@ defaults:
     url: https://ecode360.com/print/MI4969?guid=43861924
     retrieved: '2026-08-27'
     quote: "or/clackamas/milwaukie/19.501/19.501.2.txt#L5-L38"
+  # LOT AREA AND THE STRIP (FOLLOWUPS 77). 19.501.2.A is a yard, but the
+  # chapter that would say whether the strip is also dedicated (19.700,
+  # public facility improvements) is not held, so the screen takes it as
+  # handed over: the lot area the coverage cap is measured on loses it.
+  # 19.504.2 lets a dedication take a lot below the minimum lot area, so
+  # that one check reads the whole lot.
+  min_lot_sqft_before_dedication:
+    value: true
+    cite: Milwaukie MMC 19.504.2, no lot area shall be reduced below the minimum requirements of this title, except by dedication or conveyance for a public use
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.504/19.504.2.txt#L1-L3"
   # PARKING, read 2026-08-27. Milwaukie states no vehicle-parking minimum for
   # a quadplex, caps one at four spaces, dimensions the space, and dimensions
   # no aisle it is allowed to use. Every part of that is in Chapter 19.600
@@ -1082,6 +1166,35 @@ defaults:
         when: [unit_lots]
         cite: MMC 19.505.5.F.2.a, off-street parking accessed on the back facade or located in the rear yard
         quote: "or/clackamas/milwaukie/19.505/19.505.5.txt#L297"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 19.607.1 reaches quadplexes and
+  # townhouses; its location list names only the right-of-way and the
+  # sidewalk, and its paving rule names "vehicle parking spaces and
+  # maneuvering areas located within a required ... side yard". Stated.
+  # 19.505.3.D.4.b (parking to the side of a dwelling, 50% of that side,
+  # L162-L163) is not reached: the court stays behind the building and a
+  # drive aisle alone is not counted. Townhouses: the court is rear only.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: MMC 19.607.1.B.1 bars parking only from the right-of-way and the sidewalk; 19.607.1.C.1.a paves parking spaces and maneuvering areas located within a required side yard
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.607/19.607.1.txt#L4,L18-L27,L42"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: MMC 19.505.5, townhouse parking accessed from the back facade or in the rear yard; 19.607.1.C.1.a maneuvering areas in a side yard
+        quote: "or/clackamas/milwaukie/19.505/19.505.5.txt#L297"
+  parking_side_yard_stated:
+    value: lane_and_court
+    cite: MMC 19.607.1.C.1.a, parking spaces and maneuvering areas within a required side yard
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.607/19.607.1.txt#L42"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: MMC 19.607.1.C.1.a, maneuvering areas within a required side yard
+        quote: "or/clackamas/milwaukie/19.607/19.607.1.txt#L42"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -1459,6 +1572,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L34-L45"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L60"
@@ -1666,6 +1786,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L13"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_lot_width_ft:
       value: 20
       quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L24"
@@ -1807,7 +1934,7 @@ zones:
       # definition and the city lists the two as separate rows wherever it
       # lists both. Not listed here, so 19.312.2.E answers. 80 lots.
       value: false
-      quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L366-L370"
+      quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L374-L378"
     notes: >-
       Encoded 2026-09-20 from Table 19.312.2. The closest call among the
       seven: the zone's purpose sentence names housing as a primary use and
@@ -1834,7 +1961,7 @@ zones:
       # Live/work units N -- and 19.312.2.E prohibits what the table lists
       # with an N. 57 lots.
       value: false
-      quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L366-L370"
+      quote: "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L374-L378"
     notes: >-
       Encoded 2026-09-20 from Table 19.312.2. The one column of the pair that
       needs no argument about what multifamily means: the cells are N.
@@ -1857,8 +1984,14 @@ zones:
       # townhouse, apartment: the only hit is "residential and
       # nonresidential building construction" as an example of a
       # contractor's business (L2916). 74 lots.
+      # Ord. 2265 (9/1/2026; re-fetched 2026-11-09, FOLLOWUPS 166) recast
+      # the four lists as Table 19.310.2, whose categories are Commercial,
+      # Industrial/Manufacturing/Production and community services, with
+      # "Uses not listed in Table 19.310.2 ... are prohibited" (19.310.2.F).
+      # Same grep of the new 19.310: the only hit is still "residential and
+      # nonresidential building construction" (19.310.2.txt#L107). Unchanged.
       value: false
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2884-L2892,L2958-L2962,L3008-L3012,L3032-L3048"
+      quote: "or/clackamas/milwaukie/19.310/19.310.2.txt#L1,L37-L39,L48-L49,L57"
     notes: >-
       Encoded 2026-09-20. Refused on silence, and the silence is the ordinary
       kind: an older-style zone written as lists of what is allowed, with a
@@ -1868,17 +2001,26 @@ zones:
   M:
     section: ["19.309"]
     cite_default:
-      cite: MMC 19.309.2 (permitted uses are limited to industrial uses) and
-        19.309.4.B, Specific Prohibited Uses, Manufacturing Zone
+      cite: MMC 19.309.2.G (uses listed as "N" or not listed in Table
+        19.309.2 are prohibited) and Table 19.309.2, Manufacturing Zone
+        (Ord. 2265, 9/1/2026)
       url: https://ecode360.com/print/MI4969?guid=43860500
-      retrieved: '2026-09-20'
+      retrieved: '2026-11-09'
     quadplex_allowed:
-      # Manufacturing. Refuses in its own words: 19.309.4 Specific Prohibited
-      # Uses, "B. New residential, religious institutions, or public
-      # schools." 19.309.2 opens "Permitted uses are limited to industrial
-      # uses meeting the following criteria". 74 lots.
+      # Manufacturing. Until Ord. 2265 (9/1/2026) it refused in its own
+      # words: 19.309.4 Specific Prohibited Uses, "B. New residential,
+      # religious institutions, or public schools." The ordinance (re-fetched
+      # 2026-11-09, FOLLOWUPS 166) replaced the lists with Table 19.309.2,
+      # whose categories are Commercial, Manufacturing and production and
+      # community service uses, and 19.309.2.G: "Uses listed in Table 19.309.2
+      # as "N" or not listed in Table 19.309.2 ... are prohibited." No
+      # residential row; whole-section grep of the new 19.309 for dwelling,
+      # residential, housing, quadplex, townhouse, apartment finds only
+      # "residential and nonresidential building construction" as a
+      # contractor example (19.309.2.txt#L94). Still refused, now on the
+      # closed table rather than the named prohibition. 74 lots.
       value: false
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2624-L2626,L2688-L2696"
+      quote: "or/clackamas/milwaukie/19.309/19.309.2.txt#L1,L43-L45,L54-L55,L63"
     notes: >-
       Encoded 2026-09-20. The clearest of the seven -- a flat prohibition of
       new residential use, the shape Oregon City GI has in its caretaker
@@ -1981,6 +2123,18 @@ zones:
   # read as not applying, and it is the sentence to come back to if Steph
   # rules otherwise.
   DMU:
+    entrance_faces_street:
+      value: required
+      cite: "Milwaukie MMC 19.508.4 downtown design standards: All new buildings must have at least one primary entrance facing an abutting street, facing meaning within 45 degrees (FOLLOWUPS 153)"
+      url: https://ecode360.com/print/MI4969?guid=43861924
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/milwaukie/19.508/19.508.4.txt#L522-L523"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Milwaukie MMC 19.508.4 downtown design standards: \"For purposes of this standard, 'facing' means within 45 degrees of the street property line.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://ecode360.com/print/MI4969?guid=43861924
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/milwaukie/19.508/19.508.4.txt#L523"
     section: ["19.304"]
     cite_default:
       cite: MMC 19.304 Downtown Zones, Tables 19.304.2 and 19.304.4, DMU column
@@ -2013,6 +2167,13 @@ zones:
           cite: MMC 19.505.5.E.2, townhouse development must meet the minimum lot size of 1,500 sq ft (larger than the table 750)
           url: https://ecode360.com/print/MI4969?guid=43861924
           quote: "or/clackamas/milwaukie/19.505/19.505.5.txt#L262"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_frontage_ft:
       value: 15
       quote: "or/clackamas/milwaukie/19.304/19.304.4.txt#L32-L33"
@@ -2125,6 +2286,12 @@ zones:
       yellow at best until Milwaukie's street lines are read per line the
       way Portland's are.
   NMU:
+    entrance_faces_street:
+      value: unclear
+      cite: "Milwaukie MMC 19.300 mixed-use zones building orientation; whether a building turned end-on meets it is unsettled (FOLLOWUPS 153)"
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1252-L1264"
     section: ["19.303"]
     cite_default:
       cite: MMC 19.303 Commercial Mixed Use Zones, Tables 19.303.2 and 19.303.3, NMU column
@@ -2142,6 +2309,13 @@ zones:
     min_lot_sqft:
       value: 1500
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_frontage_ft:
       value: 25
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33"
@@ -2201,6 +2375,12 @@ zones:
       be reversed. Side and rear setbacks print "None" (L1005-L1008), encoded
       2026-10-15.
   GMU:
+    entrance_faces_street:
+      value: unclear
+      cite: "Milwaukie MMC 19.300 mixed-use zones building orientation; whether a building turned end-on meets it is unsettled (FOLLOWUPS 153)"
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1252-L1264"
     section: ["19.303"]
     cite_default:
       cite: MMC 19.303 Commercial Mixed Use Zones, Tables 19.303.2 and 19.303.3, GMU column
@@ -2224,6 +2404,13 @@ zones:
     min_lot_sqft:
       value: 1500
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_frontage_ft:
       value: 25
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33"
@@ -2333,6 +2520,12 @@ zones:
       street lines are read per line. The Figure 19.303.5 residential street
       edges are held as a flat 15 ft front yard, the figure being an image.
   SMU:
+    entrance_faces_street:
+      value: unclear
+      cite: "Milwaukie MMC 19.300 mixed-use zones building orientation; whether a building turned end-on meets it is unsettled (FOLLOWUPS 153)"
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1252-L1264"
     section: ["19.303"]
     cite_default:
       cite: MMC 19.303 Commercial Mixed Use Zones, Tables 19.303.2 and 19.303.3, SMU column
@@ -2350,6 +2543,13 @@ zones:
     min_lot_sqft:
       value: 1500
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29"
+    lot_of_record_relief:
+      # 19.501.1, by right: a legal lot or lot of record missing the area or
+      # dimensional rows may be put to a permitted use. Limitation A keeps every
+      # other Title 19 standard; limitation B is single detached only. The density
+      # stays. Every taxlot is a lot of record (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L21"
     min_frontage_ft:
       value: 25
       quote: "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33"
@@ -2398,3 +2598,43 @@ private_drives:
     than an alley" (L435). A back lot reached by an easement is fronted from the
     street it takes access from (L470): the easement is not the street, and s4
     reads it as a drive on other land.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    kind: wedge
+    sight_ft:
+    - 280
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    quote: or/clackamas/milwaukie/12.24.clear-vision.txt#L48-L70
+    says: AASHTO Policy on Geometric Design of Highways and Streets
+    source: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L2027
+    cite: MMC 12.24.040; AASHTO ISD as reproduced in the Clackamas County Roadway Standards
+    ruling: 2026-11-10-milwaukie-clear-vision-aashto-held
+    note: >-
+      The size is 'that area described in the most recent edition of the AASHTO
+      Policy'. Steph 2026-11-10 ("For the book, use the numbers we have"): the
+      AASHTO intersection sight distance figures held from Clackamas County's
+      reproduction -- 280 ft at 25 mph, the driver 14.5 ft back from the edge of
+      the nearest travel lane -- with the curb middle way. 12.24.030 bars
+      'planting, fence, wall, structure'. Speed unmapped: 280 ft the sure figure
+      (25 mph), 450 ft the largest plausible.
+  driveway:
+    status: read
+    kind: wedge
+    sight_ft:
+    - 280
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    quote: or/clackamas/milwaukie/12.24.clear-vision.txt#L48-L70
+    says: The clear vision area for all driveway accessways to streets
+    source: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L2027
+    cite: MMC 12.24.040
+    ruling: 2026-11-10-milwaukie-clear-vision-aashto-held
+    note: >-
+      12.24.040(A) covers driveway accessways too: the same held AASHTO figures,
+      the driver on the drive 14.5 ft back from the near travel lane's edge.

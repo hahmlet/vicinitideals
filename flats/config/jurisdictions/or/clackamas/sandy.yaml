@@ -315,6 +315,25 @@ code:
   extraction: plain
   allow_thin: true
 
+crossrefs:
+  # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
+  "100":
+    outcome: other_path
+    note: >-
+      ORS Chapter 100, condominiums, named in the definition of a condominium
+      (17.10/17.10.30.txt#L180). A form of ownership; the screen places a building.
+  "300":
+    outcome: other_building
+    note: >-
+      OAR 414 Division 300, certified child care centres, named in a definition
+      (17.10/17.10.30.txt#L245).
+  "1-5":
+    outcome: read
+    note: >-
+      Not another section: "the dimensional standards in Subsections 1-5" are the five subsections
+      of the held 17.98.60 printed just above (17.98/17.98.60.txt#L37), the source of the encoded
+      stall and aisle sizes. Spaces that do not conform go to Chapter 17.66 review, a branch the
+      screen does not take.
 definitions:
   # Read 2026-10-07 from SDC 17.10, on disk chapter by chapter.
   #
@@ -354,6 +373,53 @@ private_drives:
     reading that does not shrink a yard. A doubt.
 
 defaults:
+  entrance_faces_street:
+    # FOLLOWUPS 167 item 1 (2026-11-09): the walkway alternative read in full
+    # and left `unclear`. Four units on one lot are a multi-family dwelling
+    # (17.10.30 L166), so 17.90.160 B.2-B.3 (17.90/17.90.160.txt L29-L30)
+    # binds every ground-floor entry: face a public street (within 45 degrees,
+    # 17.10.30 L323) and be visible from it, OR face a "designated pedestrian
+    # way that is connected to a public street", no more than 20 ft longer or
+    # 120 percent of the straight-line distance to the street. A pedestrian
+    # way may be private (17.10.30 L698-L700). Why not `alternative`: (1) the
+    # way out is a paved route on the lot's own ground, not a design detail of
+    # the building, so 2026-10-14-unchecked-design-details does not reach it,
+    # and the screen neither draws the path nor measures its length against
+    # the straight line; (2) "designated" does not say by whom (17.90.130 L109
+    # uses it for an on-site way, which favours the site plan, but nothing
+    # defines it). Where it does not reach: 17.82.20 A-B (sdc.17.82.txt
+    # L30-L42, 17.82.10 L20) on a transit street asks an entrance oriented toward that
+    # street within 25 ft, with no walkway route (B's walkway is only for a
+    # site not adjacent to one, and the chapter applies only to sites that are);
+    # 17.90.150 D.3 (single-family dwellings, B at L26) has none either, and
+    # 2026-10-22-sandy-row-houses-not-multi-family keeps 17.90.160 off the
+    # unit-lots path. The Bornstedt Village boulevards (sdc.17.54.txt L456)
+    # define "oriented toward" only. Open question for Steph in the 167
+    # hand-off.
+    value: unclear
+    cite: "Sandy SDC 17.90 entrance orientation with a pedestrian-way alternative the screen does not measure; 17.82 transit-street rules (sdc.17.82.txt L18-L22, L36-L43) (FOLLOWUPS 153)"
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.90DEST
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.90.txt#L2222-L2252"
+  entrance_angle_max_deg:
+    # FOLLOWUPS 159. Every path Sandy's entrance rules take prints 45
+    # degrees: 17.10.30's definition, "Facing (building elevation): A
+    # building elevation that is parallel to, or at an angle of up to 45
+    # degrees from, a specific reference point such as a public street"
+    # (L323), which reads 17.90.160 B.2's "face a public street" for a
+    # multi-family pod; 17.90.150 D.3.b "Be at an angle up to 45 degrees
+    # from the street" (17.90.150.txt L77-L79, single family, SROs up to six
+    # units, duplex halves); 17.82.20 A "oriented toward ... at an angle of
+    # up to 45 degrees" (sdc.17.82.txt L30-L34, transit streets); and the
+    # Bornstedt Village overlay (sdc.17.54.txt L456). It binds only once
+    # entrance_faces_street is settled as required: while it reads
+    # `unclear` (the pedestrian-way alternative) the screen already holds a
+    # fit turned past 45 degrees (ENTRANCE_TURN_DEG), so nothing moves now.
+    value: 45
+    cite: "Sandy SDC 17.10.30, Facing (building elevation): \"parallel to, or at an angle of up to 45 degrees from, a specific reference point such as a public street\"; also 17.90.150 D.3.b, 17.82.20 A and the Bornstedt Village overlay (FOLLOWUPS 159)"
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.10DE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/17.10/17.10.30.txt#L323"
   # PARKING COUNT. 17.98.40 table: single family detached/attached 2 per
   # dwelling unit (L157); multi-family 1.5 per studio or one-bedroom unit and
   # 2.0 per two-bedroom unit or greater (L160). The catalog holds no bedroom
@@ -424,6 +490,18 @@ defaults:
     url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
     retrieved: '2026-10-07'
     quote: "or/clackamas/sandy/17.98/17.98.100.txt#L6"
+  parking_side_yard_allowed:
+    value: lane
+    cite: Sandy SDC 17.98.50(B), which restricts required parking in side-yard setbacks abutting a public street
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/17.98/17.98.50.txt#L6,L10"
+  parking_side_yard_stated:
+    value: none
+    cite: Sandy SDC 17.98.50(B), which names the street-abutting side yard but does not state permission for an interior side yard
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/17.98/17.98.50.txt#L6,L10"
   # PARKING SHARE OF EVERY STREET FRONTAGE (FOLLOWUPS 84). 17.90.160 binds
   # "Multi-family residential developments in residential zones" (L2224), and
   # its F. is a number, not a design menu item: "Parking lots in
@@ -1214,3 +1292,17 @@ drawn_areas:
       a lot the tracing might misplace is held, not released. Cascadia
       Village subdivisions 1 to 6, exempt from 17.54.70-17.54.110
       (17.54.60), are read inside: the stricter side.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 30
+    basis: curb
+    quote: or/clackamas/sandy/17.74/17.74.30.txt#L6-L17
+    says: Intersection of a street and another street
+    cite: SDC 17.74.30
+    note: '''a triangular area formed by the intersection of the curb lines'' (edge of asphalt where none),
+      30 ft along the curb line street to street; bars ''sign, structure, solid fence, or vegetation''.
+      Curb basis: the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way

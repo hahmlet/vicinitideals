@@ -353,7 +353,56 @@ definitions:
     quote: "or/clackamas/gladstone/17.06/17.06.270.txt#L3"
     cite: "Gladstone Municipal Code 17.06.270, Lot, corner"
 
+# READ AND NOT ENCODED (FOLLOWUPS 105, Chapter 17.76 fetched 2026-11-08 with Steph's OK; these were
+# crossref rulings until it came into the store): every district's dimensional standards apply
+# "Except as provided in ... Chapter 17.76 (Exceptions)" (17.14/17.14.050.txt#L3). Read in full,
+# every subsection relaxes: projections and height exceptions, front-yard averaging, a 10 ft front on
+# a private street or flag access, the owner naming the front of a through lot, setback exceptions
+# that "may be authorized" (17.76.exceptions.txt#L79-L97). 17.76.040(5) says a flag lot's line
+# designation "may be modified to allow flexibility" (L89-L93), a discretionary relief; the screen
+# measures 17.06.290's line, the stricter default. The one rule that could bind, 17.76.030 (an
+# undersized lot of record held to one single-household dwelling, L71), only bites a lot admitted by
+# lot-of-record relief, and no Gladstone zone resolves lot_of_record_relief, so such a lot is already
+# held to the zone minimum. Reading it can admit lots, never reject one the screen admits.
 crossrefs:
+  # FOLLOWUPS 105 round 4 (2026-11-09): binding since entrance_faces_street was encoded.
+  "12.02":
+    outcome: procedure
+    note: >-
+      Street Excavation Requirements: "Improvements installed by a developer shall conform to the
+      standards of this title, GMC Chapter 12.02 (Street Excavation Requirements) and to any
+      supplemental design and construction specifications" (17.10/17.10.060.txt#L18). How work
+      in the street is permitted and built; it sets nothing on the lot.
+  # FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer.
+  "5.22":
+    outcome: other_building
+    note: >-
+      Portable storage containers, which a setback "does not apply to" (17.10/17.10.030.txt#L31).
+  "506":
+    outcome: other_path
+    note: >-
+      Section 506 of the Oregon Structural Specialty Code: "Maximum building height may be increased
+      by one story if the building is provided with an approved automatic sprinkler system"
+      (17.20/17.20.050.txt#L18). A height relief the two-storey pod never needs.
+  "404":
+    outcome: read
+    note: >-
+      Section 404 of the federal Clean Water Act, named in the net-acre definition
+      (17.06/17.06.358.txt#L7) as one class of constrained land. The definition is held and ruled
+      (definitions block, 17.06.358: net acre is the base for maximum density, which this screen
+      does not test).
+  "17.62.100":
+    outcome: other_building
+    note: >-
+      Recreation vehicle park (17.16/17.16.040.txt#L19).
+  "17.62.120":
+    outcome: other_building
+    note: >-
+      Off-street parking and storage of truck tractors and semi-trailers (17.20/17.20.040.txt#L15).
+  "17.62.130":
+    outcome: other_building
+    note: >-
+      Light manufacturing as an accessory use (17.20/17.20.040.txt#L17).
 
   # 17.18.020 was ruled here (other_building) until 2026-09-20, when the C-2
   # chapter came into the store for the C2 zone ruling below. A ruling on a
@@ -495,6 +544,11 @@ code:
   - id: "17.48.parking"
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
     title: "Chapter 17.48 - Off-Street Parking and Loading"
+  # Fetched 2026-11-08 with Steph's OK (FOLLOWUPS 105): the Exceptions chapter
+  # every dimensional table defers to.
+  - id: "17.76.exceptions"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1776.html
+    title: "Chapter 17.76 - Exceptions"
   # ---- The four environmental districts, read 2026-09-03 ----
   #
   # Gladstone superimposes four overlay districts on its base zoning, each its
@@ -573,6 +627,12 @@ code:
     title: "Chapter 17.26 - OS Open Space District"
     allow_thin: true
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Gladstone GMC 17.10 R-7.2 entrance standard reaches single-household dwellings only (FOLLOWUPS 153)"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html
+    retrieved: '2026-09-20'
+    quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L261-L265,L273"
   # ---- GMC Chapter 17.48, Off-Street Parking and Loading, read 2026-08-29 ----
   #
   # A city that requires almost no parking and regulates all of it. 17.48.010 is
@@ -743,6 +803,23 @@ defaults:
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
     retrieved: '2026-08-29'
     quote: "or/clackamas/gladstone/17.48/17.48.040.txt#L17,L27-L28"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 17.06.494 makes a side setback
+  # the distance from a side lot line to a structure
+  # (17.06.definitions.txt#L1309), and 17.48.040(2)(e) states the parking's
+  # own distance from the property line, five feet -- the strip already
+  # encoded above. Stated.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: GMC 17.48.040(2)(e), parking spaces at a parking lot's outer boundaries set back five feet from the property line
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48/17.48.040.txt#L3,L27-L28"
+  parking_side_yard_stated:
+    value: lane_and_court
+    cite: GMC 17.48.040(2)(e), the parking's own five-foot setback from the property line
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48/17.48.040.txt#L3,L27-L28"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -1838,3 +1915,22 @@ private_drives:
     or egress for persons to one or more lots", naming "drive" and "court";
     front lot line (L881) and corner lot (L841) read "street" other than an
     alley. A flag lot's access strip or easement is not its street (L865, L881).
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: unsettled
+    legs_ft:
+    - 20
+    - 30
+    - 40
+    basis: lot_line
+    source: data/flats/books/sight-manuals/gladstone/gmc-17.54-clear-vision.txt#L17-L40
+    cite: GMC 17.54.020
+    note: 'Measured along the property lines, 20/30/40 ft for an 80/60/50-or-less ft right of way (unmapped).
+      Bars ''any sign, fence, hedge, shrubbery, natural growth or other obstructions'': whether a building
+      is one is unclear, leaning yes. Not in the stored code. Unsettled: the conservative default (rulings.yaml
+      2026-11-09-sight-triangle-corner-check): the area bars buildings at its largest plausible size,
+      measured with the curb at the lot line; a corner lot it reaches is YELLOW, never GREEN and never
+      RED on it, until the rule is read.'
+    ruling: 2026-11-09-sight-triangle-corner-check

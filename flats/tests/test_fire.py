@@ -640,3 +640,641 @@ def test_a_probe_that_reads_only_the_fit_draws_nothing_and_walks_no_hose(corpus,
     assert probe.drawing is None
     assert not probe.facts.fire_route_tried
     assert check(probe.screening, "fit_ft").verdict is check(full.screening, "fit_ft").verdict
+
+
+def _placement_retry_case(corpus, policies):
+    from flats.fit.rectangle import Fitter
+
+    row = _deep_lot(200.0, 240.0)
+    row.update(jurisdiction="portland", zone="CE")
+    lot = lot_from_row(row, corpus.layers)
+    (s,) = screen_lot(
+        lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+    )
+    assert s.drawing and s.drawing["fits"] and s.fit.angle_deg is not None
+    assert s.envelope is not None
+    fitter = Fitter(s.envelope.geom, (s.fit.angle_deg,), ground=s.envelope.ground)
+    return lot, s, fitter
+
+
+@pytest.mark.parametrize("square", [True, False])
+def test_fire_only_red_uses_the_next_fitting_placement_within_reach(
+    corpus, policies, monkeypatch, square
+) -> None:
+    """A big lot's preferred drawing is red only on hose reach; the first
+    other fitting placement within reach is kept and moves the colour.
+
+    The retry lists placements at the fit's angle. This fixture's fit stands
+    30 degrees off the street and its drawing square to it (the front-max
+    search turned it). Listed at 30 degrees, every placement stands the far
+    end of its street wall some 35 ft back against Portland CE's 10 ft
+    maximum: measured where it stands (FOLLOWUPS 160), none is taken and the
+    plan stays RED on the hose -- before, the first was kept YELLOW and the
+    screen's later re-measure turned it RED on the maximum. With the fit
+    square to the street, the next placement within the maximum is kept."""
+    import dataclasses
+
+    from flats.fit.rectangle import Fitter
+    from flats.score.flags import Colour
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    # The fixture's own fit used to stand at 30 degrees; since pdx-cm-buffer
+    # (FOLLOWUPS 171) CE's parking buffer reshapes the envelope and the fit comes
+    # out square, so both cases now set the angle they test (rel7 assembly, 2026-11-10).
+    angle = 0.0 if square else 30.0
+    s = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=angle))
+    fitter = Fitter(s.envelope.geom, (angle,), ground=s.envelope.ground)
+    first = Polygon(s.drawing["building"])
+
+    def route(building, *_args, **_kwargs):
+        return 190.0 if building.equals(first) else 120.0
+
+    monkeypatch.setattr(fire, "route_ft", route)
+    base = _coloured(s, Triage.green)
+    today = fire_checked(base, lot, None, policy=policies[0], relief=policies[1])
+    assert today.signed.colour is Colour.red
+    assert check(today.screening, "fire_access_ft").verdict is Verdict.fails
+    assert all(
+        c.verdict is Verdict.passes
+        for c in today.signed.checks
+        if c.check != "fire_access_ft"
+    ), [
+        (c.check, c.verdict)
+        for c in today.signed.checks
+        if c.check != "fire_access_ft" and c.verdict is not Verdict.passes
+    ]
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    if not square:
+        assert got.drawing == base.drawing
+        assert got.signed.colour is Colour.red
+        assert check(got.screening, "fire_access_ft").verdict is Verdict.fails
+        return
+    assert got.signed.colour is Colour.yellow
+    assert got.drawing["building"] != s.drawing["building"]
+    assert got.facts.fire_route_ft == 120.0
+    assert check(got.screening, "fire_access_ft").verdict is Verdict.passes
+    assert all(
+        c.verdict is Verdict.passes
+        for c in got.screening.checks
+        if c.check != "fire_access_ft"
+    )
+
+
+def test_fire_retry_draws_at_most_its_placement_cap(corpus, policies, monkeypatch) -> None:
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    base = _coloured(s, Triage.green)
+    ring = base.drawing["building"]
+    candidate = {
+        **base.drawing,
+        "building": [[x + 1.0, y] for x, y in ring],
+    }
+    drawn: list[object] = []
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        if listing is not None:
+            listing.extend(range(200))
+            return None
+        if where is not None:
+            drawn.append(where)
+            return candidate
+        return real_drawing_for(screened, fitter, where=where, **kwargs)
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert len(drawn) == quadfit.FIRE_RETRY_MAX_PLACEMENTS == 24
+    assert got.drawing == base.drawing
+
+
+def test_fire_retry_skips_lots_over_its_acreage_limit(corpus, policies, monkeypatch) -> None:
+    import dataclasses
+
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    large = dataclasses.replace(
+        s,
+        facts=dataclasses.replace(
+            s.facts, lot_sqft=quadfit.FIRE_RETRY_MAX_ACRES * 43_560 + 1
+        ),
+    )
+    base = _coloured(large, Triage.green)
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+    no_retry = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1]
+    )
+
+    listings = 0
+    draws = 0
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        nonlocal listings, draws
+        if listing is not None:
+            listings += 1
+            return None
+        if where is not None:
+            draws += 1
+        return real_drawing_for(screened, fitter, where=where, **kwargs)
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert listings == 0
+    assert draws == 0
+    assert got == no_retry
+
+
+@pytest.mark.parametrize(
+    "candidate_front_ft, moved",
+    [(30.0, False), (8.0, True)],
+)
+def test_fire_retry_respects_the_maximum_front_setback(
+    corpus, policies, monkeypatch, candidate_front_ft, moved
+) -> None:
+    from flats.ingest import flatter, quadfit
+    from flats.score.flags import Colour
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    base = _coloured(s, Triage.green)
+    ring = base.drawing["building"]
+    front = min(y for _, y in ring)
+    candidate = {
+        **base.drawing,
+        "building": [
+            [x, y + candidate_front_ft - (front - Y0)] for x, y in ring
+        ],
+    }
+    candidate_polygon = Polygon(candidate["building"])
+    monkeypatch.setattr(flatter, "_max_front_ft", lambda *_args: 10.0)
+
+    listed_caps: list[float | None] = []
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        if listing is not None:
+            cap = kwargs.get("max_front_ft")
+            listed_caps.append(cap)
+            if cap is not None and candidate_front_ft <= cap:
+                listing.append("candidate")
+            return None
+        if where == "candidate":
+            return candidate
+        return real_drawing_for(screened, fitter, where=where, **kwargs)
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+
+    def route(building, *_args, **_kwargs):
+        if building.equals(candidate_polygon):
+            return 120.0
+        return 190.0
+
+    monkeypatch.setattr(fire, "route_ft", route)
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert listed_caps == [10.0]
+    if moved:
+        assert got.drawing["building"] == candidate["building"]
+        assert got.facts.fire_route_ft == 120.0
+        assert got.signed.colour is Colour.yellow
+    else:
+        assert got.drawing == base.drawing
+        assert got.facts.fire_route_ft == 190.0
+        assert got.signed.colour is Colour.red
+
+
+def test_fire_retry_skips_a_drawing_with_a_measured_parking_share(
+    corpus, policies, monkeypatch
+) -> None:
+    import dataclasses
+
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    facts = dataclasses.replace(
+        s.facts, parking_frontage_share_pct=0.0, parking_frontage_run_ft=0.0
+    )
+    base = _coloured(dataclasses.replace(s, facts=facts), Triage.green)
+    listing_calls = 0
+    angle_retry_calls = 0
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, **kwargs):
+        nonlocal listing_calls
+        if listing is not None:
+            listing_calls += 1
+            return None
+        return real_drawing_for(screened, fitter, **kwargs)
+
+    def other_angle(current, *_args, **_kwargs):
+        nonlocal angle_retry_calls
+        angle_retry_calls += 1
+        return current, 190.0
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    monkeypatch.setattr(quadfit, "_turned_for_fire", other_angle)
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert listing_calls == 0
+    assert angle_retry_calls == 1
+    assert got.drawing == base.drawing
+    assert got.facts.parking_frontage_share_pct == 0.0
+    assert check(got.screening, "fire_access_ft").verdict is Verdict.fails
+
+
+def test_fire_only_red_keeps_today_result_when_no_placement_is_within_reach(
+    corpus, policies, monkeypatch
+) -> None:
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    base = _coloured(s, Triage.green)
+    today = fire_checked(base, lot, None, policy=policies[0], relief=policies[1])
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert got.drawing == today.drawing
+    assert got.facts == today.facts
+    assert got.screening == today.screening
+    assert got.signed == today.signed
+
+
+def test_fire_retry_does_not_move_a_placement_with_another_failing_check(
+    corpus, policies, monkeypatch
+) -> None:
+    import dataclasses
+
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    original_screen = quadfit.screen
+
+    def fit_fails(*args, **kwargs):
+        result = original_screen(*args, **kwargs)
+        checks = tuple(
+            dataclasses.replace(c, verdict=Verdict.fails) if c.check == "fit_ft" else c
+            for c in result.checks
+        )
+        return dataclasses.replace(result, triage=Triage.red, checks=checks)
+
+    monkeypatch.setattr(quadfit, "screen", fit_fails)
+    monkeypatch.setattr(fire, "route_ft", lambda *_args, **_kwargs: 190.0)
+    base = _coloured(s, Triage.green)
+
+    got = fire_checked(
+        base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter
+    )
+
+    assert got.drawing == base.drawing
+    assert check(got.screening, "fit_ft").verdict is Verdict.fails
+    assert check(got.screening, "fire_access_ft").verdict is Verdict.fails
+
+
+def _box_ring(x0: float, y0: float, x1: float, y1: float) -> list[list[float]]:
+    return [[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]]
+
+
+FRONT = (0.0, 0.0, 200.0, 0.0)
+FAR_FRONT = (200.0, 240.0, 0.0, 240.0)
+SIDE_STREET = (200.0, 0.0, 200.0, 240.0)
+
+
+@pytest.mark.parametrize(
+    "court, streets, between",
+    [
+        # Behind the building on an interior lot: the plan every green draws.
+        (_box_ring(20, 80, 100, 120), (FRONT,), False),
+        # Beside it, starting at its own face.
+        (_box_ring(80, 20, 120, 70), (FRONT,), False),
+        # In front of it, in the front yard.
+        (_box_ring(20, 2, 100, 18), (FRONT,), True),
+        # Behind it on a through lot: the far street's front yard.
+        (_box_ring(20, 80, 100, 120), (FRONT, FAR_FRONT), True),
+        # Behind it and wider, reaching toward a corner's side street: not
+        # between the building and that street.
+        (_box_ring(20, 80, 190, 120), (FRONT, SIDE_STREET), False),
+        # Beside it, toward the corner's side street.
+        (_box_ring(80, 20, 190, 70), (FRONT, SIDE_STREET), True),
+        # No court drawn.
+        (None, (FRONT,), False),
+    ],
+)
+def test_court_street_side_reads_the_court_between_building_and_street(
+    court, streets, between
+) -> None:
+    from flats.ingest.quadfit import _court_street_side
+
+    drawing = {"building": _box_ring(20, 20, 80, 70), "court": court}
+    assert _court_street_side(drawing, streets) is between
+
+
+def test_court_street_side_holds_at_an_angle() -> None:
+    """A plan turned 10 degrees to the street reads the same."""
+    from shapely import affinity
+
+    from flats.ingest.quadfit import _court_street_side
+
+    def turned(ring):
+        return [list(p) for p in affinity.rotate(Polygon(ring), 10.0, origin=(50, 45)).exterior.coords]
+
+    building = turned(_box_ring(20, 20, 80, 70))
+    behind = turned(_box_ring(20, 80, 100, 120))
+    ahead = turned(_box_ring(20, 2, 80, 16))
+    assert not _court_street_side({"building": building, "court": behind}, (FRONT,))
+    assert _court_street_side({"building": building, "court": ahead}, (FRONT,))
+
+
+@pytest.mark.parametrize("court_ahead", [True, False])
+def test_fire_retry_never_moves_the_court_toward_the_street(
+    corpus, policies, monkeypatch, court_ahead
+) -> None:
+    """Milwaukie 12E30CD04700 (fire_rp5): the only placement the hose
+    reaches stands the court between the building and the street. The
+    retry refuses it and the lot stays RED; the same move with the court
+    kept behind the building is taken (the pattern of the three right
+    greens, Portland 1S2E12AB06900, 1S3E07AC09706, West Linn
+    21E35BC03000)."""
+    from flats.ingest import quadfit
+    from flats.score.flags import Colour
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    base = _coloured(s, Triage.green)
+    ring, court = base.drawing["building"], base.drawing.get("court")
+    assert court and len(court) >= 4
+    b_front = min(y for _, y in ring)
+    c_front, c_back = min(y for _, y in court), max(y for _, y in court)
+    assert c_front >= max(y for _, y in ring) - 0.5, "the fixture's court stands behind"
+    depth = c_back - c_front
+    # Ahead, the court needs the building lifted past it; behind, the move
+    # stays within CE's 10 ft maximum front setback (FOLLOWUPS 160).
+    lift = depth + 5.0 if court_ahead else 3.0
+    moved = [[x, y + lift] for x, y in ring]
+    if court_ahead:
+        court_to = [[x, y - c_front + b_front] for x, y in court]
+    else:
+        court_to = [[x, y + lift] for x, y in court]
+    candidate = {**base.drawing, "building": moved, "court": court_to}
+    candidate_polygon = Polygon(moved)
+    streets = tuple((e.x1, e.y1, e.x2, e.y2) for e in lot.edges.edges if e.cls.value == "front")
+    assert not quadfit._court_street_side(base.drawing, streets)
+    assert quadfit._court_street_side(candidate, streets) is court_ahead
+
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        if listing is not None:
+            listing.append("candidate")
+            return None
+        if where == "candidate":
+            return candidate
+        return real_drawing_for(screened, fitter, where=where, **kwargs)
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    monkeypatch.setattr(
+        fire, "route_ft", lambda building, *_a, **_k: 120.0 if building.equals(candidate_polygon) else 190.0
+    )
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+
+    got = fire_checked(base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter)
+
+    if court_ahead:
+        assert got.drawing == base.drawing
+        assert got.facts.fire_route_ft == 190.0
+        assert got.signed.colour is Colour.red
+    else:
+        assert got.drawing["building"] == moved
+        assert got.facts.fire_route_ft == 120.0
+        assert got.signed.colour is Colour.yellow
+
+
+# --- FOLLOWUPS 160: a moved plan is measured again where it stands ------------
+
+
+def _lifted(drawing, front_ft: float):
+    """``drawing`` with its building and court moved so the building's front
+    stands ``front_ft`` from the front lot line."""
+    ring = drawing["building"]
+    dy = Y0 + front_ft - min(y for _, y in ring)
+    return {
+        **drawing,
+        "building": [[x, y + dy] for x, y in ring],
+        "court": [[x, y + dy] for x, y in drawing["court"]],
+    }
+
+
+@pytest.mark.parametrize("near_listed", [True, False])
+def test_fire_retry_measures_each_placement_against_the_front_maximum(
+    corpus, policies, monkeypatch, near_listed
+) -> None:
+    """FOLLOWUPS 160 (fire-reds-158, Portland 1S2E07BC  -12600): the
+    same-angle retry kept the first drawing's front-max answer for a building
+    standing elsewhere. Its listing bounds the distance from the nearest
+    street only, so a placement past the maximum on the street the screen
+    holds it to was taken, and the screen's later re-measure turned the lot
+    RED where a nearer placement reached as well. Each placement is measured
+    where it stands: the far one is refused and the near one kept, and the
+    later re-measure changes nothing."""
+    from flats.ingest import quadfit
+    from flats.score.flags import Colour
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    assert s.rules.get("setback_front_max_ft") == 10
+    base = _coloured(s, Triage.green)
+    listed = {"far": _lifted(base.drawing, 30.0), "near": _lifted(base.drawing, 8.0)}
+    order = ["far", "near"] if near_listed else ["far"]
+    reach = [Polygon(d["building"]) for d in listed.values()]
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        if listing is not None:
+            listing.extend(order)
+            return None
+        if where in listed:
+            return listed[where]
+        return real_drawing_for(screened, fitter, where=where, **kwargs)
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    monkeypatch.setattr(
+        fire, "route_ft", lambda b, *_a, **_k: 120.0 if any(b.equals(r) for r in reach) else 190.0
+    )
+    monkeypatch.setattr(
+        quadfit, "_turned_for_fire", lambda current, *_args, **_kwargs: (current, 190.0)
+    )
+
+    got = fire_checked(base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter)
+    again = quadfit.front_max_checked(got, None, policy=policies[0], relief=policies[1])
+
+    assert again.signed.colour is got.signed.colour
+    assert again.screening.colour is got.screening.colour
+    if near_listed:
+        assert got.drawing["building"] == listed["near"]["building"]
+        assert got.facts.fire_route_ft == 120.0
+        assert got.signed.colour is Colour.yellow
+    else:
+        assert got.drawing == base.drawing
+        assert got.facts.fire_route_ft == 190.0
+        assert got.signed.colour is Colour.red
+
+
+def test_fire_turn_refuses_an_angle_past_the_front_maximum(corpus, policies, monkeypatch) -> None:
+    """FOLLOWUPS 160: the other-angle retry (:func:`_turned_for_fire`) is held
+    to the same measure. A turned drawing the hose reaches but that stands
+    past the maximum is not taken: the plan stays where it was, RED on the
+    hose, rather than RED on the maximum behind a reach it never kept."""
+    from flats.fit.angles import normalize
+    from flats.fit.rectangle import Fitter
+    from flats.ingest import quadfit
+    from flats.score.flags import Colour
+
+    lot, s, _ = _placement_retry_case(corpus, policies)
+    other = normalize(s.fit.angle_deg + 90.0)
+    fitter = Fitter(s.envelope.geom, (s.fit.angle_deg, other), ground=s.envelope.ground)
+    base = _coloured(s, Triage.green)
+    far = _lifted(base.drawing, 30.0)
+    far_polygon = Polygon(far["building"])
+    real_drawing_for = quadfit.drawing_for
+
+    def drawing_for(screened, fitter, *, listing=None, where=None, **kwargs):
+        if listing is not None:
+            return None
+        if where is None and math.isclose(screened.fit.angle_deg, other, abs_tol=1e-6):
+            return far
+        return real_drawing_for(screened, fitter, where=where, **kwargs)
+
+    monkeypatch.setattr(quadfit, "drawing_for", drawing_for)
+    monkeypatch.setattr(
+        fire, "route_ft", lambda b, *_a, **_k: 120.0 if b.equals(far_polygon) else 190.0
+    )
+
+    got = fire_checked(base, lot, None, policy=policies[0], relief=policies[1], fitter=fitter)
+
+    assert got.drawing == base.drawing
+    assert got.facts.fire_route_ft == 190.0
+    assert got.signed.colour is Colour.red
+    assert check(got.screening, "fire_access_ft").verdict is Verdict.fails
+
+
+def test_a_moved_plan_holds_no_more_frontage_than_where_it_stands(corpus, policies) -> None:
+    """FOLLOWUPS 160: the building's share of the frontage was measured on
+    the fit's first placement and kept when the fire route or a flatter spot
+    moved the building; it is measured again where the building stands, and
+    never read higher than it was."""
+    import dataclasses
+
+    from flats.ingest import quadfit
+
+    lot, s, _ = _placement_retry_case(corpus, policies)
+    held = dataclasses.replace(s, facts=dataclasses.replace(s.facts, building_frontage_pct=(90.0,)))
+    placed = held.drawing
+    stays = quadfit.moved_checked(held, placed, policy=policies[0], relief=policies[1])
+    assert stays is held
+    near = quadfit.moved_checked(
+        dataclasses.replace(held, drawing=_lifted(placed, 6.0)), placed,
+        policy=policies[0], relief=policies[1],
+    )
+    (share,) = near.facts.building_frontage_pct
+    assert 0.0 < share < 90.0  # the building's own width of the street, not more
+    far = quadfit.moved_checked(
+        dataclasses.replace(held, drawing=_lifted(placed, 30.0)), placed,
+        policy=policies[0], relief=policies[1],
+    )
+    assert far.facts.building_frontage_pct == (0.0,)
+
+
+def _held_share(corpus, policies, share: float = 90.0):
+    """The retry fixture holding ``share`` percent of its street, more than
+    its 56 ft building can fill of 200 ft: any re-measure reads less."""
+    import dataclasses
+
+    lot, s, fitter = _placement_retry_case(corpus, policies)
+    facts = dataclasses.replace(s.facts, building_frontage_pct=(share,))
+    return lot, dataclasses.replace(s, facts=facts), fitter
+
+
+def test_a_turned_court_holds_no_more_frontage_than_where_it_stands(
+    corpus, policies, monkeypatch
+) -> None:
+    """FOLLOWUPS 160: :func:`court_turned` stands the building at another
+    angle where its first drawing put the court in a front yard. The share of
+    the frontage read on the fit's first placement is measured again where
+    the turned building stands, and never read higher."""
+    from flats.ingest import quadfit
+
+    lot, s, fitter = _held_share(corpus, policies)
+    turned = {**_lifted(s.drawing, 6.0), "lane": s.drawing.get("lane") or [[0, 0]] * 4}
+    monkeypatch.setattr(quadfit, "court_in_front_yard", lambda _s, drawn=None: drawn is None)
+    monkeypatch.setattr(quadfit, "_lane_in_from_street", lambda _s: True)
+    monkeypatch.setattr(quadfit, "_drive_clear", lambda *_a: True)
+    monkeypatch.setattr(quadfit, "drawn_door_turned", lambda *_a: False)
+    monkeypatch.setattr(quadfit, "_flatter_angles", lambda *_a: [s.fit.angle_deg, 0.0])
+    monkeypatch.setattr(quadfit, "drawing_for", lambda *_a, **_k: turned)
+    s = _with_drawing(s, {**s.drawing, "lane": turned["lane"]})
+
+    got = quadfit.court_turned(s, fitter, policy=policies[0], relief=policies[1])
+
+    assert got.drawing is turned
+    (share,) = got.facts.building_frontage_pct
+    assert 0.0 < share < 90.0
+
+
+def test_a_front_max_slide_holds_no_more_frontage_than_where_it_stands(
+    corpus, policies, monkeypatch
+) -> None:
+    """FOLLOWUPS 160: :func:`front_max_checked` slides or redraws a building
+    standing past the maximum; the slid plan is measured again on every
+    drawn-plan check, its share of the frontage too, never read higher."""
+    from flats.ingest import quadfit
+    from flats.score.screen import FRONT_MAX
+
+    lot, s, fitter = _held_share(corpus, policies)
+    past = _with_drawing(s, {**_lifted(s.drawing, 14.0), "lane": None})
+    slid = {**_lifted(s.drawing, 6.0), "lane": None}
+    monkeypatch.setattr(quadfit, "_front_max_flush", lambda *_a, **_k: slid)
+    before = quadfit._front_max_screened(past, policy=policies[0], relief=policies[1])
+    assert any(c.check == FRONT_MAX for c in before.signed.binds)
+
+    got = quadfit.front_max_checked(past, fitter, policy=policies[0], relief=policies[1])
+
+    assert got.drawing is slid
+    assert quadfit._front_max_clear(got)
+    (share,) = got.facts.building_frontage_pct
+    assert 0.0 < share < 90.0
+
+
+def _with_drawing(s, drawing):
+    import dataclasses
+
+    return dataclasses.replace(s, drawing=drawing)

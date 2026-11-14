@@ -116,6 +116,14 @@ CROSSREF_OUTCOMES: dict[str, str] = {
     # `narrows_only` would be worse. It belongs in the pro forma, not the
     # envelope.
     "fee_in_lieu": "Satisfiable by payment — costs money, not ground",
+    # Added 2026-11-08 (FOLLOWUPS 105), reading Portland's 33.248. An eleventh
+    # shape: the chapter reaches the pod and is full of numbers, and every
+    # number says what fills ground some other section has already sized --
+    # plants per linear foot, a fence 6 feet high, a berm 4 to 6 feet tall.
+    # The width of a landscaped strip is stated by the section that cites
+    # 33.248, never by 33.248. `procedure` would be false (there are
+    # numbers) and `narrows_only` would be wrong (it narrows nothing).
+    "design": "Specifies what fills ground already sized elsewhere — takes none",
     "read": "Read and ruled before the outcomes existed",
 }
 
@@ -442,6 +450,95 @@ class PrivateDriveRuling(BaseModel):
     note: str | None = None
 
 
+#: How a clear-vision area's legs are measured (FOLLOWUPS 161). ``lot_line``
+#: -- along the lot lines (or the right-of-way lines, which are the lot
+#: lines), from where they meet or, on a rounded corner, where they meet
+#: extended. ``curb`` / ``back_of_curb`` / ``pavement_edge`` /
+#: ``travel_lane`` -- from a street edge the maps do not hold, so the curb
+#: middle way applies (rulings.yaml 2026-11-09-curb-position-middle-way).
+#: ``unstated`` -- the code gives no basis: read both ways, as ``curb``.
+CLEAR_VISION_BASES = (
+    "lot_line", "curb", "back_of_curb", "pavement_edge", "travel_lane", "unstated",
+)
+#: ``read`` -- the figure and the basis are stated and read. ``unsettled``
+#: -- not read, or read and unclear (whether it bars a building, which
+#: figure): the conservative default (rulings.yaml
+#: 2026-11-09-sight-triangle-corner-check) -- it bars buildings, at the
+#: largest plausible size, and a lot it reaches is YELLOW, never GREEN and
+#: never RED on it. ``none`` -- the rule keeps nothing off the lot (it
+#: covers the right of way only, or bars no building).
+CLEAR_VISION_STATUSES = ("read", "unsettled", "none")
+
+
+class SightRule(BaseModel):
+    """One clear-vision area this code keeps clear of buildings, as printed
+    (FOLLOWUPS 161; :mod:`flats.geom.sight_triangle` draws it).
+
+    ``kind`` -- ``triangle``: legs ``legs_ft`` along both lines from the
+    corner; several figures are OPTIONS the screen cannot choose between
+    (a street class nobody mapped), the smallest the area surely kept and
+    the largest the area that may be. ``asymmetric``: ``legs_ft`` is
+    ``[along the through street, along the other]``, and which street is
+    which is not mapped: both ways. ``wedge``: a sight-distance rule -- the
+    driver's eye ``eye_back_ft`` behind the near travel lane's edge, seeing
+    ``sight_ft`` along the street; the area is what lies between that line
+    and the corner. ``apex`` (driveways): a triangle whose base runs
+    ``base_ft`` each way along the street line from the drive's centre and
+    whose apex is on the drive's centre ``depth_ft`` in from ``depth_from``
+    (``curb``, ``lot_line`` or ``front_setback``). ``edge`` (driveways):
+    legs ``legs_ft`` along the drive's edge and the street line, both
+    sides of the drive.
+
+    ``quote`` is a store pointer (``path#Lnn``) whose lines hold ``says``;
+    ``source`` points into a manual held outside the store
+    (``data/flats/books/...``), where the figure is not in stored code.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    status: str
+    kind: str = "triangle"
+    legs_ft: tuple[float, ...] = ()
+    #: Zones whose figure differs (Canby's C-1, 15 ft against 30).
+    zone_legs_ft: dict[str, tuple[float, ...]] = {}
+    base_ft: float | None = None
+    depth_ft: float | None = None
+    depth_from: str | None = None
+    sight_ft: tuple[float, ...] = ()
+    eye_back_ft: float | None = None
+    basis: str = "lot_line"
+    #: Zones the rule does not reach (Tigard's MU-CBD, Cornelius's CMU).
+    except_zones: tuple[str, ...] = ()
+    #: Zones where it reaches case by case (Beaverton's centers): unsettled.
+    unsettled_zones: tuple[str, ...] = ()
+    #: "Where no setbacks are required, buildings may be constructed within
+    #: the clear vision area" (Sherwood 16.58.010(3), Troutdale 5.040 D.9).
+    exempt_no_setback: bool = False
+    #: Portland TRN-10.40: "buildings built at the property line" are exempt.
+    exempt_at_lot_line: bool = False
+    #: Colour untouched, a note only (Portland, rulings.yaml
+    #: 2026-11-09-portland-driveway-clear-zone-note).
+    note_only: bool = False
+    quote: str | None = None
+    says: str | None = None
+    source: str | None = None
+    cite: str = ""
+    ruling: str | None = None
+    note: str = ""
+
+
+class ClearVision(BaseModel):
+    """The clear-vision areas a code keeps buildings out of, per layer
+    (``clear_vision:`` in a jurisdiction YAML; FOLLOWUPS 161). A layer that
+    declares none is not checked; every eligible layer declares one, and
+    a test holds it to that."""
+
+    model_config = ConfigDict(frozen=True)
+
+    corner: SightRule | None = None
+    driveway: SightRule | None = None
+
+
 class DrawnArea(BaseModel):
     """A boundary the code draws inside a zone, traced here because nobody
     publishes it as data, and the site fact a lot holds when it lies inside.
@@ -635,6 +732,9 @@ LAYER_META = frozenset(
         # Whether a private drive the lot abuts is a street here, for the
         # lot lines, the corner and the yards (`PrivateDriveRuling`).
         "private_drives",
+        # The clear-vision areas at corners and driveways the code keeps
+        # buildings out of (`ClearVision`, FOLLOWUPS 161).
+        "clear_vision",
         # Boundaries the code draws inside a zone that no GIS publishes,
         # traced here, for `inside_mapped_use_area` (`DrawnArea`).
         "drawn_areas",
@@ -956,6 +1056,14 @@ def _num(v: float) -> str:
     return str(int(v)) if float(v).is_integer() else str(v)
 
 
+#: The lot measures a setback may be stated as a share of, and the rule-file
+#: key each is written under.
+SHARE_MEASURES: dict[str, str] = {
+    "lot_width_ft": "pct_of_lot_width",
+    "lot_depth_ft": "pct_of_lot_depth",
+}
+
+
 class LotWidthShare(BaseModel):
     """A setback stated as a share of the lot's own width, with a floor.
 
@@ -984,17 +1092,34 @@ class LotWidthShare(BaseModel):
     pct: float
     #: The least the yard may be, in feet, where the sentence states one.
     floor_ft: float | None = None
+    #: The lot measure the share is of. The lot's width by default; PCC
+    #: 33.120.220.B.2.a states the Eastern Pattern Area rear setback as "an
+    #: amount equal to 25 percent of the total depth of the site", the same
+    #: bargain on the other axis (``pct_of_lot_depth`` in a rule file). The
+    #: depth is the one :data:`LOT_MEASURES` already carries for bands.
+    of: str = "lot_width_ft"
 
     @model_validator(mode="after")
     def _a_share_is_a_percentage(self) -> LotWidthShare:
+        if self.of not in SHARE_MEASURES:
+            raise ValueError(f"a share of {self.of!r}: one of {', '.join(SHARE_MEASURES)}")
         if isinstance(self.pct, bool) or not 0 < self.pct <= 100:
-            raise ValueError(f"pct_of_lot_width {self.pct} is not a percentage of the lot width")
+            raise ValueError(f"{self.key} {self.pct} is not a percentage of the {self.noun}")
         if self.floor_ft is not None and (isinstance(self.floor_ft, bool) or self.floor_ft < 0):
             raise ValueError(f"floor_ft {self.floor_ft} is not a length")
         return self
 
+    @property
+    def key(self) -> str:
+        """The rule-file key this share is written under."""
+        return SHARE_MEASURES[self.of]
+
+    @property
+    def noun(self) -> str:
+        return "lot depth" if self.of == "lot_depth_ft" else "lot width"
+
     def feet(self, width_ft: float) -> float:
-        """What this lot owes: the share of its width, never under the floor.
+        """What this lot owes: the share of its width (or depth), never under the floor.
 
         Rounded the way `_reduced` rounds a cut base, so 20 percent of 78 ft
         reads 15.6 and not 15.600000000000001.
@@ -1005,7 +1130,7 @@ class LotWidthShare(BaseModel):
         # Deterministic, because the signing fingerprint and the gaps digest
         # both hash `str(value)`; and readable, because the why-page prints it.
         floor = f", not less than {_num(self.floor_ft)} ft" if self.floor_ft is not None else ""
-        return f"{_num(self.pct)}% of lot width{floor}"
+        return f"{_num(self.pct)}% of {self.noun}{floor}"
 
 
 class Variant(BaseModel):
@@ -1131,6 +1256,10 @@ class Variant(BaseModel):
     #: than 100 feet in width" -- and every band must hold. The common case
     #: is still written `band:`, singular, and folded in below.
     bands: tuple[Band, ...] = ()
+    #: Conditions that exclude this variant even when its `when` and bands
+    #: match. Used where the code states a standard for every lot except a
+    #: named configuration.
+    unless: tuple[str, ...] = ()
     prov: Provenance
     status: Status = Status.draft
     reviewer: str | None = None
@@ -1168,7 +1297,15 @@ class Variant(BaseModel):
     def pct_of_lot_width(self) -> float | None:
         """The share the code prints, where this number is one -- the figure
         the citation check looks for on the page."""
-        return self.value.pct if isinstance(self.value, LotWidthShare) else None
+        v = self.value
+        return v.pct if isinstance(v, LotWidthShare) and v.of == "lot_width_ft" else None
+
+    @property
+    def pct_of_lot_depth(self) -> float | None:
+        """The share of the lot's depth the code prints, where this number is
+        one (PCC 33.120.220.B.2.a's 25 percent)."""
+        v = self.value
+        return v.pct if isinstance(v, LotWidthShare) and v.of == "lot_depth_ft" else None
 
     @property
     def floor_ft(self) -> float | None:
@@ -1184,7 +1321,11 @@ class Variant(BaseModel):
         conditions alone, and a banded variant carrying none of them would
         have addressed as the base.
         """
-        names = self.when + tuple(b.token for b in self.bands)
+        names = (
+            self.when
+            + tuple(b.token for b in self.bands)
+            + tuple(f"unless:{name}" for name in self.unless)
+        )
         return tuple(sorted(names))
 
     @model_validator(mode="after")
@@ -1202,7 +1343,7 @@ class Variant(BaseModel):
     def _conditions_are_registered(self) -> Variant:
         # Same refusal as the field registry: an unregistered name is a typo
         # that would become a second lever nobody can satisfy.
-        for name in self.when:
+        for name in (*self.when, *self.unless):
             try:
                 condition(name)
             except KeyError as exc:
@@ -1210,6 +1351,9 @@ class Variant(BaseModel):
                 # other problem in the file instead of aborting the load on the
                 # first typo. Porting a jurisdiction should surface all of them.
                 raise ValueError(exc.args[0]) from None
+        overlap = set(self.when) & set(self.unless)
+        if overlap:
+            raise ValueError(f"a variant both requires and excludes {sorted(overlap)}")
         return self
 
     @model_validator(mode="after")
@@ -2203,8 +2347,18 @@ class Value(BaseModel):
         What makes the batch view possible: a lever is worth offering only when
         flipping it moves a number some lot in the selection is bound by.
         """
-        held = frozenset(c for variant in self.variants for c in variant.when)
+        held = frozenset(
+            c for variant in self.variants for c in (*variant.when, *variant.unless)
+        )
         return held | ({self.qualified_by} if self.qualified_by else frozenset())
+
+    @property
+    def waivers(self) -> frozenset[str]:
+        """Conditions under which some variant says the standard does not
+        exist here (an ``exempt: true`` variant). A lot that misses the
+        number while one of these went unanswered has not missed a standard
+        that certainly applies to it (PCC 33.120.206.C.2.b, FOLLOWUPS 68)."""
+        return frozenset(c for v in self.variants if v.exempt for c in v.when)
 
 
 
@@ -2261,6 +2415,8 @@ class Value(BaseModel):
         for v in self.variants:
             if not set(v.when) <= held:
                 continue
+            if not set(v.unless).isdisjoint(held):
+                continue
             verdicts = [(b, b.holds(lot)) for b in v.bands]
             if any(h is False for _, h in verdicts):
                 # Outside one of its bands, so not this variant -- whatever
@@ -2306,7 +2462,8 @@ class Value(BaseModel):
             )
         winner = best[0]
         if isinstance(winner.value, LotWidthShare):
-            width = None if lot is None else lot.get("lot_width_ft")
+            measure = winner.value.of
+            width = None if lot is None else lot.get(measure)
             if width is None:
                 # The sentence selected this lot and the number it states is
                 # a share of a width nobody measured. Same refusal as an
@@ -2318,7 +2475,7 @@ class Value(BaseModel):
                     self.status,
                     self.reviewer,
                     self.reviewed,
-                    ambiguous=("lot_width_ft:unmeasured",),
+                    ambiguous=(f"{measure}:unmeasured",),
                     exempt=self.exempt,
                 )
             return Effective(
@@ -2369,7 +2526,7 @@ def _bands_overlap(a: Band, b: Band) -> bool:
 
 def _depth(v: Variant) -> int:
     """How specific a variant is — every thing that had to be true to pick it."""
-    return len(v.when) + len(v.bands)
+    return len(v.when) + len(v.bands) + len(v.unless)
 
 
 def check_kind(name: str, v: Any) -> None:
@@ -2836,6 +2993,9 @@ class Layer(BaseModel):
     #: Whether a private drive the lot abuts is a street here (see
     #: :class:`PrivateDriveRuling`); None where the code is silent.
     private_drives: PrivateDriveRuling | None = None
+    #: The corner and driveway clear-vision areas (see :class:`ClearVision`);
+    #: None where the layer declares none.
+    clear_vision: ClearVision | None = None
     #: Areas the code draws inside a zone, traced here -- see
     #: :class:`DrawnArea`. Keyed by the area's name.
     drawn_areas: dict[str, DrawnArea] = Field(default_factory=dict)
@@ -2873,7 +3033,7 @@ class Layer(BaseModel):
 
         Directory names carry a Census GEOID prefix so two Springfields can sit
         side by side; the store drops it, because a quote is a thing a person
-        reads in a review queue and ``or/multnomah/portland/33.110.txt#L454``
+        reads in a review queue and ``or/multnomah/portland/33.110.txt#L445``
         is legible in a way the GEOID form is not.
         """
         return "/".join(part.split("-", 1)[-1] if _GEOID.match(part) else part

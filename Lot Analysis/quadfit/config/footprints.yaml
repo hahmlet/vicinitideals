@@ -197,7 +197,10 @@ siteplan:
       aisle_one_way_ft: 24
       aisle_two_way_ft: 24
       cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
-      max_per_unit: null
+      # 2026-11-10 (drift-clack, FOLLOWUPS 166; rel7 assembly): Ord. 603 rewrote
+      # 16.43.030; Table 16.43.030-1 now caps quadplex non-studio units at 2.0 a
+      # unit (footnote 4), eight stalls for the pod -- above the design, so it binds nothing.
+      max_per_unit: 2.0
     # Oregon City states this geometry for a QUADPLEX and states none at all
     # for townhouses: OCMC 17.52.010 excludes "single-family detached
     # residential dwellings, duplexes, townhouses, and cottage clusters" from
@@ -737,6 +740,11 @@ siteplan:
         CR: 192
         CX: null
         EX: null
+        # CI1 since RICAP 11 (2026-11-01): a home there is built to RM1's
+        # standards (new 33.150.200), so it owes RM1's Table 120-4 outdoor
+        # area. The corpus holds it on RM1 and CI1's block imports it (`like: RM1`,
+        # printed in the 11/1/26 reprint).
+        CI1: 192
         CI2: null
         IR: null
       front_lot_line_corner: shortest
@@ -785,24 +793,23 @@ siteplan:
       # envelope this stage lays out in is already inset by that same building
       # setback, and so a rear court clears it on every lot in the city. It is
       # here because it is the law and because the check it feeds is general.
+      # 2026-11-10 (drift-clack, FOLLOWUPS 166; rel7 assembly): Ord. 603 moved the
+      # rule to 16.43.030.D.2, "a minimum of 10 feet from the public right-of-way",
+      # a flat 10 ft in every zone (was the zone's building setback, floored at 10).
       parking_street_setback_by_zone:
-        R40: 22
-        R20: 22
-        R15: 22
-        R10: 22
-        R8.5: 22
-        R7: 22
-        R5: 20
-        MURS: 20
-        R20CC: 22
-        # Added 2026-09-02 with the zones. All three are 10 ft, and 10 is the
-        # FLOOR 16.43.030.E.4 states rather than a building setback echoed --
-        # these are the districts whose own front setback is at or below it.
+        R40: 10
+        R20: 10
+        R15: 10
+        R10: 10
+        R8.5: 10
+        R7: 10
+        R5: 10
+        MURS: 10
+        R20CC: 10
         MURA: 10
         SFA: 10
         VTH: 10
-        # 2026-10-01, with the state middle housing path: FU-10's front is 32.
-        FU10: 32
+        FU10: 10
       front_lot_line_corner: owner
       corner_access_street: lowest_class
       cite: HV LDC 16.41.030.B.1, minimum improved driveway width; 16.43.030.E.4, parking setback; 16.44.120.B.4.b.iii approach width, iv lowest-classed street
@@ -1045,9 +1052,10 @@ siteplan:
     # 39.8045(A)(2): 300 square feet per unit of shared outdoor recreation for
     # an apartment development of three-bedroom units, which is 1,200 for this
     # pod. MR-4 permits the pod outright so review never starts, and the four
-    # Portland pockets are governed by PCC, where Table 110-4 asks 250 -- not
-    # mirrored here, because the corpus reads that number into the Portland
-    # layer and not into this one.
+    # Portland pockets are governed by PCC, where Table 110-4 asks 250 per lot
+    # -- mirrored here since 2026-11-09, when the corpus read it into this
+    # layer off its own copy of 33.110 (Title 33 is the pockets' code under
+    # the 2002 county/city planning IGA). RF waits on Steph.
     #
     # No approach ceiling, no frontage share, no maneuvering cap and no front
     # parking ban: read and absent. 39.6580(C) comes closest -- "not more than
@@ -1056,15 +1064,19 @@ siteplan:
     multnomah_unincorporated:
       drive_min_two_way_ft: 20
       parking_street_setback_by_zone:
-        R20: 20
-        R10: 20
-        R7: 15
+        # 2026-11-09 (FOLLOWUPS 112(b)): R20/R10/R7/R5 are the Portland
+        # pockets, governed by Title 33 as the county adopted it under the
+        # 2002 planning IGA, so their figure is PCC 33.266.120.C.2.a's ten
+        # feet, not 39.6580(A)'s building setback.
+        R20: 10
+        R10: 10
+        R7: 10
         LR7: 20
         # Added 2026-09-02 with the zones. MR4 takes the 20 ft the multiple-use
         # districts carry; R5 takes 10, the lowest street setback in the county
         # table.
         MR4: 20
-        R5: 10
+        R5: 10  # PCC 33.266.120.C.2.a (see above); not the county table
         # Added 2026-09-30 with the state middle housing path: 39.6580(A) is
         # the county's sentence for every zone, and both fronts are 20.
         RF: 20
@@ -1072,15 +1084,15 @@ siteplan:
         # 2026-10-01: LR-10's front is 30 (39.4878(F)).
         LR10: 30
       open_space_sqft_by_zone:
-        R20: null
-        R10: null
-        R7: null
+        R20: 250
+        R10: 250
+        R7: 250
         LR7: 1200
-        # Null for the same reason the R zones are: 39.8045(A)(2)'s shared
+        # Null because 39.8045(A)(2)'s shared
         # outdoor recreation area rides on LR-7's design review and reaches no
         # other district. An absence read, not a field left blank.
         MR4: null
-        R5: null
+        R5: 250
         # 2026-09-30: neither states an outdoor area; the shared recreation
         # area of 39.8045(A)(2) rides on LR-7's design review only.
         RF: null
@@ -1088,7 +1100,7 @@ siteplan:
         LR10: null
       front_lot_line_corner: shortest
       corner_access_street: any
-      cite: MCC 39.6560(A) driveway width; 39.6580(A) street setback; 39.8045(A)(2) shared outdoor recreation
+      cite: MCC 39.6560(A) driveway width; 39.6580(A) street setback (PCC 33.266.120.C.2.a for the R20/R10/R7/R5 pockets); 39.8045(A)(2) shared outdoor recreation
     # TWO RULES, AND THE CODE SAYS WHICH IS WHICH. Figure 73-1's last two
     # rows dimension the driveway inside a parking lot -- 12 feet one way, 22
     # two way, identical in both grids -- and 73C.090(1)(a) dimensions what

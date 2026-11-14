@@ -59,6 +59,7 @@ the comparison shows them as quadfit RED against whatever FLATS found.
 from __future__ import annotations
 
 import dataclasses
+import functools
 import itertools
 import json
 import math
@@ -72,8 +73,23 @@ from flats.designs.model import Design, Plat
 from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
-from flats.fit.draw import draw
-from flats.fit.frontage import _runs, _streets_of_run, building_runs, parking_share, street_chains
+from flats.fit.draw import (
+    COURT_BETWEEN_TOL_FT,
+    AlleyStretch,
+    court_on_stretch,
+    draw,
+    stretch_window,
+)
+from flats.fit.frontage import (
+    _runs,
+    _streets_of_run,
+    building_runs,
+    parking_share,
+    side_street_takes_drive,
+    street_chains,
+    street_lines_to_curve_ft,
+    street_runs,
+)
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
 from flats.fit.slope import ONE_M, TEN_M, load_rules as slope_rules
@@ -84,6 +100,7 @@ from flats.geom.alley import (
     alley_lines,
     cover_stretches,
     decode_cover,
+    RUN_PROBE_FT,
     observed_alley,
     rear_cover_runs,
     registry_alley,
@@ -135,6 +152,7 @@ from flats.geom.neighbour import (
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
+from flats.geom import historic_lists
 from flats.geom import pdx_overlays as pdx
 from flats.geom import split_zone as split_zones
 from flats.geom.sidewalk import (
@@ -173,6 +191,7 @@ from flats.geom.durham_apron import (
     load_street_network,
     maximum_clearance_ft,
 )
+from flats.geom import driveway_spacing
 from flats.ingest.flatter import (
     _angles as _flatter_angles,
     _drive_clear,
@@ -181,7 +200,12 @@ from flats.ingest.flatter import (
     flatter_checked,
 )
 from flats.ingest.normalize import zone_for
-from flats.rules.conditions import ACROSS_STREET_CONDITIONS
+from flats.rules.conditions import (
+    ACROSS_STREET_CONDITIONS,
+    CONDITIONS,
+    LAND_DIVISION_FOLDS,
+    fold_land_division,
+)
 from flats.rules.fields import BEARING_FIELDS
 from flats.rules.definitions import Abuts, Definition, Side, decide
 from flats.rules.model import TRANSIT_MEASURES, Layer
@@ -194,20 +218,33 @@ from flats.score import margins as margin_record
 from flats.score.relief import ReliefPolicy
 from flats.score.room import Room, room_for
 from flats.score.paper import (
+    ENTRANCE_TURN_DEG,
+    _row_ft,
     court_across,
     court_depth,
+    door_limit,
+    door_rule,
+    door_turned,
+    doors_to_the_side,
+    drive_width,
+    entrance_unsettled,
     faces_the_street,
     front_lot_line_rule,
     front_lot_line_through_rule,
     front_min_depth_ft,
     kept_rear_yard_ft,
+    narrow_lane_rules,
     lot_line_buffer_doubt_ft,
     lot_line_buffer_ft,
     side_column,
+    side_column_across,
     side_court,
+    side_yard_court_overlap_ft,
+    side_yard_lane_overlap_ft,
     side_street_fed,
 )
 from flats.score.screen import (
+    PARKING_FRONT_SHARE,
     BUILDING_SHARE,
     CLOSER_LOOK_SPLIT_ZONE,
     FRONT_MAX,
@@ -461,7 +498,8 @@ def observed_facts(
     * ``at_street_end`` -- False only where no street ends within
       :data:`~flats.geom.street_end.REACH_FT` of the taxlot (``street_end_ft``,
       measured by :func:`iter_rows`); never True, so near an end, or where
-      nothing measured, Gresham's Minor Access Street note keeps its cap.
+      nothing measured, Gresham's Minor Access Street maximum is tried at
+      both answers by :func:`_bounded`.
     * ``near_named_street_200ft`` -- True where the taxlot lies within 200 ft of
       Eagle Creek Rd or Hinman Rd (``named_street_ft``, measured by
       :func:`iter_rows`), False beyond; Estacada's NCR fourplex path. The code's
@@ -1064,6 +1102,10 @@ class QuadfitLot:
     #: historic resources say about the lot (:mod:`flats.geom.pdx_overlays`,
     #: FOLLOWUPS 78); None where nothing read it.
     pdx_overlays: pdx.Reading | None = None
+    #: The lot's code's clear-vision areas (``Layer.clear_vision``,
+    #: FOLLOWUPS 161; :mod:`flats.geom.sight_triangle`); None where no layer
+    #: was in hand or the layer declares none -- nothing is then checked.
+    clear_vision: Any = None
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -1180,6 +1222,9 @@ def lot_edges(
                 road_names=None if road is None or road[6] is None else tuple(str(n) for n in road[6]),
                 street_name=names.get(dedication.key(x1, y1, x2, y2)) if letter == STREET_CLASS else None,
                 road_classes=() if road is None else tuple(sorted((road[7] or {}).items())),
+                road_stretches=(
+                    () if road is None or len(road) < 9 else tuple(sorted((road[8] or {}).items()))
+                ),
                 across_zones=faces if letter == STREET_CLASS else None,
                 public_road=letter == STREET_CLASS and kind == "street",
             )
@@ -1209,6 +1254,8 @@ def setbacks_for(
     rules: ZoneResolution,
     plain: ZoneResolution | None = None,
     alleyed: ZoneResolution | None = None,
+    *,
+    depth_rear_ft: float | None = None,
 ) -> Setbacks | None:
     """The yards these rules resolve, as the envelope cuts them.
 
@@ -1303,6 +1350,7 @@ def setbacks_for(
         front_ft=front,
         side_ft=side,
         rear_ft=rear,
+        depth_rear_ft=depth_rear_ft,
         street_side_ft=street_side,
         alley_side_ft=alley_side_ft,
         street_off_corridor_ft=off_corridor,
@@ -1386,6 +1434,23 @@ class Envelope:
     #: is s5o's, no yard is known and the lot less the carve stands in: the
     #: court at least stays on the lot. None without a lot polygon.
     ground: Any = None
+    #: Whether :attr:`ground` was cut from the yards the corpus resolved
+    #: (FOLLOWUPS 33(c)). False where the envelope is s5o's and FLATS could
+    #: not name the yards (no taxlot or edges, a landlocked lot, a yard with
+    #: no number): the court's ground is then the lot less the carve, which
+    #: lets the court stand in a front or side yard, so the screen holds the
+    #: lot out of GREEN on it (:attr:`flats.score.screen.LotFacts.
+    #: court_ground_unread`).
+    yards_read: bool = True
+
+    @property
+    def court_in_unread_yards(self) -> bool:
+        """Whether the court may stand in a yard nobody read: the yards are
+        unread AND there is a ground past the envelope. With no ground (no
+        lot polygon) the court is held inside s5o's envelope itself
+        (:meth:`flats.fit.rectangle.Fitter._over_cells` is 0), which already
+        keeps out of every yard s5o cut."""
+        return not self.yards_read and self.ground is not None and not self.ground.is_empty
 
     @property
     def sqft(self) -> float:
@@ -1457,10 +1522,24 @@ def dedicated(edges: LotEdges, rules: ZoneResolution, zone: str | None = None) -
     return dataclasses.replace(edges, edges=tuple(out))
 
 
+def dedicated_sqft(lot: QuadfitLot, rules: ZoneResolution) -> float:
+    """The lot area the road strips of :func:`dedicated` take
+    (:func:`flats.geom.dedication.strip_sqft`), for the minimum lot area and
+    coverage the screen measures on what is left (``LotFacts.kept_sqft``,
+    FOLLOWUPS 77). Zero where the zone states no distance, and where the lot
+    has no shape or no street lines the envelope cuts (a landlocked lot):
+    the envelope takes no strip there either."""
+    if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
+        return 0.0
+    if dedication.rule_of(rules) is None:
+        return 0.0
+    return round(dedication.strip_sqft(dedicated(lot.edges, rules, lot.zone).edges, lot.lot_geom), 1)
+
+
 def _line_need(rule: dedication.Rule, e: Edge, zone: str | None) -> tuple[float, float]:
     """The distance one street line must reach, and the distance it would
     without the zone stand-in (the same where none applies)."""
-    widest = rule.required(e.road_names, dict(e.road_classes))
+    widest = rule.required(e.road_names, dict(e.road_classes), dict(e.road_stretches))
     alt = rule.standin(dict(e.road_classes), zone, e.across_zones)
     return (alt if alt is not None and alt < widest else widest), widest
 
@@ -1492,6 +1571,7 @@ def road_standin(
 #: it (Steph 2026-10-14).
 ROAD_ZONE_STANDIN = "OC-ROAD-ZONE-STANDIN"
 ROAD_ZONE_STANDIN_REASON = "OC_ROAD_ZONE_STANDIN"
+EASTERN_PATTERN_AREA = "pdx_eastern_pattern_area"
 
 
 def road_standin_checked(s: Screened, lot: QuadfitLot) -> Screened:
@@ -1530,6 +1610,9 @@ def envelope_for(
     rules: ZoneResolution,
     plain: ZoneResolution | None = None,
     alleyed: ZoneResolution | None = None,
+    *,
+    setback_rules: ZoneResolution | None = None,
+    depth_rear_ft: float | None = None,
 ) -> Envelope:
     """The envelope this lot offers under these rules (FOLLOWUPS 12).
 
@@ -1578,24 +1661,30 @@ def envelope_for(
         # No line named: keep the strip off every line (conservative).
         on_lot = on_lot.buffer(-strip)
     fallback = None if lot.envelope is None else _less_carve(_less_carve(lot.envelope, lot.steep), lot.reach_off)
-    quadfit = Envelope(fallback, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot)
+    quadfit = Envelope(
+        fallback, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot, yards_read=False
+    )
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
     edges = dedicated(lot.edges, rules, lot.zone)
     split = rear_off_alley(lot.edges)
     part = alleyed is not None and part_rear_alley(lot)
-    setbacks = setbacks_for(rules, plain if split else None, alleyed if part else None)
+    setbacks = setbacks_for(
+        rules if setback_rules is None else setback_rules,
+        plain if split else None,
+        alleyed if part else None,
+        depth_rear_ft=depth_rear_ft,
+    )
     if setbacks is None:
         return quadfit
     # A utility easement the code forbids building on, assumed along every
     # street line where Steph's ruling reaches the lot (FOLLOWUPS 43).
     setbacks = easement.floored(setbacks, lot.facts.easement_street_ft)
     strips = lot.edges.tier in (Tier.clean, Tier.corner)
-    if split and plain is None and strips and "setback_rear_ft" in rules.exempted:
-        # The exemption is about the rear line on the alley; a rear line that
-        # is not on it has a setback this resolution does not carry, and the
-        # caller did not resolve it (``plain``).
-        return quadfit
+    # The exemption is about the rear line on the alley; a rear line that is
+    # not on it has a setback this resolution does not carry, and the caller
+    # did not resolve it (``plain``): the envelope stays s5o's, below.
+    unsplit = split and plain is None and strips and "setback_rear_ft" in rules.exempted
     if strip > 0:
         # A side yard narrower than the planted strip: the court and the
         # lane are searched inside the envelope, so the envelope's sides
@@ -1617,6 +1706,14 @@ def envelope_for(
         # Both norths, grid and true (:mod:`flats.geom.bearing`).
         at = lot.lot_geom.centroid
         setbacks = dataclasses.replace(setbacks, true_north_deg=true_north_deg(at.x, at.y))
+    if unsplit:
+        # Only the rear is in doubt, and the court's ground takes no rear:
+        # it is cut from the front and side yards these rules do resolve
+        # (FOLLOWUPS 33(c)), not the whole lot.
+        return dataclasses.replace(
+            quadfit, ground=buildable(lot.lot_geom, edges, _open_rear(setbacks, strip), less=taken),
+            yards_read=True,
+        )
     geom = buildable(lot.lot_geom, edges, setbacks, less=taken)
     cut = None if strips else setbacks.largest_ft
     if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
@@ -1633,16 +1730,26 @@ def envelope_for(
     # The court may use the rear yard, less any planted strip the code keeps
     # between parking and the line (``parking_lot_line_buffer_ft``). A
     # separation 1005.02(L) draws off the top of a STRUCTURE does not reach
-    # the court.
-    open_rear = dataclasses.replace(
+    # the court. Nor does Portland's Eastern Pattern Area depth yard
+    # (`depth_rear_ft`): the share of it the court may use is charged in
+    # `behind_wall_ft`, so cutting it off the ground too charged the overlap
+    # twice (held bound pdx_map_120c, 1S2E21CB -00600, 2026-11-05).
+    ground = buildable(lot.lot_geom, edges, _open_rear(setbacks, strip), less=taken)
+    return Envelope(geom, cut, "flats", setbacks, ground)
+
+
+def _open_rear(setbacks: Setbacks, strip: float) -> Setbacks:
+    """``setbacks`` with the rear yard opened to the court
+    (:attr:`Envelope.ground`): only the planted ``strip`` stays off the rear
+    line, the alley's rear too."""
+    return dataclasses.replace(
         setbacks,
         rear_ft=strip,
+        depth_rear_ft=None,
         alley_rear_ft=None if setbacks.alley_rear_ft is None else strip,
         north_ft=0.0,
         east_west_ft=0.0,
     )
-    ground = buildable(lot.lot_geom, edges, open_rear, less=taken)
-    return Envelope(geom, cut, "flats", setbacks, ground)
 
 
 def _taken(lot: QuadfitLot, steep: Any = None) -> Any:
@@ -1817,6 +1924,25 @@ def inside_ugb_of(row: Mapping[str, Any]) -> bool | None:
     return bool(got)
 
 
+def plat_origin_of(row: Mapping[str, Any]) -> str | None:
+    """How a Washington County lot was made, off its legal description
+    (:mod:`flats.ingest.plats`, joined by :func:`iter_rows`; FOLLOWUPS 83).
+
+    Read only where the lot is a Washington County lot: a TLID names a lot
+    in one county's map, and the same string elsewhere is another lot. None
+    -- unread, the gate unmeasured -- everywhere else and where the row
+    carries no answer.
+    """
+    got = row.get("plat_origin")
+    if not isinstance(got, str) or not got:
+        return None
+    try:
+        layer = layer_id_for(str(row.get("jurisdiction")))
+    except KeyError:
+        return None
+    return got if layer.startswith("or/washington/") else None
+
+
 def lot_from_row(
     row: Mapping[str, Any],
     layers: Mapping[str, Layer] | None = None,
@@ -1905,10 +2031,18 @@ def lot_from_row(
         # Every street's line, for a building share of each street's
         # frontage (FOLLOWUPS 109).
         street_lines_ft=street_lines_ft(edges),
+        # The same streets each measured only to where the rounded corner
+        # begins: Gresham's corner frontage, "from the corner radius end
+        # point to the property corner" (FOLLOWUPS 175).
+        street_lines_curve_end_ft=street_lines_to_curve_ft(edges) if edges is not None else (),
         # Each of those streets' class rank, on the same chains in the same
         # order: which is the primary street of a corner lot (GDC 3.0100).
         street_line_ranks=street_line_ranks(edges),
         durham_apron_clearance_ft=_finite(row.get("durham_apron_clearance_ft")),
+        # Driveway spacing from intersections and along busy streets
+        # (FOLLOWUPS 169): clear / blocked / unread, None where no rule.
+        driveway_spacing=row.get("driveway_spacing") or None,
+        driveway_spacing_why=str(row.get("driveway_spacing_why") or ""),
         private_drive_lines_ft=drive_lines_ft(row) or private_drive_lines_ft(edges),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
@@ -1924,6 +2058,7 @@ def lot_from_row(
         corner_read_as_bend=bend,
         curve_on_the_line=curve_on_the_line(row, layers) if bend else None,
         inside_ugb=inside_ugb_of(row),
+        plat_origin=plat_origin_of(row),
     )
     juris = str(row.get("jurisdiction"))
     try:
@@ -1961,7 +2096,16 @@ def lot_from_row(
         sidewalk_easement_ft=_finite(row.get("sidewalk_easement_ft")),
         split=split_zones.decode(row.get(split_zones.ROW_KEY)),
         pdx_overlays=pdx.decode(row.get(pdx.ROW_KEY)),
+        clear_vision=_clear_vision(row, layers),
     )
+
+
+def _clear_vision(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> Any:
+    """The home layer's ``clear_vision`` block, or None."""
+    if not layers:
+        return None
+    home = _home_layer(row, layers)
+    return None if home is None else home.clear_vision
 
 
 def _with_access(lot: QuadfitLot, row: Mapping[str, Any]) -> QuadfitLot:
@@ -2037,6 +2181,44 @@ def _with_drive_lines(lot: QuadfitLot, row: Mapping[str, Any]) -> QuadfitLot:
     )
 
 
+def _side_street_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], ...]:
+    """A corner's side-street lot lines (``street_side``, never an alley):
+    not where the building is set back from (:func:`_street_lines`), but a
+    street it stands nearest in its corner (:func:`flats.fit.draw.draw`'s
+    ``side_streets``; rel4 move-read finding 3)."""
+    if lot.edges is None:
+        return ()
+    return tuple(
+        (e.x1, e.y1, e.x2, e.y2)
+        for e in lot.edges.of_class(EdgeClass.street_side)
+        if not e.alley
+    )
+
+
+def _side_alley_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], ...]:
+    """The lot's side lines on an alley: the side a column of stalls along a
+    side alley stands at (:func:`flats.fit.draw.draw`'s ``alley_lines``;
+    FOLLOWUPS 5). Empty without edges."""
+    if lot.edges is None:
+        return ()
+    return tuple(
+        (e.x1, e.y1, e.x2, e.y2) for e in lot.edges.of_class(EdgeClass.side) if e.alley
+    )
+
+
+def _column_draw(
+    design: Design, got: ZoneResolution, alley: Any, fit: Fit, lot: QuadfitLot
+) -> dict[str, Any]:
+    """The column keywords :func:`flats.fit.draw.draw` takes for ``fit``:
+    nothing unless the fit stood its stalls in a column along a side alley."""
+    if not fit.column:
+        return {}
+    across = side_column_across(design, got, alley)
+    if across is None:
+        return {}
+    return {"column_across_ft": across, "alley_lines": _side_alley_lines(lot)}
+
+
 def _street_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], ...]:
     """The lines the car may come in from: the front lot lines, and a
     private road the yards do not count (:attr:`QuadfitLot.access`)."""
@@ -2044,6 +2226,380 @@ def _street_lines(lot: QuadfitLot) -> tuple[tuple[float, float, float, float], .
     if lot.edges is not None:
         fronts = tuple((e.x1, e.y1, e.x2, e.y2) for e in lot.edges.of_class(EdgeClass.front))
     return fronts + tuple(a for a in lot.access if a not in fronts)
+
+
+#: The field whose ``True`` bans parking between the building and ANY street
+#: (Portland 33.266.120.C.1.a, Milwaukie 19.505.3.D.4.a).
+PARKING_FRONT_BAN = "parking_front_prohibited"
+
+
+
+def court_yard_lines(s: "Screened") -> tuple[tuple[float, float, float, float], ...]:
+    """The lines whose yard this plan's parking court may not stand in
+    (Steph 2026-11-08, rulings.yaml
+    ``2026-11-08-no-front-yard-parking-silent-codes``: "no" parking in the
+    front yard where the code is silent; FOLLOWUPS 142).
+
+    A yard is the code's, named by the plan's own lot lines
+    (:attr:`Screened.lot` edges, as the plan resolved them):
+
+    * every FRONT lot line: the front yard. That is both ends of a through
+      lot where the code makes each a front (``front_lot_line_through``
+      ``both``, ``manager``, and the both-fronts reading the unread and
+      ``both_unless_no_access`` codes keep at its worst), and every street
+      of a corner lot whose front is not named (``front_lot_line_corner``
+      ``both``, an alley lot). A through lot's far end the code lets the
+      owner name the rear (``owner``) is a rear yard, and a court there is
+      behind the building;
+    * a private road only where the city counts it as a front lot line for
+      the yards -- then it is a front edge of this reading (``private_drives
+      .street``; Clackamas ZDO 202 exception 2 in the reading that takes
+      access from it; Fairview's both readings, the worse kept). Steph
+      2026-09-30: a private road is a way in for parking, and governs
+      setbacks only where the city says so. A private road the yards do not
+      count (:attr:`QuadfitLot.access`) makes no front yard: parking may
+      face it;
+    * where the code bans parking between the building and the street
+      outright (``parking_front_prohibited`` true and not waived), EVERY
+      street line -- the corner's side street and a through lot's far end
+      renamed rear included (:attr:`Screened.street_edges`): the ban says
+      "the street", not "the front yard".
+
+    NOT a corner's side street (``street_side``) elsewhere: the code names
+    that yard a street side yard, not a front yard, and a court reached
+    from the side street (Steph 2026-10-02 / 10-05) stands in the side or
+    rear yard. Alley lines are never streets.
+    """
+    lines: list[tuple[float, float, float, float]] = []
+
+    def add(edges: LotEdges | None, classes: tuple[EdgeClass, ...]) -> None:
+        if edges is None:
+            return
+        for e in edges.edges:
+            line = (e.x1, e.y1, e.x2, e.y2)
+            if e.cls in classes and not e.alley and line not in lines:
+                lines.append(line)
+
+    add(s.lot.edges, (EdgeClass.front,))
+    if s.rules.get(PARKING_FRONT_BAN) is True and PARKING_FRONT_BAN not in set(s.rules.exempted):
+        every = (EdgeClass.front, EdgeClass.street_side)
+        add(s.lot.edges, every)
+        add(getattr(s, "street_edges", None), every)
+    return tuple(lines)
+
+
+def court_in_front_yard(s: "Screened", drawing: Mapping[str, Any] | None = None) -> bool:
+    """Whether ``drawing`` (``s``'s own where omitted) stands its parking
+    court between its building and one of :func:`court_yard_lines`. False
+    where nothing fitting is drawn, or no court: a fit that fell short shows
+    its shortfall, not a place the court would stand."""
+    from shapely.geometry import Polygon
+
+    from flats.fit.draw import court_between
+
+    drawing = s.drawing if drawing is None else drawing
+    if not drawing or not drawing.get("fits"):
+        return False
+    ring, court = drawing.get("building"), drawing.get("court")
+    if not (ring and len(ring) >= 4 and court and len(court) >= 4):
+        return False
+    building, parked = Polygon(ring), Polygon(court)
+    lines = court_yard_lines(s)
+    if not court_between(building, parked, lines):
+        return False
+    return not front_parking_allowed(s, building, parked, lines)
+
+
+def front_parking_allowed(
+    s: "Screened",
+    building: Any,
+    court: Any,
+    lines: Sequence[tuple[float, float, float, float]],
+) -> bool:
+    """Whether the code itself lets ``court`` stand between ``building`` and
+    the street lines of :func:`court_yard_lines` it stands in front of
+    (Steph 2026-11-09, rulings.yaml
+    ``2026-11-09-clackamas-front-parking-follow-zdo``: "Follow the county's
+    rules.").
+
+    Clackamas ZDO 845.02(D): garages and off-street parking areas "shall
+    not be located between a building and a public street ... except" where
+    (1) "separated from the street by a dwelling", or (2) "the combined width
+    of all garages and off-street parking areas located between a building
+    and a public street does not exceed a total of 50 percent of the street
+    frontage". True only where the zone says so
+    (``parking_front_share_allowed``), no outright ban stands, EVERY line
+    the court stands in front of is read as a public street
+    (:attr:`flats.geom.edges.Edge.public_road`: a private road the yards
+    count, or a street s4 did not read, keeps the hold), and the court on
+    this drawing faces no more than ``parking_area_max_frontage_pct`` of any
+    one street's frontage (:func:`flats.fit.frontage.street_runs`, every
+    street: Steph 2026-10-14's any-street reading of the same cap). The
+    court's whole ring is the parking measured -- at least the stalls and
+    aisle, never the lane. Limb (1) is never measured, so never opens a lot.
+    Anything unmeasured is False: the hold stays.
+    """
+    import shapely
+
+    from flats.fit.draw import court_between
+
+    rules = s.rules
+    if rules.get(PARKING_FRONT_SHARE) is not True:
+        return False
+    if rules.get(PARKING_FRONT_BAN) is True and PARKING_FRONT_BAN not in set(rules.exempted):
+        return False
+    cap = rules.get("parking_area_max_frontage_pct")
+    edges = getattr(s, "street_edges", None) or s.lot.edges
+    ground = s.lot.lot_geom
+    if cap is None or edges is None or ground is None or ground.is_empty:
+        return False
+    public = {
+        (e.x1, e.y1, e.x2, e.y2)
+        for lot_edges in (s.lot.edges, edges)
+        if lot_edges is not None
+        for e in lot_edges.edges
+        if e.public_road and not e.alley and e.cls in (EdgeClass.front, EdgeClass.street_side)
+    }
+    faced = [line for line in lines if court_between(building, court, (line,))]
+    if not faced or any(line not in public for line in faced):
+        return False
+    parked = shapely.make_valid(court).intersection(ground)
+    if parked.is_empty:
+        return False
+    runs = street_runs(ground, edges, parked, building)
+    if not runs:
+        return False
+    return max(pct for pct, _ in runs) <= float(cap)
+
+
+#: Shortest street lot line whose direction the doors may face
+#: (:func:`door_bearings`): a corner's rounding or a chamfer is a few feet of
+#: line at half the corner's angle, which a building does not face.
+DOOR_LINE_MIN_FT = 20.0
+#: How much further from a street than the building's nearest point the
+#: wall carrying the doors may stand and still face that street, as drawn
+#: (:func:`drawn_door_turned`). A judgement (rel4 move-read finding 2): a
+#: corner building in its corner stands each wall off its own street by
+#: that street's setback, and the two setbacks differ by up to about a front
+#: yard; a wall that looks across the whole lot to a street hundreds of feet
+#: away while the building's end sits on the near street (Hillsboro
+#: 1N227DD17200, 388 ft) does not face it.
+DOOR_STREET_REACH_FT = 20.0
+#: The drawn wall's bearing may differ from the street line's by the
+#: placement's rounding as well as the code's angle: the fit stands at the
+#: lot's measured front bearing, the drawn ring is rounded to 0.1 ft.
+DOOR_DRAWN_SLACK_DEG = 2.0
+
+
+def door_bearings(lot: "QuadfitLot", edges: "LotEdges | None" = None) -> tuple[float, ...]:
+    """The directions of the streets ``lot`` abuts, the ones its doors may
+    face where the code makes them face a street
+    (:func:`flats.score.paper.door_limit`): its front bearings, and every
+    street lot line -- front or a corner's side street, never an alley --
+    at least :data:`DOOR_LINE_MIN_FT` long (rel4 move-read finding 2)."""
+    edges = lot.edges if edges is None else edges
+    out = [float(b) for b in lot.front_bearings]
+    if edges is not None:
+        for e in edges.edges:
+            if (
+                e.cls in (EdgeClass.front, EdgeClass.street_side)
+                and not e.alley
+                and e.length_ft >= DOOR_LINE_MIN_FT
+                and all(bearing_delta(e.bearing_deg, b) > 1e-6 for b in out)
+            ):
+                out.append(float(e.bearing_deg))
+    return tuple(out)
+
+
+def _door_lines(lot: "QuadfitLot") -> tuple[tuple[float, float, float, float], ...]:
+    """The street lot lines the doors may face, as drawn: every front and
+    side-street line not on an alley (:func:`door_bearings`)."""
+    if lot.edges is None:
+        return ()
+    return tuple(
+        (e.x1, e.y1, e.x2, e.y2)
+        for e in lot.edges.edges
+        if e.cls in (EdgeClass.front, EdgeClass.street_side) and not e.alley
+    )
+
+
+def _doors_face_a_street(
+    ring: Sequence[Sequence[float]],
+    width_ft: float,
+    lines: Sequence[tuple[float, float, float, float]],
+    tol_deg: float,
+) -> bool:
+    """Whether the drawn building ``ring`` stands one of its long walls --
+    the faces as long as the design's ``width``, either of which may carry
+    the doors -- toward one of the street ``lines``: within ``tol_deg``
+    (and :data:`DOOR_DRAWN_SLACK_DEG`) of the line's direction, and no more
+    than :data:`DOOR_STREET_REACH_FT` further from it than the building's
+    nearest point is from any street line."""
+    from shapely.geometry import LineString, Polygon
+
+    pts = [tuple(p) for p in ring]
+    if pts[0] == pts[-1]:
+        pts = pts[:-1]
+    if len(pts) < 3 or not lines:
+        return False
+    sides = [(pts[i], pts[(i + 1) % len(pts)]) for i in range(len(pts))]
+    longest = max(math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in sides)
+    walls = [
+        (a, b)
+        for a, b in sides
+        if abs(math.hypot(b[0] - a[0], b[1] - a[1]) - width_ft) <= 1.0
+        or math.hypot(b[0] - a[0], b[1] - a[1]) >= longest - 1e-6
+    ]
+    streets = [LineString(((x1, y1), (x2, y2))) for x1, y1, x2, y2 in lines]
+    building = Polygon(pts)
+    nearest = min(building.distance(line) for line in streets)
+    for a, b in walls:
+        wall = LineString((a, b))
+        face = bearing_deg(a[0], a[1], b[0], b[1])
+        for (x1, y1, x2, y2), line in zip(lines, streets):
+            if bearing_delta(face, bearing_deg(x1, y1, x2, y2)) > tol_deg + DOOR_DRAWN_SLACK_DEG:
+                continue
+            if wall.distance(line) <= nearest + DOOR_STREET_REACH_FT:
+                return True
+    return False
+
+
+def drawn_door_turned(s: "Screened", drawing: Mapping[str, Any] | None = None) -> bool:
+    """Whether ``drawing`` (``s``'s own where omitted) stands the building
+    with its door face more than :data:`flats.score.paper.ENTRANCE_TURN_DEG`
+    off every street direction, where the zone's entrance standard is
+    unsettled (:func:`flats.score.paper.entrance_unsettled`; FOLLOWUPS 153).
+
+    The screen reads the fit's angle; the court's turn, the hose's, the
+    flatter spot's and the maximum front setback's search draw the same fit
+    at other angles and keep only the drawing, so the building shown can
+    stand turned while the fit faced the street (rel4). The door face is the
+    drawn building's side as long as the design's ``width``. False where
+    nothing fitting is drawn, the lot names no street direction, or the
+    standard is settled.
+
+    Where the code settles it -- the doors must face a street
+    (:func:`flats.score.paper.door_limit`) -- the fit already stands the
+    door face along a street the lot abuts, and the drawing is read for
+    whether it holds that face TOWARD one (:func:`_doors_face_a_street`):
+    True where it does not (rel4 move-read finding 2)."""
+    if s.design.door_face != "width":
+        return False
+    limit = door_limit(s.rules, s.design)
+    if limit is not None:
+        drawing = s.drawing if drawing is None else drawing
+        if not drawing or not drawing.get("fits"):
+            return False
+        ring = drawing.get("building")
+        lines = _door_lines(s.lot)
+        if not ring or len(ring) < 4 or not lines:
+            return False
+        return not _doors_face_a_street(ring, s.design.footprint.width_ft, lines, limit)
+    if not entrance_unsettled(s.rules, s.design):
+        return False
+    bearings = s.lot.front_bearings
+    drawing = s.drawing if drawing is None else drawing
+    if not bearings or not drawing or not drawing.get("fits"):
+        return False
+    ring = drawing.get("building")
+    if not ring or len(ring) < 4:
+        return False
+    pts = [tuple(p) for p in ring]
+    if pts[0] == pts[-1]:
+        pts = pts[:-1]
+    sides = [(pts[i], pts[(i + 1) % len(pts)]) for i in range(len(pts))]
+    width = s.design.footprint.width_ft
+    a, b = min(
+        sides,
+        key=lambda w: abs(math.hypot(w[1][0] - w[0][0], w[1][1] - w[0][1]) - width),
+    )
+    face = bearing_deg(a[0], a[1], b[0], b[1])
+    return min(bearing_delta(face, x) for x in bearings) > ENTRANCE_TURN_DEG
+
+
+def alley_stretch(
+    lot: QuadfitLot,
+    design: Design,
+    rules: ZoneResolution,
+    envelope: "Envelope | None",
+    fit: Fit,
+) -> AlleyStretch | None:
+    """Where this plan's court has to stand when a rear alley that runs only
+    PART of the rear line is its aisle (Steph 2026-09-28, rulings.yaml
+    ``2026-09-28-partial-alley``; FOLLOWUPS 3(c)); None where it is not --
+    no partial alley, a column or beside court, or a court that keeps its own
+    aisle (:func:`flats.score.paper.court_depth` charged no back-out).
+
+    The row is the charged floor (:func:`flats.score.paper._row_ft`), as the
+    depth is charged. The court's far edge may stand off the alley by the
+    strip the envelope lost at the rear -- or the planted strip kept off the
+    line, where that is wider -- and the probe's foot, as
+    :func:`flats.geom.alley.usable_run_ft` measured the run."""
+    alley = lot.facts.alley
+    if alley is None or not alley.at_rear or alley.rear_whole or not lot.rear_runs:
+        return None
+    if fit.column or fit.beside:
+        return None
+    _court, used = court_depth(design, rules, alley, corner=lot.facts.corner, fix=_fix(fit))
+    if "parking_alley_backout_ft" not in used:
+        return None
+    rear = 0.0 if envelope is None else _rear_ft(envelope, rules)
+    reach = max(rear, lot_line_buffer_ft(rules)) + RUN_PROBE_FT
+    return AlleyStretch.of(lot.rear_runs, _row_ft(design, rules, alley, None), reach)
+
+
+def _court_reaches_stretch(
+    lot: QuadfitLot,
+    design: Design,
+    rules: ZoneResolution,
+    envelope: "Envelope",
+    fit: Fit,
+    fitter: Fitter,
+    stretch: AlleyStretch,
+) -> bool:
+    """Whether any window ``fitter`` holds stands this plan's court -- the
+    shallow one the partial alley's back-out allows -- against the covered
+    stretch (:func:`flats.fit.draw.stretch_window`): the court the fit
+    charged, drawn as :func:`drawing_for` draws it."""
+    alley, corner = lot.facts.alley, lot.facts.corner
+    court = court_depth(design, rules, alley, corner=corner, fix=_fix(fit))[0]
+    across = court_across(design, rules, alley, corner=corner)
+    beyond = _court_beyond_rear(
+        design, rules, envelope.rear_cut_ft, alley, corner=corner, fix=_fix(fit)
+    )
+    return stretch_window(
+        fitter,
+        fit,
+        width_ft=design.footprint.width_ft,
+        depth_ft=design.footprint.depth_ft,
+        court_depth_ft=court,
+        court_beyond_ft=beyond,
+        stretch=stretch,
+        court_overlap_ft=side_yard_court_overlap_ft(
+            rules, across.width_ft, lane_ft=across.lane_ft, corner=corner
+        ),
+    )
+
+
+def court_off_stretch(s: "Screened", drawing: Mapping[str, Any] | None = None) -> bool:
+    """Whether ``drawing`` (``s``'s own where omitted) stands a court the
+    partial rear alley feeds anywhere but against the covered stretch
+    (:func:`alley_stretch`, :func:`flats.fit.draw.court_on_stretch`). False
+    where the alley is not this plan's aisle. A plan that needs the stretch
+    and shows no fitting drawing is read as off it: nothing showed where
+    the court would stand."""
+    from shapely.geometry import Polygon
+
+    stretch = alley_stretch(s.lot, s.design, s.rules, s.envelope, s.fit)
+    if stretch is None:
+        return False
+    drawing = s.drawing if drawing is None else drawing
+    if not drawing or not drawing.get("fits"):
+        return True
+    ring, court = drawing.get("building"), drawing.get("court")
+    if not (ring and len(ring) >= 4 and court and len(court) >= 4):
+        return True
+    return not court_on_stretch(Polygon(ring), Polygon(court), stretch)
 
 
 def transit_from_row(row: Mapping[str, Any]) -> tuple[tuple[str, float], ...]:
@@ -2073,6 +2629,7 @@ def iter_rows(
     zones: Iterable[str] = (),
     tlids: Iterable[str] = (),
     streets: Path | None = None,
+    plats: Path | None = None,
 ) -> Iterator[dict[str, Any]]:
     """Every lot's bridge row, s4 facts joined to s5o's envelope on TLID.
 
@@ -2089,6 +2646,10 @@ def iter_rows(
     ``street_end_ft``, the taxlot's distance to the nearest place a street
     ends (:func:`flats.geom.street_end.street_end_column`). Measured after
     the scope is cut, so a partial measures only its own lots.
+
+    ``plats`` is the Washington County plat reading
+    (:mod:`flats.ingest.plats`); each row gains ``plat_origin``, read only
+    for a Washington County lot (:func:`plat_origin_of`).
     """
     import pandas as pd
     import pyarrow.parquet as pq
@@ -2106,6 +2667,12 @@ def iter_rows(
         # does not hold simply has no distance (:func:`transit_from_row`).
         near = pd.read_parquet(transit, columns=["TLID", *TRANSIT_MEASURES])
         frame = frame.merge(near.drop_duplicates("TLID"), on="TLID", how="left")
+    if plats is not None:
+        from flats.ingest.plats import read as read_plats
+        from flats.ingest.plats import tlid_key
+
+        frame = frame.assign(plat_key=[tlid_key(t) for t in frame["TLID"]])
+        frame = frame.merge(read_plats(plats), on="plat_key", how="left").drop(columns="plat_key")
     keep = scope_mask(frame, jurisdictions, zones, tlids)
     if keep is not None:
         frame = frame[keep]
@@ -2162,8 +2729,12 @@ def _durham_apron_clearance_column(
                 continue
             half_width = _finite(width_row[4])
             names = width_row[6]
-            if half_width is None or half_width < 0 or not isinstance(names, list):
+            if half_width is None or not isinstance(names, list):
                 continue
+            # The dedication reads a centre line on the lot's side as a
+            # negative half-width (FOLLOWUPS 67 (b)); the curb return here
+            # reads the distance either way, as before.
+            half_width = abs(half_width)
             for name in names:
                 key = dedication.street_key(name)
                 if key:
@@ -2178,6 +2749,82 @@ def _durham_apron_clearance_column(
             )
         )
     return out
+
+
+def with_driveway_spacing(
+    rows: list[dict[str, Any]], sources: Path | None, streets: Path
+) -> int:
+    """Answer driveway spacing (FOLLOWUPS 169) on every row whose layer
+    :mod:`flats.geom.driveway_spacing` holds rules for, in place
+    (``driveway_spacing``: clear / blocked / unread, and
+    ``driveway_spacing_why``), and say how many rows it reached. A row of
+    such a layer the reading cannot reach (no snapshot, no centrelines) is
+    left unread, the conservative answer."""
+    rules = driveway_spacing.load_rules()
+    reached = [r for r in rows if _layer_id(r) in rules]
+    if not reached:
+        return 0
+    maps = driveway_spacing.load_maps(sources) if sources is not None else {}
+    network = load_street_network(streets)
+    # Where a street may be one of the code's industrial streets (Cornelius),
+    # per layer; unread (every local reading held) without the snapshot.
+    industrial: dict[str, driveway_spacing.IndustrialReach] = {}
+    for layer_id in sorted({_layer_id(r) for r in reached}):
+        spec = rules[layer_id].industrial
+        if spec is not None:
+            polygons = (
+                driveway_spacing.industrial_polygons(sources, layer_id, spec)
+                if sources is not None
+                else None
+            )
+            industrial[layer_id] = driveway_spacing.industrial_reach(network, polygons, spec.reach_ft)
+    for row in reached:
+        spacing = rules[_layer_id(row)]
+        try:
+            bearings = tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]"))
+        except (TypeError, ValueError):
+            bearings = ()
+        cmap = maps.get(spacing.map or "")
+        answer, why = driveway_spacing.read_lot(
+            row.get("edges_json") or "[]",
+            bearings,
+            network,
+            cmap,
+            spacing,
+            driveway_spacing.half_widths_of(row),
+            industrial.get(_layer_id(row)),
+        )
+        if cmap is None and spacing.map:
+            why = f"no {spacing.map} map in the snapshot; " + why
+        row["driveway_spacing"] = answer
+        row["driveway_spacing_why"] = why
+    return len(reached)
+
+
+@functools.lru_cache(maxsize=1)
+def stretch_labels() -> tuple[str, ...]:
+    """Every stretch-limited row label of a named-street table any zone a
+    dedication reaches states (:meth:`flats.geom.dedication.Rule.
+    stretch_labels`): Milwaukie Table 19.501.2.A's bracketed rows, King City
+    16.80.060 A.2's "between" rows. The bridge reads each for every street
+    line on such a street; a zone's own rule decides whether it applies."""
+    from flats.rules.loader import load_rules
+
+    layers = load_rules()
+    rules = RuleSet(layers)
+    out: set[str] = set()
+    for layer_id in dedication.LAYERS:
+        layer = layers.get(layer_id)
+        if layer is None:
+            continue
+        for zone in layer.zones:
+            try:
+                rule = dedication.rule_of(rules.resolve(layer_id, zone))
+            except Exception:  # noqa: BLE001 -- a zone that does not resolve states no row
+                continue
+            if rule is not None:
+                out.update(rule.stretch_labels())
+    return tuple(sorted(out))
 
 
 def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
@@ -2200,6 +2847,8 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
     if not maps:
         return 0
     answered = 0
+    import shapely
+
     for row in rows:
         layer_id = _layer_id(row)
         measure_widths = dedication.applies(layer_id) or layer_id == "or/washington/durham"
@@ -2208,7 +2857,13 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
             continue
         edges = json.loads(row.get("edges_json") or "[]")
         if measure_widths:
-            row["road_widths_json"] = json.dumps(dedication.measure(edges, layer_id, maps))
+            # The tax lot's shape tells which side of each street line the
+            # centre line is on (FOLLOWUPS 67 (b)); the stretch-limited rows
+            # of the named-street tables are read for every line (77).
+            lot_wkb = row.get("lot_wkb")
+            lot = shapely.from_wkb(lot_wkb) if lot_wkb else None
+            stretches = stretch_labels() if dedication.applies(layer_id) else ()
+            row["road_widths_json"] = json.dumps(dedication.measure(edges, layer_id, maps, lot, stretches))
         if not ranked:
             continue
         row["street_ranks_json"] = json.dumps(street_ranks(edges, layer_id, maps))
@@ -2429,6 +3084,63 @@ def _access_deg(here: QuadfitLot, front: float | None) -> tuple[float, ...]:
     return here.front_bearings + tuple(
         b for b in here.access_bearings if b not in here.front_bearings
     )
+
+
+# FOLLOWUPS 94: real side lot lines can differ slightly in their measured bearings.
+TOWNHOUSE_SIDE_PARALLEL_DEG = 1.0
+
+
+def _townhouse_row_angles(
+    lot: QuadfitLot,
+    design: Design,
+    rules: ZoneResolution,
+    front: float | None,
+    street_angles: Sequence[float],
+) -> tuple[float, ...]:
+    """Also try a townhouse row square to its side lines where all home lots
+    still reach the selected street frontage. Party walls meet the street at
+    intervals stretched by the secant of the row-to-street angle."""
+    if design.plat is not Plat.unit_lots or not faces_the_street(rules, design) or lot.edges is None:
+        return tuple(street_angles)
+    if front is None:
+        if len(lot.front_bearings) != 1:
+            return tuple(street_angles)
+        front = lot.front_bearings[0]
+
+    frontage = sum(
+        edge.length_ft
+        for edge in lot.edges.of_class(EdgeClass.front)
+        if bearing_delta(edge.bearing_deg, front) <= 1e-6
+    )
+    if frontage <= 0:
+        return tuple(street_angles)
+
+    side_edges = lot.edges.of_class(EdgeClass.side)
+    if len(side_edges) < 2 or any(
+        bearing_delta(edge.bearing_deg, other.bearing_deg)
+        > TOWNHOUSE_SIDE_PARALLEL_DEG
+        for index, edge in enumerate(side_edges)
+        for other in side_edges[index + 1 :]
+    ):
+        return tuple(street_angles)
+
+    bearing_x = sum(
+        edge.length_ft * math.cos(math.radians(2.0 * edge.bearing_deg))
+        for edge in side_edges
+    )
+    bearing_y = sum(
+        edge.length_ft * math.sin(math.radians(2.0 * edge.bearing_deg))
+        for edge in side_edges
+    )
+    side_bearing = normalize(math.degrees(math.atan2(bearing_y, bearing_x)) / 2.0)
+    angle = normalize(side_bearing + 90.0)
+    delta = bearing_delta(angle, front)
+    if delta <= 1e-6:
+        return tuple(street_angles)
+    row_frontage = design.footprint.width_ft / math.cos(math.radians(delta))
+    if row_frontage > frontage + 1e-6:
+        return tuple(street_angles)
+    return tuple(sorted(set(street_angles) | {angle}))
 
 
 def _search_key(env: Envelope) -> tuple[bytes | None, bytes | None]:
@@ -2752,6 +3464,316 @@ def rear_court_checked(
     return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
 
+#: At most this many angles besides the fit's own are drawn looking for a
+#: court clear of the front yard (:func:`court_turned`): each is a window
+#: search, and the flatter search reads as many.
+COURT_TURN_MAX = 6
+
+
+def court_turned(
+    s: Screened, fitter: Fitter | None, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` drawn at another angle where its first drawing stands the court
+    in a front yard (Steph 2026-11-08; :func:`court_yard_lines`) and another
+    angle keeps it out.
+
+    The first drawing already takes the nearest window at the fit's angle
+    whose court stands clear (:func:`drawing_for`); on a through lot whose
+    ends are both fronts none does, the court behind the building facing the
+    far street. Turned, the building and court can stand side by side along
+    the street. The angles nearest square to a street are drawn first
+    (:func:`flats.ingest.flatter._angles`, at most :data:`COURT_TURN_MAX`
+    besides the fit's), and the first drawing that holds the plan (``fits``,
+    no tighter than the first), whose court stands clear and whose drive in
+    from the street is clear (:func:`flats.ingest.flatter._drive_clear`) is
+    kept. Only a court reached down a lane from the street moves
+    (:func:`flats.ingest.flatter._lane_in_from_street`): any other has a way
+    in the drawing does not place. Runs before anything measures the
+    drawing (the maximum front setback, the hose, the grade), so each reads
+    the plan where it now stands. Changes no verdict:
+    :func:`court_yard_checked` reads the drawing finally kept -- but the
+    building's share of the frontage, read on the fit's first placement, is
+    measured again where the turned building stands, never higher
+    (:func:`_share_redrawn`, FOLLOWUPS 160)."""
+    drawing = s.drawing or {}
+    if fitter is None or s.fit.angle_deg is None or not court_in_front_yard(s):
+        return s
+    if not (drawing.get("lane") and _lane_in_from_street(s)):
+        return s
+    street = _street_lines(s.lot)
+    if not street:
+        return s
+    for angle in _flatter_angles(s, fitter)[1 : COURT_TURN_MAX + 1]:
+        at = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=angle))
+        drawn = drawing_for(at, fitter)
+        if not drawn or not drawn.get("fits") or (drawn.get("tight") and not drawing.get("tight")):
+            continue
+        if court_in_front_yard(s, drawn) or not _drive_clear(drawn, at, street):
+            continue
+        if drawn_door_turned(s, drawn) and not drawn_door_turned(s):
+            # Turned off the street where the entrance standard is unread
+            # (FOLLOWUPS 153): one hold traded for another, and the drawing
+            # shown worse; the fit's own placement stays.
+            continue
+        return _share_redrawn(
+            dataclasses.replace(s, drawing=drawn), policy=policy, relief=relief
+        )
+    return s
+
+
+def _no_street_yards(env: Envelope) -> bool:
+    """Whether the rules here keep no yard off the street lines (a code
+    that lets a building into the clear-vision area where no setbacks are
+    required: Sherwood 16.58.010(C)(3), Troutdale 5.040(D)(9))."""
+    sb = env.setbacks
+    return sb is not None and not sb.front_ft and not (sb.street_side_ft or 0.0)
+
+
+def sight_cut(
+    here: QuadfitLot, lot: QuadfitLot, env: Envelope
+) -> list[tuple[Envelope, QuadfitLot]]:
+    """``env`` with the lot's corner clear-vision areas off its building
+    ground (FOLLOWUPS 161; :mod:`flats.geom.sight_triangle`), each with the
+    reading of ``here`` it is screened on.
+
+    The area the rule surely keeps (``low``) comes off always. Where the
+    larger area it may be (``high``: the curb at the lot line, the largest
+    figure, every reading) still reaches the ground left, the lot is tried
+    twice and the better kept: cut by ``high`` as it stands, and cut by
+    ``low`` with ``sight_corner_doubt`` set, which holds a fit there YELLOW
+    (rulings.yaml 2026-11-09-curb-position-middle-way and
+    2026-11-09-sight-triangle-corner-check). So a lot is GREEN only clear
+    of ``high`` and RED on the area only inside ``low``. Only the
+    building's ground is cut; the court's (``ground``) is not. The streets
+    are ``lot``'s, as they lie."""
+    from flats.geom import sight_triangle as sight
+    from flats.geom.envelope import MIN_PART_SQFT, _clean
+
+    cv = lot.clear_vision
+    rule = None if cv is None else cv.corner
+    if rule is None or env.geom is None or env.geom.is_empty or lot.lot_geom is None:
+        return [(env, here)]
+    if rule.exempt_no_setback and _no_street_yards(env):
+        return [(env, here)]
+    areas = sight.corner_areas(lot.lot_geom, lot.edges, rule, lot.zone)
+    if areas is None:
+        return [(env, here)]
+
+    def carved(area: Any) -> Envelope:
+        if area is None or area.is_empty:
+            return env
+        return dataclasses.replace(env, geom=_clean(env.geom.difference(area), MIN_PART_SQFT))
+
+    low = carved(areas.low)
+    if low.geom.is_empty or low.geom.intersection(areas.high).area <= sight.OVERLAP_SQFT:
+        return [(low, here)]
+    doubt = dataclasses.replace(
+        here,
+        facts=dataclasses.replace(
+            here.facts, sight_corner_doubt=areas.reason, sight_cite=areas.cite or None
+        ),
+    )
+    return [(carved(areas.high), here), (low, doubt)]
+
+
+def _curb_ft(x: float, y: float, roads: Any, layer_id: str | None = None) -> float | None:
+    """The drawn curb's distance from this street lot line point, where the
+    curb layer holds one (``Source.curb``, :mod:`flats.geom.curbs`); None
+    where it does not -- a width-placed curb is not taken.
+
+    ``roads`` is the worker's tuple, or a :class:`flats.fit.fire_roads.Network`
+    (a run with per-place dead-end lengths), read at ``layer_id``'s length."""
+    if roads is not None and hasattr(roads, "at"):
+        net = roads.at(layer_id)
+        roads = (net.tree, net.geoms, roads.edges)
+    if not roads or len(roads) < 3 or roads[2] is None or roads[0] is None:
+        return None
+    import numpy as np
+    import shapely
+
+    from flats.geom.curbs import Source
+
+    tree, geoms, edges = roads[0], roads[1], roads[2]
+    if not len(geoms):
+        return None
+    pts = shapely.points(np.array([[x, y]]))
+    lines = np.asarray(geoms, dtype=object)[tree.nearest(pts)]
+    feet = shapely.get_coordinates(shapely.shortest_line(pts, lines)).reshape(-1, 2, 2)[:, 1]
+    near, src = edges.near(np.array([[x, y]], dtype=float), feet, lines)
+    if src[0] != Source.curb or not np.isfinite(near[0]):
+        return None
+    return float(near[0])
+
+
+def sight_driveway_checked(
+    s: Screened,
+    lot: QuadfitLot,
+    roads: Any = None,
+    *,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+) -> Screened:
+    """``s`` answered on whether the drive's clear-vision area reaches the
+    drawn building (FOLLOWUPS 161; ``clear_vision.driveway``).
+
+    Read on the drawing finally kept, where the plan's lane comes in off a
+    street: the area is drawn at the lane's mouth with the curb at the lot
+    line, or, where the curb layer holds the curb, at the curb. A building
+    it reaches is held YELLOW (``sight_driveway_doubt``) -- never RED: the
+    drive's place along the frontage is not searched, and moving it may
+    clear the area. Where the city's zone is a note only (Portland
+    TRN-10.40, rulings.yaml 2026-11-09-portland-driveway-clear-zone-note)
+    the colour stands and the note is raised. A plan RED both ways is not
+    read."""
+    from shapely.geometry import LineString, Polygon
+
+    from flats.geom import sight_triangle as sight
+
+    cv = lot.clear_vision
+    rule = None if cv is None else cv.driveway
+    if s.facts is None or rule is None or rule.status == "none":
+        return s
+    if lot.zone in rule.except_zones or lot.lot_geom is None:
+        return s
+    if s.signed.triage is Triage.red and s.screening.triage is Triage.red and not _map_green(s):
+        return s
+    if rule.exempt_no_setback and s.envelope is not None and _no_street_yards(s.envelope):
+        return s
+    drawing = s.drawing or {}
+    lane, ring = drawing.get("lane"), drawing.get("building")
+    if not (drawing.get("fits") and lane and len(lane) >= 4 and ring and len(ring) >= 4):
+        return s
+    if not _lane_in_from_street(s):
+        return s
+    building = Polygon(ring)
+    mouth = sight.drive_mouth(Polygon(lane), lot.lot_geom, lot.edges)
+    if mouth is None:
+        return s
+    if rule.exempt_at_lot_line:
+        line = LineString([
+            (mouth.cx - mouth.tx * 500, mouth.cy - mouth.ty * 500),
+            (mouth.cx + mouth.tx * 500, mouth.cy + mouth.ty * 500),
+        ])
+        if building.distance(line) <= 0.5:
+            return s
+    d = 0.0
+    if rule.basis != "lot_line":
+        d = _curb_ft(mouth.cx, mouth.cy, roads, lot.layer_id) or 0.0
+    front = None
+    if s.envelope is not None and s.envelope.setbacks is not None:
+        front = s.envelope.setbacks.front_ft
+    area = sight.driveway_area(mouth, rule, d, front_setback_ft=front)
+    held = sight.reaches(area, building, lot.lot_geom)
+    if rule.note_only:
+        if held == s.facts.sight_driveway_note:
+            return s
+        facts = dataclasses.replace(s.facts, sight_driveway_note=held)
+    else:
+        if held == s.facts.sight_driveway_doubt:
+            return s
+        facts = dataclasses.replace(s.facts, sight_driveway_doubt=held)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
+def court_yard_checked(
+    s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` answered on whether the court it finally drew stands in a front
+    yard (Steph 2026-11-08, rulings.yaml
+    ``2026-11-08-no-front-yard-parking-silent-codes``; FOLLOWUPS 142).
+
+    Every step that stands the plan somewhere -- the first drawing, the
+    turn for a clear court (:func:`court_turned`), the maximum front
+    setback's search, the hose's, the flatter spot's -- keeps the court out
+    of the yards :func:`court_yard_lines` names where it can. Where the
+    drawing kept still stands it there, nothing tried found a place for this
+    plan's court outside the front yard: the lot is held out of GREEN
+    (``court_front_yard``, COURT_FRONT_YARD), and a hold set earlier lifts
+    where the court shown is clear. The fit is not undone -- the court
+    beside the building, or the plan at an angle nothing drew, may yet
+    stand it -- so the hold is a closer look, not a red. A plan RED both
+    ways is not read."""
+    if s.facts is None:
+        return s
+    if s.signed.triage is Triage.red and s.screening.triage is Triage.red and not _map_green(s):
+        return s
+    held = court_in_front_yard(s)
+    if held == s.facts.court_front_yard:
+        return s
+    facts = dataclasses.replace(s.facts, court_front_yard=held)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
+def alley_court_checked(
+    s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` answered on whether the court it finally drew stands against
+    the stretch of rear alley that serves as its aisle (Steph 2026-09-28,
+    rulings.yaml ``2026-09-28-partial-alley``; FOLLOWUPS 3(c)).
+
+    The fit takes the partial alley as the aisle only where some window
+    stands the court against the covered stretch (:func:`_screen_on`), and
+    every drawing step prefers such a window (:func:`drawing_for`); the
+    fire, flatter and front-maximum steps can still stand the plan where no
+    window at that angle does. Where the drawing kept stands the court off
+    the stretch, its stalls would back out into a neighbour's yard, not the
+    alley: the lot is held out of GREEN (``alley_court_off_stretch``,
+    ALLEY_COURT_OFF_STRETCH), and a hold set earlier lifts where the court
+    shown stands on it. The fit is not undone -- the court with its own
+    aisle may yet stand -- so the hold is a closer look, not a red. A plan
+    RED both ways is not read."""
+    if s.facts is None:
+        return s
+    if s.signed.triage is Triage.red and s.screening.triage is Triage.red and not _map_green(s):
+        return s
+    held = court_off_stretch(s)
+    if held == s.facts.alley_court_off_stretch:
+        return s
+    facts = dataclasses.replace(s.facts, alley_court_off_stretch=held)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
+def entrance_drawn_checked(
+    s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` answered on whether the drawing it finally kept stands the
+    building turned, its doors off every street, where the entrance standard
+    is unsettled (:func:`drawn_door_turned`; FOLLOWUPS 153, rel4).
+
+    The screen holds a TURNED FIT out of GREEN (ENTRANCE-TURNED); the steps
+    after the fit (:func:`court_turned`, :func:`front_max_checked`,
+    :func:`fire_checked`, the flatter spot) may draw a facing fit at another
+    angle and keep only the drawing. Where the building shown is turned, the
+    same hold applies (``entrance_drawn_turned``), and a hold set earlier
+    lifts where it is not. A closer look, never a red. A plan RED both ways
+    is not read."""
+    if s.facts is None:
+        return s
+    if s.signed.triage is Triage.red and s.screening.triage is Triage.red and not _map_green(s):
+        return s
+    held = drawn_door_turned(s)
+    if held == s.facts.entrance_drawn_turned:
+        return s
+    facts = dataclasses.replace(s.facts, entrance_drawn_turned=held)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
 def _yard_neighbour_edges(
     lot: QuadfitLot,
 ) -> tuple[tuple[Edge, NeighbourLine | None], ...]:
@@ -2859,6 +3881,13 @@ def _screen_on(
     key = _search_key(env)
     if key not in fitters:
         fitters[key] = Fitter(env.geom, angles, ground=env.ground)
+    fitter = fitters[key]
+    limit = door_limit(got, design)
+    if limit is not None:
+        # The code makes the doors face a street: every fit, here and in
+        # the searches after it, stands the door face along a street the
+        # lot abuts (rel4 move-read finding 2).
+        fitter = fitter.facing(door_bearings(here, streets), limit)
     if here.facts.alley_at_rear and not here.facts.alley_rear_whole:
         # A rear alley along PART of the rear line is the court's
         # aisle only where the stretch it runs, with this envelope
@@ -2871,25 +3900,19 @@ def _screen_on(
         here.facts,
         envelope_rear_ft=env.rear_cut_ft,
         buildable_area_sqft=env.sqft if env.source == "flats" else None,
+        dedicated_sqft=dedicated_sqft(here, got),
+        # The court's ground is the lot less the carve where FLATS could not
+        # name the yards (FOLLOWUPS 33(c)): held out of GREEN.
+        court_ground_unread=env.court_in_unread_yards and bool(design.parking.court_depth_ft),
+        street_bearings=here.front_bearings,
+        # Unobserved is read as a through lot: the named-street hold
+        # (ENTRANCE-STREET) is the only reader.
+        through_lot=here.observed.get("through_lot") is not False,
     )
-    fit = fit_for(
-        fitters[key],
-        design,
-        got,
-        placement=False,
-        carved_rear_ft=env.rear_cut_ft,
-        alley=facts.alley,
-        corner=facts.corner,
-        frontage_ft=facts.cap_frontage_ft,
-        street_deg=_access_deg(here, front),
-    )
-    if fit.beside and not beside_reaches_street(here, design, got, fit, fitters[key], env):
-        # The court beside the building has its aisle in from the street;
-        # where the only room for it stands back from the street (the wide
-        # back of an L-shaped lot, behind a flag pole) no drive reaches it,
-        # so the lot is read on the row behind the building as before.
+
+    def fitted(facts: LotFacts) -> Fit:
         fit = fit_for(
-            fitters[key],
+            fitter,
             design,
             got,
             placement=False,
@@ -2897,8 +3920,42 @@ def _screen_on(
             alley=facts.alley,
             corner=facts.corner,
             frontage_ft=facts.cap_frontage_ft,
-            street_deg=(),
+            street_deg=_access_deg(here, front),
+            lot_width_ft=facts.lot_width_ft,
         )
+        if fit.beside and not beside_reaches_street(here, design, got, fit, fitter, env):
+            # The court beside the building has its aisle in from the street;
+            # where the only room for it stands back from the street (the wide
+            # back of an L-shaped lot, behind a flag pole) no drive reaches it,
+            # so the lot is read on the row behind the building as before.
+            fit = fit_for(
+                fitter,
+                design,
+                got,
+                placement=False,
+                carved_rear_ft=env.rear_cut_ft,
+                alley=facts.alley,
+                corner=facts.corner,
+                frontage_ft=facts.cap_frontage_ft,
+                street_deg=(),
+                lot_width_ft=facts.lot_width_ft,
+            )
+        return fit
+
+    fit = fitted(facts)
+    stretch = alley_stretch(here, design, got, env, fit) if fit.fits else None
+    if stretch is not None and not _court_reaches_stretch(
+        here, design, got, env, fit, fitter, stretch
+    ):
+        # The covered stretch is long enough, but no window at any angle
+        # stands the court against it (FOLLOWUPS 3(c)): the alley is no
+        # aisle for this plan, and its court keeps its own -- the run a court
+        # can stand behind is none.
+        here = dataclasses.replace(
+            here, facts=dataclasses.replace(here.facts, alley_rear_run_ft=0.0)
+        )
+        facts = dataclasses.replace(facts, alley_rear_run_ft=0.0)
+        fit = fitted(facts)
     base = facts
 
     def screened(fit: Fit) -> tuple[LotFacts, Screening, Screening]:
@@ -2910,7 +3967,7 @@ def _screen_on(
             )
         result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
         if (doubt_checked or here.layer_id in _REAR_COURT_LAYERS) and _fit_stands(result):
-            drawing = _court_drawn(here, design, got, fit, fitters[key], env, _street_lines(here))
+            drawing = _court_drawn(here, design, got, fit, fitter, env, _street_lines(here))
             doubt_failed = doubt_checked and _parking_doubt_drawn_fails(here, got, drawing)
             strip_failed = _sandy_strip_drawn_fails(here, got, drawing)
             short = _rear_court_short(
@@ -2929,7 +3986,7 @@ def _screen_on(
         if "open_space_shape" in result.unchecked:
             # The screen's window could not prove the outdoor square; measure it
             # on the lot's own ground and screen again on the answer.
-            square = outdoor_square(here, design, got, fit, fitters[key], env)
+            square = outdoor_square(here, design, got, fit, fitter, env)
             if square is not None:
                 facts = dataclasses.replace(facts, outdoor_square_ft=square)
                 result = screen(
@@ -2943,7 +4000,7 @@ def _screen_on(
             # this plan's share (and run in feet) on the drawn plan and
             # screen again on it.
             share = parking_frontage(
-                here, streets, design, got, fit, fitters[key], env, front=front
+                here, streets, design, got, fit, fitter, env, front=front
             )
             if share is not None:
                 facts = dataclasses.replace(
@@ -2958,7 +4015,7 @@ def _screen_on(
             # The zone asks the building to fill a share of the street
             # frontage (FOLLOWUPS 109): measure this plan's share on the
             # drawn plan and screen again on it.
-            built = building_frontage(here, streets, design, got, fit, fitters[key], env)
+            built = building_frontage(here, streets, design, got, fit, fitter, env)
             if built is not None and not _same_streets(streets, facts.street_lines_ft):
                 # Drawn on other streets than the lot's facts name: the shares
                 # would be read against the wrong lines and the wrong ranks.
@@ -2973,27 +4030,26 @@ def _screen_on(
         )
         return facts, result, shadow
 
-    def refit(menu: Sequence[Fix]) -> Fit:
-        return fit_for(
-            fitters[key],
-            design,
-            got,
-            placement=False,
-            carved_rear_ft=env.rear_cut_ft,
-            alley=base.alley,
-            corner=base.corner,
-            frontage_ft=base.cap_frontage_ft,
-            street_deg=_access_deg(here, front),
-            menu=menu,
-        )
+    def refit_on(fitter: Fitter, face_street: bool) -> Callable[[Sequence[Fix] | None], Fit]:
+        def refit(menu: Sequence[Fix] | None) -> Fit:
+            return fit_for(
+                fitter,
+                design,
+                got,
+                placement=False,
+                carved_rear_ft=env.rear_cut_ft,
+                alley=base.alley,
+                corner=base.corner,
+                frontage_ft=base.cap_frontage_ft,
+                street_deg=_access_deg(here, front),
+                menu=menu,
+                face_street=face_street,
+            )
 
-    offered = court_across(design, got, base.alley, corner=base.corner).fixes
-    facts, result, shadow = screened(fit)
-    fit, facts, result, shadow = _other_fixes(
-        fit, facts, result, shadow, screened, refit, offered
-    )
-    return (
-        Screened(
+        return refit
+
+    def reading(fit: Fit, facts: LotFacts, result: Screening, shadow: Screening) -> Screened:
+        return Screened(
             lot=here,
             design=design,
             rules=got,
@@ -3007,9 +4063,70 @@ def _screen_on(
             front_deg=front,
             facts=facts,
             street_edges=streets,
-        ),
-        fitters[key],
+        )
+
+    offered = court_across(design, got, base.alley, corner=base.corner).fixes
+    facts, result, shadow = screened(fit)
+    fit, facts, result, shadow = _other_fixes(
+        fit, facts, result, shadow, screened, refit_on(fitter, False), offered
     )
+    chosen = reading(fit, facts, result, shadow)
+    if (
+        here.front_bearings
+        and entrance_unsettled(got, design)
+        and door_turned(design, fit, here.front_bearings)
+    ):
+        # The best fit stands the building turned, its front doors off the
+        # street, where nobody has read whether the code allows that
+        # (FOLLOWUPS 153): the screen holds that fit out of GREEN. Try the
+        # building facing the street too, and keep whichever the map shows
+        # better -- the facing one where they tie, since it carries no hold.
+        facing = _facing_reading(
+            here, design, got, env, base, fitter, screened,
+            refit_on(fitter.only(here.front_bearings), True), offered, reading,
+        )
+        if facing is not None and _shown(facing) <= _shown(chosen):
+            chosen = facing
+    return chosen, fitter
+
+
+def _facing_reading(
+    here: QuadfitLot,
+    design: Design,
+    got: ZoneResolution,
+    env: Envelope,
+    base: LotFacts,
+    fitter: Fitter,
+    screened: Callable[[Fit], tuple[LotFacts, Screening, Screening]],
+    refit: Callable[[Sequence[Fix] | None], Fit],
+    offered: Sequence[Fix],
+    reading: Callable[[Fit, LotFacts, Screening, Screening], Screened],
+) -> Screened | None:
+    """The lot read with the building's front doors to the street: the fit
+    confined to the lot's front bearings, unflipped (``face_street``), its
+    court beside the building dropped where no drive reaches it, as
+    :func:`_screen_on` does for the free fit. None where it does not fit."""
+    fit = refit(None)
+    if fit.beside and not beside_reaches_street(here, design, got, fit, fitter, env):
+        fit = fit_for(
+            fitter.only(here.front_bearings),
+            design,
+            got,
+            placement=False,
+            carved_rear_ft=env.rear_cut_ft,
+            alley=base.alley,
+            corner=base.corner,
+            frontage_ft=base.cap_frontage_ft,
+            street_deg=(),
+            face_street=True,
+        )
+    if not fit.fits:
+        return None
+    facts, result, shadow = screened(fit)
+    fit, facts, result, shadow = _other_fixes(
+        fit, facts, result, shadow, screened, refit, offered
+    )
+    return reading(fit, facts, result, shadow)
 
 
 def _other_fixes(
@@ -3288,7 +4405,45 @@ def _bounded(
     every GREEN is, and keeps its lowered flags through that re-screen.
     """
     signed = s.signed
-    if signed.binds or s.config is None:
+    if s.config is None:
+        return s
+    if signed.binds:
+        corner_can_clear = (
+            all(bind.check == "fit_ft" for bind in signed.binds)
+            and "corner_lot" in s.config.assumed
+            and s.lot.observed.get(EASTERN_PATTERN_AREA) is True
+            and "parking_rear_yard_max_pct" in s.rules.values
+        )
+        assumed_corner = CONDITIONS["corner_lot"].assume
+        if corner_can_clear and assumed_corner is not None:
+            opposite = not assumed_corner
+            observed = {**lot.observed, "corner_lot": opposite}
+            (alternate,) = _screen_lot_once(
+                dataclasses.replace(lot, observed=observed),
+                [s.design],
+                rules=rules,
+                policy=policy,
+                relief=relief,
+                step_deg=step_deg,
+                roads=roads,
+                bound=False,
+                pool=pool,
+                terrain=terrain,
+                room=False,
+            )
+            if not alternate.signed.binds:
+                def held(screening: Screening) -> Screening:
+                    return dataclasses.replace(
+                        screening,
+                        triage=Triage.yellow,
+                        binds=tuple(bind for bind in screening.binds if bind.check != "fit_ft"),
+                    )
+
+                return dataclasses.replace(
+                    s,
+                    screening=held(s.screening),
+                    signed=held(s.signed),
+                )
         return s
     reg = flag_plan.registry()
     line = flag_plan.colour_rules().yellow_at_severity
@@ -3319,7 +4474,12 @@ def _bounded(
         return s
     known = {(f.code, f.key) for f in signed.flags}
     layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
-    seen = [s.rules]
+    # A miss the screen let off because a held fact may exempt the lot
+    # (:func:`flats.score.screen._unwaived`) screens differently once that
+    # fact is answered False, on the very same numbers: the unanswered
+    # reading is then no stand-in for the answered one (FOLLOWUPS 68).
+    waived = frozenset().union(*(r.waived_by for r in s.rules.values.values()))
+    seen = [] if waived & set(names) else [s.rules]
     # Every answer True first: the worst reading is the likeliest to bind,
     # and the first combination that binds ends the search.
     for combo in itertools.product((True, False), repeat=len(names)):
@@ -3356,8 +4516,7 @@ def _bounded(
     if s.facts is not None and not s.facts.fire_route_tried:
         placed = s.drawing
         s = fire_checked(s, lot, roads, policy=policy, relief=relief, fitter=fitter, green=True)
-        if s.drawing is not placed:
-            s = front_max_checked(s, None, policy=policy, relief=relief)
+        s = moved_checked(s, placed, policy=policy, relief=relief)
     return dataclasses.replace(
         s,
         screening=dataclasses.replace(s.screening, flags=zeroed(s.screening.flags)),
@@ -3391,8 +4550,13 @@ def _plat_matters(lot: QuadfitLot, s: Screened, rules: RuleSet) -> bool:
     keeps shut (a farm zone whose parking rules differ for townhouses).
     Always on a lot in Portland's Centers Main Street overlay, where 33.415.300.B
     bars attached houses near a transit street and the townhouse form is
-    asked about it (:data:`flats.geom.pdx_overlays.MAIN_STREET_TRANSIT_FLAG`)."""
+    asked about it (:data:`flats.geom.pdx_overlays.MAIN_STREET_TRANSIT_FLAG`).
+    Always where a land-division fact folds into its parent differently on
+    the two forms (:data:`flats.rules.conditions.LAND_DIVISION_FOLDS`): the
+    rule reaches the unit lots and not the one lot, so the twin is asked."""
     if lot.pdx_overlays is not None and lot.pdx_overlays.main_street:
+        return True
+    if _land_division_reaches(lot.observed):
         return True
     layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
     one = configure(lot.facts, s.design, observed=lot.observed)
@@ -3412,6 +4576,15 @@ def _plat_matters(lot: QuadfitLot, s: Screened, rules: RuleSet) -> bool:
         and use_a.relief == use_b.relief
     )
     return not (shut_alike and any(x.check == "use" for x in s.signed.binds))
+
+
+def _land_division_reaches(observed: Mapping[str, bool] | None) -> bool:
+    """Whether folding the land-division facts answers a parent differently
+    on the townhouse form than on the one-lot form (absent is unknown)."""
+    seen = dict(observed or {})
+    two = fold_land_division(seen, unit_lots=True)
+    one = fold_land_division(seen, unit_lots=False)
+    return any(two.get(p) != one.get(p) for p in set(LAND_DIVISION_FOLDS.values()))
 
 
 def land_division_flagged(s: Screened) -> Screened:
@@ -3556,15 +4729,313 @@ def screen_lot(
     on the one lot and as four townhouses on four unit lots, the better
     kept and both recorded (:func:`townhouse_checked`). Both forms go
     through :func:`_screen_plat`, which measures from the sidewalk
-    easement line where the lot has one."""
+    easement line where the lot has one.
+
+    A design the code's entrance standard makes face the street, and that
+    missed its fit facing one, is searched once more with its doors free to
+    face a side yard (:func:`side_door_checked`).
+
+    Where a ruling lets the drive be narrower than the pod's lane and the
+    lane missed, the whole of that is done once more with the narrow drive
+    (:func:`narrow_lane_checked`)."""
+    got = _screen_lot_forms(
+        lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+    return narrow_lane_checked(
+        lot, designs, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+
+
+def _screen_lot_forms(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """:func:`screen_lot` at the drive the zone's rules draw: both forms,
+    then the side-door search."""
     got = _screen_plat(
         lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
     )
-    return townhouse_checked(
+    got = townhouse_checked(
         lot, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
     )
+    return side_door_checked(
+        lot, designs, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+
+
+class _NarrowLane:
+    """``rules`` with the drive to the rear court drawn at the narrowest
+    lane a ruling opens to ``design`` (:func:`flats.score.paper.
+    narrow_lane_rules`), for one lot's second screen: every resolution the
+    screen asks for on the way -- and the drawing, the street-touch test and
+    the frontage share, which read the lane off the resolution -- comes back
+    with it. A resolution no narrower lane is open to is returned as is."""
+
+    def __init__(self, rules: RuleSet, design: Design) -> None:
+        self._rules = rules
+        self._design = design
+
+    def resolve(self, *args: Any, **kwargs: Any) -> ZoneResolution:
+        got = self._rules.resolve(*args, **kwargs)
+        return narrow_lane_rules(self._design, got) or got
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._rules, name)
+
+
+def _lane_missed(s: Screened) -> bool:
+    """Whether a narrower drive could change ``s``: not GREEN, and either
+    the fit is what failed (``fit_ft``, or the same miss on steep ground) or
+    the pod fits only with its doors turned to a side yard."""
+    if s.signed.colour is flag_plan.Colour.green:
+        return False
+    if s.lot.facts.entrance_side_fit is not None:
+        return True
+    return any(
+        c.check in ("fit_ft", STEEP_GROUND) and c.verdict is CheckVerdict.fails
+        for c in s.screening.checks
+    )
+
+
+def narrow_lane_checked(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    got: list[Screened],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """``got`` with each design the pod's own lane missed screened again with
+    the narrow drive a ruling allows, and the better answer kept.
+
+    Steph 2026-11-10 (rulings.yaml ``2026-11-10-portland-driveway-9ft``,
+    "9ft in Portland"): in Portland -- and the Portland-administered pockets,
+    which take Portland's parking rulings -- the drive to the rear court may
+    be as narrow as 33.266.120.D.2's 9 ft (``driveway_lane_narrow_ft``). The
+    pod's 12 ft lane is screened first and stands wherever it does as well;
+    a design it leaves short of GREEN on the fit, or turned sideways for its
+    doors (:func:`side_door_checked`), is screened the whole way again with
+    the lane at the narrowest width the car can use the court from
+    (:func:`flats.score.paper.narrow_lane_rules`), and that answer replaces
+    the first only where its colour is better, or is the same colour with
+    the doors to the street where the first had them turned to a side yard
+    (the ENTRANCE-SIDE-DOOR design change gone). A narrower drive costs the
+    court a deeper aisle, so it is never the first reading: a lot the wide
+    lane fits keeps it."""
+    out = list(got)
+    for i, (design, s) in enumerate(zip(designs, got)):
+        if s.rules.get("driveway_lane_narrow_ft") is None or not _lane_missed(s):
+            continue
+        if narrow_lane_rules(design, s.rules) is None and "unit_lots" not in s.rules.conditions:
+            continue
+        (narrow,) = _screen_lot_forms(
+            lot, [design], rules=_NarrowLane(rules, design), policy=policy,  # type: ignore[arg-type]
+            relief=relief, step_deg=step_deg, roads=roads, terrain=terrain,
+        )
+        better = _COLOUR[narrow.signed.colour] < _COLOUR[s.signed.colour]
+        # A tie is kept narrow only where it faces the street the wide lane
+        # could not: the same colour without the side-door design change.
+        faced = (
+            _COLOUR[narrow.signed.colour] == _COLOUR[s.signed.colour]
+            and s.lot.facts.entrance_side_fit is not None
+            and narrow.lot.facts.entrance_side_fit is None
+        )
+        if better or faced:
+            out[i] = narrow
+    return out
+
+
+def _street_fit_missed(s: Screened, design: Design) -> tuple[float, float] | None:
+    """The street-facing fit's (observed, threshold) feet, where ``s`` is RED,
+    the code makes ``design``'s doors face a street (:func:`flats.score.paper.
+    door_rule`), and the fit is what it missed (``fit_ft``, or the same miss
+    named :data:`flats.score.screen.STEEP_GROUND`); None otherwise."""
+    if s.signed.colour is not flag_plan.Colour.red:
+        return None
+    if door_rule(s.rules, design) is None:
+        return None
+    for c in s.screening.checks:
+        if c.check in ("fit_ft", STEEP_GROUND) and c.verdict is CheckVerdict.fails:
+            return (float(c.observed), float(c.threshold))
+    return None
+
+
+def side_doors(lot: QuadfitLot, missed: tuple[float, float]) -> QuadfitLot:
+    """``lot`` (and its second reading) marked as searched with the doors to
+    a side yard, the street-facing fit ``missed`` (:attr:`flats.score.screen.
+    LotFacts.entrance_side_fit`): every screen of it is held out of GREEN."""
+    facts = dataclasses.replace(lot.facts, entrance_side_fit=missed)
+    second = None if lot.second is None else side_doors(lot.second, missed)
+    return dataclasses.replace(lot, facts=facts, second=second)
+
+
+def side_door_checked(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    got: list[Screened],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """``got`` with each design that fits only turned sideways read YELLOW.
+
+    Steph 2026-11-10 (rulings.yaml ``2026-11-10-side-door-fit-yellow``,
+    FOLLOWUPS 177): the 2026-11-08 ruling stands for the design -- no
+    street-facing door on the end home, so where the code makes the main
+    entrance face the street (``entrance_faces_street`` ``required`` or
+    ``required_named``) the pod is searched with its 80 ft door face toward
+    a street (:func:`flats.score.paper.door_limit`). Where that search
+    missed the fit and left the lot RED, the lot is screened again, the whole
+    way, with the doors free to face a side yard
+    (:func:`flats.score.paper.doors_to_the_side`) and marked so every screen
+    holds it out of GREEN (:func:`side_doors`, flag ENTRANCE-SIDE-DOOR,
+    whose bounds are the street-facing miss). That answer replaces the RED
+    only where it is not RED itself: a lot that misses both ways keeps its
+    street-facing answer, slack and binding unchanged. A lot that fits
+    facing the street, or that is RED on anything but the fit, is never
+    searched again. Nothing gains GREEN here.
+    """
+    out = list(got)
+    if lot.facts.entrance_side_fit is not None:
+        # Already the side-door search: it is never searched a third time.
+        return out
+    if lot.facts.landlocked or not door_bearings(lot):
+        # No street line at all: no street-facing fit could be searched, so
+        # its miss says nothing about the doors. The lot keeps its answer
+        # (NO_FRONTAGE, RED on access or fit; coordinator 2026-11-10, no
+        # ruling opens landlocked lots).
+        return out
+    for i, (design, s) in enumerate(zip(designs, got)):
+        missed = _street_fit_missed(s, design)
+        if missed is None:
+            continue
+        with doors_to_the_side():
+            (side,) = screen_lot(
+                side_doors(lot, missed), [design], rules=rules, policy=policy,
+                relief=relief, step_deg=step_deg, roads=roads, terrain=terrain,
+            )
+        if side.signed.colour is flag_plan.Colour.yellow:
+            out[i] = side
+    return out
+
+
+#: The lot measure :func:`depth_checked` reads the lot at, where nothing
+#: measured it.
+DEPTH = "lot_depth_ft"
+
+
+def _refused_on_depth(s: Screened) -> bool:
+    """Whether ``s`` is held only because a standard here is stated per a
+    lot depth nobody measured (a band on it, or a share of it): every
+    ambiguous value names ``lot_depth_ft`` and nothing else."""
+    r = s.rules
+    if r.verdict is not RuleVerdict.ambiguous or not r.ambiguous:
+        return False
+    for name in r.ambiguous:
+        got = r.values.get(name)
+        why = got.ambiguous if got is not None else ()
+        if not why or not all(str(a).startswith(f"{DEPTH}:") for a in why):
+            return False
+    return True
+
+
+def depth_readings(rules: RuleSet) -> tuple[float, ...]:
+    """Every lot depth that opens a band on ``lot_depth_ft`` somewhere in
+    ``rules``, each band's edge read from inside it: a depth at and just past
+    every threshold, and 1 ft for the bottom of the scale. Within one band
+    every depth-stated standard here grows with the depth (a share of it) or
+    holds still, so the shallowest depth inside a band asks the least of the
+    lot that band can ask (FOLLOWUPS 68: PCC 33.120.206, 160 ft; 33.120.220.B.2,
+    100 ft and a quarter of the depth past it)."""
+    edges: set[float] = set()
+    for layer in getattr(rules, "layers", {}).values():
+        values = [*(layer.defaults or {}).values()]
+        for zone in (layer.zones or {}).values():
+            values += [*(zone.values or {}).values()]
+        for value in values:
+            for variant in value.variants:
+                band = getattr(variant, "band", None)
+                if band is None or band.measure != DEPTH:
+                    continue
+                for t in (band.at_least, band.at_most, band.more_than, band.less_than):
+                    if t is not None:
+                        edges.add(float(t))
+    if not edges:
+        return ()
+    return tuple(sorted({1.0, *edges, *(t + 0.01 for t in edges)}))
+
+
+def depth_checked(
+    lot: QuadfitLot,
+    got: list[Screened],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """``got`` RED where a design held for an unmeasured lot depth misses a
+    standard at every depth the lot could have (FOLLOWUPS 68).
+
+    A band or share on a depth nobody measured refuses the rule set, and a
+    rule set nobody trusts binds nothing -- right where the depth could open
+    the lot, wrong where the lot fails the fit, its coverage or its fire
+    route whatever the depth is. So each such design is screened again at
+    every reading :func:`depth_readings` names -- the rules read at that
+    depth, no check measured against it (``LotFacts.depth_reading_ft``);
+    where every one of them binds, the shallowest is the answer (its misses
+    are owed at any depth), and the lot's own depth stays unmeasured. Where any reading clears, the
+    design keeps its hold.
+    """
+    if lot.facts.lot_depth_ft is not None:
+        return got
+    todo = [i for i, s in enumerate(got) if _refused_on_depth(s)]
+    readings = depth_readings(rules) if todo else ()
+    if not readings:
+        return got
+    first: dict[int, Screened] = {}
+    for depth in readings:
+        if not todo:
+            break
+        here = dataclasses.replace(
+            lot, facts=dataclasses.replace(lot.facts, depth_reading_ft=depth)
+        )
+        out = _screen_lot_once(
+            here, [got[i].design for i in todo], rules=rules, policy=policy, relief=relief,
+            step_deg=step_deg, roads=roads, terrain=terrain,
+        )
+        kept: list[int] = []
+        for i, s in zip(todo, out):
+            if s.signed.binds and not _refused_on_depth(s):
+                first.setdefault(i, s)
+                kept.append(i)
+        todo = kept
+    result = list(got)
+    for i in todo:
+        result[i] = dataclasses.replace(first[i], lot=lot)
+    return result
 
 
 def _screen_plat(
@@ -3604,6 +5075,10 @@ def _screen_plat(
         lot, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads,
         terrain=terrain,
     )
+    got = depth_checked(
+        lot, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads,
+        terrain=terrain,
+    )
     if lot.second is None:
         return got
     alt = _screen_lot_once(
@@ -3611,6 +5086,10 @@ def _screen_plat(
         roads=roads, terrain=terrain,
     )
     alt = easement_checked(
+        lot.second, alt, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+    alt = depth_checked(
         lot.second, alt, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
     )
@@ -3795,22 +5274,55 @@ def _screen_lot_once(
         got = rules.resolve(layer_id, lot.zone, config.conditions, lot=config.measures)
         resolved.append((design, config, got))
 
-    # Where the code makes the building face the street, or the pod is
-    # platted as townhouse lots that each have to front one
-    # (:func:`flats.score.paper.faces_the_street`), the search runs only at
-    # the street's own bearings.
+    # Keep the existing search for every form; townhouse rows add their
+    # side-square angles separately, after each lot front has been named.
     axis_required = any(faces_the_street(got, design) for design, _, got in resolved)
+    limits = [door_limit(got, design) for design, _, got in resolved]
     angles = angles_for(
         lot.front_bearings,
         axis_required=axis_required and bool(lot.front_bearings),
         step_deg=step_deg,
     )
-    # One search per distinct envelope: the designs usually resolve the
-    # same yards, and a Fitter is the expensive part.
-    fitters: dict[Any, Fitter] = pool.setdefault(tuple(angles), {})
+    if any(limit is not None for limit in limits):
+        # Doors the code makes face a street (rel4 move-read finding 2): the
+        # building stands with its door face along any street the lot
+        # abuts, either way round -- along it (``width_facing``) or end-on
+        # to another (``depth_facing``, the angle a quarter turn off).
+        streets = door_bearings(lot)
+        doors = tuple(normalize(b + turn) for b in streets for turn in (0.0, 90.0))
+        free = not axis_required and any(
+            limit is None or limit > 0 for limit in limits
+        )
+        angles = angles_for(
+            (*lot.front_bearings, *doors),
+            axis_required=bool(streets) and not free,
+            step_deg=step_deg,
+        )
 
     out: list[Screened] = []
     for design, config, got in resolved:
+        setback_rules = got
+        depth_rear_ft = None
+        rear_value = got.values.get("setback_rear_ft")
+        if (
+            lot.observed.get(EASTERN_PATTERN_AREA) is True
+            and rear_value is not None
+            and EASTERN_PATTERN_AREA in rear_value.when
+        ):
+            ordinary_config = configure(
+                lot.facts,
+                design,
+                observed={**lot.observed, EASTERN_PATTERN_AREA: False},
+            )
+            ordinary = rules.resolve(
+                layer_id, lot.zone, ordinary_config.conditions, lot=ordinary_config.measures
+            )
+            applied = _yard(got, "setback_rear_ft")
+            ordinary_rear = _yard(ordinary, "setback_rear_ft")
+            if applied is not None and ordinary_rear is not None and applied != ordinary_rear:
+                setback_rules = ordinary
+                depth_rear_ft = applied
+
         # WHICH STREET IS THE FRONT (FOLLOWUPS 4(e)): where the code names it
         # the lot is cut with that front; where it leaves it to the applicant
         # each street is tried and the better answer kept. None: no front is
@@ -3847,10 +5359,25 @@ def _screen_lot_once(
         unranked: list[bool] = []
         plain: ZoneResolution | None = None
         alleyed: ZoneResolution | None = None
+        geometry_observed = (
+            {**lot.observed, EASTERN_PATTERN_AREA: False}
+            if depth_rear_ft is not None
+            else lot.observed
+        )
         for plan_key, plan_edges, front in plans:
             here = lot
             if plan_edges is not lot.edges:
                 here = dataclasses.replace(lot, edges=plan_edges)
+            # The side street feeds the court only where it meets the lot along
+            # a drive's width (FOLLOWUPS 172): a few feet of a street's end
+            # beside a lot line that otherwise abuts a neighbour carries no
+            # drive, and the court is reached by the lane from the front.
+            if here.facts.corner and not side_street_takes_drive(
+                plan_edges, drive_width(got, design.parking.lane_width_ft)
+            ):
+                here = dataclasses.replace(
+                    here, facts=dataclasses.replace(here.facts, corner=False)
+                )
             if guessed:
                 here = dataclasses.replace(
                     here, facts=dataclasses.replace(here.facts, through_front_guessed=True)
@@ -3861,19 +5388,35 @@ def _screen_lot_once(
             # A street class nobody measured: the driveway is tried off each
             # street and the worse answer kept (FOLLOWUPS 49(c)).
             other_got = unknown_access(got, plan_edges, front)
+            row_angles = _townhouse_row_angles(
+                here, design, got, front, angles
+            )
+            # One search per distinct envelope and angle set: apartment and
+            # townhouse forms may share the former without sharing the row.
+            fitters = pool.setdefault(tuple(row_angles), {})
             if plain is None and lot.observed.get("alley_at_rear") and rear_off_alley(here.edges):
                 # A rear line off the alley owes the ordinary rear setback:
                 # the same lot resolved without the rear alley (FOLLOWUPS 12(b)).
                 bare = configure(
-                    lot.facts, design, observed={**lot.observed, "alley_at_rear": False}
+                    lot.facts, design, observed={**geometry_observed, "alley_at_rear": False}
                 )
                 plain = rules.resolve(layer_id, lot.zone, bare.conditions, lot=bare.measures)
             if alleyed is None and part_rear_alley(here):
                 # A rear alley along PART of the line: the covered stretch
                 # abuts the alley and takes its rear (Steph 2026-09-28).
-                on = configure(lot.facts, design, observed={**lot.observed, "alley_at_rear": True})
+                on = configure(
+                    lot.facts, design, observed={**geometry_observed, "alley_at_rear": True}
+                )
                 alleyed = rules.resolve(layer_id, lot.zone, on.conditions, lot=on.measures)
-            envs = [envelope_for(here, got, plain)]
+            envs = [
+                envelope_for(
+                    here,
+                    got,
+                    plain,
+                    setback_rules=setback_rules,
+                    depth_rear_ft=depth_rear_ft,
+                )
+            ]
             if alleyed is not None and part_rear_alley(here):
                 # Both cuts are tried and the better answer kept: the stretch
                 # cut is charged the court against the alley's (smaller) rear
@@ -3882,19 +5425,32 @@ def _screen_lot_once(
                 # stretch than it gains behind the covered one; the whole-line
                 # ordinary cut is the answer before 2026-09-29. Each is sound
                 # alone, so the better of the two is.
-                cut = envelope_for(here, got, plain, alleyed)
+                cut = envelope_for(
+                    here,
+                    got,
+                    plain,
+                    alleyed,
+                    setback_rules=setback_rules,
+                    depth_rear_ft=depth_rear_ft,
+                )
                 if cut.setbacks != envs[0].setbacks:
                     envs.append(cut)
+            # The corner clear-vision areas come off the building's ground
+            # (FOLLOWUPS 161): the area surely kept always, and, where the
+            # larger area it may be bites too, both cuts are tried -- the
+            # larger clear, or the smaller held YELLOW (`sight_cut`).
+            cuts = [cut for env in envs for cut in sight_cut(here, lot, env)]
             # The better of the envelope cuts for this reading of the lot;
             # the readings are ranked against each other below.
             by_access = [
                 (variant, min(
                     (
                         _screen_on(
-                            here, design, config, variant, env, front, angles, fitters, step_deg,
-                            policy=policy, relief=relief, plan=plan_key, streets=lot.edges,
+                            sighted, design, config, variant, env, front, row_angles, fitters,
+                            step_deg, policy=policy, relief=relief, plan=plan_key,
+                            streets=lot.edges,
                         )
-                        for env in envs
+                        for env, sighted in cuts
                     ),
                     key=lambda t: _front_rank(t[0]),
                 ))
@@ -3910,20 +5466,28 @@ def _screen_lot_once(
                 access_log.append(access_record(got, used, plan_edges, front))
             tried.append(shot)
         # Drawn for the winner only: one more window search per design.
+        first: dict[str, Any] | None = None
         if worst:
             # The worse reading: the lower colour, the tighter fit, and on a
             # tie (the pod's slack is often measured across the lot, which
             # the ends do not touch) the smaller envelope.
             won, fitter = max(tried, key=lambda t: (*_front_rank(t[0]), -_env_sqft(t[0])))
-        else:
+        elif fit_only:
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
+        else:
+            # The front the applicant would choose, and on a tie the court
+            # least exposed to a street (Steph 2026-09-19, step 3).
+            won, fitter, first = least_exposed(tried, lot)
         ask_rank = unranked[next(i for i, t in enumerate(tried) if t[0] is won)]
         if access_log and len(access_log) == len(tried):
             won = dataclasses.replace(won, access=_access_won(access_log, tried, won))
         if fit_only:
             out.append(_rank_unknown(won) if ask_rank else won)
             continue
-        won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
+        if first is None:
+            first = drawing_for(won, fitter)
+        won = dataclasses.replace(won, drawing=first)
+        won = court_turned(won, fitter, policy=policy, relief=relief)
         won = front_max_checked(won, fitter, policy=policy, relief=relief)
         placed = won.drawing
         won = fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter)
@@ -3935,10 +5499,13 @@ def _screen_lot_once(
             won, lot, terrain, fitter, rules=rules, policy=policy, relief=relief,
             step_deg=step_deg, roads=roads,
         )
-        if won.drawing is not placed:
-            # The fire route or a flatter spot stood the building elsewhere:
-            # its distance from the street is measured again where it stands.
-            won = front_max_checked(won, None, policy=policy, relief=relief)
+        # The fire route or a flatter spot stood the building elsewhere: its
+        # distance from the street and its share of the frontage are measured
+        # again where it stands.
+        won = moved_checked(won, placed, policy=policy, relief=relief)
+        # Every side wall against a maximum side setback, on the drawing the
+        # plan now stands in (FOLLOWUPS 170).
+        won = side_max_checked(won, policy=policy, relief=relief)
         if _coarse_blocked(won, lot):
             # Eliminated on the coarse map's steep ground alone: screened
             # again, the whole way, as though it were not there, and flagged
@@ -3963,9 +5530,16 @@ def _screen_lot_once(
             roads=roads, bound=bound, terrain=terrain,
         )
         won = rear_court_checked(won, policy=policy, relief=relief)
+        won = court_yard_checked(won, policy=policy, relief=relief)
+        won = alley_court_checked(won, policy=policy, relief=relief)
+        won = sight_driveway_checked(won, lot, roads, policy=policy, relief=relief)
+        won = entrance_drawn_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
         won = road_standin_checked(won, lot)
-        won = pdx.checked(won, lot.pdx_overlays)
+        # The run's law day (fixed once in _init_worker), so a run that crosses
+        # midnight on a dated provision's day screens every lot alike.
+        won = pdx.checked(won, lot.pdx_overlays, on=_WORKER.get("law_on"))
+        won = historic_lists.checked(won, lot.tlid)
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
 
@@ -4381,9 +5955,69 @@ FRONT_MAX_SLIDE_STEP_FT = 0.1
 #: The rings are rounded to a tenth of a foot, so this much off the envelope is
 #: no more than the rounding.
 FRONT_MAX_SLIDE_ROUND_FT = 0.05
+#: The most :func:`_front_max_turned` turns a drawing to stand its street wall
+#: square to the street before the slide: three of the fit's one-degree sweep
+#: steps (:data:`flats.fit.angles.DEFAULT_STEP_DEG`). A building turned further
+#: from its street is a different plan, the window search's to find.
+FRONT_MAX_SNAP_DEG = 3.0
 
 
-def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
+def _front_max_turned(drawing: Mapping[str, Any], chain: Sequence[Edge]) -> dict[str, Any] | None:
+    """``drawing`` turned about the near corner of its wall facing ``chain`` so
+    that wall runs with the street line it faces, or None where it already does
+    or would turn more than :data:`FRONT_MAX_SNAP_DEG` (FOLLOWUPS 147, rel3
+    read finding 1).
+
+    A building the fit stood a degree or two off its street reaches the
+    maximum at its near corner but not along its wall: Tigard 2S103BA00137
+    stood 21.15 ft off the street at one end of its wall and 22.52 ft at the
+    other, behind a minimum and a maximum both 20 ft, so the slide alone left
+    the far end past the line. Turned about the near corner, the whole wall
+    stands at the near corner's distance; the slide then brings it to the
+    envelope's front edge. Whether the turned plan still stands on the
+    envelope and its ground is the slide's to check."""
+    from shapely.geometry import LineString, MultiLineString, Point
+
+    ring = drawing.get("building")
+    if not ring or len(ring) < 4 or not chain:
+        return None
+    lines = MultiLineString([[(e.x1, e.y1), (e.x2, e.y2)] for e in chain])
+    pts = [tuple(p) for p in ring]
+    if pts[0] == pts[-1]:
+        pts = pts[:-1]
+    walls = [(pts[i], pts[(i + 1) % len(pts)]) for i in range(len(pts))]
+    a, c = min(
+        walls, key=lambda w: Point((w[0][0] + w[1][0]) / 2, (w[0][1] + w[1][1]) / 2).distance(lines)
+    )
+    mid = Point((a[0] + c[0]) / 2, (a[1] + c[1]) / 2)
+    edge = min(chain, key=lambda e: LineString([(e.x1, e.y1), (e.x2, e.y2)]).distance(mid))
+    wall_deg = math.degrees(math.atan2(c[1] - a[1], c[0] - a[0]))
+    edge_deg = math.degrees(math.atan2(edge.y2 - edge.y1, edge.x2 - edge.x1))
+    turn = (edge_deg - wall_deg + 90.0) % 180.0 - 90.0
+    if abs(turn) < 1e-3 or abs(turn) > FRONT_MAX_SNAP_DEG:
+        return None
+    px, py = a if Point(a).distance(lines) <= Point(c).distance(lines) else c
+    cos_t, sin_t = math.cos(math.radians(turn)), math.sin(math.radians(turn))
+
+    def turned(points: Sequence[Sequence[float]]) -> list[list[float]]:
+        return [
+            [
+                px + (x - px) * cos_t - (y - py) * sin_t,
+                py + (x - px) * sin_t + (y - py) * cos_t,
+            ]
+            for x, y in points
+        ]
+
+    out = dict(drawing)
+    for name in ("room", "building", "lane", "court"):
+        if out.get(name):
+            out[name] = turned(out[name])
+    return out
+
+
+def _front_max_flush(
+    s: Screened, fitter: Fitter, *, snap: bool = False
+) -> dict[str, Any] | None:
     """``s``'s drawing slid whole toward the street whose maximum the raster
     left it just past, or None where nothing is so left (FOLLOWUPS 147).
 
@@ -4392,7 +6026,12 @@ def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     is the raster, not the lot. The slide is along one of the building's own
     sides, no further than :data:`FRONT_MAX_SLIDE_FT` and than the room stays on
     the envelope and the court on the ground it may use, so the minimum still
-    holds; it stops at the maximum itself, not at the allowance."""
+    holds; it stops at the maximum itself, not at the allowance.
+
+    ``snap`` first turns the drawing square to that street
+    (:func:`_front_max_turned`), so the slide brings the whole wall, not one
+    corner, to the envelope's front edge."""
+    import shapely
     from shapely import affinity
     from shapely.geometry import LineString, MultiLineString, Polygon
     from shapely.ops import nearest_points
@@ -4401,7 +6040,7 @@ def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     cap = s.rules.get("setback_front_max_ft")
     measured = front_max_streets(s)
     edges = _front_max_edges(s)
-    room, building = drawing.get("room"), drawing.get("building")
+    room = drawing.get("room")
     if (
         measured is None
         or edges is None
@@ -4419,6 +6058,12 @@ def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     )
     if not 0.0 < over <= FRONT_MAX_SLIDE_FT:
         return None
+    if snap:
+        turned = _front_max_turned(drawing, chain)
+        if turned is None:
+            return None
+        drawing = turned
+    room, building = drawing.get("room"), drawing.get("building")
     body = Polygon(building)
     lines = MultiLineString([[(e.x1, e.y1), (e.x2, e.y2)] for e in chain])
     here, there = nearest_points(body, lines)
@@ -4441,6 +6086,25 @@ def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
     envelope = s.envelope.geom.buffer(FRONT_MAX_SLIDE_ROUND_FT)
     ground = (fitter.ground or s.envelope.geom).buffer(FRONT_MAX_SLIDE_ROUND_FT)
     court = drawing.get("court")
+    # The court as drawn may already stand partly off this ground: the fit
+    # asks only its run past the window to land on it, and the drawn court
+    # spans the lane beside the building too, into the side yard. The slide
+    # may stand it on the ground, or where the plan's own court and lane
+    # already stood, and nowhere else (rel3 read finding 1: asking the whole
+    # court on the ground stopped every such slide at its first step).
+    # Against the drawing as the fit drew it, so a snap's turn counts too.
+    if court:
+        drawn = s.drawing or {}
+        ground = shapely.union_all(
+            [
+                ground,
+                *(
+                    Polygon(drawn[name]).buffer(FRONT_MAX_SLIDE_ROUND_FT)
+                    for name in ("court", "lane")
+                    if drawn.get(name)
+                ),
+            ]
+        )
     best = 0.0
     need = over / toward
     steps = int(min(need, FRONT_MAX_SLIDE_FT) / FRONT_MAX_SLIDE_STEP_FT) + 1
@@ -4450,7 +6114,9 @@ def _front_max_flush(s: Screened, fitter: Fitter) -> dict[str, Any] | None:
         if not envelope.covers(affinity.translate(Polygon(room), dx, dy)):
             break
         if court and not ground.covers(affinity.translate(Polygon(court), dx, dy)):
-            break
+            # Not a place to stop; a turned court may land on its ground
+            # further along. Only the room leaving the envelope ends the slide.
+            continue
         best = t
     if best == 0.0:
         return None
@@ -4508,20 +6174,42 @@ def front_max_checked(
     drawing = s.drawing or {}
     if not (drawing.get("fits") and not drawing.get("tight")):
         return out
+    # A slide that brings the near corner within the maximum but leaves the
+    # wall's far end past it turns the fail into a question: kept, held out of
+    # GREEN, where no window below clears it (rel3 read finding 1).
+    fallback = out
     if any(c.check == FRONT_MAX for r in (out.screening, out.signed) for c in r.binds):
-        slid = _front_max_flush(s, fitter)
-        if slid is not None and (not slid.get("lane") or _drive_clear(slid, s, _street_lines(s.lot))):
-            cand = _front_max_screened(
-                dataclasses.replace(s, drawing=slid), policy=policy, relief=relief
-            )
+        for snap in (False, True):
+            slid = _front_max_flush(s, fitter, snap=snap)
+            if slid is None or (slid.get("lane") and not _drive_clear(slid, s, _street_lines(s.lot))):
+                continue
+            if any(
+                held(s, slid) and not held(s)
+                for held in (court_in_front_yard, court_off_stretch, drawn_door_turned)
+            ):
+                # The slide or its turn stands the court in a front yard, off
+                # the alley stretch that is its aisle, or the doors off the
+                # street, where the drawing did not (rel4: FOLLOWUPS 142,
+                # 3(c), 153 hold with 147).
+                continue
+            # Measured where it now stands on every drawn-plan check, the
+            # building's share of the frontage too (FOLLOWUPS 160).
+            cand = _redrawn(s, slid, policy=policy, relief=relief)
             if _front_max_clear(cand) and _no_worse_but_front(out, cand):
                 return cand
+            if (
+                fallback is out
+                and not _front_max_failed(cand)
+                and flag_plan.Colour.green not in (cand.screening.colour, cand.signed.colour)
+                and _no_worse_but_front(out, cand, question=True)
+            ):
+                fallback = cand
     if not (drawing.get("lane") and _lane_in_from_street(s)):
-        return out
+        return fallback
     street = _street_lines(s.lot)
     cap = s.rules.get("setback_front_max_ft")
     if not street or isinstance(cap, bool) or not isinstance(cap, (int, float)):
-        return out
+        return fallback
     # The listing measures to points two feet apart on the front lines, from
     # the lot's own line: the strip and the allowance are added, and every
     # window kept is measured exactly below.
@@ -4547,18 +6235,23 @@ def front_max_checked(
                 continue
             if not _drive_clear(drawn, at, street):
                 continue
-            cand = _front_max_screened(
-                dataclasses.replace(s, drawing=drawn), policy=policy, relief=relief
-            )
+            cand = _redrawn(s, drawn, policy=policy, relief=relief)
             if _front_max_clear(cand) and _no_worse_but_front(out, cand):
                 return cand
-    return out
+    return fallback
 
 
-def _no_worse_but_front(base: Screened, cand: Screened) -> bool:
+def _front_max_failed(s: Screened) -> bool:
+    """Whether ``s`` fails the maximum front setback under either reading."""
+    return any(c.check == FRONT_MAX for r in (s.screening, s.signed) for c in r.binds)
+
+
+def _no_worse_but_front(base: Screened, cand: Screened, *, question: bool = False) -> bool:
     """:func:`flats.ingest.flatter._no_worse` with the maximum front
     setback's own bind and flags set aside: the candidate is drawn to
-    clear them."""
+    clear them. ``question`` sets the candidate's own front-max flags aside
+    too: one left a question on the maximum, held out of GREEN by them, is
+    measured against the base on everything else."""
 
     def strip(s: Screened) -> Screened:
         def one(r: Screening) -> Screening:
@@ -4573,7 +6266,208 @@ def _no_worse_but_front(base: Screened, cand: Screened) -> bool:
 
         return dataclasses.replace(s, screening=one(s.screening), signed=one(s.signed))
 
-    return _no_worse(strip(base), cand)
+    return _no_worse(strip(base), strip(cand) if question else cand)
+
+
+#: The checks measured on the drawn plan itself: a building moved after the
+#: first drawing is measured again on them (:func:`_redrawn`).
+DRAWN_CHECKS: frozenset[str] = frozenset({FRONT_MAX, BUILDING_SHARE})
+
+
+def _drawn_share(s: Screened) -> tuple[float, ...] | None:
+    """The building's share of each street frontage measured on ``s``'s own
+    drawing (:func:`flats.fit.frontage.building_runs`, as
+    :func:`building_frontage` measures it), never more on a street than the
+    share already held (:attr:`LotFacts.building_frontage_pct`, measured on
+    the fit's first placement): a building moved back from the street can
+    only lose frontage, and a move is not a reason to read more. None where
+    no share is held, or it cannot be measured here -- held out of GREEN
+    (FOLLOWUPS 160)."""
+    from shapely.geometry import Polygon
+
+    held = s.facts.building_frontage_pct if s.facts is not None else None
+    if held is None:
+        return None
+    drawing = s.drawing or {}
+    ring = drawing.get("building")
+    streets = getattr(s, "street_edges", None) or s.lot.edges
+    band = share_band(s.rules)
+    if (
+        s.lot.lot_geom is None
+        or streets is None
+        or band is None
+        or not (drawing.get("fits") and ring and len(ring) >= 4)
+    ):
+        return None
+    lane_ring = drawing.get("lane")
+    lane = (
+        Polygon(lane_ring)
+        if s.rules.get("building_frontage_less_drive") is True and lane_ring and len(lane_ring) >= 4
+        else None
+    )
+    runs = building_runs(s.lot.lot_geom, streets, Polygon(ring), band, lane=lane)
+    if not runs or len(runs) != len(held):
+        return None
+    return tuple(min(was, pct) for was, (pct, _) in zip(held, runs))
+
+
+def _share_redrawn(s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy) -> Screened:
+    """``s`` re-screened on the building share measured on its own drawing
+    (:func:`_drawn_share`), where it holds one."""
+    if s.facts is None or s.facts.building_frontage_pct is None:
+        return s
+    share = _drawn_share(s)
+    if share == s.facts.building_frontage_pct:
+        return s
+    facts = dataclasses.replace(s.facts, building_frontage_pct=share)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
+def _redrawn(
+    s: Screened, drawing: dict[str, Any] | None, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` with ``drawing`` as its plan, re-screened on every fact measured
+    on the drawn plan (:data:`DRAWN_CHECKS`): its distance from each street
+    against a stated maximum front setback, by the measure the first drawing
+    took (:func:`_front_max_screened`), and the building's share of the
+    frontage (:func:`_drawn_share`). A placement the fire route moves to is
+    held to both (FOLLOWUPS 160): the retry had kept the first drawing's
+    answers for a building standing elsewhere."""
+    moved = dataclasses.replace(s, drawing=drawing)
+    if moved.facts is None:
+        return moved
+    if s.rules.get("setback_front_max_ft") is not None:
+        moved = _front_max_screened(moved, policy=policy, relief=relief)
+    return _share_redrawn(moved, policy=policy, relief=relief)
+
+
+def _kept_checks(screening: Screening) -> tuple[Any, ...]:
+    """``screening``'s checks bar the hose's, as the fire retry compares a
+    moved plan with the plan it moves (:func:`fire_checked`): every check as
+    it was, but a drawn-plan check (:data:`DRAWN_CHECKS`) by its verdict
+    alone -- a building moved stands at another distance, and is held only
+    to standing within the same answer."""
+    return tuple(
+        (c.check, c.verdict) if c.check in DRAWN_CHECKS else c
+        for c in screening.checks
+        if c.check != "fire_access_ft"
+    )
+
+
+def _no_new_drawn_fail(base: Screened, cand: Screened) -> bool:
+    """Whether ``cand`` fails no drawn-plan check (:data:`DRAWN_CHECKS`) that
+    ``base`` does not, under either reading. A question it raises instead
+    holds it out of GREEN by its own flags, so is not refused here."""
+    for b, c in ((base.screening, cand.screening), (base.signed, cand.signed)):
+        if {x.check for x in c.binds if x.check in DRAWN_CHECKS} - {x.check for x in b.binds}:
+            return False
+    return True
+
+
+def moved_checked(
+    s: Screened, placed: dict[str, Any] | None, *, policy: SlackPolicy, relief: ReliefPolicy
+) -> Screened:
+    """``s`` measured again where a step after the first drawing (the fire
+    route, a flatter spot) stood its building elsewhere than ``placed``: its
+    distance from the street (:func:`front_max_checked`) and its share of the
+    frontage (:func:`_share_redrawn`, FOLLOWUPS 160)."""
+    if s.drawing is placed:
+        return s
+    s = front_max_checked(s, None, policy=policy, relief=relief)
+    return _share_redrawn(s, policy=policy, relief=relief)
+
+
+def side_max_gaps(s: Screened) -> tuple[float, ...] | None:
+    """The drawn building's nearest distance from each side lot line
+    (:attr:`LotFacts.side_max_gaps`, FOLLOWUPS 170), or None where no fitting
+    building is drawn or the lot has no classified lines.
+
+    A side lot line is an unbroken run of side-class edges around the lot's
+    ring (:attr:`flats.geom.edges.EdgeClass.side`), so a side line drawn in
+    several pieces is one line and the two sides of an ordinary lot are two.
+    An alley along a side is still a side lot line: the tables exempt only the
+    "Rear (including alley)"."""
+    from shapely.geometry import MultiLineString, Polygon
+
+    drawing = s.drawing or {}
+    ring = drawing.get("building")
+    edges = getattr(s.lot, "edges", None)
+    if not (drawing.get("fits") and ring and len(ring) >= 4) or edges is None:
+        return None
+    lines = tuple(edges.edges)
+    side = [e.cls is EdgeClass.side for e in lines]
+    if not any(side):
+        return ()
+    runs: list[list[Edge]] = []
+    if all(side):
+        runs = [list(lines)]
+    else:
+        # Start just after a non-side edge, so a run that wraps the ring's
+        # start is read as one.
+        start = next(i for i, x in enumerate(side) if not x) + 1
+        current: list[Edge] = []
+        for k in range(len(lines)):
+            i = (start + k) % len(lines)
+            if side[i]:
+                current.append(lines[i])
+            elif current:
+                runs.append(current)
+                current = []
+        if current:
+            runs.append(current)
+    building = Polygon(ring)
+    return tuple(
+        round(building.distance(MultiLineString([[(e.x1, e.y1), (e.x2, e.y2)] for e in run])), 2)
+        for run in runs
+    )
+
+
+def side_max_checked(s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy) -> Screened:
+    """``s`` re-screened with its drawn building measured from each side lot
+    line, where the zone states a maximum side setback (FOLLOWUPS 170,
+    :func:`flats.score.screen._side_max`). Measured on the plan's final
+    drawing, after the fire route and the flatter spot have stood it where it
+    stays; nothing after this step moves the building. Where nothing is drawn
+    the plan is held out of GREEN, never passed."""
+    if s.facts is None or s.rules.get("setback_side_max_ft") is None:
+        return s
+    facts = dataclasses.replace(s.facts, side_max_gaps=side_max_gaps(s), side_max_tried=True)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
+FIRE_RETRY_MAX_PLACEMENTS = 24
+# Drawing every listed placement at once can exhaust a worker on a large lot.
+FIRE_RETRY_MAX_ACRES = 3.0
+#: Feet the court must come nearer a street line than the building before it
+#: is read as standing between them (:data:`flats.fit.draw.COURT_BETWEEN_TOL_FT`).
+COURT_STREET_SIDE_TOL_FT = COURT_BETWEEN_TOL_FT
+
+
+def _court_street_side(
+    drawing: Mapping[str, Any], streets: Sequence[tuple[float, float, float, float]]
+) -> bool:
+    """Whether ``drawing``'s parking court stands between its building and
+    one of ``streets`` (:func:`flats.fit.draw.court_between`; Steph
+    2026-11-08, rulings.yaml ``2026-11-08-no-front-yard-parking-silent-codes``).
+    Which lines count is :func:`court_yard_lines`'s. A drawing with no court
+    stands nothing between.
+    """
+    from shapely.geometry import Polygon
+
+    from flats.fit.draw import court_between
+
+    ring, court_ring = drawing.get("building"), drawing.get("court")
+    if not (ring and len(ring) >= 4 and court_ring and len(court_ring) >= 4):
+        return False
+    return court_between(Polygon(ring), Polygon(court_ring), streets, COURT_STREET_SIDE_TOL_FT)
 
 
 def fire_checked(
@@ -4606,15 +6500,24 @@ def fire_checked(
     and the route misses, the plan is drawn once more at the fronts a truck
     can reach (``fitter``), and kept where the building fits there and the
     hose reaches it sooner: the same fit, the end the developer would
-    build at. Where the route still misses, the plan is drawn at the fit's
-    other angles (:func:`_turned_for_fire`) and kept at one the hose
-    reaches. Other placements at an angle than the one nearest the street
-    are not searched: where one would reach, the answer is a false red,
-    never a false green. ``green`` says the plan
+    build at. Where the selected placement misses only on fire reach, the bounded
+    fitting placements already produced for that angle are ranked by the
+    building's distance from the front and at most
+    ``FIRE_RETRY_MAX_PLACEMENTS`` are drawn, only on lots no larger than
+    ``FIRE_RETRY_MAX_ACRES``. The stated maximum front setback and the
+    measured-parking-share guard still apply, and each placement is measured
+    again where it stands on every drawn-plan check (:func:`_redrawn`,
+    FOLLOWUPS 160); the first that reaches and keeps
+    every other check unchanged is kept, never one that stands its court
+    in a yard :func:`court_yard_lines` names (:func:`_court_street_side`).
+    If none passes, the existing other-angle
+    retry follows unchanged: the plan is drawn at the fit's other angles
+    (:func:`_turned_for_fire`) and kept at one the hose reaches.
+    ``green`` says the plan
     is GREEN whatever its triage reads -- its open facts were bounded
     (:func:`_bounded`) -- and holds it to the same rule.
     """
-    from shapely.geometry import Polygon
+    from shapely.geometry import MultiLineString, Polygon
 
     from flats.fit import fire
 
@@ -4632,6 +6535,20 @@ def fire_checked(
     # A private road the yards do not count is still a road the truck may
     # stand on (where it is one: the offset keeps only truck roads).
     streets += tuple(a for a in lot.access if a not in streets)
+    # The truck roads at the length the lot's place states for a dead end
+    # with no turnaround (FOLLOWUPS 168), and the same roads with the long
+    # dead ends driven -- a reading only the fire marshal can grant (Steph
+    # 2026-11-10: "Yellow.").
+    freed_offset = None
+    row_offset = None
+    if roads is not None and hasattr(roads, "at"):
+        net = roads.at(lot.layer_id)
+        freed_offset = fire.point_offset(net.tree, net.geoms, roads.edges, net.freed)
+        # The same with the streets too narrow for the road and its curbs
+        # driven as well (rulings.yaml 2026-11-10-narrow-street-fire-yellow).
+        if net.row is not None and net.row is not net.freed:
+            row_offset = fire.point_offset(net.tree, net.geoms, roads.edges, net.row)
+        roads = (net.tree, net.geoms, roads.edges, net.walks)
     offset = fire.point_offset(*roads) if roads is not None else None
     # The hose measured from the curb itself (FOLLOWUPS 29): only to flag a
     # red the stricter reading alone makes.
@@ -4653,13 +6570,25 @@ def fire_checked(
     at = None
     if (route is None or route > limit) and fitter is not None:
         fronts = _street_lines(s.lot)
-        served = fire.reachable(fronts, offset)
+        # A front whose hose would start past the limit serves nothing: a
+        # street the truck cannot stand on, walked (FOLLOWUPS 168).
+        served = fire.reachable(fronts, offset, within=limit)
         if served and len(served) < len(fronts):
             at = served
             drawn = drawing_for(s, fitter, street=served)
             again = measure(drawn) if drawn and drawn.get("fits") else None
+            # Standing the building at the served end must not stand its
+            # court in a front yard the plan's own drawing kept it out of
+            # (Steph 2026-11-08): on a through lot whose ends are both
+            # fronts, the court behind faces the other street.
+            if again is not None and court_in_front_yard(s, drawn) and not court_in_front_yard(s):
+                again = None
             if again is not None and (route is None or again < route):
-                s, route = dataclasses.replace(s, drawing=drawn), again
+                # Measured again where it now stands (FOLLOWUPS 160), and
+                # kept only where that fails nothing the plan did not.
+                cand = _redrawn(s, drawn, policy=policy, relief=relief)
+                if _no_new_drawn_fail(s, cand):
+                    s, route = cand, again
     green = green or Triage.green in (s.screening.triage, s.signed.triage) or _map_green(s)
     if route is None and not green:
         return s
@@ -4674,21 +6603,213 @@ def fire_checked(
         )
         return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
 
+    def freed(out: Screened) -> Screened:
+        # A plan the hose misses on the code's reading but reaches with the
+        # long dead ends driven to their ends (FOLLOWUPS 168): held YELLOW
+        # with a flag, never GREEN (rulings.yaml
+        # 2026-11-10-fire-long-dead-end-yellow).
+        if freed_offset is None or out.facts is None or not out.facts.fire_route_tried:
+            return out
+        if out.facts.fire_route_ft is not None and out.facts.fire_route_ft <= limit:
+            return out
+        loose = measure(out.drawing, freed_offset)
+        if loose is None or loose > limit:
+            # Reached only with a street too narrow for the road and its
+            # curbs driven too, its pavement unmeasured: YELLOW with
+            # FIRE-NARROW-STREET (rulings.yaml
+            # 2026-11-10-narrow-street-fire-yellow), never GREEN.
+            wide = measure(out.drawing, row_offset) if row_offset is not None else None
+            if wide is None or wide > limit:
+                return out
+            facts = dataclasses.replace(out.facts, fire_route_row_ft=wide)
+            result = screen(out.rules, facts, out.design, out.fit, policy=policy, relief=relief, config=out.config)
+            shadow = _if_signed(
+                out.rules, facts, out.design, out.fit, result, policy=policy, relief=relief, config=out.config
+            )
+            return dataclasses.replace(out, screening=result, signed=shadow, facts=facts)
+        facts = dataclasses.replace(out.facts, fire_route_freed_ft=loose)
+        result = screen(out.rules, facts, out.design, out.fit, policy=policy, relief=relief, config=out.config)
+        shadow = _if_signed(
+            out.rules, facts, out.design, out.fit, result, policy=policy, relief=relief, config=out.config
+        )
+        return dataclasses.replace(out, screening=result, signed=shadow, facts=facts)
+
     out = screened(s, route)
-    # The other angles are drawn only where the hose is all that stands in
-    # the way: a plan missing something else stays short of GREEN whatever
-    # the route, and the search is the dearest step on a big lot.
-    # A route that was never found is not turned for: the fit's own angle
-    # has the most room, and where its drawing holds no building the others
-    # seldom do -- every angle drawn for nothing (run on a 7-acre lot: 13 s
-    # to 233 s). The plan stays out of GREEN, unobserved.
+    def fire_only(screening: Screening) -> bool:
+        fire_checks = [c for c in screening.checks if c.check == "fire_access_ft"]
+        return (
+            len(fire_checks) == 1
+            and fire_checks[0].verdict is CheckVerdict.fails
+            and all(
+                c.verdict is CheckVerdict.passes
+                for c in screening.checks
+                if c.check != "fire_access_ft"
+            )
+        )
+
+    def fire_passed(screening: Screening) -> bool:
+        fire_checks = [c for c in screening.checks if c.check == "fire_access_ft"]
+        return (
+            len(fire_checks) == 1
+            and fire_checks[0].verdict is CheckVerdict.passes
+            and all(
+                c.verdict is CheckVerdict.passes
+                for c in screening.checks
+                if c.check != "fire_access_ft"
+            )
+        )
+
+    if (
+        fitter is not None
+        and fire_only(out.screening)
+        and fire_only(out.signed)
+        and s.facts.parking_frontage_share_pct is None
+        and s.facts.parking_frontage_run_ft is None
+        and s.facts.lot_sqft <= FIRE_RETRY_MAX_ACRES * 43_560
+    ):
+        from flats.ingest import flatter
+        from flats.designs.model import Orientation
+        from shapely import affinity
+
+        max_front_ft = flatter._max_front_ft(out, _street_lines(lot))
+        placements: list[Any] = []
+        drawing_for(
+            out, fitter, street=at, listing=placements, max_front_ft=max_front_ft
+        )
+        front_lines = MultiLineString(
+            [[(x1, y1), (x2, y2)] for x1, y1, x2, y2 in streets]
+        )
+        current = out.drawing or {}
+        current_building = current.get("building")
+
+        def placement_rank(index: int) -> tuple[float, float, int]:
+            where = placements[index]
+            grid = getattr(where, "grid", None)
+            if grid is None:
+                return math.inf, 0.0, index
+
+            if s.fit.orientation is Orientation.depth_facing:
+                across_b, deep_b = s.design.footprint.depth_ft, s.design.footprint.width_ft
+            else:
+                across_b, deep_b = s.design.footprint.width_ft, s.design.footprint.depth_ft
+            across = s.fit.across_ft
+            res = grid.res
+            x0 = grid.minx + where.col * res
+            y0 = grid.miny + where.row * res
+            face, sign = (y0, 1.0) if where.low else (y0 + where.d_cells * res, -1.0)
+            bx0 = x0 if where.left else x0 + across - across_b
+
+            def band(left: float, right: float, start: float, end: float):
+                return Polygon(
+                    (
+                        (left, start),
+                        (right, start),
+                        (right, end),
+                        (left, end),
+                    )
+                )
+
+            def rounded(polygon: Any) -> Any:
+                return Polygon(
+                    [(round(x, 1), round(y, 1)) for x, y, *_ in polygon.exterior.coords]
+                )
+
+            building = rounded(
+                affinity.rotate(
+                    band(bx0, bx0 + across_b, face, face + sign * deep_b),
+                    grid.angle_deg,
+                    origin=grid.origin,
+                )
+            )
+            building_distance = building.distance(front_lines)
+
+            alley, corner = s.lot.facts.alley, s.lot.facts.corner
+            if s.fit.beside:
+                beside = side_court(
+                    s.design,
+                    s.rules,
+                    alley,
+                    corner=corner,
+                    frontage_ft=s.lot.facts.cap_frontage_ft,
+                )
+                if beside is None:
+                    return building_distance, 0.0, index
+                flank = beside.band_ft
+                lx0 = bx0 + across_b if where.left else bx0 - flank
+                court_local = band(
+                    lx0,
+                    lx0 + flank,
+                    face,
+                    face + sign * beside.length_ft,
+                )
+            else:
+                column = side_column(s.design, s.rules, alley) if s.fit.column else None
+                court_depth_ft = (
+                    column[0]
+                    if column is not None
+                    else court_depth(s.design, s.rules, alley, corner=corner, fix=_fix(s.fit))[0]
+                )
+                if court_depth_ft <= 0:
+                    return building_distance, 0.0, index
+                court_local = band(
+                    x0,
+                    x0 + across,
+                    face + sign * deep_b,
+                    face + sign * (deep_b + court_depth_ft),
+                )
+            court = rounded(affinity.rotate(court_local, grid.angle_deg, origin=grid.origin))
+            return building_distance, -court.distance(front_lines), index
+
+        ranked = sorted(range(len(placements)), key=placement_rank)
+        for index in ranked[:FIRE_RETRY_MAX_PLACEMENTS]:
+            where = placements[index]
+            drawn = drawing_for(out, fitter, street=at, where=where)
+            if not drawn or not drawn.get("fits") or drawn.get("building") == current_building:
+                continue
+            # A move that stands the court in a yard it may not use is
+            # refused (Steph 2026-11-08; Milwaukie 12E30CD04700, fire_rp5):
+            # the listing already holds none, and this reads the drawing
+            # itself on the plan's own yards (:func:`court_yard_lines`).
+            if court_in_front_yard(out, drawn):
+                continue
+            candidate_route = measure(drawn)
+            if candidate_route is None or candidate_route > limit:
+                continue
+            # Measured where it now stands, as the first drawing was: its
+            # distance from each street against the maximum and its share of
+            # the frontage (FOLLOWUPS 160). The listing bounds the building's
+            # distance from the nearest street only, and the screen holds it
+            # to every street the code names.
+            candidate = _redrawn(out, drawn, policy=policy, relief=relief)
+            candidate = screened(candidate, candidate_route)
+            if not fire_passed(candidate.screening) or not fire_passed(candidate.signed):
+                continue
+            if (
+                _kept_checks(candidate.screening) != _kept_checks(out.screening)
+                or _kept_checks(candidate.signed) != _kept_checks(out.signed)
+            ):
+                continue
+            return candidate
+
     binds = out.signed.binds
     alone = route is not None and bool(binds) and all(b.check == "fire_access_ft" for b in binds)
+    # Other angles are drawn only where the hose is all that stands in the
+    # way: a plan missing something else stays short of GREEN whatever the
+    # route, and the search is the dearest step on a big lot. A route that was
+    # never found is not turned for: the fit's own angle has the most room,
+    # and where its drawing holds no building the others seldom do -- every
+    # angle drawn for nothing (run on a 7-acre lot: 13 s to 233 s). The plan
+    # stays out of GREEN, unobserved.
     if fitter is not None and alone:
-        turned, again = _turned_for_fire(s, fitter, measure, route, limit, street=at)
+        turned, again = _turned_for_fire(
+            s, fitter, measure, route, limit, street=at,
+            keep=lambda drawn: _no_new_drawn_fail(
+                s, _redrawn(s, drawn, policy=policy, relief=relief)
+            ),
+        )
         if turned is not s:
             out = screened(turned, again)
-    return out
+    return freed(out)
 
 
 def _fire_why(
@@ -4730,6 +6851,7 @@ def _turned_for_fire(
     limit: float,
     *,
     street: tuple[tuple[float, float, float, float], ...] | None = None,
+    keep: Callable[[dict[str, Any]], bool] | None = None,
 ) -> tuple[Screened, float | None]:
     """``s`` drawn at the angle the hose reaches soonest, and that route
     (FOLLOWUPS 39, Steph 2026-10-04).
@@ -4744,7 +6866,9 @@ def _turned_for_fire(
     shortest that beats ``route``. Only a drawing whose room holds the building and its court on
     ground counts (``measure``), so the placement kept is one the fit would
     have passed: a red lifted, never a green invented. ``street`` is the
-    fronts a truck can reach where the caller narrowed them.
+    fronts a truck can reach where the caller narrowed them. ``keep`` refuses
+    a drawing the caller will not take (:func:`fire_checked`: one that fails
+    a drawn-plan check the plan did not, FOLLOWUPS 160).
     """
     if s.fit.angle_deg is None:
         return s, route
@@ -4765,10 +6889,20 @@ def _turned_for_fire(
         key=lambda a: (off(a), a),
     )[:TURN_MAX]
     best: tuple[float, dict[str, Any]] | None = None
+    # A turn may not stand the court in a yard the drawing kept it out of
+    # (Steph 2026-11-08): on a through lot the court behind faces the far
+    # street at some angles.
+    kept_out = not court_in_front_yard(s)
     for angle in angles:
         turned = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=angle))
         drawn = drawing_for(turned, fitter, street=street)
+        if kept_out and court_in_front_yard(s, drawn):
+            continue
         got = measure(drawn) if drawn and drawn.get("fits") else None
+        if got is not None and keep is not None and not keep(drawn):
+            # Fails a check measured on the drawn plan that the plan did
+            # not: past the maximum front setback (FOLLOWUPS 160).
+            continue
         if got is not None and (best is None or got < best[0]):
             best = (got, drawn)
             if got <= limit:
@@ -4993,6 +7127,7 @@ def _beside_drawn(
         court_depth_ft=0.0,
         court_beyond_ft=beyond,
         street=_street_lines(here),
+        side_streets=_side_street_lines(here),
         beside_band_ft=beside.band_ft,
         beside_len_ft=beside.length_ft,
     )
@@ -5143,9 +7278,11 @@ def _court_drawn(
             fix=fix,
         ),
         street=street,
+        side_streets=_side_street_lines(here),
         paved_across_ft=None if fit.column else max(across.width_ft, across.lane_ft),
         gap_ft=gap,
         side_drive=side_drive,
+        **_column_draw(design, got, alley, fit, here),
     )
 
 
@@ -5447,10 +7584,18 @@ def drawing_for(
     ``street``, some of those lines, where the caller names them
     (:func:`fire_checked`). ``where``, ``listing`` and ``max_front_ft`` are
     :func:`flats.fit.draw.draw`'s: a chosen window, or the windows listed
-    (:mod:`flats.ingest.flatter`).
+    (:mod:`flats.ingest.flatter`). The court is kept out of the yards
+    :func:`court_yard_lines` names wherever a window allows (Steph
+    2026-11-08): the nearest window whose court stands clear is drawn, and a
+    listing holds only those; where none is clear the nearest is drawn and
+    :func:`court_in_front_yard` reads it.
     """
     alley, corner = s.lot.facts.alley, s.lot.facts.corner
+    yard = court_yard_lines(s)
     rear = s.envelope.rear_cut_ft if s.envelope else None
+    # A partial rear alley as the aisle: the court against its stretch
+    # wherever a window allows (FOLLOWUPS 3(c); :func:`court_off_stretch`).
+    stretch = alley_stretch(s.lot, s.design, s.rules, s.envelope, s.fit)
     if street is None:
         street = _street_lines(s.lot)
     short = _tight_ft(s)
@@ -5470,20 +7615,38 @@ def drawing_for(
             court_depth_ft=0.0,
             court_beyond_ft=beyond,
             street=street,
+            side_streets=_side_street_lines(s.lot),
             beside_band_ft=beside.band_ft,
             beside_len_ft=beside.length_ft,
+            court_overlap_ft=side_yard_court_overlap_ft(
+                s.rules, beside.band_ft, corner=corner
+            ),
             short_ft=short,
             where=where,
             listing=listing,
             max_front_ft=max_front_ft,
             include_frontmost=include_frontmost,
+            yard=yard,
+            yard_moves=False,
         )
         return None if got is None else got.to_json(s.envelope.geom if s.envelope else None)
     if s.fit.column:
         got = side_column(s.design, s.rules, alley)
         court = got[0] if got is not None else 0.0
+        across = court_across(s.design, s.rules, alley, corner=corner)
+        lane_overlap = side_yard_lane_overlap_ft(
+            s.rules, across.lane_ft, corner=corner
+        )
+        court_overlap = 0.0
     else:
         court = court_depth(s.design, s.rules, alley, corner=corner, fix=_fix(s.fit))[0]
+        across = court_across(s.design, s.rules, alley, corner=corner)
+        lane_overlap = side_yard_lane_overlap_ft(
+            s.rules, across.lane_ft, corner=corner
+        )
+        court_overlap = side_yard_court_overlap_ft(
+            s.rules, across.width_ft, lane_ft=across.lane_ft, corner=corner
+        )
     beyond = _court_beyond_rear(
         s.design,
         s.rules,
@@ -5498,15 +7661,22 @@ def drawing_for(
         s.fit,
         width_ft=s.design.footprint.width_ft,
         depth_ft=s.design.footprint.depth_ft,
-        lane_ft=court_across(s.design, s.rules, alley, corner=corner).lane_ft,
+        lane_ft=across.lane_ft,
         court_depth_ft=court,
         court_beyond_ft=beyond,
         street=street,
+        side_streets=_side_street_lines(s.lot),
+        lane_overlap_ft=lane_overlap,
+        court_overlap_ft=court_overlap,
         short_ft=short,
         where=where,
         listing=listing,
         max_front_ft=max_front_ft,
         include_frontmost=include_frontmost,
+        yard=yard,
+        yard_moves=_lane_in_from_street(s),
+        stretch=stretch,
+        **_column_draw(s.design, s.rules, alley, s.fit, s.lot),
     )
     if got is None:
         return None
@@ -5532,13 +7702,94 @@ def _access_won(
     )
 
 
+#: The court's street exposure is compared to the nearest this many feet:
+#: less than a stall's width apart is the raster's corner cells, not a
+#: preference (quadfit s6s ``_plan_rank``, the same five feet).
+EXPOSURE_STEP_FT = 5.0
+#: How far past the street setback a court's edge still stands on the
+#: street: a raster cell and the drawing's rounding.
+EXPOSURE_TOL_FT = 2.0
+
+
+def court_street_ft(
+    s: Screened, drawing: Mapping[str, Any] | None, lot: QuadfitLot
+) -> float | None:
+    """Feet of the drawn court's edge that stand on a street: its exposure,
+    step 3 of Steph's ruling of 2026-09-19 (HUMAN_TODO 21, rulings.yaml
+    ``2026-09-19-orientation-choice-order``): "the side that has the least
+    exposure to street".
+
+    Measured as quadfit's s6s measures it (``_street_exposure``): the court's
+    edge inside the strip along every street lot line of ``lot`` (front and
+    street side alike, never an alley) as deep as the street setback the
+    plan's envelope was cut with, plus :data:`EXPOSURE_TOL_FT`. A court
+    behind the building on an interior lot scores zero; on a corner, the side
+    along the side street scores its run. 0.0 where the plan draws no court;
+    None where nothing fitting is drawn, which ranks last."""
+    import shapely
+
+    if not drawing or not drawing.get("fits"):
+        return None
+    ring = drawing.get("court")
+    if not ring or len(ring) < 4:
+        return 0.0
+    if lot.edges is None:
+        return 0.0
+    lines = [
+        shapely.LineString([(e.x1, e.y1), (e.x2, e.y2)])
+        for e in lot.edges.edges
+        if e.cls in (EdgeClass.front, EdgeClass.street_side) and not e.alley
+    ]
+    if not lines:
+        return 0.0
+    sb = s.envelope.setbacks if s.envelope is not None else None
+    deep = 0.0
+    if sb is not None:
+        deep = max(sb.front_ft, sb.street_side_ft if sb.street_side_ft is not None else 0.0)
+    strip = shapely.union_all(
+        [ln.buffer(deep + EXPOSURE_TOL_FT, cap_style="flat") for ln in lines]
+    )
+    court = shapely.Polygon(ring)
+    return float(court.boundary.intersection(strip).length)
+
+
+def least_exposed(
+    tried: Sequence[tuple[Screened, Fitter]], lot: QuadfitLot
+) -> tuple[Screened, Fitter, dict[str, Any] | None]:
+    """The plan the applicant would choose where the code leaves the front
+    to them, and its drawing.
+
+    :func:`_front_rank` first -- the colour, then the stall band (Steph
+    2026-09-19 steps 1 and 2). Among the plans level on those, the one whose
+    drawn court is least exposed to a street (step 3, :func:`court_street_ft`,
+    to :data:`EXPOSURE_STEP_FT`), then the rest of :func:`_front_rank`. Only
+    a tie is drawn: one window search per tied plan. The drawing comes back
+    so the winner's is not searched twice; None where only one plan led."""
+    ranked = [(_front_rank(t[0]), i) for i, t in enumerate(tried)]
+    head = min(ranked)[0][:4]
+    level = [i for r, i in ranked if r[:4] == head]
+    if len(level) < 2:
+        i = min(ranked)[1]
+        return tried[i][0], tried[i][1], None
+    scored = []
+    for i in level:
+        s, fitter = tried[i]
+        drawing = drawing_for(s, fitter)
+        ft = court_street_ft(s, drawing, lot)
+        step = math.inf if ft is None else round(ft / EXPOSURE_STEP_FT)
+        scored.append(((step, _front_rank(s), i), drawing))
+    (_, _, i), drawing = min(scored, key=lambda t: t[0])
+    return tried[i][0], tried[i][1], drawing
+
+
 def _front_rank(s: Screened) -> tuple[int, int, int, int, float]:
     """Which of a corner lot's fronts the applicant would choose.
 
     Steph's ruling of 2026-09-19 (HUMAN_TODO 21): the front that turns the
-    lot green, then the one reaching the preferred stall band, then -- where
-    quadfit compares the court's exposure to the streets, which the screen
-    does not draw -- the one with more room to spare. The colour once signed
+    lot green, then the one reaching the preferred stall band, then the one
+    with more room to spare -- the court's exposure to the streets, the
+    ruling's third step, comes between the band and the room where the
+    plans are drawn (:func:`least_exposed`). The colour once signed
     first, as the Lots pages show it (the flag plan's, where a miss is red
     -- FOLLOWUPS 44: on the triage a miss with a variance path read yellow
     and outranked a front that fits but waits on an open fact), then its
@@ -5646,6 +7897,7 @@ def _init_worker(
     dem: Path | None = None,
     curbs: Path | None = None,
     law_on: str | None = None,
+    fire_roads: Path | None = None,
 ) -> None:
     """Load the corpus, catalog, policies, corridor maps, the street
     centrelines the fire route is measured to (with the curbs and widths
@@ -5654,7 +7906,12 @@ def _init_worker(
 
     ``law_on`` is the ISO date whose law the run applies, fixed once when
     the run starts (:func:`run`) so a run that crosses midnight on the day
-    an amendment takes effect does not screen half its lots under each."""
+    an amendment takes effect does not screen half its lots under each.
+
+    ``fire_roads`` is the file :func:`build_fire_roads` wrote for the run:
+    the truck roads in pieces, each standing or walked (FOLLOWUPS 168).
+    Given, it is the index the fire route is measured to in place of the
+    bare centrelines of ``roads``."""
     from datetime import date
 
     from flats.designs.model import load_catalog
@@ -5665,17 +7922,96 @@ def _init_worker(
     from flats.score import relief as relief_mod, slack as slack_mod
 
     on = date.fromisoformat(law_on) if law_on else today_law()
+    _WORKER["law_on"] = on
     _WORKER["rules"] = load_trusted(strict=False, on=on).rules
-    _WORKER["designs"] = list(load_catalog())
+    # Active designs only: an archived entry stays loadable so old results
+    # read, but a new run never screens it. Since 2026-11-08 that is one
+    # design, pod80x30 (rulings.yaml 2026-11-08-single-design-80x30).
+    _WORKER["designs"] = load_catalog().active()
     _WORKER["policy"] = slack_mod.load_policy()
     _WORKER["relief"] = relief_mod.load_policy()
     _WORKER["step_deg"] = step_deg
     _WORKER["corridors"] = load_corridor_maps(sources) if sources is not None else ()
     street_edges = load_street_edges(curbs) if curbs is not None and roads is not None else None
-    _WORKER["roads"] = (
-        (*load_truck_roads(roads, street_edges), street_edges) if roads is not None else None
-    )
+    if fire_roads is not None and roads is not None:
+        from flats.fit import fire_roads as fire_roads_mod
+
+        _WORKER["roads"] = fire_roads_mod.Network(
+            fire_roads_mod.load_all(fire_roads), fire_roads_mod.rules(), street_edges
+        )
+    else:
+        _WORKER["roads"] = (
+            (*load_truck_roads(roads, street_edges), street_edges) if roads is not None else None
+        )
     _WORKER["terrain"] = terrain_at(dem) if dem is not None else None
+
+
+def build_fire_roads(
+    roads: Path, fabric: Path, curbs: Path | None, out: Path, *, keep: Path | None = None,
+    log: Any = print,
+) -> Path:
+    """Write the truck roads of ``roads`` in pieces, each standing or walked
+    (:func:`flats.fit.fire_roads.build`), measured against the taxlot
+    ``fabric``; the same roads :func:`_init_worker` would index, with the
+    paved unimproved streets of ``curbs``' widths.
+
+    Some four minutes for the three counties, so ``keep`` (the answer
+    cache's directory) holds each one built, under the inputs and the code
+    that built it, and a run on the same inputs copies it instead."""
+    import hashlib
+    import shutil
+
+    import pandas as pd
+    import shapely
+
+    from flats.fit import fire, fire_roads
+    from flats.ingest.batch import _input_digest
+
+    kept = None
+    if keep is not None:
+        code = b"".join(Path(m.__file__).read_bytes() for m in (fire, fire_roads))
+        code += fire_roads.CONFIG.read_bytes()
+        digest = hashlib.sha256(
+            code + "|".join(str(_input_digest(p)) for p in (roads, fabric, curbs)).encode("utf-8")
+        ).hexdigest()
+        kept = keep / "fire_roads" / f"{digest}.parquet"
+        if kept.is_file():
+            shutil.copyfile(kept, out)
+            log(f"bridge: fire roads read from {kept}")
+            return out
+    from flats.geom.curbs import load as load_street_edges
+    from flats.ingest.normalize import NOT_A_TAXLOT_RE
+
+    edges = load_street_edges(curbs) if curbs is not None else None
+    lines, kinds = fire.truck_lines(roads, edges)
+    links = fire.link_lines(roads)
+    frame = pd.read_parquet(fabric, columns=["TLID", "wkb"])
+    polys = shapely.from_wkb(frame["wkb"].to_numpy())
+    private = ~frame["TLID"].astype(str).str.contains(NOT_A_TAXLOT_RE.pattern, regex=True).to_numpy()
+    # One cut of the network per dead-end length a place states (the
+    # state's 150 ft, Portland's 300 ft: flats/config/fire_roads.yaml).
+    ruled = fire_roads.rules()
+    # And the streets too narrow for the road and its curbs, where no
+    # pavement width is recorded (rulings.yaml
+    # 2026-11-10-narrow-street-fire-yellow; fire_roads.yaml narrow_row).
+    by_ft = fire_roads.build_all(
+        lines, kinds, links, polys, private, lengths=ruled.lengths, release=ruled.release,
+        row_ft=ruled.row_ft, edges=edges,
+    )
+    for ft, pieces in by_ft.items():
+        walked: dict[str, int] = {}
+        for piece in pieces:
+            if not piece.stand:
+                walked[piece.why] = walked.get(piece.why, 0) + 1
+        log(
+            f"bridge: fire roads at {ft:g} ft dead ends -- {len(lines):,} truck centrelines in "
+            f"{len(pieces):,} pieces; walked: {', '.join(f'{k} {v:,}' for k, v in sorted(walked.items())) or 'none'}"
+        )
+    fire_roads.write(by_ft, out)
+    if kept is not None:
+        kept.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(out, kept)
+    return out
 
 
 def terrain_at(raw: Path) -> Any:
@@ -5950,6 +8286,8 @@ def run(
     curbs: Path | None = None,
     institutional: Path | None = None,
     cache: Path | None = None,
+    plats: Path | None = None,
+    fabric: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -5963,6 +8301,9 @@ def run(
     corridor maps answer the corridor facts; without it they stay unasked.
     ``transit`` is the distance file :mod:`flats.ingest.transit` wrote for
     the transit release in use; without it no lot has a distance to transit.
+    ``plats`` is the Washington County plat reading :mod:`flats.ingest.plats`
+    wrote (default: the committed pull, :data:`flats.ingest.plats.CURRENT`);
+    without one every lot's standard-plat gate stays unmeasured.
     ``roads`` is quadfit s1's street centrelines (``s1_streets.parquet``),
     which the fire route is measured to; it defaults to the file beside
     ``s4`` and a run without one is refused -- measured from the lot line,
@@ -5984,7 +8325,12 @@ def run(
     hospitals, utilities -- are left out of the scan and assign answers them
     RED (Steph 2026-10-06, FOLLOWUPS 47: "flagged out of scans for any
     reason" -- every scan, a test scan included), and a run with neither is
-    refused.
+    refused. ``fabric`` is the whole taxlot file (quadfit s1's
+    ``s1_lots.parquet``, the default beside ``s4``): the right-of-way
+    between its private lots says which streets are too narrow for a fire
+    truck and which dead ends have no room to turn one (FOLLOWUPS 168,
+    :func:`build_fire_roads`), and a run without it is refused -- every
+    mapped street would be taken as one a truck can drive.
 
     The lots run costliest first and ``timings.parquet`` says what each
     cost (:mod:`flats.ingest.batch`). ``cache`` is a directory of answers
@@ -5998,6 +8344,9 @@ def run(
     from flats.geom.curbs import missing as curbs_missing
     from flats.ingest import batch
 
+    # A tree whose historic lists were never matched screens every listed
+    # building as unlisted: refused before anything is read (rel4 finding 1).
+    historic_lists.require_matched()
     roads = roads if roads is not None else s4.parent / "s1_streets.parquet"
     curbs = curbs if curbs is not None else sources
     if not roads.exists():
@@ -6017,7 +8366,22 @@ def run(
             f"no {', '.join(lacking)} for Portland's main street overlay and historic resources in "
             f"{sources}: run acquire (FOLLOWUPS 78)"
         )
+    if sources is not None and (lacking := driveway_spacing.missing(sources)):
+        raise FileNotFoundError(
+            f"no {', '.join(lacking)} for driveway spacing in {sources}: run acquire (FOLLOWUPS 169)"
+        )
     institutional = _institutional_source(institutional, sources)
+    fabric = fabric if fabric is not None else s4.parent / "s1_lots.parquet"
+    if not fabric.exists():
+        raise FileNotFoundError(
+            f"no taxlot fabric for the fire road widths and dead ends: {fabric} (FOLLOWUPS 168)"
+        )
+    if plats is None:
+        from flats.ingest.plats import CURRENT
+
+        # Without the reading every Washington County lot keeps its
+        # standard-plat gate unmeasured: the conservative answer.
+        plats = CURRENT if CURRENT.is_file() else None
     out.mkdir(parents=True, exist_ok=True)
     parts_dir = out / "parts"
     parts_dir.mkdir(exist_ok=True)
@@ -6029,8 +8393,12 @@ def run(
         iter_rows(
             s4, s5o, transit=transit, limit=limit, sample=sample, seed=seed,
             jurisdictions=jurisdictions, zones=zones, tlids=tlids, streets=roads,
+            plats=plats,
         )
     )
+    # How many lots the plat reading answered: a bound reads this beside the
+    # Washington County lot count -- near zero means the TLIDs did not join.
+    plats_read = sum(1 for r in rows if plat_origin_of(r) is not None)
     if not _is_reading(institutional):
         institutional = _read_institutional(rows, institutional, out)
     from flats.ingest.institutional import skip_tlids
@@ -6047,6 +8415,9 @@ def run(
         clearances = _durham_apron_clearance_column(rows, roads)
         for row, clearance in zip(rows, clearances, strict=True):
             row["durham_apron_clearance_ft"] = clearance
+    spaced = with_driveway_spacing(rows, sources, roads)
+    if spaced:
+        log(f"bridge: driveway spacing read on {spaced:,} lots")
     named = with_street_names(rows, sources)
     if named:
         log(f"bridge: street names read on {named:,} lots")
@@ -6055,6 +8426,12 @@ def run(
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
     marked = pdx.with_overlays(rows, sources)
     log(f"bridge: Portland's main street overlay or a protected historic resource on {marked:,} lots")
+    placed = historic_lists.write_report(rows, out)
+    log(
+        f"bridge: historic lists: {placed['on_lot']:,} listings on a lot of this run, "
+        f"{placed['not_in_run']:,} name a lot it does not hold, {placed['unmatched']:,} name no lot "
+        f"({historic_lists.REPORT_NAME})"
+    )
     from flats.encode.load import load_trusted
     from flats.rules.loader import amendments_in_force, law_on
 
@@ -6064,11 +8441,18 @@ def run(
     # replayed under this one (batch.run_key).
     on = law_on()
     corpus = load_trusted(strict=False, on=on).rules.layers
-    law = amendments_in_force(corpus)
+    # With the dated provisions code applies (pdx.dated_in_force: Portland's
+    # 33.415.200 residential exemption ends 2029-01-01), which no rule file
+    # carries but which screen a lot differently either side of their day.
+    law = [*amendments_in_force(corpus), *pdx.dated_in_force(on)]
     log(f"bridge: the law in force on {on.isoformat()}" + (f", with {', '.join(law)}" if law else ""))
     split = with_split_zones(rows, s4.parent, corpus)
     if split:
         log(f"bridge: the other districts of {split:,} split-zoned lots read off the zoning maps")
+    # Which streets a fire truck can stand on, read once for the run
+    # (FOLLOWUPS 168): too narrow between its lots, or a dead end past 150 ft
+    # with no room to turn, and the hose walks from where it can.
+    fire_roads = build_fire_roads(roads, fabric, curbs, out / "fire_roads.parquet", keep=cache, log=log)
     # Costliest lots first, started as free memory allows, and the answers a
     # cache already holds not screened again (FOLLOWUPS 46): the same
     # records in the same order as lot by lot in file order.
@@ -6079,7 +8463,7 @@ def run(
             cache,
             batch.run_key(
                 step_deg=step_deg,
-                inputs={"sources": sources, "roads": roads, "dem": dem, "curbs": curbs},
+                inputs={"sources": sources, "roads": roads, "dem": dem, "curbs": curbs, "fabric": fabric},
                 law=law,
             ),
         )
@@ -6095,7 +8479,7 @@ def run(
         processes=processes,
         chunk_size=chunk_size,
         init=screened._init_worker,
-        initargs=(step_deg, sources, roads, dem, curbs, on.isoformat()),
+        initargs=(step_deg, sources, roads, dem, curbs, on.isoformat(), fire_roads),
         cache=answers,
         step_deg=step_deg,
         log=log,
@@ -6117,9 +8501,12 @@ def run(
         "tlids": tlids,
         "sources": str(sources) if sources is not None else None,
         "transit": str(transit) if transit is not None else None,
+        "plats": str(plats) if plats is not None else None,
+        "plats_read": plats_read,
         "roads": str(roads),
         "dem": str(dem),
         "curbs": str(curbs) if curbs is not None else None,
+        "fabric": str(fabric),
         "institutional": str(institutional),
         "institutional_skipped": skipped,
         "law_on": on.isoformat(),
@@ -6177,6 +8564,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--sources", type=Path, help="snapshot dir holding the corridor maps")
     ap.add_argument("--transit", type=Path, help="distances.parquet from flats.ingest.transit")
     ap.add_argument(
+        "--plats",
+        type=Path,
+        help="plats.parquet from flats.ingest.plats (default: the committed Washington County pull)",
+    )
+    ap.add_argument(
         "--roads",
         type=Path,
         help="street centrelines for the fire route (default: s1_streets beside --s4)",
@@ -6190,6 +8582,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         "--curbs",
         type=Path,
         help="snapshot dir holding the curb lines and pavement widths (default: --sources)",
+    )
+    ap.add_argument(
+        "--fabric",
+        type=Path,
+        help="the whole taxlot file, for the fire road widths and dead ends (default: s1_lots beside --s4)",
     )
     ap.add_argument(
         "--institutional",
@@ -6230,11 +8627,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         chunk_size=args.chunk_size,
         sources=args.sources,
         transit=args.transit,
+        plats=args.plats,
         roads=args.roads,
         dem=args.dem,
         curbs=args.curbs,
         institutional=args.institutional,
         cache=cache,
+        fabric=args.fabric,
     )
     return 0
 

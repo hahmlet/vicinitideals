@@ -81,7 +81,9 @@ jurisdictions:
       # it as allowed only through the `state_middle_housing` relief, so the
       # row is measured and capped at review, never green.
       - zone: RF
-        quadplex_allowed: true
+        # Closed 2026-11-10: RF is farm land outside the state middle housing
+        # law (rulings.yaml 2026-11-09-rf-is-farm-land). PCC Table 110-2 No.
+        quadplex_allowed: false
         setback_front_ft: 20
         setback_side_ft: 10
         setback_rear_ft: 10
@@ -207,6 +209,43 @@ jurisdictions:
         source_url: "https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf"
         confidence: needs_verification
         notes: "Corpus zone or/multnomah/portland/CE, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      # Campus Institutional 1 as RICAP 11 (Ordinance 192213, in force
+      # 2026-11-01) leaves it, now printed in the 11/1/26 Title 33 reprint.
+      # Table 150-1 gives Household Living a Y in CI1, and 33.150.200 puts a
+      # CI1 home on the RM1 zone's development standards (33.266.100.B does the
+      # same for parking):
+      #   "Household Living and Group Living uses in the CI1 zone are subject
+      #    to the development standards that apply in the RM1 zone."
+      #   or/multnomah/portland/33.150.txt#L342,L344 (Table 150-1)
+      #   or/multnomah/portland/33.150.txt#L402-L404 (33.150.200)
+      #   or/multnomah/portland/33.266.txt#L38-L40 (33.266.100.B)
+      # The corpus's codified CI1 block is `like: RM1` since the reprint
+      # (pdx-drift, FOLLOWUPS 165, 2026-11-09), so this row mirrors that block
+      # directly; it no longer names `corpus_amendment: ricap11`. Every number
+      # below is the RM1 row's.
+      #
+      # RM1's 4,000 sq ft / 33 ft minimum is kept although 33.150.202 still
+      # says the campus zones need no minimum lot size: the two do not say which
+      # wins, and the minimum is the reading that cannot turn a lot GREEN (the
+      # corpus's own note on the zone).
+      #
+      # NO setback_alley_ft, on purpose. RM1's alley waiver (33.120.220.B.3.g)
+      # reaches a CI1 home through the import, and FLATS applies it per lot; this
+      # file leaves the alley line at the 5 ft rear setback, the side that cannot
+      # draw quadfit's envelope too big.
+      - zone: CI1
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        min_lot_sqft: 4000
+        min_lot_width_ft: 33
+        max_coverage_pct: 50
+        min_density_du_per_acre: 17.424
+        source: "PCC 33.150 -- Table 150-1 (33.150.100 Primary Uses), 33.150.200 Residential Uses in the CI1 Zone; PCC 33.266.100.B; RM1 standards, PCC 33.120"
+        source_url: "https://www.portland.gov/sites/default/files/code/150-campus-inst-zones_0.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/CI1 as the 11/1/26 reprint prints it (RICAP 11, in force 2026-11-01): homes allowed on RM1's standards, so this is the RM1 row. needs_verification caps quadfit's own report at review, as on RM1."
       - zone: CI2
         quadplex_allowed: true
         setback_front_ft: 10
@@ -905,9 +944,9 @@ jurisdictions:
       - zone: "DCC"
         quadplex_allowed: true
         setback_front_ft: 10
-        # 10, not 5: the townhouse row's side beside a lower-density zone
-        # (districts chunk 5, 2026-10-29) -- the larger limb, as s5 carves.
-        setback_side_ft: 10
+        # 5 since 2026-11-09 (pagecheck-findings): Table 4.1130's note 11 (10
+        # beside a lower-density district) is not marked on the townhouse row.
+        setback_side_ft: 5
         setback_rear_ft: 10
         setback_alley_ft: 6
         setback_street_side_ft: 10
@@ -923,9 +962,9 @@ jurisdictions:
       - zone: "DTM"
         quadplex_allowed: true
         setback_front_ft: 10
-        # 10, not 5: the townhouse row's side beside a lower-density zone
-        # (districts chunk 5, 2026-10-29) -- the larger limb, as s5 carves.
-        setback_side_ft: 10
+        # 5 since 2026-11-09 (pagecheck-findings): Table 4.1130's note 11 (10
+        # beside a lower-density district) is not marked on the townhouse row.
+        setback_side_ft: 5
         setback_rear_ft: 10
         setback_alley_ft: 6
         setback_street_side_ft: 10
@@ -981,7 +1020,7 @@ jurisdictions:
       - zone: "DMU"
         quadplex_allowed: true
         setback_front_ft: 10
-        setback_side_ft: 10
+        setback_side_ft: 5
         setback_rear_ft: 10
         # Table 4.1130's townhouse row, Rear Alley: 3 ft (10 where the rear abuts a
         # lower-density district, note 11 -- FLATS reads that per lot).
@@ -999,7 +1038,7 @@ jurisdictions:
       - zone: "DEM"
         quadplex_allowed: true
         setback_front_ft: 10
-        setback_side_ft: 10
+        setback_side_ft: 5
         setback_rear_ft: 10
         # Table 4.1130's townhouse row, Rear Alley: 3 ft (10 where the rear abuts a
         # lower-density district, note 11 -- FLATS reads that per lot).
@@ -1017,7 +1056,7 @@ jurisdictions:
       - zone: "DCL"
         quadplex_allowed: true
         setback_front_ft: 10
-        setback_side_ft: 10
+        setback_side_ft: 5
         setback_rear_ft: 10
         # Table 4.1130's townhouse row, Rear Alley: 3 ft (10 where the rear abuts a
         # lower-density district, note 11 -- FLATS reads that per lot).
@@ -1242,6 +1281,15 @@ jurisdictions:
     #   or/multnomah/fairview/19.13.definitions.txt#L255
     #   or/multnomah/fairview/19.140.txt#L79
     alley_is_street: true
+    # The map's FLX is FMC 19.135.030(A)(1)(e)'s "VC flex" area, one lot
+    # (1N3E33AB  -00500, 1700 NE Market Dr): the VC zone with its
+    # first-floor-commercial rule lifted. FLATS rules it an alias of VC
+    # (fairview.yaml zone_rulings FLX, 2026-09-28) and feeds the lot
+    # inside_mapped_use_area; without this line s3 dropped it
+    # zone_not_in_rules and FLATS could only answer LOT-NOT-MEASURED
+    # (FOLLOWUPS 10(a), 84). zone_raw stays FLX, so FLATS still sees the code.
+    zone_aliases:
+      "FLX": "VC"
     zones:
       - zone: R-6
         quadplex_allowed: true
@@ -1588,7 +1636,7 @@ jurisdictions:
         # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
         # from a lot line abutting an alley. Matter of record -- no county lot
         # carries an alley edge (s4, 2026-09-12).
-        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        #   or/multnomah/_unincorporated/33.110.txt#L710-L711
         setback_alley_ft: 0
         min_lot_sqft: 6000
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
@@ -1604,7 +1652,7 @@ jurisdictions:
         # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
         # from a lot line abutting an alley. Matter of record -- no county lot
         # carries an alley edge (s4, 2026-09-12).
-        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        #   or/multnomah/_unincorporated/33.110.txt#L710-L711
         setback_alley_ft: 0
         min_lot_sqft: 12000
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
@@ -1619,11 +1667,13 @@ jurisdictions:
       # answers these lots UNKNOWN until it is. Measured now so the sewer
       # layer is all that is left.
       - zone: RF
-        quadplex_allowed: true
+        # Closed 2026-11-10: RF is farm land outside the state middle housing
+        # law (rulings.yaml 2026-11-09-rf-is-farm-land). PCC Table 110-2 No.
+        quadplex_allowed: false
         setback_front_ft: 20
         setback_side_ft: 10
         setback_rear_ft: 10
-        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        #   or/multnomah/_unincorporated/33.110.txt#L710-L711
         setback_alley_ft: 0
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
         source: "Portland Zoning Code 33.110 Table 110-2 (fourplex prohibited in RF); ORS 197A.420 / 197A.015(12) (state middle housing path, urban unincorporated land)"
@@ -1676,7 +1726,7 @@ jurisdictions:
         # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
         # from a lot line abutting an alley. Matter of record -- no county lot
         # carries an alley edge (s4, 2026-09-12).
-        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        #   or/multnomah/_unincorporated/33.110.txt#L710-L711
         setback_alley_ft: 0
         min_lot_sqft: 4200
         coverage_curve: [[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]
@@ -1751,7 +1801,7 @@ jurisdictions:
         # Portland-administered pocket, so PCC 33.110.220.D.9 applies: no setback
         # from a lot line abutting an alley. Matter of record -- no county lot
         # carries an alley edge (s4, 2026-09-12).
-        #   or/multnomah/_unincorporated/33.110.txt#L746-L747
+        #   or/multnomah/_unincorporated/33.110.txt#L710-L711
         setback_alley_ft: 0
         min_lot_sqft: 3000
         source: "Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered pockets); 33.110.205"
@@ -2193,6 +2243,18 @@ jurisdictions:
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
         notes: "YELLOW in FLATS, RE-RULED 2026-10-14 (Steph's review rule): design review (ZDO 1102.01(A)) holds the quadplex to Section 1005, whose judgement words FLATS flags REVIEW-CONDITIONS; needs_verification caps the row at review here. Was red by ruling 2026-10-09. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). 37 lots. Reads as RCHDR (Table 510-1 note 13). Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback."
+      # ported 2026-11-08 (FOLLOWUPS 52, the last zone gap) by port_from_flats.zone_row: SCMU, the Fuller Road Station Community Mixed Use district, re-ruled YELLOW 2026-10-14 (it was red by ruling when the 2026-10-08 gaps were ported, so it never reached this file and s3 dropped its 34 lots zone_not_in_rules). Ported so the pod is measured. Front yard read 2026-11-09 off Map 1005-1 (FLATS holds 10, the Landscape minimum, on every lot; it was a 15 ft PLACEHOLDER). FLATS keeps the verdict.
+      - zone: "SCMU"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        min_lot_sqft: 7000
+        min_density_du_per_acre: 20
+        source: "Clackamas ZDO Table 510-1, Quadplexes row, SCMU column (P)"
+        source_url: "https://www.clackamas.us/planning/zdo510"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/_unincorporated SCMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
 
   happy_valley:
     eligible: true
@@ -2749,7 +2811,7 @@ jurisdictions:
       - zone: R-2
         quadplex_allowed: true
         setback_front_ft: 5
-        setback_side_ft: 5
+        setback_side_ft: 10  # Table 17.12.040 note 1's larger limb (beside R-10/R-8/R-6); FLATS answers 5 or 10 per lot
         setback_rear_ft: 10
         setback_street_side_ft: 5
         min_lot_sqft: 6000
@@ -2859,15 +2921,16 @@ jurisdictions:
     zones:
       - zone: R7.2
         quadplex_allowed: true
+        corpus_amendment: ord1545
         setback_front_ft: 20
         setback_side_ft: 5
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_lot_sqft: 7200
-        source: "Gladstone Municipal Code 17.10.020 (middle housing allowed outright) & 17.10.050 (dimensional standards)"
-        source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html"
+        source: "Gladstone Municipal Code 17.10.020 (middle housing allowed outright) & 17.10.050 (dimensional standards), as Ordinance 1545 Exhibit A re-reads them"
+        source_url: "https://www.ci.gladstone.or.us/media/30151"
         confidence: needs_verification
-        notes: "Ord. 1545 (effective 2026-08-13) amends GMC 17.10.050: minimum lot area for duplex, triplex, quadplex, and cottage cluster is 7,200 sq ft; side setback is 5 ft. See Gladstone Ordinance 1545 Exhibit A (pp. 9-5 to 9-6)."
+        notes: "Ord. 1545 (effective 2026-08-13) amends GMC 17.10.050: minimum lot area for duplex, triplex, quadplex, and cottage cluster is 7,200 sq ft; side setback is 5 ft. See Gladstone Ordinance 1545 Exhibit A (pp. 9-5 to 9-6). Mirrored against the corpus's ord1545 block (FOLLOWUPS 156)."
       - zone: R5
         quadplex_allowed: true
         setback_front_ft: 20
@@ -2881,15 +2944,16 @@ jurisdictions:
         notes: "GIS literal 'R5' (code writes 'R-5'). Height 35 ft. NO max lot coverage, NO min lot width. Middle housing outright. Front drops to ~10-15 ft inside Gladstone Town Center overlay. min_lot is the QUADPLEX row of 17.12.050 (7,000) -- detached is 5,000 and duplex/triplex 5,000, so the four-unit building is the one row that asks for more. Street-side read via mirror; confirm 17.12.050."
       - zone: R10
         quadplex_allowed: true
+        corpus_amendment: ord1545
         setback_front_ft: 20
-        setback_side_ft: 7.5
+        setback_side_ft: 5
         setback_rear_ft: 15
         setback_street_side_ft: 20
-        min_lot_sqft: 3600
-        source: "Gladstone MC Title 17 (no R-10 chapter; standards mirror R-7.2, the lowest-density defined SFD district)"
-        source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone17.html"
+        min_lot_sqft: 7200
+        source: "Gladstone MC Title 17 (no R-10 chapter; standards mirror R-7.2 as Ordinance 1545 Exhibit A re-reads GMC 17.10.050)"
+        source_url: "https://www.ci.gladstone.or.us/media/30151"
         confidence: needs_verification
-        notes: "DISCREPANCY: Gladstone's adopted code defines only R-7.2 and R-5 single-household districts — there is NO R-10 district in Title 17. Exactly one layer polygon carries ZONE='R10'. SFD zone, so HB 2001 attaches. Standards are placeholders copied from R-7.2 pending verification, including its middle-housing minimum lot of 3,600 and the two-side-rows question behind the 7.5 ft side yard."
+        notes: "DISCREPANCY: Gladstone's adopted code defines only R-7.2 and R-5 single-household districts — there is NO R-10 district in Title 17. Exactly one layer polygon carries ZONE='R10'. SFD zone, so HB 2001 attaches. Standards are placeholders copied from R-7.2 as Ord. 1545 (effective 2026-08-13) leaves it: quadplex minimum lot 7,200 sq ft (was 3,600) and one 5 ft side setback (the '7.5 ft or 5 ft' row is gone). Mirrored against the corpus's ord1545 block (FOLLOWUPS 156)."
       # ported 2026-10-08 (zone gaps, FOLLOWUPS 52a) by port_from_flats.zone_row: Gladstone C2 (by right: attached residential outright) and MR (middle housing outright), encoded 2026-10-08; ported so the pod is measured. FLATS keeps the verdict.
       - zone: "C2"
         quadplex_allowed: true
@@ -2917,15 +2981,16 @@ jurisdictions:
       # ported 2026-10-15 (FOLLOWUPS 85) by port_from_flats.zone_row: C1, C3, LI open through a conditional use that ORS 197A.400 reduces to the clear and objective standards inside a UGB (Steph 2026-10-15); ported so the pod is measured. FLATS keeps the verdict.
       - zone: "C1"
         quadplex_allowed: true
+        corpus_amendment: ord1545
         setback_front_ft: 20
         setback_side_ft: 15
         setback_rear_ft: 15
         setback_street_side_ft: 20
-        min_lot_sqft: 3600
+        min_lot_sqft: 7200
         source: "Gladstone Municipal Code 17.16.020 (uses allowed outright), 17.16.040 (conditional uses), 17.16.060 (dimensional standards), Local Commercial District"
         source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1716.html"
         confidence: "needs_verification"
-        notes: "Ported from the FLATS corpus (or/clackamas/gladstone C1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+        notes: "Ported from the FLATS corpus (or/clackamas/gladstone C1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. A dwelling here is held to R-7.2's 17.10.050 (GMC 17.16.040), so Ord. 1545 (effective 2026-08-13) raises its minimum lot from 3,600 to 7,200 sq ft through the corpus's like: R7.2; C-1's own 15 ft side yard (17.16.060, not amended) stands. Mirrored against ord1545 (FOLLOWUPS 156)."
       - zone: "C3"
         quadplex_allowed: true
         setback_front_ft: 20
@@ -5723,11 +5788,10 @@ jurisdictions:
         setback_front_ft: 5
         setback_side_ft: 5
         setback_rear_ft: 10
-        min_lot_sqft: 2000
         min_lot_width_ft: 20
-        min_density_du_per_acre: 18
-        source: "Cornelius CMC 18.75.020 (H)-(I) and 18.75.040 (multi-family and single-family attached only; the fourplex is not multi-family, Steph 2026-10-01)"
-        source_url: "https://ecode360.com/print/CO4396?guid=47338473"
+        min_density_du_per_acre: 14
+        source: "Cornelius CMC 18.75.020 (H)-(I) and 18.75.040 as amended by Ord. 2026-06 (multi-family and single-family attached only; the fourplex is not multi-family, Steph 2026-10-01)"
+        source_url: "https://ecode360.com/CO4396/laws/LF2862187.pdf"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/cornelius GMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "LI"

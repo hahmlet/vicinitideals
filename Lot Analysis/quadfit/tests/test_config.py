@@ -101,10 +101,11 @@ def test_portland_min_lots_and_rf_on_the_state_path():
     from common import load_rules
 
     pdx = load_rules().jurisdictions["portland"]
-    # RF is measured since 2026-09-30 (state middle housing path) but can
-    # never be green here: needs_verification caps it at review.
+    # RF was measured 2026-09-30 to 2026-11-10 on the state middle housing path;
+    # rf-farm-land (FOLLOWUPS 173, rel7 assembly 2026-11-10) closed it: RF is farm
+    # land with no state middle-housing route, so the row is quadplex_allowed false.
     rf = pdx.rule_for("RF")
-    assert rf.quadplex_allowed is True
+    assert rf.quadplex_allowed is False
     assert rf.confidence == "needs_verification"
     assert rf.min_lot_sqft == 52000
     assert pdx.rule_for("R20").min_lot_sqft == 12000

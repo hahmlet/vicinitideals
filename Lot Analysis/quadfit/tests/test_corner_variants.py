@@ -75,6 +75,14 @@ BY_RIGHT_GAINS = {
     # corner 45 against 40 with it -- the same Hillsboro row as above, reached
     # through the county layer (only_when east_hillsboro_city_standards).
     "or/washington/_unincorporated/R-5.max_coverage_pct",
+    # 2026-11-10 (rel7 assembly; failing since rel6, FOLLOWUPS 68's Eastern Pattern
+    # Area rear setback): PCC 33.120.220.B.2.b(1) exempts corner lots from the 25
+    # percent rear yard, so the EPA corner variant spells out Table 120-4's own
+    # figure, 5 ft low-rise. The audit reads that as 10 -> 5 against the zone's
+    # unconditioned base, but a low-rise RM3/RM4 lot off the corner already takes
+    # the same 5 ft (`when: [low_rise]`): no room a non-corner lot lacks.
+    "or/multnomah/portland/RM3.setback_rear_ft",
+    "or/multnomah/portland/RM4.setback_rear_ft",
 }
 
 

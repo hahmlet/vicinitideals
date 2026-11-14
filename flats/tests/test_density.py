@@ -503,7 +503,7 @@ def test_the_same_floor_reaches_the_portland_administered_pockets(
     assert held.get("min_units_at_trigger") == 2
     assert (
         load_rules()[MULTNOMAH].zones["R7"].values["min_units_at_trigger"].prov.quote
-        == "or/multnomah/_unincorporated/33.110.txt#L421,L422"
+        == "or/multnomah/_unincorporated/33.110.txt#L412,L413"
     )
 
 

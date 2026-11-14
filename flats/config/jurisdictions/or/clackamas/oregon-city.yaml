@@ -376,6 +376,42 @@ crossrefs:
       lot. A quadplex here is built to it and no lot fails this screen because of it -- the
       standard applies to the development, not to whether the development fits.
 
+  # --- FOLLOWUPS 105 (2026-11-08): the binding references left open, followed ---
+  "402.8.1":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.8.1 Oregon City Supp. No. 48" of the codified Title 17
+      (17.zoning.txt#L7114), a page number the dotted-number pattern reads as a section.
+  "402.16.3":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.16.3 Oregon City Supp. No. 44" of the codified Title
+      17 (17.zoning.txt#L7637), a page number the dotted-number pattern reads as a section.
+  "402.16.20":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.16.20 Oregon City Supp. No. 41" of the codified Title
+      17 (17.zoning.txt#L8600), a page number the dotted-number pattern reads as a section.
+  "402.16.23":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.16.23 Oregon City Supp. No. 40" of the codified Title
+      17 (17.zoning.txt#L8899), a page number the dotted-number pattern reads as a section.
+  "402.16.24":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.16.24 Oregon City Supp. No. 40" of the codified Title
+      17 (17.zoning.txt#L8944), a page number the dotted-number pattern reads as a section.
+  "402.16.5":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "402.16.5 Oregon City Supp. No. 44" of the codified Title
+      17 (17.zoning.txt#L7731), a page number the dotted-number pattern reads as a section.
+  "416.16.21":
+    outcome: misread
+    note: >-
+      Not a reference: the page footer "416.16.21 Oreg on City Supp. No . 42" of the codified
+      Title 17 (17.zoning.txt#L8739), letter-spaced in extraction; a page number, not a section.
 definitions:
   # "Corner lot" means a lot abutting upon two or more streets at their
   # intersection."
@@ -429,6 +465,18 @@ code:
     # four defined terms this city never defined.
     definitions_at: L834-L3883
 defaults:
+  entrance_faces_street:
+    value: required
+    cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): main entrance facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L5400-L5413"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Oregon City OCMC 17 middle housing entry orientation (townhouse L5230-L5243): \"b. Be at an angle of up to forty-five degrees from\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L5409"
   # RIGHT-OF-WAY DEDICATION. 16.12.011.B: "All single-family detached
   # residential and middle housing units shall provide any necessary
   # dedications, easements or agreements as identified in the
@@ -753,9 +801,8 @@ defaults:
   # front yard or side yard of a townhouse", held apart from
   # `parking_front_prohibited` because the two bans reach different ground: a
   # front ban leaves a court beside the building on a wide lot, a side ban
-  # does not. Read by no screen yet -- the site plan draws one arrangement,
-  # the rear court, and this is what will let it try a side court where the
-  # code allows one (FOLLOWUPS 5).
+  # does not. The fit treats this prohibition as overriding any configured
+  # side-yard reach; it does not change the rear-court layout.
   #
   # On one lot 17.16.060.D permits front-facade garages and front-yard parking
   # under two width caps and states no side-yard ban, so the base is exempt
@@ -776,6 +823,52 @@ defaults:
         when: [unit_lots]
         cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
         quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). No residential sentence puts parking
+  # or a drive lane in or out of an interior side yard: 17.16.060.D (the
+  # quadplex path) caps front-yard parking only, 17.16.060.E's "one or
+  # both sides of buildings" is the mixed-use and commercial zones, and
+  # Chapter 17.52 names no yard (grep of 17.52 for setback, yard and lot
+  # line: only the straddle sentence). 17.04.1510 keeps a yard "unoccupied
+  # or unobstructed from the ground upward", which speaks to structures, not
+  # to paving. Silent, so stated is none (ruling
+  # 2026-11-05-side-yard-parking-silent-codes). The townhouse path bans the
+  # court from the side yard (17.16.040.B.1, `parking_side_prohibited`).
+  #
+  # THE FIVE-FOOT PERIMETER. 17.52.060.C: "Parking lots and associated
+  # drive aisles shall include a five-foot wide landscaped buffer where the
+  # parking lot abuts the right-of-way and/or adjoining properties";
+  # 17.04.890 makes a parking lot "off-street parking spaces", and 17.52.010
+  # excludes only detached houses, duplexes, townhouses and cottage clusters,
+  # so a quadplex's court is one. Not the townhouse path: zero there.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: OCMC 17.04.1110, 17.04.1510 and 17.04.1535, a setback separates buildings or structures from a lot line and a yard stays open from the ground upward; 17.16.060.D caps front-yard parking only; no residential rule places parking in or out of an interior side yard
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L3048-L3051,L3846-L3850,L3877-L3881,L5418-L5426"
+    variants:
+      - value: lane
+        when: [unit_lots]
+        cite: OCMC 17.16.040.B.1, townhouse parking only off the back facade or in the rear yard; the drive lane is not named
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L5347-L5349"
+  parking_side_yard_stated:
+    value: none
+    cite: OCMC 17.16.060.D and Chapter 17.52 state no interior-side-yard parking rule for a quadplex
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L5418-L5426,L14791-L14797"
+    variants:
+      - value: none
+        when: [unit_lots]
+        cite: OCMC 17.16.040.B.1 names the rear yard and back facade only
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L5347-L5349"
+  parking_lot_line_buffer_ft:
+    value: 5
+    unless: [unit_lots]
+    cite: OCMC 17.52.060.C, five-foot landscaped buffer where a parking lot and its drive aisles abut adjoining properties; 17.52.010 applicability; 17.04.890 parking lot
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L2598-L2599,L14791-L14797,L15290-L15292,L15324-L15330"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -998,6 +1091,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4120-L4121"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       value: 65
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1158,6 +1258,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4120-L4121"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1311,6 +1418,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4120-L4121"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1453,6 +1567,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4317"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"
@@ -1619,6 +1740,13 @@ zones:
         - value: 2000
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4578"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       # "Minimum lot width / All, except 50 feet, except / Townhouse 20 feet".
       # The pod on one lot is in "All".
@@ -1667,11 +1795,31 @@ zones:
       quote: "or/clackamas/oregon-city/17.zoning.txt#L1701-L1704,L4598,L4605"
     setback_side_ft:
       # "Minimum interior side yard setback / All, except 5 feet / Townhouse 0
-      # feet (attached)/5 feet (side)". The stray "1" on L4602 is footnote
-      # marker 1 shaken loose from the row above it by the extractor; the note
-      # it points at is quoted under `notes` and does not reach this building.
+      # feet (attached)/5 feet (side)". The "1" on L4602 is footnote marker 1,
+      # printed beside the side, rear and lot size rows.
+      #
+      # Note 1 (L4615-L4618): "If a multi-family residential development
+      # abuts a parcel zoned R-10, R-8, R-6, there shall be a landscaped yard
+      # of ten feet on the side abutting the adjacent zone in order to
+      # provide a buffer area." Encoded 2026-11-08 (FOLLOWUPS 2(a)) as the
+      # variant below. 17.04.780 makes "multi-family" five or more units,
+      # which arguably keeps the note off a quadplex; the variant takes it
+      # anyway, the reading that cannot turn a lot GREEN. Until 2026-11-08 it
+      # was held `unmeasured` on `abuts_lower_density_zone`, capping every R-2
+      # value; that was harmless while note 2 (`utility_easement`) capped them
+      # too, and stopped being harmless when Steph's easement ruling
+      # (2026-10-05, easements.yaml) answered note 2. The fact is per lot and
+      # the note per line, so a lot whose REAR alone abuts R-10 is charged
+      # ten on both sides as well -- coarse in the tightening direction. The
+      # rear is already ten (below); the court is kept off the yard by
+      # `parking_lot_line_buffer_ft`.
       value: 5
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4599-L4601"
+      variants:
+        - value: 10
+          when: [abuts_lower_density_zone]
+          cite: OCMC Table 17.12.040 note 1 (ten-foot landscaped yard on the side abutting R-10, R-8 or R-6)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4599-L4601,L4615-L4618"
     setback_street_side_ft:
       # "Minimum corner side yard setback 5 feet" -- the label wraps, so the
       # quote takes both lines. Corner lots only, which is why the paper fit
@@ -1686,6 +1834,30 @@ zones:
       # the setback already took.
       value: 10
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4607-L4608"
+    parking_lot_line_buffer_ft:
+      # The layer's 17.52.060.C five-foot planted strip (defaults, which stand
+      # down on unit lots because 17.52.010 excludes townhouses), restated
+      # here so Table 17.12.040 note 1 can widen it: the ten-foot landscaped
+      # yard against R-10, R-8 or R-6 is a buffer no court or drive aisle may
+      # pave. The strip is kept off every non-street line, not only the one
+      # that abuts, which is the tightening way to be coarse. Note 1 is in
+      # Chapter 17.12, not 17.52, so it reaches the townhouse plat too.
+      value: 5
+      cite: OCMC 17.52.060.C, five-foot landscaped buffer where a parking lot and its drive aisles abut adjoining properties; 17.52.010 applicability
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L14791-L14797,L15324-L15330"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          cite: OCMC 17.52.010, the parking chapter "does not apply to ... townhouses"
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L14791-L14797"
+        - value: 10
+          when: [abuts_lower_density_zone]
+          cite: OCMC Table 17.12.040 note 1 (ten-foot landscaped yard on the side abutting R-10, R-8 or R-6)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4615-L4618"
+        - value: 10
+          when: [unit_lots, abuts_lower_density_zone]
+          cite: OCMC Table 17.12.040 note 1 (ten-foot landscaped yard on the side abutting R-10, R-8 or R-6)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4615-L4618"
     min_landscaped_pct:
       # "Minimum required landscaping 15% (including landscaping within a
       # parking lot)". R-2 is the ONLY Oregon City residential district whose
@@ -1780,12 +1952,13 @@ zones:
       so from 2026-09-08 they cap every value above. Note 1 ("If a multi-family
       residential development abuts a parcel zoned R-10, R-8, R-6, there shall
       be a landscaped yard of ten feet on the side abutting the adjacent zone",
-      L4615-L4618) is held `unmeasured` on `abuts_lower_density_zone` from the
-      2026-08-19 ruling, and is LEFT THAT WAY although 17.04.780 defines
-      multi-family as five or more units and so arguably keeps the note off a
-      quadplex entirely: a cap only ever withholds a GREEN, every Oregon City
-      zone is already capped by note 2, and the definition argument is on the
-      record here if anyone revisits it. Note 2 ("Public utility easements may
+      L4615-L4618) was held `unmeasured` on `abuts_lower_density_zone` from the
+      2026-08-19 ruling until 2026-11-08, when it became the setback_side_ft
+      and parking_lot_line_buffer_ft variants above (FOLLOWUPS 2(a)), applied
+      although 17.04.780 defines multi-family as five or more units and so
+      arguably keeps the note off a quadplex entirely -- the tightening
+      reading, with the definition argument on the record here if anyone
+      revisits it. Note 2 ("Public utility easements may
       supersede the minimum setback", L4619-L4620) TIGHTENS -- an easement
       moves the building further in by an amount the text never states -- and
       is one of three printings of that sentence, all `unmeasured` on
@@ -1880,6 +2053,13 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4317"
+    lot_of_record_relief:
+      # 17.58.020: a lot lawfully created that no longer meets the legal lot
+      # standards may be occupied by a permitted use meeting all other provisions.
+      # The lot size, width and depth rows are lifted; the density stays. The lot
+      # is taken as lawful (rulings.yaml, Steph 2026-10-21).
+      value: lot_standards
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
     min_lot_width_ft:
       value: 25
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"
@@ -2899,13 +3079,12 @@ zone_rulings:
 # and its twins), the fact quadfit's s4 now reads off the taxlot fabric
 # across every non-street lot line (neighbour_zones_json), turned into
 # `abuts_residential_zone` by flats/geom/neighbour.py against these lists.
-# Only that condition is declared: `abuts_lower_density_zone` also caps
-# R-2 in caps.json (Table 17.12.040 note 1, the ten-foot landscaped side
-# yard against R-10, R-8 or R-6 -- narrowed to R-2 on 2026-09-22, it had
-# reached R-3.5 and R-5's minimum density through the region scope), and an
-# observed fact lifts a cap, so that list may not be written until that
-# footnote is encoded as a variant. Nothing waits on it: every R-2 value is
-# capped on `utility_easement` by note 2 as well.
+# `abuts_lower_density_zone` is declared beside it from 2026-11-08
+# (FOLLOWUPS 2(a)): Table 17.12.040 note 1, the ten-foot landscaped yard of
+# an R-2 lot against R-10, R-8 or R-6, was a cap on every R-2 value and is
+# now the R-2 side yard and parking strip variants. It waited while note 2
+# capped the same values on `utility_easement`; Steph's easement ruling
+# (2026-10-05) answers that one, so the cap had become the only thing left.
 # Areas the code draws inside a zone that the zoning layer does not carry
 # (FOLLOWUPS 109 chunk 3, 2026-10-22). See flats/rules/model.py DrawnArea.
 drawn_areas:
@@ -2993,6 +3172,26 @@ neighbours:
       with nothing on the true_for side across any of them. Today the zones that
       turn on it (C, MUC-1, MUC-2, MUD, WFDD) are ahead of quadfit's own
       rules and unmeasured, so the list waits for that port (FOLLOWUPS).
+  abuts_lower_density_zone:
+    true_for: [R-10, R-8, R-6]
+    false_for: [R-5, R-3.5, R-2, NC, HC, C, GI, CI, MUC-1, MUC-2, MUE, MUD, I, WFDD]
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L4615-L4618"
+    cite: OCMC Table 17.12.040 note 1 (R-2, landscaped yard abutting R-10, R-8, R-6);
+      OCMC 17.06.015 (Classification of zoning districts)
+    note: >-
+      Read for one footnote: Table 17.12.040 note 1, "If a multi-family
+      residential development abuts a parcel zoned R-10, R-8, R-6, there
+      shall be a landscaped yard of ten feet on the side abutting the
+      adjacent zone", the R-2 side yard and parking strip variants. The
+      note names three districts and those are the true_for side; every
+      other base district 17.06.015 lists is on the false_for side, R-5 and
+      R-3.5 included, because the note names neither. Title 17 defines no
+      "abut", so a neighbour s4 reads across an alley counts too, which only
+      ever tightens. The condition is true of a lot when ANY non-street
+      line has R-10, R-8 or R-6 across it; false needs every line fully read
+      with none of the three across any of them. A lot across the city line
+      is another jurisdiction's and is not read by these lists, so a line
+      against one leaves the fact unanswered (UNKNOWN), as before.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
@@ -3055,3 +3254,22 @@ set_aside:
     why: driveway spacing -- the table excludes quadplexes and townhouses
   - quote: "or/clackamas/oregon-city/16.12/16.12.035.txt#L20"
     why: driveway five feet off the property line -- known gap, not yet encoded
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: unsettled
+    kind: wedge
+    sight_ft:
+    - 250
+    - 450
+    eye_back_ft: 15
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/oregon-city/ocmc-10.32-traffic-sight-obstructions.txt#L8-L25
+    cite: OCMC 10.32
+    note: '''the area of which is to be determined by the city engineer'' with a sight-distance table
+      (250 ft at 25 mph, 15 ft back). Speed unmapped and the engineer decides. Unsettled: the conservative
+      default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings at its largest
+      plausible size, measured with the curb at the lot line; a corner lot it reaches is YELLOW, never
+      GREEN and never RED on it, until the rule is read.'
+    ruling: 2026-11-09-sight-triangle-corner-check

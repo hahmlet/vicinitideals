@@ -208,6 +208,11 @@ readings:
     queue: chapter
     outcome: nothing_here
     note: >-
+      CORRECTED 2026-11-10 (false-green round 4, fg-rate-C): this reading missed B(3), "Roof pitch
+      shall be a minimum of five to twelve (5 : 12) ... Flat or shed style roof designs are not
+      permitted" (#L86). That is a ban the flat-roofed pod fails (rulings.yaml
+      2026-10-21-pod-roof-flat), now encoded as min_roof_pitch_in_12 5 on LR 7.5 and LR 12. The card
+      stays closed because the work it orders is done. The original reading follows.
       Design Review for all residential development in the LR7.5 and LR12 zones, and it does reach
       this building -- "all residential development", Type I, no housing-type exception. It closes
       on WHAT it asks rather than WHO it asks. Two required elements: the main entry of every
@@ -228,6 +233,10 @@ readings:
     queue: chapter
     outcome: nothing_here
     note: >-
+      CORRECTED 2026-11-10 (false-green round 4, fg-rate-C): like 210.375, this reading missed
+      B(3), the 5:12 minimum roof pitch with "Flat or shed style roof designs are not permitted"
+      (#L86), a ban the flat-roofed pod fails; now encoded as min_roof_pitch_in_12 5 on MR 2 and MR
+      4. The original reading follows.
       The MR2 and MR4 twin of 210.375, word for word: the same entry orientation within 45 degrees
       of the street, the same 20 percent of street-facing wall area in windows or doors, and the
       same "at least four of the following" menu of dormers, bay windows, recessed and covered
@@ -877,6 +886,45 @@ defaults:
     url: https://woodvillage.municipal.codes/WVDC/350.065
     retrieved: '2026-08-30'
     quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L70,L72-L75"
+  # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 720.030: "Unless otherwise
+  # indicated, an unspecified setback refers to a building setback", so the
+  # zone tables' side setback does not reach the court. The quadplex is
+  # under 350.065, whose Table 350-2 states the parking-area setbacks line by
+  # line: 5 ft from a lot line abutting an LR or MR lot (L3 planting), 5 ft
+  # with L2 or 10 ft with L1 against the other zones -- five is the
+  # minimum. The townhouse (an "attached house", 720.030 L370) is under
+  # 350.055, which keeps parking only out of the first 10 ft from the front
+  # lot line and holds garages, not surface parking, to the base-zone
+  # setbacks. Stated both ways. The strip is the quadplex's only.
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: WVDC 720.030 Setback, an unspecified setback is a building setback; 350.065(C) and Table 350-2 state the parking-area setbacks
+    url: https://woodvillage.municipal.codes/WVDC/720.030
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/720.030.definitions.txt#L370,L378"
+    variants:
+      - value: lane_and_court
+        when: [unit_lots]
+        cite: WVDC 350.055(A)-(B), attached houses (townhouses, 720.030), parking kept only out of the first 10 ft from the front lot line, garages alone held to the base-zone setbacks
+        quote: "or/multnomah/wood-village/350.055.one-and-two-unit.txt#L60,L62"
+  parking_side_yard_stated:
+    value: lane_and_court
+    cite: WVDC 720.030 Setback and 350.065(C), Table 350-2, parking-area setbacks stated apart from the building setback
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L70,L72-L77"
+    variants:
+      - value: lane_and_court
+        when: [unit_lots]
+        cite: WVDC 350.055(B), the townhouse branch bars parking only near the front lot line
+        quote: "or/multnomah/wood-village/350.055.one-and-two-unit.txt#L60,L62"
+  parking_lot_line_buffer_ft:
+    value: 5
+    unless: [unit_lots]
+    cite: WVDC 350.065(C), Table 350-2, lot line abutting an LR or MR zone lot line, 5 ft (the minimum of every non-street row)
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L70,L72-L77"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -1099,6 +1147,12 @@ zones:
     notes: >-
       Table 240-1 reads N on Household Living and on Group Living in both manufacturing columns. Light Manufacturing is the looser of the two on retail and office and is no different on housing. The row that answers is Household Living, which 710.100 defines as "the residential occupancy of a dwelling unit or a structure by a household" with an average stay of thirty days or more. It names no housing type and excludes none, so a four-unit attached townhome is inside it -- which is how the non-residential zones speak about dwellings at all. The residential zones do the opposite and list types by name. The definition is quoted at or/multnomah/wood-village/710.100.txt#L56,L60.
   TC:
+    entrance_faces_street:
+      value: unclear
+      cite: "Wood Village 235.450.F: a primary entrance turned more than 45 degrees from the street must stand within 20 feet of a street sidewalk, a distance the screen does not measure (FOLLOWUPS 153)"
+      url: https://woodvillage.municipal.codes/WVDC/235.450
+      retrieved: '2026-10-22'
+      quote: "or/multnomah/wood-village/235.450.txt#L86"
     section: ["235.200", "235.300", "235.310", "235.320", "235.330", "235.340",
               "235.390", "235.410", "235.420", "235.440", "235.450", "235.465",
               "710.100"]
@@ -1117,6 +1171,16 @@ zones:
       wins: local
       cite: WVDC 235.300 Table 235-2, "Lot size and dimensions" and "Maximum lot coverage" rows
       quote: "or/multnomah/wood-village/235.300.txt#L68-L71,L77"
+    min_roof_pitch_in_12:
+      # Stated here because `like: MR 2` has no field list, and MR 2 holds
+      # 220.355's 5:12 roof (2026-11-10). The Town Center has its own roof rule,
+      # 235.440.E: "Buildings must have either a sloped roof with a pitch no
+      # flatter than 4:12 or a flat roof with a cornice". A flat roof is
+      # allowed; the cornice is an unchecked design detail the pod can take on
+      # (rulings.yaml 2026-10-14-unchecked-design-details). No pitch floor.
+      exempt: true
+      cite: "WVDC 235.440.E: a sloped roof no flatter than 4:12 or a flat roof with a cornice"
+      quote: "or/multnomah/wood-village/235.440.txt#L62,L72"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/wood-village/235.200.txt#L60,L66,L68"
@@ -1279,6 +1343,33 @@ zones:
       answer, and 167 lots is too many to leave unread because the other half
       is out of reach.
   LR 7.5:
+    entrance_faces_street:
+      value: required_named
+      cite: "Wood Village 210.375(B)(1): All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street; for corner lots, the front entryway shall be whichever street is the official address of the dwelling (FOLLOWUPS 153)"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/210.375.txt#L60-L64,L90-L92"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Wood Village 210.375(B)(1): \"(1) Entry Orientation. All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street. For corner lots, the front entryway shall be whichever street is the official address of the dwelling.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/210.375.txt#L64"
+    min_roof_pitch_in_12:
+      # False-green round 4 (fg-rate-C, 2026-11-10). 210.375(B)(3) binds "All
+      # residential development in the LR7.5 and LR12 zones" (210.375(A)): "Roof pitch
+      # shall be a minimum of five to twelve (5 : 12) ... Flat or shed style
+      # roof designs are not permitted." The pod's roof is flat (rulings.yaml
+      # 2026-10-21-pod-roof-flat), so these lots are RED. The rule binds
+      # detached houses in the same zones too, so OAR 660-046-0225(1)(c) lets a
+      # Large City apply it to middle housing. NOT ENCODED, loosening only:
+      # C(1) exempts a development set behind another dwelling on the street
+      # side, which no lot fact here measures.
+      value: 5
+      cite: "Wood Village 210.375(B)(3): Roof pitch shall be a minimum of five to twelve (5 : 12) ... Flat or shed style roof designs are not permitted"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/wood-village/210.375.txt#L60,L86"
     section: ["210."]
     cite_default:
       cite: WVDC 210.310 Table 210-2 (housing types), 210.320 Table 210-3 (development standards),
@@ -1409,6 +1500,33 @@ zones:
       NOT ENCODED: footnote (3), which gives cottage housing a 10-foot rear and street side yard and
       exempts it from coverage outright. A cottage cluster is not the pod.'
   LR 12:
+    entrance_faces_street:
+      value: required_named
+      cite: "Wood Village 210.375(B)(1): All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street; for corner lots, the front entryway shall be whichever street is the official address of the dwelling (FOLLOWUPS 153)"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/210.375.txt#L60-L64,L90-L92"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Wood Village 210.375(B)(1): \"(1) Entry Orientation. All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street. For corner lots, the front entryway shall be whichever street is the official address of the dwelling.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/210.375.txt#L64"
+    min_roof_pitch_in_12:
+      # False-green round 4 (fg-rate-C, 2026-11-10). 210.375(B)(3) binds "All
+      # residential development in the LR7.5 and LR12 zones" (210.375(A)): "Roof pitch
+      # shall be a minimum of five to twelve (5 : 12) ... Flat or shed style
+      # roof designs are not permitted." The pod's roof is flat (rulings.yaml
+      # 2026-10-21-pod-roof-flat), so these lots are RED. The rule binds
+      # detached houses in the same zones too, so OAR 660-046-0225(1)(c) lets a
+      # Large City apply it to middle housing. NOT ENCODED, loosening only:
+      # C(1) exempts a development set behind another dwelling on the street
+      # side, which no lot fact here measures.
+      value: 5
+      cite: "Wood Village 210.375(B)(3): Roof pitch shall be a minimum of five to twelve (5 : 12) ... Flat or shed style roof designs are not permitted"
+      url: https://woodvillage.municipal.codes/WVDC/210.375
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/wood-village/210.375.txt#L60,L86"
     section: ["210."]
     cite_default:
       cite: WVDC 210.310 Table 210-2 (housing types), 210.320 Table 210-3 (development standards),
@@ -1539,6 +1657,33 @@ zones:
       NOT ENCODED: footnote (3), which gives cottage housing a 10-foot rear and street side yard and
       exempts it from coverage outright. A cottage cluster is not the pod.'
   MR 2:
+    entrance_faces_street:
+      value: required_named
+      cite: "Wood Village 220.355(B)(1): All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street; for corner lots, the front entryway shall be whichever street is the official address of the dwelling (FOLLOWUPS 153)"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/220.355.txt#L60-L64"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Wood Village 220.355(B)(1): \"(1) Entry Orientation. All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street. For corner lots, the front entryway shall be whichever street is the official address of the dwelling.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/220.355.txt#L64"
+    min_roof_pitch_in_12:
+      # False-green round 4 (fg-rate-C, 2026-11-10). 220.355(B)(3) binds "All
+      # residential development in the MR2 and MR4 zones" (220.355(A)): "Roof pitch
+      # shall be a minimum of five to twelve (5 : 12) ... Flat or shed style
+      # roof designs are not permitted." The pod's roof is flat (rulings.yaml
+      # 2026-10-21-pod-roof-flat), so these lots are RED. The rule binds
+      # detached houses in the same zones too, so OAR 660-046-0225(1)(c) lets a
+      # Large City apply it to middle housing. NOT ENCODED, loosening only:
+      # C(1) exempts a development set behind another dwelling on the street
+      # side, which no lot fact here measures.
+      value: 5
+      cite: "Wood Village 220.355(B)(3): Roof pitch shall be a minimum of five to twelve (5 : 12) ... Flat or shed style roof designs are not permitted"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/wood-village/220.355.txt#L60,L86"
     section: ["220."]
     cite_default:
       cite: WVDC 220.310 Table 220-2 (housing types), 220.320 Table 220-3 (development standards),
@@ -1658,6 +1803,33 @@ zones:
       units. The pod is four. MR tables also state no corner-lot rows at all, so no street-side
       setback is applied here -- genuinely unstated rather than assumed away.'
   MR 4:
+    entrance_faces_street:
+      value: required_named
+      cite: "Wood Village 220.355(B)(1): All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street; for corner lots, the front entryway shall be whichever street is the official address of the dwelling (FOLLOWUPS 153)"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/220.355.txt#L60-L64"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Wood Village 220.355(B)(1): \"(1) Entry Orientation. All street-facing units shall have the main entry facing the street or be at an angle of up to forty-five (45) degrees from the street. For corner lots, the front entryway shall be whichever street is the official address of the dwelling.\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/wood-village/220.355.txt#L64"
+    min_roof_pitch_in_12:
+      # False-green round 4 (fg-rate-C, 2026-11-10). 220.355(B)(3) binds "All
+      # residential development in the MR2 and MR4 zones" (220.355(A)): "Roof pitch
+      # shall be a minimum of five to twelve (5 : 12) ... Flat or shed style
+      # roof designs are not permitted." The pod's roof is flat (rulings.yaml
+      # 2026-10-21-pod-roof-flat), so these lots are RED. The rule binds
+      # detached houses in the same zones too, so OAR 660-046-0225(1)(c) lets a
+      # Large City apply it to middle housing. NOT ENCODED, loosening only:
+      # C(1) exempts a development set behind another dwelling on the street
+      # side, which no lot fact here measures.
+      value: 5
+      cite: "Wood Village 220.355(B)(3): Roof pitch shall be a minimum of five to twelve (5 : 12) ... Flat or shed style roof designs are not permitted"
+      url: https://woodvillage.municipal.codes/WVDC/220.355
+      retrieved: '2026-11-10'
+      quote: "or/multnomah/wood-village/220.355.txt#L60,L86"
     section: ["220."]
     cite_default:
       cite: WVDC 220.310 Table 220-2 (housing types), 220.320 Table 220-3 (development standards),
@@ -1852,3 +2024,25 @@ private_drives:
     travel or for motor vehicle access to abutting property." Corner lot (L250)
     and front lot line (L268) read "street", so a private right-of-way the lot
     abuts is a street for both.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 15
+    basis: curb
+    source: data/flats/books/sight-manuals/wood-village/wvdc-730.130-figure.txt#L1-L20
+    cite: WVDC 730.130
+    note: '''No signs, structures or vegetation in excess of three (3) feet''; the figure draws 15 ft
+      by 15 ft along the street edges (curb), extended at the rounded return. Curb basis: the middle way.'
+    ruling: 2026-11-09-curb-position-middle-way
+  driveway:
+    status: read
+    kind: edge
+    legs_ft: 15
+    basis: curb
+    source: data/flats/books/sight-manuals/wood-village/wvdc-730.130-figure.txt#L1-L20
+    cite: WVDC 730.130
+    note: 'The figure''s driveway panel: 15 ft along the street edge and 15 ft along the driveway edge,
+      each side.'
+    ruling: 2026-11-09-curb-position-middle-way

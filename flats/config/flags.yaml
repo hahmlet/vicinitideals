@@ -198,6 +198,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [STREET_UNCONFIRMED]
+  ACCESS-DRIVEWAY-SPACING:
+    description: "Every street the lot fronts spaces a new driveway from intersections or other driveways farther than the lot allows"
+    kind: categorical
+    risk: likely
+    severity: 6
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot]
+    path: "Call the city (or ODOT on a state highway) about access: every code here has a way out for a lot that cannot meet spacing (2026-11-09-busy-road-driveway-spacing-yellow, FOLLOWUPS 169)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [DRIVEWAY_SPACING_BLOCKED, DRIVEWAY_NEAR_INTERSECTION_100FT]
+  ACCESS-DRIVEWAY-SPACING-UNREAD:
+    description: "The code spaces driveways by street class here, and no place on the frontage was shown to clear it"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Load the street-class map, or read the lot's intersections (FOLLOWUPS 169)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [DRIVEWAY_SPACING_UNREAD]
   ACCESS-STREET-RANK-UNKNOWN:
     description: "A corner lot's parking works off one street but not the other, and a street line has no class: nothing says the street that works is the quieter one the code sends the driveway to (Steph 2026-10-09: \"yellow, then measure\")"
     kind: categorical
@@ -258,6 +288,128 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [REAR_COURT_SHORT]
+  PARKING-COURT-FRONT-YARD:
+    description: "The drawn parking court stands between the building and a street the code makes a front, and no placement tried kept it out of the front yard"
+    kind: categorical
+    risk: likely
+    severity: 5
+    absorbs: parking
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Draw the plan with the court beside the building or the plan turned on the lot; Steph 2026-11-08: no parking in the front yard where the code is silent"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [COURT_FRONT_YARD]
+  PARKING-ALLEY-COURT-OFF-STRETCH:
+    description: "The court backs out into a rear alley that runs only part of the rear line, and the drawn court stands off the stretch the alley covers"
+    kind: categorical
+    risk: likely
+    severity: 5
+    absorbs: parking
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Stand the court against the covered stretch, or give it its own aisle; Steph 2026-09-28: the alley is the travel lane only where it abuts the court and is long enough"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ALLEY_COURT_OFF_STRETCH]
+  PARKING-COURT-GROUND-UNREAD:
+    description: "The envelope is quadfit's and FLATS could not name the yards, so where the parking court may stand was read as the whole lot less the carve"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: parking
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Read the lot's front and side yards and check the court stands outside them (FOLLOWUPS 33(c))"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [COURT_GROUND_UNREAD]
+  SIGHT-CORNER-CURB:
+    description: "Check where the curb is: the building clears the corner clear-vision area only if the curb stands back from the lot line, and the code measures that area from the curb, which the maps do not hold (FOLLOWUPS 161; middle way, Steph 2026-11-09)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Find the curb at the corner (site visit, aerial, or the city's curb layer) and measure the clear-vision triangle from it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_CORNER_CURB]
+  SIGHT-CORNER-UNSETTLED:
+    description: "The building stands where the city's corner clear-vision area might reach, and that rule is unread or unclear here, so it was taken at its largest plausible size (Steph 2026-11-09)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Read the city's clear-vision rule (its size, how it is measured, whether it bars a building) into clear_vision in the jurisdiction file"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_CORNER_UNSETTLED]
+  SIGHT-DRIVEWAY:
+    description: "The drawn building stands inside the clear-vision area the city keeps where the drive meets the street, at least with the curb at the lot line; moving the drive or the curb's real place may clear it (FOLLOWUPS 161)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Place the drive and find the curb; draw the driveway clear-vision area from them and check the building stands outside it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_DRIVEWAY]
+  SIGHT-DRIVEWAY-NOTE:
+    description: "Portland's driveway clear zone (PBOT TRN-10.40, 15 ft by 15 ft from the pavement edge) may reach the drawn building; a note for the street permit, the colour unchanged (Steph 2026-11-09)"
+    kind: categorical
+    risk: unlikely
+    # A note only (rulings.yaml 2026-11-09-portland-driveway-clear-zone-note):
+    # below the yellow line.
+    severity: 1
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "At the driveway permit: place the drive so its clear zone misses the building, or build at the property line"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_DRIVEWAY_NOTE]
+  SIDE-YARD-PARKING-SILENT:
+    description: "The fit depends on side-yard parking the code neither allows nor forbids; Steph's silent-code ruling keeps the lot yellow"
+    kind: categorical
+    risk: possible
+    severity: 3
+    absorbs: parking
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone]
+    path: "Read a code amendment or authoritative interpretation that states the side-yard parking reach"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIDE_YARD_PARKING_SILENT]
 
   # --- what our own measurement left open --------------------------------
   FIT-COURT-WIDTH:
@@ -316,6 +468,36 @@ types:
     key: [lot, design]
     path: "Our own fire route measure (FOLLOWUPS 29)"
     priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  FIRE-DEAD-END:
+    description: "Long dead-end street, no turnaround seen: the fire hose reaches only if the truck may drive the dead end past the length the fire code (or the city's amendment) allows without one; check with the fire marshal (Steph 2026-11-10)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot, design]
+    path: "Ask the fire marshal whether a truck may use the dead end, or where a turnaround would go (FOLLOWUPS 168)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  FIRE-NARROW-STREET:
+    description: "Narrow street: the fire truck reaches the lot only along a street whose right-of-way is too narrow to hold a 20 ft fire road and its curbs (under 22 ft), and its paved width is not measured; fire review often refuses such a street (Steph 2026-11-10)"
+    kind: categorical
+    risk: likely
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Measure the street's paved width (20 ft clear needed, OFC 503.2.1) or ask the fire marshal whether a truck may use it (FOLLOWUPS 178(b))"
+    priority: later
     status: pending
     approved_by: null
     approved_on: null
@@ -430,6 +612,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-LOT-OF-RECORD:
+    description: "The lot misses a lot standard the code lifts for an existing lot only on a condition the data does not hold: when the lot was created, who has owned the land beside it, or whether the lift reaches an area stated per dwelling"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Read the deed history and adjoining ownership in legal review, or a planner's letter on the per-dwelling area (FOLLOWUPS 108)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-BUILDING-FRONTAGE:
     description: "The zone asks the building to fill a share of the street frontage; the drawn plan was not measured, or falls short where the same pod placed otherwise could clear it"
     kind: categorical
@@ -456,6 +653,21 @@ types:
     key: [lot, design]
     path: "Hold the street typology (Beaverton Figure 70.15.15.1) and the primary-frontage order (transit, street class) per lot (FOLLOWUPS 109)"
     priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  MEASURE-FRONTAGE-LINE:
+    description: "The lot clears the minimum street frontage on its streets added together, or on its longest street, and not on its shortest street alone; the code does not settle which street the minimum is owed on (or, measured from the end of the corner curve, the curve end was not taken)"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone, design]
+    path: "Read which street line the zone's minimum frontage is owed on and set min_frontage_line or min_frontage_one_street (FOLLOWUPS 175)"
+    priority: next
     status: pending
     approved_by: null
     approved_on: null
@@ -490,6 +702,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-SIDE-MAX-BOTH:
+    description: "Hillsboro's 5 ft side limit read as both sides; ask the city (15 ft in SCR-DNC). The zone's maximum side setback is read as holding every side wall, and the drawn building stands farther than that from at least one side lot line (or nothing was drawn to measure): the plan fits only on the one-wall reading"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot, design]
+    path: "Ask Hillsboro whether the maximum side setback (5 ft in SCR-MD and SCR-HD, 15 ft in SCR-DNC) holds both side walls or one (Steph 2026-11-09 and 2026-11-10, rulings.yaml 2026-11-09-hillsboro-scr-side-max-both, 2026-11-10-hillsboro-scr-dnc-side-max-both; FOLLOWUPS 170, 176)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   FRONTAGE-MORE-BUILDINGS:
     description: "One pod cannot fill the building share of a street this long, but enough pods to fill it could stand side by side along it: the lot needs more than one building"
     kind: categorical
@@ -500,6 +727,66 @@ types:
     scope: per_lot
     key: [lot, design]
     path: "A site plan with more than one building on the lot (Steph 2026-10-21, rulings.yaml 2026-10-21-wide-lot-frontage-more-pods; multi-pod plotting, FOLLOWUPS 31)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  ENTRANCE-TURNED:
+    description: "The building fits only turned, its front doors away from the street, and nobody has read whether this city's front-door rule allows that"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Read the zone's main-entrance orientation standard and record it as entrance_faces_street (FOLLOWUPS 153)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  ENTRANCE-DRAWN:
+    description: "The code makes the front doors face a street; the building fits facing one of this lot's street directions, but no drawing shows it standing with its doors toward a street the lot touches"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Draw the building with its front doors toward a street the lot abuts, or confirm none fits (rel4 move-read finding 2)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  ENTRANCE-SIDE-DOOR:
+    description: "Fits only with doors facing the side; needs a street-facing end door (design change). The code makes the front doors face the street, the pod does not fit with its door face toward a street, and it fits turned sideways with its doors to a side yard (Steph 2026-11-10, rulings.yaml 2026-11-10-side-door-fit-yellow: YELLOW, never GREEN, not RED on this alone; the bounds are the street-facing fit and the fit it needed, feet)"
+    kind: parametric
+    risk: likely
+    severity: 6
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "A pod design with a street-facing door on the end home, or a plan that stands the doors toward the street (FOLLOWUPS 177)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_ENTRANCE_SIDE]
+  ENTRANCE-STREET:
+    description: "The front doors must face the street the code names (the address street, the busiest street or a mapped access street), and this lot has more than one street"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Check which street the code names for this lot (its address, foot traffic or the access-street map) and that the building faces it (FOLLOWUPS 153)"
     priority: later
     status: pending
     approved_by: null
@@ -673,6 +960,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [PDX_MAIN_STREET_SETBACK]
+  PDX-MAIN-STREET-ACTIVE-USE:
+    description: "A lot in Portland's Centers Main Street overlay (\"m\"): PCC 33.415.200 requires, on a site with frontage on a transit street, that 25% of the ground level floor area within 100 ft of that street be a non-residential active use (retail, office, daycare and the like). The four homes have none. Development that includes a residential use is exempt until January 1, 2029 (and 33.415.340's 60% ground floor windows wait for the same day): screened under the law of an earlier day the flag sits below the yellow line and says when the exemption ends; from that day it is a closer look. No map of the city's transit streets is held, so every street is taken as one (FOLLOWUPS 78)."
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Before 2029: apply for the permit before January 1, 2029, or check whether the city has extended the exemption. From 2029: acquire the Transportation System Plan's transit street classes and measure whether the lot fronts one; a lot that does needs a ground floor active use the design does not have"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [PDX_MAIN_STREET_ACTIVE_USE]
+  HISTORIC-LISTING-UNSETTLED:
+    description: "The lot appears on a city's, county's or the state's historic list, but whether that protects a building here is not settled: the state may only have surveyed it, the city's list or the code that says what a listing does is not held, the listing is an object rather than a building, or the address only nearly fixes the lot (FOLLOWUPS 87, flats/config/historic/protection.yaml). A protected building would make the lot red under Steph's 2026-10-14 ruling, so it does not stay green on the doubt."
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: document_review
+    scope: per_lot
+    key: [lot]
+    path: "Read the code section the flag names and the city's record for the lot; a protected listing goes red, one that does not protect goes back to green"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [HISTORIC_LISTING_UNSETTLED]
   PDX-COMMUNITY-DESIGN-STANDARDS:
     description: "The lot is in a Portland Conservation District, where a new building needs historic resource review or must meet the Community Design Standards, the clear and objective alternative (PCC 33.445.210.D, 33.445.500, 33.218). Those standards place the building and its parking -- the front setback between the neighbours' and never more than 25 ft (exactly 25 ft in Piedmont), the car in off an alley where there is one, no parking in the front setback -- and none of it is measured."
     kind: categorical
@@ -733,6 +1050,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_SECOND_APPROACH]
+  ROOF-CORNICE:
+    description: "The code wants a sloped roof and allows a flat one only with a cornice of a printed height (Tigard 18.280.040.J: extending at least 6 in from the facade and at least 12 in tall) or a roof deck of no more than 150 sq ft; the pod's roof is flat and its catalog shows no cornice. Steph 2026-11-10 (rulings.yaml 2026-11-10-tigard-cornice-yellow): YELLOW with this flag, not RED (the bounds are the cornice the pod shows and the height asked, inches)"
+    kind: parametric
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, design]
+    path: "Confirm the pod's flat roof can carry a cornice at least 12 in tall projecting at least 6 in (or a roof deck under 150 sq ft), and add it to the design catalog"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_ROOF_CORNICE]
   DRIVEWAY-STATE-OVERRIDE:
     description: "The city's code asks one driveway approach for every N dwelling units (Oregon City 16.12.035.F: every two, which is two for the four-unit pod), and state law overrides it: a Large City may not scale a design standard, driveways included, by the number of dwelling units (OAR 660-046-0225(1)(c), 660-046-0020(4)), so the plan's one shared drive stands. A record of the city's rule, below the yellow line; it returns as DRIVEWAY-SECOND-APPROACH if the override is ever removed"
     kind: parametric
@@ -765,7 +1097,7 @@ types:
     approved_on: null
     raised_from: [CLOSER_LOOK_RESOURCE]
   REVIEW-CONDITIONS:
-    description: "The pod is taken here only through a review whose standards are clear and measurable but whose decider may add conditions, or whose criteria also weigh judgement words (\"compatible\", \"character\"). The fact says which: `conditions` or `judgement` (the zone's review, named in the citation), or, in Washington County, `buildable_area` (the lot is past the quick Type I review's size limit and four homes miss the district's minimum density) or `standard_plat` (the Type I path needs a lot made by a standard subdivision or partition plat, which nothing here holds), either of which leaves the Type II review, on which the county may add conditions (CDC 207-5). Steph 2026-10-14: \"If it's otherwise clear and measurable, but there is a 'may add conditions', yellow.\" Never red, never green."
+    description: "The pod is taken here only through a review whose standards are clear and measurable but whose decider may add conditions, or whose criteria also weigh judgement words (\"compatible\", \"character\"). The fact says which: `conditions` or `judgement` (the zone's review, named in the citation), or, in Washington County, `buildable_area` (the lot is past the quick Type I review's size limit and four homes miss the district's minimum density) or `standard_plat` (the Type I path needs a lot made by a standard subdivision or partition plat, and the county's legal description for the lot does not show one older than middle housing land divisions: it reads acres or part of a lot, names a middle housing land division or a plat that may postdate them, or was not read; FOLLOWUPS 83), either of which leaves the Type II review, on which the county may add conditions (CDC 207-5). Steph 2026-10-14: \"If it's otherwise clear and measurable, but there is a 'may add conditions', yellow.\" Never red, never green."
     kind: categorical
     risk: possible
     severity: 5
@@ -773,7 +1105,7 @@ types:
     resolution: external_inquiry
     scope: per_lot
     key: [lot, design, fact]
-    path: "Ask the city or county what conditions the review would put on four homes here, or apply. In Washington County, where the fact is the plat, the county's plat records may show the lot came from a standard subdivision or partition, which keeps it on the Type I path"
+    path: "Ask the city or county what conditions the review would put on four homes here, or apply. In Washington County, where the fact is the plat, the county surveyor's plat records may show the lot came from a standard subdivision or partition the tax roll's legal description does not name, which keeps it on the Type I path"
     priority: next
     status: pending
     approved_by: null
@@ -1390,6 +1722,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-HILLSBORO-DOWNTOWN-PLAN-DISTRICT:
+    description: "Whether the lot lies inside Hillsboro's Downtown Plan District (Figure 12.61.200-A), where 12.61.800 refuses a flat primary roof (4/12 hipped, 6/12 gabled) and the flat-roofed pod is RED"
+    kind: categorical
+    risk: possible
+    severity: 9
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Trace Figure 12.61.200-A (CDC 12.61.200) as Hillsboro's drawn_areas; the city publishes no plan-district layer"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-TROUTDALE-TOWN-CENTER:
     description: "Whether the lot lies inside Troutdale's Town Center Overlay District"
     kind: categorical
@@ -1415,6 +1762,21 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "The city's CFEC Parking Delineated Area Map, or our own measure from the Town Center layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-FAIRVIEW-OUTSIDE-STOREFRONT-DISTRICT:
+    description: "Storefront district edge unconfirmed: whether the Fairview TCC lot lies outside the Halsey Street storefront district (Figure 19.65.030(B), traced); the line cuts this lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "A city map of the storefront district boundary, or a planner's word on which side of it the lot falls"
     priority: later
     status: pending
     approved_by: null
@@ -1676,6 +2038,22 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [UTILITY_EASEMENT_ASSUMED]
+  ALLEY-IMPROVEMENT-UNCONFIRMED:
+    description: "The parking is reached from the alley, and the code lets access come from an alley only where it is improved -- built to the county's alley width and pavement standards (Washington County CDC 430-84, citing 409-3.3 A: an alley serving 1-8 units paved at least 16 ft wide, curbs only where drainage needs them). The alley's width is measured; its paving is not"
+    kind: categorical
+    risk: unlikely
+    # Informational, never holds a green: below the yellow line (coordinator 2026-11-08, FOLLOWUPS 105).
+    severity: 1
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "Look at the alley (street view or a site visit): paved at least 16 ft wide (CDC 409-3.3 A, alleys of 1-8 units; cdc.409.private-streets.txt#L106-L111)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ALLEY_IMPROVEMENT_UNCONFIRMED]
   OC-ROAD-ZONE-STANDIN:
     description: "Oregon City's road strip was read with the zones on both sides of the street standing in for the plan designations its table asks for, and came out narrower than the widest row (Steph 2026-10-14, FOLLOWUPS 82)"
     kind: parametric
@@ -1911,6 +2289,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-WASHINGTON-COUNTY-411-BUFFER:
+    description: "Whether Washington County's Section 411 screening and buffering adds a setback to the side and rear yards of a North Bethany R-9 NB or R-24 NB lot; the 411-5 matrix names no North Bethany district, so the width is left to the Review Authority (CDC 411-5, Other row)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Ask Washington County planning which 411-5 row and buffer type the North Bethany districts take (or a ruling that they read as their parent R-9 and R-24 rows); then encode the buffer as a setback variant on the neighbouring district"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-BEAVERTON-TYPE-A-FRONTAGE:
+    description: "Whether the Beaverton Downtown lot fronts a Type A frontage of Figure 70.20.10.6.2 (or is an Area C or D tax lot), where the ground floor must be at least 16 ft floor to floor (BDC 70.20.10.6 S1.a, 70.20.10.6.D.2) against the pod's 12 ft"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Fetch Figure 70.20.10.6.2 (the Active Frontage Design Map, BDC Chapter 70) and trace its Type A streets onto the RLIS centrelines (FOLLOWUPS 105): a lot on one fails the 16 ft ground floor; a lot on none is cleared"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-HILLSBORO-CENTER-CORE:
     description: "Center Core edge unconfirmed: whether the MU-VTC lot lies inside South Hillsboro's Town Center or Village Center Core Area (Figure 12.65.930-A, traced); the traced line cuts this lot, and inside it owes 3 stories, outside 2"
     kind: categorical
@@ -2051,7 +2459,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-PDX-JOHNSON-CREEK-UNMEASURED:
-    description: "Whether the lot lies where a Johnson Creek Basin rule reaches the pod that nothing measures: the limits on removing trees 6 inches or more across (PCC 33.537.125) or the Springwater Corridor's 20 ft landscaped buffer, with no building, parking or paving in it (33.537.130)"
+    description: "Whether the lot lies where a Johnson Creek Basin rule reaches the pod that nothing measures: the Springwater Corridor's 20 ft landscaped buffer, with no building, parking or paving in it (PCC 33.537.130), the South subdistrict's slope-class density for land divisions (33.537.140.E) or the Flood Risk Area's limits on land divisions (33.537.160); the last two only on the townhouse form (four unit lots), since built as one building on the one lot the pod makes no land division"
     kind: categorical
     risk: possible
     severity: 5
@@ -2059,7 +2467,22 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "A tree survey of the lot, and which lot line abuts the Springwater Corridor; the city's tree canopy layer could release some lots"
+    path: "The fit with the landscaped buffer and vehicle-area setback set on the lot line that abuts the Springwater Corridor parcel (springwater-corridor.geojson), the slope classes of a South subdistrict lot, and how much of the lot is in the Flood Risk Area"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-JOHNSON-CREEK-LAND-DIVISION:
+    description: "Whether the lot lies where a Johnson Creek Basin land-division rule reaches: the South subdistrict's slope-class density (PCC 33.537.140.E) or the Flood Risk Area's limits (33.537.160). Both govern land divisions only, so they reach the pod as four townhouses on unit lots and not as one building on the one lot; on the townhouse form the lot is held under FACT-PDX-JOHNSON-CREEK-UNMEASURED"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The slope classes of a South subdistrict lot, and how much of the lot is in the Flood Risk Area, before a land division into unit lots"
     priority: later
     status: pending
     approved_by: null
@@ -2075,6 +2498,21 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "The Special Building Setbacks maps from the Development Services Center, or the city's setback-line layer read against them"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-MIN-SITE-FRONTAGE-AREA:
+    description: "Whether the lot lies in one of the Eastern Portland centres on Zoning Code Map 120-2, where a multi-dwelling site more than 160 ft deep may take new homes only with 90 ft of frontage on a street (PCC 33.120.206); the outline cuts this lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against Map 120-2 by hand, or the City's Minimum Required Site Frontage Areas layer at the lot's own boundary"
     priority: later
     status: pending
     approved_by: null
@@ -2140,6 +2578,51 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-SITE-FRONTAGE-NEIGHBOUR-EXCEPTION:
+    description: "Whether every lot sharing a side lot line with this deep, narrow site is zoned other than multi-dwelling, meets its minimum density, or holds three homes -- the exception PCC 33.120.206.C.2.b makes to the 90 ft frontage rule on Map 120-2; nobody has counted the neighbours' homes"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The neighbouring lots' zoning, home counts and areas from the assessor roll, against 33.120.206.C.2.b"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-HAYDEN-ISLAND:
+    description: "Whether the lot is in Portland's Hayden Island plan district, where in the commercial/mixed use zones the main entrance faces the street, or on a lot with more than one street the Island Core Access Street (PCC 33.532.250)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The Hayden Island outline on Portland Maps; a lot the outline cuts is read by hand"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-LOMBARD-SUBDISTRICT-A:
+    description: "Whether the lot is in Subdistrict A of Portland's Lombard Street plan district, where on RM2 sites the main entrance of each building faces the street lot line (PCC 33.545.120.C.2)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The Lombard Subdistrict A outline on Portland Maps; a lot the outline cuts is read by hand"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-PDX-NW-RESIDENTIAL-LIMITED:
     description: "Whether a CM3 lot lies in the Northwest plan district's Residential Use Limitation Area (Map 562-2, PCC 33.562.100.B), where more than 20 percent Residential use in a building is prohibited"
     kind: categorical
@@ -2150,6 +2633,21 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "Read the lot against Map 562-2: a lot the area boundary cuts is unanswered"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-EASTERN-PATTERN-AREA:
+    description: "Whether the lot lies in Portland's Eastern Pattern Area on Zoning Code Map 120-3, where the multi-dwelling rear setback is a quarter of the site's depth with at most half of it vehicle area (PCC 33.120.220.B.2); the outline cuts this lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against Map 120-3 by hand, or the City's Pattern Areas layer at the lot's own boundary"
     priority: later
     status: pending
     approved_by: null

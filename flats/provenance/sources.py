@@ -86,6 +86,9 @@ OFFICIAL: frozenset[str] = frozenset(
         "westlinnoregon.gov",
         "wilsonvilleoregon.gov",
         "tualatinoregon.gov",
+        # Cornelius's own site: its Public Works Standards, which CMC 18.143
+        # sends access spacing to (FOLLOWUPS 169).
+        "corneliusor.gov",
         "ci.gladstone.or.us",
         # Not rivergroveoregon.gov, which was guessed here and resolves
         # nowhere. Thirty Rivergrove and Wood Village values were reading as
@@ -98,6 +101,11 @@ OFFICIAL: frozenset[str] = frozenset(
         # the issuing fire marshal's own statement of what OFC 2022 requires
         # of a site plan (FOLLOWUPS 28).
         "clackamasfire.com",
+        # Canby Fire District, the fire code official for Canby. Its own host
+        # on the shared special-district platform (the platform as a whole is
+        # many districts, so only this host is named). Its Conditions of
+        # Construction states the district's dead-end length (FOLLOWUPS 168).
+        "cfpd.specialdistrict.org",
         # State
         "oregonlegislature.gov",
         "sos.state.or.us",

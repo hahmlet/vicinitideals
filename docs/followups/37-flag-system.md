@@ -1,6 +1,6 @@
 # 37. Flag system plan ("FLATS Flag System Plan.md", Steph 2026-10-02) -- slices 1-(e) BUILT and LIVE
 
-37. [Claude] [scan: YES for (iii); NO for (f)] **Flag system plan ("FLATS Flag System Plan.md", Steph 2026-10-02) --
+37. [Claude] [scan: YES for (iii)] **Flag system plan ("FLATS Flag System Plan.md", Steph 2026-10-02) --
    slices 1-(e) BUILT and LIVE** (34963899 slice 1 + approval page;
    6eb14ffe measure + lot page; 85712ad6 severity 0; flags tables
    0139-0142; cbc47269; check margins 7dc34722; room each way f3408efa).
@@ -26,11 +26,11 @@
    `scripts/flats_flags.py sync` then `check` on 114 (nightly sync 10:30
    UTC). An ambiguous rule set binds nothing, so ~0.07% of rows stay yellow
    despite a 50+ ft fit miss (Wilsonville R, Hillsboro SCR-V) -- by design.
-   OPEN: (iii) Gresham note 5 "end of a Minor Access Street" held on
-   `local_street` (wrong fact) -- re-point + measure dead ends; worth little
-   while sidewalk_easement holds the same Gresham lots. (e) extending
-   severity 0 = encode each capped footnote's direction (most fact flags
-   sit on footnotes with no stated direction). Unknown facts needing a
-   title report: utility_easement 28k, sidewalk_easement 20k (run 63
-   yellow lots). Plan gaps: flag history across county refreshes; bulk
-   writes through the loader. (f) Phase 4 pod spec, deferred by the plan.
+   (iii) DONE and live (main, run 124): Gresham note 5 encoded at its worst reading
+   (c37b8b54 via flats/flag-leftovers, merged into rel5 as 4d9e7666); (f) CLOSED 2026-11-08 (one fixed
+   design; set access is FOLLOWUPS 145).
+   STILL OPEN: (e) the other 29 `unmeasured` notes turn on data nobody holds (easements, water
+   features, LO net developable area, site-specific limits) and have no figure to bound -- nothing
+   buildable; unknown facts needing a title report: utility_easement 28k, sidewalk_easement 20k (run 63
+   yellow lots). Plan gaps "flag history across county refreshes" and "bulk writes through the loader"
+   are unspecified: a feature to scope with Steph before building.

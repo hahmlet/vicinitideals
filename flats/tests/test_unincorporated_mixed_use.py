@@ -33,6 +33,8 @@ EXPECTED = {
         "setback_side_ft": (5, "Minimum Side and Rear Setbacks"),
         "setback_rear_ft": (5, "Minimum Side and Rear Setbacks"),
         "min_building_height_ft": (20, "Minimum Building Height"),
+        "setback_front_ft": (10, "a minimum of 10 feet and a maximum of 15 feet"),
+        "setback_front_max_ft": (15, "a minimum of 10 feet and a maximum of 15 feet"),
     },
     "PMU1": {
         "min_lot_sqft": (7000, "quadplex"),
@@ -109,9 +111,19 @@ def test_each_kept_number_matches_the_line_it_cites(
     assert phrase in store.quote(held.prov.quote), (zone, field)
 
 
-def test_scmu_front_setback_is_left_unfilled(layer: Layer) -> None:
-    """1005.09 keys the front line to street type on a map; no lot carries that."""
-    assert "setback_front_ft" not in layer.zones["SCMU"].values
+def test_scmu_front_window_fits_every_street_type(layer: Layer, store: ProvenanceStore) -> None:
+    """1005.09 keys the front line to the street type on Map 1005-1 (read 2026-11-09).
+
+    No lot carries its street type, so the window held is Landscape's 10-15 ft (A
+    streets), which also sits inside Porch/Stoop/Terrace's 5-15 ft (B, C, D streets).
+    """
+    held = layer.zones["SCMU"].values
+    quote = store.quote(held["setback_front_ft"].prov.quote)
+    assert "Table 1005-1" in quote and "Map 1005-1" in quote
+    assert "a minimum of five feet and a maximum of 15 feet" in quote
+    assert (held["setback_front_ft"].value, held["setback_front_max_ft"].value) == (10, 15)
+    # The zone stays a judgement review, so no SCMU lot can open GREEN on this reading.
+    assert held["review_discretion"].value == "judgement"
 
 
 def test_pmu_sites_share_the_one_table_510_2_column(layer: Layer) -> None:

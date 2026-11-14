@@ -29,14 +29,20 @@ built on draft encoding is legible as one rather than mistaken for a verdict.
 
 from __future__ import annotations
 
+import contextlib
+import contextvars
 import math
+from collections.abc import Iterator
+import dataclasses
 from dataclasses import dataclass, field as _dc_field
 from typing import TYPE_CHECKING
 
-from flats.designs.model import Design, ParkingConfig, Plat
+from flats.designs.model import Design, Orientation, ParkingConfig, Plat
+from flats.geom.edges import bearing_delta
 from flats.score.turns import AS_DRAWN, Fix, Shape, Unsearched, fixes
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
+    from flats.fit.rectangle import Fit
     from flats.rules.resolver import ZoneResolution
 
 #: What sets the area floor. Named rather than inferred so the page can say
@@ -44,6 +50,19 @@ if TYPE_CHECKING:  # pragma: no cover - typing only
 BY_MIN_LOT = "min_lot_sqft"
 BY_COVERAGE = "max_coverage_pct"
 BY_ENVELOPE = "envelope"
+#: The lot the building, its pavement and the open space or landscaping the
+#: code asks to be left over add up to (FOLLOWUPS 7): the screen's
+#: ``landscaped_pct`` / ``open_space_pct`` / ``open_space_sqft`` checks read
+#: backwards into an area.
+BY_LEFTOVER = "leftover"
+
+#: The leftover standards the paper lot is charged for, as (field, share):
+#: a share is a percent of the whole lot, an area is square feet.
+_LEFTOVER_FIELDS: tuple[tuple[str, bool], ...] = (
+    ("min_landscaped_pct", True),
+    ("open_space_min_pct", True),
+    ("open_space_min_sqft", False),
+)
 
 #: What sets the width, for the same reason. The building with the lane
 #: beside it, the row of stalls behind it, or a lot-width standard above both.
@@ -73,8 +92,8 @@ class PaperFit:
     #: the design parks nowhere the lot has to give depth for.
     parking_depth_ft: float = 0.0
     #: What that row of stalls asks across the lot: the design's floor,
-    #: raised to the zone's legal minimum and cut to its cap, each the
-    #: design's stall width or the zone's if wider. 0.0 with no rear court.
+    #: raised to the zone's legal minimum and cut to its cap, each at the
+    #: zone's stated width or the design's where none is stated. 0.0 with no court.
     parking_width_ft: float = 0.0
     #: The drive lane beside the building that reaches the court, the design's
     #: figure raised by the zone's two-way driveway minimum. 0.0 with no court.
@@ -359,6 +378,140 @@ def faces_the_street(rules: "ZoneResolution", design: Design) -> bool:
     return design.plat is Plat.unit_lots and townhouse_lots(rules)
 
 
+#: The field holding the angle a zone's main-entrance standard lets the
+#: doors stand off the street (``entrance_angle_max_deg``).
+ENTRANCE_ANGLE_FIELD = "entrance_angle_max_deg"
+
+
+def door_limit(rules: "ZoneResolution", design: Design) -> float | None:
+    """How far, in degrees, the face carrying ``design``'s doors may stand
+    off a street the lot abuts, where the zone's main-entrance standard
+    makes the doors face the street (``entrance_faces_street`` ``required``
+    or ``required_named``; FOLLOWUPS 153, rulings.yaml
+    ``2026-11-08-no-porch-end-door``); ``None`` where no such standard
+    binds, or the building is already made to face the street
+    (:func:`faces_the_street`).
+
+    The doors face A street: any street the lot abuts -- its front, or a
+    corner's side street (``entrance_faces_street``'s "facing either street
+    counts"; Portland 33.110.230.B.3 lets the applicant choose the
+    frontage) -- so the fit may stand the building end-on to the front with
+    its doors to the side street (rel4 move-read finding 2, 1N2E22BD
+    -06800). The angle is the one the code prints
+    (``entrance_angle_max_deg``: "be at an angle of up to 45 degrees from
+    the street"); unread, nought -- the doors parallel to a street line.
+
+    ``None`` too inside :func:`doors_to_the_side`: the second search for a
+    lot that fits only with its doors to a side yard (rulings.yaml
+    ``2026-11-10-side-door-fit-yellow``); :func:`door_rule` says whether
+    the standard binds whatever that search.
+    """
+    if _DOORS_TO_THE_SIDE.get():
+        return None
+    return door_rule(rules, design)
+
+
+def door_rule(rules: "ZoneResolution", design: Design) -> float | None:
+    """:func:`door_limit` as the code states it, whether or not the search
+    for a side-door fit (:func:`doors_to_the_side`) is under way."""
+    if design.door_face != "width" or faces_the_street(rules, design):
+        return None
+    if rules.get("entrance_faces_street") not in ("required", "required_named"):
+        return None
+    got = rules.get(ENTRANCE_ANGLE_FIELD)
+    return float(got) if isinstance(got, (int, float)) and got > 0 else 0.0
+
+
+#: Set while a lot is searched with its doors free to face a side yard
+#: (:func:`doors_to_the_side`); read only by :func:`door_limit`.
+_DOORS_TO_THE_SIDE: contextvars.ContextVar[bool] = contextvars.ContextVar(
+    "doors_to_the_side", default=False
+)
+
+
+@contextlib.contextmanager
+def doors_to_the_side() -> Iterator[None]:
+    """Search the pod with its door face free to stand to a side yard, as
+    though no entrance standard bound it (:func:`door_limit` returns
+    ``None``), for the duration of the block.
+
+    Steph 2026-11-10 (rulings.yaml ``2026-11-10-side-door-fit-yellow``,
+    FOLLOWUPS 177): the 2026-11-08 ruling stands for the design -- no
+    street-facing door on the end home -- but where a code makes the doors
+    face the street and the pod fits only turned sideways, the lot is
+    YELLOW ("fits only with doors facing the side; needs a street-facing
+    end door (design change)"), never GREEN and not RED on that ground
+    alone. The caller (:func:`flats.ingest.quadfit.side_door_checked`)
+    marks the lot so every screen in the block holds it out of GREEN
+    (:attr:`flats.score.screen.LotFacts.entrance_side_fit`)."""
+    token = _DOORS_TO_THE_SIDE.set(True)
+    try:
+        yield
+    finally:
+        _DOORS_TO_THE_SIDE.reset(token)
+
+
+#: How far the door face may turn from a street before the doors no longer
+#: face it, where a zone's entrance standard is unread or unsettled
+#: (``entrance_faces_street`` absent or ``unclear``). Forty-five degrees is
+#: the angle the Large Cities Model Code (OAR 660-046 Exhibit B,
+#: C.2.b.ii, "Be at an angle of up to 45 degrees from the street") and the
+#: codes copied from it print; a judgement for a zone that prints none, and
+#: one that only decides which fits are held out of GREEN, never failed.
+ENTRANCE_TURN_DEG = 45.0
+
+
+def entrance_unsettled(rules: "ZoneResolution", design: Design) -> bool:
+    """Whether a turned fit of ``design`` here waits on an entrance standard
+    nobody has settled: the design's doors are all on one face, the building
+    is not already made to face the street, and the zone's
+    ``entrance_faces_street`` is ``unclear`` or was never read (FOLLOWUPS
+    153). ``alternative`` and ``not_required`` let the turned fit stand;
+    ``required`` searches only fits whose doors face a street
+    (:func:`door_limit`)."""
+    if design.door_face is None or faces_the_street(rules, design):
+        return False
+    return rules.get("entrance_faces_street") in (None, "unclear")
+
+
+def entrance_street_named(rules: "ZoneResolution", design: Design) -> bool:
+    """Whether the zone makes the doors of ``design`` face the street and,
+    on a lot with more than one, names which street
+    (``entrance_faces_street: required_named``, FOLLOWUPS 153 round 2):
+    Wood Village's official address, downtown Estacada's busiest street or
+    Broadway, Hayden Island's Core Access Street. Nothing the screen reads
+    says which street that is, so a fit on such a lot cannot be shown to
+    face the right one."""
+    return design.door_face is not None and (
+        rules.get("entrance_faces_street") == "required_named"
+    )
+
+
+def door_turn_deg(fit: "Fit", bearings: "tuple[float, ...]") -> float | None:
+    """How far the face carrying the doors stands from the nearest street
+    direction, 0 to 90 degrees, for a design whose doors are on its
+    ``width`` face: the fit's grid angle is the direction its across side
+    runs, which is the width face standing ``width_facing`` and the depth
+    face standing ``depth_facing``. ``None`` where the fit or the lot names
+    no direction."""
+    if fit.angle_deg is None or fit.orientation is None or not bearings:
+        return None
+    face = fit.angle_deg + (0.0 if fit.orientation is Orientation.width_facing else 90.0)
+    return min(bearing_delta(face, b) for b in bearings)
+
+
+def door_turned(design: Design, fit: "Fit", bearings: "tuple[float, ...]") -> bool:
+    """Whether ``fit`` stands ``design`` with its doors turned away from
+    every street (more than :data:`ENTRANCE_TURN_DEG`). A fit that names no
+    angle is read by its orientation alone: end-on is turned."""
+    if design.door_face is None or not fit.fits:
+        return False
+    turn = door_turn_deg(fit, bearings)
+    if turn is None:
+        return fit.orientation is Orientation.depth_facing
+    return turn > ENTRANCE_TURN_DEG
+
+
 
 
 #: Parking configurations that put a row of stalls and its drive aisle behind
@@ -537,12 +690,97 @@ def lot_line_buffer_doubt_ft(rules: "ZoneResolution") -> float:
     return _number(rules, "parking_lot_line_buffer_doubt_ft") or 0.0
 
 
+def side_yard_mode(rules: "ZoneResolution") -> str:
+    """The side-yard parking permission, with prohibitions taking precedence."""
+    mode = rules.get("parking_side_yard_allowed")
+    if mode not in ("lane", "lane_and_court"):
+        return "none"
+    if rules.get("parking_side_prohibited") is True or yards_kept_clear(rules):
+        return "none"
+    return mode
+
+
+def side_yard_stated_mode(rules: "ZoneResolution") -> str:
+    """The allowed reach the code actually states; absent means silence."""
+    allowed = side_yard_mode(rules)
+    stated = rules.get("parking_side_yard_stated")
+    if allowed == "none" or stated not in ("lane", "lane_and_court"):
+        return "none"
+    return min((allowed, stated), key=("none", "lane", "lane_and_court").index)
+
+
+def _side_yard_clearance_ft(rules: "ZoneResolution") -> float:
+    """The side setback available to parking after the lot-line strip."""
+    side = _number(rules, "setback_side_ft")
+    total = _number(rules, "setback_side_total_ft")
+    if total is not None:
+        side = max(side or 0.0, total / 2)
+    if side is None:
+        return 0.0
+    return max(0.0, side - lot_line_buffer_ft(rules))
+
+
+def side_yard_lane_overlap_ft(
+    rules: "ZoneResolution", lane_ft: float, *, corner: bool = False
+) -> float:
+    """How much of the lane may overlap one side setback."""
+    if corner or side_yard_mode(rules) == "none":
+        return 0.0
+    return min(max(0.0, lane_ft), _side_yard_clearance_ft(rules))
+
+
+def side_yard_court_overlap_ft(
+    rules: "ZoneResolution",
+    court_ft: float,
+    *,
+    lane_ft: float | None = None,
+    corner: bool = False,
+) -> float:
+    """How much of the court may overlap the lane's side setback."""
+    if corner or side_yard_mode(rules) != "lane_and_court" or lane_ft == 0:
+        return 0.0
+    return min(max(0.0, court_ft), _side_yard_clearance_ft(rules))
+
+
+def rear_kept_clear_ft(
+    rear_ft: float,
+    rules: "ZoneResolution",
+    *,
+    court_width_ft: float | None = None,
+    lot_width_ft: float | None = None,
+) -> float:
+    """The part of the required rear yard parking may not use, where the code
+    caps the vehicle share of it (``parking_rear_yard_max_pct``, PCC
+    33.120.220.B.2.a: "No more than 50 percent of the Eastern Pattern Area
+    rear setback can be vehicle area"); 0 where none is stated.
+
+    Where both widths are known, the court may overlap the setback strip by
+    the lesser of its full depth and the area cap expressed as depth:
+    ``share * lot_width / court_width * rear_ft``. Without both widths, use
+    the whole-lot-width case, the conservative bound.
+    """
+    share = _number(rules, "parking_rear_yard_max_pct")
+    if share is None or rear_ft <= 0:
+        return 0.0
+    if court_width_ft is None or lot_width_ft is None:
+        return rear_ft * max(0.0, 100.0 - float(share)) / 100.0
+    if court_width_ft <= 0 or lot_width_ft <= 0:
+        return 0.0
+    overlap_depth = min(
+        rear_ft,
+        rear_ft * (float(share) / 100.0) * lot_width_ft / court_width_ft,
+    )
+    return max(0.0, rear_ft - overlap_depth)
+
+
 def behind_wall_ft(
     parked_ft: float,
     rear_ft: float,
     rules: "ZoneResolution",
     *,
     lot_line_buffer_override_ft: float | None = None,
+    court_width_ft: float | None = None,
+    lot_width_ft: float | None = None,
 ) -> float:
     """The ground a lot must give behind the building's rear wall.
 
@@ -566,12 +804,23 @@ def behind_wall_ft(
     (:func:`lot_line_buffer_ft`), and raises the keep-off distance here; its
     lateral half -- a strip wider than the side setback -- is not this
     function's, because the side yards are already outside the envelope the
-    court is searched in.
+    court is searched in. Side-yard parking permissions change only the
+    width searched; they do not let the court share the rear yard
+    differently.
 
     The building still stands the whole of ``rear_ft``; what the court stays
     out of is the printed yard (:func:`kept_rear_yard_ft`).
     """
-    keep = kept_rear_yard_ft(rear_ft, rules) if yards_kept_clear(rules) else 0.0
+    keep = (
+        kept_rear_yard_ft(rear_ft, rules)
+        if yards_kept_clear(rules)
+        else rear_kept_clear_ft(
+            rear_ft,
+            rules,
+            court_width_ft=court_width_ft,
+            lot_width_ft=lot_width_ft,
+        )
+    )
     keep = max(keep, lot_line_buffer_ft(rules), lot_line_buffer_override_ft or 0.0)
     return max(rear_ft, parked_ft + keep)
 
@@ -630,6 +879,38 @@ def side_column(
     ``stalls`` is the count to stand in the column; the charged floor
     (:func:`court_across`) when omitted.
     """
+    frame = _column_frame(design, rules, alley)
+    if frame is None:
+        return None
+    gap, _, used = frame
+    # Not driven (:func:`court_across`): the stalls back straight out into
+    # the alley, so the column is the stalls as drawn.
+    across = court_across(design, rules, alley, turning=False)
+    count = across.stalls if stalls is None else stalls
+    if not count:
+        return None
+    return gap + count * across.stall_ft, tuple(used + list(across.from_code))
+
+
+def side_column_across(
+    design: Design, rules: "ZoneResolution", alley: Alley | None
+) -> float | None:
+    """How far across the lot a side alley's column of stalls stands
+    (:func:`side_column`): one stall's depth plus the back-out room the alley
+    leaves short, measured in from the alley's side of the plan. ``None``
+    where :func:`side_column` offers no column. What the drawing stands the
+    column in (FOLLOWUPS 5): the strip of the court along the alley, not the
+    room's whole width."""
+    frame = _column_frame(design, rules, alley)
+    return None if frame is None else frame[1]
+
+
+def _column_frame(
+    design: Design, rules: "ZoneResolution", alley: Alley | None
+) -> tuple[float, float, list[str]] | None:
+    """:func:`side_column`'s standoff off the rear wall, its crossing (one
+    stall's depth plus the back-out shortfall) and the fields read for them;
+    ``None`` where the alley offers no column."""
     if (
         alley is None
         or not alley.at_side
@@ -652,13 +933,7 @@ def side_column(
     narrow = min(design.footprint.width_ft, design.footprint.depth_ft)
     if stall + shortfall > narrow:
         return None
-    # Not driven (:func:`court_across`): the stalls back straight out into
-    # the alley, so the column is the stalls as drawn.
-    across = court_across(design, rules, alley, turning=False)
-    count = across.stalls if stalls is None else stalls
-    if not count:
-        return None
-    return gap + count * across.stall_ft, tuple(used + list(across.from_code))
+    return gap, stall + shortfall, used
 
 
 def _row_ft(
@@ -798,6 +1073,66 @@ def drive_width(rules: "ZoneResolution", base: float, used: list[str] | None = N
     return base
 
 
+def narrow_lane_rules(design: Design, rules: "ZoneResolution") -> "ZoneResolution | None":
+    """``rules`` with the drive drawn at the narrowest lane a ruling lets
+    the pod use (``driveway_lane_narrow_ft``), held as the one lane that
+    governs (``driveway_one_lane_ft``, :func:`drive_width`); None where no
+    narrower lane is open to this design here.
+
+    Steph 2026-11-10 (rulings.yaml ``2026-11-10-portland-driveway-9ft``,
+    "9ft in Portland"): the lane may be as narrow as Portland's printed
+    minimum, 33.266.120.D.2's 9 ft, wherever the code allows it for this
+    building. The car decides how narrow is drivable: at the stated width,
+    or failing that the narrowest whole foot above it short of the pod's own
+    lane, from which the turning ledger (:mod:`flats.score.turns`) finds
+    some fix that lets a car use every stall. A width the ledger never
+    searched is taken as it stands -- the court is then undriven and the lot
+    cannot be green on it. None where every width short of the pod's lane
+    leaves the court unusable, on the unit-lot form (a parking tract goes to
+    33.266.130, which prints no driveway width), and where a one-lane ruling
+    already sets the lane."""
+    for trial in narrow_lane_rungs(design, rules):
+        shape = court_shape(design, trial)
+        found = None if shape is None else fixes(shape)
+        if shape is None or isinstance(found, Unsearched) or found:
+            return trial
+    return None
+
+
+def narrow_lane_rungs(design: Design, rules: "ZoneResolution") -> list["ZoneResolution"]:
+    """Every reading :func:`narrow_lane_rules` may try, narrowest first: the
+    drive at ``driveway_lane_narrow_ft`` and at each whole foot above it
+    short of the pod's own lane. Empty where no narrower lane is open --
+    the unit-lot form, a one-lane ruling, no narrow drive stated. The
+    turning ledger holds the court of every one (``flats.score.turns.
+    corpus_shapes``)."""
+    if design.plat is Plat.unit_lots or "unit_lots" in rules.conditions:
+        return []
+    if _number(rules, "driveway_one_lane_ft") is not None:
+        return []
+    narrow = _number(rules, "driveway_lane_narrow_ft")
+    held = rules.values.get("driveway_lane_narrow_ft")
+    if narrow is None or held is None:
+        return []
+    wide = drive_width(rules, design.parking.lane_width_ft)
+    out: list[ZoneResolution] = []
+    width = narrow
+    while width < wide:
+        out.append(
+            dataclasses.replace(
+                rules,
+                values={
+                    **rules.values,
+                    "driveway_one_lane_ft": dataclasses.replace(
+                        held, name="driveway_one_lane_ft", value=width
+                    ),
+                },
+            )
+        )
+        width += 1.0
+    return out
+
+
 @dataclass(frozen=True, slots=True)
 class Across:
     """What a rear court asks of the lot's width, and where the figures came from."""
@@ -805,7 +1140,7 @@ class Across:
     #: Stalls the court is charged at: the design's floor, raised to the
     #: zone's legal minimum, cut to its cap.
     stalls: int = 0
-    #: Those stalls side by side, each the wider of the design's and the zone's.
+    #: Those stalls side by side at the zone's stated width or the design's.
     width_ft: float = 0.0
     #: The two-way lane beside the building from the street to the court --
     #: or the one lane a ruling lets serve it (:func:`drive_width`).
@@ -886,10 +1221,9 @@ def court_across(
     them the lot seats and says so beside the colour
     (:attr:`flats.score.screen.Screening.stalls_seated`).
 
-    **How wide each.** The design's stall width, raised by the zone's. Gresham
-    dimensions a stall at 8.5 ft and that does not shrink the court, for the
-    same reason its narrower aisle does not deepen it — the design is drawn to
-    a 9 ft cell and a smaller one is a different drawing.
+    **How wide each.** The zone's stated stall width where it gives one;
+    otherwise the design's. A narrower stated width draws a narrower cell,
+    and a wider one draws a wider cell.
 
     A code that plants islands inside the court
     (``parking_island_sqft_per_space``) widens each cell by its share of
@@ -947,10 +1281,11 @@ def court_across(
         stalls = min(stalls, math.floor(round(cap * units, 6)))
         most = min(most, math.floor(round(cap * units, 6)))
     most = max(most, stalls)
-    stall = design.parking.stall_width_ft
+    bare = design.parking.stall_width_ft
     if (stated := _number(rules, "parking_stall_width_ft")) is not None:
         used.append("parking_stall_width_ft")
-        stall = max(stall, stated)
+        bare = stated
+    stall = bare
     if (island := _number(rules, "parking_island_sqft_per_space")) is not None and island > 0:
         # Planted islands inside the court, so much ground per stall
         # (Tualatin 73C.210(4), 25 sq ft at the aisle ends): charged as width
@@ -978,9 +1313,6 @@ def court_across(
     offered: tuple[Fix, ...] = ()
     turns: bool | None = True
     if lane and stalls > 0:
-        bare = design.parking.stall_width_ft
-        if (stated := _number(rules, "parking_stall_width_ft")) is not None:
-            bare = max(bare, stated)
         deep = design.parking.stall_depth_ft
         if (stated := _number(rules, "parking_stall_depth_ft")) is not None:
             deep = max(deep, stated)
@@ -1120,7 +1452,12 @@ def side_court(
       Milwaukie 19.505.3.D.4.a keep parking off. Where that ban holds on an
       interior lot the court stops at the rear wall
       (:attr:`Beside.within_building`) -- a through lot's far end is a
-      street the fit cannot see either;
+      street the fit cannot see either. Which flank the court takes is the
+      drawing's: it stands the court on the flank clear of the yards
+      :func:`flats.ingest.quadfit.court_yard_lines` names (a side street
+      the code makes a front, or any street where the ban holds), and a
+      plan whose court still stands in one is held out of GREEN (Steph
+      2026-11-08, no front-yard parking; COURT_FRONT_YARD);
     * not on a corner lot whose code sends the driveway to the side street
       (``corner_access_street: side``): the aisle is entered off the front;
     * not where the code sends the driveway to the alley
@@ -1390,9 +1727,16 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     per_unit = design.plat is Plat.unit_lots
     lots = design.units
 
-    front = _number(rules, "setback_front_ft")
-    rear = _number(rules, "setback_rear_ft")
-    side = _number(rules, "setback_side_ft")
+    # A setback the code waives (``exempt: true``) is zero feet, not an
+    # unknown one: until 2026-11-08 the paper fit read it as unstated, so a
+    # zone with no side or rear yard -- Fairview VA, 19.125.040(F) -- never
+    # costed its envelope and reported the coverage floor alone, 3,102 sq ft
+    # for a pod that needs a drive and a court behind it (FOLLOWUPS 7). The
+    # combined side figure stays as stated: a waived total says nothing of
+    # an unread per-side yard.
+    front = _yard(rules, "setback_front_ft")
+    rear = _yard(rules, "setback_rear_ft")
+    side = _yard(rules, "setback_side_ft")
     side_total = _number(rules, "setback_side_total_ft")
     min_lot, lot_answered = lot_standard(rules, "min_lot_sqft", per_unit=per_unit, lots=lots)
     min_width, width_answered = lot_standard(
@@ -1415,8 +1759,9 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     min_stories = _number(rules, "min_building_height_stories")
     min_ground = _number(rules, "min_ground_story_ft")
     # A code that makes the building face the street has taken one of the
-    # two orientations away, and the cheaper lot may have been that one.
-    axis = faces_the_street(rules, design)
+    # two orientations away, and the cheaper lot may have been that one. So
+    # has an entrance standard on paper: the lot drawn here has one street.
+    axis = faces_the_street(rules, design) or door_limit(rules, design) is not None
 
     # What the two side yards take off the width together. Where the code
     # states a combined figure it governs, and a per-side floor can only make
@@ -1425,6 +1770,10 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     sides = _pair(side, side_total)
     court, court_from_code = court_depth(design, rules)
     across = court_across(design, rules)
+    lane_overlap = side_yard_lane_overlap_ft(rules, across.lane_ft)
+    court_overlap = side_yard_court_overlap_ft(
+        rules, across.width_ft, lane_ft=across.lane_ft
+    )
     needed = (
         ("setback_front_ft", front),
         ("setback_rear_ft", rear),
@@ -1448,6 +1797,12 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         used.append("parking_required_yard_prohibited")
     if court and lot_line_buffer_ft(rules) > 0:
         used.append("parking_lot_line_buffer_ft")
+    if lane_overlap or court_overlap:
+        used.append("parking_side_yard_allowed")
+        if lot_line_buffer_ft(rules) > 0 and "parking_lot_line_buffer_ft" not in used:
+            used.append("parking_lot_line_buffer_ft")
+    if court and rear_kept_clear_ft(rear or 0.0, rules) > 0:
+        used.append("parking_rear_yard_max_pct")
     used += [
         name
         for name, got in (
@@ -1462,6 +1817,12 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         )
         if got is not None
     ]
+    leftovers = [
+        (name, float(got), share)
+        for name, share in _LEFTOVER_FIELDS
+        if isinstance(got := rules.get(name), (int, float)) and not isinstance(got, bool)
+    ]
+    used += [name for name, _, _ in leftovers]
     unsigned = tuple(name for name in used if name in rules.untrusted)
 
     best: PaperFit | None = None
@@ -1471,9 +1832,10 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         # behind both, so the lane is never added to the court. This is the
         # rectangle quadfit's site plan draws inside the setbacks, and it is
         # why the pod end-on is not a 36 ft question: six stalls are 54.
-        building = width_ft + across.lane_ft
-        if across.width_ft > building:
-            envelope_ft, width_binding = across.width_ft, ACROSS_COURT
+        building = width_ft + across.lane_ft - lane_overlap
+        court_width = across.width_ft - court_overlap
+        if court_width > building:
+            envelope_ft, width_binding = court_width, ACROSS_COURT
         else:
             envelope_ft, width_binding = building, ACROSS_BUILDING
         needed_width = envelope_ft + sides if sides is not None else None
@@ -1486,7 +1848,15 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         # parking out of required yards (Cornelius 18.145.010 (B)) they
         # stack (`behind_wall_ft`).
         needed_depth = (
-            depth_ft + front + behind_wall_ft(court, rear, rules)
+            depth_ft
+            + front
+            + behind_wall_ft(
+                court,
+                rear,
+                rules,
+                court_width_ft=across.width_ft,
+                lot_width_ft=needed_width,
+            )
             if front is not None and rear is not None
             else None
         )
@@ -1501,6 +1871,24 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             floors.append((design.ground_sqft * 100.0 / coverage, BY_COVERAGE))
         if needed_width is not None and needed_depth is not None:
             floors.append((needed_width * needed_depth, BY_ENVELOPE))
+        # What has to be left over (FOLLOWUPS 7): the lot less the building
+        # and less the least pavement a legal plan lays (`paved`, the lane
+        # running the front yard and this orientation's depth) must hold the
+        # share or the area the code asks, the screen's own arithmetic read
+        # backwards. Pavement nothing here draws leaves the building alone
+        # -- a smaller lot than the truth -- and the standard is named among
+        # the unknowns, as a lower bound.
+        short: tuple[str, ...] = ()
+        if leftovers:
+            pavement = paved(design, rules, deep_ft=depth_ft)
+            taken = design.ground_sqft + (pavement or 0.0)
+            for name, value, share in leftovers:
+                if share and value < 100.0:
+                    floors.append((taken * 100.0 / (100.0 - value), BY_LEFTOVER))
+                elif not share:
+                    floors.append((taken + value, BY_LEFTOVER))
+            if pavement is None:
+                short = tuple(name for name, _, _ in leftovers)
 
         area, binding = max(floors, default=(None, ""))
         candidate = PaperFit(
@@ -1519,7 +1907,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             height_ok=_height_ok(design, height, min_height, min_stories, min_ground),
             orientation=orientation.value,
             plat=design.plat.value,
-            unknown=unknown,
+            unknown=unknown + short,
             unsigned=unsigned,
             excluded=(
                 "setback_street_side_ft (corner lots only)",
@@ -1661,6 +2049,27 @@ def drive_at_street(
     if alley_fed(rules, alley):
         return 0.0
     return drive_width(rules, parking.lane_ft)
+
+
+def drive_in_side_street_yard(
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None = None,
+    *,
+    corner: bool = False,
+    beside: "Beside | None" = None,
+) -> float:
+    """Width of the pod's driveway across a corner lot's STREET-SIDE yard, in
+    feet: what a cap on that yard's share in vehicle area
+    (``parking_side_street_yard_max_pct``, Portland 33.266.120.C.1.b) is
+    measured against. The drive a corner lot takes off the side street
+    (:func:`side_street_fed`) crosses it; a drive off the front runs down
+    the building's flank inside the envelope, since a corner lot lends no
+    side yard to the lane or the court (:func:`side_yard_lane_overlap_ft`),
+    and leaves the street-side yard unpaved. 0.0 off a corner lot."""
+    if not corner or beside is not None or not side_street_fed(rules, alley, corner):
+        return 0.0
+    return drive_at_street(design, rules, alley, corner=corner, beside=beside) or 0.0
 
 
 def drive_in_front_yard(

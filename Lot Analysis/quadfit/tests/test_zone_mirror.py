@@ -18,8 +18,10 @@ away for nothing. It ran the other way once: Milwaukie R-HD was drawn on a
 figure, where the general standard is 20.
 
 Gladstone Ord. 1545 (effective 2026-08-13) amends R7.2's minimum lot area and
-side setback. The mirror now follows the ordinance; this audit still compares
-the corpus's base zone values, so those two differences are listed below.
+side setback, and with them R10 (a placeholder copying R-7.2) and C1 (whose
+dwellings 17.16.040 sends to R-7.2's table). Those rows say so with
+`corpus_amendment: ord1545` and are compared against the law with it in force
+(FOLLOWUPS 156), so they are no longer listed as differences.
 
 The other remaining differences are not drift, and each kind has its own list
 below because each closes in a different way. Nothing here is a clean bill:
@@ -40,13 +42,11 @@ import pytest
 
 pytestmark = pytest.mark.unit
 
-#: Gladstone Ord. 1545 amends the base values represented in the corpus. The
-#: mirror follows the effective ordinance; the audit does not apply amendment
-#: blocks, so it deliberately reports these two differences.
-KNOWN_DIVERGENT: frozenset[str] = frozenset({
-    "gladstone/R7.2.min_lot_sqft",
-    "gladstone/R7.2.setback_side_ft",
-})
+#: Empty since 2026-11-09 (FOLLOWUPS 156). It held Gladstone R7.2's minimum
+#: lot and side setback, which rules.yaml carried as Ord. 1545 reads them while
+#: the audit compared the codified text. The row now names `corpus_amendment:
+#: ord1545` and is held to the amended block, as are R10 and C1 beside it.
+KNOWN_DIVERGENT: frozenset[str] = frozenset()
 
 #: Empty since 2026-09-02, and it took the feature rather than seven edits.
 #: These were the seven dimensions where rules.yaml held the number the district
@@ -99,8 +99,10 @@ KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
     "multnomah_unincorporated/LR10",
     "multnomah_unincorporated/LR5",
     "multnomah_unincorporated/LR7",
-    "multnomah_unincorporated/RF",
-    "portland/RF",
+    # 2026-11-10: Portland RF and the county's RF are off this list. Steph
+    # ruled RF farm land outside the state middle housing law (rulings.yaml
+    # 2026-11-09-rf-is-farm-land); the corpus closes both outright and
+    # rules.yaml's two RF rows say quadplex_allowed: false to match.
     # 2026-10-14: Sandy R-1 back on this list -- the review rule admits it
     # again, on individual lots only (17.36.10 A.4); rules.yaml says yes so
     # the lots are measured at all.
@@ -279,9 +281,14 @@ def test_the_quadplex_row_is_the_one_that_gets_read() -> None:
     assert _zone("milwaukie", "R-MD")["min_lot_sqft"] == 3000
 
     # Ord. 1545 amends R7.2's minimum lot and side setback; rules.yaml mirrors
-    # the effective ordinance while the corpus audit compares the base values.
+    # the ordinance (corpus_amendment: ord1545), and so do R10, which copies
+    # R-7.2, and C1, whose dwellings take R-7.2's lot minimum (FOLLOWUPS 156).
     r72 = _zone("gladstone", "R7.2")
     assert (r72["min_lot_sqft"], r72["setback_side_ft"]) == (7200, 5)
+    r10 = _zone("gladstone", "R10")
+    assert (r10["min_lot_sqft"], r10["setback_side_ft"]) == (7200, 5)
+    c1 = _zone("gladstone", "C1")
+    assert (c1["min_lot_sqft"], c1["setback_side_ft"]) == (7200, 15)
     assert _zone("gladstone", "R5")["min_lot_sqft"] == 7000
 
 
@@ -619,6 +626,10 @@ def test_nothing_in_the_screen_is_unquoted(audit_scan) -> None:
     # 16 -> 27 on 2026-10-19: the zones the ORS 197A.400 lane admits (FOLLOWUPS 85).
     # 27 -> 25 on 2026-11-08 (FOLLOWUPS 147, f4ac56b0): Washington County TO:R24-40 and
     # TO:R40-80 front yards are read (Table B(2) prints "None"), no longer placeholders.
+    # 25 -> 26 on 2026-11-08 (FOLLOWUPS 52): Clackamas SCMU's front yard, keyed by ZDO
+    # 1005.09 to Map 1005-1's street types, which nothing reads.
+    # 26 -> 25 on 2026-11-09 (FOLLOWUPS 52): SCMU's front yard read off Map 1005-1
+    # (10 ft, the Landscape minimum), no longer a placeholder.
     assert len(placeholders) == 25
     assert agree > 460, agree
 
@@ -728,9 +739,12 @@ UNSCREENED_ZONES: dict[str, tuple[str, ...]] = {
 #:
 #: 2026-10-14, later: one. The lot-line-bearing lane encoded HDR's dimensions
 #: (FOLLOWUPS 61) and its row is ported; SCMU still waits.
-AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {
-    "clackamas_unincorporated": ("SCMU",),
-}
+#:
+#: 2026-11-08: none (FOLLOWUPS 52, flats/dropped-lots-fairview). SCMU is ported
+#: with its front yard a PLACEHOLDER, the way the Washington County and ORS
+#: 197A.400 rows are: FLATS answers its lots UNKNOWN on the unread yard, and
+#: its 34 lots are measured instead of dropped `zone_not_in_rules`.
+AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {}
 
 
 def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> None:
@@ -1054,19 +1068,50 @@ def test_a_conditioned_port_carries_its_larger_limb() -> None:
 #: the ORS 197A.400 lane admits and the townhouse unit-lot rows add front-max, density,
 #: landscaping, garage-entrance, unit-count and review-tier standards.
 UNEXPRESSIBLE: dict[str, int] = {
+    #: FOLLOWUPS 153 (2026-11-08): the front-door orientation rule per place
+    #: (required / alternative / not_required / unclear). quadfit has one
+    #: orientation column, written entrance_only for every place; the new
+    #: field is read by FLATS alone. (61 for an hour in round 2, while Oregon
+    #: City's six residential zones carried their own blocks; round 3 folded
+    #: them back into the city default.)
+    # 55 -> 57 (rel6 2026-11-09, combining two lanes): +1 FOLLOWUPS 155
+    # (flats/ci1-quadfit) Portland CI1 pairs with its RICAP 11 block, which
+    # imports RM1's standards whole; +1 FOLLOWUPS 52 (flats/dropped-lots-fairview)
+    # Clackamas SCMU ported.
+    "entrance_faces_street": 57,
+    #: rel4 move-read finding 2 (2026-11-08): the angle a door face may stand
+    #: off the street (`entrance_angle_max_deg`, the printed 45 or 0) -- read
+    #: by the FLATS facing fitter alone; quadfit has no angle column.
+    # 25 -> 26 on 2026-11-09 (rel6: ci1-quadfit x rel4-fixes): CI1 is `like: RM1`
+    # and so carries RM1's door angle.
+    #: FOLLOWUPS 159 (2026-11-09): +1, Tigard TMU 45 (18.660.080.C.2).
+    # 26 -> 27 on 2026-11-09 (rel6: CI1 +1 and FOLLOWUPS 159 Tigard TMU +1).
+    "entrance_angle_max_deg": 27,
     #: FOLLOWUPS 109 chunk 4 (2026-10-28): Gresham's eight townhouse-only districts
     #: (CNTH, CNTM, CNRM, DMU, DEM, DCL, RTC, THR-SW) carry their townhouse rows --
     #: storeys, density ceilings, maximum fronts, garage setbacks, discretion and
     #: RTC's Rockwood frontage share -- none of which this file has a column for.
+    # 125 -> 125 and 60 -> 61 (rel6 2026-11-09, combining two lanes): +1 garage and +1
+    # landscaped for FOLLOWUPS 155 (flats/ci1-quadfit), Portland CI1 on its RICAP 11 block
+    # (RM1's standards); -1 garage for FOLLOWUPS 112 (flats/pagecheck-findings), Wilsonville
+    # OTR's garage setback NOT ENCODED (the OTR book measures it from the front building
+    # line, which no field holds; 4.138(.04)A puts the book first).
     "setback_garage_entrance_ft": 125,
-    "min_landscaped_pct": 60,
+    "min_landscaped_pct": 61,
     # 105 -> 104 on 2026-11-08 (FOLLOWUPS 147, 33911e99): Beaverton MR's maximum
     # is exempt -- note 18 confines it to 60.05.15.6 frontage, which MR is not.
-    "setback_front_max_ft": 104,
+    # 104 -> 107 (rel6 2026-11-09, combining two lanes): +1 FOLLOWUPS 52
+    # (flats/dropped-lots-fairview), Clackamas SCMU's 15 ft maximum off Map 1005-1
+    # (ZDO 1005.09(H)(1), (K)(1)); +2 FOLLOWUPS 112 (flats/pagecheck-findings), Gresham
+    # DCC and DTM hold Table 4.1130's maximum front.
+    # 107 -> 108 on 2026-11-10 (rel7 assembly): flats/drift-wash (FOLLOWUPS 166): Cornelius GMU re-read from Ord. 2026-06.
+    "setback_front_max_ft": 108,
     #: FOLLOWUPS 147 (2026-11-08): which streets a maximum front holds (named
     #: streets, every street, the front) and the share of the facade it binds --
     #: qualifiers of `setback_front_max_ft`, which this pipeline already cannot place.
-    "setback_front_max_streets": 34,
+    # 34 -> 36 on 2026-11-09 (pagecheck-findings): Gresham DCC and DTM hold Table
+    # 4.1130's maximum front.
+    "setback_front_max_streets": 36,
     "setback_front_max_facade_pct": 10,
     #: FOLLOWUPS 131: Tualatin CO prints no base density (Table 50-2); its 25 is
     #: a Block 1 variant now, so CO leaves the count.
@@ -1078,41 +1123,100 @@ UNEXPRESSIBLE: dict[str, int] = {
     # hold Table 4.0430 row C, 0.5 : 1 width/depth. FLATS screens it; this
     # pipeline still compares no ratio of two measurements.
     "max_lot_depth_ratio": 8,
-    "max_units": 14,
-    "max_height_stories": 25,
+    # 14 -> 11 on 2026-11-09 (FOLLOWUPS 156): Gladstone R7.2, R10 and C1 are
+    # held to Ord. 1545, whose 17.10.050 drops the "not more than four
+    # dwelling units on a lot" sentence the codified table carried, so the
+    # three rows read no unit cap.
+    "max_units": 11,
+    # 25 -> 26 on 2026-11-10 (rel7 assembly): flats/drift-wash (FOLLOWUPS 166): Cornelius GMU re-read from Ord. 2026-06.
+    "max_height_stories": 26,
     "setback_side_total_ft": 3,
-    "min_building_height_ft": 17,
-    "front_lot_line_through": 1,
+    #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
+    "min_building_height_ft": 18,
+    # 2026-11-09 (FOLLOWUPS 112(b), multco-pockets): Multnomah unincorporated R5, R7, R10
+    # and R20 restate PCC 33.266.120 and 33.110 at zone level (Title 33 governs the
+    # Portland-administered pockets): stall, driveway, side-yard reach, corner street,
+    # 33.910's front lot lines, the 40% front paving cap and the outdoor square -- +4 on
+    # each of those keys. Their footprints.yaml row stays the county's (per jurisdiction).
+    # 5 -> 6 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "front_lot_line_through": 6,
+    # 4 -> 5 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "front_lot_line_corner": 5,
+    # 4 -> 5 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "parking_front_yard_max_pct": 5,
     # 3 -> 8 on 2026-11-05 (FOLLOWUPS 150): Troutdale LDR-2 and MDR and
     # Sandy R-1, R-2 and R-3 keep the court the stricter neighbour district's
     # yard off the lot lines (TDC 9.095 A, SDC 17.98.50 A); quadfit has no
     # neighbour fact.
-    "parking_lot_line_buffer_ft": 8,
+    # 8 -> 20 on 2026-11-07 (rescreen-1110, FOLLOWUPS 146 merged): the
+    # side-yard lane's new planted strips (Oregon City and Wood Village QP,
+    # West Linn, Clackamas and Washington unincorporated). The side-yard
+    # permission itself has no column here either.
+    # 20 -> 23 on 2026-11-08 (FOLLOWUPS 105 round 3): Tigard RES-A, RES-B and
+    # RES-C screen side and rear parking to S-3, a 5 ft strip (Table 18.420.2).
+    # 23 -> 24 on 2026-11-08 (FOLLOWUPS 2(a), rel5 merge): Oregon City R-2 restates the strip
+    # so Table 17.12.040 note 1 can widen it to 10 ft beside R-10/R-8/R-6.
+    # 24 -> 28 on 2026-11-09 (FOLLOWUPS 105 round 4): Washington County R-9 NB,
+    # R-24 NB, NMU and CCMU reach 413-4.10 and so 407-6.4's 5 ft strip.
+    # 28 -> 36 on 2026-11-09 (FOLLOWUPS 171, flats/pdx-cm-buffer): Portland CR, CM1, CM2,
+    # CM3, CE and CX keep 33.130.215.B.2.b's 10 ft L3 strip beside RF-RM4/RMP/IR, EX Table
+    # 140-3's 5 ft, IR Table 150-2's 10 ft; quadfit has no neighbour fact.
+    "parking_lot_line_buffer_ft": 36,
+    # 16 -> 20 on 2026-11-09 (multco-pockets: Multnomah R5/R7/R10/R20 +4).
+    # 20 -> 21 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "parking_side_yard_allowed": 21,
+    # 16 -> 21 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+    # restate the field so the townhouse variant cites 4.1152 S14(a)(i).
+    # 21 -> 25 on 2026-11-09 (rel6: pagecheck-findings 16 -> 21 plus multco-pockets +4).
+    # 25 -> 26 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "parking_side_yard_stated": 26,
     # FOLLOWUPS 150 (2026-11-08, 75837198): Troutdale's seven districts hold the
     # doubtful larger court buffer (20 ft, TDC 3.130.A, when the adjoining district
     # is unknown) as a question; quadfit has no neighbour fact.
     "parking_lot_line_buffer_doubt_ft": 7,
-    "parking_required_yard_prohibited": 1,
+    # 1 -> 6 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+    # restate the field so the townhouse variant cites 4.1152 S14(a)(i).
+    "parking_required_yard_prohibited": 6,
+    #: FOLLOWUPS 68 (2026-11-01): Portland RM1-RM4 and RX owe 33.120.206's
+    #: 90 ft on ONE street, on Map 120-2 only; this pipeline sums frontage.
+    # 5 -> 6 on 2026-11-09 (rel6: ci1-quadfit x pdx-map-120): CI1 is `like: RM1`
+    # and so carries RM1's 33.120.206 one-street frontage.
+    # 6 -> 16 on 2026-11-10 (rel7 assembly): flats/corner-min-frontage (FOLLOWUPS 175): Durham SDR and the WashCo "on a public or private street" zones read one street.
+    "min_frontage_one_street": 16,
     "min_building_height_stories": 6,
     "parking_area_max_frontage_pct": 6,
-    "parking_aisle_two_way_ft": 17,
-    "parking_aisle_one_way_ft": 17,
-    "driveway_approach_max_width_ft": 10,
-    "corner_access_street": 4,
+    # 17 -> 21 on 2026-11-10 (rel7 assembly): flats/pockets-parking: Steph's 20 ft aisle in the pockets' R5, R7, R10, R20 (was exempt).
+    "parking_aisle_two_way_ft": 21,
+    # 17 -> 21 on 2026-11-10 (rel7 assembly): flats/pockets-parking: Steph's 20 ft aisle in the pockets' R5, R7, R10, R20 (was exempt).
+    "parking_aisle_one_way_ft": 21,
+    # 10 -> 15 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+    # restate the field so the townhouse variant cites 4.1152 S12(b).
+    "driveway_approach_max_width_ft": 15,
+    # 4 -> 9 on 2026-11-09 (pagecheck-findings): Gresham DCC, DTM, DMU, DEM and DCL
+    # restate the field so the townhouse variant cites 4.1152 S14(a)(ii).
+    # 9 -> 13 on 2026-11-09 (rel6: pagecheck-findings 4 -> 9 plus multco-pockets +4).
+    # 13 -> 14 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "corner_access_street": 14,
     "max_impervious_pct": 20,
     "min_average_lot_width_ft": 4,
     "setback_street_off_corridor_ft": 6,
     "setback_street_across_nonresidential_ft": 4,
     #: The outdoor square (FOLLOWUPS 7(b)): quadfit charges the open-space
     #: AMOUNT, never its shape; FLATS measures the square on the lot.
-    "open_space_min_dimension_ft": 6,
-    "driveway_min_width_one_way_ft": 17,
-    "driveway_min_width_two_way_ft": 17,
+    # 10 -> 11 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "open_space_min_dimension_ft": 11,
+    # 21 -> 22 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "driveway_min_width_one_way_ft": 22,
+    # 21 -> 22 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "driveway_min_width_two_way_ft": 22,
     "driveway_one_lane_ft": 1,
     "min_ground_story_ft": 2,
-    "parking_covered_required": 5,
-    "parking_stall_depth_ft": 14,
-    "parking_stall_width_ft": 14,
+    # 5 -> 4 on 2026-11-10 (rel7 assembly): flats/drift-wash (FOLLOWUPS 166): Ord. 2026-06 struck GMU's covered-parking rule.
+    "parking_covered_required": 4,
+    # 18 -> 19 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "parking_stall_depth_ft": 19,
+    # 18 -> 19 on 2026-11-10 (rel7 assembly): flats/rf-farm-land (FOLLOWUPS 173): pocket RF takes Title 33's parking card.
+    "parking_stall_width_ft": 19,
     "solar_shade_limit": 2,
     #: Road land to a distance from the street's centre line (FOLLOWUPS 67/77):
     #: per street lot line, measured by the FLATS bridge
@@ -1133,11 +1237,15 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: the parking cap read on every street frontage, measured on FLATS's
     #: drawn plan. 28 -> 37 the same day: Clackamas HDR and the eight 1102
     #: blocks (SHD, RCHDR, RTL, CC, C3, OC, RCC, RCO) admitted by the same rule.
-    "review_discretion": 47,
+    #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
+    "review_discretion": 48,
     "type_i_max_buildable_sqft": 11,
     "type_i_density_escape_du_per_acre": 8,
     "type_i_standard_plat_required": 8,
     "parking_area_frontage_any_street": 4,
+    #: 2026-11-09 (FOLLOWUPS 52 extra 2, flats/dropped-lots-fairview): new, Fairview TCC
+    #: states its own side-parking answer (FMC 19.65.100(A)(2), behind or beside the building).
+    "parking_side_prohibited": 1,
     #: FOLLOWUPS 84 (2026-10-15): Beaverton 60.05.15.6.C's 35 percent is the
     #: driveway inside the ten-foot street strip, not a parking cap -- twelve
     #: blocks move off `parking_area_max_frontage_pct` (17 -> 5).
@@ -1146,12 +1254,38 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: record, so a Gresham lot missing the size, frontage or width/depth row
     #: may still take one building (4.0431.C, Table 4.0130 note 2). FLATS
     #: lifts those rows per form; quadfit has no per-form lift.
-    "lot_of_record_relief": 10,
+    #: 10 -> 94 on 2026-11-07 (FOLLOWUPS 108, legal-lots merged into
+    #: rescreen-1110): the lot-of-record reliefs of every other layer, with
+    #: the floors some print and the conditions (creation date, adjoining
+    #: ownership) others ask.
+    # 94 -> 95 and 43 -> 44 on 2026-11-08 (FOLLOWUPS 155): Portland CI1 on its
+    # RICAP 11 block takes RM1's lot-of-record relief and condition.
+    "lot_of_record_relief": 95,
+    "lot_of_record_floor_sqft": 14,
+    "lot_of_record_condition": 44,
+    #: 2026-11-09 (FOLLOWUPS 167 item 3): Portland RX's relief reaches Table
+    #: 120-3's 10 ft only, not 33.120.206's 90 ft variant; quadfit has no
+    #: relief to narrow.
+    "lot_of_record_relief_base_only": 1,
+    #: New on 2026-11-10 (rel7 assembly), standards quadfit has no column for:
+    #: flats/corner-min-frontage (FOLLOWUPS 175) -- which street line a minimum
+    #: frontage is read on (front, radius_end); flats/hillsboro-side-max
+    #: (FOLLOWUPS 170) -- Hillsboro SCR-MD, SCR-HD, SCR-DNC side maximum;
+    #: flats/pockets-parking -- the pockets' alley back-out (R5-R20).
+    "min_frontage_line": 29,
+    "setback_side_max_ft": 3,
+    "parking_alley_backout_ft": 4,
+    #: 2026-11-08 (FOLLOWUPS 77, tigard-road-land merged into rescreen-1110):
+    #: Washington County's R and TO zones and Milwaukie measure the minimum lot
+    #: area before the road strip; quadfit takes no strip off the lot area.
+    "min_lot_sqft_before_dedication": 11,
     #: FOLLOWUPS 109 (2026-10-21): the building's share of the street
     #: frontage, measured on FLATS's drawn plan (flats/fit/frontage.py
     #: building_runs). Beaverton's twelve 60.05 blocks and four Downtown
     #: blocks, Washington County NMU and CCMU; quadfit draws no building.
-    "building_frontage_min_pct": 30,
+    # fg4-fixes 2026-11-10: Clackamas ZDO 1005.02(E)'s share joins PMD, MR1, MR2,
+    # VA, HDR and the eight zones that take HDR's standards: +13 on the three keys.
+    "building_frontage_min_pct": 43,
     "building_frontage_min_pct_least": 5,
     "building_frontage_other_pct": 19,
     "building_frontage_through_one": 2,
@@ -1162,8 +1296,14 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: the whole site as the code bases it (Steph 2026-10-21); the pitched roof
     #: Sandy and others require (a flat-roofed pod is RED); and the outdoor
     #: square's newly read districts. Quadfit draws no building and no roof.
-    "building_frontage_basis": 28,
-    "min_roof_pitch_in_12": 11,
+    "building_frontage_basis": 41,  # +13, fg4-fixes 2026-11-10 (1005.02(E))
+    # rel7 add-ons 2026-11-10 (flats/roof-ban): Wood Village LR/MR 5:12, Hillsboro SCR 4/12 -- 11 -> 17;
+    # new flat_roof_cornice_min_in (Tigard 18.280.040.J) in 7 zones. Quadfit draws no roof.
+    "min_roof_pitch_in_12": 17,
+    "flat_roof_cornice_min_in": 7,
+    # rel7 add-ons 2026-11-10 (flats/pdx-9ft): the 9 ft drive lane (33.266.120.D.2) in Portland
+    # and the four county pocket zones R5, R7, R10, R20. Quadfit keeps the 12 ft reading.
+    "driveway_lane_narrow_ft": 4,
     #: Steph 2026-10-22: a Gresham corner lot owes the share on its main
     #: street only (GDC 3.0100 Primary Street), measured per street class.
     "building_frontage_corner": 2,
@@ -1178,10 +1318,14 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: and the share counted at the minimum setback; with Estacada's Downtown rows they
     #: add landscaping, maximum fronts, impervious, frontage shares, review tiers,
     #: a parking frontage cap and a height floor -- counted on the keys above.
-    "building_frontage_band_ft": 1,
+    "building_frontage_band_ft": 14,  # +13, fg4-fixes 2026-11-10 (1005.02(E))
     # 1 -> 2 on 2026-11-08 (FOLLOWUPS 147, 8adfedd5): Hillsboro MU-VTC's minimum
     # FAR, 0.5 inside the traced Center Cores and 0.4 outside (Table 12.24.360-1).
     "min_far": 2,
+    #: fg4-fixes 2026-11-10: Beaverton RMA, RMB, RMC and CM-RM let a plex's court
+    #: stand in front behind the 10 ft yard within S11's half (60.05.60.2).
+    #: Quadfit draws no court against the building.
+    "parking_front_share_allowed": 4,
 }
 
 
@@ -1651,3 +1795,59 @@ def test_a_signed_zone_whose_flag_never_flipped_is_reported() -> None:
     hit = [r for r in rows if r.startswith(f"{juris}/{zone_code}:")]
     assert hit, f"a signed {juris}/{zone_code} was not reported: {rows}"
     assert "needs_verification" in hit[0]
+
+
+def test_ci1_is_mirrored_against_its_reprinted_block() -> None:
+    """Portland CI1 since RICAP 11 (2026-11-01, FOLLOWUPS 155).
+
+    Until the 11/1/26 Title 33 reprint the corpus loaded CI1 as the old
+    codified text (the home refused, 15 ft on every line) and rules.yaml's row
+    named ``corpus_amendment: ricap11`` to be held to the amendment. The
+    reprint prints the change, the corpus took the entry off (pdx-drift,
+    FOLLOWUPS 165, 2026-11-09), and the codified block is now `like: RM1`. The
+    row names no amendment, is held to the codified block, and agrees.
+    """
+    audit = _audit()
+    top, corpus = audit._load()
+    pairs = {(j, z["zone"]): zl for j, z, zl, _layer in audit._pairs(top, corpus)}
+    ci1 = pairs[("portland", "CI1")]
+    assert ci1.values["quadplex_allowed"].value is True
+    assert ci1.like is not None and ci1.like.zone == "RM1"
+    rm1 = pairs[("portland", "RM1")]
+    for field in ("setback_front_ft", "setback_side_ft", "setback_rear_ft", "min_lot_sqft",
+                  "min_lot_width_ft", "max_coverage_pct", "min_density_du_per_acre"):
+        assert ci1.values[field].value == rm1.values[field].value, field
+    assert not [s for s in audit.permission_splits() if s.startswith("portland/CI1")]
+    diverge, _uncited, _agree = audit.scan()
+    assert not [d for d in diverge if d.zone == "CI1"]
+    with pytest.raises(LookupError):
+        audit.corpus_block(corpus["or/multnomah/portland"].zones["CI1"], "ricap11")
+
+
+def test_a_row_reaching_an_amendment_through_like_is_held_to_it() -> None:
+    """Gladstone C1 on Ord. 1545 (FOLLOWUPS 156).
+
+    C-1 prints no lot minimum for a dwelling; 17.16.040 sends one to R-7.2's
+    17.10.050, which the corpus writes as ``like: R7.2``. Ord. 1545 re-reads
+    that table and C1's own block carries no amendment, so the row is held to
+    the layer with ord1545 in force: R-7.2's amended 7,200 sq ft through the
+    ``like:``, C-1's own 15 ft side yard over it. R10, a placeholder copying
+    R-7.2, carries the amendment itself.
+    """
+    audit = _audit()
+    top, corpus = audit._load()
+    pairs = {(j, z["zone"]): zl for j, z, zl, _layer in audit._pairs(top, corpus)}
+    for zone, side in (("R7.2", 5), ("R10", 5), ("C1", 15)):
+        held = pairs[("gladstone", zone)]
+        assert held.values["min_lot_sqft"].value == 7200, zone
+        assert held.values["setback_side_ft"].value == side, zone
+    diverge, _uncited, _agree = audit.scan()
+    assert not [d for d in diverge if d.jurisdiction == "gladstone"]
+    layer = corpus["or/clackamas/gladstone"]
+    # The codified text is untouched: C1 through R-7.2 still reads 3,600.
+    assert audit._effective(layer, layer.zones["C1"])["min_lot_sqft"].value == 3600
+    # A zone neither carrying the id nor adopting one that does is an error.
+    with pytest.raises(LookupError):
+        audit.amended_layer(layer, "ord1545", "C2")
+    with pytest.raises(LookupError):
+        audit.amended_layer(layer, "ord9999", "C1")

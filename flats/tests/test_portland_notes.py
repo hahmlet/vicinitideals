@@ -42,7 +42,7 @@ def test_exactly_one_note_caps_a_verdict() -> None:
     four-unit pod rather than sitting harmlessly above it."""
     capping = [n for n in notes() if n.layer == LAYER and n.state == "unmeasured"]
 
-    assert [n.quote for n in capping] == ["or/multnomah/portland/33.150.txt#L571"]
+    assert [n.quote for n in capping] == ["or/multnomah/portland/33.150.txt#L577"]
     assert capping[0].fact == "site_specific_limitation"
 
 
@@ -55,8 +55,9 @@ def test_the_grandfathering_notes_are_dismissed_as_relief() -> None:
         n.line: n
         for n in notes()
         # Proof copy 33.110.txt L396-L413 until Portland was cut into
-        # sections (FOLLOWUPS 73, batch 6).
-        if n.layer == LAYER and n.doc.endswith("33.110/33.110.202.txt") and 44 < n.line < 52
+        # sections (FOLLOWUPS 73, batch 6); L45-L51 of the section until the
+        # 11/1/26 reprint (pdx-drift, FOLLOWUPS 165).
+        if n.layer == LAYER and n.doc.endswith("33.110/33.110.202.txt") and 38 < n.line < 46
     }
 
     assert len(ruled) == 5

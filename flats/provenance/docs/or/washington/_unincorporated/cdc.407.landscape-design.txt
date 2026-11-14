@@ -1,0 +1,475 @@
+407-1        Minimum Landscape Standards
+
+407-1.1     The minimum landscaping area requirements may include landscaping around
+             buildings and in parking and loading areas, outdoor recreational use areas,
+             screening  and  buffering  as  required  under  Section  411,  and  vegetated
+             stormwater facilities as defined by Section 106-198.1.
+
+407-1.2     Areas determined unbuildable due to slopes, floodplains, water quality sensitive
+             areas, vegetated corridors, or are required as open space under Sections 405
+             or landscaping within parking areas under Section 407-1.7, shall not be used to
+             calculate or satisfy minimum landscape requirements.
+
+407-1.3     Residential:
+             A minimum percentage of the buildable land area pursuant to Section 407-1.2
+             shall be used for landscaping in residential districts. Redevelopment or additions
+             to buildings that include attached dwelling units shall meet the following minimum
+             landscape area requirements:
+
+                                                   IV:36
+                                    DEVELOPMENT STANDARDS                                                  407
+
+                DWELLING/DEVELOPMENT TYPE  MINIMUM PERCENT OF THE
+                                                                BUILDABLE LAND AREA
+                                                                REQUIRED FOR LANDSCAPING
+                Single Detached Dwelling Units,
+                Duplexes*                                                               No minimum
+                Middle Housing, Middle Housing
+                Land Division                                                          No minimum
+                Multi-dwelling attached units (not on
+                individual lots and other than Middle                               15%
+                Housing) in R-15, R-24, and R-25+
+                land use districts
+                All other residential development                                  25%
+
+              *On a lot of record located in an urban residential district or rural district
+
+407-1.4     Commercial, Industrial and Institutional Districts:
+
+              A.    For new development, the minimum area required for landscaping shall be
+                    15% of the land area.
+
+              B.    For developed areas where 15% of the land area is not landscaped, where
+                    there are additions, alterations or changes, the following amounts of
+                    landscaping shall be provided until the 15% requirement is satisfied:
+
+                    (1)   On sites of two acres or less:
+
+                           (a)   Changes in use as defined in Section 106-33 or structural
+                                 additions up to 1,999 square feet, shall be required to landscape
+                                 at least 5% of the entire developed site area.
+
+                           (b)   Structural additions of 2,000 to 4,999 square feet shall be
+                                 required to landscape at least 10% of the entire developed site
+                                 area.
+
+                           (c)    Structural additions of 5,000 square feet or more shall be
+                                 required to meet the current minimum landscape requirement
+                                 for new development.
+
+                    (2)   On sites of more than two acres, any structural additions shall be
+                           required to provide landscaping proportional to the additional footage
+                           being proposed.
+
+Supp. No. 1                                         IV:37
+407            WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+
+                    Example:
+                      Lot Area × 15% required landscaping    = X (Existing)
+                                    Building Floor Area    = Y
+                         Proposed Building Floor Area    = Z
+                                                     Z / Y    = A (Addition as percent of total building
+                                                                area)
+                                                    X × A    = Required amount of landscaping
+
+                    (3)   Where  successive  occupancy  changes  or  additions  occur  the
+                          landscape requirement shall accumulate until total conformance is
+                          reached.
+
+407-1.5     All areas of a building site not identified in a site plan or development plan
+             application as intended for a specified immediate use, shall be landscaped
+             except where enclosed and blocked from the view of public streets by solid
+             fencing or buildings.
+
+407-1.6     The minimum landscape area required by Sections 407-1.3 and 407-1.4 may
+             be reduced when the requirements of A. or B. below are met. Subsection
+             407-1.6 shall not be used to satisfy the requirements of Subsection 407-1.7.
+
+             A.    A reduction of up to 20% of the required landscape area is permitted when
+                    the following construction design features and materials are used in the
+                    development. The amount of reduction is related to the extent of the
+                    proposed improvements (more improvements result in a greater reduction).
+                    The application shall include a recommendation from Clean Water Services
+                    that  indicates  the  amount  of  reduction  warranted  by  the  proposed
+                    improvements.
+                    (1)   Structure(s) incorporate vegetated roofs; or other low-impact features
+                          designed to reduce storm water runoff; or
+                    (2)   Required  driveways,  sidewalks  or  off-street  parking  areas  are
+                          designed and constructed to reduce stormwater runoff rates and
+                          volumes through the use of pervious materials and/or other on-site
+                          stormwater management techniques;
+
+             B.    Up to 50% of the verified Upland Wildlife Habitat on a site may be used as
+                    a credit to reduce the required amount of landscaping when the portion of
+                    Upland Wildlife Habitat that is used as a credit is:
+                    (1)   Preserved  and  maintained  consistent  with  the  requirements  of
+                          Sections 405-4 and 405-5; and
+                    (2)   Used to retain or replace native trees in accordance with Section 422.
+
+Supp. No. 1                                         IV:38
+                                    DEVELOPMENT STANDARDS                                                  407
+
+407-1.7     The following interior landscaping requirements shall apply to all parking areas
+             for ten or more vehicles:
+             A.    Ten square feet of landscaping per parking space, excluding perimeter
+                    landscaping;
+             B.    Landscaped islands shall be a minimum of 120 square feet.
+(Ord. No. 842, § 2.A.(Exh. 1, § 5), 9-18-18, eff. 11-23-18; Ord. No. 885A, § 2.1.(Exh. 1,
+§ 14.), 6-28-22, eff. 7-28-22; Ord. No. 890A, § 2.A.(Exh. 1, §§ 1., 17.), 2-7-23, eff. 3-9-23;
+Ord. No. 903, § 2.M.(Exh. 13, § 18.), 10-15-24, eff. 11-14-24; Ord. No. 902A, § 2.B.(Exh. 2,
+§ 32.), 11-5-24, eff. 12-5-24)
+
+407-2        Standards for Landscaping Materials
+             In order to reduce water usage, developments are encouraged to use native
+             trees and plant materials. Developments are also encouraged to use pervious
+             materials and compost amended soils to reduce storm water runoff.
+             Where landscaping is required by Section 407-1, the materials, installation and
+             maintenance are subject to the following provisions:
+
+407-2.1     Allowable Materials:
+             Landscaping is to include a combination of any of the following materials:
+             A.    Trees, shrubs, ground cover, vines, flowers and lawns;
+             B.    Brick, bark, timber, decorative rock or other decorative materials, provided
+                    that materials other than planting materials are not to exceed 25% of the
+                    total area of landscaping; and
+             C.    Features including fountains, pools, artwork, walls and fences.
+
+407-2.2     Prohibited Materials:
+             Landscaping required by Section 407 shall not include any plant material which:
+             A.    Is identified by the Director as having root structures that in their mature
+                    state may damage or interfere with the normal use of existing public or
+                    private underground electrical lines, cables or conduits, pipes or other
+                    underground structures; or public or private sidewalks, curbs, gutters or
+                    paved parking turnaround areas, drainage improvements, or adjacent
+                    structures, foundations, or landscape materials;
+             B.    Cast a shadow, which is greater than the shadow cast by a hypothetical
+                    wall 7 feet high located along the property line, between 10:00 a.m. and
+                    2:00 p.m. on December 21, upon an existing solar collector; and
+             C.    Are identified on regional or local plant lists as invasive or noxious plant
+                    species.
+
+Supp. No. 1                                         IV:39
+407            WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+
+407-2.3     Landscape materials should be selected and sited to produce a hardy and
+             drought-resistant landscaped area. Selection should include consideration of
+             soil type and depth, spacing, exposure to sun and wind, slope and contours of
+             the site, building walls and overhangs, and compatibility with existing native
+             vegetation preserved on the site.
+
+407-3        Tree Preservation and Removal
+407-3.1     Applicability
+             Section 407-3 applies to all tree removal except as specified in Section 407-3.2
+             below.
+407-3.2     Exemptions from Tree Preservation and Removal Requirements
+             The requirements of Section 407-3 do not apply to the following:
+                    A.    Trees identified and approved for removal through a Type II or III
+                          procedure in an approved Development Plan;
+                    B.    Trees in a hazardous condition that present a danger to health or
+                          property. If such trees are located within Significant Habitat inside the
+                          UGB, their removal is subject to the requirements of Section 422;
+                    C.    Trees located within a floodplain or drainage hazard area inside the
+                          UGB, which are subject to Section 421; or
+                    D.    Trees located within Significant Habitat inside the UGB, which are
+                          subject to Section 422.
+407-3.3     Submission Requirements
+             Applications for tree removal shall include the following information:
+             A.    Written narrative containing:
+                    (1)   A description of the size, species and condition (e.g., diseased,
+                          healthy) of each tree or group of trees, proposed for removal or
+                          replacement;
+                    (2)   An explanation of the purpose of removal;
+                    (3)   A description of any associated floodplain or drainage hazard area
+                          alterations;
+                    (4)   Findings addressing the application requirements of Section 422;
+                          and
+                    (5)   Findings addressing relevant design elements of the applicable
+                          community plan.
+             B.    A Site Plan showing:
+                    (1)   The location, size and species of trees 6 inches or greater in diameter
+                          at 4 feet above grade. For forested areas that are larger than 5 acres,
+
+Supp. No. 1                                        IV:40
+                                    DEVELOPMENT STANDARDS                                                  407
+
+                           the general locations of trees may be shown with one or more
+                           detailed one acre sample areas. Sample areas must be representative
+                           of the site.
+                    (2)   A delineation  of  any  floodplain,  drainage  or  wetland  areas  in
+                           accordance with Sections 421 and 422.
+
+              C.    An approved erosion control plan from the Clean Water Services.
+
+407-3.4     Tagging Required:
+              Trees proposed for removal shall be identified for field inspection by means of
+              flagging, staking, paint spotting or other means readily visible but not detrimental
+              to a healthy tree.
+              If a proposed harvest area is located within 25 feet of a rear or side property line,
+              not including property lines adjacent to a public or private street, the applicant
+              shall:
+              A.    Mark or stake the property line(s) so that it is readily visible; and
+
+              B.    Identify trees within 25 feet of the property line that are proposed to be
+                    removed in the manner described above.
+
+407-3.5     Removal Standards:
+
+              A.    Compliance with Section 422 and any other applicable Code requirement;
+                    and
+
+              B.    Inside the UGB, the harvesting of forest tree species for the commercial
+                    value of the timber shall be subject to the following additional requirement:
+                    (1)   The harvesting of trees shall use a selective cutting procedure.
+                           Clear-cutting shall not be permitted.
+                    (2)   For the purposes of Section 407-3, clear-cut means any harvest unit
+                           that leaves fewer than 50 living, healthy and upright trees per acre
+                           that are well-distributed over the unit and that measure at least 11
+                           inches in diameter at 4 feet above grade. Species left should reflect
+                           the same species proportions existing prior to harvest.
+
+              C.    The Review Authority may require the applicant to identify a property line
+                    through a boundary survey when evidence has been submitted which
+                    indicates that trees that are proposed to be removed may be located on an
+                    adjacent property. If required, the boundary survey shall be made and
+                    recorded in the county Survey Division prior to the removal of any trees
+                    from the area in question.
+(Ord. No. 902A, § 2.B.(Exh. 2, § 32.), 11-5-24, eff. 12-5-24)
+
+Supp. No. 1                                         IV:41
+407            WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+
+407-4        Landscape Plan
+             The purpose of a landscape plan is to identify the type and placement of plant
+             materials. By detailing the plantings, a landscape plan provides an effective
+             means for evaluating whether chosen plant materials will survive in the climate
+             and soils of a given site and satisfy the functional objectives of landscaping
+             (such as erosion control, screening and shade) within a reasonable time.
+             Landscaping plans are to be prepared, processed and used as follows:
+
+407-4.1     When Required:
+             Landscaping plans are required to be submitted as part of a development
+             application, except for detached and Duplex dwelling units located within the
+             R-5, R-6 and Agricultural Districts.
+
+407-4.2     Landscape Plan Content:
+             Landscape plans are to be neatly and accurately drawn, at a scale that will
+             enable ready identification and recognition of information submitted. Where a
+             project covers only a portion of a site, the landscape plan need show only the
+             areas  where  existing  soil  contours  and  vegetation  will  be  disturbed  by
+             construction or use, or other areas where landscaping is required. Landscaping
+             plans shall show:
+             A.    The location of all trees 6 inches or larger in diameter at 4 feet above grade
+                    existing in or within 50 feet of the area of the site proposed for grading or
+                    other construction. Trees proposed to be removed are to be identified;
+             B.    Proposed landscaping details including the location, species, container
+                    size and number of trees, shrubs and ground cover;
+             C.    Details and location of proposed fencing, entryways, trash collection areas
+                    and freestanding signs;
+             D.    Walkways, plazas and sitting areas, play areas, including related street
+                    furniture and permanent outdoor equipment; and
+             E.    Outdoor light fixtures, including their location, height and wattage.
+             F.     No fill material shall be placed adjacent to existing trees inside the drip line.
+             G.    When  applicable,  demonstration  of  compliance  with  Tree  Canopy
+                    Requirements in Section 407-6.9.
+(Ord. No. 890A, § 2.A.(Exh. 1, § 1.), 2-7-23, eff. 3-9-23; Ord. No. 903, § 2.M.(Exh. 13, § 18.),
+10-15-24, eff. 11-14-24)
+
+407-5        General Provisions and Guidelines
+
+407-5.1     The landscape design shall incorporate existing significant trees and vegetation,
+             which shall be protected during construction to the extent practicable.
+
+Supp. No. 1                                         IV:42
+                                   DEVELOPMENT STANDARDS                                                407
+
+407-5.2     Patterns of landscape design established on adjacent properties through a
+             consistent use of species or spacing should be continued within a development.
+
+407-5.3     Fencing adjacent to stream buffers or other wildlife habitat areas shall be
+             designed to allow the passage of wildlife. Fencing shall include openings
+             appropriately sized and spaced to accommodate the passage of wildlife common
+             to urban Washington County including deer, beaver, coyote, muskrat, rabbit,
+             raccoon, and skunk.
+
+407-6        Parking Area Landscaping
+407-6.1     The landscaping located within and adjacent to access roads and parking areas
+             shall consist of a mixture of ground covers, shrubs and trees.
+
+407-6.2     Landscaped areas shall be located to provide shade for parking lots and to
+             create small clusters of parking.
+
+407-6.3     In addition to pedestrian ways, parking areas and access roads shall be
+             separated from the exterior wall of a structure with landscaping except where
+             loading and access ways exist.
+407-6.4     A minimum 5-foot landscape strip shall be created along any parking lot
+             boundary, including access roads, except where the use of joint parking or a
+             zero setback is approved.
+
+407-6.5     Landscape "islands" located within parking areas shall maintain a minimum
+             width and length dimension of 5 feet (see Section 407-1.6).
+
+407-6.6     Entryways into parking lots shall be bordered by a minimum 5-foot-wide
+             landscape strip.
+407-6.7     Landscape  plans  that  do  not  meet  the  minimum  area  standard  through
+             requirements intended to provide landscaping around buildings and in parking
+             and loading areas, and screening and buffering as required under Section 411,
+             are required to focus landscaping along pedestrian walkways linking on-site
+             building(s) to the street in order to meet the minimum area standard.
+
+407-6.8     In  the  Pedestrian-Oriented  Mixed-Use  Districts,  the  applicable  screening
+             requirements between a surface parking area and an adjacent right-of-way are
+             those listed in Section 392.
+
+407-6.9     Tree Canopy Requirements
+             A.    Applicability.  Developments  that  propose  surface  parking  areas  that
+                    cumulatively provide more than 0.5-acre of surface parking are subject to
+                    the requirements of this Section. This includes:
+                    (1)   New surface parking of more than 0.5-acre;
+
+Supp. No. 1                                        IV:43
+407            WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+
+                    (2)   Existing parking areas that are enlarged to more than 0.5-acre; or
+                    (3)   Reconstruction of a surface parking area that continues to exceed
+                          0.5-acre.
+
+             B.    Minimum Canopy Requirements. Development shall provide tree canopy
+                    coverage of a minimum of 40% of the surface parking area within 15 years
+                    of planting.
+
+             C.    Surface Parking Area Calculations.
+                    (1)   The surface parking area shall be measured based on the area of all
+                          new off-street parking spaces, maneuvering lanes, and maneuvering
+                          areas, including driveways and drive aisles.
+                    (2)   The following surfaced areas are exempt from the minimum canopy
+                          requirements.
+                          (A)   Mixed solid waste and recyclable storage facilities as required
+                                 by Section 406-6.
+                          (B)   Truck loading areas and off-street drop-off areas as required by
+                                 Section 413-9 and 413-10.
+
+             D.    Tree Canopy Plan Requirements.
+                    (1)   Development of a tree canopy plan under this Section shall be done
+                          in coordination with the local electric utility, including pre-design,
+                          design,  building  and  maintenance  phases  to  not  interfere  with
+                          overhead and/or underground facilities.
+                    (2)   The tree canopy plan must be prepared and certified by a registered
+                          landscape architect.
+
+             E.    Canopy Design Requirements.
+                    (1)   Tree spacing and species planted must be designed to maintain a
+                          continuous canopy except when interrupted by driveways, drive
+                          aisles, and other site design considerations.
+                    (2)   Trees must be planted and maintained to maximize their root health
+                          and chances for survival, including having ample high-quality soil,
+                          space for root growth, and reliable irrigation according to the needs of
+                          the species.
+                    (3)   Trees should be planted in continuous trenches where possible.
+                    (4)   Trees planted to meet this standard shall be planted and maintained
+                          consistent with the 2021 American National Standards Institute (ANSI)
+                          A300 standards.
+
+Supp. No. 1                                        IV:44
+                                   DEVELOPMENT STANDARDS                                                  407
+
+             F.     Exemptions.  Developments  that  are  required  to  comply  with  OAR
+                    330-135-0010 are not subject to this Section.
+(Ord. No. 857, § 2.D.(Exh. 4, § 3), 8-27-19, 11-28-19; Ord. No. 903, § 2.M.(Exh. 13, § 18.),
+10-15-24, eff. 11-14-24)
+407-7        Urban Street Tree Standards
+             Inside an urban growth boundary, when fronting on public or private roadways
+             or access drives, new structures including a Single Detached Dwelling Unit or
+             Duplex on an existing lot or parcel, or Middle Housing, and any Standard Land
+             Division or Middle Housing Land Division, shall be required to plant street trees
+             in accordance with the following standards:
+407-7.1     The species of street trees to be planted shall be chosen from the approved list
+             of street trees unless approval of another species is given by the Director
+             through a Type I procedure. Trees shall be selected and spaced to provide
+             canopy overlap for shade. Trees shall be installed at an average of one tree per
+             35 feet of lineal road frontage unless otherwise required by district standards, or
+             the Director approves, through a Type I procedure, a greater average spacing
+             based on submitted evidence demonstrating the approved species typically
+             requires such spacing, and that the alternative spacing will result in canopy
+             overlap.
+407-7.2     Exemption from the requirement to plant street trees may be granted by the
+             Director to the extent that existing trees meet location and diameter requirements
+             below. This exemption may be granted through a Type I procedure;
+407-7.3     Street trees shall be installed on public or private property no more than five feet
+             from the designated right-of-way; and
+407-7.4     Street trees shall be a minimum of 1½ inches in diameter as measured at four
+             feet above grade.
+(Ord. No. 885A, § 2.1.(Exh. 1, § 14.), 6-28-22, eff. 7-28-22; Ord. No. 890A, § 2.A.(Exh. 1,
+§ 17.), 2-7-23, eff. 3-9-23)
+407-8        Installation and Maintenance
+407-8.1     Landscape plant materials will be installed to current nursery industry standards.
+407-8.2     Landscape plant materials shall be properly guyed and staked to current
+             industry standards. Stakes and guy wires shall not interfere with vehicular or
+             pedestrian traffic.
+407-8.3     Mandated deciduous trees shall be fully branched, have a minimum caliper of
+             1½ inches, and a minimum height of 8 feet in height at the time of planting.
+             Reduction in the minimum size may be permitted, except where the plant
+
+Supp. No. 1                                        IV:44.1
+
+                                   DEVELOPMENT STANDARDS                                                  407
+
+             material is required by Section 411, Screening and Buffering, if certified by a
+             registered landscape architect that the reduction will not diminish the chance of
+             survival or intended effect of the plant material.
+
+407-8.4     Evergreen trees shall be a minimum of 6 feet in height, fully branched, at the
+             time of planting. Reduction in the minimum size may be permitted, except when
+             the plant material is required by Section 411, if certified by a registered
+             landscape architect that the reduction shall not diminish the plant material's
+             chance of survival or intended effect.
+407-8.5     Shrubs shall be supplied in one gallon containers or 8-inch burlap balls with a
+             minimum spread of 12 inches. Reduction in the minimum size may be permitted,
+             except when the plant material is required by Section 411, if certified by a
+             registered landscape architect that the reduction will not diminish the plant
+             materials chance of survival or intended effect.
+407-8.6     Ground cover plantings shall be planted at a maximum of 30 inches on center
+             and 30 inches between rows. Rows of plants shall be staggered for a more
+             effective covering. Ground cover shall be supplied in a minimum 4 inch size
+             container or a 2¼ inch container or equivalent if planted 18 inches on center.
+             Reduction in the minimum size may be permitted, except when the plant
+             material is required by Section 411, if certified by a registered landscape
+             architect that the reduction will not diminish the plant materials chance of
+             survival or intended effect.
+407-8.7     Except as allowed by Sections 407-8.9 and 407-8.10, all landscaping required
+             by this Code and approved by the Review Authority shall be installed prior to the
+             issuance of any compliance permits.
+407-8.8     Prior to requesting occupancy in an attached dwelling unit development, where
+             landscaping has not been completely installed according to the approved plan,
+             the applicant may choose either to post security or request compliance permits
+             for not more than 50% of the total number of units in the project, or if the project
+             is being built in phases, not more than 50% of the units in the phase being
+             developed. If the latter choice is made, the compliance permits for the remaining
+             units shall not be issued until the landscaping has been completely installed
+             according to the approved plan.
+407-8.9     Compliance permits may be issued prior to the complete installation of all
+             required landscaping if security equal to 110% of the cost of the landscaping, as
+             determined by the Director, is filed with the county to assure such installation
+             within a time specified by the Director, but not to exceed six months after
+             occupancy. The applicant shall provide the estimated cost of landscaping
+             materials and installation to the satisfaction of the Director prior to approval of
+
+                                                    IV:45
+407            WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+
+             the security. "Security" may consist of a faithful performance bond payable to
+             the county, cash, certified check, time certificate of deposit, or assignment of a
+             savings account. The form shall meet with the approval of the Director. If the
+             installation of the landscaping is not completed within the period specified by the
+             Director, or within an extension of time authorized by the Review Authority, the
+             security may be used by the county to complete the installation.
+
+             Upon completion of the installation, any portion of the remaining security
+             deposited with the county shall be returned. The final landscape inspection shall
+             be made prior to any security being returned. Any portions of the plan not
+             installed properly shall cause the compliance permit to be withheld until the
+             project is completed or cause the security to be used by the county.
+
+407-8.10   All landscaping approved through the Development Review process shall be
+             continually maintained, including necessary watering, weeding, pruning and
+             replacement, in a substantially similar manner as originally approved by the
+             Review Authority, unless a modification is approved.

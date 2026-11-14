@@ -8,6 +8,7 @@ from __future__ import annotations
 import dataclasses
 import json
 import re
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -106,7 +107,9 @@ def maps(tmp_path):
 def test_every_cite_quotes_the_stored_chapter(name) -> None:
     _, where, quote = pdx.CITES[name]
     doc, lines = where.split("#")
-    first, last = (int(n) for n in re.findall(r"\d+", lines))
+    # One line ("#L71") or a range; the 11/1/26 reprint reflowed five to one line.
+    nums = [int(n) for n in re.findall(r"\d+", lines)]
+    first, last = nums[0], nums[-1]
     text = (DOCS / doc).read_text(encoding="utf-8").splitlines()[first - 1 : last]
 
     def flat(s: str) -> str:
@@ -353,11 +356,21 @@ def _district(name: str, status: str = "Non-contributing") -> list:
     return [({"Status": status, "DistStatus": status, "DistName": name, "Address": "X"}, MISSOURI)]
 
 
-def _flags(reading, *, zone="R5", plat="one_lot", height=26.0, max_setback=None, lot=None, edges=None, drawing=None):
-    return pdx.flags_for(
+#: A day before 33.415.200's residential exemption ends.
+BEFORE_2029 = date(2026, 11, 8)
+
+
+def _flags(
+    reading, *, zone="R5", plat="one_lot", height=26.0, max_setback=None, lot=None, edges=None, drawing=None,
+    on=BEFORE_2029, active_use=False,
+):
+    """The flags on one design; the 33.415.200 notice every "m" lot carries
+    is left out unless ``active_use`` (its own tests below)."""
+    got = pdx.flags_for(
         reading, zone=zone, plat=plat, units=4, height_ft=height, max_setback_ft=max_setback,
-        lot=lot, edges=edges, drawing=drawing,
+        lot=lot, edges=edges, drawing=drawing, on=on,
     )
+    return got if active_use else tuple(f for f in got if f.code != pdx.MAIN_STREET_ACTIVE_USE_FLAG)
 
 
 def _colour(binds=(), flags=()):
@@ -598,3 +611,57 @@ def test_on_the_main_street_the_townhouse_form_is_screened_and_asked(tmp_path) -
     assert townhomes.get("screened", True) is True
     assert pdx.MAIN_STREET_TRANSIT_FLAG in [f["code"] for f in townhomes.get("flags", [])]
     assert pdx.MAIN_STREET_TRANSIT_FLAG not in [f["code"] for f in s.forms["apartment"].get("flags", [])]
+
+
+# --- FOLLOWUPS 78: 33.415.200's required ground floor active use from 2029 ---
+
+
+def test_the_active_use_rule_is_a_notice_before_2029_and_a_closer_look_after() -> None:
+    # 33.415.200: 25% of the ground floor within 100 ft of a transit street in
+    # a non-residential active use; "Development that includes a residential
+    # use is exempt from this standard until January 1, 2029."
+    kw = dict(zone="CM2", max_setback=10.0, lot=STREET_LOT, edges=_street_edges(),
+              drawing=_plan(NEAR, LANE, REAR_COURT), active_use=True)
+    assert pdx.ACTIVE_USE_FROM == date(2029, 1, 1)
+    for plat in ("one_lot", "unit_lots"):
+        before = [f for f in _flags(MAIN, plat=plat, **kw) if f.code == pdx.MAIN_STREET_ACTIVE_USE_FLAG]
+        (notice,) = before
+        assert notice.severity == pdx.ACTIVE_USE_NOTICE_SEVERITY
+        assert notice.source.startswith("PCC 33.415.200") and "January 1, 2029" in notice.source
+        assert _colour(flags=[notice]).value == "green"
+        (after,) = [
+            f for f in _flags(MAIN, plat=plat, on=date(2029, 1, 1), **kw)
+            if f.code == pdx.MAIN_STREET_ACTIVE_USE_FLAG
+        ]
+        assert after.severity is None and "ended" in after.source
+        assert _colour(flags=[after]).value == "yellow"
+    # Only an "m" lot owes it.
+    assert _flags(pdx.Reading(), on=date(2030, 1, 1), active_use=True) == ()
+    assert pdx.MAIN_STREET_ACTIVE_USE_REASON in pdx.REASONS
+
+
+def test_the_day_the_exemption_ends_is_part_of_the_run_key() -> None:
+    assert pdx.dated_in_force(date(2028, 12, 31)) == []
+    assert pdx.dated_in_force(date(2029, 1, 1)) == [pdx.ACTIVE_USE_LAW]
+
+
+def test_a_main_street_lot_screened_today_stays_its_colour_with_the_notice(tmp_path) -> None:
+    from flats.encode.load import load_trusted
+    from flats.ingest.quadfit import lot_from_row, screen_lot
+    from flats.score import relief, slack
+    from flats.tests.test_quadfit_bridge import pod, row
+
+    corpus = load_trusted(strict=False).rules
+    policy, relieve = slack.load_policy(), relief.load_policy()
+    r = row(TLID="1S1E22BA  -02300", zone="CM2", area_sqft=8907.0, lot_wkb=shapely.to_wkb(MACADAM))
+    pdx.with_overlays([r], snapshot(tmp_path))
+    (s,) = screen_lot(lot_from_row(r, corpus.layers), [pod()], rules=corpus, policy=policy, relief=relieve, step_deg=30.0)
+    lot = lot_from_row(r).pdx_overlays
+    before = pdx.checked(s, lot, on=BEFORE_2029)
+    assert before.signed.colour is s.signed.colour
+    after = pdx.checked(s, lot, on=date(2029, 1, 1))
+    codes = [f.code for f in after.signed.flags]
+    assert pdx.MAIN_STREET_ACTIVE_USE_FLAG in codes
+    if s.signed.colour.value == "green":
+        assert after.signed.colour.value == "yellow"
+    assert after.signed.colour.value != "green"

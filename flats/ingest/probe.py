@@ -47,6 +47,7 @@ import httpx
 
 from flats.ingest.acquire import _spec_sha, data_edited, redirect_identity
 from flats.ingest.sources import Dataset, Kind, Pipeline, Provides
+from flats.ingest.tls import ssl_context
 
 #: Findings that mean the county's side changed, or ours did.
 CHANGED = frozenset({"moved", "fields_missing", "count_drift", "registry_changed"})
@@ -240,6 +241,7 @@ def probe(
     """Every dataset in the registry against the manifest of the copy in use."""
     own = client is None
     client = client or httpx.Client(
+        verify=ssl_context(),
         timeout=httpx.Timeout(TIMEOUT_S), follow_redirects=True, headers={"User-Agent": _USER_AGENT}
     )
     datasets = manifest.get("datasets") or {}

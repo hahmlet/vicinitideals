@@ -108,12 +108,15 @@ def test_a_word_that_is_not_a_number_still_counts_as_a_cell() -> None:
 def test_scmu_s_frontage_minimum_is_not_read_as_the_office_district_s(
     store: ProvenanceStore,
 ) -> None:
-    """Table 510-2's eighth column is SCMU, and the header does not say so."""
+    """Table 510-2's eighth column is SCMU. The stored header used to drop it,
+    and the reader refused the table rather than count into it. The county's
+    copy re-fetched 2026-11-09 (drift-clack, FOLLOWUPS 166) names SCMU, so the
+    "100 feet" now lands on SCMU and still never on OA (rel7 assembly, 2026-11-10)."""
     out = read(store, ZDO_510)
     assert not [c for c in out.get("OA", []) if c.field == "min_frontage_ft"]
-    # Nor may it be quietly re-filed under the district the header dropped:
-    # a header that lost a column cannot be counted into at all.
-    assert "SCMU" not in out
+    assert [(c.field, c.value) for c in out["SCMU"] if c.field == "min_frontage_ft"] == [
+        ("min_frontage_ft", 100)
+    ]
 
 
 def test_the_district_the_header_dropped_is_named_by_the_applicability_clause(
@@ -123,8 +126,10 @@ def test_the_district_the_header_dropped_is_named_by_the_applicability_clause(
     text = store.text_path(ZDO_510).read_text(encoding="utf-8")
     applies = next(line for line in text.splitlines() if line.startswith("Section 510 applies"))
     assert "Station Community Mixed Use (SCMU)" in applies
-    header = text.splitlines()[1380:1390]
-    assert header == ["NC", "C-2", "RCC", "RTL", "CC", "C-3", "PMU", "OA", "OC", "RCO"]
+    # The re-fetched copy (2026-11-09, FOLLOWUPS 166) prints the column the old
+    # one dropped, between PMU and OA (rel7 assembly, 2026-11-10).
+    header = text.splitlines()[1380:1391]
+    assert header == ["NC", "C-2", "RCC", "RTL", "CC", "C-3", "PMU", "SCMU", "OA", "OC", "RCO"]
 
 
 # --- a district code five letters long ------------------------------------

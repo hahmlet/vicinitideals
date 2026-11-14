@@ -20,6 +20,7 @@ or ``neither``.
 from __future__ import annotations
 
 import json
+import math
 from dataclasses import replace
 
 import pytest
@@ -27,24 +28,28 @@ import pytest
 pytest.importorskip("shapely")
 
 import shapely  # noqa: E402
-from shapely.geometry import box  # noqa: E402
+from shapely.geometry import Polygon, box  # noqa: E402
 
 from flats.designs.model import Plat  # noqa: E402
 from flats.ingest import quadfit  # noqa: E402
 from flats.ingest.quadfit import (  # noqa: E402
     LAND_DIVISION,
     _screen_plat,
+    _townhouse_row_angles,
+    envelope_for,
     lot_from_row,
     screen_lot,
     townhouse,
 )
+from flats.fit.rectangle import Fitter  # noqa: E402
 from flats.rules.loader import load_rules  # noqa: E402
 from flats.rules.net_area import MEASURED  # noqa: E402
 from flats.rules.resolver import RuleSet  # noqa: E402
 from flats.score import relief, slack  # noqa: E402
+from flats.score.configure import configure  # noqa: E402
 from flats.score.flags import Colour, load_registry  # noqa: E402
 from flats.score.paper import lot_standard, townhouse_only  # noqa: E402
-from flats.score.screen import LotFacts  # noqa: E402
+from flats.score.screen import LotFacts, fit_for, screen  # noqa: E402
 from flats.score.slack import Verdict  # noqa: E402
 from flats.tests.test_fire import X0, Y0, bridge_row, pod  # noqa: E402
 from flats.tests.test_round2_rulings import fit, run  # noqa: E402
@@ -89,6 +94,77 @@ def row(jurisdiction: str, zone: str, *, width: float = 80.0, depth: float = 120
         lot_wkb=shapely.to_wkb(box(X0, Y0, X0 + width, Y0 + depth)),
         **NO_OVERLAYS,
     )
+
+
+def slanted_row(
+    jurisdiction: str,
+    zone: str,
+    *,
+    normal_width: float = 105.0,
+    side_bearing: float = 70.0,
+    side_bearings: tuple[float, float] | None = None,
+    frontage_ft: float | None = None,
+    side_length_ft: float = 220.0,
+) -> dict:
+    """A lot with a slanted side-line bearing."""
+    if side_bearings is None:
+        side_bearings = (side_bearing, side_bearing)
+    bearings = tuple(math.radians(bearing) for bearing in side_bearings)
+    vectors = [
+        (side_length_ft * math.cos(bearing), side_length_ft * math.sin(bearing))
+        for bearing in bearings
+    ]
+    frontage = (
+        frontage_ft
+        if frontage_ft is not None
+        else normal_width / math.sin(bearings[0])
+    )
+    points = [
+        (X0, Y0),
+        (X0 + frontage, Y0),
+        (X0 + frontage + vectors[0][0], Y0 + vectors[0][1]),
+        (X0 + vectors[1][0], Y0 + vectors[1][1]),
+    ]
+    lot = Polygon(points)
+    edges = [
+        [*points[0], *points[1], "F"],
+        [*points[1], *points[2], "S"],
+        [*points[2], *points[3], "R"],
+        [*points[3], *points[0], "S"],
+    ]
+    return bridge_row(
+        jurisdiction=jurisdiction,
+        zone=zone,
+        inside_ugb=True,
+        area_sqft=lot.area,
+        frontage_ft=frontage,
+        lot_width_ft=frontage,
+        lot_depth_ft=max(y for _, y in points) - Y0,
+        edges_json=json.dumps(edges),
+        front_bearings_json="[0.0]",
+        wkb=shapely.to_wkb(lot),
+        lot_wkb=shapely.to_wkb(lot),
+        **NO_OVERLAYS,
+    )
+
+
+def with_side_bearings(lot, bearings, lengths=None, *, front_bearing=None):
+    assert lot.edges is not None
+    edges = list(lot.edges.edges)
+    side_indexes = [i for i, edge in enumerate(edges) if edge.cls is quadfit.EdgeClass.side]
+    assert len(side_indexes) == len(bearings)
+    if lengths is not None:
+        assert len(lengths) == len(bearings)
+    for offset, index in enumerate(side_indexes):
+        changes = {"bearing_deg": bearings[offset]}
+        if lengths is not None:
+            changes["length_ft"] = lengths[offset]
+        edges[index] = replace(edges[index], **changes)
+    if front_bearing is not None:
+        for index, edge in enumerate(edges):
+            if edge.cls is quadfit.EdgeClass.front:
+                edges[index] = replace(edge, bearing_deg=front_bearing)
+    return replace(lot, edges=replace(lot.edges, edges=tuple(edges)))
 
 
 def wide():
@@ -141,14 +217,23 @@ def test_a_fairview_village_lot_passes_as_townhouses_with_the_flag(corpus, polic
 
     assert got.design.plat is Plat.unit_lots
     assert got.design.key == pod().key  # the pod's own row, not a new design
-    assert got.signed.colour is Colour.green
     (flag,) = land_division(got)
     assert "land division into 4 unit lots" in flag.source
-
     forms = got.forms
-    assert forms["works_as"] == "townhomes"
     assert forms["kept"] == "townhomes"
-    assert forms["townhomes"] == {"colour": "green"}
+    if zone == "VMU":
+        # VMU's shallow front yard puts the building inside Fairview's 15 ft
+        # driveway clear-vision triangle (FDC 19.162.020(O)) under the middle-way
+        # curb ruling: held YELLOW on that alone, never on the use (sight-triangles,
+        # FOLLOWUPS 161; rel7 assembly, 2026-11-10).
+        assert got.signed.colour is Colour.yellow
+        assert set(got.signed.reasons) == {"SIGHT_DRIVEWAY"}
+        assert forms["townhomes"]["colour"] == "yellow"
+        assert forms["works_as"] == "neither"
+    else:
+        assert got.signed.colour is Colour.green
+        assert forms["works_as"] == "townhomes"
+        assert forms["townhomes"] == {"colour": "green"}
     assert forms["apartment"]["colour"] == "red"
     assert [b["check"] for b in forms["apartment"]["binds"]] == ["use"]
 
@@ -299,7 +384,9 @@ def test_the_record_rides_into_the_bridge_row(corpus, policies) -> None:
     from flats.ingest.assign import ROW_COLUMNS
     from scripts.flats_load_bridge import result_checks
 
-    _, got = both(corpus, policies, row("fairview", "VMU"), design=pitched(pod()))
+    # VA, not VMU: a VMU lot is held YELLOW on the driveway clear-vision area
+    # since sight-triangles (FOLLOWUPS 161; rel7 assembly, 2026-11-10).
+    _, got = both(corpus, policies, row("fairview", "VA"), design=pitched(pod()))
     written = quadfit.row_for(got)
     assert "forms" in ROW_COLUMNS  # a synthetic row carries the column too
     assert json.loads(written["forms"])["works_as"] == "townhomes"
@@ -458,6 +545,171 @@ def test_a_turned_row_of_townhouses_is_not_screened(corpus, policies) -> None:
     assert twin.signed.colour is Colour.red
     assert any(b.check == "fit_ft" for b in twin.signed.binds)
     assert twin.fit.orientation is None or twin.fit.orientation.value == "width_facing"
+
+
+def test_a_townhouse_row_can_square_to_slanted_side_lines(corpus, policies) -> None:
+    """The side-square row fits this lot and every home lot still fronts it."""
+    design = townhouse(pitched(wide()))
+    lot = lot_from_row(slanted_row("fairview", "VTH", normal_width=95.0), corpus.layers)
+    config = configure(lot.facts, design, observed=lot.observed)
+    got = corpus.resolve(lot.layer_id, lot.zone, config.conditions, lot=config.measures)
+    env = envelope_for(lot, got)
+    straight = fit_for(
+        Fitter(env.geom, (0.0,), ground=env.ground),
+        design,
+        got,
+        placement=False,
+        carved_rear_ft=env.rear_cut_ft,
+        alley=lot.facts.alley,
+        corner=lot.facts.corner,
+        frontage_ft=lot.facts.cap_frontage_ft,
+        street_deg=(0.0,),
+    )
+    (twin,) = _screen_plat(
+        lot, [design], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+    )
+    trusted = rules(min_frontage_ft=20, min_lot_width_ft=20, min_lot_sqft=2_000)
+    straight_screen = screen(
+        trusted, lot.facts, design, straight, policy=policies[0], relief=policies[1]
+    )
+    tilted_screen = screen(
+        trusted, lot.facts, design, twin.fit, policy=policies[0], relief=policies[1]
+    )
+
+    assert not straight.fits
+    assert twin.fit.fits
+    assert twin.fit.angle_deg == pytest.approx(160.0)
+    home_frontage = design.unit_width_ft / math.cos(math.radians(20.0))
+    assert lot.facts.frontage_ft >= design.units * home_frontage
+    assert straight_screen.colour is Colour.red
+    assert tilted_screen.colour is Colour.green
+    home_checks = {
+        check.check: check
+        for check in tilted_screen.checks
+        if check.check in {"home_lot_frontage_ft", "home_lot_width_ft", "home_lot_area_sqft"}
+    }
+    assert set(home_checks) == {
+        "home_lot_frontage_ft",
+        "home_lot_width_ft",
+        "home_lot_area_sqft",
+    }
+    assert all(check.verdict is Verdict.passes for check in home_checks.values())
+
+
+def test_a_townhouse_row_can_square_to_side_lines_032_degrees_apart(
+    corpus, policies
+) -> None:
+    design = townhouse(pitched(wide()))
+    frontage = 102.3
+    lot = lot_from_row(
+        slanted_row(
+            "fairview",
+            "VTH",
+            side_bearings=(63.0, 63.32),
+            frontage_ft=frontage,
+            side_length_ft=300.0,
+        ),
+        corpus.layers,
+    )
+    config = configure(lot.facts, design, observed=lot.observed)
+    got = corpus.resolve(lot.layer_id, lot.zone, config.conditions, lot=config.measures)
+    env = envelope_for(lot, got)
+    straight = fit_for(
+        Fitter(env.geom, (0.0,), ground=env.ground),
+        design,
+        got,
+        placement=False,
+        carved_rear_ft=env.rear_cut_ft,
+        alley=lot.facts.alley,
+        corner=lot.facts.corner,
+        frontage_ft=lot.facts.cap_frontage_ft,
+        street_deg=(0.0,),
+    )
+    (twin,) = _screen_plat(
+        lot, [design], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+    )
+    trusted = rules(min_frontage_ft=20, min_lot_width_ft=20, min_lot_sqft=2_000)
+    straight_screen = screen(
+        trusted, lot.facts, design, straight, policy=policies[0], relief=policies[1]
+    )
+    tilted_screen = screen(
+        trusted, lot.facts, design, twin.fit, policy=policies[0], relief=policies[1]
+    )
+
+    assert lot.facts.frontage_ft == pytest.approx(frontage)
+    assert not straight.fits
+    assert twin.fit.fits
+    assert twin.fit.angle_deg == pytest.approx(153.16)
+    assert straight_screen.colour is Colour.red
+    assert tilted_screen.colour in {Colour.yellow, Colour.green}
+    home_checks = {
+        check.check: check
+        for check in tilted_screen.checks
+        if check.check in {"home_lot_frontage_ft", "home_lot_width_ft", "home_lot_area_sqft"}
+    }
+    assert set(home_checks) == {
+        "home_lot_frontage_ft",
+        "home_lot_width_ft",
+        "home_lot_area_sqft",
+    }
+    assert all(check.verdict is Verdict.passes for check in home_checks.values())
+
+
+def test_side_lines_more_than_one_degree_apart_do_not_tilt_townhouse_row(
+    corpus,
+) -> None:
+    design = townhouse(pitched(wide()))
+    lot = lot_from_row(slanted_row("fairview", "VTH"), corpus.layers)
+    lot = with_side_bearings(lot, (70.0, 73.0))
+    config = configure(lot.facts, design, observed=lot.observed)
+    got = corpus.resolve(lot.layer_id, lot.zone, config.conditions, lot=config.measures)
+
+    assert _townhouse_row_angles(lot, design, got, 0.0, (0.0,)) == (0.0,)
+
+
+def test_townhouse_side_bearing_mean_wraps_and_uses_line_lengths(corpus) -> None:
+    design = townhouse(pitched(wide()))
+    lot = lot_from_row(slanted_row("fairview", "VTH"), corpus.layers)
+    lot = with_side_bearings(
+        lot, (179.7, 0.2), (100.0, 200.0), front_bearing=90.0
+    )
+    config = configure(lot.facts, design, observed=lot.observed)
+    got = corpus.resolve(lot.layer_id, lot.zone, config.conditions, lot=config.measures)
+
+    angles = _townhouse_row_angles(lot, design, got, 90.0, (90.0,))
+
+    assert angles == pytest.approx((90.0, 90.0333), abs=0.001)
+
+
+def test_a_side_square_row_without_frontage_for_all_home_lots_stays_red(corpus, policies) -> None:
+    """The tilted row is withheld when the street line cannot front all four lots."""
+    design = townhouse(pitched(wide()))
+    lot = lot_from_row(slanted_row("fairview", "VTH", normal_width=75.0), corpus.layers)
+    config = configure(lot.facts, design, observed=lot.observed)
+    got = corpus.resolve(lot.layer_id, lot.zone, config.conditions, lot=config.measures)
+    angles = _townhouse_row_angles(lot, design, got, 0.0, (0.0,))
+    (twin,) = _screen_plat(
+        lot, [design], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+    )
+
+    assert lot.facts.frontage_ft < design.footprint.width_ft / math.cos(math.radians(20.0))
+    assert angles == (0.0,)
+    assert not twin.fit.fits
+    assert twin.signed.colour is Colour.red
+
+
+def test_a_square_townhouse_lot_keeps_its_street_parallel_row(corpus, policies) -> None:
+    design = townhouse(pitched(wide()))
+    lot = lot_from_row(row("fairview", "VTH", width=100.0), corpus.layers)
+    config = configure(lot.facts, design, observed=lot.observed)
+    got = corpus.resolve(lot.layer_id, lot.zone, config.conditions, lot=config.measures)
+
+    assert _townhouse_row_angles(lot, design, got, 0.0, (0.0,)) == (0.0,)
+    (twin,) = _screen_plat(
+        lot, [design], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+    )
+    assert twin.fit.angle_deg == pytest.approx(0.0)
+    assert twin.signed.colour is Colour.green
 
 
 def test_the_end_lots_carry_the_side_yards() -> None:

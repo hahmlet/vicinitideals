@@ -303,6 +303,15 @@ class ZoneRule(BaseModel):
     source_url: str = ""
     confidence: Confidence = "needs_verification"
     notes: str = ""
+    #: The id of the adopted amendment (the corpus zone's ``amended:`` entry)
+    #: whose text this row mirrors, when it is not the codified block.
+    #: Gladstone R7.2/R10/C1 on Ord. 1545 (``ord1545``, in force 2026-08-13);
+    #: Portland CI1 on RICAP 11 was the first, until the 11/1/26 Title 33
+    #: reprint codified it (FOLLOWUPS 165). The
+    #: pipeline does not read it; ``audit_zone_mirror`` compares the row against
+    #: that amendment's block instead of the codified one, and fails loudly if
+    #: the corpus zone carries no amendment by that id.
+    corpus_amendment: str | None = None
 
     @model_validator(mode="after")
     def _validate(self) -> ZoneRule:

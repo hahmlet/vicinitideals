@@ -138,8 +138,9 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   standards of the RCHDR District (RCC, RCO) or of the HDR District (RTL, CC, C-3, OC).
   Freestanding is the only kind this building is. So 896 lots of commercial land depend on
   two residential districts this layer has never encoded, and encoding them is the whole of
-  the remaining work here. SCMU is a third shape: Table 510-2 omits it from the header while
-  every data row carries eleven cells, and its eighth cell is not a number but "See
+  the remaining work here. SCMU is a third shape: Table 510-2 omitted it from the header while
+  every data row carried eleven cells (the county repaired the header; re-fetched 2026-11-09,
+  FOLLOWUPS 166), and its eighth cell is not a number but "See
   Subsection 1005.09", the Fuller Road Station Community standards. PMU is a fourth -- Table
   510-3 states its requirements site by site, six sites with six different minimum lot sizes.
 
@@ -306,8 +307,11 @@ readings:
       for eleven columns of cells, having dropped SCMU from between PMU and OA. Counting into that
       header read SCMU's "100 feet" minimum street frontage as OA's -- a number for a district
       whose own cell is blank, with a citation pointing at exactly the right line. The table
-      reader now refuses a row wider than its header rather than shifting it, so nothing can be
-      encoded off this table by counting until the header is repaired at the source. Encoding
+      reader now refuses a row wider than its header rather than shifting it, so nothing could be
+      encoded off this table by counting until the header was repaired at the source. It was:
+      the copy re-fetched 2026-11-09 (FOLLOWUPS 166) prints SCMU between PMU and OA, eleven names
+      for eleven columns, and no cell changed. Nothing is encoded from the table yet, so no value
+      moves; counting is now possible, but the by-hand reading below is still the job. Encoding
       these eleven districts by hand, against the applicability clause in 510.02 rather than
       against the header, is the job this card is holding open.
     fingerprint: 859334521615ea1b
@@ -656,22 +660,18 @@ crossrefs:
       gates a use that is not this pod -- an RV as a second dwelling, an accessory historic
       dwelling -- and none of them states a dimension.
   "1002.02":
-    outcome: fetch
+    outcome: procedure
     note: >-
-      Tree removal, and the one reference here that is genuinely about our building on land we
-      would buy. Table 316-1 note 13 (L640), printed on the Forest Practices row: "For land
-      inside the Portland Metropolitan Urban Growth Boundary, refer to Subsection 1002.02
-      regarding a development restriction that may apply if excessive tree removal occurs." The
-      row it sits on is why the footnote itself is dismissed and this reference is not: a note
-      about forestry cannot move a use gate, but the subsection it points at is a development
-      restriction and says nothing about who is doing the clearing. A development restriction
-      triggered by clearing is
-      the same shape as Portland's Title 11, which is encoded as fee_in_lieu and cost real ground
-      before it was read -- and this cannot be ruled the way it is tempting to rule it, namely
-      that Section 316's own districts refuse the pod so the note is moot. That is a reason that
-      argues about OUR corpus rather than about the page, and it goes stale the moment anybody
-      reads 1002 for the urban districts. Section 1002 is not in the store. `fetch` keeps the row
-      in the queue, which is where it belongs.
+      Fetched 2026-11-08 from https://www.clackamas.us/planning/zdo1002 (ZDO 1002, Protection of
+      Natural Features). 1002.02 is a development restriction: inside the Portland Metropolitan
+      UGB, where more than three trees were removed from a lot in the previous five years, the
+      county denies an application for design review, a conditional use, or a land division other
+      than a middle housing land division. It reaches the pod only where the pod needs design
+      review (ZDO 1102.01: commercial and industrial districts and HDR, MR-1, MR-2, MRR, PMD,
+      RCHDR, SHD, VA, VTH) and only on a lot whose recent tree history the screen cannot see. That
+      is a condition on whether an application is accepted, not ground the building gives up: an
+      approval process. 1002.03 (tree preservation) states it cannot preclude development. The
+      tree history is a purchase check; see item 105 for the question put to Steph.
   # --- and five more, arriving with ZDO Sections 510 and 1005 on 2026-09-08 -
   # Four close and one does not, and the one that does not is the shape §30
   # taught: a section this county cites for what it MAKES a site hold, not for
@@ -717,21 +717,14 @@ crossrefs:
       Services, subject to Section 827" (ZDO 510 L209). A window a car stops at, and one of the
       thirty-eight markers in Table 510-1 that resolve to a row this building is not on.
   "1021":
-    outcome: fetch
+    outcome: other_building
     note: >-
-      Solid Waste and Recyclable Material Collection, and the second reference in this layer that
-      a chapter's arrival turned from a name into a requirement. Table 510-1 note 8 (ZDO 510 L67):
-      "In the SCMU District, outdoor displays, processes, or storage, except for the storage of
-      solid waste and recyclables either as required by Section 1021, Solid Waste and Recyclable
-      Material Collection, or as an accessory use to a townhouse, are prohibited." The three words
-      that matter are "as required by": the sentence is a prohibition on outdoor storage, and it
-      carves out the collection area because the county requires one somewhere else. A collection
-      area is ground. It is the same family as the parking court, which took between twelve and
-      forty-two feet of depth off every quadplex zone in this corpus the day somebody measured it
-      instead of assuming it, and this model holds no field for it. The tempting ruling -- that
-      the citing sentence is about SCMU and SCMU is not encoded -- argues about our corpus rather
-      than about the page and expires the day somebody encodes SCMU. Section 1021 is not in the
-      store. `fetch` keeps the row in the queue, which is where it belongs.
+      Fetched 2026-11-08 from https://www.clackamas.us/planning/zdo1021 (ZDO 1021, Solid Waste and
+      Recyclable Material Collection). 1021.01 applies to "Multifamily dwellings" and to
+      commercial, industrial and institutional development, and ZDO 202 defines a multifamily
+      dwelling as five or more units (zdo.202.definitions.txt#L177). The pod is four attached
+      units -- the citing sentence itself carves out storage "as an accessory use to a townhouse"
+      -- so the collection area the section sizes is somebody else's building.
   # --- two made binding on 2026-10-14 by encoding 1005.02(L) (FOLLOWUPS 61) --
   "904":
     outcome: other_path
@@ -753,6 +746,134 @@ crossrefs:
       fire is not four attached units placed new, and the term only decides whether a rebuilt
       footprint counts toward the 40,000 sq ft tally.
 
+  # --- FOLLOWUPS 105 (2026-11-08): the binding references left open, followed ---
+  "830":
+    outcome: other_building
+    note: >-
+      Utility Carrier Cabinets ("Utility Carrier Cabinets, subject to Section 830", 511.05). A
+      use-table row naming its own special-use section; the pod is four attached dwelling units,
+      not this use.
+  "840":
+    outcome: other_building
+    note: >-
+      Farmers' Markets ("Farmers' Markets, subject to Section 840", 315.04). A use-table row
+      naming its own special-use section; the pod is four attached dwelling units, not this use.
+  "849":
+    outcome: other_building
+    note: >-
+      Crisis Stabilization Centers ("as defined in ORS 430.626, subject to Section 849", 510.05).
+      A use-table row naming its own special-use section; the pod is four attached dwelling units,
+      not this use.
+  "832":
+    outcome: other_building
+    note: >-
+      Bed and Breakfast Inns (315.04). A use-table row naming its own special-use section; the pod
+      is four attached dwelling units, not this use.
+  "841":
+    outcome: other_building
+    note: >-
+      Marijuana production ("Marijuana production is subject to Section 841", 401.04). A use-table
+      row naming its own special-use section; the pod is four attached dwelling units, not this
+      use.
+  "848":
+    outcome: other_building
+    note: >-
+      Emergency Shelter ("Emergency Shelter, subject to Section 848", 315.04). A use-table row
+      naming its own special-use section; the pod is four attached dwelling units, not this use.
+  "1204.04":
+    outcome: other_building
+    note: >-
+      Temporary dwelling for care (401.04), a temporary permit for a second dwelling. A use-table
+      row naming its own special-use section; the pod is four attached dwelling units, not this
+      use.
+  "835":
+    outcome: other_building
+    note: >-
+      Wireless telecommunication facilities (401.04). A use-table row naming its own special-use
+      section; the pod is four attached dwelling units, not this use.
+  "804":
+    outcome: other_building
+    note: >-
+      Places of Worship (315.04). A use-table row naming its own special-use section; the pod is
+      four attached dwelling units, not this use.
+  "834":
+    outcome: other_building
+    note: >-
+      Composting operations and facilities other than accepted farm practice (401.04 L184-L188). A
+      use-table row naming its own special-use section; the pod is four attached dwelling units,
+      not this use.
+  "806":
+    outcome: other_building
+    note: >-
+      Home Occupations to Host Events (316.04). A use-table row naming its own special-use
+      section; the pod is four attached dwelling units, not this use.
+  "821":
+    outcome: other_building
+    note: >-
+      Livestock (316.04). A use-table row naming its own special-use section; the pod is four
+      attached dwelling units, not this use.
+  "817":
+    outcome: other_building
+    note: >-
+      Auto Wrecking Yards and Junkyards (604.04). A use-table row naming its own special-use
+      section; the pod is four attached dwelling units, not this use.
+  "836":
+    outcome: other_building
+    note: >-
+      Home occupation for canine skills training (406.04). A use-table row naming its own special-
+      use section; the pod is four attached dwelling units, not this use.
+  "1003":
+    outcome: narrows_only
+    note: >-
+      Hazards to Safety, named in ZDO 1012.05 only as one of the areas subtracted from the site
+      before minimum density is computed ("2 Mass movement hazards regulated by Section 1003").
+      Subtracting land can only lower a minimum-density floor, and maximum density is exempt for
+      middle housing; this mention takes nothing from the pod.
+  "703":
+    outcome: narrows_only
+    note: >-
+      Floodplain Management District, named in ZDO 1012.05 only as an area subtracted before
+      minimum density is computed ("3 The floodway of the Floodplain Management District regulated
+      by Section 703"). Can only lower a floor; the floodplain itself reaches a lot through its
+      mapped overlay, not this list.
+  "705":
+    outcome: narrows_only
+    note: >-
+      Willamette River Greenway, named in ZDO 1012.05 only as an area subtracted before minimum
+      density is computed ("4 The Willamette River and the required buffer area regulated by
+      Section 705"). Can only lower a floor.
+  "706":
+    outcome: narrows_only
+    note: >-
+      Habitat Conservation Area District, named in ZDO 1012.05 only as an area subtracted before
+      minimum density is computed ("5 Habitat Conservation Areas regulated by Section 706"). Can
+      only lower a floor; the HCA reaches a lot through its mapped overlay, not this list.
+  "709":
+    outcome: narrows_only
+    note: >-
+      Water Quality Resource Area District, named in ZDO 1012.05 only as an area subtracted before
+      minimum density is computed ("6 Water Quality Resource Areas regulated by Section 709"). Can
+      only lower a floor; the WQRA reaches a lot through its mapped overlay, not this list.
+  "512":
+    outcome: narrows_only
+    note: >-
+      A district section (512) named in ZDO 1015.02's list of urban districts where "no minimum
+      off-street parking spaces are required for any development" inside the UGB (1015.02.txt#L40,
+      #L212). A relief from a parking minimum; it can only loosen.
+  "846.01":
+    outcome: other_path
+    note: >-
+      Affordable housing: "[7] Dwellings not otherwise permitted in the applicable zoning district
+      may nonetheless be permitted if they are developed as affordable housing" (315.04). A path
+      for a use the district does not permit, taken only by affordable housing; this screen
+      answers as market rate (affordable deferred).
+  "1002.04":
+    outcome: other_path
+    note: >-
+      Stream corridor protection, cited from the ZDO 202 definition of STREAM CORRIDOR AREA.
+      1002.04 governs stream corridors outside the Portland Metropolitan UGB, where the urban
+      districts that permit the pod do not sit; inside the UGB stream buffers are the Water
+      Quality Resource Areas of Section 709.
 definitions:
   # "LOT, CORNER: A lot with more than one front lot line, where at least two
   # front lot lines intersect. A lot within the radius curve or curves of a
@@ -844,6 +965,16 @@ code:
   end: "Return to the Zoning and Development Ordinance main page"
   # Table 510-1 runs eleven hundred lines of use names against eleven columns.
   allow_thin: true
+# Table 1001-1 says which Section 1000 chapters reach which development. Its
+# row for middle housing in the R-5 to R-30 and VR districts leaves 1005 and
+# 1009 blank (page 1001-3 of the county PDF, "Last Amended 9/9/2024"; stored
+# with layout extraction so the columns line up; the tick marks are the only
+# content of most cells, hence allow_thin).
+- id: zdo.1001
+  url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+  title: Clackamas County ZDO Section 1001 - General Provisions (Table 1001-1, Applicability of Section 1000), Last Amended 9/9/2024
+  start: "1001.01"
+  allow_thin: true
 # Where eight of those eleven districts' standards actually live. Table 510-1
 # notes 12 and 14 send a FREESTANDING quadplex -- which is the only kind this
 # building is -- to "the development and dimensional standards applicable to
@@ -931,6 +1062,17 @@ code:
   nth: 2
   end: "SECTION 330 - COMMERCIAL, INDUSTRIAL AND MULTIFAMILY DRIVEWAYS"
   # 71 lines: one section of a 300-page manual, sliced to the parking part.
+  allow_thin: true
+# Section 220's access spacing (Table 2-1 and its notes), read for the
+# driveway spacing from intersections and along collectors and arterials
+# (flats/config/driveway_spacing.yaml, FOLLOWUPS 169). Read 2026-11-09.
+- id: roadway.220
+  url: https://dochub.clackamas.us/documents/drupal/fc5951b3-7eab-424c-a4d2-b484220a3ffb
+  title: Clackamas County Roadway Standards Section 220 - Access Standards
+  start: "220.1 General"
+  # The contents list the heading first.
+  nth: 2
+  end: "220.5 Roadway Intersection Management"
   allow_thin: true
 # And Section 320 hands them on again, to two CAD sheets. Both are stored and
 # both store three lines, because a drawing's only extractable text is its
@@ -1025,6 +1167,18 @@ code:
   end: "Return to the Zoning and Development Ordinance main page"
   allow_thin: true
 defaults:
+  entrance_faces_street:
+    value: required
+    cite: "Clackamas County ZDO 845.02(B) Entry orientation (845.03(B) for townhouses): at least one main entrance within 8 feet of the longest street-facing wall, facing the street or meeting the Large Cities Model Code alternatives (an angle of up to 45 degrees, a common open space, or a porch with a street-facing entrance or a roof) (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-09-27'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L25-L41"
+  entrance_angle_max_deg:
+    value: 45
+    cite: "Clackamas County ZDO 845.02(B) Entry orientation (845.03(B) for townhouses): \"2 Be at an angle of up to 45 degrees from the street (see Figure 845-3, Entrance at 45-Degree Angle from the Street);\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-09-27'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L33"
   # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27 out of Section 845, which
   # is the section Table 315-1's note 8 sends this building to for everything.
   # Unincorporated Clackamas is Fairview's shape almost word for word, because
@@ -1081,6 +1235,45 @@ defaults:
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-08-27'
     quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55,L121,L193-L197"
+    # THE TOWNHOUSE PATH BANS IT (Steph 2026-11-09, "Follow the county's
+    # rules"; coordinator 2026-11-09). 845.03(E)(1) lets parking stand between
+    # a townhouse and a public street only with one driveway entry per
+    # townhouse and parking no wider than 12 feet on each lot; the pod's one
+    # shared court meets neither, so (E)(2)(a) governs: "Off-street parking
+    # areas shall not be located between a townhouse and a public street" --
+    # ANY public street, a corner's side street and a through lot's far end
+    # included, as Portland's and Milwaukie's bans read.
+    variants:
+      - value: true
+        when: [unit_lots]
+        cite: Clackamas ZDO 845.03(E)(2)(a), off-street parking areas shall not be located between a townhouse and a public street where 845.03(E)(1) is not met
+        quote: "or/clackamas/_unincorporated/845/845.03.txt#L46-L60"
+  # FOLLOW THE COUNTY'S RULE, not the silent-codes ban (Steph 2026-11-09,
+  # rulings.yaml 2026-11-09-clackamas-front-parking-follow-zdo: "Follow the
+  # county's rules."). 845.02(D) lets a quadplex's parking stand between the
+  # building and a public street where (1) a dwelling separates it from the
+  # street or (2) all of it together is no wider than half the street
+  # frontage. The screen measures (2) on the drawing it keeps, on every
+  # street (the any-street reading above); (1) is never measured. Lines not
+  # read as a public street keep the 2026-11-08 hold.
+  #
+  # THE TOWNHOUSE PATH IS DIFFERENT. 845.03(E)(1) allows parking between a
+  # townhouse and a public street only with one driveway per townhouse and
+  # parking no wider than 12 feet on each unit lot; the pod's one shared
+  # court meets neither, so (E)(2)(a) governs: "Off-street parking areas
+  # shall not be located between a townhouse and a public street." False
+  # there.
+  parking_front_share_allowed:
+    value: true
+    cite: Clackamas ZDO 845.02(D), garages and off-street parking areas may stand between a building and a public street where a dwelling separates them from it or their combined width is at most 50 percent of the street frontage
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/_unincorporated/845/845.02.txt#L1,L37-L41"
+    variants:
+      - value: false
+        when: [unit_lots]
+        cite: Clackamas ZDO 845.03(E)(2)(a), off-street parking areas shall not be located between a townhouse and a public street where 845.03(E)(1) is not met
+        quote: "or/clackamas/_unincorporated/845/845.03.txt#L46-L60"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from
@@ -1103,6 +1296,45 @@ defaults:
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-09-08'
     quote: "or/clackamas/_unincorporated/zdo.845.txt#L51-L55,L115"
+  # SIDE-YARD PARKING, ROUND 4 (FOLLOWUPS 146, 2026-11-06; Section 1009 now
+  # stored). SILENT, not allowed outright. A setback is "between a structure
+  # and the lot line" (202), and no stored section places parking in or out of
+  # an interior side setback: 845.02(D) and 845.03(E) speak only to the street,
+  # 1015 names no yard, and the side-line rule in 845 is for cottage clusters.
+  # YELLOW at best (ruling 2026-11-05-side-yard-parking-silent-codes).
+  #
+  # THE FIVE-FOOT STRIP. 1009.03(B)(1): "A landscaping strip with a minimum
+  # width of five feet shall be provided adjacent to the perimeter of the
+  # surface parking or loading area", under the heading "adjacent to abutting
+  # lots or rights-of-way". Permitted uses are "subject to ... Section 1000"
+  # (zdo.315.txt#L33), and 1009 carries no middle-housing exception, so it
+  # holds on both paths. A driveway is defined apart from the parking area
+  # (202), so the strip's reach to a lone lane is unsure; held on the lane too,
+  # the conservative answer (coordinator, 2026-11-05). VA, OA and VCS print 10
+  # below; VO has no key in this layer.
+  # NOT IN R-5 TO R-30 OR THE VR DISTRICTS (2026-11-10, fg4-fixes): Table 1001-1
+  # leaves the 1009 column blank for middle housing there (zdo.1001.txt#L94,L99-L105),
+  # so those nine districts hold the strip exempt; every other district keeps it.
+  # NOT ENCODED: the strip's street half and 1009.06's five feet at a front lot
+  # line (FOLLOWUPS 146 round 4 hand-off).
+  parking_side_yard_allowed:
+    value: lane_and_court
+    cite: Clackamas ZDO 202, a setback is the distance between a structure and the lot line; no section bars surface parking from a side setback
+    url: https://www.clackamas.us/planning/zdo202
+    retrieved: '2026-09-27'
+    quote: "or/clackamas/_unincorporated/zdo.202.definitions.txt#L489,L495,L591"
+  parking_side_yard_stated:
+    value: none
+    cite: Clackamas ZDO 845.02(D) and 845.03(E)(2) place parking against the front and state no interior-side rule
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L51-L55,L115"
+  parking_lot_line_buffer_ft:
+    value: 5
+    cite: Clackamas ZDO 1009.03(B)(1), landscaping strip with a minimum width of five feet adjacent to the perimeter of the surface parking area, abutting lots
+    url: https://www.clackamas.us/planning/zdo1009
+    retrieved: '2026-11-05'
+    quote: "or/clackamas/_unincorporated/zdo.1009.txt#L112,L162,L164"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -1386,6 +1618,22 @@ zones:
         20, side 5, rear 20, coverage 50%)
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1463,6 +1711,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1539,6 +1803,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1615,6 +1895,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1691,6 +1987,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1767,6 +2079,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1843,6 +2171,22 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
       # permitted, subject to note 7 (a lot of record may hold only one of the
@@ -1925,6 +2269,22 @@ zones:
     # VA, VCS and VO districts (1005.11.txt L6-L121) and name no VR
     # district, so nothing in it reaches this zone; Table 315-3's roof
     # pitch already holds the flat-roofed pod here.
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, second column: "VR-4/5 & VR-5/7" reads
       # P7,8, the same as the low-density zones. One table, one row, both
@@ -2044,6 +2404,22 @@ zones:
     # VA, VCS and VO districts (1005.11.txt L6-L121) and name no VR
     # district, so nothing in it reaches this zone; Table 315-3's roof
     # pitch already holds the flat-roofed pod here.
+    # TABLE 1001-1 LEAVES 1009 BLANK HERE (fg4-fixes, 2026-11-10). The row
+    # "Middle housing in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5,
+    # and VR-5/7 Districts" ticks 1002.01/1002.094, 1003, 1004, 1006, 1007.04,
+    # 1010 and the listed 1015 subsections for quadplexes, duplexes, triplexes
+    # and townhouses; the Landscaping (1009) and Site and Building Design
+    # (1005) columns are blank (zdo.1001.txt#L94,L99-L105, the cells read by
+    # column position), where "all other zoning districts" tick both
+    # (#L109,L117-L120). 1001.03: Section 1000 applies "as identified in Table
+    # 1001-1" (#L31-L32). So the layer's 1009.03(B)(1) strip is not this
+    # district's, on either path.
+    parking_lot_line_buffer_ft:
+      exempt: true
+      cite: Clackamas ZDO 1001.03 and Table 1001-1, middle housing in the R-5 to R-30, VR-4/5 and VR-5/7 Districts, no tick under 1009 Landscaping (ticked for middle housing in all other zoning districts)
+      url: https://dochub.clackamas.us/documents/drupal/5bf0ce34-f47f-4f3b-a419-30d1f226e70c
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/zdo.1001.txt#L31-L32,L94,L99-L105"
     quadplex_allowed:
       # Table 315-1, Quadplexes row, second column: "VR-4/5 & VR-5/7" reads
       # P7,8, the same as the low-density zones. One table, one row, both
@@ -2420,6 +2796,38 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
+    building_frontage_min_pct:
+      # fg4-fixes 2026-11-10 (false-green round 4, 19108 SE River Rd, C3):
+      # 1005.02(E) noted 2026-09-09 but held only as axis_required. Half
+      # the development site's street frontage must have buildings at the
+      # minimum front setback line. 1005.02 opens "The following site
+      # design standards apply" (L3) and Table 1001-1 ticks Section 1005
+      # for middle housing outside the R and VR districts. Held
+      # conservatively: (E)(1)'s 20 ft relief bought with pedestrian
+      # amenities is not taken, and (E)(3)'s one-frontage rule (major
+      # transit street, then the higher functional class, then the
+      # longest) is not held -- FLATS holds no major-transit-street
+      # map -- so a lot on two streets needs every street for GREEN
+      # (building_frontage_corner absent).
+      value: 50
+      cite: Clackamas ZDO 1005.02(E), inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
+    building_frontage_band_ft:
+      # "at the minimum front setback line": this district's minimum front
+      # setback, 15 ft (315/315.04.txt#L1592-L1599).
+      value: 15
+      cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, PMD minimum front setback 15 feet
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
+    building_frontage_basis:
+      value: site
+      cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
     orientation_constraint:
       # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
       # minimum of 50 percent of the street frontage of the development site
@@ -2460,6 +2868,7 @@ zones:
       # a frontage. That is the same hole Gresham's reading left open, and it
       # is a floor on what this encoding claims rather than a reason to
       # withhold it.
+      # (Encoded 2026-11-10, fg4-fixes: building_frontage_min_pct, below.)
       #
       # Also not encoded, deliberately: 1005.02(E)(1) lets a front setback
       # under 20 feet be increased to 20 where pedestrian amenities are
@@ -2621,6 +3030,38 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
+    building_frontage_min_pct:
+      # fg4-fixes 2026-11-10 (false-green round 4, 19108 SE River Rd, C3):
+      # 1005.02(E) noted 2026-09-09 but held only as axis_required. Half
+      # the development site's street frontage must have buildings at the
+      # minimum front setback line. 1005.02 opens "The following site
+      # design standards apply" (L3) and Table 1001-1 ticks Section 1005
+      # for middle housing outside the R and VR districts. Held
+      # conservatively: (E)(1)'s 20 ft relief bought with pedestrian
+      # amenities is not taken, and (E)(3)'s one-frontage rule (major
+      # transit street, then the higher functional class, then the
+      # longest) is not held -- FLATS holds no major-transit-street
+      # map -- so a lot on two streets needs every street for GREEN
+      # (building_frontage_corner absent).
+      value: 50
+      cite: Clackamas ZDO 1005.02(E), inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
+    building_frontage_band_ft:
+      # "at the minimum front setback line": this district's minimum front
+      # setback, 15 ft (315/315.04.txt#L1592-L1599).
+      value: 15
+      cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, MR1 minimum front setback 15 feet
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
+    building_frontage_basis:
+      value: site
+      cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
     orientation_constraint:
       # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
       # minimum of 50 percent of the street frontage of the development site
@@ -2838,6 +3279,38 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
+    building_frontage_min_pct:
+      # fg4-fixes 2026-11-10 (false-green round 4, 19108 SE River Rd, C3):
+      # 1005.02(E) noted 2026-09-09 but held only as axis_required. Half
+      # the development site's street frontage must have buildings at the
+      # minimum front setback line. 1005.02 opens "The following site
+      # design standards apply" (L3) and Table 1001-1 ticks Section 1005
+      # for middle housing outside the R and VR districts. Held
+      # conservatively: (E)(1)'s 20 ft relief bought with pedestrian
+      # amenities is not taken, and (E)(3)'s one-frontage rule (major
+      # transit street, then the higher functional class, then the
+      # longest) is not held -- FLATS holds no major-transit-street
+      # map -- so a lot on two streets needs every street for GREEN
+      # (building_frontage_corner absent).
+      value: 50
+      cite: Clackamas ZDO 1005.02(E), inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
+    building_frontage_band_ft:
+      # "at the minimum front setback line": this district's minimum front
+      # setback, 15 ft (315/315.04.txt#L1592-L1599).
+      value: 15
+      cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, MR2 minimum front setback 15 feet
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
+    building_frontage_basis:
+      value: site
+      cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
     orientation_constraint:
       # ZDO 1005.02(E): "Inside the UGB, except for industrial developments, a
       # minimum of 50 percent of the street frontage of the development site
@@ -2952,6 +3425,12 @@ zones:
       (H)" -- read 2026-09-09 and now carried as `orientation_constraint:
       axis_required`) and minimum density ("See Section 1012").
   VA:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.11(D) Villages at Mt. Hood building orientation; how a building turned end-on reads against it is unsettled (flat roofs also prohibited, L935) (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L919,L923"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -3037,6 +3516,40 @@ zones:
       # one in this table stated as a number rather than a cross-reference.
       value: 18
       quote: "or/clackamas/_unincorporated/315/315.04.txt#L1600-L1607"
+    building_frontage_min_pct:
+      # fg4-fixes 2026-11-10 (false-green round 4, 19108 SE River Rd, C3):
+      # 1005.02(E) noted 2026-09-09 but held only as axis_required. Half
+      # the development site's street frontage must have buildings at the
+      # minimum front setback line. 1005.02 opens "The following site
+      # design standards apply" (L3) and Table 1001-1 ticks Section 1005
+      # for middle housing outside the R and VR districts. Held
+      # conservatively: (E)(1)'s 20 ft relief bought with pedestrian
+      # amenities is not taken, and (E)(3)'s one-frontage rule (major
+      # transit street, then the higher functional class, then the
+      # longest) is not held -- FLATS holds no major-transit-street
+      # map -- so a lot on two streets needs every street for GREEN
+      # (building_frontage_corner absent).
+      # The 18 ft maximum (setback_front_max_ft) bounds the band too; the
+      # nearer, 10 ft, governs (share_band).
+      value: 50
+      cite: Clackamas ZDO 1005.02(E), inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
+    building_frontage_band_ft:
+      # "at the minimum front setback line": this district's minimum front
+      # setback, 10 ft (315/315.04.txt#L1592-L1599).
+      value: 10
+      cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, VA minimum front setback 10 feet
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592-L1599"
+    building_frontage_basis:
+      value: site
+      cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
     setback_rear_ft:
       exempt: true
       cite: Clackamas ZDO Table 315-4, Minimum Rear Setback row, VA column ("None")
@@ -3103,6 +3616,13 @@ zones:
       area for four units -- which is below the 7,000 Section 845 asks, so
       this is the one district of the four where the county's density standard
       would not have bound anyway) and minimum density ("See Section 1012").
+    # 1009.03(B)(1): the perimeter strip is 10 feet in this district (FOLLOWUPS 146).
+    parking_lot_line_buffer_ft:
+      value: 10
+      cite: Clackamas ZDO 1009.03(B)(1), in the OA, VA, VCS and VO Districts the minimum width shall be 10 feet
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L112,L162,L164,L166"
   HDR:
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
@@ -3174,6 +3694,41 @@ zones:
       # "15 feet[5]"; note 5 is about nonconforming detached houses.
       value: 15
       quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592,L1596"
+    building_frontage_min_pct:
+      # fg4-fixes 2026-11-10 (false-green round 4, 19108 SE River Rd, C3):
+      # 1005.02(E) noted 2026-09-09 but held only as axis_required. Half
+      # the development site's street frontage must have buildings at the
+      # minimum front setback line. 1005.02 opens "The following site
+      # design standards apply" (L3) and Table 1001-1 ticks Section 1005
+      # for middle housing outside the R and VR districts. Held
+      # conservatively: (E)(1)'s 20 ft relief bought with pedestrian
+      # amenities is not taken, and (E)(3)'s one-frontage rule (major
+      # transit street, then the higher functional class, then the
+      # longest) is not held -- FLATS holds no major-transit-street
+      # map -- so a lot on two streets needs every street for GREEN
+      # (building_frontage_corner absent).
+      # Carried by like: HDR to SHD, RCHDR, RTL, CC, C3 and OC, and through
+      # RCHDR to RCC and RCO, every one of which holds a 15 ft minimum front
+      # setback (SHD its own 15, RCHDR note 8's 15, the rest HDR's).
+      value: 50
+      cite: Clackamas ZDO 1005.02(E), inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L3,L44"
+    building_frontage_band_ft:
+      # "at the minimum front setback line": this district's minimum front
+      # setback, 15 ft (315/315.04.txt#L1592,L1596).
+      value: 15
+      cite: Clackamas ZDO 1005.02(E), buildings located at the minimum front setback line; Table 315-4, HDR minimum front setback 15 feet
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/315/315.04.txt#L1592,L1596"
+    building_frontage_basis:
+      value: site
+      cite: Clackamas ZDO 1005.02(E), the street frontage of the development site
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-10'
+      quote: "or/clackamas/_unincorporated/1005/1005.02.txt#L44"
     orientation_constraint:
       # The Maximum Front Setback cell reads "See Subsections 1005.02(E) and
       # (H)", as PMD's does; encoded as PMD's is (see the note there).
@@ -3780,6 +4335,13 @@ zones:
       mixed-use building", and they send the freestanding kind somewhere else
       for its standards. A code that draws that line in two other notes has
       drawn it here too.
+    # 1009.03(B)(1): the perimeter strip is 10 feet in this district (FOLLOWUPS 146).
+    parking_lot_line_buffer_ft:
+      value: 10
+      cite: Clackamas ZDO 1009.03(B)(1), in the OA, VA, VCS and VO Districts the minimum width shall be 10 feet
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L112,L162,L164,L166"
   # === The September 2026 map's thirty codes, ruled 2026-09-20 =============
   #
   # Steph's rule: every code the county map carries is read once, its reason
@@ -3893,6 +4455,13 @@ zones:
       answered the way NC and C-2 answer Table 510-1's note 11: it turns on
       what is built, this product is market rate, and the screen answers the
       question it is asked.
+    # 1009.03(B)(1): the perimeter strip is 10 feet in this district (FOLLOWUPS 146).
+    parking_lot_line_buffer_ft:
+      value: 10
+      cite: Clackamas ZDO 1009.03(B)(1), in the OA, VA, VCS and VO Districts the minimum width shall be 10 feet
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L112,L162,L164,L166"
   RC:
     cite_default:
       cite: Clackamas ZDO 513.02 (Section 513 applies to RTC and RC), 513.03
@@ -4007,6 +4576,12 @@ zones:
       resources". A caretaker's dwelling is the one residence the district
       admits and it is accessory to a park.
   SCMU:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4018,7 +4593,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, SCMU cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1489,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1490,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4068,6 +4643,39 @@ zones:
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
       url: https://www.clackamas.us/planning/zdo845
       quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
+    # THE FRONT YARD, read 2026-11-09 off Map 1005-1 (the regulating plan,
+    # stored as flats/config/areas/or/clackamas/_unincorporated/
+    # zdo-map-1005-1-fuller-road-regulating-plan.map-only.pdf). Table 510-2
+    # sends the SCMU setback cells to 1005.09, and 1005.09 prints no front
+    # setback of its own: it keys the facade line to the building frontage
+    # type, and Table 1005-1 keys the frontage types to the street type the
+    # map gives each frontage (1005.09(E), (G)). The map types every street
+    # in the station area: 82nd Avenue and Johnson Creek Boulevard "A",
+    # Fuller Road "C" north of Con Battin and south of Otty and "B" between,
+    # Otty Road "B", Battin Road and the future streets "D", Con Battin "C";
+    # Maloney Pl is drawn and not typed. Which of those a given lot fronts
+    # is not a fact any lot carries, so the number held is the one that
+    # satisfies a permitted frontage on EVERY street type a residential pod
+    # can take: Landscape (A streets only) prints "a minimum of 10 feet and a
+    # maximum of 15 feet" (H)(1), Porch/Stoop/Terrace (B, C, D) "a minimum of
+    # five feet and a maximum of 15 feet" (K)(1). Ten to fifteen is inside
+    # both. Linear and Forecourt (every street, "no minimum", at most five,
+    # (I)(1), (J)(1)) are storefront facades -- 60 percent ground-floor
+    # glazing and awnings (I)(8), (I)(5) -- and are not assumed. A lot on
+    # Maloney Pl, or in Sectors 1-2 before 1005.09(A)'s thresholds, may owe
+    # less; ten is the stricter reading there too.
+    setback_front_ft:
+      value: 10
+      cite: "Clackamas ZDO 1005.09(H)(1), Landscape Building Frontage (Type A streets), front setback minimum 10 feet; Table 1005-1 and Map 1005-1 (street types); Porch/Stoop/Terrace (B, C, D streets) minimum five, 1005.09(K)(1)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/_unincorporated/1005/1005.09.txt#L1,L43-L44,L117-L123,L125,L145,L147,L307,L309"
+    setback_front_max_ft:
+      value: 15
+      cite: "Clackamas ZDO 1005.09(H)(1) and (K)(1), Landscape and Porch/Stoop/Terrace Building Frontage, front setback maximum 15 feet; 1005.09(G)(1)-(3), buildings within 40 feet of a typed street and half of each frontage built to a permitted frontage type"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-11-09'
+      quote: "or/clackamas/_unincorporated/1005/1005.09.txt#L1,L125,L132,L145,L147,L307,L309"
     setback_side_ft:
       # 1005.09(C): "Five feet, except a zero setback is allowed for attached
       # structures." Read as 5: the zero is for a structure attached to a
@@ -4089,7 +4697,7 @@ zones:
     max_height_ft:
       exempt: true
       cite: Clackamas ZDO Table 510-2, Maximum Building Height row, SCMU cell ("None"); 1005.09 states no maximum
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1445,L1453"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1446,L1454"
     notes: >-
       YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
       by-right-only ruling of 2026-10-08): design review here weighs
@@ -4116,19 +4724,19 @@ zones:
       stay so the ruling can be reversed.
 
 
-      Not encoded: setback_front_ft. Table 510-2 prints "See Subsection
-      1005.09" in all four setback cells of the SCMU column (the table omits
-      SCMU from its header; every data row carries eleven cells, so the SCMU
-      cell sits right after PMU). 1005.09 does not contain a front setback
-      number. It keys the front building line to the street TYPE (A, B, C, D) of
-      each frontage on the regulating plan, Map 1005-1, and to the building
-      frontage type chosen (Linear Building, Porch/Stoop/Terrace and others,
-      1005.09(G)): a Linear Building facade is set back at most 5 feet, a
-      Porch/Stoop/Terrace facade 5 to 15 or 10 to 15 feet by street type, and
-      50 percent of the frontage must be built out. Street type per frontage is
-      not a fact any lot here carries, so no front setback is stated. The
-      expectation that this turns on 1005.02(L) bearing-plane setbacks is
-      wrong: 1005.02(L) applies only to HDR, RCHDR and SHD.
+      Front setback, encoded 2026-11-09 from Map 1005-1 (was unread). Table
+      510-2 prints "See Subsection 1005.09" in all four setback cells of the
+      SCMU column (the table omits SCMU from its header; every data row
+      carries eleven cells, so the SCMU cell sits right after PMU). 1005.09
+      keys the front building line to the street TYPE (A, B, C, D) of each
+      frontage on the regulating plan, Map 1005-1, and to the building
+      frontage type chosen (1005.09(G), Table 1005-1): Landscape 10 to 15 feet
+      on A streets, Porch/Stoop/Terrace 5 to 15 on B, C and D, Linear and
+      Forecourt 0 to 5 on all. The street type per frontage is not a fact any
+      lot carries, so 10 to 15 -- inside a permitted residential frontage on
+      every street type -- is held on every lot. The expectation that this
+      turns on 1005.02(L) bearing-plane setbacks is wrong: 1005.02(L) applies
+      only to HDR, RCHDR and SHD.
 
 
       Also: 1005.09(B)-(M) "do not apply in Sectors 1 and 2, as shown on Map
@@ -4172,23 +4780,23 @@ zones:
       quote: "or/clackamas/_unincorporated/845/845.01.txt#L3,L7"
     setback_front_ft:
       value: 0
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1409,L1416"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1410,L1417"
     setback_side_ft:
       # Table 510-2 PMU side cell is "0[8,15]". Note 15: "If the side lot line
       # abuts a residential zoning district, the minimum shall be 15 feet."
       # This layer declares no abuts_residential_zone fact, so the 15 is held
       # on every lot, the stricter reading.
       value: 15
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1433,L1440,L1551"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1434,L1441,L1552"
     setback_rear_ft:
       # "0[8,10]"; note 10: 15 feet if the rear lot line abuts a residential
       # zoning district. Held at 15 for the same reason as the side.
       value: 15
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1421,L1428,L1537"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1422,L1429,L1538"
     max_height_ft:
       exempt: true
       cite: Clackamas ZDO Table 510-2, Maximum Building Height row, PMU cell ("None")
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1445,L1452"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1446,L1453"
     notes: >-
       RED, RE-RULED 2026-10-14 under Steph's review rule (replacing the
       by-right-only ruling of 2026-10-08): the pod misses the measured site
@@ -4234,7 +4842,7 @@ zones:
     min_lot_sqft:
       # Table 510-2: "PMU2: 2 acres" = 87,120 square feet.
       acres: 2
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1368,L1376"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1369,L1377"
     notes: >-
       RED, RE-RULED 2026-10-14 (the same reason as PMU1). Table 510-3 for
       PMU2 to PMU5 requires 50 percent of the site in office or residential
@@ -4264,12 +4872,18 @@ zones:
     min_lot_sqft:
       # Table 510-2: "PMU3: 3 acres" = 130,680 square feet.
       acres: 3
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1368,L1377"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1369,L1378"
     notes: >-
       RED, RE-RULED 2026-10-14 (the same reason as PMU1), and the same Table 510-3
       column as PMU2 (PMU 2, 3, 4 and 5). Only the minimum lot size, 3 acres,
       differs.
   RTL:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4281,7 +4895,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RTL cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1485,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1486,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4340,6 +4954,12 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   CC:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4351,7 +4971,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, CC cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1486,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1487,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4410,6 +5030,12 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   C3:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4421,7 +5047,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, C-3 cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1487,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1488,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4480,6 +5106,12 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   OC:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4491,7 +5123,7 @@ zones:
       # on 1012.08(A)-(B) net acreage.
       value: 20
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, OC cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1491,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1492,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4550,6 +5182,12 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, 510.05.txt#L1481) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   RCC:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4564,7 +5202,7 @@ zones:
       # definitions are read (conservative default).
       value: 30
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RCC cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1484,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1485,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4623,6 +5261,12 @@ zones:
       standards (like: RCHDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Note 13 keeps no Table 510-2 standard, so the minimum lot size that table prints for this district does not reach the building -- and Table 510-2 note 2 limits it to land divisions in any case (510.05.txt#L1511-L1512).
   RCO:
+    entrance_faces_street:
+      value: unclear
+      cite: "Clackamas County ZDO 1005.08 and 1005.09 (Regional Center and Fuller Road Station areas): buildings oriented to the street, a word the ZDO does not define for a building turned end-on (FOLLOWUPS 153)"
+      url: https://www.clackamas.us/planning/zdo1005
+      retrieved: '2026-09-27'
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L478,L588,L636,L778"
     min_density_du_per_acre:
       # 1012.01 reaches a quadplex through design review for dwellings, and
       # 1102.01(A)(1) requires design review in this district (review_discretion
@@ -4637,7 +5281,7 @@ zones:
       # definitions are read (conservative default).
       value: 30
       cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RCO cell; Table 510-1 note 15; Table 510-2 note 24
-      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1481,L1492,L1571"
+      quote: "or/clackamas/_unincorporated/510/510.05.txt#L1482,L1493,L1572"
       measured_on:
         fact: net_developable_area
         # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
@@ -4831,3 +5475,36 @@ zone_rulings:
       fabric carries them as Milwaukie R-MD, Moderate Density Residential,
       which Milwaukie's layer holds; the assessor's roll still calls the
       lots unincorporated.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: unsettled
+    kind: wedge
+    sight_ft:
+    - 280
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L2027
+    cite: Clackamas County Roadway Standards 240; CCC 7.03
+    note: 'A sight-DISTANCE rule, not a triangle: no object on private property may limit the intersection
+      sight distance of Tables 2-6 to 2-10 (280/240/205 ft at 25 mph), measured 14.5 ft back from the
+      edge of the nearest travel lane. The street''s speed is not mapped; 450 ft is taken as the largest
+      plausible (a 45 mph road). Unsettled: the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check):
+      the area bars buildings at its largest plausible size, measured with the curb at the lot line; a
+      corner lot it reaches is YELLOW, never GREEN and never RED on it, until the rule is read.'
+    ruling: 2026-11-09-sight-triangle-corner-check
+  driveway:
+    status: unsettled
+    kind: wedge
+    sight_ft:
+    - 280
+    - 450
+    eye_back_ft: 14.5
+    basis: travel_lane
+    source: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L2027
+    cite: Clackamas County Roadway Standards 240.2(c)
+    note: '240.2(c): ISD and SSD ''shall be provided at all proposed accesses ... subject to land use
+      approval''. Same wedge as the corner, the eye on the drive. Speed unmapped: largest plausible.'
+    ruling: 2026-11-09-sight-triangle-corner-check

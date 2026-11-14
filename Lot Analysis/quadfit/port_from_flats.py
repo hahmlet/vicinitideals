@@ -230,6 +230,28 @@ def zone_row(layer: Any, name: str, layer_id: str, placeholders: dict[str, float
     return row
 
 
+def amended_zone_row(layer: Any, name: str, layer_id: str, amendment: str) -> dict[str, Any]:
+    """:func:`zone_row` run on an adopted amendment's block instead of the codified one.
+
+    For a single row placed by hand in a jurisdiction this file does not
+    write (Portland, whose block predates the port): CI1 on RICAP 11 is the
+    first. Every block the amendment re-reads goes in its zone's place
+    (``audit_zone_mirror.amended_layer``), so a ``like:`` resolves against the
+    amended text the way the screen resolves it -- Gladstone C1 takes
+    Ordinance 1545's R-7.2 through its ``like: R7.2`` (FOLLOWUPS 156) -- and
+    the row records the id it was taken from so the mirror audit holds it to
+    the same blocks.
+    """
+    from audit_zone_mirror import amended_layer
+
+    swapped = amended_layer(layer, amendment, name, where=f"{layer_id}/{name}")
+    row = zone_row(swapped, name, layer_id, largest_yards(layer))
+    out = {"zone": row.pop("zone"), "quadplex_allowed": row.pop("quadplex_allowed"),
+           "corpus_amendment": amendment}
+    out.update(row)
+    return out
+
+
 def _q(s: str) -> str:
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 

@@ -237,12 +237,72 @@ def rows() -> list[Routing]:
 #: multi-dwelling standards of 33.120.280. The pod is a primary structure;
 #: the pointer reaches a shed or a garage this screen never places.
 OPEN = {
+    # 2026-11-13 (FOLLOWUPS 105 item 4, the resolver gap): these targets used
+    # to read as unfetched in the crossrefs ledger, because the store prints
+    # them only as a local "14." / "D." under a held section or as a table
+    # caption. Now they resolve, so each pointer is a redirect into a held
+    # section nothing cites inside. Each was read:
+    # - 16.23.010D, Happy Valley RCMU: the master-plan standards
+    #   (16.23.010.txt#L162-L172), already quoted in RCMU's
+    #   quadplex_allowed: false. A process, in a zone that is closed.
+    "or/clackamas/happy-valley 16.23.010 -> 16.23.010D",
+    # - 50.04.003.10, Lake Oswego: the exceptions to minimum density. They lift
+    #   a floor, so they can only admit (the old crossrefs ruling, narrows_only).
+    #   The layer is switched off.
+    "or/clackamas/lake-oswego 50.04.001.1 -> 50.04.003.10",
+    "or/clackamas/lake-oswego 50.04.001.2 -> 50.04.003.10",
+    # - 60.50.25.14, Beaverton: Vehicle Camping, a use the pod is not.
+    "or/washington/beaverton 20.05.20 -> 60.50.25.14",
+    "or/washington/beaverton 20.10.20 -> 60.50.25.14",
+    "or/washington/beaverton 20.15.20 -> 60.50.25.14",
+    "or/washington/beaverton 20.20.20 -> 60.50.25.14",
+    "or/washington/beaverton 20.22.20 -> 60.50.25.14",
+    # - 60.05.25.13, the landscape buffers. Table 60.05.25.13.D's Middle
+    #   Housing row reads N/A (the beaverton.yaml crossrefs ruling, read).
+    "or/washington/beaverton 60.05.25 -> 60.05.25.13",
+    # - 60.30.10.11, compact cars. Residential stalls stay at the standard size
+    #   of 60.30.10.7, which this layer encodes (60.30.10.txt#L413-L415).
+    "or/washington/beaverton 60.30.10 -> 60.30.10.11",
+    # - 70.15.10.5, Downtown's reduced minimum density for small pre-1999
+    #   sites. It lowers a floor (narrows_only).
+    "or/washington/beaverton 70.15.10 -> 70.15.10.5",
+    # - Tigard Table 18.660.4, the Triangle use table. TMU's quadplex_allowed
+    #   cites it at 18.660.060.txt#L55, but a caption has no section span for
+    #   a citation to land in, so the row cannot close as followed.
+    "or/washington/tigard 18.660.060 -> 18.660.4",
+    # - Table 18.660.6 allows 1 driveway per street frontage up to 300 ft
+    #   (18.660.070.txt#L264-L284). The pod's plan draws one drive
+    #   (flats/score/screen.py#L333-L334).
+    "or/washington/tigard 18.660.070 -> 18.660.6",
+    # - Table 18.660.8 sets window shares (residential: 30% of the first
+    #   storey, 20% above; 18.660.080.txt#L117-L122). Facade glazing is a
+    #   design matter that the screen does not grade.
+    "or/washington/tigard 18.660.080 -> 18.660.8",
+    # 2026-11-08 (FOLLOWUPS 140): Johnson Creek Basin's South, Springwater and
+    # floodplain sections each send tree removal to 33.537.125. Followed on
+    # 2026-11-01 while the hold quoted it; Steph's ruling
+    # 2026-11-01-trees-ignored-entered-per-lot took trees out of the screen, the
+    # hold no longer quotes 125, so the rows are open again (read and set aside).
+    # 2026-11-10 (FOLLOWUPS 165): 33.537.130 -> 33.537.125 left the ledger with
+    # the 11/1/26 reprint. The redirect still stands (33.537.txt L279-L281), but
+    # the reprint's text layer prints "a" / "re subject to" on two lines, so the
+    # "are subject to" pattern no longer sees it. Set aside as before (trees out
+    # of the screen, ruling 2026-11-01-trees-ignored-entered-per-lot).
+    "or/multnomah/portland 33.537.140 -> 33.537.125",
+    "or/multnomah/portland 33.537.150 -> 33.537.125",
     "or/clackamas/_unincorporated 401.04 -> 401.07",
     "or/clackamas/_unincorporated 406.04 -> 406.07",
     "or/clackamas/_unincorporated 406.04 -> 406.08",
     "or/clackamas/_unincorporated 510.03 -> 510.04",
     "or/clackamas/_unincorporated 511.03 -> 511.04",
     "or/clackamas/_unincorporated 602.03 -> 602.04",
+    # 2026-11-08 (FOLLOWUPS 105 round 3): Gladstone Chapter 17.76, Exceptions,
+    # fetched with Steph's OK and read. Each dimensional table opens "Except as
+    # provided in ... Chapter 17.76"; every subsection relaxes, so no value cites it.
+    "or/clackamas/gladstone 17.14.050 -> 17.76",
+    "or/clackamas/gladstone 17.18.060 -> 17.76",
+    "or/clackamas/gladstone 17.24.060 -> 17.76",
+    # 2026-11-05 side-yard chapters fetched (FOLLOWUPS 146).
     # Estacada (FOLLOWUPS 53, 2026-10-07), each read when it was added. The
     # fence lines (16.08.010, and 16.60.010 from the C-2, CMU, R-3 and NCR
     # fence clauses) point at the clear vision rule, which the screen does not
@@ -264,9 +324,17 @@ OPEN = {
     # 2026-10-08-estacada-staff-review-by-right).
     "or/clackamas/estacada 16.26.040 -> 16.60.010",
     "or/clackamas/estacada 16.26.050 -> 16.132.015",
-    "or/clackamas/milwaukie 19.309.2 -> 19.509",
-    "or/clackamas/milwaukie 19.310.2 -> 19.509.2",
-    "or/clackamas/milwaukie 19.310.5 -> 19.509",
+    # 2026-11-08 (FOLLOWUPS 153), each read: 16.16.040, quoted for Estacada's
+    # entrance menu, carries the same fence clause to clear vision; 19.505.1,
+    # quoted for Milwaukie's main entrance, sends a manufactured home on its own
+    # lot to 19.506, which the pod is not.
+    "or/clackamas/estacada 16.16.040 -> 16.60.010",
+    "or/clackamas/milwaukie 19.505.1 -> 19.506",
+    # Milwaukie's three M and BI rows (19.309.2 and 19.310.2/.5 -> 19.509)
+    # left on 2026-11-09 (FOLLOWUPS 166): Ord. 2265 recast both use lists as
+    # Tables 19.309.2 and 19.310.2, the refusals now quote the closed-list
+    # clauses (19.309.2.G, 19.310.2.F), and the marijuana pointers sit in a
+    # Standards column beside no quoted line.
     "or/clackamas/milwaukie 19.607.1 -> 19.505.4",
     "or/clackamas/milwaukie 19.607.1 -> 19.505.5",
     # 2026-10-08, Milwaukie GMU (draft). Table 19.303.2 note 1 (L922): "The
@@ -354,7 +422,9 @@ OPEN = {
     "or/multnomah/gresham 4.1413 -> 4.1414",
     "or/multnomah/gresham 4.1415 -> 10.1700",
     "or/multnomah/gresham 4.1508 -> 10.1700",
-    "or/multnomah/portland 33.130.215 -> 33.120.280",
+    # 2026-11-10 (FOLLOWUPS 165): 33.130.215 -> 33.120.280 closed. The 11/1/26
+    # reprint deleted 215.B.4's pointer; detached accessory setbacks are now
+    # "stated in 33.130.265" (33.130.txt L792-L793), a shed's rule, not the pod's.
     "or/multnomah/portland 33.140.210 -> 33.140.215",
     # 2026-10-29 (FOLLOWUPS 73 batch 6): newly visible when Portland was cut into
     # sections, listed and not yet read -- RM max FAR's bonus options (33.120.210
@@ -411,20 +481,15 @@ OPEN = {
     #   (quoted in the layer's comments, not by a value); 18.100.070 is the
     #   menu of design features, not placement. CR's 18.100.030(C) Type III
     #   path is for multi-unit dwellings, five or more units.
-    # - 18.75.065 -> 18.75.060, .070: GMU's ground-floor residential
-    #   standards stand "In lieu of" the zone's general ones. GMU refuses
-    #   the one-lot pod; its townhouse path (Steph, 2026-10-01) is held
-    #   behind an unmapped subdistrict figure. The .050 row closed: see
-    #   FOLLOWED.
+    # - 18.75.065 -> 18.75.060, .070 stood here until 2026-11-09 (FOLLOWUPS
+    #   166): Ordinance 2026-06 struck old 065 "In lieu of" whole, and GMU
+    #   now cites the ordinance, so no GMU citation lands in the codified
+    #   18.75 sections and the rows are gone.
     "or/washington/cornelius 18.145.010 -> 18.145.020",
     "or/washington/cornelius 18.35.050 -> 18.150.010",
-    "or/washington/cornelius 18.35.060 -> 18.100",
     "or/washington/cornelius 18.70.050 -> 18.150.010",
-    "or/washington/cornelius 18.70.060 -> 18.100",
     "or/washington/cornelius 18.70.060 -> 18.100.030",
     "or/washington/cornelius 18.70.060 -> 18.100.070",
-    "or/washington/cornelius 18.75.065 -> 18.75.060",
-    "or/washington/cornelius 18.75.065 -> 18.75.070",
     # Tigard, a draft from a cloud session, 2026-10-01. Each read:
     # 18.140.040 -> .030 lists the PR zone's restricted uses; PR prohibits
     # Residential Use. 18.280.040 -> 18.920.030 is the tandem-driveway path
@@ -481,6 +546,21 @@ OPEN = {
     "or/washington/_unincorporated 390-9 -> 390-9.5",
     "or/washington/_unincorporated 392-9 -> 413",
     "or/washington/_unincorporated 413-6 -> 413-6.1",
+    # 2026-11-07 (rescreen-1110, FOLLOWUPS 108 merged): LR-5, LR-7, LR-10 and
+    # MR-4 point at MCC 39.3140, now stored (39.3140.lot-of-record.txt) and
+    # quoted for the lot-of-record relief. They read OPEN only because the
+    # heading finder misses that file's "§ 39.3140" first line and credits
+    # its lines to the "39.3005" a sentence opens with at L7. Really followed;
+    # a ledger artifact, not an unread section.
+    "or/multnomah/_unincorporated 39.4830 -> 39.3140",
+    "or/multnomah/_unincorporated 39.4862 -> 39.3140",
+    "or/multnomah/_unincorporated 39.4878 -> 39.3140",
+    "or/multnomah/_unincorporated 39.4990 -> 39.3140",
+    # 2026-11-12 (rel7 release): Hillsboro 12.61.800 and 12.62.400 each say the
+    # standard "does not apply to accessory dwelling units created pursuant to
+    # 12.40.100.C.1". The pod is not an ADU, so the pointer is set aside, unread.
+    "or/washington/hillsboro 12.61.800 -> 12.40.100",
+    "or/washington/hillsboro 12.62.400 -> 12.40.100",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
@@ -497,12 +577,16 @@ OPEN = {
 #: are, and encoding them is what closed it: a redirect closes by a citation
 #: landing inside the target, which is the only answer this ledger takes.
 FOLLOWED = {
-    # 2026-11-01 (FOLLOWUPS 109, Portland plan districts part 1): Johnson Creek
-    # Basin's South, Springwater and floodplain sections each send tree removal
-    # to 33.537.125, which the tree hold quotes.
-    "or/multnomah/portland 33.537.130 -> 33.537.125",
-    "or/multnomah/portland 33.537.140 -> 33.537.125",
-    "or/multnomah/portland 33.537.150 -> 33.537.125",
+    # 2026-11-08 (FOLLOWUPS 153): 18.100.040 quoted for Cornelius's entrance
+    # rules (B, Nonresidential Design Standards). Followed for the entrance
+    # reading; 18.100.030 and .070 stay open above.
+    "or/washington/cornelius 18.35.060 -> 18.100",
+    "or/washington/cornelius 18.70.060 -> 18.100",
+    # 2026-11-08 (FOLLOWUPS 153): Hillsboro's design applicability (12.50.710)
+    # names 12.50.715, the middle housing standards quoted for the entrance rule.
+    "or/washington/hillsboro 12.50.710 -> 12.50.715",
+    # 2026-11-06 (FOLLOWUPS 146): Section 1009 stored and read for side-yard parking.
+    "or/clackamas/_unincorporated 1005.09 -> 1009",
     # 2026-10-31 (library batch 7): cutting the two unincorporated codes made these
     # five pointers visible, each to the very next section, which is read.
     "or/clackamas/_unincorporated 604.03 -> 604.04",
@@ -579,6 +663,9 @@ FOLLOWED = {
     # 2026-09-25: the alley back-out room, quoted from inside 130 (see the
     # note on OPEN).
     "or/multnomah/portland 33.266.120 -> 33.266.130",
+    # 2026-11-09 (FOLLOWUPS 112(b)): the Multnomah pockets on Title 33 quote
+    # 33.266.130.B (L385-L386) for the aisle and buffer 120 never prints.
+    "or/multnomah/_unincorporated 33.266.120 -> 33.266.130",
     # 2026-09-29, Beaverton (a cloud draft). Four use tables print the same
     # note: food cart pods "are exempt from the Site Development Standards of
     # 20.10.15 but are subject to the standards of 60.11". The ledger reads
@@ -594,14 +681,9 @@ FOLLOWED = {
     # Density and Intensity Standards" read as a heading. Readable text joins
     # the wrap, and 70.15.10.5 is a subsection of the section that points at
     # it, so there is no row left to follow.
-    # 2026-10-01, Cornelius GMU (a worktree draft). 065 stands "In lieu of"
-    # 050, and 050 was read to know what it replaces: lot size, setbacks,
-    # height, landscaping. The citation that lands there is 050 (A)'s "No
-    # minimum lot size is required", held as the one-lot default under the
-    # townhouse lot size and width -- moot, because the one-lot path is
-    # refused on the use row. Followed in the sense the ledger asks; no
-    # 050 standard is applied to a townhouse.
-    "or/washington/cornelius 18.75.065 -> 18.75.050",
+    # "or/washington/cornelius 18.75.065 -> 18.75.050" stood here until
+    # 2026-11-09 (FOLLOWUPS 166): Ordinance 2026-06 struck old 065, and GMU
+    # now cites the ordinance, not the codified 18.75 sections.
     # Tigard, 2026-10-01 (draft). 18.660.080 -> 18.30 is TMU's height in
     # storeys (L943), whose basements are "as defined in Chapter 18.30"; the
     # layer reads 18.30 whole. 18.660.060 -> .040 is a WIRELESS FACILITY
@@ -733,7 +815,7 @@ def test_the_ledger_speaks_on_the_state_the_corpus_was_actually_in() -> None:
         update={
             "variants": (),
             "prov": stall.prov.model_copy(
-                update={"quote": "or/multnomah/portland/33.266.txt#L317-L318"}
+                update={"quote": "or/multnomah/portland/33.266.txt#L330-L331"}
             ),
         }
     )

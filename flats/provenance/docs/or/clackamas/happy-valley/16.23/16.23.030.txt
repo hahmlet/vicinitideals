@@ -58,7 +58,7 @@ Barber shops, beauty salons                                                     
 Bicycle sales, supplies, repair service                                                                                                                                P                                                                                                    P
 Book stores                                                                                                                                                            P                                                                                                    P
 Camera stores                                                                                                                                                          P                                                                                                    P
-Coffee shops, cafés, sandwich shops and delicatessens                                                                                                                  P[4]                                                                                                 P[4]
+Coffee shops, cafes, sandwich shops and delicatessens                                                                                                                  P[4]                                                                                                 P[4]
 Drug stores                                                                                                                                                            P[4]                                                                                                 P[4]
 Dry cleaners and tailors                                                                                                                                               P[4]                                                                                                 P[4]
 Florists                                                                                                                                                               P                                                                                                    P
@@ -103,20 +103,33 @@ Psilocybin processing, production and wholesaling                               
 Self-storage facilities                                                                                                                                                X                                                                                                    P[7]
 
 NOTES:
-[1] Residential uses on upper floors of mixed use buildings are permitted.
+NOTES:
+[1]
+Residential uses on upper floors of mixed-use buildings are permitted.
 In such cases, Notes 2 and 3 below do not apply.
-[2] Freestanding residential uses at densities greater than the minimum SFA density of 10 du/acre and not to exceed the maximum MUR-M2 density of 34 du/acre (10—34 du/acre) may be permitted in the CCC zone when nonresidential uses occupy the street side(s) of the parcel.
-The footprint of such freestanding residential uses (including associated parking and accessory uses) may not exceed 25% of the CCC zoned area of the parcel or subject property.
+[2]
+Freestanding residential uses at densities greater than the minimum SFA density of 10 du/acre and not to exceed the maximum MUR-M2 density of 34 du/acre (10-34 du/acre) may be permitted in the CCC zone when nonresidential uses occupy the street side(s) of the parcel.
+The footprint of such freestanding residential uses (including associated parking and accessory uses) may not exceed 50% of the CCC zoned area of the parcel or subject property.
 In the Rock Creek Employment Center, the same residential densities may be utilized in freestanding residential footprints if a nonresidential use per Table 16.23.030-1 occupies one street side of the parcel, and occupies at least 18% of the total ground floor footprints.
 Of the nonresidential footprint, 65% maximum may be live/work units.
-[3] Residential uses at MUR-M2 densities (25—34 du/acre) in conjunction with nonresidential uses are permitted by this code.
+Freestanding residential uses at densities greater than the minimum SFA density of 10 du/acre and not to exceed the maximum MUR-M2 density of 34 du/acre (10-34 du/acre) may be permitted in the CCC zone when nonresidential uses occupy the street side(s) of the parcel.
+The footprint of such freestanding residential uses (including associated parking and accessory uses) may not exceed 50% of the CCC zoned area of the parcel or subject property.
+In the Rock Creek Employment Center, the same residential densities may be utilized in freestanding residential footprints if a nonresidential use per Table 16.23.030-1 occupies one street side of the parcel, and occupies at least 18% of the total ground floor footprints.
+Of the nonresidential footprint, 65% maximum may be live/work units.
+[3]
+Residential uses at MUR-M2 densities (25-34 du/acre) in conjunction with nonresidential uses are permitted by this code.
 The footprint of such freestanding residential uses (including associated parking and accessory uses) may not exceed 25% of the MCC zoned area of the parcel or subject property.
-[4] Drive-through facilities not permitted for these uses, and all other uses, within the CCC zoned areas of the Happy Valley Town Center Plan Area.
-[5] Pursuant to Section 16.69.030.
-[6] Pursuant to Chapter 16.49.
-[7] Self-storage facilities shall be limited to a single building where individual storage units are only accessed from within the building and are constructed within a single structure.
+[4]
+Drive-through facilities not permitted for these uses, and all other uses, within the CCC zoned areas of the Happy Valley Town Center Plan Area.
+[5]
+Pursuant to Section 16.69.030.
+[6]
+Pursuant to Chapter 16.49.
+[7]
+Self-storage facilities shall be limited to a single building where individual storage units are only accessed from within the building and are constructed within a single structure.
 Not more than one self-storage facility, limited to 60,000 square feet of building footprint, shall be permitted within the MCC zone, and only on lots or parcels within the Happy Valley Town Center area and abutting Rock Creek.
-[8] Live-work units limited to the Rock Creek Employment Center.
+[8]
+Live-work units limited to the Rock Creek Employment Center.
 
 C.
 
@@ -256,4 +269,4 @@ g.
 
 Public uses in prominent locations.
 
-(Ord. 389 § 1(Exh. A), 2009; Ord. 398 § 1, 2010; Ord. 422 § 1, 2012; Ord. 446 § 1, 2014; Ord. 474 § 1, 2015; Ord. 503 § 1, 2016; Ord. 521 § 3, 2017; Ord. 523 § 1, 2017; Ord. 534 § 1, 2017; Ord. 539 § 1, 2018; Ord. 572 § 1, 2023; Ord. 582, 3/19/2024; Ord. 583, 2/20/2024; Ord. 592, 6/3/2025)
+(Ord. 389 § 1(Exh. A), 2009; Ord. 398 § 1, 2010; Ord. 422 § 1, 2012; Ord. 446 § 1, 2014; Ord. 474 § 1, 2015; Ord. 503 § 1, 2016; Ord. 521 § 3, 2017; Ord. 523 § 1, 2017; Ord. 534 § 1, 2017; Ord. 539 § 1, 2018; Ord. 572 § 1, 2023; Ord. 582, 3/19/2024; Ord. 583, 2/20/2024; Ord. 592, 6/3/2025; Ord. 603, 8/18/2026)

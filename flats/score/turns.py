@@ -245,7 +245,7 @@ def corpus_shapes() -> set[Shape]:
     from flats.designs.model import load_catalog
     from flats.rules.loader import load_rules
     from flats.rules.resolver import RuleSet
-    from flats.score.paper import court_shape
+    from flats.score.paper import court_shape, narrow_lane_rungs
 
     layers = load_rules()
     rules = RuleSet(layers)
@@ -260,6 +260,17 @@ def corpus_shapes() -> set[Shape]:
             for design in designs:
                 if (shape := court_shape(design, resolved)) is not None:
                     out.add(shape)
+                # The narrower drives a ruling lets the second screen try
+                # (Portland's 9 ft, rulings.yaml 2026-11-10-portland-driveway-9ft),
+                # narrowest first, up to the first the car is known to use or
+                # was never asked about: the one the screen draws.
+                for rung in narrow_lane_rungs(design, resolved):
+                    if (shape := court_shape(design, rung)) is None:
+                        break
+                    out.add(shape)
+                    found = fixes(shape)
+                    if isinstance(found, Unsearched) or found:
+                        break
     return out
 
 

@@ -1,0 +1,21 @@
+{
+  "source": "https://mapservices.nps.gov/arcgis/rest/services/cultural_resources/nrhp_locations/MapServer/0",
+  "holds": "National Park Service National Register of Historic Places points",
+  "where": "State='OR' OR State='OREGON' OR State='Oregon'",
+  "fields": "OBJECTID,NRIS_Refnum,RESNAME,ResType,Address,City,County",
+  "raw_rows": 1812,
+  "raw_bytes": 3443718,
+  "retrieved": "2026-11-06",
+  "kept_rows": 141,
+  "kept_by_class": {
+    "nr-individual": 132,
+    "nr-object": 9
+  },
+  "left_out": {
+    "outside the three counties": 1073,
+    "city FLATS does not screen": 18,
+    "a National Register district's single point": 16,
+    "multnomah point in Portland (its map answers)": 564
+  },
+  "bytes_kept": 22367
+}

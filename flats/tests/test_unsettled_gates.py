@@ -6,7 +6,12 @@ false is capped owes everything, because the cap is the admission that we
 cannot say the gate stays shut. This file is about the second kind -- and,
 since 2026-08-26, about how a zone stops being one.
 
-Portland CI1 is the live case. Table 150-1 reads N for Household Living, the
+Portland CI1 was the live case until RICAP 11. (2026-11-10: in force
+2026-11-01 and codified by the 11/1/26 reprint, FOLLOWUPS 165, RICAP 11 made
+CI1 Household Living Y on RM1's standards, and the pdx-drift lane narrowed
+note [3] to CI2 and IR, so CI1's gate is open and uncapped. The live case
+below is Oregon City GI; the paragraph that follows is CI1's history.)
+Table 150-1 read N for Household Living, the
 cell carries no marker of its own, and it sits in a region note [3] governs --
 the PCC Sylvania FAR boundary on Map 150-5 -- which is ruled ``unmeasured``:
 read, understood, waiting on a map nobody holds. Note [3] cannot plausibly turn
@@ -43,7 +48,12 @@ pytestmark = pytest.mark.unit
 
 #: Shut, and not settled: the unmeasured fact whose footnote levers each gate.
 UNSETTLED = {
-    ("or/multnomah/portland", "CI1"): "site_specific_limitation",
+    # 2026-11-10 (b): Portland CI1 ("site_specific_limitation") left this list
+    # when RICAP 11 made it Household Living Y (see the module docstring).
+    # Oregon City GI is the same shape: Chapter 17's prohibition, capped by
+    # the notes block's vegetated-corridor footnote, ruled unmeasured (see
+    # DECLARED_OWING's Oregon City paragraph below).
+    ("or/clackamas/oregon-city", "GI"): "protected_water_feature",
 }
 
 #: Shut and settled, after the narrowing. These three carried `civic_corridor`
@@ -192,10 +202,18 @@ def test_gresham_rtc_answers_the_height_question_in_storeys(rules: RuleSet) -> N
     assert values["setback_rear_ft"].value == 15
 
 
-def test_portland_ci1_takes_the_neighbours_setback_on_every_line(
+def test_portland_ci1_homes_take_rm1s_setbacks(
     rules: RuleSet,
 ) -> None:
-    """Table 150-2 gives CI1 three minimums by what the lot line faces -- 15 ft
+    """2026-11-10 (b): renamed from
+    test_portland_ci1_takes_the_neighbours_setback_on_every_line. Since RICAP
+    11 (codified by the 11/1/26 reprint, FOLLOWUPS 165) a CI1 home is on RM1's
+    development standards (33.150.200; rulings.yaml
+    2026-08-06-portland-ricap11-ci1-housing), so Table 150-2's
+    neighbour-keyed 15 / 10 / 0 no longer reaches it: RM1's 10 ft front and
+    5 ft side and rear apply, cited to 33.120.206. History follows.
+
+    Table 150-2 gave CI1 three minimums by what the lot line faces -- 15 ft
     against OS or RF-R2.5, 10 against RM1-RMP or IR, 0 against a C, CI, E or I
     lot -- and no residual. Every line takes one of the three, and which one is
     the neighbour's zoning rather than this lot's, which nothing here reads. So
@@ -203,19 +221,33 @@ def test_portland_ci1_takes_the_neighbours_setback_on_every_line(
 
     IR one column over escapes this entirely; its column is a single merged
     cell measured off the building. See that zone's notes."""
-    values = rules.resolve("or/multnomah/portland", "CI1").values
+    got = rules.resolve("or/multnomah/portland", "CI1")
+    values = got.values
+    rm1 = rules.resolve("or/multnomah/portland", "RM1").values
 
-    assert values["setback_front_ft"].value == 15
-    assert values["setback_side_ft"].value == 15
-    assert values["setback_rear_ft"].value == 15
-    # CI1's maximum building setback reads None, so note [5] -- no minimum
-    # setback where a maximum applies -- never fires here. CI2 and IR both get
-    # that relief on a transit street or in a Pedestrian District; CI1 does not.
+    assert got.borrowed_from == ("RM1",)
+    assert values["setback_front_ft"].value == 10
+    assert values["setback_side_ft"].value == 5
+    assert values["setback_rear_ft"].value == 5
+    for field in ("setback_front_ft", "setback_side_ft", "setback_rear_ft"):
+        assert values[field].prov.quote == rm1[field].prov.quote, field
+        assert "33.120.206" in values[field].prov.quote, field
+    # RM1 states no maximum front setback either, so Table 150-2 note [5] --
+    # no minimum setback where a maximum applies -- still never fires here.
     assert "setback_front_max_ft" not in values
 
 
-def test_portland_ci1_gets_its_lot_minimum_from_the_far(rules: RuleSet) -> None:
-    """33.150.200 states no minimum lot size anywhere in the campus zones, and
+def test_portland_ci1_keeps_rm1s_lot_minimum(rules: RuleSet) -> None:
+    """2026-11-10 (b): renamed from test_portland_ci1_gets_its_lot_minimum_from_the_far.
+    Since RICAP 11 (codified by the 11/1/26 reprint, FOLLOWUPS 165) a CI1
+    home takes RM1's standards: FAR 1 to 1, coverage 50 percent, landscaping
+    30 percent, and RM1's 4,000 sq ft minimum lot, kept over 33.150.202's
+    "no minimum" because that is the reading that cannot turn a lot GREEN
+    (rulings.yaml 2026-08-06-portland-ricap11-ci1-housing). The zone's own
+    `min_lot_sqft` is no longer written; it comes in through `like: RM1`.
+    History follows.
+
+    33.150.200 states no minimum lot size anywhere in the campus zones, and
     then Table 150-2 sets CI1's floor area ratio at 0.5 to 1, the tightest in
     the corpus. Four units of a 56 by 36 ft pod over two floors is roughly
     4,000 sq ft of floor area, which at 0.5 asks for roughly 8,000 sq ft of
@@ -223,10 +255,12 @@ def test_portland_ci1_gets_its_lot_minimum_from_the_far(rules: RuleSet) -> None:
     layer = load_rules()["or/multnomah/portland"]
     values = rules.resolve("or/multnomah/portland", "CI1").values
 
-    assert layer.zones["CI1"].values["min_lot_sqft"].exempt is True
-    assert values["max_far"].value == 0.5
+    assert "min_lot_sqft" not in layer.zones["CI1"].values
+    assert values["min_lot_sqft"].value == 4000
+    assert "33.120.205" in values["min_lot_sqft"].prov.quote
+    assert values["max_far"].value == 1.0
     assert values["max_coverage_pct"].value == 50
-    assert values["min_landscaped_pct"].value == 25
+    assert values["min_landscaped_pct"].value == 30
 
 
 #: The zones allowed to owe a required standard, and the argument for each.

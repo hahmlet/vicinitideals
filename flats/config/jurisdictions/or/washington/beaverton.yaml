@@ -16,7 +16,176 @@ ingest:
   geoid: null
   juris_city_codes:
   - BEAVERTON
+crossrefs:
+  # FOLLOWUPS 105 round 4 (2026-11-09): binding since entrance_faces_street was encoded.
+  "70.15.05.1":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption "Figure 70.15.05.1: Downtown Zoning Districts" printed
+      inside the held 70.15/70.15.05.txt. The figure draws the RC-BC, RC-OT, RC-MU and RC-DT
+      districts, which come to this screen from the zoning map, not from the figure.
+  "60.05.60.1":
+    outcome: read
+    note: >-
+      In the store: subsection 1 of the held 60.05/60.05.60.txt, whose applicability line names
+      "duplexes, triplexes, and quadplexes" (L29) and whose standards this layer reads (the
+      resolver gap: a subsection printed as "1." under its section). Its townhouse twin is at L539.
+  # FOLLOWUPS 105 (2026-11-08): every binding reference in this layer followed. Many targets
+  # are HELD (60.05.15, 60.30.10, 60.30.15, 20.25.10, 70.15.10 ...): the resolver credits a
+  # held document only for full-number headings and these print as "7." or as table and
+  # figure captions. `read` says the content is already encoded or inert; see item 105.
+  "60.30.15.10":
+    outcome: misread
+    note: >-
+      Not a reference out: "Figure 60.30.15.10, Tree Canopy Overlap Measurement" inside the held
+      60.30/60.30.15.txt. The canopy standard it illustrates applies to "A new development that
+      adds more than one-half acre of new surface parking" (60.30.15.txt#L50); the pod's court of
+      four stalls is a small fraction of that.
+  "70.15.10.1.1":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.1.1 (setbacks without ground-floor
+      residential) for RC-BC inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-BC ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.1.2":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.1.2 (setbacks with ground-floor
+      residential) for RC-BC inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-BC ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.2.1":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.2.1 (setbacks without ground-floor
+      residential) for RC-OT inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-OT ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.2.2":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.2.2 (setbacks with ground-floor
+      residential) for RC-OT inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-OT ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.3.1":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.3.1 (setbacks without ground-floor
+      residential) for RC-MU inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-MU ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.3.2":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.3.2 (setbacks with ground-floor
+      residential) for RC-MU inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-MU ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.4.1":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.4.1 (setbacks without ground-floor
+      residential) for RC-DT inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-DT ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.4.2":
+    outcome: misread
+    note: >-
+      Not a reference out: the caption of Figure 70.15.10.4.2 (setbacks with ground-floor
+      residential) for RC-DT inside the held 70.15/70.15.10.txt, whose setback table this layer
+      encodes for RC-DT ("with ground floor residential units" rows). A drawing of the table's
+      numbers, not another section.
+  "70.15.10.2.3":
+    outcome: misread
+    note: >-
+      Not a reference out: Figure 70.15.10.2.3, "RC-OT Minimum Density / Intensity"
+      (70.15.10.txt#L92), the map note 4 of the RC-OT table sends minimum density to. It decides
+      where a floor applies, and minimum density is a flag here.
+  "70.20.10.6.2":
+    outcome: fetch
+    note: >-
+      Figure 70.20.10.6.2, the Active Frontage Design Map, and a standard that does reach the pod.
+      70.20.10.6.D (70.20.10.txt#L486-L491): building facades fronting a mapped street must meet
+      the Active Ground Floor rules; Type A frontages "must comply with the Non-residential Active
+      Ground Floor Design regulations" (S1: a ground floor at least 16 feet floor to floor,
+      70.20.10.txt#L377-L378, against the pod's stated 12), and Type B frontages may instead take
+      the residential design (S2: ground floor no more than 4 feet above the sidewalk, at least 12
+      feet floor to floor, and a stoop, porch, patio, terrace or frontage court). Facades not on a
+      mapped street are exempt. Encoded 2026-11-08: min_ground_story_ft 16 under
+      beaverton_type_a_frontage in RC-BC, RC-OT, RC-MU and RC-DT. The figure itself is not held
+      (the stored map PDF carries Figure 70.15.25.1, the use map), so the fact is unobserved and
+      every lot in those zones is held out of GREEN. Kept in the queue until the figure is fetched
+      and traced: see FOLLOWUPS 105.
+  "60.70.35.14":
+    outcome: other_building
+    note: >-
+      Wireless Communication Facilities: every mention is the "Yard Setbacks - Other ... Refer to
+      60.70.35.14.A and B" row, which footnote 8 makes "Applicable to all WCF towers, antenna
+      arrays, and ground and/or roof-mounted equipment shelters" (20.20.15.txt#L110, L156-L163).
+  "40.30":
+    outcome: other_path
+    note: >-
+      Adjustments and variances: "Under the thresholds outlined in Section 40.30., application may
+      be made for zero side yard setbacks ... in conjunction with a land division application"
+      (20.10.15.txt#L84). A relief by application, never taken.
+  "60.35.10":
+    outcome: other_path
+    note: >-
+      Planned Unit Development: the FAR row "Maximum with a PUD ... See Section 60.35.10"
+      (20.20.15.txt#L41-L51). A PUD bonus path this screen does not take; the pod's floor area is
+      far under every base FAR.
+  "40.55.15.1":
+    outcome: other_path
+    note: >-
+      Parking Requirement Determination for "uses not specifically mentioned" (60.30.10.txt#L50).
+      The pod's use is listed in Table 60.30.10.5.A.
+  "1.5.2":
+    outcome: procedure
+    note: >-
+      Table 1 in Section 1.5.2 of the Comprehensive Plan, which assigns a City zone to annexed
+      County land (10.40.txt#L9-L15). A zoning step for annexation, not a standard.
+  # FOLLOWUPS 105 round 3 (2026-11-08), a non-binding row read for what it could take.
+  "60.05.25.13":
+    outcome: read
+    note: >-
+      Landscape buffers, a subsection of the held 60.05.25 (60.05/60.05.25.txt#L294-L548). Table
+      60.05.25.13.D's Middle Housing proposed-use row reads N/A against every abutting use but the
+      Cooper Mountain Nature Park, where it asks NPB-25, a 25 ft native plantings buffer
+      (60.05/60.05.25.txt#L473-L484; widths in the table notes, L540-L548). That is the Cooper Mountain buffer already
+      listed NOT ENCODED (Table 20.22.15 G.6), not a new standard.
+  "60.55.35.3":
+    outcome: narrows_only
+    note: >-
+      The mention is the waiver: "The requirements specified in 60.55.35.3.A. may be lessened or
+      waived" (60.55.35.txt#L15). 3.A (Visibility at Intersections) sends sight clearance to the
+      Engineering Design Manual, case by case in the Regional and Town Centers -- the corner
+      vision area this corpus does not model anywhere (listed in FOLLOWUPS 105).
+  "60.11":
+    outcome: other_building
+    note: >-
+      Food Cart Pods (20.10.20.txt#L114). A use the pod is not.
+  "60.20.20":
+    outcome: other_building
+    note: >-
+      "The placement of a manufactured home is subject to the design and placement criteria found
+      in Section 60.20.20" (20.05.20.txt#L68). A building the pod is not.
+  "845":
+    outcome: other_building
+    note: >-
+      OAR Chapter 845, division 25, cited for Retail Marijuana Sales (20.10.20.txt#L118-L119). A
+      use the pod is not.
 code:
+- id: "bdc.30.15.nonconforming-lots"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 30.15 Nonconforming Lots of Record"
+  start: "30.15. Nonconforming Lots of Record."
+  end: "30.20. Nonconforming Uses."
+  nth: 2
+  extraction: plain
+  # One section, so the thinness guard would read it as a landing page.
+  allow_thin: true
 # The whole BDC as one PDF from the encodeplus export endpoint (the city's
 # own development-code page links to it). Plain extraction throughout. The
 # PDF prints a table of contents first, so every chapter and section
@@ -163,6 +332,22 @@ code:
   title: "Washington County - City of Beaverton Urban Planning Area Agreement (as amended by Ordinance 839A, 2018)"
   extraction: plain
   allow_thin: true
+# EDM 210.21 Driveways (C's corner clearance table, D's relief, E's spacing
+# between driveways), which BDC 60.55.35.3.C.1 sends driveway spacing to;
+# read for flats/config/driveway_spacing.yaml (fg4-fixes, 2026-11-10). The
+# Chapter 2 file the city's EDM page links on its CivicPlus asset host,
+# stored 2026-11-09 from the downloaded PDF; the 2025 EDM as amended
+# (Res. 4954) prints the same table.
+- id: "edm.210.21.driveways"
+  url: https://content.civicplus.com/api/assets/d763c241-c3ec-4e64-aac9-54276565d027
+  title: "Beaverton Engineering Design Manual, Chapter 2 Streets, 210.21 Driveways"
+  start: "210.21 Driveways"
+  # The contents list the heading first.
+  nth: 2
+  end: "210.22 Curbs, Shoulders, and Grading"
+  extraction: plain
+  # One section of a manual.
+  allow_thin: true
 definitions:
   # Read 2026-09-29 from BDC Chapter 90, which is on disk whole.
   #
@@ -236,7 +421,62 @@ private_drives:
     On a corner lot the applicant picks which street line is the front
     (L1421-L1422), but that choice is not tied to where the car comes in.
 
+neighbours:
+  abuts_residential_zone:
+    true_for: [MR, CM-MR, RMA, RMB, RMC, CM-RM]
+    false_for: [NS, CS, CM-CS, CC, GC, OI, OI-NC, IND, RC-MU, RC-BC, RC-OT, RC-DT,
+                RC-E, OI-WS, C-WS, TC-MU, TC-HDR, CM-HDR, SC-MU, SC-HDR, SC-S, SC-E]
+    quote: "or/washington/beaverton/bdc.10.general-provisions.txt#L175-L188,L204-L222"
+    cite: >-
+      BDC 10.25 (Classification of Zoning Districts: Residential Districts);
+      BDC 20.22 note 9 ("residential zone" is any of the zones under
+      Residential Districts in Section 10.25); BDC 20.10 notes 3-4; BDC
+      70.15.10.4.B (RC-DT, "Setback abutting property zoned Residential")
+    note: >-
+      Every value here that turns on it tightens: the commercial side and rear
+      yards of 20.10 notes 3 and 4 (owed beside "a residential use in a
+      residential zone"; the zone alone is read, the stricter half), the
+      Cooper Mountain 5 ft yards, RC-DT's 10/20 and the height transitions.
+      The true side is the six districts 10.25 files under Residential
+      Districts, the reading 20.22 note 9 spells out ("'residential zone' is
+      any of the zones under Residential Districts in Section 10.25"). The
+      Town Center, Station Community and Cooper Mountain High Density
+      Residential districts are Multiple Use Districts in that table, so they
+      sit on the false side with the commercial, industrial, regional-centre
+      and other multiple-use districts; 20.10 note 4's rear yard names only
+      RMA, RMB and RMC, so MR and the Cooper Mountain pair on the true side
+      are the stricter reading there. ROW, the county pocket (WAcnty) and any
+      neighbour across a city line are on neither list, so a line against one
+      leaves the lot unstated. FOLLOWUPS 2(c), 2026-11-09.
+  abuts_nonresidential_zone:
+    true_for: [NS, CS, CM-CS, CC, GC, OI, OI-NC, IND, RC-MU, RC-BC, RC-OT, RC-E,
+               OI-WS, C-WS, TC-MU, SC-MU, SC-S, SC-E]
+    false_for: [MR, CM-MR, RMA, RMB, RMC, CM-RM, RC-DT]
+    quote: "or/washington/beaverton/70.15/70.15.10.txt#L35,L37-L38"
+    cite: >-
+      BDC Tables 70.15.10.1.B, 70.15.10.2.B and 70.15.10.3.B (Setback abutting
+      property zoned residential and/or Downtown Transition (DT)); BDC 10.25
+    note: >-
+      Read only by RC-BC, RC-OT and RC-MU, whose side and rear yards are 10/20
+      (10/10 in RC-OT) "abutting property zoned residential and/or Downtown
+      Transition (DT)" and 0 on an "Interior side or rear setback". True is
+      the relaxing answer, so it needs every non-street line read with only
+      true-side districts across: the commercial, industrial and multiple-use
+      districts of 10.25 that are neither residential nor RC-DT. The false
+      side is the six Residential Districts and RC-DT itself, the two the row
+      names. Chapter 70 does not define "zoned residential", so the three
+      High Density Residential districts (TC-HDR, SC-HDR, CM-HDR) are left on
+      neither list here: a downtown lot against one keeps its 10/20 unstated
+      rather than relaxed. ROW, WAcnty and other cities are on neither list.
+      FOLLOWUPS 2(c), 2026-11-09.
+
 defaults:
+  entrance_faces_street:
+    value: not_required
+    cite: "Beaverton BDC 60.05.11.3 sends other districts to 60.05.15, whose entrance standard reaches non-residential buildings (FOLLOWUPS 153)"
+    url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+    retrieved: '2026-09-29'
+    quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L39-L60,L195-L206"
   # PARKING COUNT. 60.30.10.3.A.1: "No minimum parking is required for any
   # use." Encoded as zero rather than left out, because an omitted minimum
   # lets the state cap resolve as though it were a requirement.
@@ -409,6 +649,16 @@ zones:
   # perimeter figure (5) is taken as the conservative reading. A doubt.
   # ------------------------------------------------------------------
   MR:
+    # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). The side-yard permission at
+    # 60.30.10.9.B (60.30/60.30.10.txt#L404) names four zones and not this
+    # one; 9.C gives middle housing outside them front-yard parking in the
+    # driveway only. The yard stays unoccupied. None.
+    parking_side_yard_allowed:
+      value: none
+      cite: Beaverton BDC Chapter 90 Yard, Side, unoccupied and unobstructed from the ground upward except as specified elsewhere; 60.30.10.9.B names only RMA, RMB, RMC and CM-RM
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2914-L2917"
     cite_default:
       cite: "Beaverton BDC 20.05 (MR Multi-Unit Residential), Tables 20.05.15 and 20.05.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -423,6 +673,15 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex (MR N/A)"
       quote: "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -506,6 +765,35 @@ zones:
       by a residential lot line); FAR 4.0. Parking kept 20 ft off the right-
       of-way and out of the Primary Frontage; 15% open space.
   RMA:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Beaverton BDC 60.05 residential design standard S1: \"2. Be at an angle of up to 45 degrees from the\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+    # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
+    # parking stand in side and rear yards in this zone; the yard definition
+    # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
+    # yard unoccupied "except as specified elsewhere", and this is the
+    # elsewhere. The spaces need their drive, so the lane rides with them.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Beaverton BDC 60.30.10.9.B, in the RMA, RMB, RMC and CM-RM zones parking for middle housing may be located in side and rear yards
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/60.30/60.30.10.txt#L404"
+    parking_side_yard_stated:
+      value: lane_and_court
+      cite: Beaverton BDC 60.30.10.9.B, parking in side and rear yards stated for this zone
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/60.30/60.30.10.txt#L404"
     cite_default:
       cite: "Beaverton BDC 20.05 (RMA), Tables 20.05.15 and 20.05.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -520,6 +808,15 @@ zones:
       value: 3000
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18,L267-L271"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 17
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -599,6 +896,33 @@ zones:
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
       quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381"
       via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+    # COURT IN FRONT OF THE BUILDING, BEHIND THE FRONT YARD (fg4-fixes
+    # 2026-11-10, false-green round 4 batch D, 5755 SW Elm Ave). Beaverton is
+    # not a silent code, so ruling 2026-11-08-no-front-yard-parking-silent-codes
+    # does not reach it. Its front yard is the setback depth only (Chapter
+    # 90, Yard, Front: "The distance between the two lines is established
+    # by the setback requirement", bdc.90.definitions.txt#L2902-L2906);
+    # 60.30.10.9.B lets middle-housing parking stand in side and rear yards
+    # and up to two spaces in the front yard (60.30/60.30.10.txt#L404); and
+    # the plex table (60.05.60.2) bars nothing between the building and the
+    # street but caps garages and outdoor parking and maneuvering areas at
+    # 50 percent of any street frontage (S11, the cap the screen measures
+    # the court against). The townhouse table does bar it: 60.05.60.3
+    # S13.c, "The driveway and approach are not allowed in the area between
+    # the front building facade and front lot line of any of the
+    # townhouses", and S13.b's front access holds parking to 12 ft wide on
+    # any lot -- so the townhouse form keeps the hold. The court is drawn
+    # inside the setback envelope, never in the 10 ft yard.
+    parking_front_share_allowed:
+      value: true
+      cite: Beaverton BDC Table 60.05.60.2 S11, garages and outdoor on-site parking and maneuvering areas no more than 50 percent of any street frontage; 60.30.10.9.B, middle-housing parking in side and rear yards and up to two spaces in the front yard; nothing in 60.05.60.2 bars parking between the building and the street
+      quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376"
+      via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+      variants:
+        - value: false
+          when: [unit_lots]
+          cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
+          quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -639,6 +963,35 @@ zones:
       maximum; 60.05.60 middle housing standards (S4 open area by lot size,
       S11 50% frontage, S13 32 ft of driveway approach, lowest-class access).
   RMB:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Beaverton BDC 60.05 residential design standard S1: \"2. Be at an angle of up to 45 degrees from the\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+    # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
+    # parking stand in side and rear yards in this zone; the yard definition
+    # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
+    # yard unoccupied "except as specified elsewhere", and this is the
+    # elsewhere. The spaces need their drive, so the lane rides with them.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Beaverton BDC 60.30.10.9.B, in the RMA, RMB, RMC and CM-RM zones parking for middle housing may be located in side and rear yards
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/60.30/60.30.10.txt#L404"
+    parking_side_yard_stated:
+      value: lane_and_court
+      cite: Beaverton BDC 60.30.10.9.B, parking in side and rear yards stated for this zone
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/60.30/60.30.10.txt#L404"
     cite_default:
       cite: "Beaverton BDC 20.05 (RMB), Tables 20.05.15 and 20.05.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -653,6 +1006,15 @@ zones:
       value: 4000
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18,L267-L271"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 10
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -741,6 +1103,33 @@ zones:
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
       quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381"
       via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+    # COURT IN FRONT OF THE BUILDING, BEHIND THE FRONT YARD (fg4-fixes
+    # 2026-11-10, false-green round 4 batch D, 5755 SW Elm Ave). Beaverton is
+    # not a silent code, so ruling 2026-11-08-no-front-yard-parking-silent-codes
+    # does not reach it. Its front yard is the setback depth only (Chapter
+    # 90, Yard, Front: "The distance between the two lines is established
+    # by the setback requirement", bdc.90.definitions.txt#L2902-L2906);
+    # 60.30.10.9.B lets middle-housing parking stand in side and rear yards
+    # and up to two spaces in the front yard (60.30/60.30.10.txt#L404); and
+    # the plex table (60.05.60.2) bars nothing between the building and the
+    # street but caps garages and outdoor parking and maneuvering areas at
+    # 50 percent of any street frontage (S11, the cap the screen measures
+    # the court against). The townhouse table does bar it: 60.05.60.3
+    # S13.c, "The driveway and approach are not allowed in the area between
+    # the front building facade and front lot line of any of the
+    # townhouses", and S13.b's front access holds parking to 12 ft wide on
+    # any lot -- so the townhouse form keeps the hold. The court is drawn
+    # inside the setback envelope, never in the 10 ft yard.
+    parking_front_share_allowed:
+      value: true
+      cite: Beaverton BDC Table 60.05.60.2 S11, garages and outdoor on-site parking and maneuvering areas no more than 50 percent of any street frontage; 60.30.10.9.B, middle-housing parking in side and rear yards and up to two spaces in the front yard; nothing in 60.05.60.2 bars parking between the building and the street
+      quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376"
+      via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+      variants:
+        - value: false
+          when: [unit_lots]
+          cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
+          quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -781,6 +1170,35 @@ zones:
       at the setback line, 1:1); FAR 1.20 on net area. 60.05.60 standards as
       RMA.
   RMC:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Beaverton BDC 60.05 residential design standard S1: \"2. Be at an angle of up to 45 degrees from the\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+    # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
+    # parking stand in side and rear yards in this zone; the yard definition
+    # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
+    # yard unoccupied "except as specified elsewhere", and this is the
+    # elsewhere. The spaces need their drive, so the lane rides with them.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Beaverton BDC 60.30.10.9.B, in the RMA, RMB, RMC and CM-RM zones parking for middle housing may be located in side and rear yards
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/60.30/60.30.10.txt#L404"
+    parking_side_yard_stated:
+      value: lane_and_court
+      cite: Beaverton BDC 60.30.10.9.B, parking in side and rear yards stated for this zone
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/60.30/60.30.10.txt#L404"
     cite_default:
       cite: "Beaverton BDC 20.05 (RMC), Tables 20.05.15 and 20.05.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -795,6 +1213,15 @@ zones:
       value: 5000
       cite: "Beaverton BDC Table 20.05.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/20.05/20.05.15.txt#L7,L10-L11,L16-L18,L267-L271"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 7
       cite: "Beaverton BDC Table 20.05.15, D. Minimum Residential Density"
@@ -888,6 +1315,33 @@ zones:
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
       quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381"
       via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+    # COURT IN FRONT OF THE BUILDING, BEHIND THE FRONT YARD (fg4-fixes
+    # 2026-11-10, false-green round 4 batch D, 5755 SW Elm Ave). Beaverton is
+    # not a silent code, so ruling 2026-11-08-no-front-yard-parking-silent-codes
+    # does not reach it. Its front yard is the setback depth only (Chapter
+    # 90, Yard, Front: "The distance between the two lines is established
+    # by the setback requirement", bdc.90.definitions.txt#L2902-L2906);
+    # 60.30.10.9.B lets middle-housing parking stand in side and rear yards
+    # and up to two spaces in the front yard (60.30/60.30.10.txt#L404); and
+    # the plex table (60.05.60.2) bars nothing between the building and the
+    # street but caps garages and outdoor parking and maneuvering areas at
+    # 50 percent of any street frontage (S11, the cap the screen measures
+    # the court against). The townhouse table does bar it: 60.05.60.3
+    # S13.c, "The driveway and approach are not allowed in the area between
+    # the front building facade and front lot line of any of the
+    # townhouses", and S13.b's front access holds parking to 12 ft wide on
+    # any lot -- so the townhouse form keeps the hold. The court is drawn
+    # inside the setback envelope, never in the 10 ft yard.
+    parking_front_share_allowed:
+      value: true
+      cite: Beaverton BDC Table 60.05.60.2 S11, garages and outdoor on-site parking and maneuvering areas no more than 50 percent of any street frontage; 60.30.10.9.B, middle-housing parking in side and rear yards and up to two spaces in the front yard; nothing in 60.05.60.2 bars parking between the building and the street
+      quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376"
+      via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+      variants:
+        - value: false
+          when: [unit_lots]
+          cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
+          quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -937,6 +1391,35 @@ zones:
   # and I.1 minimum FAR (no field).
   # ------------------------------------------------------------------
   CM-RM:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 60.05 residential design standard S1: main entrance facing the street or opening onto a porch whose entrance faces the street (FOLLOWUPS 153; the pod's doors stay on its 80 ft face and it takes none of the alternatives, rulings.yaml 2026-11-08-no-porch-end-door)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2397-L2402,L2446-L2469"
+    entrance_angle_max_deg:
+      value: 45
+      cite: "Beaverton BDC 60.05 residential design standard S1: \"2. Be at an angle of up to 45 degrees from the\" -- the angle the main entrance may stand off the street (rel4 move-read finding 2)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+    # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
+    # parking stand in side and rear yards in this zone; the yard definition
+    # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
+    # yard unoccupied "except as specified elsewhere", and this is the
+    # elsewhere. The spaces need their drive, so the lane rides with them.
+    parking_side_yard_allowed:
+      value: lane_and_court
+      cite: Beaverton BDC 60.30.10.9.B, in the RMA, RMB, RMC and CM-RM zones parking for middle housing may be located in side and rear yards
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/60.30/60.30.10.txt#L404"
+    parking_side_yard_stated:
+      value: lane_and_court
+      cite: Beaverton BDC 60.30.10.9.B, parking in side and rear yards stated for this zone
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/60.30/60.30.10.txt#L404"
     cite_default:
       cite: "Beaverton BDC 20.22 (CM-RM Cooper Mountain Residential Mixed), Tables 20.22.15 and 20.22.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -951,6 +1434,15 @@ zones:
       value: 4000
       cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex"
       quote: "or/washington/beaverton/20.22/20.22.15.txt#L7,L10-L16,L20-L22,L157-L158"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 10
       cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
@@ -1033,6 +1525,33 @@ zones:
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
       quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376-L381"
       via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+    # COURT IN FRONT OF THE BUILDING, BEHIND THE FRONT YARD (fg4-fixes
+    # 2026-11-10, false-green round 4 batch D, 5755 SW Elm Ave). Beaverton is
+    # not a silent code, so ruling 2026-11-08-no-front-yard-parking-silent-codes
+    # does not reach it. Its front yard is the setback depth only (Chapter
+    # 90, Yard, Front: "The distance between the two lines is established
+    # by the setback requirement", bdc.90.definitions.txt#L2902-L2906);
+    # 60.30.10.9.B lets middle-housing parking stand in side and rear yards
+    # and up to two spaces in the front yard (60.30/60.30.10.txt#L404); and
+    # the plex table (60.05.60.2) bars nothing between the building and the
+    # street but caps garages and outdoor parking and maneuvering areas at
+    # 50 percent of any street frontage (S11, the cap the screen measures
+    # the court against). The townhouse table does bar it: 60.05.60.3
+    # S13.c, "The driveway and approach are not allowed in the area between
+    # the front building facade and front lot line of any of the
+    # townhouses", and S13.b's front access holds parking to 12 ft wide on
+    # any lot -- so the townhouse form keeps the hold. The court is drawn
+    # inside the setback envelope, never in the 10 ft yard.
+    parking_front_share_allowed:
+      value: true
+      cite: Beaverton BDC Table 60.05.60.2 S11, garages and outdoor on-site parking and maneuvering areas no more than 50 percent of any street frontage; 60.30.10.9.B, middle-housing parking in side and rear yards and up to two spaces in the front yard; nothing in 60.05.60.2 bars parking between the building and the street
+      quote: "or/washington/beaverton/60.05/60.05.60.txt#L368,L376"
+      via: "or/washington/beaverton/60.05/60.05.60.txt#L6"
+      variants:
+        - value: false
+          when: [unit_lots]
+          cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
+          quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -1086,6 +1605,15 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.22.15, B.2 Minimum Lot Area - Triplex and Quadplex (CM-MR N/A)"
       quote: "or/washington/beaverton/20.22/20.22.15.txt#L7,L10-L16,L20-L22"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.22.15, E. Minimum Residential Density"
@@ -1480,6 +2008,15 @@ zones:
       exempt: true
       cite: "Beaverton BDC Table 20.10.15 (no minimum lot area row)"
       quote: "or/washington/beaverton/20.10/20.10.15.txt#L7,L10-L27"
+    lot_of_record_relief:
+      # 30.15: width is lifted on a single lot of record; subsection 3 and Table
+      # 20.05.15 note 2 keep the area for middle housing. Subsection 2 merges lots
+      # in single ownership, which we do not hold. YELLOW, not GREEN.
+      value: lot_width
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
+    lot_of_record_condition:
+      value: adjoining_ownership
+      quote: "or/washington/beaverton/bdc.30.15.nonconforming-lots.txt#L4-L10,L18-L20"
     min_density_du_per_acre:
       value: 34
       cite: "Beaverton BDC Table 20.10.15, A. Minimum Density"
@@ -3149,6 +3686,12 @@ zones:
   # measured standard the pod fails stays RED (Steph 2026-10-14).
   # ------------------------------------------------------------------
   RC-BC:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 70.15 Downtown S9: At least one primary building entrance shall face the primary frontage (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L199-L203,L2410-L2414"
     cite_default:
       cite: "Beaverton BDC 70.15.10 (RC-BC Beaverton Central), Tables 70.15.10.1.A and 70.15.10.1.B"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -3284,6 +3827,24 @@ zones:
       cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
       quote: "or/washington/beaverton/70.20/70.20.05.txt#L138-L139"
       via: "or/washington/beaverton/70.15/70.15.05.txt#L10-L14"
+    min_ground_story_ft:
+      # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
+      # Active Frontage Design Map) meets the Active Ground Floor Design;
+      # a Type A frontage takes the Non-residential design, whose S1.a asks
+      # a ground floor of at least 16 ft floor to floor, against the pod's
+      # 12. Facades on no mapped street are exempt. The figure is not held,
+      # so `beaverton_type_a_frontage` is unobserved and every lot here is
+      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
+      # 2026-11-08). Type B may take the Residential design instead, which
+      # the pod's 12 ft ground floor meets.
+      exempt: true
+      cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
+      quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      variants:
+        - value: 16
+          when: [beaverton_type_a_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 60 du/net acre (all-
       residential development); 120 ft; front 6 (max 12), street side 6,
@@ -3291,6 +3852,12 @@ zones:
       neither residential nor RC-DT). Surface parking out of the primary
       frontage and 6 ft off the street; 48 sq ft of open space a unit.
   RC-OT:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 70.15 Downtown S9: At least one primary building entrance shall face the primary frontage (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L199-L203,L2410-L2414"
     cite_default:
       cite: "Beaverton BDC 70.15.10 (RC-OT Old Town), Tables 70.15.10.2.A and 70.15.10.2.B"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -3420,12 +3987,36 @@ zones:
       cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
       quote: "or/washington/beaverton/70.20/70.20.05.txt#L138-L139"
       via: "or/washington/beaverton/70.15/70.15.05.txt#L10-L14"
+    min_ground_story_ft:
+      # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
+      # Active Frontage Design Map) meets the Active Ground Floor Design;
+      # a Type A frontage takes the Non-residential design, whose S1.a asks
+      # a ground floor of at least 16 ft floor to floor, against the pod's
+      # 12. Facades on no mapped street are exempt. The figure is not held,
+      # so `beaverton_type_a_frontage` is unobserved and every lot here is
+      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
+      # 2026-11-08). Type B may take the Residential design instead, which
+      # the pod's 12 ft ground floor meets.
+      exempt: true
+      cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
+      quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      variants:
+        - value: 16
+          when: [beaverton_type_a_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre (18 where
       Figure 70.15.10.2.3 says so, not encoded); 65 ft; front 6 (max 16),
       street side 6, side and rear 10 (0 as RC-BC). Parking and open space
       as RC-BC.
   RC-MU:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 70.15 Downtown S9: At least one primary building entrance shall face the primary frontage (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L199-L203,L2410-L2414"
     cite_default:
       cite: "Beaverton BDC 70.15.10 (RC-MU Mixed Use), Tables 70.15.10.3.A and 70.15.10.3.B"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -3555,11 +4146,35 @@ zones:
       cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
       quote: "or/washington/beaverton/70.20/70.20.05.txt#L138-L139"
       via: "or/washington/beaverton/70.15/70.15.05.txt#L10-L14"
+    min_ground_story_ft:
+      # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
+      # Active Frontage Design Map) meets the Active Ground Floor Design;
+      # a Type A frontage takes the Non-residential design, whose S1.a asks
+      # a ground floor of at least 16 ft floor to floor, against the pod's
+      # 12. Facades on no mapped street are exempt. The figure is not held,
+      # so `beaverton_type_a_frontage` is unobserved and every lot here is
+      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
+      # 2026-11-08). Type B may take the Residential design instead, which
+      # the pod's 12 ft ground floor meets.
+      exempt: true
+      cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
+      quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      variants:
+        - value: 16
+          when: [beaverton_type_a_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 43 du/net acre; 75 ft;
       front 6 (max 16), street side 6, side 10 and rear 20 (0 as RC-BC).
       Parking and open space as RC-BC.
   RC-DT:
+    entrance_faces_street:
+      value: required
+      cite: "Beaverton BDC 70.15 Downtown S9: At least one primary building entrance shall face the primary frontage (FOLLOWUPS 153)"
+      url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+      retrieved: '2026-09-29'
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L199-L203,L2410-L2414"
     cite_default:
       cite: "Beaverton BDC 70.15.10 (RC-DT Downtown Transition), Tables 70.15.10.4.A and 70.15.10.4.B"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -3702,6 +4317,24 @@ zones:
       cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
       quote: "or/washington/beaverton/70.20/70.20.05.txt#L138-L139"
       via: "or/washington/beaverton/70.15/70.15.05.txt#L10-L14"
+    min_ground_story_ft:
+      # 70.20.10.6.D: a facade fronting a street of Figure 70.20.10.6.2 (the
+      # Active Frontage Design Map) meets the Active Ground Floor Design;
+      # a Type A frontage takes the Non-residential design, whose S1.a asks
+      # a ground floor of at least 16 ft floor to floor, against the pod's
+      # 12. Facades on no mapped street are exempt. The figure is not held,
+      # so `beaverton_type_a_frontage` is unobserved and every lot here is
+      # held out of GREEN until it is traced (FOLLOWUPS 105, coordinator
+      # 2026-11-08). Type B may take the Residential design instead, which
+      # the pod's 12 ft ground floor meets.
+      exempt: true
+      cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
+      quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      variants:
+        - value: 16
+          when: [beaverton_type_a_frontage]
+          cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
+          quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; 30 to 60 du/net acre; 60 ft;
       front 10 (max 20), street side 10, interior 0 (side 10 and rear 20
@@ -3854,3 +4487,34 @@ zone_rulings:
       (10.35.txt L1,L3), so the code zones a
       street as the land beside it and prints no ROW district. No lot
       stands on a street; nothing to screen.
+
+# Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
+clear_vision:
+  corner:
+    status: read
+    legs_ft: 15
+    basis: lot_line
+    unsettled_zones: &id001
+    - RC-BC
+    - RC-DT
+    - RC-E
+    - RC-MU
+    - RC-OT
+    - TC-HDR
+    - TC-MU
+    quote: or/washington/beaverton/bdc.60.55.transportation.txt#L428-L434
+    says: The sight clearance area requirements for Town Centers and Regional Centers
+    source: data/flats/books/sight-manuals/beaverton/edm-ch2.txt#L1213-L1216
+    cite: BDC 60.55.35.3; EDM 210.18
+    note: 'EDM: ''a triangular area measuring 15 feet along the right-of-way or private access''; no structure.
+      The 2025 file is a public review draft but its figure equals the 2019 text. Regional and Town Centers
+      are case by case: unsettled there.'
+  driveway:
+    status: read
+    kind: edge
+    legs_ft: 15
+    basis: lot_line
+    unsettled_zones: *id001
+    source: data/flats/books/sight-manuals/beaverton/edm-ch2.txt#L1213-L1216
+    cite: EDM 210.18
+    note: The same 15 ft triangle at driveways, each side of the drive.

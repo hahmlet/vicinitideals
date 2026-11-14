@@ -656,6 +656,9 @@ def test_the_command_screens_in_workers_set_up_by_the_module_that_screens(tmp_pa
         {"name": ["SE TEST ST"], "type": ["1500"], "ftype": ["ST"], "alley": [False],
          "wkb": [shapely.to_wkb(shapely.LineString([(X0 - 100, Y0 - 20), (X0 + 150, Y0 - 20)]))]}
     ).to_parquet(tmp_path / "s1_streets.parquet")
+    pd.DataFrame({"TLID": pd.Series([], dtype=str), "wkb": pd.Series([], dtype=object)}).to_parquet(
+        tmp_path / "s1_lots.parquet"
+    )
     write_dem(tmp_path / "raw" / "dem" / "flat.tif", (X0 - 50, Y0 - 50, X0 + 200, Y0 + 200), plane(1.0))
     snapshot = tmp_path / "snapshot"
     snapshot.mkdir()
