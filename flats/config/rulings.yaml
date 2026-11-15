@@ -3513,3 +3513,19 @@
     Tualatin flat roofs stay RED; Villebois lots without the Pattern Book stay
     YELLOW. FOLLOWUPS 181 questions closed.
   source: Steph 2026-11-14 (chat, question sheet B), docs/followups/181-roof-sweep-clackamas.md
+- id: 2026-11-14-hillsboro-downtown-roof-every-lot
+  kind: ruling
+  date: 2026-11-14
+  scope: {county: washington, city: hillsboro}
+  question: >-
+    Downtown Hillsboro's traced map line (Figure 12.61.200-A) takes in some
+    R-7 and MR-1 lots, but 12.61.200 lists only five downtown zones. Does the
+    "no flat roofs" rule (12.61.800.B.7) apply to every lot inside the line,
+    or only to the five downtown zones?
+  ruling: '"every lot"'
+  effect: >-
+    The roof rule applies to every lot inside or cut by the traced line,
+    whatever its zoning; the flat-roof pod is RED there (cut lots never
+    GREEN). About 3 rel8 GREENs (1N231DA04600, 1N231DA01800, 1S205BB04500)
+    and 5 held lots are affected. Built on flats/rel8 (FOLLOWUPS 193).
+  source: Steph 2026-11-14 (chat, question sheet item 28), ../vicinitideals-worktrees/rel8-moves.findings.md F1

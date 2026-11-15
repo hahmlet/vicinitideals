@@ -9,6 +9,7 @@ All R-7. CDC 12.61.800.A.1/B apply the roof rule "within the boundaries shown on
 the `downtown_plan_district` variant exists only in the SCR blocks of hillsboro.yaml. Five more R-7/MR-1
 lots inside the trace already went red->yellow for the same cause.
 
+RULED 2026-11-14 (Steph, "every lot"; ruling 2026-11-14-hillsboro-downtown-roof-every-lot): the roof rule covers every lot inside the traced line -> RED; cut lots never GREEN. Original hold plan, superseded:
 Fix on flats/rel8 (before release): lots in a zone outside the five but touching/inside the traced
 line are held YELLOW with a flag (map and zone list disagree), never GREEN. Then a Hillsboro-scoped
 re-bound spliced onto /root/rel8_bound, a re-read of the Hillsboro moves, then flats-release-runner.
