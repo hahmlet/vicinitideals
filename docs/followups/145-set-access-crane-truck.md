@@ -96,3 +96,6 @@ Order 28 t site, 45 t site, 28 t street, 45 t street; street only where recorded
 
 ## Steph 2026-11-14 (later): crane plan changed -- IC-80 primary, 45 t secondary, 28 t dropped
 Spec: Factory-Sim docs/research/S3e-crane-20x25.md (fc9ead7). Primary owned Broderson IC-80-3H (9 t carry-deck, works from one long face); fallback hired 45 t NBT45-2; viability rule section 5 (IC-80 one face -> both faces -> 45 t -> not viable). Slice 3 being built on flats/set-access-3 (report only; power lines still not checked). Slice-2 questions on the 28 t (container reach, turntable) are moot.
+
+## 11-14 slice 3 BUILT: flats/set-access-3 04616184 (report only)
+IC-80 one face -> both faces -> 45 t site -> 45 t street -> not viable/unmeasured. Hand-off ../vicinitideals-worktrees/set-access-3.handoff.md (137 sample command). Judgements: one trailer spot serves the pod (both-faces carry fails at 800 lb rigging); roof-cassette stack 45 ft (stowed jib); 12 ft swing room. Steph questions on the sheet: container lift from the street or arrive another way; one parking spot per truck load; stair kit/truss/cassette hook height; 45 t jib stowed?
