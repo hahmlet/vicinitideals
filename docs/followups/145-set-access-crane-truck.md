@@ -99,3 +99,5 @@ Spec: Factory-Sim docs/research/S3e-crane-20x25.md (fc9ead7). Primary owned Brod
 
 ## 11-14 slice 3 BUILT: flats/set-access-3 04616184 (report only)
 IC-80 one face -> both faces -> 45 t site -> 45 t street -> not viable/unmeasured. Hand-off ../vicinitideals-worktrees/set-access-3.handoff.md (137 sample command). Judgements: one trailer spot serves the pod (both-faces carry fails at 800 lb rigging); roof-cassette stack 45 ft (stowed jib); 12 ft swing room. Steph questions on the sheet: container lift from the street or arrive another way; one parking spot per truck load; stair kit/truss/cassette hook height; 45 t jib stowed?
+
+Steph 2026-11-14 answers: (1) container -- IC-80 may lift it from the street, yes; (2) one trailer on site at a time ("the empty trailer leaves before the new full trailer arrives") so each load parks where it suits; (3) per-piece hook height table now in the spec; (4) 45 t jib optional, assume on (cautious); 45 t hook ball 250 lb. Slice 3b building on flats/set-access-3.
