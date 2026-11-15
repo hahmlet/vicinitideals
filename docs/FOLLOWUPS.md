@@ -46,20 +46,12 @@ the full one.)
 
 ## 1. Claude -- priority
 
-193. [Claude] [scan: YES -- false greens only] **rel8 BLOCK: 3 Hillsboro R-7 greens inside the traced downtown line** -- move read 11-15 F1; RULED 11-14 every lot inside the line (RED); BUILT flats/rel8 ada852f6+53b64caf; re-bound DONE 11-15 (5 moves exactly as expected, md5 ebb093bf); release running. [file](followups/193-rel8-hillsboro-downtown-hold.md)
 152. [Claude] [Steph] **ci-runner: optional OOM protection for its Postgres** -- run cap + Postgres check shipped (70c1cb75); only the optional OOMScoreAdjust=-900 unit setting on 138 is left, Steph's call (only if Postgres is OOM-killed again). [file](followups/152-ci-runner-overload.md)
 147. [Claude] **Maximum front setback never checked on its own** -- DONE and live; last open lot 1S2E17BA -14300 re-checked 11-13: true RED (corner, 18 ft off SE 71st; small-fixes-9 hand-off). Remove at rel9 merge. [file](followups/147-max-front-setback-unchecked.md)
 
 148. [Claude] [scan: YES -- toward yellow] **Minimum floor area: red only when more pods clearly cannot fit** -- LIVE since run 118; fix-forward BUILT flats/small-fixes-9 6ed32c51 (4 Portland part-overlay lots R->Y), rides rel9. [file](followups/148-min-floor-area-more-pods.md)
 
-182. [Claude] [scan: YES -- false greens only] **No-sewer rule: city pipe in the street outside every district** -- RULED 11-11 YELLOW; BUILT 4592039a, rides rel8 (bound running 11-13; ~398 G->R, ~148 G->Y). [file](followups/182-no-sewer-street-pipe.md)
-181. [Claude] [scan: YES -- false greens only] **Roof sweep: Clackamas pitched roof + four re-reads** -- (a) BUILT 4245abd9, (b) BUILT 0151a6c5, both ride rel8 (bound running 11-13). Steph 11-14: no city contact (ruling 2026-11-14-no-city-contact) -- text governs, Tualatin flat roof RED, Villebois YELLOW; nothing left open. [file](followups/181-roof-sweep-clackamas.md)
-
-186. [Claude] [scan: YES -- toward red, FALSE GREEN] **Gresham end walls need 5% glass but 40 greens sit < 3 ft from a lot line** -- RULED 11-12 each wall; BUILT 1b0d6299 (+187 places), rides rel8 (bound running 11-13; est. 5-20 of 40 go RED). [file](followups/186-gresham-end-wall-glass.md)
-
-187. [Claude] [scan: YES -- end-wall glass places] **Glazing rules: read, report published** -- report https://claude.ai/artifact/PvTVXncwqnjMT4br3Krhdj; Portland CM fourplex exemption RULED 11-12; end-wall hold (1b0d6299) and Tigard TMU (c6f46146) ride rel8 (bound running 11-13). [file](followups/187-glazing-gaps.md)
-
-185. [Claude] [scan: YES -- every lot] **Screen the 80 x 25 pod, 20 ft tall, 9'2" storeys** -- RULED 11-12 (three rulings); BUILT c6f46146, rides rel8 (full bound running 11-13). Open later: trace Kenton 33.538.230 Map 538-4 (held YELLOW whole now). [file](followups/185-pod-depth-30.md)
+185. [Claude] [scan: YES -- every lot] **Screen the 80 x 25 pod, 20 ft tall, 9'2" storeys** -- RULED 11-12 (three rulings); BUILT c6f46146, LIVE run 126 (2026-11-15). Open later: trace Kenton 33.538.230 Map 538-4 (held YELLOW whole now). [file](followups/185-pod-depth-30.md)
 
 188. [Claude] [scan: YES -- toward yellow] **Lots cut by a district boundary pass untested** (S/E Hillsboro, Portland map areas) -- found 11-12; count + sample, then split-zone-yellow rule. [file](followups/188-cut-district-untested.md)
 189. [Claude] [scan: YES -- toward green only] **rel7 move-read fix-forwards: pdx-9ft cases not moved, Thorville bulb unmeasured, Clackamas R10 51.2% share red** -- none a false GREEN. F5/F6 (ingest cert, recipe root) done 766dd02d. [file](followups/189-rel7-fix-forwards.md)
@@ -68,7 +60,7 @@ the full one.)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
-- Weekly re-screen state -- run 124 PROMOTED 2026-11-12 (rel7, pod80x30); NEXT rel8 full bound (pod80x25@3). [file](followups/weekly-rescreen.md)
+- Weekly re-screen state -- run 126 PROMOTED 2026-11-15 (rel8, pod80x25@3, + Hillsboro downtown fix); NEXT rel9 full bound. [file](followups/weekly-rescreen.md)
 77. [Claude] **Road land to the centre line in the cities** -- all built and live (7cbc3346, d3b6db52, 19ee2d97, e67b7193); only the no-centre-line case (34 lots) left conservative, needs a new centreline source. [file](followups/77-city-road-dedication.md)
 78. [Claude] [Steph: confirm 2029 transit-street RED vs YELLOW] **Portland false GREENs: main street minimum floor area and protected historic buildings are RED** -- all built and live (4ed70036, 8d1597ef, bc380601); only Steph's confirm that a 2029 mapped-transit-street lot is RED (built under no-variances) left. [file](followups/78-portland-false-greens.md)
 80. [Claude] [Steph: (c) human copy of Wood Village 235.400/490] **Readings for Steph from item 64 round 2** -- (a)(b)(d) ruled/built and live; 1S113BA07700 ruled 11-03 (show green), build not recorded; (c) waits on a copy; (e) flag_instances staleness unchecked. [file](followups/80-item64-round2-readings.md)
@@ -84,7 +76,7 @@ the full one.)
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-(none -- rel8 is packed and bounding; lanes built for rel9 carry BUILT in their line below)
+(none -- rel8 LIVE run 126 2026-11-15; rel9 packed 289e4fe4, needs a re-merge of main then a full bound)
 
 ### 1c. The rest, most urgent first (dated items first)
 194. [Claude] [scan: YES -- toward green] **rel8 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R)** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)
@@ -137,12 +129,11 @@ the full one.)
 142. [Claude] [Steph: through-lot court yellow or red, non-blocking] [scan: YES -- false reds only] **Placement ignores fire reach; stall width; parking down a long lot** -- (a) rounds 1-6, (b) city stall width, court-front-yard all DONE and live; (c) later with 92; open: through lot parking facing the back street (built YELLOW). [file](followups/142-placement-and-stall-width.md)
 145. [Claude] [Steph: load charts + parameter answers] [scan: YES when built (colour policy TBD by Steph)] **Set access: truck route, crane setup and lifts solved per lot** -- slice 1 (calculator, not wired) BUILT 6e6669fb on flats/set-access, not yet in a release; crane guide (28 t + 45 t charts) delivered 11-14; slice 2 direction 11-14: report only (no colour), 28 t then 45 t, trailer spot = 45 t landing, street set-up by road width, power lines later. Slice 2 BUILT 9c8f9ff0; 11-14 plan change (IC-80 primary, 45 t fallback, 28 t dropped): slice 3 BUILT flats/set-access-3 04616184; slice 3b BUILT 8f1fc121; slice 3c f59c08f3; FIRST SAMPLE 11-15 (598 greens): IC-80 3, 45 t 46, not viable 56, unmeasured 493; gear changes 3 lots; 11-14 Steph: IC-80 picks from street trailer + carries; ignore curb; trees matter; slice 4 BUILT 2263ffc5; 4b BUILT ec10aab7, sample: IC-80 5 (25 without trees), 45 t 47, undecided 489 (pavement width missing 469); street-width scout DONE: real data ~1/5 of lots; Steph 11-15 chose A+B: BUILDING on set-access-3 -> set-access-5.handoff.md; sample run on 137 after rel8 bound. [file](followups/145-set-access-crane-truck.md)
 146. [Claude] [scan: YES -- reds/yellows only go green] **Let the drive lane (and court) use the side setback where the code allows it** -- BUILT and LIVE (e92ca641..add83c5f, rescreen-1110); open: read of the side-yard moves not recorded, King City 16.124.110 C buffer unencoded. [file](followups/146-parking-in-side-yards.md)
-156. [Claude] [scan: YES (envelopes only)] **Gladstone quadfit rules follow Ordinance 1545** -- quadfit mirror DONE cd5ba695 (main/live); citation pass 33a2a406 rides rel8 (bound running 11-13); optional R5/MR/C2/C3 provenance tidy left. [file](followups/156-gladstone-ordinance-1545.md)
+156. [Claude] [scan: YES (envelopes only)] **Gladstone quadfit rules follow Ordinance 1545** -- quadfit mirror DONE cd5ba695 (main/live); citation pass 33a2a406 LIVE run 126; optional R5/MR/C2/C3 provenance tidy left. [file](followups/156-gladstone-ordinance-1545.md)
 158. [Claude] [scan: YES] **17 fire-reach / front-max reds left after rel4-fixes** -- 14 resolved or read (Hillsboro 45 deg fixed 89aa02bd, live); OPEN: 3 lots whose envelope shrank in rel4, cause untraced (RED = safe side). [file](followups/158-fire-front-max-17-reds.md)
 161. [Claude] [scan: YES -- toward yellow] **Sight triangles at corners and driveways** -- open parts BUILT flats/sight-leftovers 2fe743d5 (King City read; alley corners + parking-in-triangle YELLOW+flag; 0 run-124 greens reached), rides rel9; held YELLOW (moot today): OC/Hillsboro engineer-set size, 450 vs 500 ft at 45 mph. [file](followups/161-sight-triangles.md)
 162. [Claude] [scan: YES -- toward red, false-GREEN risk] **Tigard entrance rules outside TMU** -- BUILT d35ef11a on flats/tigard-entrances, 0 moves; NOT in main or rel8 (earlier 'rides rel7' was wrong) -- needs a release slot (rel9). [file](followups/162-tigard-entrances.md)
 163. [Claude] [scan: YES -- toward green] **Fire retry at the drawing's angle** -- BUILT 7ae34393 on flats/retry-drawing-angle; NOT in main or rel8 (earlier 'rides rel7' was wrong) -- needs a release slot (rel9) and a gain read. [file](followups/163-retry-drawing-angle.md)
-164. [Claude] [scan: YES -- toward red, possible false GREEN] **Turned pod not held back where no street direction was measured** -- BUILT 32a510bf (+9f8f71dd), rides rel8 (bound running 11-13). [file](followups/164-no-bearing-parallel.md)
 170. [Claude] [Steph] [scan: YES if read the other way] **Hillsboro SCR 5 ft maximum side setback: one wall or both?** -- RULED 11-09 both walls, BUILT + LIVE (84b08a72, 6d5b84d0, rel7); OPEN: city email parked by Steph (offer again). [file](followups/170-hillsboro-side-max.md)
 
 ## 2. Waiting on Steph
