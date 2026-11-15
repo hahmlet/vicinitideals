@@ -19,10 +19,11 @@ the crown height, ft; EPSG:2913) puts the trees in: canopy in the IC-80's
 working ground, swing room or on a carry path blocks it, and each row also
 carries the answer with the trees left out (``result_no_trees``).
 
-Each lot is run once per carry case (slice 4, ``--combos``): ``spec`` (the
-spec's reading: cassettes are not carried, a carry path must be paved),
-``relaxed`` (both switches off), ``cassettes`` or ``unpaved`` (one off);
-``--cassettes-carryable`` / ``--carry-unpaved`` run the one case they name.
+Each lot is run once per carry case (slice 4b, ``--combos``): ``spec``
+(S3e 3.7 at 9985b64: cassettes flat and crosswise, walls upright) and
+``relaxed`` (walls may also be carried flat and crosswise, the switch
+``walls_flat_crosswise`` that waits on FOLLOWUPS 215(a)); ``--walls-flat``
+runs relaxed alone.
 And once per wall-gear case (slice 3c; ``ic80.wall_gear_lb``, spec 3.6):
 ``light`` (400 lb, the default) or ``heavy`` (800 lb, the far walls then
 need both faces); ``--gear both`` runs both. Only the walls take the gear.
@@ -77,19 +78,9 @@ if str(REPO_ROOT) not in sys.path:
 _W: dict[str, Any] = {}
 
 
-#: The carry cases (slice 4): (cassettes may be carried, the path must be paved).
-COMBOS: dict[str, tuple[bool, bool]] = {
-    "spec": (False, True),
-    "cassettes": (True, True),
-    "unpaved": (False, False),
-    "relaxed": (True, False),
-}
-_COMBO_WORDS = {
-    "spec": "spec",
-    "cassettes": "cassettes carried",
-    "unpaved": "unpaved carry",
-    "relaxed": "relaxed (cassettes carried, unpaved carry)",
-}
+#: The carry cases (slice 4b): walls may be carried flat and crosswise.
+COMBOS: dict[str, bool] = {"spec": False, "relaxed": True}
+_COMBO_WORDS = {"spec": "spec", "relaxed": "relaxed (walls carried flat)"}
 #: Metro's Canopy 2019 data extent (canopy2019.xml westbc/eastbc/northbc/
 #: southbc): a lot outside it has its trees unmeasured.
 CANOPY_EXTENT = (-123.153528597, 45.23396470, -122.367487422, 45.70263875)
@@ -106,9 +97,8 @@ def _cases(combos: tuple[str, ...], gears: tuple[str, ...]) -> dict[str, tuple[s
     base = sa.load_rules()
     out = {}
     for c in combos:
-        cas, paved = COMBOS[c]
         for g in gears:
-            rules = sa.with_carry(sa.with_wall_gear(base, g), cassettes=cas, paved=paved)
+            rules = sa.with_carry(sa.with_wall_gear(base, g), walls_flat=COMBOS[c])
             out[f"{c}/{g}"] = (c, g, rules)
     return out
 
@@ -338,8 +328,8 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
     lines += [
         "## Lots on each result, by case",
         "",
-        "Carry (slice 4): spec = cassettes are not carried and a carry path must be paved; relaxed = both "
-        "switches off. Wall-lifting gear (spec 3.6): light = one face is enough; heavy = the far walls need "
+        "Carry (slice 4b): spec = cassettes carried flat and crosswise, walls upright (S3e 3.7); relaxed = "
+        "walls may also be carried flat (FOLLOWUPS 215 a). Wall-lifting gear (spec 3.6): light = one face is enough; heavy = the far walls need "
         "both faces. \"no trees\" = the same lots with the canopy left out (what the trees cost).",
         "",
         "| result | " + " | ".join(n for _, n, _ in cols) + " |",
@@ -481,21 +471,16 @@ def main(argv: list[str] | None = None) -> int:
         "--combos", default="spec,relaxed",
         help="the carry cases, comma-separated, of " + ", ".join(COMBOS) + " (default spec,relaxed)",
     )
-    parser.add_argument("--cassettes-carryable", action="store_true",
-                        help="run one carry case: cassettes may be carried (with --carry-unpaved: relaxed)")
-    parser.add_argument("--carry-unpaved", action="store_true",
-                        help="run one carry case: a carry path need not be paved (with --cassettes-carryable: relaxed)")
+    parser.add_argument("--walls-flat", action="store_true",
+                        help="run the relaxed carry case alone: walls may be carried flat and crosswise")
     parser.add_argument("--canopy", type=Path, default=None,
                         help="a GeoTIFF of Metro's Canopy 2019 (EPSG:2913): trees in the IC-80's way")
     for key in ("s4", "s5o", "roads", "curbs", "dem"):
         parser.add_argument(f"--{key}", type=Path, default=None, help=f"override meta.json's {key}")
     args = parser.parse_args(argv)
     gears = ("light", "heavy") if args.gear == "both" else (args.gear,)
-    if args.cassettes_carryable or args.carry_unpaved:
-        combos: tuple[str, ...] = (
-            "relaxed" if args.cassettes_carryable and args.carry_unpaved
-            else "cassettes" if args.cassettes_carryable else "unpaved",
-        )
+    if args.walls_flat:
+        combos: tuple[str, ...] = ("relaxed",)
     else:
         combos = tuple(c.strip() for c in args.combos.split(",") if c.strip())
     bad = [c for c in combos if c not in COMBOS]

@@ -127,8 +127,8 @@ def test_summary_sets_the_carry_cases_and_the_trees_side_by_side() -> None:
 def test_carry_cases_are_the_switches() -> None:
     from scripts.flats_set_access_sample import COMBOS, _cases
 
-    assert COMBOS["spec"] == (False, True) and COMBOS["relaxed"] == (True, False)
+    assert COMBOS == {"spec": False, "relaxed": True}  # walls carried flat (FOLLOWUPS 215 a)
     cases = _cases(("spec", "relaxed"), ("light",))
     assert set(cases) == {"spec/light", "relaxed/light"}
-    assert (cases["relaxed/light"][2].ic80.carry_cassettes, cases["relaxed/light"][2].ic80.carry_paved) == (True, False)
+    assert (cases["spec/light"][2].ic80.carry_walls_flat, cases["relaxed/light"][2].ic80.carry_walls_flat) == (False, True)
     assert cases["spec/light"][2].ic80.wall_rigging_lb == 400

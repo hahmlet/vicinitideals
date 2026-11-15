@@ -13,6 +13,8 @@ import math
 import re
 from pathlib import Path
 
+import types
+
 import numpy as np
 import pytest
 import yaml
@@ -138,10 +140,12 @@ def test_config_holds_the_spec_figures(rules: sa.Rules) -> None:
     assert len(rules.pieces) == 16
     # Slice 3c: the sample's two wall-gear cases, spec 3.6's 400 and 800 lb columns.
     assert ic.wall_gear_lb == {"light": 400, "heavy": 800} and ic.wall_rigging_lb is None
-    # Slice 4's carry switches, the spec's reading by default (spec 5 step 1,
-    # spec 3.9), and spec 3.10's 20 ft under a line.
-    assert (ic.carry_cassettes, ic.carry_paved, ic.carry_power_ft) == (False, True, 20)
-    assert ic.carry_w_ft == 6.5 and ic.carry_level_pct == 3
+    # Slice 4b (S3e 3.7/3.10 at 9985b64): walls flat off (FOLLOWUPS 215 a);
+    # 3% of the chart lost per 1% downhill; the 360 deg column past ~3%
+    # across; 6 ft 6 in upright, ~27 ft crosswise; 20 ft from a line.
+    assert (ic.carry_walls_flat, ic.carry_slope_per_pct, ic.carry_cross_pct) == (False, 0.03, 3)
+    assert (ic.carry_w_ft, ic.carry_cross_w_ft, ic.carry_power_ft) == (6.5, 27, 20)
+    assert ic.carry_chart_360.capacity_at(12) == 3200 and ic.carry_chart.capacity_at(14) == 3400
     assert rules.ic80_places == ("lot", "street") and rules.places == ("lot", "curb")
     # Spec 3.4's per-piece hook table (high ends) and its Load column.
     hooks = {p.key: p.hook_ft for p in rules.pieces}
@@ -215,9 +219,10 @@ def test_spec_3_6_rigging_reach(rules: sa.Rules, key: str, want: tuple[int, int,
 
 
 def test_spec_3_7_carry(rules: sa.Rules) -> None:
-    """Walls carried on rubber, the extension off: 72% (ground front wall),
-    70-71% (end and party walls); FULL4 would be 96%, so even where the
-    switch lets cassettes be carried, the chart does not."""
+    """Walls carried upright on rubber, the extension off: 72% (ground
+    front wall), 70-71% (end and party walls). Cassettes go flat and
+    crosswise (S3e 3.7 at 9985b64): 25-28% on the 12 ft row, FULL4 44% on
+    the 14 ft row; lengthwise (96%) is not tried."""
     ic = rules.ic80
     lift = sa._ic80_carry_lift(ic, rules, rules.piece("ground_front_wall"), None)  # type: ignore[arg-type]
     assert lift.carried and lift.row_ft == 20 and round(lift.pct_of_chart) == 72
@@ -225,13 +230,16 @@ def test_spec_3_7_carry(rules: sa.Rules) -> None:
     end = sa._ic80_carry_lift(ic, rules, rules.piece("end_wall"), None)  # type: ignore[arg-type]
     assert end.row_ft == 22 and round(end.pct_of_chart) == 71
     full4 = rules.piece("roof_cassette_full4")
-    assert round(100 * (full4.weight_lb + 490) / ic.carry_chart.capacity_at(20.6)) == 96
+    assert round(100 * (full4.weight_lb + 490) / ic.carry_chart.capacity_at(20.6)) == 96  # lengthwise: no
     cas = sa._ic80_carry_lift(ic, rules, full4, None)  # type: ignore[arg-type]
-    assert cas.row_ft == 22 and cas.status == sa.FAIL and "planning line" in cas.why
-    # Every cassette but the stair cassette (72%) is over the line carried.
-    over = {p.key for p in rules.pieces if p.group == "cassette"
-            and sa._ic80_carry_lift(ic, rules, p, None).status == sa.FAIL}  # type: ignore[arg-type]
-    assert over == {p.key for p in rules.pieces if p.group == "cassette"} - {"floor_cassette_stair4f"}
+    assert cas.radius_ft == 12.1 and cas.row_ft == 14 and round(cas.pct_of_chart) == 44 and cas.status == sa.PASS
+    wet = sa._ic80_carry_lift(ic, rules, rules.piece("floor_cassette_wet4f"), None)  # type: ignore[arg-type]
+    assert wet.radius_ft == 11.1 and wet.row_ft == 12 and round(wet.pct_of_chart) == 28
+    # Across a slope past ~3%: the 360 deg column, 35-58%.
+    assert round(sa._ic80_carry_lift(ic, rules, full4, None, across=True).pct_of_chart) == 58  # type: ignore[arg-type]
+    # Walls flat and crosswise (only behind the switch): 12.1 ft, 31-38%.
+    flat = sa._ic80_carry_lift(ic, rules, rules.piece("ground_front_wall"), None, flat=True)  # type: ignore[arg-type]
+    assert flat.row_ft == 14 and round(flat.pct_of_chart) == 38
 
 
 def test_spec_3_8_container(rules: sa.Rules) -> None:
@@ -401,26 +409,27 @@ def test_route_six_and_a_half_feet_wide(rules: sa.Rules) -> None:
     assert route.status == sa.PASS and "straight in" in route.detail
 
 
-def test_trailer_needs_every_cassette_in_reach(front: sa.Report) -> None:
-    """From the back face the street trailer is ~50 ft off: cassettes
-    cannot be carried, so the back fails on the trailer; the walls of loads
-    1 and 3 are picked in the street and carried, unmeasured where the lot
-    holds no paving data (spec 3.9: "paved")."""
+def test_back_face_carries_from_the_street(front: sa.Report) -> None:
+    """From the back face the street trailer is ~50 ft off: every piece is
+    picked in the street and carried. The walls go upright through a 12 ft
+    side yard; a crosswise cassette needs ~27 ft and finds none."""
     got = _attempt(front, "ic80_back")
     trailer = next(c for c in got.plan.checks if c.name == "trailer")
     assert trailer.status == sa.FAIL
-    assert ("load 2: no trailer spot has every piece that cannot be carried within the IC-80's reach; the first "
-            "short: Floor cassette WET4F (cassettes cannot be carried (spec section 5, step 1))") in trailer.detail
     assert "load 1: at the street, end wall, ground back wall, ground front wall, party wall picked there and carried" \
         in trailer.detail
-    assert "no paving data on the lot" in trailer.detail
+    assert "carried walls upright, path 6.5 ft wide" in trailer.detail
+    assert "carried cassettes flat, crosswise, path 27 ft wide" in trailer.detail
+    assert "paving" not in trailer.detail
 
 
 def test_trailer_unmeasured_where_the_centreline_is_not(rules: sa.Rules) -> None:
     rep = sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, None), rules, grade_of=level)
     got = _attempt(rep, "ic80_front")
     trailer = next(c for c in got.plan.checks if c.name == "trailer")
-    assert trailer.status == sa.UNMEASURED and "no street centreline held" in trailer.detail
+    # Slice 4b: every piece may now be carried, so the street trailer at a
+    # place not read is tried, and is never better than unmeasured.
+    assert trailer.status == sa.UNMEASURED and "where the trailer stands is not measured" in trailer.detail
     assert not rep.result.startswith("IC-80")
 
 
@@ -445,23 +454,68 @@ def test_street_trailer_spots_from_the_centreline(rules: sa.Rules) -> None:
     assert not measured and not len(far)
 
 
-def test_carry_switches(front: sa.Report, rules: sa.Rules) -> None:
-    """The slice-4 switches: an unpaved carry path counts (the walls carried
-    from the street pass); cassettes may be carried, but all but the stair
-    cassette are over the line carried, so the back face still fails."""
-    site = Site(FRONT_LOT, FRONT_POD, SOUTH, street(), street_centre=centre())
-    unpaved = sa.report(site, sa.with_carry(rules, paved=False), grade_of=level)
-    trailer = next(c for c in _attempt(unpaved, "ic80_back").plan.checks if c.name == "trailer")
-    assert "no paving data" not in trailer.detail and "carry path 9.5 ft wide from the street" in trailer.detail
-    both = sa.report(site, sa.with_carry(rules, cassettes=True, paved=False), grade_of=level)
-    back = _attempt(both, "ic80_back").plan
+#: NOT A REAL LOT: 30 ft side yards both ends and a 46 ft back yard, so a
+#: crosswise cassette (~27 ft path) gets round the pod to where it hangs
+#: off the back face (crane 7 ft out, the panel ~12 ft beyond).
+WIDE_LOT = box(0, 0, 140, 85)
+WIDE_POD = box(30, 14, 110, 39)
+WIDE_SOUTH = ((0.0, 0.0, 140.0, 0.0),)
+
+
+def test_crosswise_cassettes_carried_round_a_wide_side_yard(rules: sa.Rules) -> None:
+    """Slice 4b: from the back face every piece is carried from the street,
+    the cassettes flat and crosswise down a 30 ft side yard."""
+    rep = sa.report(Site(WIDE_LOT, WIDE_POD, WIDE_SOUTH, street(), street_centre=centre()), rules, grade_of=level)
+    back = _attempt(rep, "ic80_back").plan
     trailer = next(c for c in back.checks if c.name == "trailer")
-    assert trailer.status == sa.FAIL
-    assert "the first short: Floor cassette WET4F (carried: over the 75% planning line" in trailer.detail
+    assert trailer.status == sa.PASS and "cassettes flat, crosswise, path 27 ft wide" in trailer.detail, trailer.detail
+    assert back.status == sa.PASS and "carry" in back.way
+
+
+def test_carry_slope_costs_the_chart(rules: sa.Rules) -> None:
+    """Spec 3.7 [est]: usable chart = chart x (1 - 0.03 x downhill %). An
+    upright wall (72%) takes ~1%; a crosswise cassette (44% at most) takes
+    5%; past ~3% the 360 deg column is read."""
+    lot = types.SimpleNamespace(rules=rules)
+    wall, cas = [rules.piece("ground_front_wall")], [rules.piece("roof_cassette_full4")]
+    assert sa._carry_slope(lot, wall, False, 1.0, "")[0] == sa.PASS  # type: ignore[arg-type]  # 71.6 / 0.97 = 73.8%
+    st, why = sa._carry_slope(lot, wall, False, 2.0, "")  # type: ignore[arg-type]
+    assert st == sa.FAIL and "planning line" in why
+    assert sa._carry_slope(lot, cas, False, 3.0, "")[0] == sa.PASS  # type: ignore[arg-type]  # 43.7 / 0.91 = 48%
+    st, why = sa._carry_slope(lot, cas, False, 5.0, "")  # type: ignore[arg-type]  # 360 deg: 58.3 / 0.85 = 69%
+    assert st == sa.PASS and "360 deg" in why
+    st, why = sa._carry_slope(lot, cas, False, 8.0, "")  # type: ignore[arg-type]  # 58.3 / 0.76 = 77%
+    assert st == sa.FAIL
+    assert sa._carry_slope(lot, cas, False, None, "not read")[0] == sa.UNMEASURED  # type: ignore[arg-type]
+    assert sa._carry_slope(lot, cas, False, 0.0, "")[0] == sa.PASS  # type: ignore[arg-type]
+
+
+def test_walls_flat_switch(rules: sa.Rules) -> None:
+    """Walls carried flat and crosswise wait on FOLLOWUPS 215(a): off by
+    default; on, a wall over the line upright (heavy gear) can go flat."""
     assert sa.with_carry(rules).ic80 == rules.ic80
-    # A carry names spec 3.10's clearance; a plan with none does not.
-    assert any("20 ft clearance" in n for n in back.notes)
-    assert not any("clearance" in n for n in front.plan.notes)
+    heavy = sa.with_wall_gear(rules, "heavy")
+    ic = heavy.ic80
+    gf = heavy.piece("ground_front_wall")
+    assert sa._ic80_carry_lift(ic, heavy, gf, None).status == sa.FAIL  # type: ignore[arg-type]
+    assert sa._ic80_carry_lift(ic, heavy, gf, None, flat=True).status == sa.PASS  # type: ignore[arg-type]
+    site = Site(WIDE_LOT, WIDE_POD, WIDE_SOUTH, street(), street_centre=centre())
+    off = _attempt(sa.report(site, heavy, grade_of=level), "ic80_back").plan
+    on = _attempt(sa.report(site, sa.with_carry(heavy, walls_flat=True), grade_of=level), "ic80_back").plan
+    t_off = next(c for c in off.checks if c.name == "trailer")
+    t_on = next(c for c in on.checks if c.name == "trailer")
+    assert "walls flat, crosswise" not in t_off.detail and "walls flat, crosswise" in t_on.detail
+    assert sa._ORDER[t_on.status] <= sa._ORDER[t_off.status]
+
+
+def test_power_line_notes(rules: sa.Rules, front: sa.Report) -> None:
+    """Spec 3.10 at 9985b64: never checked; a carry names 1926.1411(a), a
+    street trailer names the four ways a street plan still works."""
+    rep = sa.report(Site(WIDE_LOT, WIDE_POD, WIDE_SOUTH, street(), street_centre=centre()), rules, grade_of=level)
+    back = _attempt(rep, "ic80_back").plan
+    assert any("1926.1411(a)" in n and "de-energises and grounds" in n for n in back.notes)
+    assert any(n.startswith("street trailer: with a power line on the lot's side") for n in front.plan.notes)
+    assert not any("1926.1411(a)" in n for n in front.plan.notes)  # nothing carried from the front
 
 
 def test_canopy_blocks_and_its_cost_is_shown(rules: sa.Rules) -> None:
@@ -490,7 +544,7 @@ def test_canopy_on_the_carry_path(rules: sa.Rules) -> None:
     working ground clear but stand on every carry path from the street."""
     crown = sa.Trees(box(0, 0.5, 104, 10))  # NOT A REAL TREE
     site = Site(FRONT_LOT, FRONT_POD, SOUTH, street(), street_centre=centre(), trees=crown)
-    rep = sa.report(site, sa.with_carry(rules, paved=False), grade_of=level)
+    rep = sa.report(site, rules, grade_of=level)
     trees = next(c for c in _attempt(rep, "ic80_back").plan.checks if c.name == "trees")
     assert trees.status == sa.FAIL and "carry path of load 1 and 3" in trees.detail
 

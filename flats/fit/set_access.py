@@ -1,5 +1,5 @@
 """Set access: which crane can set the pod on this lot, and how (FOLLOWUPS
-145, slices 3-4, Steph 2026-11-14).
+145, slices 3-4b, Steph 2026-11-14/15).
 
 A REPORT, NOT A SCREEN CHECK. Nothing here reaches the colour, a reason
 code, a flag or the bound (Steph 2026-11-14: "Don't flag any lots by color
@@ -23,9 +23,11 @@ first step that passes is the answer:
    lot, or IN THE STREET along the frontage (placed from the street lot
    line and centreline, the curb ignored), so every piece on it is within
    the IC-80's reach of a crane spot that also sets it -- or else picked
-   at the trailer and CARRIED on rubber to a set-up spot (spec 3.7; the
-   switches ``cassettes_carryable`` and ``path_must_be_paved`` default to
-   the spec); a way in 6 ft 6 in wide, 9 ft 6 in at turns; and every lift
+   at the trailer and CARRIED on rubber to a set-up spot (spec 3.7 at
+   9985b64: cassettes flat and crosswise on a ~27 ft path, walls upright
+   on a 6 ft 6 in path, walls flat only behind ``walls_flat_crosswise``;
+   the route's fall costs ~3 chart points per 1%); a way in 6 ft 6 in
+   wide, 9 ft 6 in at turns; and every lift
    within 75% of the chart and the hook height it needs.
 2. **IC-80 both faces.** The same with a strip on both long faces; far
    walls are then set from their own face.
@@ -83,6 +85,21 @@ BENDS = "bends"
 NONE = "none"
 #: Said on every set-up, both cranes (Steph 2026-11-14).
 POWER_NOTE = "power lines not checked"
+#: Spec 3.10 at 9985b64 (1926.1411(a): a crane travelling with a load is
+#: lifting, so 1926.1408 applies): reported where a plan carries or uses a
+#: street trailer, never checked (FLATS holds no power-line data).
+CARRY_POWER_NOTE = (
+    "a loaded carry is a lift (spec 3.10, OSHA 1926.1411(a)): boom, rigging and load {ft:g} ft from any power "
+    "line, or 10 ft with the utility's <=50 kV confirmation, so no loaded carry under a line unless the "
+    "utility de-energises and grounds it: power lines not checked"
+)
+STREET_POWER_NOTE = (
+    "street trailer: with a power line on the lot's side of the street, no pick off a trailer under it and no "
+    "loaded carry under it (spec 3.10); it then needs (1) the truck onto the lot, parked clear of the line, "
+    "(2) the line on the far side of the street or in a rear easement, the trailer at the near kerb, (3) the "
+    "wire a phone or cable line (not a power line, 1926.1401), or (4) the utility de-energising and grounding "
+    "it (covered only still counts as live): power lines not checked"
+)
 #: What no plan checks (said on every report).
 NOT_CHECKED: tuple[str, ...] = (
     "overhead power lines (both cranes)",
@@ -90,6 +107,8 @@ NOT_CHECKED: tuple[str, ...] = (
     "trees, where no canopy map is read (a canopy map shows crowns, not trunks or heights)",
     "the ground between the IC-80's set-up spots (firm and drivable for the empty crane)",
     "a carried load's sweep on a turn; the carry distance and time on the cargo deck",
+    "a carry route firm and even (spec 3.7: no ruts over ~1 in, no bumps or kerbs over ~2 in; mats or gravel "
+    "where soft); which way along it the load faces (taken downhill)",
     "where the street may be closed for the trailer or the IC-80 (street-use permit)",
     "room in the street for the IC-80 beside a street trailer (it picks there on rubber)",
     "how close the IC-80's pads may stand to the new slab edge (FOLLOWUPS 220)",
@@ -339,6 +358,9 @@ class IC80:
     #: Carrying: over the front on rubber, the extension taken off (rows to
     #: 30 ft).
     carry_chart: Chart
+    #: The same rows on the 360 deg on-rubber column: read where the route
+    #: falls across more than ``carry_cross_pct`` (spec 3.7).
+    carry_chart_360: Chart
     stowed_deduct_lb: float
     #: Hook height table, with the extension up: radii and heights.
     hook_radii: tuple[float, ...]
@@ -360,15 +382,20 @@ class IC80:
     #: None = ``rigging_lb``. The sample runs each of ``wall_gear_lb``.
     wall_rigging_lb: float | None = None
     wall_gear_lb: Mapping[str, float] = field(default_factory=dict)
-    #: Slice 4 carry switches (``ic80.carry``): the spec's reading by
-    #: default. Spec 5 step 1: "Cassettes cannot be carried"; spec 3.9: the
-    #: carry path "must be smooth, level and paved".
-    carry_cassettes: bool = False
-    carry_paved: bool = True
-    #: Where paving is not required, the most a carry path may fall, %.
-    carry_level_pct: float = 3.0
-    #: The carry path's width (spec 3.7: "The path is the machine's width").
+    #: Slice 4b (spec 3.7 at 9985b64): walls carried flat and crosswise
+    #: hang on FOLLOWUPS 215(a); off by default.
+    carry_walls_flat: bool = False
+    #: The share of the chart a carried load loses per 1% downhill fall of
+    #: its route (spec 3.7; the crane agent 2026-11-15: "usable chart =
+    #: chart x (1 - 0.03 x downhill %)").
+    carry_slope_per_pct: float = 0.03
+    #: Past this cross fall the 360 deg on-rubber column is read (spec 3.7:
+    #: "At ~3% the wall carry uses up the +-2 deg straight-ahead allowance").
+    carry_cross_pct: float = 3.0
+    #: Carry path widths (spec 3.7): an upright wall edge-on, and a panel
+    #: flat and crosswise.
     carry_w_ft: float = 6.5
+    carry_cross_w_ft: float = 27.0
     #: Spec 3.10: carrying under a line needs this clearance (reported,
     #: never checked).
     carry_power_ft: float = 20.0
@@ -521,6 +548,8 @@ def _ic80(raw: Mapping[str, Any], pct: float) -> IC80:
     # Carrying: no load on the extension; taken off, so only the main
     # boom's rows (below the extension rows) and no deduction.
     carry_chart = _chart("ic80_carry", src, [{"boom_ft": 30, "rows": column(raw["carry_column"], ext_from)}], 0.0, pct)
+    carry_360 = _chart("ic80_carry_360", src, [{"boom_ft": 30, "rows": column(raw["carry_column_cross"], ext_from)}],
+                       0.0, pct)
     hook = raw["hook_height_ft"]
     out = raw["outriggers"]
     site = raw["site"]
@@ -537,6 +566,7 @@ def _ic80(raw: Mapping[str, Any], pct: float) -> IC80:
         rigging_lb=_hi(raw["rigging_lb"]),
         set_chart=set_chart,
         carry_chart=carry_chart,
+        carry_chart_360=carry_360,
         stowed_deduct_lb=stowed,
         hook_radii=tuple(float(r) for r in hook["radius"]),
         hook_heights=tuple(None if h is None else float(h) for h in hook["with_extension_40"]),
@@ -547,11 +577,12 @@ def _ic80(raw: Mapping[str, Any], pct: float) -> IC80:
         swing_ft=_hi_len(site["swing_beyond_end_ft"]),
         level_pct=_hi_len(raw["pad_level_pct"]),
         carry_radius_ft={k: _hi_len(v) for k, v in carry["hook_radius_ft"].items()},
-        carry_cassettes=bool(carry.get("cassettes_carryable", False)),
-        carry_paved=bool(carry.get("path_must_be_paved", True)),
-        carry_level_pct=_hi_len(carry["path_level_pct"]),
+        carry_walls_flat=bool(carry.get("walls_flat_crosswise", False)),
+        carry_slope_per_pct=float(carry["slope_chart_lost_per_pct"]),
+        carry_cross_pct=_hi_len(carry["cross_fall_pct"]),
         carry_w_ft=_hi_len(carry["path_width"]),
-        carry_power_ft=_hi_len(carry["power_line_clearance_ft"]),
+        carry_cross_w_ft=_hi_len(carry["path_width_crosswise"]),
+        carry_power_ft=float(re.match(r"\s*(\d+(?:\.\d+)?)", str(carry["power_line_clearance_ft"])).group(1)),  # type: ignore[union-attr]
         container_sling_lb=_hi(raw["container"]["sling_lb"]),
         container_within_ft=_hi_len(raw["container"]["within_ft"]),
         container_street=bool(raw["container"].get("street_allowed", False)),
@@ -1561,44 +1592,84 @@ def _pad_levels(lot: _Lot, S: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     return g, cls
 
 
-def _carry_level(lot: _Lot, S: np.ndarray, goal: BaseGeometry | None, width: float) -> tuple[Status, str]:
-    """The fall along a carry path: the plane fitted to the lot ground on a
+def _carry_fall(lot: _Lot, S: np.ndarray, goal: BaseGeometry | None, width: float) -> tuple[float | None, str]:
+    """The fall of a carry path, %: the plane fitted to the lot ground on a
     ``width`` corridor along the shortest line from the crane spots to the
-    trailer's deck, or to the street lot lines."""
-    ic, site = lot.rules.ic80, lot.site
+    trailer's deck, or to the street lot lines (0 where it does not cross
+    the lot; None, with why, where it is not read)."""
+    site = lot.site
     if lot.grade_of is None:
-        return UNMEASURED, "the carry path's fall is not read (no elevation model)"
+        return None, "the carry path's fall is not read (no elevation model)"
     if goal is None:
         if not site.street:
-            return UNMEASURED, "no street lot line traced"
+            return None, "no street lot line traced"
         goal = shapely.union_all([LineString([(x1, y1), (x2, y2)]) for x1, y1, x2, y2 in site.street])
-    key = ("carry_level", S.tobytes(), goal.wkb, round(width, 3))
+    key = ("carry_fall", S.tobytes(), goal.wkb, round(width, 3))
     if key not in lot.memo:
         line = shapely.shortest_line(shapely.multipoints(S), goal)
         corridor = line.buffer(width / 2, cap_style="flat").intersection(site.lot) if line.length > EPS else Polygon()
         if corridor.is_empty or corridor.area < 1.0:
-            lot.memo[key] = (PASS, "the carry path does not cross the lot")
+            lot.memo[key] = (0.0, "the carry path does not cross the lot")
         else:
             g = lot.grade_of(corridor)
-            if g is None:
-                lot.memo[key] = (UNMEASURED, "the carry path's fall is not read")
-            elif g <= ic.carry_level_pct + EPS:
-                lot.memo[key] = (PASS, f"the carry path falls {g:.2f}%")
-            else:
-                lot.memo[key] = (FAIL, f"the carry path falls {g:.2f}%, more than {ic.carry_level_pct:g}%")
+            lot.memo[key] = (None, "the carry path's fall is not read") if g is None else (float(g), "")
     return lot.memo[key]
+
+
+def _carry_slope(lot: _Lot, hook: Sequence[Piece], flat: bool, g: float | None, why: str) -> tuple[Status, str]:
+    """Spec 3.7, carrying on a real site [est]: the usable chart is the
+    chart x (1 - 0.03 x the downhill fall %) (the fall of the fitted plane
+    taken as downhill with the load ahead, and as across the route too:
+    past ~3% across, the 360 deg on-rubber column is read). Every hook
+    piece must stay within the planning line on the usable chart."""
+    ic, rules = lot.rules.ic80, lot.rules
+    if g is None:
+        return UNMEASURED, why
+    if g <= EPS:
+        return PASS, why or "the carry path is level"
+    cross = g > ic.carry_cross_pct + EPS
+    worst: tuple[float, Piece] | None = None
+    for p in hook:
+        lf = _ic80_carry_lift(ic, rules, p, None, flat=flat, across=cross)  # type: ignore[arg-type]
+        keep = 1.0 - ic.carry_slope_per_pct * g
+        use = math.inf if lf.pct_of_chart is None or keep <= EPS else lf.pct_of_chart / keep
+        if worst is None or use > worst[0]:
+            worst = (use, p)
+    assert worst is not None
+    use, p = worst
+    col = "the 360 deg column" if cross else "over the front"
+    if use <= rules.max_pct + EPS:
+        return PASS, f"the carry path falls {g:.2f}%: {p.label} at {use:.0f}% of the usable chart ({col})"
+    return FAIL, (f"the carry path falls {g:.2f}%: {p.label} would be at {use:.0f}% of the usable chart ({col}, "
+                  f"{100 * ic.carry_slope_per_pct:g}% of it lost per 1%), over the {rules.max_pct:g}% planning line")
+
+
+def _panel_points(lot: _Lot, S: np.ndarray, r: float) -> np.ndarray:
+    """Where a panel carried crosswise hangs with the crane at each set-up
+    spot of ``S``: ``r`` ft out from the spot, away from the building (the
+    crane backs in with the load ahead of it, then turns the panel to its
+    line, spec 3.7)."""
+    if not len(S):
+        return S
+    pts = shapely.points(S)
+    near = shapely.get_coordinates(shapely.shortest_line(pts, lot.site.building))[1::2]
+    d = S - near
+    n = np.linalg.norm(d, axis=1, keepdims=True)
+    return S + np.where(n > EPS, d / np.maximum(n, EPS), 0.0) * r
 
 
 def _carry(lot: _Lot, S: np.ndarray, carried: Sequence[Piece], deck: Polygon | None) -> tuple[Status, Status, str]:
     """How a load's carried kinds get from the trailer (on the lot: its
-    ``deck``; in the street: None) to a set-up spot among ``S`` (slice 4).
-    Pieces on the hook ride on rubber over the front (spec 3.7): an open
-    path the machine's width (a cassette's own width, flat, if wider),
-    paved where ``carry_paved`` (no paving data on a lot: unmeasured),
-    level within ``carry_level_pct``; bundles ride the cargo deck and need
-    the way in only. Returns (status with no tree read, status with the
-    canopy as an obstacle, detail)."""
-    ic = lot.rules.ic80
+    ``deck``; in the street: None) to a set-up spot among ``S`` (slice 4b,
+    spec 3.7 at 9985b64). Pieces on the hook ride on rubber over the front:
+    cassettes flat and crosswise on a ~27 ft path; walls upright, edge-on,
+    on a 6 ft 6 in path, or (``carry_walls_flat``) flat and crosswise like a
+    cassette, the better of the two; the route's fall within what the
+    chart has left (:func:`_carry_slope`). Bundles ride the cargo deck and
+    need the way in only. Firm and even are not read (NOT_CHECKED).
+    Returns (status with no tree read, status with the canopy as an
+    obstacle, detail)."""
+    ic, rules = lot.rules.ic80, lot.rules
     goal = None if deck is None else deck.buffer(max(ic.carry_radius_ft.values()))
     hook = [p for p in carried if p.group != "bundle"]
     bundles = [p for p in carried if p.group == "bundle"]
@@ -1607,22 +1678,43 @@ def _carry(lot: _Lot, S: np.ndarray, carried: Sequence[Piece], deck: Polygon | N
     parts: list[str] = []
     trees = lot.site.trees is not None and lot.site.trees.covered
     if hook:
-        width = max([ic.carry_w_ft] + [p.short_hi_ft for p in hook if p.group == "cassette"])
-        st, why = _way(lot, S, width, goal=goal, avoid=deck)
-        st_t, why_t = _way(lot, S, width, goal=goal, avoid=deck, trees=True) if trees else (st, why)
-        bare.append(st)
-        treed.append(st_t)
-        parts.append(f"carry path {why}")
-        if st_t != st:
-            parts.append(f"with the canopy: {why_t}")
-        if ic.carry_paved:
-            bare.append(UNMEASURED)
-            treed.append(UNMEASURED)
-            parts.append("no paving data on the lot (spec 3.9: the carry path must be smooth, level and paved)")
-        lv, lv_why = _carry_level(lot, S, deck, width)
-        bare.append(lv)
-        treed.append(lv)
-        parts.append(lv_why)
+        cassettes = any(p.group == "cassette" for p in hook)
+        walls = [p for p in hook if p.group != "cassette"]
+        ways: list[bool] = []
+        if all(_ic80_carry_lift(ic, rules, p, None).status == PASS for p in walls):  # type: ignore[arg-type]
+            ways.append(False)  # walls upright (cassettes always flat, crosswise)
+        if walls and ic.carry_walls_flat:
+            ways.append(True)
+        tried: list[tuple[tuple, Status, Status, list[str]]] = []
+        for flat in ways:
+            cross = flat or cassettes
+            width = ic.carry_cross_w_ft if cross else ic.carry_w_ft
+            # A crosswise panel rides ~11-12 ft ahead of the crane: it is
+            # carried to where it hangs with the crane at a set-up spot,
+            # backed in with the load away from the building.
+            to = _panel_points(lot, S, max(
+                _ic80_carry_lift(ic, rules, p, None, flat=flat).radius_ft for p in hook)) if cross else S  # type: ignore[arg-type]
+            st, why = _way(lot, to, width, goal=goal, avoid=deck)
+            st_t, why_t = _way(lot, to, width, goal=goal, avoid=deck, trees=True) if trees else (st, why)
+            how = ", ".join(([f"walls {'flat, crosswise' if flat else 'upright'}"] if walls else [])
+                            + (["cassettes flat, crosswise"] if cassettes else []))
+            ps = [f"carried {how}, path {width:g} ft wide: {why}"]
+            if st_t != st:
+                ps.append(f"with the canopy: {why_t}")
+            g, g_why = _carry_fall(lot, S, deck, width)
+            lv, lv_why = _carry_slope(lot, hook, flat, g, g_why)
+            ps.append(lv_why)
+            b, t = _worst([st, lv]), _worst([st_t, lv])
+            tried.append(((_ORDER[t], _ORDER[b]), b, t, ps))
+        if not tried:
+            bare.append(FAIL)
+            treed.append(FAIL)
+            parts.append("a wall carried upright is over the planning line (spec 3.7)")
+        else:
+            _, b, t, ps = min(tried, key=lambda x: x[0])
+            bare.append(b)
+            treed.append(t)
+            parts.extend(ps)
     if bundles:
         st, why = _way(lot, S, ic.route_w_ft, goal=goal, avoid=deck)
         bare.append(st)
@@ -1810,6 +1902,9 @@ def _ic80_load(
         # picked at the trailer and carried.
         carried = frozenset(by_key)
         st, st_t, why = _carry(lot, S, kinds, None)
+        # Where it stands is not read, so never better than unmeasured.
+        st, st_t = _worst([st, UNMEASURED]), _worst([st_t, UNMEASURED])
+        why += "; where the trailer stands is not measured"
         options.append((
             (_ORDER[st_t], _ORDER[st], len(carried), 1, math.inf),
             _LoadPick(st, st_t, f"in the street, every piece picked there and carried: {why}", "street (carried)", None,
@@ -1818,7 +1913,15 @@ def _ic80_load(
     if options:
         best = min(options, key=lambda o: o[0])[1]
         bare = _best(o[1].status for o in options)
-        return dataclasses.replace(best, status=bare) if _ORDER[bare] < _ORDER[best.status] else best
+        if _ORDER[bare] < _ORDER[best.status]:
+            best = dataclasses.replace(best, status=bare)
+        if street_open and FAIL in (best.status, best.treed):
+            # A street trailer at a place not measured might still serve.
+            best = dataclasses.replace(
+                best, status=_best([best.status, UNMEASURED]), treed=_best([best.treed, UNMEASURED]),
+                detail=best.detail + "; the street trailer's place is not measured (no street centreline held)",
+            )
+        return best
     st = UNMEASURED if street_open else FAIL
     if not n:
         return _LoadPick(
@@ -2078,9 +2181,9 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
         for lf in lifts:
             p = rules.piece(lf.key)
             carry_lifts[p.key] = cl = _ic80_carry_lift(ic, rules, p, lf)
-            if p.group == "cassette" and not ic.carry_cassettes:
-                no_carry[p.key] = "cassettes cannot be carried (spec section 5, step 1)"
-            elif cl.status != PASS:
+            if cl.status != PASS and p.group == "wall" and ic.carry_walls_flat:
+                carry_lifts[p.key] = cl = _ic80_carry_lift(ic, rules, p, lf, flat=True)
+            if cl.status != PASS:
                 no_carry[p.key] = f"carried: {cl.why}"
         tr = _ic80_trailer(lot, S, masks, reach, working, no_carry, two)
         final: list[Lift] = []
@@ -2163,8 +2266,8 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
         setup="site",
         bare_status=bare,
         extra_notes=(
-            (f"a carry under a power line needs {ic.carry_power_ft:g} ft clearance (spec 3.10): power lines not checked",)
-            if carried_any else ()
+            ((CARRY_POWER_NOTE.format(ft=ic.carry_power_ft),) if carried_any else ())
+            + ((STREET_POWER_NOTE,) if any(v[0].startswith("street") for v in tr.spots.values()) else ())
         ),
     )
 
@@ -2203,34 +2306,42 @@ def _ic80_set_lift(ic: IC80, rules: Rules, p: Piece, gross: float, r_set: float,
     return _lift(ic.set_chart, "piece", p.key, p.label, p.count, gross, 0.0, r_set, rules.max_pct, extra_fail=short)
 
 
-def with_carry(rules: Rules, *, cassettes: bool | None = None, paved: bool | None = None) -> Rules:
-    """``rules`` with the slice-4 carry switches set (None keeps the
-    config's): ``cassettes`` = cassettes may be carried; ``paved`` = a
-    carry path must be paved."""
+def with_carry(rules: Rules, *, walls_flat: bool | None = None) -> Rules:
+    """``rules`` with the slice-4b carry switch set (None keeps the
+    config's): ``walls_flat`` = walls may be carried flat and crosswise
+    (spec 3.7, hanging on FOLLOWUPS 215(a))."""
     ic = rules.ic80
     return dataclasses.replace(rules, ic80=dataclasses.replace(
-        ic,
-        carry_cassettes=ic.carry_cassettes if cassettes is None else cassettes,
-        carry_paved=ic.carry_paved if paved is None else paved,
+        ic, carry_walls_flat=ic.carry_walls_flat if walls_flat is None else walls_flat,
     ))
 
 
-def _ic80_carry_lift(ic: IC80, rules: Rules, p: Piece, set_lift: Lift) -> Lift:
-    """A wall carried edge-on, or a cassette (where the switch allows it),
-    straight ahead over the front, on rubber, the extension off (spec 3.7),
-    read on the carry chart at the spec's hook radius; a bundle rides the
-    cargo deck. The path is the trailer check's; the set itself is the set
-    lift's."""
+def _ic80_carry_lift(ic: IC80, rules: Rules, p: Piece, set_lift: Lift, *, flat: bool = False,
+                     across: bool = False) -> Lift:
+    """A piece carried straight ahead over the front, on rubber, the
+    extension off (spec 3.7 at 9985b64), read on the carry chart at the
+    spec's hook radius: a cassette flat and crosswise (10.8-11.1 ft for
+    64-72 in wide, 12.1 ft for the 96 in FULL4; lengthwise, the spec's
+    no, is not tried); a wall upright and edge-on (18.1 / 20.2 ft), or
+    flat and crosswise where ``flat`` (12.1 ft). ``across``: the 360 deg
+    column (the route falls across). A bundle rides the cargo deck. The
+    path is the trailer check's; the set itself is the set lift's."""
     if p.group == "bundle":
         return dataclasses.replace(set_lift, carried=True, why="rides the cargo deck")
     if p.group == "cassette":
-        key = "cassette"
+        w = p.short_hi_ft
+        key = "cassette_crosswise" if w <= 6.0 + EPS else "cassette_crosswise_96_in" if w <= 8.0 + EPS else ""
+        if not key:
+            return _lift(ic.carry_chart, "piece", p.key, p.label + " (carried)", p.count, 0.0, math.inf, 0.0,
+                         rules.max_pct, carried=True, extra_fail=f"no carry radius printed for a {w:g} ft wide panel")
+    elif flat:
+        key = "wall_flat_crosswise"
     else:
         key = "wall_24_ft" if p.plan_ft[0] >= 24 - EPS else "wall_20_ft"
     r = ic.carry_radius_ft[key]
     gross = p.weight_lb + ic.rigging_for(p) + ic.hook_lb
-    return _lift(ic.carry_chart, "piece", p.key, p.label + " (carried)", p.count, gross, r, 0.0, rules.max_pct,
-                 carried=True)
+    return _lift(ic.carry_chart_360 if across else ic.carry_chart, "piece", p.key, p.label + " (carried)", p.count,
+                 gross, r, 0.0, rules.max_pct, carried=True)
 
 
 # --------------------------------------------------------------------------

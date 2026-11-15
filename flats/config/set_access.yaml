@@ -50,8 +50,8 @@
 #   carries "power lines not checked".
 # ---------------------------------------------------------------------------
 
-version: 4
-source: "Factory-Sim docs/research/S3e-crane-20x25.md (rewritten 2026-11-14, level 5dcd917), Steph 2026-11-14"
+version: 5
+source: "Factory-Sim docs/research/S3e-crane-20x25.md (rewritten 2026-11-14; level 5dcd917; carry and power lines 9985b64), Steph 2026-11-14/15"
 
 lifts:
   # Spec 3.3: "Planning line: 75% of chart. Anything above that is a
@@ -130,6 +130,9 @@ ic80:
   # over-front column (section 3.7)."
   set_column: outriggers_360
   carry_column: rubber_front
+  # Spec 3.7: past ~3% cross fall on a carry route, "read the 360 deg
+  # on-rubber column instead".
+  carry_column_cross: rubber_360
 
   # Spec 3.3 [est]: "Gross pick = piece + rigging + 90 lb downhaul";
   # "Rigging is taken as ~400 lb: a 16-20 ft spreader plus slings". How a
@@ -217,58 +220,80 @@ ic80:
   # rigging_lb (spec 3.3).
   wall_gear_lb: {light: 400, heavy: 800}
 
-  # Spec 3.7 pick and carry [vendor, calc]. "Carry on the over-front,
-  # on-rubber column only, boom straight ahead ... at creep speed, 2 mph or
-  # less"; "on a smooth, level, paved surface"; "No carrying on the
-  # extension: stow it (deduct 100 lb) or take it off." Hook radius while
-  # carrying: "about 18 ft ahead of the centre of rotation for a 20 ft wall
-  # and about 20 ft for a 24 ft wall"; the table: 18.1 ft (20 ft walls),
-  # 20.2 ft (24 ft walls), 20.6 ft (cassettes). "Walls can be carried ...
-  # every wall with the extension taken off. Cassettes are not carried."
-  # "The cargo deck (14,000 lb, 53 sq ft) is too small for a panel. It suits
-  # bundles, mats and tools."
+  # Spec 3.7 pick and carry [vendor, calc] (S3e at 9985b64, L318-389; the
+  # crane agent's figures to the coordinator 2026-11-15). Rules: "Carry on
+  # the over-front, on-rubber column only, boom straight ahead (about +-2
+  # deg), at creep speed, 2 mph or less"; "No carrying on the extension:
+  # stow it (deduct 100 lb) or take it off" (taken off here: the
+  # extension rows are dropped and nothing deducted). "The load's centre
+  # must sit ahead of the front bumper (~6.6 ft from the centre of
+  # rotation ...) plus ~1.5 ft clearance, plus half the load's depth in the
+  # direction of travel." The table (L338-345):
+  #   "Ground front wall, upright, lengthwise (edge-on) | 6.5 ft | 18.1 ft (20)"
+  #   "End and party walls (24 ft), upright, lengthwise | 6.5 ft | 20.2 ft (22)"
+  #   "Cassettes flat, lengthwise (25 ft ahead) | 8 ft | 20.6 ft (22) | 1,550 | 79-102%"
+  #   "Cassettes flat, crosswise (25 ft across the path), 64-72 in wide | ~27 ft
+  #    | 10.8-11.1 ft (12) | 4,450 | 27-30%"
+  #   "Roof cassette FULL4 flat, crosswise, 96 in wide | ~27 ft | 12.1 ft (14)
+  #    | 3,400 | 47%"
+  # "Cassettes can be carried, crosswise. Earlier versions of this note said
+  # they could not; that only held for carrying them lengthwise". Lengthwise
+  # (79-102%) is the spec's no and is not tried. "An upright wall cannot go
+  # crosswise". "The cargo deck (14,000 lb, 53 sq ft) is too small for a
+  # panel. It suits bundles, mats and tools."
   carry:
-    hook_radius_ft: {wall_20_ft: "18.1", wall_24_ft: "20.2", cassette: "20.6"}
+    hook_radius_ft:
+      wall_20_ft: "18.1"
+      wall_24_ft: "20.2"
+      cassette_crosswise: "10.8-11.1"  # 64-72 in wide; the high end read
+      cassette_crosswise_96_in: "12.1"  # FULL4
+      wall_flat_crosswise: "12.1"  # only with walls_flat_crosswise
     extension: removed
-    path_width: "6 ft 6 in"
+    path_width: "6 ft 6 in"  # an upright wall, edge-on
+    path_width_crosswise: "~27"  # "the 25 ft panel plus ~1 ft each side"
     speed_mph: "2"
     deck_lb: "14,000"
-    # SLICE 4 SWITCHES (Steph 2026-11-14, after the first sample: "the
-    # IC-80 is meant to drive to a trailer parked in the street, pick under
-    # the wires, carry to the lot and lift"). The spec and Steph's plan
-    # disagree on two carry rules; Steph is asking the crane agent. Until
-    # answered each is a switch, defaulting to the SPEC (the cautious
-    # reading); the sample also runs both relaxed.
-    # (a) Spec 5 step 1 (S3e L619): "Cassettes cannot be carried." Spec 3.7:
-    #     "Cassettes are not carried. They have to be picked off a trailer
-    #     within reach." Relaxed, a cassette carry is still read on the
-    #     on-rubber chart (spec 3.7 prints 79-96% with the extension off,
-    #     over the 75% planning line; read here at 20.6 ft on the 22 ft row,
-    #     the stair cassette alone comes in under it, at 72%).
-    cassettes_carryable: false
-    # (b) Spec 3.9 (S3e L386-387): "Carrying (the fallback, 3.7) is
-    #     different: on rubber there is nothing to level the crane, so the
-    #     carry path itself must be smooth, level and paved [vendor]." True:
-    #     a carry path counts only on ground known paved. FLATS holds no
-    #     paving data on a lot (the street is paved; the curb is ignored,
-    #     Steph 2026-11-14 "drive over it, replace it cheaply"), so every
-    #     carry onto the lot is UNMEASURED, never a pass. False: the path
-    #     need only be open, drivable and level (below).
-    path_must_be_paved: true
-    # The level a carry path must hold where paving is not required. The
-    # spec prints no carry figure ("smooth, level"); the agent uses the
-    # spec's only levelling figure, the pads' ~3% (3.9) [est, agent; for
-    # the crane agent to confirm]. The fall is read as the plane best
-    # fitting the ground along the path.
-    path_level_pct: "~3"
-    # (c) Spec 3.10 (S3e L418): "Carrying a panel under a line: no, in
-    #     practice. A load means 1926.1408 applies: 20 ft from the line".
-    #     FLATS holds no power-line data: reported "power lines not
-    #     checked", never a block (Steph 2026-11-14).
-    power_line_clearance_ft: "20"
+    # Spec 3.7: "Walls carried flat, crosswise, like a cassette would be
+    # 35-41% (12.1 ft, reads 14) ... Whether that works depends on how walls
+    # are turned upright and with what gear (FOLLOWUPS 215 a)." Not in the
+    # plan yet (crane agent 2026-11-15): a switch, OFF.
+    walls_flat_crosswise: false
+    # CARRYING ON A REAL SITE [est] (spec 3.7 L364-389), in place of the
+    # chart's "smooth, level, paved" (the spec no longer asks for paving,
+    # so no paving switch and no paving data is needed):
+    # - "Firm: the loaded crane leaves no ruts deeper than ~1 in. Dry firm
+    #   lawn or compacted gravel is fine. Soft or wet ground gets
+    #   ground-protection mats or a few inches of compacted gravel" and
+    #   "Even: no holes, kerbs or bumps over ~2 in on the route": no data,
+    #   reported as not checked, never a fail.
+    # - "Slope along the route: ... Allow ~3% of the chart for each 1% of
+    #   downhill slope with the load ahead [calc on est]" -- the crane agent:
+    #   "usable chart = chart x (1 - 0.03 x downhill %)", read on the
+    #   route's ground. The fall is the plane fitted along the route, taken
+    #   as downhill with the load ahead (the spec's "Where possible drive so
+    #   the load is on the uphill side" is not taken).
+    slope_chart_lost_per_pct: 0.03
+    # - "Slope across the route: ... At ~3% the wall carry uses up the +-2
+    #   deg straight-ahead allowance; beyond that, read the 360 deg on-rubber
+    #   column instead". The fitted plane's whole fall is taken as across
+    #   too (cautious).
+    cross_fall_pct: "~3"
+    # The pads' ~3% (spec 3.9) is the outrigger pads' only; no carry rule
+    # borrows it (crane agent 2026-11-15).
+    # Spec 3.10 (L453-499): "A load means 1926.1408 applies: 20 ft from the
+    # line, or 10 ft if the utility confirms 50 kV or less"; "A crane
+    # travelling with a load is treated as lifting (1926.1411(a) sends it
+    # to 1926.1408)"; "The pick off a trailer parked under the line is
+    # blocked for the same reason"; "De-energised and grounded ... the
+    # IC-80 may carry under the line with physical clearance only";
+    # "Covered only ... the line still counts as live". FLATS holds no
+    # power-line data: every plan that carries, or uses a street trailer,
+    # says so, and names the ways a street plan still works; never a block
+    # (Steph 2026-11-14).
+    power_line_clearance_ft: "20, or 10 with the utility's <=50 kV confirmation"
     # Bundles (stair kits, truss bundles) ride the cargo deck ("It suits
     # bundles, mats and tools"), nothing on the hook: they need the IC-80's
-    # own way in only (agent reading: the paved rule is the hook carry's).
+    # own way in only.
 
   # Spec 3.8 [calc, est]: "The container weighs ~4,100-4,600 lb [est]. Add
   # ~150 lb of chain sling [est] and the 90 lb hook"; "the crane lifts the
@@ -307,8 +332,10 @@ ic80:
     swing_beyond_end_ft: "10-12"
     boom_tip_ft: "~41"
     # "Trailer: a 53 ft trailer can get in and park within ~28-32 ft of a
-    # crane spot, or a paved, level route lets the IC-80 carry walls (3.7).
-    # Cassettes cannot be carried."
+    # crane spot, or the IC-80 carries from where it parks (3.7): cassettes
+    # flat and crosswise on a firm route ~27 ft wide (up to ~5% slope);
+    # upright walls only on a near-level route; walls flat if the wall
+    # rigging allows (215 a)." (S3e at 9985b64, L693-695.)
     trailer_within_ft: "~28-32"
     # "Getting the IC-80 in: a route 6 ft 6 in wide, 9 ft 6 in at turns,
     # firm enough for ~17,600 lb."
