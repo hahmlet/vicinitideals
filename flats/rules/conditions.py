@@ -1112,7 +1112,10 @@ _C: tuple[ConditionDef, ...] = (
         "site_fact",
         "The lot lies inside Hillsboro's Downtown Plan District, whose "
         "boundary is Figure 12.61.200-A and nothing else (CDC 12.61.200). The "
-        "SCR-LD, SCR-MD and SCR-HD zones lie both inside and outside it, and "
+        "SCR-LD, SCR-MD and SCR-HD zones lie both inside and outside it, as "
+        "does R-7 and MR-1 ground the traced line takes in though 12.61.200's "
+        "zone list leaves them out (Steph 2026-11-14: the roof rule reaches "
+        "every lot inside the line, whatever its zoning), and "
         "inside it 12.61.800 binds new residential construction to a pitched "
         "roof (\"Flat roofs are not permitted as the primary roof form\", "
         "4/12 hipped, 6/12 gabled), which the flat-roofed pod fails. The city "

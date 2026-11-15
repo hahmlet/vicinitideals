@@ -156,36 +156,6 @@ crossrefs:
       (tdc.18.420.landscaping.txt#L175-L188). It says what a required landscape area is planted
       with (shrub share, hardscape cap, a tree per 600 sq ft), not how deep or where; the S-3 strip
       counts toward the minimum landscape area (L161), and min_landscaped_pct is the zones' own row.
-  "18.110.2":
-    outcome: read
-    note: >-
-      Table 18.110.2, the residential use table, is printed in the held section
-      (18.110/18.110.030.txt#L25) and is cited by every residential zone's quadplex_allowed.
-  "18.110.3":
-    outcome: read
-    note: >-
-      Table 18.110.3, residential housing types, is printed in the held section
-      (18.110/18.110.040.txt#L36); rowhouses L[2] is cited by quadplex_allowed.
-  "18.120.1":
-    outcome: read
-    note: >-
-      Table 18.120.1, the commercial use table, is printed in the held section
-      (18.120/18.120.030.txt#L34) and cited by the commercial zones' quadplex_allowed.
-  "18.120.2":
-    outcome: read
-    note: >-
-      Table 18.120.2, commercial-zone housing types, is printed in the held section
-      (18.120/18.120.040.txt#L32) and cited by the commercial zones' quadplex_allowed.
-  "18.130.1":
-    outcome: read
-    note: >-
-      Table 18.130.1, the industrial use table, is printed in the held section
-      (18.130/18.130.030.txt#L29).
-  "18.140.1":
-    outcome: read
-    note: >-
-      Table 18.140.1, the parks and recreation use table, is printed in the held section
-      (18.140/18.140.040.txt#L25).
   "18.650.1":
     outcome: read
     note: >-
@@ -214,16 +184,6 @@ crossrefs:
     note: >-
       Table 18.660.4, the Triangle use table, is printed in the held section
       (18.660/18.660.060.txt#L55) and cited by TMU's quadplex_allowed.
-  "18.660.7":
-    outcome: read
-    note: >-
-      Table 18.660.7, height by type of story, is printed in the held section
-      (18.660/18.660.080.txt#L15) and is cited by the encoded Triangle story heights.
-  "18.670.2":
-    outcome: read
-    note: >-
-      Table 18.670.2, Washington Square housing types, is printed in the held section
-      (18.670/18.670.060.txt#L36) and cited by the Washington Square zones' quadplex_allowed.
   "18.280.1":
     outcome: read
     note: >-
@@ -239,21 +199,6 @@ crossrefs:
     outcome: other_building
     note: >-
       Table 18.410.1 is stacking lanes for drive-through facilities (18.410/18.410.030.txt#L83).
-  "18.410.2":
-    outcome: read
-    note: >-
-      Table 18.410.2, parking space and aisle dimensions, is printed in the held section
-      (18.410/18.410.030.txt#L165) and is the source of the encoded stall and aisle sizes.
-  "18.410.3":
-    outcome: read
-    note: >-
-      Table 18.410.3 is printed in the held section (18.410/18.410.060.txt#L3), vehicle and bicycle parking quantities, cited by the
-      encoded parking figures.
-  "18.805.1":
-    outcome: read
-    note: >-
-      Table 18.805.1, residential lot dimensions, is printed in the held section
-      (18.805/18.805.030.txt#L7) and is the source of the encoded lot sizes and widths.
   "18.910.1":
     outcome: read
     note: >-

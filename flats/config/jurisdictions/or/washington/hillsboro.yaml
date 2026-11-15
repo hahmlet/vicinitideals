@@ -42,13 +42,6 @@ crossrefs:
       "Subsection 15.50.715.E.4." (12.21.450), cited for cottage cluster height. There is no Title
       15 of the zoning code; the text intends 12.50.715 (cottage clusters). A cottage cluster is
       detached cottages around a common court, not the pod's attached fourplex.
-  "12.61.700G":
-    outcome: other_path
-    note: >-
-      See Subsection 12.61.700G (12.21.850), held in this layer's SCR-DNC text: the arterial
-      exception area along First Avenue, which allows three stories within 100 ft of the arterial
-      and two stories from 100 to 200 ft. A height allowance; the pod is two storeys at 26 ft,
-      under either figure, so it can only loosen.
   "12.70.040":
     outcome: procedure
     note: >-
@@ -850,6 +843,29 @@ zones:
       cite: Hillsboro CDC 12.21.300 (R-7 Residential), Tables 12.21.320-1 and 12.21.350-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Downtown roof, every lot (rel8 hold, FOLLOWUPS 193; Steph 2026-11-14,
+      # rulings.yaml 2026-11-14-hillsboro-downtown-roof-every-lot). 12.61.200
+      # lists five zones in the Downtown Plan District and not this one, but
+      # 12.61.800 A.1 and B bind "new residential construction" "within the
+      # boundaries shown on Figure 12.61.200-A", and the traced figure takes in
+      # R-7 ground along its edge. Steph: the rule reaches every lot inside
+      # the line, whatever its zoning. "Flat roofs are not permitted as the
+      # primary roof form" (B.7.a), minimum pitch 4/12 hipped, 6/12 gabled
+      # (B.7.b); the flat pod fails it (rulings.yaml 2026-10-21-pod-roof-flat).
+      # Outside the line no Hillsboro chapter sets a roof form for this
+      # building. Same encoding as SCR-LD/MD/HD: the traced line is
+      # drawn_areas `downtown_plan_district`; a lot inside is held to 4/12
+      # (RED), one outside owes nothing, one the line cuts stays unanswered,
+      # off GREEN.
+      exempt: true
+      cite: "Hillsboro CDC 12.61.800.A.1 and B: the roof rule applies only within the boundaries shown on Figure 12.61.200-A"
+      quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7"
+      variants:
+        - value: 4
+          when: [hillsboro_downtown_plan_district]
+          cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled (every lot inside Figure 12.61.200-A, Steph 2026-11-14)"
+          quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
     facade_glass_other_pct:
       # FOLLOWUPS 187. South Hillsboro Plan District only (12.65.020.A): 12.65.710
       # reaches quadplexes and townhouses there (B.2), and D.2.b asks each side
@@ -1767,6 +1783,29 @@ zones:
       cite: Hillsboro CDC 12.22.100 (MR-1 Multi-Dwelling Residential), Tables 12.22.120-1 and 12.22.150-1
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
+    min_roof_pitch_in_12:
+      # Downtown roof, every lot (rel8 hold, FOLLOWUPS 193; Steph 2026-11-14,
+      # rulings.yaml 2026-11-14-hillsboro-downtown-roof-every-lot). 12.61.200
+      # lists five zones in the Downtown Plan District and not this one, but
+      # 12.61.800 A.1 and B bind "new residential construction" "within the
+      # boundaries shown on Figure 12.61.200-A", and the traced figure takes in
+      # MR-1 ground along its edge. Steph: the rule reaches every lot inside
+      # the line, whatever its zoning. "Flat roofs are not permitted as the
+      # primary roof form" (B.7.a), minimum pitch 4/12 hipped, 6/12 gabled
+      # (B.7.b); the flat pod fails it (rulings.yaml 2026-10-21-pod-roof-flat).
+      # Outside the line no Hillsboro chapter sets a roof form for this
+      # building. Same encoding as SCR-LD/MD/HD: the traced line is
+      # drawn_areas `downtown_plan_district`; a lot inside is held to 4/12
+      # (RED), one outside owes nothing, one the line cuts stays unanswered,
+      # off GREEN.
+      exempt: true
+      cite: "Hillsboro CDC 12.61.800.A.1 and B: the roof rule applies only within the boundaries shown on Figure 12.61.200-A"
+      quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7"
+      variants:
+        - value: 4
+          when: [hillsboro_downtown_plan_district]
+          cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled (every lot inside Figure 12.61.200-A, Steph 2026-11-14)"
+          quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
     facade_glass_other_pct:
       # FOLLOWUPS 187. South Hillsboro Plan District only (12.65.020.A): 12.65.710
       # reaches quadplexes and townhouses there (B.2), and D.2.b asks each side
@@ -4921,7 +4960,7 @@ drawn_areas:
       MU-VTC lot, inside or out, carries HILLSBORO-CENTER-CORE-ILLUSTRATIVE.
   downtown_plan_district:
     condition: hillsboro_downtown_plan_district
-    zones: [SCR-LD, SCR-MD, SCR-HD]
+    zones: [SCR-LD, SCR-MD, SCR-HD, R-7, MR-1]
     file: or/washington/hillsboro/downtown-plan-district.geojson
     source: >-
       Traced 2026-11-11 (roof-rereads, FOLLOWUPS 181(b)) from Figure
@@ -4935,10 +4974,16 @@ drawn_areas:
     quote: "or/washington/hillsboro/12.61/12.61.200.txt#L2"
     cite: Hillsboro CDC 12.61.200 and Figure 12.61.200-A; 12.61.800.A.1 (the roof standard applies in the plan district)
     note: >-
-      Asked of SCR-LD, SCR-MD and SCR-HD lots only: 12.61.200 lists them
-      among the plan district's five zones, and they also lie outside it
-      (Orenco, Quatama, AmberGlen and the edges of downtown). SCC-DT and
-      SCR-DNC hold the roof rule without the condition. A lot at least 90
+      Asked of SCR-LD, SCR-MD and SCR-HD lots: 12.61.200 lists them among
+      the plan district's five zones, and they also lie outside it (Orenco,
+      Quatama, AmberGlen and the edges of downtown). SCC-DT and SCR-DNC hold
+      the roof rule without the condition. Also asked of R-7 and MR-1 lots
+      (rel8 hold, FOLLOWUPS 193): the traced line takes in R-7 and MR-1 ground
+      along its edge that 12.61.200's zone list leaves out, and Steph ruled
+      2026-11-14 (rulings.yaml 2026-11-14-hillsboro-downtown-roof-every-lot)
+      that 12.61.800's roof rule reaches every lot inside the line, whatever
+      its zoning. The line also crosses I-G and C-G ground; both refuse the
+      quadplex, so they are not asked. A lot at least 90
       percent inside the traced line owes 12.61.800's 4/12 pitched roof and
       the flat-roofed pod fails it; at most 10 percent inside owes no roof
       form; one the line cuts is unanswered and held off GREEN. The figure
