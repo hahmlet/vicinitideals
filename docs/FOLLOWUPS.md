@@ -46,6 +46,7 @@ the full one.)
 
 ## 1. Claude -- priority
 
+193. [Claude] [Steph: zone list vs map] [scan: YES -- false greens only] **rel8 BLOCK: hold 3 Hillsboro R-7 greens inside the traced downtown line** -- move read 11-15 F1; fix on flats/rel8, Hillsboro re-bound + splice, then release. [file](followups/193-rel8-hillsboro-downtown-hold.md)
 152. [Claude] [Steph] **ci-runner: optional OOM protection for its Postgres** -- run cap + Postgres check shipped (70c1cb75); only the optional OOMScoreAdjust=-900 unit setting on 138 is left, Steph's call (only if Postgres is OOM-killed again). [file](followups/152-ci-runner-overload.md)
 147. [Claude] **Maximum front setback never checked on its own** -- DONE and live; last open lot 1S2E17BA -14300 re-checked 11-13: true RED (corner, 18 ft off SE 71st; small-fixes-9 hand-off). Remove at rel9 merge. [file](followups/147-max-front-setback-unchecked.md)
 
@@ -86,6 +87,7 @@ the full one.)
 (none -- rel8 is packed and bounding; lanes built for rel9 carry BUILT in their line below)
 
 ### 1c. The rest, most urgent first (dated items first)
+194. [Claude] [scan: YES -- toward green] **rel8 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R)** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)
 
 100. [Claude] [scan: YES (yellows only go green)] **Driveway street: measure it instead of asking** -- MERGED e63617b8, LIVE (run 124). Open: (a) measure the street line the drawn drive crosses; (b) a Happy Valley street-class map -- until then MEASURE-DRIVE-STREET / ACCESS-STREET-RANK-UNKNOWN yellows stay. [file](followups/100-driveway-street.md)
 86. [Claude] [Steph: (B) unattributed rulings] [scan: NO] **Agents could not recall a property ruling** -- A, B, C1, C2 merged and live (CI1 live in run 124); (B) leftovers (Tigard MUR, Portland total-turn, Hillsboro SCR, Milwaukie aisle) wait on Steph; RICAP MP5/MP4/TA9 not encoded; DLCD watch weekly. [file](followups/86-ruling-recall.md)
