@@ -117,10 +117,23 @@ def test_config_holds_the_spec_figures(rules: sa.Rules) -> None:
     assert (ic.route_w_ft, ic.route_turn_w_ft) == pytest.approx((6.5, 9.5))
     assert rules.max_pct == 75 and rules.deck_l_ft == 53
     t = rules.t45
-    assert (t.pad_w_ft, t.pad_l_ft) == (28, 42) and t.ball_lb == 171
+    # Spec 4.1/4.3 (updated): the 250 lb overhaul ball, 11,250 lb on a single
+    # line, the 329 lb one-sheave block above it; ~300 lb container slings.
+    assert (t.pad_w_ft, t.pad_l_ft) == (28, 42) and t.ball_lb == 250
+    assert (t.single_line_lb, t.block_lb, t.container_sling_lb) == (11250, 329, 300)
     assert t.chart.deductions_lb == 450 and t.rigging_lb == 1300
-    assert t.whole_rigging_lb == 3100 and t.max_piece_radius_ft == 80 and t.level_pct == 1
-    assert len(rules.pieces) == 15
+    assert t.whole_rigging_lb == 2600 and t.max_piece_radius_ft == 80 and t.level_pct == 1
+    assert len(rules.pieces) == 16
+    # Spec 3.4's per-piece hook table (high ends) and its Load column.
+    hooks = {p.key: p.hook_ft for p in rules.pieces}
+    assert hooks["ground_front_wall"] == 16 and hooks["upper_back_wall"] == 25
+    assert hooks["floor_cassette_wet4f"] == 22 and hooks["roof_cassette_full4"] == 31
+    assert (hooks["floor_closing_trusses"], hooks["roof_closing_trusses"]) == (23, 32)
+    assert (hooks["stair_truss_pieces"], hooks["stair_kit"]) == (21, 21)
+    loads = {p.key: p.loads for p in rules.pieces}
+    assert loads["ground_back_wall"] == (1,) and loads["end_wall"] == (1, 3)
+    assert loads["floor_closing_trusses"] == (2,) and loads["roof_closing_trusses"] == (4,)
+    assert loads["upper_front_wall"] == (3,) and loads["roof_cassette_wet3"] == (4,)
     assert {w.key: w.within_ft for w in rules.whole_loads} == {
         "ground_walls": 35, "upper_walls": 35, "floor_cassettes": 50, "roof_cassettes": 50,
     }
@@ -155,11 +168,18 @@ def test_spec_3_5_chart_use(rules: sa.Rules) -> None:
     for key, want in farthest.items():
         p = rules.piece(key)
         assert ic.reach(p.weight_lb + 490, p.hook_ft) == want, key
-    # The stair kit's load alone reaches 36 ft (the table); its hook need is
-    # not printed, so the highest (roof, 31 ft) holds it to 28 ft.
+    # The stair kit's ~21 ft hook (spec 3.4's table) leaves its 36 ft load
+    # reach whole; the roof closing trusses' ~32 ft holds them to 28 ft
+    # ("from no more than ~28 ft out", spec 3.4).
     kit = rules.piece("stair_kit")
     assert ic.set_chart.reach_for(kit.weight_lb + 490) == 36
-    assert kit.hook_ft == 31 and ic.reach(kit.weight_lb + 490, kit.hook_ft) == 28
+    assert kit.hook_ft == 21 and ic.reach(kit.weight_lb + 490, kit.hook_ft) == 36
+    roof_t = rules.piece("roof_closing_trusses")
+    assert ic.reach(roof_t.weight_lb + 490, roof_t.hook_ft) == 28
+    # Off the trailer the hook height does not limit the pick (spec 3.4).
+    full3 = rules.piece("roof_cassette_full3")
+    assert ic.reach(full3.weight_lb + 490, full3.hook_ft) == 28
+    assert ic.pick_reach(full3.weight_lb + 490) == ic.set_chart.reach_for(full3.weight_lb + 490) > 28
 
 
 @pytest.mark.parametrize(
@@ -202,13 +222,17 @@ def test_spec_4_4_and_4_5(rules: sa.Rules) -> None:
     t = rules.t45
     wall = rules.piece("ground_front_wall")
     assert t.chart.reach_for(wall.weight_lb + t.rigging_lb + t.ball_lb) == 80
-    stacks = {w.key: t.chart.reach_for(w.stack_lb + t.whole_rigging_lb) for w in rules.whole_loads}
-    # Spec 4.5 prints ~35 / ~35 / ~50 / ~50. With the 450 lb stowed-jib
-    # allowance taken off the chart (spec 4.3), the roof-cassette stack
-    # reaches 45 ft: reported, not rounded up.
-    assert stacks == {"ground_walls": 35, "upper_walls": 35, "floor_cassettes": 50, "roof_cassettes": 45}
-    # The container: ~4,600 + ~150 sling + 171 ball + 450 jib = 5,371 ("~5,400").
-    assert rules.container_lb + rules.ic80.container_sling_lb + t.ball_lb + t.chart.deductions_lb == 5371
+    stacks = {w.key: t.chart.reach_for(t.whole_gross(w.stack_lb)) for w in rules.whole_loads}
+    # Spec 4.5 prints ~35 / ~35 / ~50 / ~50, the 450 lb folded-jib allowance
+    # taken off the chart (spec 4.3).
+    assert stacks == {"ground_walls": 35, "upper_walls": 35, "floor_cassettes": 50, "roof_cassettes": 50}
+    # The hook: the one-sheave block on the wall stacks (over 11,250 lb on
+    # the ball), the ball on the rest.
+    walls, roof = rules.whole_loads[0], rules.whole_loads[-1]
+    assert t.whole_gross(walls.stack_lb) == walls.stack_lb + 2600 + 329
+    assert t.whole_gross(roof.stack_lb) == roof.stack_lb + 2600 + 250
+    # The container: ~4,600 + ~300 slings + 250 ball + 450 jib = 5,600 ("~5,600").
+    assert rules.container_lb + t.container_sling_lb + t.ball_lb + t.chart.deductions_lb == 5600
 
 
 # --------------------------------------------------------------------------
@@ -260,11 +284,14 @@ def test_heavier_rigging_needs_both_faces(rules: sa.Rules) -> None:
     assert both.faces == ("front", "back")
     assert all(lf.status == sa.PASS for lf in both.sets)
     assert _lift(dataclasses.replace(both, lifts=both.sets), "ground_back_wall").set_ft == pytest.approx(14.0, abs=0.01)
-    # One trailer spot must serve both faces: here the back walls would be
-    # carried round from the curb, and with 800 lb rigging that carry is
-    # over the line (spec 3.7 is figured at 400 lb).
+    # Each load parks on its own (Steph 2026-11-14), but loads 1 and 3 each
+    # hold a front and a back wall, and one load is one spot: from the curb
+    # the back wall of each is carried round, and with 800 lb rigging that
+    # carry is over the line (spec 3.7 is figured at 400 lb).
+    assert set(both.trailer_spots) == {1, 2, 3, 4}
     trailer = next(c for c in both.checks if c.name == "trailer")
-    assert "must be carried" in trailer.detail
+    assert trailer.detail.startswith("load 1: ") and "load 4: at the curb, every piece within reach" in trailer.detail
+    assert sorted(lf.key for lf in both.lifts if lf.carried) == ["ground_back_wall", "upper_back_wall"]
     assert not rep.result.startswith("IC-80")
 
 
@@ -306,7 +333,7 @@ def test_trailer_needs_every_cassette_in_reach(front: sa.Report) -> None:
     """From the back face the curb trailer is ~50 ft off: cassettes cannot
     be carried, so the back fails on the trailer."""
     got = _attempt(front, "ic80_back")
-    assert any(w.startswith("trailer: no trailer spot has every cassette") for w in got.why)
+    assert any(w.startswith("trailer: ") and "load 2: no trailer spot has every cassette" in w for w in got.why)
 
 
 def test_trailer_unmeasured_where_the_curb_is_not(rules: sa.Rules) -> None:
@@ -328,11 +355,23 @@ def test_unknown_front_names_the_faces_and_takes_the_worse(rules: sa.Rules) -> N
 
 
 def test_container_side_check_is_reported_not_ruled(front: sa.Report) -> None:
-    """Spec 3.8: within ~10 ft of the IC-80. A curb trailer is out of that
-    reach from the lot; it is reported beside the answer, not in it."""
+    """Spec 3.8: within ~10 ft of the IC-80. A trailer 2 ft off the lot line
+    leaves no room for the crane between it and the lot, even in the street;
+    it is reported beside the answer, not in it."""
     assert front.plan.container.status == sa.FAIL
     assert front.result.startswith("IC-80")
     assert front.row()["container"] == sa.FAIL
+
+
+def test_container_may_be_lifted_from_the_street(rules: sa.Rules) -> None:
+    """Steph 2026-11-14: the IC-80 may step into the street for the
+    container lift only. With 10 ft between the lot line and the curb, the
+    crane stands there; without the street stance it cannot."""
+    site = Site(box(0, 0, 104, 80), box(12, 24, 92, 49), SOUTH, street(curb=10))  # NOT A REAL LOT
+    got = _attempt(sa.report(site, rules, grade_of=level), "ic80_front").plan.container
+    assert got.status == sa.PASS and "in the street for this lift; power lines not checked" in got.detail
+    off = dataclasses.replace(rules, ic80=dataclasses.replace(rules.ic80, container_street=False))
+    assert _attempt(sa.report(site, off, grade_of=level), "ic80_front").plan.container.status == sa.FAIL
 
 
 # --------------------------------------------------------------------------
@@ -412,6 +451,7 @@ def test_report_row(front: sa.Report, yard: sa.Report) -> None:
     assert row["result"] == "IC-80 one face (front)" and row["face"] == "front" and row["crane"] == "IC-80"
     assert row["hardest_lift"] == "Upper back wall" and row["chart_row_ft"] == 32
     assert row["binding_check"] == "lifts: Upper back wall"
+    assert row["truck"] == "1 curb, 2 curb, 3 curb, 4 curb"  # each trailer load's spot
     assert row["rigging_limit_lb"] == 608 and row["ic80_front"] == sa.PASS and row["45t_site"] == sa.NOT_TRIED
     assert set(sa.STEPS) <= set(row)
     y = yard.row()

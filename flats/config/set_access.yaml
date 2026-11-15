@@ -146,15 +146,27 @@ ic80:
     radius: [14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36]
     main_30: [31, 29, 28, 26, 24, 22, 19, 15, null, null, null, null]
     with_extension_40: [41, 41, 40, 39, 37, 36, 34, 33, 30, 28, 25, 21]
-  # Spec 3.4 [est, S3h]: "Ground-floor walls: ~14-16 ft. Upper walls: ~25
-  # ft. Roof cassettes: ~31 ft." "So the extension stays up for all
-  # upper-floor and roof work." A piece with no printed figure (floor
-  # cassettes, stair kits, truss bundles) takes the HIGHEST printed one
-  # (roof, 31 ft): agent, conservative.
+  # Spec 3.4 (updated a780573, Steph 2026-11-14) "Hook needed, every piece
+  # [est]": "Hook height = the top of whatever the piece must pass over,
+  # plus ~2 ft clear ..., plus the piece's hanging height, plus the
+  # rigging". The table's "Hook needed" column, by piece:
+  #   Ground walls ~14-16 ft; Site container ~16-18 ft; Floor cassettes,
+  #   all three types ~21-22 ft; Floor-level closing trusses ~22-23 ft;
+  #   Stair trusses ~20-21 ft; Stair kits "~20-21 ft at most; ~10 ft on the
+  #   ground"; Upper walls ~25 ft; Roof cassettes ~31 ft; Roof closing
+  #   trusses ~31-32 ft.
+  # The high end of each is used. "Off the trailer: a piece only has to
+  # clear the rest of its stack ..., so hook height does not limit the pick
+  # off the trailer": the hook need is checked at the SET radius only.
   hook_needed_ft:
     ground_walls: "~14-16"
+    floor_cassettes: "~21-22"
+    floor_closing_trusses: "~22-23"
+    stair_trusses: "~20-21"
+    stair_kits: "~20-21"
     upper_walls: "~25"
     roof_cassettes: "~31"
+    roof_closing_trusses: "~31-32"
   # Spec 3.4 [est]: "the hook can come no closer than about 10 ft on the 30
   # ft main boom, or about 14 ft with the extension up. Pieces on the near
   # face are therefore set from at least ~14 ft away". Every panel is set
@@ -223,7 +235,9 @@ ic80:
   # rotation"; "The container's final spot has to be next to a crane spot";
   # "Keep the extension stowed for this pick (deduct 100 lb)". NOT in the
   # viability rule (spec section 5): reported beside the answer only.
-  container: {sling_lb: "~150", within_ft: "~10", extension: stowed}
+  # Steph 2026-11-14 (set-access-3 question 1, "yes"): the IC-80 may step
+  # into the street for this one lift; "power lines not checked" still.
+  container: {sling_lb: "~150", within_ft: "~10", extension: stowed, street_allowed: true}
 
   # Spec 3.9 [est]: "Plan level within 1% (about 1/8 in per foot) at each
   # set-up spot and let the outriggers take out the rest"; section 5: "a
@@ -268,18 +282,30 @@ nbt45:
   # working". The centre of rotation is taken at the pad's centre (no
   # turntable position is printed).
   rotation_offset_ft: {along: 0, across: 0}
-  # Spec 4.1: "Single line up to about 11,250 lb, with a headache ball (171
-  # lb)". Spec 4.3: "Hook block, 1-4 sheaves 400-800 lb"; "Boom extension
-  # (jib) stowed on the boom ~300-450 lb off every figure [vendor, older
-  # NBT45 chart]; this note allows 450 lb".
-  ball_lb: 171
+  # Spec 4.1 (updated a780573): "Single line up to 11,250 lb, with a 7 US
+  # ton overhaul ball (250 lb). Heavier lifts use a multi-part block: 329 /
+  # 640 / 600 / 796 lb for 1 / 2 / 3 / 4 sheaves". Spec 4.3: "Overhaul ball,
+  # single line | 250 lb [vendor, current guide] (the older chart's ball was
+  # 171 lb)"; "Boom extension (jib) folded on the boom | ~300-450 lb off
+  # every figure [vendor, older NBT45 chart]; this note allows 450 lb".
+  # Steph 2026-11-14 (set-access-3 question 4): whether a hire unit has the
+  # jib depends on the truck; it is never needed for this pod; the plan
+  # assumes it is on (450 lb off), the cautious case.
+  ball_lb: 250
+  single_line_lb: "11,250"
+  block_1_sheave_lb: 329
   deductions_lb: {jib_stowed: "~300-450"}
-  # Spec 4.4: "Gross = piece + rigging + 171 lb ball + 450 lb stowed-jib
+  # Spec 4.4: "Gross = piece + rigging + 250 lb ball + 450 lb folded-jib
   # allowance", tabled at 400 lb and 1,300 lb rigging. The high end.
   rigging_lb: "400-1,300"
-  # Spec 4.5: "Gross = stack + lifting frame 1,000-1,500 lb + spreader
-  # ~1,100 lb + hook block ~500 lb."
-  whole_load_rigging_lb: {frame: "1,000-1,500", spreader: "~1,100", hook_block: "~500"}
+  # Spec 4.5 (updated a780573): "Gross = stack + lifting frame 1,000-1,500
+  # lb + spreader ~1,100 lb + the hook (a 329 lb one-sheave block for the
+  # wall stacks, over the 11,250 lb single-line limit; the 250 lb ball for
+  # the rest) + 450 lb folded-jib allowance. The container is taken with
+  # ~300 lb of slings [est]." The hook is the ball, or the one-sheave block
+  # where the lift with the ball is over the single-line limit.
+  whole_load_rigging_lb: {frame: "1,000-1,500", spreader: "~1,100"}
+  container_sling_lb: "~300"
   # Spec section 5 step 3: "Reach: within ~80 ft of the farthest piece."
   max_piece_radius_ft: "~80"
   # Spec 4.2 load chart, NBT45127-2, 4,000 lb counterweight, outriggers
@@ -394,8 +420,13 @@ truck:
 #                           printed width from each end.
 # `points_at_crane`: spec 3.5, "End walls, party walls, all cassettes": the
 # IC-80 stands ~10 ft along the face from the piece's line.
-# `hook`: the hook height the piece needs (ic80.hook_needed_ft); null = the
-# highest printed.
+# `hook`: the hook height the piece needs (ic80.hook_needed_ft, spec 3.4's
+# per-piece table).
+# `loads`: the trailer load(s) it rides (spec 3.4's "Load" column: ground
+# walls 1, floor stage 2, upper walls 3, roof stage 4). End and party walls
+# are "ground and upper": loads 1 and 3. Steph 2026-11-14 (set-access-3
+# question 2): "the empty trailer leaves before the new full trailer
+# arrives": each load parks in its own spot.
 # Stair kits and truss bundles have no printed place: they are taken to the
 # middle pieces' place (`centreline`), from spec 3.8 "Stair kits and truss
 # bundles are light (section 3.5 table)" (agent reading; Steph to confirm).
@@ -407,6 +438,7 @@ pieces:
     weight_lb: "798"
     place: front_wall
     hook: ground_walls
+    loads: [1]
     group: wall
   ground_back_wall:
     label: Ground back wall
@@ -415,6 +447,7 @@ pieces:
     weight_lb: "556"
     place: back_wall
     hook: ground_walls
+    loads: [1]
     group: wall
   upper_front_wall:
     label: Upper front wall
@@ -423,6 +456,7 @@ pieces:
     weight_lb: "723"
     place: front_wall
     hook: upper_walls
+    loads: [3]
     group: wall
   upper_back_wall:
     label: Upper back wall
@@ -431,6 +465,7 @@ pieces:
     weight_lb: "615"
     place: back_wall
     hook: upper_walls
+    loads: [3]
     group: wall
   # "End wall (ground and upper)": the upper hook governs.
   end_wall:
@@ -441,6 +476,7 @@ pieces:
     place: end_wall
     points_at_crane: true
     hook: upper_walls
+    loads: [1, 3]
     group: wall
   party_wall:
     label: Party wall
@@ -450,6 +486,7 @@ pieces:
     place: party_wall
     points_at_crane: true
     hook: upper_walls
+    loads: [1, 3]
     group: wall
   # "Floor cassettes WET4F / FULL4F / STAIR4F | 4 each | 25 ft x 5 ft 4 in-5
   # ft 11 in | 736 / 701 / 632 lb". Which width goes with which cassette is
@@ -461,7 +498,8 @@ pieces:
     weight_lb: "736"
     place: centreline
     points_at_crane: true
-    hook: null
+    hook: floor_cassettes
+    loads: [2]
     group: cassette
   floor_cassette_full4f:
     label: Floor cassette FULL4F
@@ -470,7 +508,8 @@ pieces:
     weight_lb: "701"
     place: centreline
     points_at_crane: true
-    hook: null
+    hook: floor_cassettes
+    loads: [2]
     group: cassette
   floor_cassette_stair4f:
     label: Floor cassette STAIR4F
@@ -479,7 +518,8 @@ pieces:
     weight_lb: "632"
     place: centreline
     points_at_crane: true
-    hook: null
+    hook: floor_cassettes
+    loads: [2]
     group: cassette
   # "Roof cassette FULL4 (stair side, with batts) | 4 | 25 ft x 8 ft | 996
   # lb (heaviest panel)".
@@ -491,6 +531,7 @@ pieces:
     place: centreline
     points_at_crane: true
     hook: roof_cassettes
+    loads: [4]
     group: cassette
   # "Roof cassettes FULL3 / WET3 | 4 each | 25 ft x 5 ft 10 in-6 ft | 742 /
   # 721 lb".
@@ -502,6 +543,7 @@ pieces:
     place: centreline
     points_at_crane: true
     hook: roof_cassettes
+    loads: [4]
     group: cassette
   roof_cassette_wet3:
     label: Roof cassette WET3
@@ -511,6 +553,7 @@ pieces:
     place: centreline
     points_at_crane: true
     hook: roof_cassettes
+    loads: [4]
     group: cassette
   # "Stair kits | 4 | bundle not sized | 593 lb".
   stair_kit:
@@ -519,18 +562,34 @@ pieces:
     size: null
     weight_lb: "593"
     place: centreline
-    hook: null
+    hook: stair_kits
+    loads: [2]
     group: bundle
   # "Truss bundles | 2-3 | 25 ft closing trusses; stair pieces | 350 lb each
   # closing bundle; 637 lb stair pieces". The bundle count is not split by
-  # kind (count null).
-  closing_truss_bundle:
-    label: Closing truss bundle
+  # kind (count null). Spec 3.4 splits the closing trusses into a floor-level
+# bundle (load 2) and a roof bundle (load 4), each one 350 lb bundle.
+  floor_closing_trusses:
+    label: Floor closing truss bundle
     count: null
     size: "25"
     weight_lb: "350"
     place: centreline
-    hook: null
+    hook: floor_closing_trusses
+    loads: [2]
+    group: bundle
+  # Spec 3.4: "Roof closing trusses, 25 ft bundle | 4 | Upper-wall tops,
+  # between the roof cassettes | ... | ~31-32 ft"; "Set them from no more
+  # than ~28 ft out (33 ft of hook), the same limit as the FULL4 roof
+  # cassette."
+  roof_closing_trusses:
+    label: Roof closing truss bundle
+    count: null
+    size: "25"
+    weight_lb: "350"
+    place: centreline
+    hook: roof_closing_trusses
+    loads: [4]
     group: bundle
   stair_truss_pieces:
     label: Stair truss pieces
@@ -538,13 +597,14 @@ pieces:
     size: null
     weight_lb: "637"
     place: centreline
-    hook: null
+    hook: stair_trusses
+    loads: [2]
     group: bundle
 
 # Spec 3.3: "Site container, 10 ft, packed | 1 | 10 x 8 x 8 ft 6 in | 4,100
 # lb [est, product model]; ~4,600 lb with FOLLOWUPS 208's contents [est]".
 # Spec 3.8: lifted off load 1. Its place on the trailer is not printed: it
-# may stand anywhere on the deck (conservative).
+# may stand anywhere on load 1's deck (conservative).
 container:
   label: Site container
   size: "10 x 8"
