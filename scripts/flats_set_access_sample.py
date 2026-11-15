@@ -1,6 +1,7 @@
 """Set access over a sample of a finished bridge run: which crane sets the
-pod on each lot, from where, and what binds (FOLLOWUPS 145, slice 3: the
-IC-80 from one or both long faces, then the hired 45 t; crane spec S3e).
+pod on each lot, from where, and what binds (FOLLOWUPS 145, slices 3-4: the
+IC-80 from one or both long faces, its trailer on the lot or in the street,
+pieces picked there and carried; then the hired 45 t; crane spec S3e).
 
 A REPORT. It reads a run's ``lots.parquet`` and writes beside nothing of
 it: no colour, reason, flag or result is touched (Steph 2026-11-14: "Don't
@@ -8,15 +9,23 @@ flag any lots by color yet"). For each sampled lot it rebuilds the lot from
 the run's own stage files (``meta.json``'s ``s4``/``s5o``), takes the pod
 where the screen drew it (the row's ``drawing``), and runs
 :func:`flats.fit.set_access.report` with the run's own street data: the
-truck centrelines (``roads``) and the curbs and pavement widths (``curbs``),
-and the run's elevation models (``dem``) for the fall across the IC-80's
-working strip and the 45 t's pad (both must be within 1%; ``--no-grade``
-skips it, and level is then unmeasured on every lot).
+truck centrelines (``roads``: they also place the IC-80's street trailer,
+slice 4; no curb is read for it) and the curbs and pavement widths
+(``curbs``, the 45 t's street set-up only), and the run's elevation models
+(``dem``) for the fall across each IC-80 set-up spot's pads (~3%) and the
+45 t's pad (1%); ``--no-grade`` skips it, and level is then unmeasured on
+every lot. ``--canopy`` (a GeoTIFF of Metro's Canopy 2019, the cell value
+the crown height, ft; EPSG:2913) puts the trees in: canopy in the IC-80's
+working ground, swing room or on a carry path blocks it, and each row also
+carries the answer with the trees left out (``result_no_trees``).
 
-Each lot is run once per wall-gear case (slice 3c; ``ic80.wall_gear_lb``,
-spec 3.6): ``light`` (400 lb, one face enough) and ``heavy`` (800 lb, the
-far walls then need both faces). ``--gear light`` or ``--gear heavy`` runs
-one. Only the walls take the case; every other piece keeps its rigging.
+Each lot is run once per carry case (slice 4, ``--combos``): ``spec`` (the
+spec's reading: cassettes are not carried, a carry path must be paved),
+``relaxed`` (both switches off), ``cassettes`` or ``unpaved`` (one off);
+``--cassettes-carryable`` / ``--carry-unpaved`` run the one case they name.
+And once per wall-gear case (slice 3c; ``ic80.wall_gear_lb``, spec 3.6):
+``light`` (400 lb, the default) or ``heavy`` (800 lb, the far walls then
+need both faces); ``--gear both`` runs both. Only the walls take the gear.
 
 Writes into ``--out``:
 
@@ -29,11 +38,13 @@ Writes into ``--out``:
   capacity and percent of chart, the IC-80's wall-rigging limit, each
   step's status, notes ("power lines not checked") and why the earlier
   steps failed.
-* ``summary.md`` -- for each gear case, the lots on each result (IC-80 one
+* ``summary.md`` -- for each case, the lots on each result (IC-80 one
   face, IC-80 both faces, 45 t on site, 45 t in the street, not viable,
-  unmeasured) side by side, the lots the heavy gear moves, the stacking
-  orders; then per case the counts by result, by jurisdiction, the binding
-  checks and lifts, and the commonest reasons.
+  unmeasured) side by side, with and without the trees; the lots the second
+  case moves, the stacking orders; then per case the counts by result, how
+  the IC-80 works (trailer on the lot or in the street, carried or not),
+  what the trees cost, the failing checks of each IC-80 step, by
+  jurisdiction, the binding checks and lifts, and the commonest reasons.
 
 Run on LXC 137 when its heavy lock is free (never on production), e.g.::
 
@@ -51,6 +62,7 @@ from __future__ import annotations
 import argparse
 import collections
 import csv
+import dataclasses
 import json
 import math
 import sys
@@ -65,29 +77,106 @@ if str(REPO_ROOT) not in sys.path:
 _W: dict[str, Any] = {}
 
 
-def _init(meta: dict[str, Any], grade: bool, gears: tuple[str, ...] = ("light", "heavy")) -> None:
-    """Per process: the corpus layers, the street data, the terrain, and
-    the set-access rules for each wall-gear case."""
+#: The carry cases (slice 4): (cassettes may be carried, the path must be paved).
+COMBOS: dict[str, tuple[bool, bool]] = {
+    "spec": (False, True),
+    "cassettes": (True, True),
+    "unpaved": (False, False),
+    "relaxed": (True, False),
+}
+_COMBO_WORDS = {
+    "spec": "spec",
+    "cassettes": "cassettes carried",
+    "unpaved": "unpaved carry",
+    "relaxed": "relaxed (cassettes carried, unpaved carry)",
+}
+#: Metro's Canopy 2019 data extent (canopy2019.xml westbc/eastbc/northbc/
+#: southbc): a lot outside it has its trees unmeasured.
+CANOPY_EXTENT = (-123.153528597, 45.23396470, -122.367487422, 45.70263875)
+#: How far round a lot the canopy is read (beyond the IC-80's swing room).
+CANOPY_PAD_FT = 40.0
+#: A lot inside the extent with no canopy cell this far round it is taken
+#: as off the map (no LiDAR there), not as treeless.
+CANOPY_SEEN_FT = 500.0
+
+
+def _cases(combos: tuple[str, ...], gears: tuple[str, ...]) -> dict[str, tuple[str, str, Any]]:
+    from flats.fit import set_access as sa
+
+    base = sa.load_rules()
+    out = {}
+    for c in combos:
+        cas, paved = COMBOS[c]
+        for g in gears:
+            rules = sa.with_carry(sa.with_wall_gear(base, g), cassettes=cas, paved=paved)
+            out[f"{c}/{g}"] = (c, g, rules)
+    return out
+
+
+def _init(
+    meta: dict[str, Any], grade: bool, gears: tuple[str, ...] = ("light",), combos: tuple[str, ...] = ("spec",),
+    canopy: str | None = None,
+) -> None:
+    """Per process: the corpus layers, the street data, the terrain, the
+    canopy, and the set-access rules for each case."""
     from flats.fit import fire
     from flats.fit import set_access as sa
     from flats.geom.curbs import load as load_street_edges
     from flats.rules.loader import load_rules
 
     _W["layers"] = load_rules()
-    base = sa.load_rules()
-    _W["gears"] = {g: sa.with_wall_gear(base, g) for g in gears}
+    _W["cases"] = _cases(combos, gears)
     edges = load_street_edges(Path(meta["curbs"])) if meta.get("curbs") else None
     lines, _ = fire.truck_lines(Path(meta["roads"]), edges)
     _W["reader"] = sa.street_reader(edges, lines, fire.MAX_GAP_FT) if edges is not None else None
+    _W["centre"] = sa.centre_reader(lines, fire.MAX_GAP_FT)
     _W["terrain"] = None
     if grade and meta.get("dem"):
         from flats.ingest.quadfit import terrain_at
 
         _W["terrain"] = terrain_at(Path(meta["dem"]))
+    _W["canopy"] = None
+    if canopy:
+        import rasterio
+        from pyproj import Transformer
+
+        _W["canopy"] = rasterio.open(canopy)
+        _W["to_lonlat"] = Transformer.from_crs(2913, 4326, always_xy=True)
+
+
+def _trees(lot_geom: Any) -> Any:
+    """The canopy round the lot (:class:`flats.fit.set_access.Trees`), from
+    the ``--canopy`` raster: every cell with a crown, any height (a crown
+    height is the top, not the clearance under it)."""
+    import numpy as np
+    import shapely
+    import shapely.geometry
+    from rasterio.features import shapes
+    from rasterio.windows import from_bounds
+
+    from flats.fit import set_access as sa
+
+    src = _W["canopy"]
+    lon, lat = _W["to_lonlat"].transform(*lot_geom.centroid.coords[0])
+    w, s, e, n = CANOPY_EXTENT
+    if not (w <= lon <= e and s <= lat <= n):
+        return sa.Trees(shapely.Polygon(), covered=False, source="canopy map (Metro 2019)")
+    b = lot_geom.bounds
+    win = from_bounds(b[0] - CANOPY_SEEN_FT, b[1] - CANOPY_SEEN_FT, b[2] + CANOPY_SEEN_FT, b[3] + CANOPY_SEEN_FT,
+                      transform=src.transform).round_offsets().round_lengths()
+    z = src.read(1, window=win, masked=True, boundless=True, fill_value=0)
+    tf = src.window_transform(win)
+    crown = (z.filled(0) > 0)
+    if not crown.any():
+        return sa.Trees(shapely.Polygon(), covered=False, source="canopy map (Metro 2019), no crown within 500 ft,")
+    near = lot_geom.buffer(CANOPY_PAD_FT)
+    polys = [shapely.geometry.shape(g) for g, v in shapes(crown.astype(np.uint8), mask=crown, transform=tf) if v]
+    canopy = shapely.union_all([q for q in polys if q.intersects(near)]) if polys else shapely.Polygon()
+    return sa.Trees(canopy.intersection(near) if not canopy.is_empty else canopy, source="canopy map (Metro 2019)")
 
 
 def _one(row: dict[str, Any], picked: dict[str, Any]) -> list[dict[str, Any]]:
-    """The lot once per wall-gear case."""
+    """The lot once per case."""
     from flats.fit import set_access as sa
     from flats.ingest import quadfit
 
@@ -103,35 +192,48 @@ def _one(row: dict[str, Any], picked: dict[str, Any]) -> list[dict[str, Any]]:
         street = tuple(dict.fromkeys(quadfit._street_lines(lot) + quadfit._side_street_lines(lot)))
         drawing = json.loads(picked["drawing"])
         site = sa.site_from_drawing(lot.lot_geom, drawing, street, _W["reader"])
-        gears = _W["gears"]
+        cases = _W["cases"]
         if site is None:
-            return [{**base, **_gear(g, r), "result": "unmeasured", "why": "no drawn building"} for g, r in gears.items()]
+            return [{**base, **_case(k, c), "result": "unmeasured", "why": "no drawn building"} for k, c in cases.items()]
         if not street:
-            return [{**base, **_gear(g, r), "result": "unmeasured", "why": "no street lot line traced"}
-                    for g, r in gears.items()]
+            return [{**base, **_case(k, c), "result": "unmeasured", "why": "no street lot line traced"}
+                    for k, c in cases.items()]
+        site = dataclasses.replace(
+            site, street_centre=_W["centre"], trees=_trees(lot.lot_geom) if _W.get("canopy") is not None else None
+        )
         terrain = _W.get("terrain")
         grade_of = None
         if terrain is not None:
+            # One read of the ground round the lot grades every pad on it
+            # (the 45 t's street pad too); the terrain itself where not held.
+            surface = terrain.surface(lot.lot_geom.buffer(60.0))
 
             def grade_of(poly: Any) -> float | None:
-                g = terrain.grade([poly])
+                g = surface.grade([poly]) if surface is not None else None
+                if g is None:
+                    g = terrain.grade([poly])
                 return None if g is None else g.pct
 
         out = []
-        for g, rules in gears.items():
+        for k, c in cases.items():
             t1 = time.time()
-            rep = sa.report(site, rules, grade_of=grade_of)
-            out.append({**base, **_gear(g, rules), **rep.row(), "seconds": round(time.time() - t1, 2)})
+            rep = sa.report(site, c[2], grade_of=grade_of)
+            out.append({**base, **_case(k, c), **rep.row(), "seconds": round(time.time() - t1, 2)})
         return out
     except Exception as exc:  # noqa: BLE001 -- one bad lot is reported, not fatal
         why = f"{type(exc).__name__}: {exc}"
-        return [{**base, **_gear(g, r), "result": "error", "why": why} for g, r in _W.get("gears", {}).items()] or [
+        return [{**base, **_case(k, c), "result": "error", "why": why} for k, c in _W.get("cases", {}).items()] or [
             {**base, "result": "error", "why": why, "seconds": round(time.time() - t0, 2)}
         ]
 
 
-def _gear(case: str, rules: Any) -> dict[str, Any]:
-    return {"gear": case, "wall_rigging_lb": round(rules.ic80.wall_rigging_lb)}
+def _case(key: str, case: tuple[str, str, Any]) -> dict[str, Any]:
+    combo, gear, rules = case
+    lb = round(rules.ic80.wall_rigging_lb)
+    return {
+        "case": key, "case_label": f"{_COMBO_WORDS[combo]}, {gear} gear ({lb} lb)", "carry": combo, "gear": gear,
+        "wall_rigging_lb": lb,
+    }
 
 
 def _work(batch: list[tuple[dict[str, Any], dict[str, Any]]]) -> list[dict[str, Any]]:
@@ -196,10 +298,14 @@ def _table(counter: collections.Counter, head: str) -> list[str]:
     return out
 
 
+def _key(r: dict[str, Any]) -> Any:
+    return r.get("case") or r.get("gear")
+
+
 def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Namespace, seconds: float) -> str:
     from flats.fit.set_access import NOT_CHECKED
 
-    gears = list(dict.fromkeys(r.get("gear") for r in rows))
+    gears = list(dict.fromkeys(_key(r) for r in rows))
     lots = len({r.get("TLID") for r in rows}) if gears != [None] else len(rows)
     lines = [
         "# Set access sample (FOLLOWUPS 145, report only)",
@@ -212,22 +318,34 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
     ]
     if gears == [None]:
         return "\n".join(lines + _body(rows, "##")) + "\n"
-    by_gear = {g: [r for r in rows if r.get("gear") == g] for g in gears}
+    by_gear = {g: [r for r in rows if _key(r) == g] for g in gears}
     lb = {g: next((r.get("wall_rigging_lb") for r in by_gear[g] if r.get("wall_rigging_lb") is not None), None)
           for g in gears}
-    names = [f"{g} gear ({lb[g]} lb)" if lb[g] is not None else f"{g} gear" for g in gears]
+    names = [
+        next((r["case_label"] for r in by_gear[g] if r.get("case_label")), None)
+        or (f"{g} gear ({lb[g]} lb)" if lb[g] is not None else f"{g} gear")
+        for g in gears
+    ]
     counts = {g: collections.Counter(_group(r.get("result")) for r in by_gear[g]) for g in gears}
-    extra = [k for g in gears for k in counts[g] if k not in _GROUPS]
+    # The answer with the trees left out, where the canopy was read.
+    treed = [g for g in gears if any(r.get("result_no_trees") for r in by_gear[g])]
+    bare = {g: collections.Counter(_group(r.get("result_no_trees") or r.get("result")) for r in by_gear[g])
+            for g in treed}
+    cols = [(g, n, counts[g]) for g, n in zip(gears, names)] + [
+        (g, f"{n}, no trees", bare[g]) for g, n in zip(gears, names) if g in treed
+    ]
+    extra = [k for _, _, c in cols for k in c if k not in _GROUPS]
     lines += [
-        "## Lots on each result, by wall gear",
+        "## Lots on each result, by case",
         "",
-        "Wall-lifting gear (spec 3.6): light = one face is enough; heavy = the far walls need both faces. "
-        "Only the walls take the gear.",
+        "Carry (slice 4): spec = cassettes are not carried and a carry path must be paved; relaxed = both "
+        "switches off. Wall-lifting gear (spec 3.6): light = one face is enough; heavy = the far walls need "
+        "both faces. \"no trees\" = the same lots with the canopy left out (what the trees cost).",
         "",
-        "| result | " + " | ".join(names) + " |",
-        "|---|" + "---|" * len(gears),
-        *(f"| {k} | " + " | ".join(f"{counts[g][k]:,}" for g in gears) + " |" for k in (*_GROUPS, *dict.fromkeys(extra))),
-        "| total | " + " | ".join(f"{len(by_gear[g]):,}" for g in gears) + " |",
+        "| result | " + " | ".join(n for _, n, _ in cols) + " |",
+        "|---|" + "---|" * len(cols),
+        *(f"| {k} | " + " | ".join(f"{c[k]:,}" for _, _, c in cols) + " |" for k in (*_GROUPS, *dict.fromkeys(extra))),
+        "| total | " + " | ".join(f"{len(by_gear[g]):,}" for g, _, _ in cols) + " |",
         "",
     ]
     if len(gears) >= 2:
@@ -242,7 +360,7 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
         lines += _table(moves, f"{a} -> {b}") if moves else ["(none)"]
         lines.append("")
     stacks = collections.Counter(
-        f"{r.get('gear')}: {r.get('stack')}" for r in rows if str(r.get("result")).startswith("IC-80") and r.get("stack")
+        f"{_key(r)}: {r.get('stack')}" for r in rows if str(r.get("result")).startswith("IC-80") and r.get("stack")
     )
     lines += ["## Wall-load stacking order (lots the IC-80 sets)", ""]
     lines += _table(stacks, "gear: stack") if stacks else ["(none)"]
@@ -281,6 +399,21 @@ def _body(rows: list[dict[str, Any]], h: str) -> list[str]:
         lines.append(f"| {j} | " + " | ".join(str(c[k]) for k in cols) + " |")
     lines += [
         "",
+        f"{h} How the IC-80 works (lots it sets): where the trailer stands, and whether pieces are carried",
+        "",
+        *(table(ways, "trailer") if (ways := collections.Counter(
+            str(r.get("ic80_way")) for r in rows if str(r.get("result") or "").startswith("IC-80"))) else ["(none)"]),
+        "",
+        f"{h} What the trees cost (answer with the canopy -> without it)",
+        "",
+        *(table(cost, "with trees -> without") if (cost := collections.Counter(
+            f"{r.get('result')} -> {r.get('result_no_trees')}" for r in rows
+            if r.get("result_no_trees") and r.get("result_no_trees") != r.get("result"))) else ["(none)"]),
+        "",
+        f"{h} Failing checks of each IC-80 step (every lot; a lot counts once per check)",
+        "",
+        *_checks(rows),
+        "",
         f"{h} Binding check and hardest lift (lots where a crane works)",
         "",
         *table(
@@ -305,6 +438,20 @@ def _body(rows: list[dict[str, Any]], h: str) -> list[str]:
     return lines
 
 
+def _checks(rows: list[dict[str, Any]]) -> list[str]:
+    steps = ("ic80_front", "ic80_back", "ic80_both")
+    got = {s: collections.Counter(c for r in rows for c in str(r.get(f"{s}_checks") or "").split(", ") if c)
+           for s in steps}
+    names = sorted({c for s in steps for c in got[s]}, key=lambda c: -sum(got[s][c] for s in steps))
+    if not names:
+        return ["(none)"]
+    return [
+        "| check | " + " | ".join(steps) + " |",
+        "|---|" + "---|" * len(steps),
+        *(f"| {c} | " + " | ".join(f"{got[s][c]:,}" for s in steps) + " |" for c in names),
+    ]
+
+
 def _generic(reason: str) -> str:
     """A reason with its numbers taken out, so like reasons count together."""
     import re
@@ -327,13 +474,37 @@ def main(argv: list[str] | None = None) -> int:
         help="do not read the strip's and pad's fall off the run's elevation models (level is then unmeasured)",
     )
     parser.add_argument(
-        "--gear", default="both", choices=["both", "light", "heavy"],
-        help="the wall-gear case(s): light 400 lb, heavy 800 lb (ic80.wall_gear_lb); default both",
+        "--gear", default="light", choices=["both", "light", "heavy"],
+        help="the wall-gear case(s): light 400 lb, heavy 800 lb (ic80.wall_gear_lb); default light",
     )
+    parser.add_argument(
+        "--combos", default="spec,relaxed",
+        help="the carry cases, comma-separated, of " + ", ".join(COMBOS) + " (default spec,relaxed)",
+    )
+    parser.add_argument("--cassettes-carryable", action="store_true",
+                        help="run one carry case: cassettes may be carried (with --carry-unpaved: relaxed)")
+    parser.add_argument("--carry-unpaved", action="store_true",
+                        help="run one carry case: a carry path need not be paved (with --cassettes-carryable: relaxed)")
+    parser.add_argument("--canopy", type=Path, default=None,
+                        help="a GeoTIFF of Metro's Canopy 2019 (EPSG:2913): trees in the IC-80's way")
     for key in ("s4", "s5o", "roads", "curbs", "dem"):
         parser.add_argument(f"--{key}", type=Path, default=None, help=f"override meta.json's {key}")
     args = parser.parse_args(argv)
     gears = ("light", "heavy") if args.gear == "both" else (args.gear,)
+    if args.cassettes_carryable or args.carry_unpaved:
+        combos: tuple[str, ...] = (
+            "relaxed" if args.cassettes_carryable and args.carry_unpaved
+            else "cassettes" if args.cassettes_carryable else "unpaved",
+        )
+    else:
+        combos = tuple(c.strip() for c in args.combos.split(",") if c.strip())
+    bad = [c for c in combos if c not in COMBOS]
+    if bad:
+        parser.error(f"unknown carry case(s): {', '.join(bad)}")
+    canopy = str(args.canopy) if args.canopy else None
+    if canopy and not Path(canopy).exists():
+        parser.error(f"no canopy file: {canopy}")
+    n_cases = len(gears) * len(combos)
 
     import pandas as pd
 
@@ -365,12 +536,14 @@ def main(argv: list[str] | None = None) -> int:
 
         size = max(1, math.ceil(len(pairs) / (args.processes * 8)))
         batches = [pairs[i : i + size] for i in range(0, len(pairs), size)]
-        with ProcessPoolExecutor(args.processes, initializer=_init, initargs=(meta, args.grade, gears)) as pool:
+        with ProcessPoolExecutor(
+            args.processes, initializer=_init, initargs=(meta, args.grade, gears, combos, canopy)
+        ) as pool:
             for got in pool.map(_work, batches):
                 out_rows.extend(got)
-                print(f"set access: {len(out_rows) // len(gears):,}/{len(pairs):,}", flush=True)
+                print(f"set access: {len(out_rows) // n_cases:,}/{len(pairs):,}", flush=True)
     else:
-        _init(meta, args.grade, gears)
+        _init(meta, args.grade, gears, combos, canopy)
         for i, pair in enumerate(pairs, 1):
             out_rows.extend(_one(*pair))
             if i % 25 == 0:

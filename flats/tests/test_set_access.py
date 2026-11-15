@@ -1,5 +1,6 @@
-"""Set access, slice 3 (FOLLOWUPS 145; Steph 2026-11-14): the IC-80 from
-one long face, then both, then the hired 45 t on site and in the street.
+"""Set access, slices 3-4 (FOLLOWUPS 145; Steph 2026-11-14): the IC-80 from
+one long face, then both (its trailer on the lot or in the street, pieces
+picked there and carried), then the hired 45 t on site and in the street.
 
 Every figure checked here is the crane spec's (Factory-Sim
 ``docs/research/S3e-crane-20x25.md``) as stored in
@@ -58,6 +59,17 @@ def street(width: float | None = 36.0, curb: float | None = 2.0):
     return read
 
 
+def centre(gap: float | None = 10.5):
+    """NOT A REAL STREET: the centreline ``gap`` ft out from every street lot
+    line (None = not held). 10.5 ft puts the IC-80's street trailer (8.5 ft
+    wide, its far side at the centreline) 2 ft off the lot line."""
+
+    def read(pts: np.ndarray) -> np.ndarray:
+        return np.full(len(np.asarray(pts).reshape(-1, 2)), np.nan if gap is None else float(gap))
+
+    return read
+
+
 def level(_poly) -> float:
     """NOT A REAL GRADE: every polygon falls 0.5%."""
     return 0.5
@@ -70,7 +82,7 @@ def rules() -> sa.Rules:
 
 @pytest.fixture(scope="module")
 def front(rules: sa.Rules) -> sa.Report:
-    return sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, street()), rules, grade_of=level)
+    return sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, street(), street_centre=centre()), rules, grade_of=level)
 
 
 @pytest.fixture(scope="module")
@@ -80,7 +92,7 @@ def back(rules: sa.Rules) -> sa.Report:
 
 @pytest.fixture(scope="module")
 def yard(rules: sa.Rules) -> sa.Report:
-    return sa.report(Site(YARD_LOT, YARD_POD, YARD_STREETS, street()), rules, grade_of=level)
+    return sa.report(Site(YARD_LOT, YARD_POD, YARD_STREETS, street(), street_centre=centre()), rules, grade_of=level)
 
 
 def _lift(plan, key: str) -> sa.Lift:
@@ -112,7 +124,7 @@ def test_config_holds_the_spec_figures(rules: sa.Rules) -> None:
     ic = rules.ic80
     assert ic.out_w_ft == pytest.approx(9 + 7 / 12)  # 9 ft 7 in spread
     assert ic.off_face_ft == 7 and ic.min_radius_ft == 14 and ic.along_ft == 10
-    assert ic.strip_w_ft == 10 and ic.swing_ft == 12 and ic.level_pct == 1
+    assert ic.strip_w_ft == 10 and ic.swing_ft == 12 and ic.level_pct == 3  # spec 3.9: ~3% at the pads
     assert ic.rigging_lb == 400 and ic.hook_lb == 90
     assert (ic.route_w_ft, ic.route_turn_w_ft) == pytest.approx((6.5, 9.5))
     assert rules.max_pct == 75 and rules.deck_l_ft == 53
@@ -126,6 +138,11 @@ def test_config_holds_the_spec_figures(rules: sa.Rules) -> None:
     assert len(rules.pieces) == 16
     # Slice 3c: the sample's two wall-gear cases, spec 3.6's 400 and 800 lb columns.
     assert ic.wall_gear_lb == {"light": 400, "heavy": 800} and ic.wall_rigging_lb is None
+    # Slice 4's carry switches, the spec's reading by default (spec 5 step 1,
+    # spec 3.9), and spec 3.10's 20 ft under a line.
+    assert (ic.carry_cassettes, ic.carry_paved, ic.carry_power_ft) == (False, True, 20)
+    assert ic.carry_w_ft == 6.5 and ic.carry_level_pct == 3
+    assert rules.ic80_places == ("lot", "street") and rules.places == ("lot", "curb")
     # Spec 3.4's per-piece hook table (high ends) and its Load column.
     hooks = {p.key: p.hook_ft for p in rules.pieces}
     assert hooks["ground_front_wall"] == 16 and hooks["upper_back_wall"] == 25
@@ -199,16 +216,22 @@ def test_spec_3_6_rigging_reach(rules: sa.Rules, key: str, want: tuple[int, int,
 
 def test_spec_3_7_carry(rules: sa.Rules) -> None:
     """Walls carried on rubber, the extension off: 72% (ground front wall),
-    70-71% (end and party walls); FULL4 would be 96%, so cassettes are
-    never carried."""
+    70-71% (end and party walls); FULL4 would be 96%, so even where the
+    switch lets cassettes be carried, the chart does not."""
     ic = rules.ic80
     lift = sa._ic80_carry_lift(ic, rules, rules.piece("ground_front_wall"), None)  # type: ignore[arg-type]
     assert lift.carried and lift.row_ft == 20 and round(lift.pct_of_chart) == 72
-    assert lift.status == sa.UNMEASURED and "route is not checked" in lift.why
+    assert lift.status == sa.PASS  # the path is the trailer check's
     end = sa._ic80_carry_lift(ic, rules, rules.piece("end_wall"), None)  # type: ignore[arg-type]
     assert end.row_ft == 22 and round(end.pct_of_chart) == 71
     full4 = rules.piece("roof_cassette_full4")
     assert round(100 * (full4.weight_lb + 490) / ic.carry_chart.capacity_at(20.6)) == 96
+    cas = sa._ic80_carry_lift(ic, rules, full4, None)  # type: ignore[arg-type]
+    assert cas.row_ft == 22 and cas.status == sa.FAIL and "planning line" in cas.why
+    # Every cassette but the stair cassette (72%) is over the line carried.
+    over = {p.key for p in rules.pieces if p.group == "cassette"
+            and sa._ic80_carry_lift(ic, rules, p, None).status == sa.FAIL}  # type: ignore[arg-type]
+    assert over == {p.key for p in rules.pieces if p.group == "cassette"} - {"floor_cassette_stair4f"}
 
 
 def test_spec_3_8_container(rules: sa.Rules) -> None:
@@ -245,7 +268,7 @@ def test_spec_4_4_and_4_5(rules: sa.Rules) -> None:
 def test_ic80_one_face_from_the_front(front: sa.Report) -> None:
     assert front.result == "IC-80 one face (front)" and front.face == "front"
     plan = front.plan
-    assert isinstance(plan, sa.IC80Plan) and plan.status == sa.PASS and plan.truck == "curb"
+    assert isinstance(plan, sa.IC80Plan) and plan.status == sa.PASS and plan.truck == "street"
     assert {c.name for c in plan.checks} >= {"working strip", "outriggers", "level", "swing room", "trailer", "route"}
     # Spec 3.5's three reaches: far walls ~31 read at 32, middle pieces ~21.9
     # read at 22, near walls 14.
@@ -277,7 +300,7 @@ def test_heavier_rigging_needs_both_faces(rules: sa.Rules) -> None:
     """Spec 3.6: with 800 lb rigging the far walls cannot be set from one
     face; from both, each far wall is set from its own face, ~14 ft out."""
     heavy = dataclasses.replace(rules, ic80=dataclasses.replace(rules.ic80, rigging_lb=800.0))  # NOT A REAL FIGURE
-    rep = sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, street()), heavy, grade_of=level)
+    rep = sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, street(), street_centre=centre()), heavy, grade_of=level)
     for step in ("ic80_front", "ic80_back"):
         got = _attempt(rep, step)
         assert got.status == sa.FAIL
@@ -287,13 +310,14 @@ def test_heavier_rigging_needs_both_faces(rules: sa.Rules) -> None:
     assert all(lf.status == sa.PASS for lf in both.sets)
     assert _lift(dataclasses.replace(both, lifts=both.sets), "ground_back_wall").set_ft == pytest.approx(14.0, abs=0.01)
     # Each load parks on its own (Steph 2026-11-14), but loads 1 and 3 each
-    # hold a front and a back wall, and one load is one spot: from the curb
-    # the back wall of each is carried round, and with 800 lb rigging that
-    # carry is over the line (spec 3.7 is figured at 400 lb).
-    assert set(both.trailer_spots) == {1, 2, 3, 4}
+    # hold a front and a back wall, and one load is one spot: the back wall
+    # of each would be carried round, and with 800 lb rigging that carry is
+    # over the line (spec 3.7 is figured at 400 lb), so no spot serves them.
+    assert set(both.trailer_spots) == {2, 4}
     trailer = next(c for c in both.checks if c.name == "trailer")
-    assert trailer.detail.startswith("load 1: ") and "load 4: at the curb, every piece within reach" in trailer.detail
-    assert sorted(lf.key for lf in both.lifts if lf.carried) == ["ground_back_wall", "upper_back_wall"]
+    assert trailer.detail.startswith("load 1: ") and "load 4: at the street, every piece within reach" in trailer.detail
+    assert "the first short: Ground back wall (carried: over the 75% planning line" in trailer.detail
+    assert not any(lf.carried for lf in both.lifts)
     assert not rep.result.startswith("IC-80")
 
 
@@ -304,7 +328,7 @@ def test_stack_order_follows_the_crane_face(front: sa.Report, back: sa.Report) -
     assert back.row()["stack"] == "front walls on top, end and party walls in the middle, back walls at the bottom"
 
 
-CORNER = Site(BACK_LOT, FRONT_POD, BACK_STREETS, street())  # NOT A REAL LOT: BACK_LOT without the tree
+CORNER = Site(BACK_LOT, FRONT_POD, BACK_STREETS, street(), street_centre=centre())  # NOT A REAL LOT: BACK_LOT without the tree
 
 
 def test_heavy_gear_both_faces_with_one_move(rules: sa.Rules) -> None:
@@ -317,7 +341,7 @@ def test_heavy_gear_both_faces_with_one_move(rules: sa.Rules) -> None:
     heavy = sa.report(CORNER, sa.with_wall_gear(rules, "heavy"), grade_of=level)
     assert heavy.result == sa.IC80_BOTH
     row = heavy.row()
-    assert row["truck"] == "1 lot at the back, then curb at the front, 2 lot, 3 lot at the back, then curb at the front, 4 lot"
+    assert row["truck"] == "1 lot at the back, then street at the front, 2 lot, 3 lot at the back, then street at the front, 4 lot"
     assert row["stack"].startswith("back walls on top") and row["stack"].endswith(
         "the trailer moves once, back to front (loads 1 and 3)"
     )
@@ -332,15 +356,19 @@ def test_heavy_gear_both_faces_with_one_move(rules: sa.Rules) -> None:
 
 def test_heavy_gear_needs_a_park_on_both_faces(rules: sa.Rules) -> None:
     """No trailer spot reaches the back face: the move cannot help."""
-    heavy = sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, street()), sa.with_wall_gear(rules, "heavy"), grade_of=level)
+    heavy = sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, street(), street_centre=centre()), sa.with_wall_gear(rules, "heavy"),
+                      grade_of=level)
     assert not heavy.result.startswith("IC-80")
     both = _attempt(heavy, "ic80_both")
     assert both.status == sa.FAIL and "moved once" not in next(c for c in both.plan.checks if c.name == "trailer").detail
 
 
-def test_working_strip_level_within_one_percent(rules: sa.Rules) -> None:
-    site = Site(FRONT_LOT, FRONT_POD, SOUTH, street())
-    steep = sa.report(site, rules, grade_of=lambda _p: 1.5)
+def test_pads_level_within_three_percent(rules: sa.Rules) -> None:
+    """Slice 4 (spec 3.9): level applies at each set-up spot's pads, ~3%;
+    the strip between need not be level."""
+    site = Site(FRONT_LOT, FRONT_POD, SOUTH, street(), street_centre=centre())
+    assert sa.report(site, rules, grade_of=lambda _p: 2.5).result == "IC-80 one face (front)"
+    steep = sa.report(site, rules, grade_of=lambda _p: 4.0)
     assert not steep.result.startswith("IC-80")
     assert "level" in _attempt(steep, "ic80_front").plan.binding_check
     blind = sa.report(site, rules, grade_of=lambda _p: None)
@@ -352,7 +380,8 @@ def test_working_strip_level_within_one_percent(rules: sa.Rules) -> None:
 
 def test_swing_room_twelve_feet_beyond_each_end(rules: sa.Rules) -> None:
     # 8 ft beside the west end: the outriggers (5.85 ft past the end) fit, the swing does not.
-    rep = sa.report(Site(box(4, 0, 104, 70), FRONT_POD, ((4.0, 0.0, 104.0, 0.0),), street()), rules, grade_of=level)
+    rep = sa.report(Site(box(4, 0, 104, 70), FRONT_POD, ((4.0, 0.0, 104.0, 0.0),), street(), street_centre=centre()), rules,
+                    grade_of=level)
     got = _attempt(rep, "ic80_front")
     assert got.status == sa.FAIL and got.plan.binding_check == "swing room"
 
@@ -373,18 +402,97 @@ def test_route_six_and_a_half_feet_wide(rules: sa.Rules) -> None:
 
 
 def test_trailer_needs_every_cassette_in_reach(front: sa.Report) -> None:
-    """From the back face the curb trailer is ~50 ft off: cassettes cannot
-    be carried, so the back fails on the trailer."""
+    """From the back face the street trailer is ~50 ft off: cassettes
+    cannot be carried, so the back fails on the trailer; the walls of loads
+    1 and 3 are picked in the street and carried, unmeasured where the lot
+    holds no paving data (spec 3.9: "paved")."""
     got = _attempt(front, "ic80_back")
-    assert any(w.startswith("trailer: ") and "load 2: no trailer spot has every cassette" in w for w in got.why)
+    trailer = next(c for c in got.plan.checks if c.name == "trailer")
+    assert trailer.status == sa.FAIL
+    assert ("load 2: no trailer spot has every piece that cannot be carried within the IC-80's reach; the first "
+            "short: Floor cassette WET4F (cassettes cannot be carried (spec section 5, step 1))") in trailer.detail
+    assert "load 1: at the street, end wall, ground back wall, ground front wall, party wall picked there and carried" \
+        in trailer.detail
+    assert "no paving data on the lot" in trailer.detail
 
 
-def test_trailer_unmeasured_where_the_curb_is_not(rules: sa.Rules) -> None:
+def test_trailer_unmeasured_where_the_centreline_is_not(rules: sa.Rules) -> None:
     rep = sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, None), rules, grade_of=level)
     got = _attempt(rep, "ic80_front")
     trailer = next(c for c in got.plan.checks if c.name == "trailer")
-    assert trailer.status == sa.UNMEASURED and "curb in front is not measured" in trailer.detail
+    assert trailer.status == sa.UNMEASURED and "no street centreline held" in trailer.detail
     assert not rep.result.startswith("IC-80")
+
+
+def test_the_curb_is_ignored_for_the_ic80(rules: sa.Rules) -> None:
+    """Steph 2026-11-14: "ignore the curb". The IC-80's street trailer is
+    placed from the centreline; no curb read changes it."""
+    for curb in (None, 2.0, 30.0):
+        rep = sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, street(curb=curb), street_centre=centre()), rules,
+                        grade_of=level)
+        assert rep.result == "IC-80 one face (front)" and rep.row()["ic80_way"] == "street"
+
+
+def test_street_trailer_spots_from_the_centreline(rules: sa.Rules) -> None:
+    site = Site(FRONT_LOT, FRONT_POD, SOUTH, None, street_centre=centre())
+    spots, measured = sa.street_truck_spots(site, rules)
+    assert measured and len(spots) and set(spots.place) == {"street"}
+    # Its far side at the centreline, 10.5 ft out: the deck 2 ft off the lot line.
+    assert np.allclose(spots.centres[:, 1], -(10.5 - rules.truck_w_ft / 2))
+    none, measured = sa.street_truck_spots(Site(FRONT_LOT, FRONT_POD, SOUTH, None), rules)
+    assert not measured and not len(none)
+    far, measured = sa.street_truck_spots(Site(FRONT_LOT, FRONT_POD, SOUTH, None, street_centre=centre(None)), rules)
+    assert not measured and not len(far)
+
+
+def test_carry_switches(front: sa.Report, rules: sa.Rules) -> None:
+    """The slice-4 switches: an unpaved carry path counts (the walls carried
+    from the street pass); cassettes may be carried, but all but the stair
+    cassette are over the line carried, so the back face still fails."""
+    site = Site(FRONT_LOT, FRONT_POD, SOUTH, street(), street_centre=centre())
+    unpaved = sa.report(site, sa.with_carry(rules, paved=False), grade_of=level)
+    trailer = next(c for c in _attempt(unpaved, "ic80_back").plan.checks if c.name == "trailer")
+    assert "no paving data" not in trailer.detail and "carry path 9.5 ft wide from the street" in trailer.detail
+    both = sa.report(site, sa.with_carry(rules, cassettes=True, paved=False), grade_of=level)
+    back = _attempt(both, "ic80_back").plan
+    trailer = next(c for c in back.checks if c.name == "trailer")
+    assert trailer.status == sa.FAIL
+    assert "the first short: Floor cassette WET4F (carried: over the 75% planning line" in trailer.detail
+    assert sa.with_carry(rules).ic80 == rules.ic80
+    # A carry names spec 3.10's clearance; a plan with none does not.
+    assert any("20 ft clearance" in n for n in back.notes)
+    assert not any("clearance" in n for n in front.plan.notes)
+
+
+def test_canopy_blocks_and_its_cost_is_shown(rules: sa.Rules) -> None:
+    """Slice 4: a canopy map's crowns (no height read) in the swing room
+    block the IC-80; the answer without trees is reported beside it."""
+    crown = sa.Trees(box(2, 20, 8, 30))  # NOT A REAL TREE: in the west swing room
+    rep = sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, street(), street_centre=centre(), trees=crown), rules,
+                    grade_of=level)
+    plan = _attempt(rep, "ic80_front").plan
+    trees = next(c for c in plan.checks if c.name == "trees")
+    assert trees.status == sa.FAIL and "swing room" in trees.detail
+    assert plan.status == sa.FAIL and plan.bare_status == sa.PASS
+    assert not rep.result.startswith("IC-80 one face (front)")
+    assert rep.result_no_trees == "IC-80 one face (front)"
+    row = rep.row()
+    assert row["result_no_trees"] == "IC-80 one face (front)" and "trees" in row["ic80_front_checks"]
+    # Off the map: unmeasured, never a pass.
+    off = sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, street(), street_centre=centre(),
+                         trees=sa.Trees(box(0, 0, 0, 0), covered=False)), rules, grade_of=level)
+    assert next(c for c in _attempt(off, "ic80_front").plan.checks if c.name == "trees").status == sa.UNMEASURED
+    assert off.result == sa.UNMEASURED_ANSWER or not off.result.startswith("IC-80")
+
+
+def test_canopy_on_the_carry_path(rules: sa.Rules) -> None:
+    """Crowns across the front yard leave the swing room and the back
+    working ground clear but stand on every carry path from the street."""
+    crown = sa.Trees(box(0, 0.5, 104, 10))  # NOT A REAL TREE
+    site = Site(FRONT_LOT, FRONT_POD, SOUTH, street(), street_centre=centre(), trees=crown)
+    rep = sa.report(site, sa.with_carry(rules, paved=False), grade_of=level)
+    trees = next(c for c in _attempt(rep, "ic80_back").plan.checks if c.name == "trees")
+    assert trees.status == sa.FAIL and "carry path of load 1 and 3" in trees.detail
 
 
 def test_unknown_front_names_the_faces_and_takes_the_worse(rules: sa.Rules) -> None:
@@ -410,7 +518,7 @@ def test_container_may_be_lifted_from_the_street(rules: sa.Rules) -> None:
     """Steph 2026-11-14: the IC-80 may step into the street for the
     container lift only. With 10 ft between the lot line and the curb, the
     crane stands there; without the street stance it cannot."""
-    site = Site(box(0, 0, 104, 80), box(12, 24, 92, 49), SOUTH, street(curb=10))  # NOT A REAL LOT
+    site = Site(box(0, 0, 104, 80), box(12, 24, 92, 49), SOUTH, street(curb=10), street_centre=centre(18.5))  # NOT A REAL LOT
     got = _attempt(sa.report(site, rules, grade_of=level), "ic80_front").plan.container
     assert got.status == sa.PASS and "in the street for this lift; power lines not checked" in got.detail
     off = dataclasses.replace(rules, ic80=dataclasses.replace(rules.ic80, container_street=False))
@@ -494,7 +602,8 @@ def test_report_row(front: sa.Report, yard: sa.Report) -> None:
     assert row["result"] == "IC-80 one face (front)" and row["face"] == "front" and row["crane"] == "IC-80"
     assert row["hardest_lift"] == "Upper back wall" and row["chart_row_ft"] == 32
     assert row["binding_check"] == "lifts: Upper back wall"
-    assert row["truck"] == "1 curb, 2 curb, 3 curb, 4 curb"  # each trailer load's spot
+    assert row["truck"] == "1 street, 2 street, 3 street, 4 street"  # each trailer load's spot
+    assert row["ic80_way"] == "street" and row["ic80_front_way"] == "street" and row["ic80_front_checks"] == ""
     assert row["rigging_limit_lb"] == 608 and row["ic80_front"] == sa.PASS and row["45t_site"] == sa.NOT_TRIED
     assert set(sa.STEPS) <= set(row)
     y = yard.row()
@@ -503,7 +612,8 @@ def test_report_row(front: sa.Report, yard: sa.Report) -> None:
 
 
 def test_power_lines_not_checked_on_every_set_up(front: sa.Report, back: sa.Report, yard: sa.Report, rules: sa.Rules) -> None:
-    narrow = sa.report(Site(FULL_LOT, FULL_POD, FULL_STREET, street(width=24)), rules, grade_of=level)
+    narrow = sa.report(Site(FULL_LOT, FULL_POD, FULL_STREET, street(width=24), street_centre=centre()), rules,
+                       grade_of=level)
     for rep in (front, back, yard, narrow):
         assert sa.POWER_NOTE in rep.notes
         assert sa.POWER_NOTE in rep.row()["notes"]

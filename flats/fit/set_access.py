@@ -1,5 +1,5 @@
 """Set access: which crane can set the pod on this lot, and how (FOLLOWUPS
-145, slice 3, Steph 2026-11-14).
+145, slices 3-4, Steph 2026-11-14).
 
 A REPORT, NOT A SCREEN CHECK. Nothing here reaches the colour, a reason
 code, a flag or the bound (Steph 2026-11-14: "Don't flag any lots by color
@@ -15,12 +15,18 @@ first step that passes is the answer:
    up beside the building and sets every piece from one long face, front or
    back. Checked: a working strip ~10 ft wide along the whole face with the
    outrigger footprint at the crane line (centre 7 ft off the face) on open
-   ground in the lot; the strip level within 1% (the screen's elevation
-   models); swing room 12 ft beyond each wall end inside the lot; the
-   trailer parked so every piece on it is within the IC-80's reach of a
-   crane spot that also sets it (walls may instead be carried on a paved,
-   level route: unmeasured); a way in 6 ft 6 in wide, 9 ft 6 in at turns;
-   and every lift within 75% of the chart and the hook height it needs.
+   ground in the lot; LEVEL ONLY AT THE SET-UP SPOTS (slice 4, spec 3.9):
+   the ground under each spot's outrigger footprint within ~3%, a lift set
+   only from such spots; swing room 12 ft beyond each wall end inside the
+   lot; trees (a canopy map, where one is read) clear of the swing room,
+   the working ground and any carry path; each trailer load parked on the
+   lot, or IN THE STREET along the frontage (placed from the street lot
+   line and centreline, the curb ignored), so every piece on it is within
+   the IC-80's reach of a crane spot that also sets it -- or else picked
+   at the trailer and CARRIED on rubber to a set-up spot (spec 3.7; the
+   switches ``cassettes_carryable`` and ``path_must_be_paved`` default to
+   the spec); a way in 6 ft 6 in wide, 9 ft 6 in at turns; and every lift
+   within 75% of the chart and the hook height it needs.
 2. **IC-80 both faces.** The same with a strip on both long faces; far
    walls are then set from their own face.
 3. **45 t on site, then 45 t in the street** (the hired NBT45-2, slice 2's
@@ -81,7 +87,11 @@ POWER_NOTE = "power lines not checked"
 NOT_CHECKED: tuple[str, ...] = (
     "overhead power lines (both cranes)",
     "ground firm and drained; what the mats bear",
-    "trees in the swing room",
+    "trees, where no canopy map is read (a canopy map shows crowns, not trunks or heights)",
+    "the ground between the IC-80's set-up spots (firm and drivable for the empty crane)",
+    "a carried load's sweep on a turn; the carry distance and time on the cargo deck",
+    "where the street may be closed for the trailer or the IC-80 (street-use permit)",
+    "room in the street for the IC-80 beside a street trailer (it picks there on rubber)",
     "how close the IC-80's pads may stand to the new slab edge (FOLLOWUPS 220)",
     "the wall rigging (not designed, FOLLOWUPS 215; taken as 400 lb unless a wall-gear case is named)",
     "other buildings and walls on the lot",
@@ -296,6 +306,9 @@ class Piece:
     plan_ft: tuple[float, float] = (0.0, 0.0)
     #: The trailer load(s) it rides (spec 3.4's "Load" column).
     loads: tuple[int, ...] = (1,)
+    #: The printed short side, HIGH end (a cassette carried flat sweeps
+    #: this wide); 0 where not printed.
+    short_hi_ft: float = 0.0
 
 
 @dataclass(frozen=True, slots=True)
@@ -335,6 +348,7 @@ class IC80:
     along_ft: float
     strip_w_ft: float
     swing_ft: float
+    #: The fall across one set-up spot's pads (spec 3.9, ~3%).
     level_pct: float
     carry_radius_ft: Mapping[str, float]
     container_sling_lb: float
@@ -346,6 +360,18 @@ class IC80:
     #: None = ``rigging_lb``. The sample runs each of ``wall_gear_lb``.
     wall_rigging_lb: float | None = None
     wall_gear_lb: Mapping[str, float] = field(default_factory=dict)
+    #: Slice 4 carry switches (``ic80.carry``): the spec's reading by
+    #: default. Spec 5 step 1: "Cassettes cannot be carried"; spec 3.9: the
+    #: carry path "must be smooth, level and paved".
+    carry_cassettes: bool = False
+    carry_paved: bool = True
+    #: Where paving is not required, the most a carry path may fall, %.
+    carry_level_pct: float = 3.0
+    #: The carry path's width (spec 3.7: "The path is the machine's width").
+    carry_w_ft: float = 6.5
+    #: Spec 3.10: carrying under a line needs this clearance (reported,
+    #: never checked).
+    carry_power_ft: float = 20.0
 
     def rigging_for(self, piece: Piece) -> float:
         if piece.group == "wall" and self.wall_rigging_lb is not None:
@@ -450,6 +476,8 @@ class Rules:
     street_step_ft: float
     crane_step_ft: float
     deck_step_ft: float
+    #: Where the IC-80's trailer may stand (slice 4): ``lot`` / ``street``.
+    ic80_places: tuple[str, ...] = ("lot", "street")
 
     def piece(self, key: str) -> Piece:
         for p in self.pieces:
@@ -517,8 +545,13 @@ def _ic80(raw: Mapping[str, Any], pct: float) -> IC80:
         along_ft=_hi_len(raw["along_from_piece_line_ft"]),
         strip_w_ft=_hi_len(site["strip_width_ft"]),
         swing_ft=_hi_len(site["swing_beyond_end_ft"]),
-        level_pct=float(raw["level_pct"]),
+        level_pct=_hi_len(raw["pad_level_pct"]),
         carry_radius_ft={k: _hi_len(v) for k, v in carry["hook_radius_ft"].items()},
+        carry_cassettes=bool(carry.get("cassettes_carryable", False)),
+        carry_paved=bool(carry.get("path_must_be_paved", True)),
+        carry_level_pct=_hi_len(carry["path_level_pct"]),
+        carry_w_ft=_hi_len(carry["path_width"]),
+        carry_power_ft=_hi_len(carry["power_line_clearance_ft"]),
         container_sling_lb=_hi(raw["container"]["sling_lb"]),
         container_within_ft=_hi_len(raw["container"]["within_ft"]),
         container_street=bool(raw["container"].get("street_allowed", False)),
@@ -574,6 +607,7 @@ def rules_from(raw: Mapping[str, Any]) -> Rules:
                 inset_ft=inset,
                 plan_ft=_plan(size),
                 loads=tuple(int(n) for n in (p.get("loads") or (1,))),
+                short_hi_ft=sorted((hi for _, hi in size), reverse=True)[1] if size and len(size) >= 2 else 0.0,
             )
         )
     cont = raw["container"]
@@ -606,6 +640,7 @@ def rules_from(raw: Mapping[str, Any]) -> Rules:
         street_step_ft=float(search["street_step_ft"]),
         crane_step_ft=float(search["crane_step_ft"]),
         deck_step_ft=float(search["deck_step_ft"]),
+        ic80_places=tuple(truck.get("ic80_places") or ("lot", "street")),
     )
 
 
@@ -696,6 +731,21 @@ def set_points(frame: PodFrame, piece: Piece, homes: int, front: int = 0) -> np.
 #: street's near curb and the recorded pavement width there, feet; NaN
 #: where nothing measures them (:func:`street_reader`).
 StreetReading = Callable[[np.ndarray], tuple[np.ndarray, np.ndarray]]
+#: Given points on street lot lines (N, 2), the distance from each to its
+#: street's centreline, feet; NaN where no centreline is held near
+#: (:func:`centre_reader`).
+CentreReading = Callable[[np.ndarray], np.ndarray]
+
+
+@dataclass(frozen=True)
+class Trees:
+    """Tree canopy read off a public map round one lot (slice 4): the crown
+    cover as polygons (working CRS), whether the map covers the lot and
+    its street, and the map's name and date."""
+
+    canopy: BaseGeometry
+    covered: bool = True
+    source: str = "canopy map"
 
 
 @dataclass(frozen=True)
@@ -703,13 +753,17 @@ class Site:
     """One lot with the pod placed: the lot, the drawn building, the lot
     lines on a street ``(x1, y1, x2, y2)``, what measures the street in
     front of them (None: no street set-up or curb truck is measured), and
-    any other obstacle held as geometry (other buildings, trees)."""
+    any other obstacle held as geometry (other buildings). ``street_centre``
+    places the IC-80's street trailer (slice 4); ``trees`` is the canopy
+    (None: trees are not checked)."""
 
     lot: BaseGeometry
     building: BaseGeometry
     street: Sequence[tuple[float, float, float, float]]
     street_reading: StreetReading | None = None
     obstacles: BaseGeometry | None = None
+    street_centre: CentreReading | None = None
+    trees: Trees | None = None
 
 
 def _outward(seg: tuple[float, float, float, float], lot: BaseGeometry) -> np.ndarray:
@@ -950,6 +1004,36 @@ def curb_truck_spots(site: Site, rules: Rules) -> tuple[Spots, bool]:
     return Spots.join(out), measured
 
 
+def street_truck_spots(site: Site, rules: Rules) -> tuple[Spots, bool]:
+    """The IC-80's trailer IN THE STREET along the frontage (slice 4, Steph
+    2026-11-14), parallel to each street lot line, centred anywhere along
+    it, its far side at the street's centreline (the farthest it stands on
+    the near half: the cautious place to pick from). No curb is read
+    ("ignore the curb"). Returns the spots whose place is measured, and
+    whether every frontage's centreline was read."""
+    if site.street_centre is None:
+        return Spots.empty(), False
+    L, W = rules.deck_l_ft, rules.truck_w_ft
+    out: list[Spots] = []
+    measured = True
+    for a, d, n, length in _segments(site):
+        us = _along(length, rules.spot_grid_ft)
+        pts = np.concatenate([a + np.clip(us + k, 0, length)[:, None] * d for k in (-L / 2, 0.0, L / 2)])
+        gap = np.asarray(site.street_centre(pts), dtype=float).reshape(3, -1)
+        ok = np.isfinite(gap).all(axis=0)
+        if not ok.all():
+            measured = False
+        if not ok.any():
+            continue
+        off = np.maximum(gap.max(axis=0)[ok] - W / 2, W / 2)
+        centre = a + us[ok][:, None] * d + off[:, None] * n
+        corners = _corners(centre, d, L, W)
+        out.append(
+            Spots(centre, corners, corners, np.full(int(ok.sum()), "street", dtype=object), np.tile(d, (int(ok.sum()), 1)))
+        )
+    return Spots.join(out), measured
+
+
 def container_spots(open_ground: BaseGeometry, rules: Rules, base_deg: float) -> Spots:
     """Every place the site container's plan fits on open ground."""
     fp = rules.container_fp
@@ -1038,7 +1122,8 @@ class IC80Plan:
     working: BaseGeometry
     truck: str | None = None
     truck_spot: BaseGeometry | None = None
-    strip_grade_pct: float | None = None
+    #: The steepest fall across the pads of a set-up spot used, %.
+    pad_grade_pct: float | None = None
     #: The heaviest wall rigging every wall lift of this plan holds within
     #: the planning line (spec 3.6), lb.
     rigging_limit_lb: float | None = None
@@ -1048,11 +1133,26 @@ class IC80Plan:
     #: Every piece's set lift alone (from the crane spot nearest its place),
     #: before the trailer's pick radius is added.
     sets: tuple[Lift, ...] = ()
-    #: Where each trailer load parks (``lot`` / ``curb``), by load number.
+    #: Where each trailer load parks (``lot`` / ``street``, `` (carried)``
+    #: where a kind is picked there and carried), by load number.
     trailer_spots: Mapping[int, str] = field(default_factory=dict)
     #: How each wall load is stacked (DECISIONS S-wallstack): the walls set
     #: first on top.
     stack: str | None = None
+    #: The status with the canopy left out (what trees cost, slice 4).
+    bare_status: Status | None = None
+    extra_notes: tuple[str, ...] = ()
+
+    @property
+    def way(self) -> str | None:
+        """How the IC-80 works: ``lot`` (every load picked straight off a
+        trailer on the lot), ``street``, ``lot and street``, each with
+        `` + carry`` where any kind is picked at the trailer and carried."""
+        if not self.trailer_spots:
+            return None
+        text = " ".join(self.trailer_spots.values())
+        where = [w for w in ("lot", "street") if w in text]
+        return " and ".join(where) + (" + carry" if "carried" in text else "")
 
     @property
     def binding(self) -> Lift | None:
@@ -1071,10 +1171,7 @@ class IC80Plan:
 
     @property
     def notes(self) -> tuple[str, ...]:
-        out = [POWER_NOTE]
-        if any(lf.carried for lf in self.lifts):
-            out.append("walls carried to the building: a paved, level route is not checked")
-        return tuple(out)
+        return (POWER_NOTE, *self.extra_notes)
 
 
 @dataclass(frozen=True)
@@ -1142,6 +1239,8 @@ class Report:
     why: tuple[str, ...]
     not_checked: tuple[str, ...] = NOT_CHECKED
     notes: tuple[str, ...] = field(default=())
+    #: The answer with the canopy left out (slice 4: what trees cost).
+    result_no_trees: str | None = None
 
     def row(self) -> dict[str, Any]:
         """One flat record for the summary table."""
@@ -1168,7 +1267,10 @@ class Report:
             "rigging_limit_lb": None
             if not isinstance(p, IC80Plan) or p.rigging_limit_lb is None
             else round(p.rigging_limit_lb),
-            "grade_pct": _round(p.strip_grade_pct if isinstance(p, IC80Plan) else getattr(p, "slope_pct", None)),
+            "grade_pct": _round(p.pad_grade_pct if isinstance(p, IC80Plan) else getattr(p, "slope_pct", None)),
+            "ic80_way": p.way if isinstance(p, IC80Plan) else None,
+            "trees": next((c.status for c in p.checks if c.name == "trees"), None) if isinstance(p, IC80Plan) else None,
+            "result_no_trees": self.result_no_trees,
             "container": None if not isinstance(p, IC80Plan) or p.container is None else p.container.status,
             "stack": p.stack if isinstance(p, IC80Plan) else None,
             "notes": "; ".join(self.notes),
@@ -1176,6 +1278,9 @@ class Report:
         }
         for a in self.attempts:
             out[a.step] = a.status
+            if isinstance(a.plan, IC80Plan):
+                out[f"{a.step}_checks"] = ", ".join(c.name for c in a.plan.checks if c.status != PASS)
+                out[f"{a.step}_way"] = a.plan.way
         return out
 
 
@@ -1275,6 +1380,12 @@ class _Lot:
     curb_spots: Spots
     curb_measured: bool
     grade_of: Callable[[BaseGeometry], float | None] | None
+    #: The IC-80's street trailer spots (slice 4) and whether every
+    #: frontage's centreline was read.
+    street_spots: Spots = field(default_factory=Spots.empty)
+    street_measured: bool = False
+    #: Per-lot memo (pad grades, carry paths).
+    memo: dict = field(default_factory=dict)
 
 
 def _front(site: Site, frame: PodFrame) -> int:
@@ -1353,20 +1464,44 @@ def _set_radius(S: np.ndarray, su: np.ndarray, P: np.ndarray, pu: np.ndarray, ic
     return float(d.min(axis=0).max()), d
 
 
-def _ic80_route(lot: _Lot, ground: dict[str, BaseGeometry], S: np.ndarray) -> Check:
-    """The IC-80's way from the street to the crane line: 9 ft 6 in wide
-    all the way (any turn fits), or a straight run in 6 ft 6 in wide from
-    the street into ground that wide; else unmeasured where a 6 ft 6 in way
-    exists (whether its turns are 9 ft 6 in is not checked)."""
+def _way(
+    lot: _Lot, S: np.ndarray, width: float, *, goal: BaseGeometry | None = None, trees: bool = False,
+    avoid: BaseGeometry | None = None,
+) -> tuple[Status, str]:
+    """A way for the IC-80, ``width`` wide, between the crane spots ``S``
+    and the street (``goal`` None) or ``goal`` (ground beside a trailer on
+    the lot): 9 ft 6 in (or ``width``, if wider) all the way, where any
+    turn fits, passes; from the street, a straight run in ``width`` wide to
+    ground that wide passes; a narrower way only is unmeasured (whether its
+    turns fit is not checked); none fails. ``trees``: the canopy is an
+    obstacle too; ``avoid``: more ground taken out (the trailer's deck).
+    Memoised per lot."""
+    canopy = lot.site.trees.canopy if trees and lot.site.trees is not None else None
+    if canopy is not None and canopy.is_empty:
+        canopy = None
+    key = ("way", S.tobytes(), round(width, 3), None if goal is None else goal.wkb, canopy is not None,
+           None if avoid is None else avoid.wkb)
+    if key not in lot.memo:
+        lot.memo[key] = _way_uncached(lot, S, width, goal, canopy, avoid)
+    return lot.memo[key]
+
+
+def _way_uncached(
+    lot: _Lot, S: np.ndarray, width: float, goal: BaseGeometry | None, canopy: BaseGeometry | None,
+    avoid: BaseGeometry | None,
+) -> tuple[Status, str]:
     site, ic = lot.site, lot.rules.ic80
-    if not site.street:
-        return Check("route", UNMEASURED, "no street lot line traced")
+    turn = max(ic.route_turn_w_ft, width)
     aprons = _aprons(site, APRON_FT)
     obst = site.building if site.obstacles is None else site.building.union(site.obstacles)
+    if canopy is not None:
+        obst = obst.union(canopy)
+    if avoid is not None:
+        obst = obst.union(avoid)
     drivable = site.lot.union(aprons).difference(obst)
-    street_zone = aprons.difference(site.lot.buffer(ic.route_turn_w_ft / 2 + 0.5))
-    wide = drivable.buffer(-ic.route_turn_w_ft / 2 + EPS)
-    narrow = drivable.buffer(-ic.route_w_ft / 2 + EPS)
+    zone = aprons.difference(site.lot.buffer(turn / 2 + 0.5)) if goal is None else goal
+    wide = drivable.buffer(-turn / 2 + EPS)
+    narrow = drivable.buffer(-width / 2 + EPS)
     line_pts = shapely.points(S)
 
     def component(geom: BaseGeometry) -> BaseGeometry | None:
@@ -1374,27 +1509,126 @@ def _ic80_route(lot: _Lot, ground: dict[str, BaseGeometry], S: np.ndarray) -> Ch
         return shapely.union_all(parts) if parts else None
 
     wide_part = component(wide)
-    if wide_part is not None and wide_part.intersects(street_zone):
-        return Check("route", PASS, f"{ic.route_turn_w_ft:.1f} ft wide from the street")
-    if wide_part is not None:
+    if wide_part is not None and wide_part.intersects(zone):
+        return PASS, f"{turn:.1f} ft wide " + ("from the street" if goal is None else "from the trailer")
+    if wide_part is not None and goal is None:
         # A straight run in from the street, square to a street lot line,
-        # 6 ft 6 in wide, reaching ground where the crane can turn.
+        # ``width`` wide, reaching ground where the crane can turn.
         for a, d, n, length in _segments(site):
             for t in _along(length, 2.0):
                 # Inside the street far enough that the eroded ground holds it.
-                start = a + d * t + n * (APRON_FT - ic.route_turn_w_ft / 2 - 1.0)
+                start = a + d * t + n * (APRON_FT - turn / 2 - 1.0)
                 ray = LineString([tuple(start), tuple(start - n * (APRON_FT + 400.0))])
                 inside = ray.intersection(narrow)
                 for piece in shapely.get_parts(inside):
                     if piece.distance(Point(*start)) < 1e-3 and piece.intersects(wide_part):
-                        return Check("route", PASS, f"straight in {ic.route_w_ft:.1f} ft wide, turning on open ground")
+                        return PASS, f"straight in {width:.1f} ft wide, turning on open ground"
     narrow_part = component(narrow)
-    if narrow_part is not None and narrow_part.intersects(street_zone):
-        return Check(
-            "route", UNMEASURED,
-            f"a way {ic.route_w_ft:.1f} ft wide exists; whether its turns are {ic.route_turn_w_ft:.1f} ft wide is not checked",
-        )
-    return Check("route", FAIL, f"no way {ic.route_w_ft:.1f} ft wide from the street to the crane line")
+    if narrow_part is not None and narrow_part.intersects(zone):
+        return UNMEASURED, f"a way {width:.1f} ft wide exists; whether its turns are {turn:.1f} ft wide is not checked"
+    where = "from the street" if goal is None else "from beside the trailer"
+    return FAIL, f"no way {width:.1f} ft wide {where} to the crane line"
+
+
+def _ic80_route(lot: _Lot, ground: dict[str, BaseGeometry], S: np.ndarray) -> Check:
+    """The IC-80's way from the street to the crane line, empty, boom
+    stowed (trees do not stop it: it stands 7 ft 3 in): 9 ft 6 in wide all
+    the way, or a straight run in 6 ft 6 in wide; else unmeasured where a
+    6 ft 6 in way exists."""
+    if not lot.site.street:
+        return Check("route", UNMEASURED, "no street lot line traced")
+    st, why = _way(lot, S, lot.rules.ic80.route_w_ft)
+    return Check("route", st, why)
+
+
+def _pad_levels(lot: _Lot, S: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Slice 4 (spec 3.9, "Level applies to the crane, not the strip"):
+    per crane spot, the fall across its outrigger footprint (the four pads'
+    ground; NaN where not read) and its class: 0 within ~3%, 1 not read, 2
+    steeper. Memoised per lot (one face's spots serve every plan)."""
+    ic = lot.rules.ic80
+    g = np.full(len(S), np.nan)
+    if lot.grade_of is not None and len(S):
+        memo = lot.memo.setdefault("pads", {})
+        rects = _corners(S, np.array(lot.frame.axis), ic.out_l_ft, ic.out_w_ft)
+        for i, (x, y) in enumerate(S):
+            k = (round(float(x), 2), round(float(y), 2))
+            if k not in memo:
+                v = lot.grade_of(Polygon(rects[i]))
+                memo[k] = math.nan if v is None else float(v)
+            g[i] = memo[k]
+    cls = np.where(np.isnan(g), 1, np.where(g <= ic.level_pct + EPS, 0, 2))
+    return g, cls
+
+
+def _carry_level(lot: _Lot, S: np.ndarray, goal: BaseGeometry | None, width: float) -> tuple[Status, str]:
+    """The fall along a carry path: the plane fitted to the lot ground on a
+    ``width`` corridor along the shortest line from the crane spots to the
+    trailer's deck, or to the street lot lines."""
+    ic, site = lot.rules.ic80, lot.site
+    if lot.grade_of is None:
+        return UNMEASURED, "the carry path's fall is not read (no elevation model)"
+    if goal is None:
+        if not site.street:
+            return UNMEASURED, "no street lot line traced"
+        goal = shapely.union_all([LineString([(x1, y1), (x2, y2)]) for x1, y1, x2, y2 in site.street])
+    key = ("carry_level", S.tobytes(), goal.wkb, round(width, 3))
+    if key not in lot.memo:
+        line = shapely.shortest_line(shapely.multipoints(S), goal)
+        corridor = line.buffer(width / 2, cap_style="flat").intersection(site.lot) if line.length > EPS else Polygon()
+        if corridor.is_empty or corridor.area < 1.0:
+            lot.memo[key] = (PASS, "the carry path does not cross the lot")
+        else:
+            g = lot.grade_of(corridor)
+            if g is None:
+                lot.memo[key] = (UNMEASURED, "the carry path's fall is not read")
+            elif g <= ic.carry_level_pct + EPS:
+                lot.memo[key] = (PASS, f"the carry path falls {g:.2f}%")
+            else:
+                lot.memo[key] = (FAIL, f"the carry path falls {g:.2f}%, more than {ic.carry_level_pct:g}%")
+    return lot.memo[key]
+
+
+def _carry(lot: _Lot, S: np.ndarray, carried: Sequence[Piece], deck: Polygon | None) -> tuple[Status, Status, str]:
+    """How a load's carried kinds get from the trailer (on the lot: its
+    ``deck``; in the street: None) to a set-up spot among ``S`` (slice 4).
+    Pieces on the hook ride on rubber over the front (spec 3.7): an open
+    path the machine's width (a cassette's own width, flat, if wider),
+    paved where ``carry_paved`` (no paving data on a lot: unmeasured),
+    level within ``carry_level_pct``; bundles ride the cargo deck and need
+    the way in only. Returns (status with no tree read, status with the
+    canopy as an obstacle, detail)."""
+    ic = lot.rules.ic80
+    goal = None if deck is None else deck.buffer(max(ic.carry_radius_ft.values()))
+    hook = [p for p in carried if p.group != "bundle"]
+    bundles = [p for p in carried if p.group == "bundle"]
+    bare: list[Status] = []
+    treed: list[Status] = []
+    parts: list[str] = []
+    trees = lot.site.trees is not None and lot.site.trees.covered
+    if hook:
+        width = max([ic.carry_w_ft] + [p.short_hi_ft for p in hook if p.group == "cassette"])
+        st, why = _way(lot, S, width, goal=goal, avoid=deck)
+        st_t, why_t = _way(lot, S, width, goal=goal, avoid=deck, trees=True) if trees else (st, why)
+        bare.append(st)
+        treed.append(st_t)
+        parts.append(f"carry path {why}")
+        if st_t != st:
+            parts.append(f"with the canopy: {why_t}")
+        if ic.carry_paved:
+            bare.append(UNMEASURED)
+            treed.append(UNMEASURED)
+            parts.append("no paving data on the lot (spec 3.9: the carry path must be smooth, level and paved)")
+        lv, lv_why = _carry_level(lot, S, deck, width)
+        bare.append(lv)
+        treed.append(lv)
+        parts.append(lv_why)
+    if bundles:
+        st, why = _way(lot, S, ic.route_w_ft, goal=goal, avoid=deck)
+        bare.append(st)
+        treed.append(st)
+        parts.append(f"bundles on the cargo deck: {why}")
+    return _worst(bare), _worst(treed), "; ".join(parts)
 
 
 def _ic80_container(lot: _Lot, working: BaseGeometry, deck: Polygon | None, place: str | None) -> Check:
@@ -1460,84 +1694,147 @@ def _ic80_container(lot: _Lot, working: BaseGeometry, deck: Polygon | None, plac
     )
 
 
+@dataclass(frozen=True)
+class _LoadPick:
+    """Where one trailer load parks and how its pieces reach the crane."""
+
+    #: The best status with no tree read (over every place), and the
+    #: chosen place's status with the canopy as an obstacle.
+    status: Status
+    treed: Status
+    detail: str
+    #: ``lot`` / ``street``, plus `` (carried)`` where any kind is carried;
+    #: None where no place serves.
+    place: str | None
+    deck: Polygon | None
+    picks: Mapping[str, float]
+    carried: frozenset[str]
+
+
+#: At most this many trailer spots on the lot get a carry path worked out
+#: per load (the best by fewest kinds carried, then shortest pick).
+_LOT_CARRY_TRIES = 6
+
+
 def _ic80_load(
     lot: _Lot, S: np.ndarray, masks: dict[str, np.ndarray], reach: dict[str, float], trucks: Spots,
-    kinds: Sequence[Piece], curb_open: bool,
-) -> tuple[Status, str, int | None, dict[str, float], set[str]]:
-    """One trailer load: the spot where every piece of ``kinds``, anywhere
-    on the deck, is within its pick reach of a crane spot that also sets it
-    (spec 3.5). Walls and bundles may be carried instead (spec 3.7);
-    cassettes may not. Returns the status, the detail, the spot's index,
-    each kind's pick radius there, and the kinds carried."""
+    kinds: Sequence[Piece], no_carry: Mapping[str, str], street_open: bool,
+) -> _LoadPick:
+    """One trailer load. A spot serves where every piece of ``kinds``,
+    anywhere on the deck, is within its pick reach of a crane spot that
+    also sets it (spec 3.5); a kind that is not may be picked at the
+    trailer and carried (spec 3.7, slice 4), unless ``no_carry`` names why
+    it cannot be. The trailer may also stand in the street at a place not
+    measured, every kind then carried. Best: no tree in the way, then the
+    best status, then the fewest kinds carried, then on the lot before the
+    street ("trailer on site is preferred"), then the shortest farthest
+    pick."""
     rules, ic = lot.rules, lot.rules.ic80
-    # Cassettes first (they cannot be carried); each later kind is only
-    # worked out on the spots every earlier cassette kind left standing.
-    kinds = sorted(kinds, key=lambda p: p.group != "cassette")
+    # The kinds that cannot be carried first; each later kind is only
+    # worked out on the spots every earlier such kind left standing.
+    kinds = sorted(kinds, key=lambda p: p.key not in no_carry)
+    by_key = {p.key: p for p in kinds}
     ok: dict[str, np.ndarray] = {}
     picks: dict[str, np.ndarray] = {}
     live = np.ones(len(trucks), dtype=bool)
-    first_short: str | None = None
+    first_short: Piece | None = None
     seen: dict[tuple, tuple[np.ndarray, np.ndarray]] = {}
     for p in kinds:
-        inset = (p.plan_ft[0] / 2, p.plan_ft[1] / 2)
-        key = (inset, reach[p.key], masks[p.key].tobytes(), live.tobytes())
-        if key not in seen:
-            good = np.zeros(len(trucks), dtype=bool)
-            pick = np.full(len(trucks), np.inf)
-            Sm = S[masks[p.key]].astype(np.float32)
-            idx = np.flatnonzero(live)
-            if len(Sm) and len(idx):
-                Q = trucks.take(idx).places_on(rules.deck_l_ft, rules.truck_w_ft, inset, rules.deck_step_ft)
-                for i0 in range(0, len(idx), 128):
-                    q = Q[i0 : i0 + 128].astype(np.float32)
-                    d = np.sqrt(((q[:, :, None, :] - Sm[None, None, :, :]) ** 2).sum(-1))
-                    d = np.where((d >= ic.min_radius_ft - EPS) & (d <= reach[p.key] + EPS), d, np.inf)
-                    best = d.min(axis=2)
-                    pick[idx[i0 : i0 + 128]] = best.max(axis=1)
-                    good[idx[i0 : i0 + 128]] = np.isfinite(best).all(axis=1)
-            seen[key] = (good, pick)
-        ok[p.key], picks[p.key] = seen[key]
-        if p.group == "cassette":
+        if p.key not in reach:
+            ok[p.key], picks[p.key] = np.zeros(len(trucks), dtype=bool), np.full(len(trucks), np.inf)
+        else:
+            inset = (p.plan_ft[0] / 2, p.plan_ft[1] / 2)
+            key = (inset, reach[p.key], masks[p.key].tobytes(), live.tobytes())
+            if key not in seen:
+                good = np.zeros(len(trucks), dtype=bool)
+                pick = np.full(len(trucks), np.inf)
+                Sm = S[masks[p.key]].astype(np.float32)
+                idx = np.flatnonzero(live)
+                if len(Sm) and len(idx):
+                    Q = trucks.take(idx).places_on(rules.deck_l_ft, rules.truck_w_ft, inset, rules.deck_step_ft)
+                    for i0 in range(0, len(idx), 128):
+                        q = Q[i0 : i0 + 128].astype(np.float32)
+                        d = np.sqrt(((q[:, :, None, :] - Sm[None, None, :, :]) ** 2).sum(-1))
+                        d = np.where((d >= ic.min_radius_ft - EPS) & (d <= reach[p.key] + EPS), d, np.inf)
+                        best = d.min(axis=2)
+                        pick[idx[i0 : i0 + 128]] = best.max(axis=1)
+                        good[idx[i0 : i0 + 128]] = np.isfinite(best).all(axis=1)
+                seen[key] = (good, pick)
+            ok[p.key], picks[p.key] = seen[key]
+        if p.key in no_carry:
             live = live & ok[p.key]
             if not live.any() and first_short is None:
-                first_short = p.label
-    must = [p.key for p in kinds if p.group == "cassette"]
-    carry = [p.key for p in kinds if p.group != "cassette"]
-    all_ok = np.all([ok[k] for k in ok], axis=0) if ok else np.ones(len(trucks), dtype=bool)
-    must_ok = np.all([ok[k] for k in must], axis=0) if must else np.ones(len(trucks), dtype=bool)
-    # Best spot: the fewest kinds carried, then on the lot before the curb,
-    # then the shortest farthest pick among the kinds it serves.
-    if picks:
-        stack = np.array([np.where(ok[k], picks[k], 0.0) for k in picks])
-        worst = stack.max(axis=0)
+                first_short = p
+    n = len(trucks)
+    must = [p.key for p in kinds if p.key in no_carry]
+    must_ok = np.all([ok[k] for k in must], axis=0) if must and n else np.ones(n, dtype=bool)
+    if picks and n:
+        worst = np.array([np.where(ok[k], picks[k], 0.0) for k in picks]).max(axis=0)
         short = np.array([~ok[k] for k in picks]).sum(axis=0)
     else:
-        worst = short = np.zeros(len(trucks))
-    lot_first = (trucks.place != "lot").astype(int)
-
-    def pick_best(mask: np.ndarray) -> int:
-        idx = np.flatnonzero(mask)
-        order = np.lexsort((worst[idx], lot_first[idx], short[idx]))
-        return int(idx[order[0]])
-
-    if all_ok.any():
-        i = pick_best(all_ok)
-        return PASS, f"at the {trucks.place[i]}, every piece within reach", i, {k: float(picks[k][i]) for k in picks}, set()
-    if must_ok.any():
-        i = pick_best(must_ok)
-        carried = {k for k in carry if not ok[k][i]}
-        return (
-            UNMEASURED,
-            f"at the {trucks.place[i]}, the cassettes within reach; {len(carried)} wall or bundle kinds "
-            "carried (a paved, level route is not checked)",
-            i, {k: float(picks[k][i]) for k in picks}, carried,
+        worst = short = np.zeros(n)
+    lot_first = (trucks.place != "lot").astype(int) if n else np.zeros(0, dtype=int)
+    options: list[tuple[tuple, _LoadPick]] = []
+    idx = np.flatnonzero(must_ok)
+    order = idx[np.lexsort((worst[idx], lot_first[idx], short[idx]))] if len(idx) else idx
+    lot_tries = 0
+    street_seen: dict[frozenset[str], tuple[Status, Status, str]] = {}
+    for i in order:
+        place = str(trucks.place[i])
+        carried = frozenset(k for k in picks if not ok[k][i])
+        if carried and place == "lot" and lot_tries >= _LOT_CARRY_TRIES:
+            continue
+        if carried and place != "lot" and carried in street_seen:
+            continue  # the same carry from the street; the first had the shorter picks
+        deck = Polygon(trucks.corners[i])
+        got = {k: float(picks[k][i]) for k in picks if ok[k][i]}
+        if not carried:
+            options.append(((0, 0, 0, int(lot_first[i]), float(worst[i])),
+                            _LoadPick(PASS, PASS, f"at the {place}, every piece within reach", place, deck, got, carried)))
+            break  # spots are in order: this is the best
+        if place == "lot":
+            lot_tries += 1
+            st, st_t, why = _carry(lot, S, [by_key[k] for k in sorted(carried)], deck)
+        else:
+            if carried not in street_seen:
+                street_seen[carried] = _carry(lot, S, [by_key[k] for k in sorted(carried)], None)
+            st, st_t, why = street_seen[carried]
+        names = ", ".join(by_key[k].label.lower() for k in sorted(carried))
+        options.append((
+            (_ORDER[st_t], _ORDER[st], len(carried), int(lot_first[i]), float(worst[i])),
+            _LoadPick(st, st_t, f"at the {place}, {names} picked there and carried: {why}", f"{place} (carried)", deck,
+                      got, carried),
+        ))
+    if "street" in rules.ic80_places and lot.site.street and not any(p.key in no_carry for p in kinds):
+        # The trailer in the street at a place not measured: every kind is
+        # picked at the trailer and carried.
+        carried = frozenset(by_key)
+        st, st_t, why = _carry(lot, S, kinds, None)
+        options.append((
+            (_ORDER[st_t], _ORDER[st], len(carried), 1, math.inf),
+            _LoadPick(st, st_t, f"in the street, every piece picked there and carried: {why}", "street (carried)", None,
+                      {}, carried),
+        ))
+    if options:
+        best = min(options, key=lambda o: o[0])[1]
+        bare = _best(o[1].status for o in options)
+        return dataclasses.replace(best, status=bare) if _ORDER[bare] < _ORDER[best.status] else best
+    st = UNMEASURED if street_open else FAIL
+    if not n:
+        return _LoadPick(
+            st, st, "no place for the trailer clear of the working ground and within the IC-80's reach"
+            + ("; the street trailer's place is not measured (no street centreline held)" if street_open else ""),
+            None, None, {}, frozenset(),
         )
-    st: Status = UNMEASURED if curb_open else FAIL
-    return st, (
-        "no trailer spot has every cassette within the IC-80's reach (cassettes cannot be carried); "
-        f"the first short: {first_short or 'a cassette'}"
-        + ("; the curb in front is not measured" if curb_open else "")
-    ), None, {}, set()
+    short_p = first_short or next((by_key[k] for k in must), None)
+    why = no_carry.get(short_p.key, "") if short_p is not None else ""
+    return _LoadPick(
+        st, st,
+        "no trailer spot has every piece that cannot be carried within the IC-80's reach; "
+        f"the first short: {short_p.label if short_p else 'a piece'}" + (f" ({why})" if why else "")
+        + ("; the street trailer's place is not measured (no street centreline held)" if street_open else ""),
+        None, None, {}, frozenset(),
+    )
 
 
 @dataclass(frozen=True, slots=True)
@@ -1555,42 +1852,48 @@ class TwoParks:
     then_name: str
 
 
+@dataclass(frozen=True)
+class _Trailer:
+    """Every load's park: the worst load's status (no tree read), the loads
+    a tree stops, the detail, each load's (place, deck), each kind's pick
+    radius (the farthest over its loads), the kinds carried, the loads
+    that moved."""
+
+    status: Status
+    tree_loads: tuple[int, ...]
+    detail: str
+    spots: Mapping[int, tuple[str, Polygon | None]]
+    picks: Mapping[str, float]
+    carried: frozenset[str]
+    moved: frozenset[int]
+
+
 def _ic80_trailer(
     lot: _Lot, S: np.ndarray, masks: dict[str, np.ndarray], reach: dict[str, float], working: BaseGeometry,
-    two: TwoParks | None = None,
-) -> tuple[Status, str, dict[int, tuple[str, Polygon]], dict[str, float], set[str], set[int]]:
+    no_carry: Mapping[str, str], two: TwoParks | None = None,
+) -> _Trailer:
     """Where each trailer load parks. Steph 2026-11-14: "the empty trailer
     leaves before the new full trailer arrives", so each of the four loads
-    takes whichever spot suits it, one after another. One spot serves the
-    whole of a load, except a wall load on both faces (``two``), which may
-    park at the first face and then move once to the other. Returns the
-    worst load's status, the detail by load, each load's (place, deck),
-    each kind's pick radius (the farthest over the loads it rides), the
-    kinds carried, and the loads that moved."""
+    takes whichever spot suits it, one after another: on the lot or in the
+    street (slice 4). One spot serves the whole of a load, except a wall
+    load on both faces (``two``), which may park at the first face and then
+    move once to the other."""
     rules = lot.rules
-    trucks = Spots.join([s for s, place in ((lot.lot_spots, "lot"), (lot.curb_spots, "curb")) if place in rules.places])
+    parts = [s for s, place in ((lot.lot_spots, "lot"), (lot.street_spots, "street")) if place in rules.ic80_places]
+    trucks = Spots.join(parts)
     if len(trucks):
         clear = ~shapely.intersects(_polys(trucks.clear), working) & ~shapely.intersects(_polys(trucks.corners), working)
         trucks = trucks.take(clear)
-    curb_open = "curb" in rules.places and not lot.curb_measured
-    if not len(trucks):
-        st: Status = UNMEASURED if curb_open else FAIL
-        return st, "no place for the trailer clear of the working strip" + (
-            "; the curb in front is not measured" if curb_open else ""
-        ), {}, {}, set(), set()
-    far_r = max(reach.values()) if reach else 0.0
-    seg = shapely.linestrings(S) if len(S) > 1 else Point(*S[0])
-    centre_d = shapely.distance(shapely.points(trucks.centres), seg)
-    trucks = trucks.take(centre_d <= far_r + rules.deck_l_ft / 2 + EPS)
-    if not len(trucks):
-        st = UNMEASURED if curb_open else FAIL
-        return st, "every trailer spot is beyond the IC-80's reach" + (
-            "; the curb in front is not measured" if curb_open else ""
-        ), {}, {}, set(), set()
+    if len(trucks):
+        far_r = max(reach.values()) if reach else 0.0
+        centre_d = shapely.distance(shapely.points(trucks.centres), shapely.multipoints(S))
+        trucks = trucks.take(centre_d <= far_r + rules.deck_l_ft / 2 + EPS)
+    street_open = "street" in rules.ic80_places and bool(lot.site.street) and not lot.street_measured
     loads = sorted({n for p in rules.pieces for n in p.loads})
     statuses: list[Status] = []
+    tree_loads: list[int] = []
     details: list[str] = []
-    spots: dict[int, tuple[str, Polygon]] = {}
+    spots: dict[int, tuple[str, Polygon | None]] = {}
     picks: dict[str, float] = {}
     carried: set[str] = set()
     moved: set[int] = set()
@@ -1598,40 +1901,76 @@ def _ic80_trailer(
         kinds = [p for p in rules.pieces if n in p.loads and p.key in reach]
         if not kinds:
             continue
-        st, detail, i, got, carry = _ic80_load(lot, S, masks, reach, trucks, kinds, curb_open)
-        spot = (str(trucks.place[i]), Polygon(trucks.corners[i])) if i is not None else None
+        got = _ic80_load(lot, S, masks, reach, trucks, kinds, no_carry, street_open)
+        detail = got.detail
+        spot = (got.place, got.deck) if got.place is not None else None
+        st, st_t, carry, pk = got.status, got.treed, got.carried, dict(got.picks)
         fronts = [p for p in kinds if p.place == "front_wall"]
         rest = [p for p in kinds if p.place != "front_wall"]
-        if two is not None and st != PASS and fronts and rest:
+        if two is not None and (st != PASS or st_t != PASS) and fronts and rest:
             # Option A: park at the first face for the back walls, the end
             # and party walls; then move once for the front walls.
             first = {k: m & two.first for k, m in masks.items()}
             then = {k: m & two.then for k, m in masks.items()}
-            st1, d1, i1, got1, carry1 = _ic80_load(lot, S, first, reach, trucks, rest, curb_open)
-            st2, d2, i2, got2, carry2 = _ic80_load(lot, S, then, reach, trucks, fronts, curb_open)
-            st12 = _worst([st1, st2])
-            if (_ORDER[st12], len(carry1 | carry2)) < (_ORDER[st], len(carry)):
-                st, carry, got = st12, carry1 | carry2, {**got1, **got2}
+            g1 = _ic80_load(lot, S, first, reach, trucks, rest, no_carry, street_open)
+            g2 = _ic80_load(lot, S, then, reach, trucks, fronts, no_carry, street_open)
+            st12, t12 = _worst([g1.status, g2.status]), _worst([g1.treed, g2.treed])
+            if (_ORDER[t12], _ORDER[st12], len(g1.carried | g2.carried)) < (_ORDER[st_t], _ORDER[st], len(carry)):
+                st, st_t, carry, pk = st12, t12, g1.carried | g2.carried, {**g1.picks, **g2.picks}
                 detail = (
-                    f"parked at the {two.first_name} for the {two.first_name} walls, end and party walls: {d1}; "
-                    f"then moved once to the {two.then_name} for the {two.then_name} walls: {d2}"
+                    f"parked at the {two.first_name} for the {two.first_name} walls, end and party walls: {g1.detail}; "
+                    f"then moved once to the {two.then_name} for the {two.then_name} walls: {g2.detail}"
                 )
                 spot = (
-                    f"{trucks.place[i1] if i1 is not None else 'none'} at the {two.first_name}, then "
-                    f"{trucks.place[i2] if i2 is not None else 'none'} at the {two.then_name}",
-                    Polygon(trucks.corners[i1]) if i1 is not None else None,
-                ) if i1 is not None or i2 is not None else None
+                    f"{g1.place or 'none'} at the {two.first_name}, then {g2.place or 'none'} at the {two.then_name}",
+                    g1.deck,
+                ) if g1.place is not None or g2.place is not None else None
                 moved.add(n)
         statuses.append(st)
+        if _ORDER[st_t] > _ORDER[st]:
+            tree_loads.append(n)
         details.append(f"load {n}: {detail}")
         if spot is not None:
-            spots[n] = spot  # type: ignore[assignment]
-        for k, r in got.items():
+            spots[n] = spot
+        for k, r in pk.items():
             picks[k] = max(picks.get(k, 0.0), r)
         carried |= carry
     if not statuses:
-        return FAIL, "no piece can be set", {}, {}, set(), set()
-    return _worst(statuses), "; ".join(details), spots, picks, carried, moved
+        return _Trailer(FAIL, (), "no piece can be set", {}, {}, frozenset(), frozenset())
+    return _Trailer(_worst(statuses), tuple(tree_loads), "; ".join(details), spots, picks, frozenset(carried),
+                    frozenset(moved))
+
+
+_FrontSets = tuple[list[Lift], dict[str, np.ndarray], dict[str, float], dict[str, float]]
+
+
+def _ic80_sets(lot: _Lot, S: np.ndarray, su: np.ndarray, fronts: Sequence[int]) -> list[_FrontSets]:
+    """Per "front" reading: every piece's set lift from the crane spots
+    ``S`` (spec 3.4-3.5), the spots that set each kind, each kind's pick
+    reach off the trailer, and each kind's set radius."""
+    rules, ic, frame = lot.rules, lot.rules.ic80, lot.frame
+    out: list[_FrontSets] = []
+    for f in fronts:
+        lifts: list[Lift] = []
+        masks: dict[str, np.ndarray] = {}
+        picks_r: dict[str, float] = {}
+        sets: dict[str, float] = {}
+        for p in rules.pieces:
+            gross = p.weight_lb + ic.rigging_for(p) + ic.hook_lb
+            uv = local_points(frame, p, rules.homes, f)
+            P = frame.worlds(uv)
+            if len(S):
+                r_set, d = _set_radius(S, su, P, uv[:, 0], ic, p.points_at_crane)
+            else:
+                r_set, d = math.inf, np.zeros((0, len(P)))
+            R = ic.reach(gross, p.hook_ft)
+            sets[p.key] = r_set
+            if R is not None:
+                masks[p.key] = (d <= R + EPS).any(axis=1)
+                picks_r[p.key] = ic.pick_reach(gross) or R
+            lifts.append(_ic80_set_lift(ic, rules, p, gross, r_set, R))
+        out.append((lifts, masks, picks_r, sets))
+    return out
 
 
 def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
@@ -1649,7 +1988,7 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
             off = geom.difference(lot.open_lot).area
             return Check(name, FAIL, f"{what} runs {off:,.0f} sq ft off the lot or into the building")
         if obst is not None and geom.intersects(obst):
-            return Check(name, FAIL, f"{what} meets another building or a tree")
+            return Check(name, FAIL, f"{what} meets another building")
         return Check(name, PASS, what)
 
     checks.append(on_lot("working strip", ground["strip"], f"{ic.strip_w_ft:g} ft strip along the whole face"))
@@ -1659,26 +1998,16 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
             f"outriggers {ic.out_w_ft:.1f} ft wide at {ic.off_face_ft:g} ft off the face (to {ic.off_face_ft + ic.out_w_ft / 2:.1f} ft)",
         )
     )
-    grade: float | None = None
-    if lot.grade_of is None:
-        checks.append(Check("level", UNMEASURED, "no elevation model read"))
-    else:
-        grade = lot.grade_of(working)
-        if grade is None:
-            checks.append(Check("level", UNMEASURED, "the elevation model does not cover the strip"))
-        elif grade <= ic.level_pct + EPS:
-            checks.append(Check("level", PASS, f"strip falls {grade:.2f}%"))
-        else:
-            checks.append(Check("level", FAIL, f"strip falls {grade:.2f}%, more than {ic.level_pct:g}%"))
     swing = ground["swing"]
     if not _covered(site.lot, swing):
         checks.append(Check("swing room", FAIL, f"less than {ic.swing_ft:g} ft beyond a wall end inside the lot"))
     elif obst is not None and swing.intersects(obst):
-        checks.append(Check("swing room", FAIL, "another building or a tree stands in the swing room"))
+        checks.append(Check("swing room", FAIL, "another building stands in the swing room"))
     else:
         checks.append(Check("swing room", PASS, f"{ic.swing_ft:g} ft beyond each end, inside the lot"))
 
-    # Lifts: every piece set from an allowed crane spot (spec 3.4-3.5).
+    # The crane spots: every step along the face, plus the exact spots a
+    # piece's least radius or along-offset asks for.
     fronts = (lot.front,) if lot.front != 0 else (1, -1)
     extra: list[float] = []
     for f in fronts:
@@ -1690,49 +2019,84 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
                     if p.points_at_crane:
                         du = max(du, ic.along_ft)
                     extra.extend((pu - du, pu + du))
-    S, su = _crane_line(frame, ic, sides, rules.crane_step_ft, extra)
-    lifts_by_front: list[tuple[list[Lift], dict[str, np.ndarray], dict[str, float], dict[str, float]]] = []
-    for f in fronts:
-        lifts: list[Lift] = []
-        masks: dict[str, np.ndarray] = {}
-        reach: dict[str, float] = {}
-        picks_r: dict[str, float] = {}
-        sets: dict[str, float] = {}
-        for p in rules.pieces:
-            gross = p.weight_lb + ic.rigging_for(p) + ic.hook_lb
-            uv = local_points(frame, p, rules.homes, f)
-            P = frame.worlds(uv)
-            r_set, d = _set_radius(S, su, P, uv[:, 0], ic, p.points_at_crane)
-            R = ic.reach(gross, p.hook_ft)
-            sets[p.key] = r_set
-            if R is not None:
-                reach[p.key] = R
-                masks[p.key] = (d <= R + EPS).any(axis=1)
-                picks_r[p.key] = ic.pick_reach(gross) or R
-            lifts.append(_ic80_set_lift(ic, rules, p, gross, r_set, R))
-        lifts_by_front.append((lifts, masks, picks_r, sets))
+    S_all, su_all = _crane_line(frame, ic, sides, rules.crane_step_ft, extra)
+    side_all = np.repeat(np.asarray(sides), len(S_all) // max(len(sides), 1))
+
+    # Level (slice 4, spec 3.9: "Level applies to the crane, not the
+    # strip"): only the set-up spots used, each across its own pads. The
+    # spots within ~3% first; then those not read (unmeasured); then all.
+    grades, cls = _pad_levels(lot, S_all)
+    chosen: tuple[np.ndarray, Status, list[_FrontSets]] | None = None
+    tried: dict[bytes, list[_FrontSets]] = {}
+    for mask, st in ((cls == 0, PASS), (cls <= 1, UNMEASURED), (np.ones(len(S_all), dtype=bool), FAIL)):
+        if not mask.any() or mask.tobytes() in tried:
+            continue
+        got = _ic80_sets(lot, S_all[mask], su_all[mask], fronts)
+        tried[mask.tobytes()] = got
+        if all(lf.status == PASS for lifts, *_ in got for lf in lifts):
+            chosen = (mask, st, got)
+            break
+    if chosen is None:
+        mask = np.ones(len(S_all), dtype=bool)
+        st = PASS if (cls == 0).all() else FAIL if (cls == 2).any() else UNMEASURED
+        chosen = (mask, st, tried.get(mask.tobytes()) or _ic80_sets(lot, S_all, su_all, fronts))
+    use, level_st, lifts_by_front = chosen
+    S, side_of = S_all[use], side_all[use]
+    used = grades[use]
+    pad_grade = float(np.nanmax(used)) if np.isfinite(used).any() else None
+    if lot.grade_of is None:
+        checks.append(Check("level", UNMEASURED, "no elevation model read"))
+    elif level_st == PASS:
+        checks.append(Check(
+            "level", PASS,
+            f"every set-up spot used is within {ic.level_pct:g}% across its pads"
+            + (f" (steepest {pad_grade:.2f}%)" if pad_grade is not None else ""),
+        ))
+    elif level_st == UNMEASURED:
+        checks.append(Check(
+            "level", UNMEASURED,
+            f"{int((cls[use] == 1).sum())} set-up spots needed have pads the elevation model does not cover",
+        ))
+    else:
+        steep = float(np.nanmax(grades[cls == 2])) if (cls == 2).any() else math.nan
+        checks.append(Check(
+            "level", FAIL,
+            f"{int((cls == 2).sum())} of {len(cls)} set-up spots fall more than {ic.level_pct:g}% across their pads "
+            f"(steepest {steep:.2f}%), and every piece needs one",
+        ))
 
     # Each "front" reading is tried with the trailer; where the front is not
     # known, the worse governs (the heavier walls may be the far ones).
     results = []
-    side_of = np.repeat(np.asarray(sides), len(S) // max(len(sides), 1))
-    for f, (lifts, masks, reach, sets) in zip(fronts, lifts_by_front):
+    for f, (lifts, masks, reach, _sets) in zip(fronts, lifts_by_front):
         two = (
             TwoParks(side_of == -f, side_of == f, _face_name(-f, lot.front), _face_name(f, lot.front))
             if len(sides) == 2 else None
         )
-        t_status, t_detail, spots, picks, carried, moved = _ic80_trailer(lot, S, masks, reach, working, two)
+        carry_lifts: dict[str, Lift] = {}
+        no_carry: dict[str, str] = {}
+        for lf in lifts:
+            p = rules.piece(lf.key)
+            carry_lifts[p.key] = cl = _ic80_carry_lift(ic, rules, p, lf)
+            if p.group == "cassette" and not ic.carry_cassettes:
+                no_carry[p.key] = "cassettes cannot be carried (spec section 5, step 1)"
+            elif cl.status != PASS:
+                no_carry[p.key] = f"carried: {cl.why}"
+        tr = _ic80_trailer(lot, S, masks, reach, working, no_carry, two)
         final: list[Lift] = []
         for lf in lifts:
             p = rules.piece(lf.key)
             if lf.status != PASS:
                 final.append(lf)
-                continue
-            if lf.key in carried:
-                final.append(_ic80_carry_lift(ic, rules, p, lf))
-            elif lf.key in picks and math.isfinite(picks[lf.key]):
+            elif lf.key in tr.carried:
+                # The carry (on rubber) and the set (on outriggers): the
+                # harder of the two governs.
+                cl = carry_lifts[lf.key]
+                final.append(max((cl, dataclasses.replace(lf, carried=True)),
+                                 key=lambda x: (_ORDER[x.status], x.pct_of_chart or 0.0)))
+            elif lf.key in tr.picks and math.isfinite(tr.picks[lf.key]):
                 final.append(
-                    _lift(ic.set_chart, "piece", p.key, p.label, p.count, lf.gross_lb, picks[lf.key], lf.set_ft,
+                    _lift(ic.set_chart, "piece", p.key, p.label, p.count, lf.gross_lb, tr.picks[lf.key], lf.set_ft,
                           rules.max_pct)
                 )
             else:
@@ -1744,12 +2108,12 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
         )
         lift_status = _worst(lf.status for lf in final)
         hardest = max((lf.pct_of_chart or 0.0) for lf in final) if final else 0.0
-        stack = _stack_order(lot, sides, f, moved)
-        results.append((t_status, t_detail, spots, final, limit, lift_status, lifts, hardest, stack))
-    results.sort(key=lambda r: (_ORDER[_worst([r[0], r[5]])], r[7]), reverse=True)
-    t_status, t_detail, spots, final, limit, lift_status, set_lifts, _, stack = results[0]
-    checks.append(Check("trailer", t_status, t_detail))
-    checks.append(_ic80_route(lot, ground, S))
+        stack = _stack_order(lot, sides, f, set(tr.moved))
+        results.append((tr, final, limit, lift_status, lifts, hardest, stack))
+    results.sort(key=lambda r: (_ORDER[_worst([r[0].status, r[3]])], bool(r[0].tree_loads), r[5]), reverse=True)
+    tr, final, limit, lift_status, set_lifts, _, stack = results[0]
+    checks.append(Check("trailer", tr.status, tr.detail))
+    checks.append(_ic80_route(lot, ground, S if len(S) else S_all))
     bad = [lf for lf in final if lf.status != PASS]
     checks.append(
         Check(
@@ -1757,26 +2121,51 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
             "; ".join(f"{lf.label}: {lf.why}" for lf in bad) if bad else f"every lift within {rules.max_pct:g}% of the chart",
         )
     )
-    first = spots.get(min(spots)) if spots else None
-    deck = first[1] if first else None
-    place = first[0] if first else None
-    load1 = spots.get(1)
+    bare = _worst(c.status for c in checks)
+    trees = site.trees
+    if trees is not None:
+        if not trees.covered:
+            checks.append(Check("trees", UNMEASURED, f"the {trees.source} does not cover the lot"))
+        else:
+            over = 0.0 if trees.canopy.is_empty else trees.canopy.intersection(working.union(swing)).area
+            if over > 1.0:
+                checks.append(Check(
+                    "trees", FAIL,
+                    f"canopy over {over:,.0f} sq ft of the working ground or swing room ({trees.source}; "
+                    "no height read, so any canopy blocks)",
+                ))
+            elif tr.tree_loads:
+                checks.append(Check(
+                    "trees", FAIL,
+                    "canopy on every carry path of load " + " and ".join(str(n) for n in tr.tree_loads)
+                    + f" ({trees.source}; no height read, so any canopy blocks)",
+                ))
+            else:
+                checks.append(Check("trees", PASS, "no canopy in the working ground, swing room or carry path"))
+    first = tr.spots.get(min(tr.spots)) if tr.spots else None
+    load1 = tr.spots.get(1)
+    carried_any = any(lf.carried for lf in final)
     return IC80Plan(
         faces=faces,
         checks=tuple(checks),
         lifts=tuple(final),
         status=_worst(c.status for c in checks),
         working=working,
-        truck=place,
-        truck_spot=deck,
-        trailer_spots={k: v[0] for k, v in sorted(spots.items())},
-        strip_grade_pct=grade,
+        truck=first[0] if first else None,
+        truck_spot=first[1] if first else None,
+        trailer_spots={k: v[0] for k, v in sorted(tr.spots.items())},
+        pad_grade_pct=pad_grade,
         rigging_limit_lb=limit,
         sets=tuple(set_lifts),
         container=_ic80_container(lot, working.union(swing), load1[1] if load1 else None,
                                   load1[0] if load1 else None),
         stack=stack,
         setup="site",
+        bare_status=bare,
+        extra_notes=(
+            (f"a carry under a power line needs {ic.carry_power_ft:g} ft clearance (spec 3.10): power lines not checked",)
+            if carried_any else ()
+        ),
     )
 
 
@@ -1814,18 +2203,34 @@ def _ic80_set_lift(ic: IC80, rules: Rules, p: Piece, gross: float, r_set: float,
     return _lift(ic.set_chart, "piece", p.key, p.label, p.count, gross, 0.0, r_set, rules.max_pct, extra_fail=short)
 
 
+def with_carry(rules: Rules, *, cassettes: bool | None = None, paved: bool | None = None) -> Rules:
+    """``rules`` with the slice-4 carry switches set (None keeps the
+    config's): ``cassettes`` = cassettes may be carried; ``paved`` = a
+    carry path must be paved."""
+    ic = rules.ic80
+    return dataclasses.replace(rules, ic80=dataclasses.replace(
+        ic,
+        carry_cassettes=ic.carry_cassettes if cassettes is None else cassettes,
+        carry_paved=ic.carry_paved if paved is None else paved,
+    ))
+
+
 def _ic80_carry_lift(ic: IC80, rules: Rules, p: Piece, set_lift: Lift) -> Lift:
-    """A wall carried edge-on, straight ahead, on rubber, the extension off
-    (spec 3.7); a bundle rides the cargo deck. The set radius still
-    governs the set itself."""
+    """A wall carried edge-on, or a cassette (where the switch allows it),
+    straight ahead over the front, on rubber, the extension off (spec 3.7),
+    read on the carry chart at the spec's hook radius; a bundle rides the
+    cargo deck. The path is the trailer check's; the set itself is the set
+    lift's."""
     if p.group == "bundle":
-        return dataclasses.replace(set_lift, carried=True, status=UNMEASURED, why="rides the cargo deck; route not checked")
-    key = "wall_24_ft" if p.plan_ft[0] >= 24 - EPS else "wall_20_ft"
+        return dataclasses.replace(set_lift, carried=True, why="rides the cargo deck")
+    if p.group == "cassette":
+        key = "cassette"
+    else:
+        key = "wall_24_ft" if p.plan_ft[0] >= 24 - EPS else "wall_20_ft"
     r = ic.carry_radius_ft[key]
     gross = p.weight_lb + ic.rigging_for(p) + ic.hook_lb
-    carried = _lift(ic.carry_chart, "piece", p.key, p.label + " (carried)", p.count, gross, r, 0.0, rules.max_pct,
-                    why_unmeasured="carried: a paved, level route is not checked", carried=True)
-    return carried
+    return _lift(ic.carry_chart, "piece", p.key, p.label + " (carried)", p.count, gross, r, 0.0, rules.max_pct,
+                 carried=True)
 
 
 # --------------------------------------------------------------------------
@@ -2226,9 +2631,9 @@ def report(
     """Which crane sets the pod on ``site``, and how (spec section 5).
 
     ``grade_of`` is the fall across a polygon, percent (the screen's
-    :meth:`flats.fit.slope.Terrain.grade` ``.pct``): the IC-80's working
-    strip and the 45 t's pad must each fall no more than 1%. Without it,
-    level is unmeasured and no step passes on it."""
+    :meth:`flats.fit.slope.Terrain.grade` ``.pct``): each IC-80 set-up
+    spot's pads ~3%, the 45 t's pad 1%. Without it, level is unmeasured
+    and no step passes on it."""
     rules = rules or load_rules()
     frame = pod_frame(site.building)
     why: list[str] = []
@@ -2250,6 +2655,8 @@ def report(
         curb_measured=curb_measured,
         grade_of=grade_of,
     )
+    if "street" in rules.ic80_places:
+        lot.street_spots, lot.street_measured = street_truck_spots(site, rules)
     sides = (front, -front) if front else (1, -1)
     attempts: list[Attempt] = []
     won: Attempt | None = None
@@ -2286,26 +2693,33 @@ def report(
             break
         if a.status in (FAIL, UNMEASURED):
             why.extend(f"{_step_words(a.step, front)}: {w}" for w in a.why)
+    # The answer with the canopy left out: the first step that passes bare
+    # (trees only ever add a fail, so it is at or before the real answer).
+    bare = [(a, a.plan.bare_status if isinstance(a.plan, IC80Plan) and a.plan.bare_status else a.status)
+            for a in attempts if a.status != NOT_TRIED]
+    won_bare = next((a for a, st in bare if st == PASS), None)
+    no_trees = _result_of(won_bare) if won_bare is not None else (
+        UNMEASURED_ANSWER if any(st == UNMEASURED for _, st in bare) else NOT_VIABLE
+    )
     if won is not None:
         plan = won.plan
         assert plan is not None
-        face = None
-        if won.step in ("ic80_front", "ic80_back"):
-            face = plan.faces[0]  # type: ignore[union-attr]
-            result = f"{IC80_ONE} ({face})"
-        elif won.step == "ic80_both":
-            result = IC80_BOTH
-        elif won.step == "45t_site":
-            result = T45_SITE
-        else:
-            result = T45_STREET
-        return Report(result, face, plan, tuple(attempts), tuple(why), notes=plan.notes)
+        face = plan.faces[0] if won.step in ("ic80_front", "ic80_back") else None  # type: ignore[union-attr]
+        return Report(_result_of(won), face, plan, tuple(attempts), tuple(why), notes=plan.notes,
+                      result_no_trees=no_trees)
     statuses = [a.status for a in attempts]
     answer = UNMEASURED_ANSWER if UNMEASURED in statuses else NOT_VIABLE
     shown = [a for a in attempts if a.plan is not None]
     shown.sort(key=lambda a: _ORDER.get(str(a.status), 3))
     plan = shown[0].plan if shown else None
-    return Report(answer, None, plan, tuple(attempts), tuple(why), notes=plan.notes if plan else (POWER_NOTE,))
+    return Report(answer, None, plan, tuple(attempts), tuple(why), notes=plan.notes if plan else (POWER_NOTE,),
+                  result_no_trees=no_trees)
+
+
+def _result_of(a: Attempt) -> str:
+    if a.step in ("ic80_front", "ic80_back"):
+        return f"{IC80_ONE} ({a.plan.faces[0]})"  # type: ignore[union-attr]
+    return {"ic80_both": IC80_BOTH, "45t_site": T45_SITE}.get(a.step, T45_STREET)
 
 
 def _step_words(step: str, front: int) -> str:
@@ -2331,6 +2745,27 @@ def site_from_drawing(
     if not drawing.get("fits") or not ring or len(ring) < 4:
         return None
     return Site(lot, Polygon(ring), tuple(street), street_reading)
+
+
+def centre_reader(centrelines: np.ndarray, max_gap_ft: float) -> CentreReading:
+    """A :data:`CentreReading`: each point's distance to its nearest street
+    centreline (:func:`flats.fit.fire.truck_lines`); NaN past
+    ``max_gap_ft``."""
+    tree = shapely.STRtree(centrelines) if len(centrelines) else None
+
+    def read(points: np.ndarray) -> np.ndarray:
+        pts = np.asarray(points, dtype=float).reshape(-1, 2)
+        out = np.full(len(pts), np.nan)
+        if tree is None or not len(pts):
+            return out
+        geoms = shapely.points(pts)
+        idx = tree.nearest(geoms)
+        gap = shapely.distance(geoms, centrelines[idx])
+        live = gap <= max_gap_ft
+        out[live] = gap[live]
+        return out
+
+    return read
 
 
 def street_reader(edges: Any, centrelines: np.ndarray, max_gap_ft: float) -> StreetReading:
@@ -2368,6 +2803,7 @@ def street_reader(edges: Any, centrelines: np.ndarray, max_gap_ft: float) -> Str
 
 __all__ = [
     "Attempt",
+    "CentreReading",
     "Chart",
     "Check",
     "Crane45",
@@ -2392,6 +2828,7 @@ __all__ = [
     "StreetReading",
     "T45_SITE",
     "T45_STREET",
+    "Trees",
     "UNMEASURED_ANSWER",
     "box",
     "container_spots",
@@ -2407,6 +2844,9 @@ __all__ = [
     "report",
     "rules_from",
     "set_points",
+    "centre_reader",
     "site_from_drawing",
     "street_reader",
+    "street_truck_spots",
+    "with_carry",
 ]

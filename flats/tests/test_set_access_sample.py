@@ -94,3 +94,41 @@ def test_grade_is_read_by_default() -> None:
 
     src = Path(sample.__file__).read_text(encoding="utf-8")
     assert '"--no-grade", dest="grade", action="store_false"' in src
+
+
+def test_summary_sets_the_carry_cases_and_the_trees_side_by_side() -> None:
+    """Slice 4: the spec and relaxed carry cases, each also counted with the
+    canopy left out; how the IC-80 works; each step's failing checks."""
+
+    def row(tlid: str, case: str, result: str, **kw) -> dict:
+        label = {"spec/light": "spec, light gear (400 lb)", "relaxed/light": "relaxed, light gear (400 lb)"}[case]
+        return {"TLID": tlid, "jurisdiction": "Portland", "case": case, "case_label": label, "gear": "light",
+                "wall_rigging_lb": 400, "result": result, **kw}
+
+    rows = [
+        row("A", "spec/light", "IC-80 one face (front)", result_no_trees="IC-80 one face (front)", ic80_way="street",
+            ic80_back_checks="trailer, trees"),
+        row("A", "relaxed/light", "IC-80 one face (front)", result_no_trees="IC-80 one face (front)", ic80_way="street"),
+        row("B", "spec/light", "45 t on site", result_no_trees="IC-80 one face (front)",
+            ic80_front_checks="trees", ic80_back_checks="trailer"),
+        row("B", "relaxed/light", "IC-80 one face (back)", result_no_trees="IC-80 one face (back)",
+            ic80_way="street + carry"),
+    ]
+    text = _summary(rows, {"law_on": "2026-11-15"}, _args(), 60.0)
+    assert ("| result | spec, light gear (400 lb) | relaxed, light gear (400 lb) | spec, light gear (400 lb), "
+            "no trees | relaxed, light gear (400 lb), no trees |") in text
+    assert "| IC-80 one face | 1 | 2 | 2 | 2 |" in text and "| 45 t on site | 1 | 0 | 0 | 0 |" in text
+    assert "| 45 t on site -> IC-80 one face (front) | 1 |" in text
+    assert "| street + carry | 1 |" in text
+    assert "| check | ic80_front | ic80_back | ic80_both |" in text and "| trailer | 0 | 2 | 0 |" in text
+    assert "| trees | 1 | 1 | 0 |" in text
+
+
+def test_carry_cases_are_the_switches() -> None:
+    from scripts.flats_set_access_sample import COMBOS, _cases
+
+    assert COMBOS["spec"] == (False, True) and COMBOS["relaxed"] == (True, False)
+    cases = _cases(("spec", "relaxed"), ("light",))
+    assert set(cases) == {"spec/light", "relaxed/light"}
+    assert (cases["relaxed/light"][2].ic80.carry_cassettes, cases["relaxed/light"][2].ic80.carry_paved) == (True, False)
+    assert cases["spec/light"][2].ic80.wall_rigging_lb == 400

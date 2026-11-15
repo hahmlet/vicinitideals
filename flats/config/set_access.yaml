@@ -50,8 +50,8 @@
 #   carries "power lines not checked".
 # ---------------------------------------------------------------------------
 
-version: 3
-source: "Factory-Sim docs/research/S3e-crane-20x25.md (rewritten 2026-11-14), Steph 2026-11-14"
+version: 4
+source: "Factory-Sim docs/research/S3e-crane-20x25.md (rewritten 2026-11-14, level 5dcd917), Steph 2026-11-14"
 
 lifts:
   # Spec 3.3: "Planning line: 75% of chart. Anything above that is a
@@ -232,8 +232,42 @@ ic80:
     extension: removed
     path_width: "6 ft 6 in"
     speed_mph: "2"
-    cassettes_carried: false
     deck_lb: "14,000"
+    # SLICE 4 SWITCHES (Steph 2026-11-14, after the first sample: "the
+    # IC-80 is meant to drive to a trailer parked in the street, pick under
+    # the wires, carry to the lot and lift"). The spec and Steph's plan
+    # disagree on two carry rules; Steph is asking the crane agent. Until
+    # answered each is a switch, defaulting to the SPEC (the cautious
+    # reading); the sample also runs both relaxed.
+    # (a) Spec 5 step 1 (S3e L619): "Cassettes cannot be carried." Spec 3.7:
+    #     "Cassettes are not carried. They have to be picked off a trailer
+    #     within reach." Relaxed, a cassette carry is still read on the
+    #     on-rubber chart (spec 3.7 prints 79-96% with the extension off,
+    #     over the 75% planning line).
+    cassettes_carryable: false
+    # (b) Spec 3.9 (S3e L386-387): "Carrying (the fallback, 3.7) is
+    #     different: on rubber there is nothing to level the crane, so the
+    #     carry path itself must be smooth, level and paved [vendor]." True:
+    #     a carry path counts only on ground known paved. FLATS holds no
+    #     paving data on a lot (the street is paved; the curb is ignored,
+    #     Steph 2026-11-14 "drive over it, replace it cheaply"), so every
+    #     carry onto the lot is UNMEASURED, never a pass. False: the path
+    #     need only be open, drivable and level (below).
+    path_must_be_paved: true
+    # The level a carry path must hold where paving is not required. The
+    # spec prints no carry figure ("smooth, level"); the agent uses the
+    # spec's only levelling figure, the pads' ~3% (3.9) [est, agent; for
+    # the crane agent to confirm]. The fall is read as the plane best
+    # fitting the ground along the path.
+    path_level_pct: "~3"
+    # (c) Spec 3.10 (S3e L418): "Carrying a panel under a line: no, in
+    #     practice. A load means 1926.1408 applies: 20 ft from the line".
+    #     FLATS holds no power-line data: reported "power lines not
+    #     checked", never a block (Steph 2026-11-14).
+    power_line_clearance_ft: "20"
+    # Bundles (stair kits, truss bundles) ride the cargo deck ("It suits
+    # bundles, mats and tools"), nothing on the hook: they need the IC-80's
+    # own way in only (agent reading: the paved rule is the hook carry's).
 
   # Spec 3.8 [calc, est]: "The container weighs ~4,100-4,600 lb [est]. Add
   # ~150 lb of chain sling [est] and the 90 lb hook"; "the crane lifts the
@@ -245,16 +279,25 @@ ic80:
   # into the street for this one lift; "power lines not checked" still.
   container: {sling_lb: "~150", within_ft: "~10", extension: stowed, street_allowed: true}
 
-  # Spec 3.9 [est]: "Plan level within 1% (about 1/8 in per foot) at each
-  # set-up spot and let the outriggers take out the rest"; section 5: "a
-  # firm, level (<=1%), drained strip".
-  level_pct: "1"
+  # Spec 3.9 (updated 5dcd917), "Level applies to the crane, not the
+  # strip" [vendor wording, est reading]: "the requirement falls only on
+  # the four pad spots at each set-up"; "Until it is known, plan the ground
+  # across the pads within ~3% (about 3-4 in over the 9 ft 7 in spread)
+  # [est]"; "Between spots: the strip only has to be firm and drivable for
+  # the empty crane." Section 5 step 1: "The strip does not have to be
+  # level: only each set-up spot's four pads must be firm and within what
+  # the legs and mats can level (~3% across the pads until Broderson's
+  # figure is known, more with cribbing; 3.9)." Read as the fall of the
+  # plane fitted to the ground under each spot's outrigger footprint. The
+  # cribbing allowance is not taken (no figure).
+  pad_level_pct: "~3"
 
   # Spec section 5, step 1 (Steph's rule; checks est unless marked).
   site:
-    # "Working strip: a firm, level (<=1%), drained strip along the full 80
-    # ft of one long face, about 10 ft wide, with the crane's centre ~6-7 ft
-    # off the face." The outrigger footprint at the crane line is checked as
+    # "Working strip: a firm, drained, drivable strip along the full 80 ft
+    # of one long face, about 10 ft wide, with the crane's centre ~6-7 ft
+    # off the face. The strip does not have to be level" (level: pads only,
+    # pad_level_pct above). The outrigger footprint at the crane line is checked as
     # well (it reaches past 10 ft: 7 + 9 ft 7 in / 2 = 11.8 ft).
     strip_width_ft: "~10"
     # "Swing room: 10-12 ft beyond each wall end. Clear of trees, neighbours
@@ -270,6 +313,22 @@ ic80:
     # firm enough for ~17,600 lb."
     route_width: "6 ft 6 in"
     route_width_at_turns: "9 ft 6 in"
+    # TREES (slice 4, Steph 2026-11-14: "trees matter more" than the curb).
+    # Spec 5 step 1, swing room: "Clear of trees, neighbours and walls
+    # already set. Boom tip up to ~41 ft." A tree is read off a public
+    # canopy map (the sample's --canopy: Metro RLIS Canopy 2019, LiDAR +
+    # imagery, summer 2019) as crown cover, never as a trunk or a species.
+    # Any canopy cell inside the IC-80's swing room, its working strip and
+    # outrigger band, or on a carry path, is an obstruction, its own reason
+    # ("trees"), whatever its height (cautious: the boom tip reaches ~41 ft
+    # and a carried wall's ~19-21 ft, spec 3.10). The map's cell value is
+    # the crown's top height (canopy2019.xml: "Value: Tree height"; cells
+    # read 10 ft and up), not the clearance under it, so no height clears
+    # a tree. A lot outside the map's data extent, or with no crown within
+    # 500 ft (no LiDAR there), has its trees unmeasured. This is a set-access
+    # REPORT item only: rulings 2026-11-01-trees-ignored-entered-per-lot
+    # (no tree limit holds a lot's colour) is not touched.
+    trees: canopy_blocks
 
 # ===========================================================================
 # SECONDARY: 45 t boom truck, National NBT45-2 class, hired with its
@@ -409,8 +468,18 @@ truck:
   #   of the truck that backs up as a valid landing spot. It'll be fairly
   #   level, and the size of the load."
   # * AT THE CURB in front of the lot, parallel to it, where the street's
-  #   near curb is measured (flats/geom/curbs.py).
+  #   near curb is measured (flats/geom/curbs.py). The 45 t only.
   places: [lot, curb]
+  # The IC-80's trailer (slice 4, Steph 2026-11-14): on the lot first
+  # ("trailer on site is preferred (faster) but not required"), else IN THE
+  # STREET along the lot's frontage, placed from the street geometry held
+  # (the street lot line and the street's centreline), never from a curb:
+  # "ignore the curb" (drive over it). The deck lies parallel to the
+  # frontage with its far side at the centreline (the farthest it can
+  # stand on the near half of the street: the cautious place for a pick off
+  # it). Where no centreline is held its place is not known: no pick off it
+  # is measured, but the IC-80 may still drive to it, pick and carry.
+  ic80_places: [lot, street]
 
 # Every piece of one pod (spec 3.3, "from the product model on main,
 # 2026-11-14 [calc on est inputs]"). Both cranes lift the same pieces.
