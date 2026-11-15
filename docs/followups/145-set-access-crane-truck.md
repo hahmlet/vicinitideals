@@ -132,3 +132,5 @@ Steph's crane agent: cassettes carried flat CROSSWISE (hook 10.8-12.1 ft, 27-47%
 ## 11-15 slice 4b BUILT: flats/set-access-3 ec10aab7; sample on 598 rel8 greens (light gear)
 Spec / trees left out: IC-80 5 / 25; 45 t 47 / 42; not viable 57 / 55; undecided 489 / 476. Walls flat-crosswise adds 1 lot. Trees cost ~20 IC-80 lots. Commonest IC-80 failures: trees, then street-trailer wall carry (no 6.5 ft path, or > ~1% off level). Most undecided stall at the 45 t street set-up: pavement width missing on 469 lots. Agent's cautious call: the 27 ft cassette path must stay clear right up to the hang point (~12 ft off a set-up spot), so a back face needs ~32 ft of open yard -- for Steph's crane agent to confirm.
 Offered Steph: a quick search for street pavement-width data (scout first, then a lane only if a usable source exists).
+
+Steph 11-15: yes, look for street width. Scout running -> ../vicinitideals-worktrees/street-width-scout.md; build lane only if a usable source exists.
