@@ -356,7 +356,7 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
             for r in by_gear[a]
             if r.get("TLID") in res_b and _group(r.get("result")) != res_b[r.get("TLID")]
         )
-        lines += [f"## Lots whose answer moves from {a} to {b} gear", ""]
+        lines += [f"## Lots whose answer moves from {a} to {b}", ""]
         lines += _table(moves, f"{a} -> {b}") if moves else ["(none)"]
         lines.append("")
     stacks = collections.Counter(

@@ -243,7 +243,8 @@ ic80:
     #     "Cassettes are not carried. They have to be picked off a trailer
     #     within reach." Relaxed, a cassette carry is still read on the
     #     on-rubber chart (spec 3.7 prints 79-96% with the extension off,
-    #     over the 75% planning line).
+    #     over the 75% planning line; read here at 20.6 ft on the 22 ft row,
+    #     the stair cassette alone comes in under it, at 72%).
     cassettes_carryable: false
     # (b) Spec 3.9 (S3e L386-387): "Carrying (the fallback, 3.7) is
     #     different: on rubber there is nothing to level the crane, so the
