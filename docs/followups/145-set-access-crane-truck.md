@@ -93,3 +93,6 @@ Steph asked the cost of evaluating BOTH cranes. Answer given: the solver is the 
 
 ## 11-14 slice 2 BUILT: flats/set-access-2 9c8f9ff0 (report only, not wired)
 Order 28 t site, 45 t site, 28 t street, 45 t street; street only where recorded road width >= pad width, always "power lines not checked". 45 t lands whole loads on the truck spot. Finding: 28 t rarely works on site -- the site container (~6,150 lb rigged) must be within ~40 ft, rear-only swing puts it ~41 ft+. Sample-run command in ../vicinitideals-worktrees/set-access-2.handoff.md (run on 137 after the rel8 bound). Unmeasured: power lines, pad slope, boom height, turning paths, ground bearing. Steph questions on the sheet (Q21-25): container on the truck or separate, 28 t turntable position, load at the trailer back, stair kits/truss bundles reach, 75% of chart fail or mark.
+
+## Steph 2026-11-14 (later): crane plan changed -- IC-80 primary, 45 t secondary, 28 t dropped
+Spec: Factory-Sim docs/research/S3e-crane-20x25.md (fc9ead7). Primary owned Broderson IC-80-3H (9 t carry-deck, works from one long face); fallback hired 45 t NBT45-2; viability rule section 5 (IC-80 one face -> both faces -> 45 t -> not viable). Slice 3 being built on flats/set-access-3 (report only; power lines still not checked). Slice-2 questions on the 28 t (container reach, turntable) are moot.
