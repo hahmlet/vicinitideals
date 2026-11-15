@@ -246,6 +246,10 @@ def test_a_lot_inside_each_area_is_inside_and_one_far_away_is_not(layers, condit
         ("or/washington/hillsboro", "SCR-LD", ["hillsboro_downtown_plan_district"], 4),
         ("or/washington/hillsboro", "SCR-MD", ["hillsboro_downtown_plan_district"], 4),
         ("or/washington/hillsboro", "SCR-HD", ["hillsboro_downtown_plan_district"], 4),
+        # 2026-11-14 (rel8 hold, FOLLOWUPS 193): every lot inside the traced
+        # line, whatever its zoning (rulings.yaml 2026-11-14-hillsboro-downtown-roof-every-lot).
+        ("or/washington/hillsboro", "R-7", ["hillsboro_downtown_plan_district"], 4),
+        ("or/washington/hillsboro", "MR-1", ["hillsboro_downtown_plan_district"], 4),
     ],
 )
 def test_each_roof_rule_resolves_to_its_printed_pitch(corpus, layer, zone, conditions, pitch) -> None:
@@ -265,6 +269,8 @@ def test_each_roof_rule_resolves_to_its_printed_pitch(corpus, layer, zone, condi
         # Outside the (untraced) Downtown Plan District no roof form is set.
         ("or/washington/hillsboro", "SCR-LD"),
         ("or/washington/hillsboro", "SCR-HD"),
+        ("or/washington/hillsboro", "R-7"),
+        ("or/washington/hillsboro", "MR-1"),
     ],
 )
 def test_a_roof_rule_scoped_to_a_district_or_a_form_stays_off_elsewhere(corpus, layer, zone) -> None:
@@ -336,7 +342,9 @@ def test_hillsboro_downtown_plan_district_is_traced_for_the_three_zones(corpus) 
     layer = corpus["or/washington/hillsboro"]
     area = layer.drawn_areas["downtown_plan_district"]
     assert area.condition == "hillsboro_downtown_plan_district"
-    assert set(area.zones) == {"SCR-LD", "SCR-MD", "SCR-HD"}
+    # 2026-11-14 (rel8 hold, FOLLOWUPS 193): + R-7 and MR-1, the ground the
+    # traced line takes in that 12.61.200's zone list leaves out (Steph: every lot).
+    assert set(area.zones) == {"SCR-LD", "SCR-MD", "SCR-HD", "R-7", "MR-1"}
     data = json.loads((AREAS_ROOT / area.file).read_text(encoding="utf-8"))
     src = data["source"]
     assert src["drawn"] is True and src["traced_by"] and src["traced_on"]
