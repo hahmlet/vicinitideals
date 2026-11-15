@@ -134,3 +134,7 @@ Spec / trees left out: IC-80 5 / 25; 45 t 47 / 42; not viable 57 / 55; undecided
 Offered Steph: a quick search for street pavement-width data (scout first, then a lane only if a usable source exists).
 
 Steph 11-15: yes, look for street width. Scout running -> ../vicinitideals-worktrees/street-width-scout.md; build lane only if a usable source exists.
+
+## 11-15 street-width scout result (../vicinitideals-worktrees/street-width-scout.md)
+Real pavement-width data covers only ~17-23% of the undecided sample lots: Hillsboro "Roadway" polygons (38), Washington County Paved Roads Width_Rd (35, county roads only), Oregon City edge of pavement (40, patchy), Tualatin (0 in sample). Portland/Wilsonville/Multnomah are already in the registry, but 4+7 lots still miss (a lookup bug). Nothing for Gresham, Clackamas County and its cities, Beaverton, Sherwood, Troutdale, Cornelius or Durham (~75%). Clackamas's licensed shapefile is a named centreline only (no width), so it is not worth accepting. OSM width tags are too sparse. ROW from taxlots is an upper bound only; the 1 m impervious raster merges sidewalks.
+Offered Steph: (A) build the real-data lane (Hillsboro, Washington County, Oregon City, plus the Portland/Wilsonville lookup fix), ~1/5 of lots; (B) for the rest, an ESTIMATE from each street's ROW width less a standard sidewalk/planter allowance (or the city's narrowest street standard), always labelled estimated; (C) measure curbs from Metro's lidar (bigger job, covers everything). Recommend A + B now, C only if the 45 t street set-up proves to matter.
