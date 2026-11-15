@@ -622,8 +622,10 @@ def test_street_pad_stands_at_the_near_curb(rules: sa.Rules) -> None:
     lot = _lot(Site(FULL_LOT, FULL_POD, FULL_STREET, street(width=36, curb=12)), rules)
     pads, status, _ = sa._street_pads(lot, rules.t45, [sa.set_points(lot.frame, p, rules.homes) for p in rules.pieces])
     assert status == sa.PASS and pads
-    centre, _, access = pads[0]
+    centre, _, access, source = pads[0]
     assert access == sa.STRAIGHT and centre[1] == pytest.approx(-(12 + 14))
+    # A reader without a source array is taken as measured.
+    assert source == "measured"
 
 
 def _lot(site: Site, rules: sa.Rules) -> sa._Lot:
@@ -714,7 +716,7 @@ def test_report_only_nothing_reads_it_into_the_colour() -> None:
     users = [
         p
         for p in root.rglob("*.py")
-        if p.name not in ("set_access.py", "test_set_access.py")
+        if p.name not in ("set_access.py", "test_set_access.py", "test_set_access_widths.py")
         and re.search(
             r"(import\s+flats\.fit\.set_access|from\s+flats\.fit\.set_access\s+import"
             r"|from\s+flats\.fit\s+import\s+[^\n]*\bset_access\b)",

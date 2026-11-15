@@ -19,6 +19,18 @@ the crown height, ft; EPSG:2913) puts the trees in: canopy in the IC-80's
 working ground, swing room or on a carry path blocks it, and each row also
 carries the answer with the trees left out (``result_no_trees``).
 
+The street's pavement width (FOLLOWUPS 145, Steph 2026-11-15) is read by
+:mod:`flats.geom.street_width`: the fire hose's curbs and widths, plus
+Washington County's and Tualatin's width attributes, Hillsboro's paved
+shapes and Oregon City's pavement edges, from the run's ``curbs`` snapshot
+and any ``--widths`` snapshot (the first holding a dataset gives it); and
+where none reads a point, an ESTIMATE off the right-of-way in the taxlot
+fabric (``--fabric``, default quadfit s1's ``s1_lots.parquet`` beside
+``s4``) less the ``street_width`` allowance of ``set_access.yaml``.
+``--no-estimate`` leaves the estimate out. A row's ``width_source`` (and
+``45t_street_width``) says ``measured:<dataset>`` or ``estimated``; a 45 t
+street answer on an estimate reads ``45 t in the street (width estimated)``.
+
 Each lot is run once per carry case (slice 4b, ``--combos``): ``spec``
 (S3e 3.7 at 9985b64: cassettes flat and crosswise, walls upright) and
 ``relaxed`` (walls may also be carried flat and crosswise, the switch
@@ -109,16 +121,27 @@ def _init(
 ) -> None:
     """Per process: the corpus layers, the street data, the terrain, the
     canopy, and the set-access rules for each case."""
+    import shapely
+
     from flats.fit import fire
     from flats.fit import set_access as sa
+    from flats.geom import street_width
     from flats.geom.curbs import load as load_street_edges
     from flats.rules.loader import load_rules
 
     _W["layers"] = load_rules()
     _W["cases"] = _cases(combos, gears)
+    # The truck centrelines exactly as the fire hose takes them (its own
+    # curbs and widths decide which unnamed roads count as paved).
     edges = load_street_edges(Path(meta["curbs"])) if meta.get("curbs") else None
     lines, _ = fire.truck_lines(Path(meta["roads"]), edges)
-    _W["reader"] = sa.street_reader(edges, lines, fire.MAX_GAP_FT) if edges is not None else None
+    snaps = [Path(x) for x in (meta.get("curbs"), *(meta.get("widths") or ())) if x]
+    fabric = meta.get("fabric")
+    widths = street_width.load(snaps, Path(fabric) if fabric else None) if (snaps or fabric) else None
+    _W["widths"] = widths
+    _W["lines"] = lines
+    _W["line_tree"] = shapely.STRtree(lines) if len(lines) else None
+    _W["reader"] = None
     _W["centre"] = sa.centre_reader(lines, fire.MAX_GAP_FT)
     _W["terrain"] = None
     if grade and meta.get("dem"):
@@ -181,7 +204,7 @@ def _one(row: dict[str, Any], picked: dict[str, Any]) -> list[dict[str, Any]]:
         lot = quadfit.lot_from_row(row, _W["layers"])
         street = tuple(dict.fromkeys(quadfit._street_lines(lot) + quadfit._side_street_lines(lot)))
         drawing = json.loads(picked["drawing"])
-        site = sa.site_from_drawing(lot.lot_geom, drawing, street, _W["reader"])
+        site = sa.site_from_drawing(lot.lot_geom, drawing, street, _reader(picked.get("layer_id")))
         cases = _W["cases"]
         if site is None:
             return [{**base, **_case(k, c), "result": "unmeasured", "why": "no drawn building"} for k, c in cases.items()]
@@ -215,6 +238,19 @@ def _one(row: dict[str, Any], picked: dict[str, Any]) -> list[dict[str, Any]]:
         return [{**base, **_case(k, c), "result": "error", "why": why} for k, c in _W.get("cases", {}).items()] or [
             {**base, "result": "error", "why": why, "seconds": round(time.time() - t0, 2)}
         ]
+
+
+def _reader(layer: Any) -> Any:
+    """The lot's street reading (its jurisdiction sets the estimate's
+    allowance); None where no street data is held."""
+    from flats.fit import fire
+    from flats.geom import street_width
+
+    widths = _W.get("widths")
+    if widths is None:
+        return _W.get("reader")
+    return street_width.reader(widths, _W["lines"], fire.MAX_GAP_FT, str(layer) if layer else None,
+                               tree=_W["line_tree"])
 
 
 def _case(key: str, case: tuple[str, str, Any]) -> dict[str, Any]:
@@ -262,6 +298,7 @@ RESULTS = (
     "IC-80 both faces",
     "45 t on site",
     "45 t in the street",
+    "45 t in the street (width estimated)",
     "not viable",
     "unmeasured",
     "error",
@@ -274,7 +311,8 @@ _SHORT = {
 }
 _WORKS = ("IC-80", "45 t")
 #: The gear comparison's rows: the ladder's answers, one face taken together.
-_GROUPS = ("IC-80 one face", "IC-80 both faces", "45 t on site", "45 t in the street", "not viable", "unmeasured")
+_GROUPS = ("IC-80 one face", "IC-80 both faces", "45 t on site", "45 t in the street",
+           "45 t in the street (width estimated)", "not viable", "unmeasured")
 
 
 def _group(result: Any) -> str:
@@ -400,6 +438,12 @@ def _body(rows: list[dict[str, Any]], h: str) -> list[str]:
             f"{r.get('result')} -> {r.get('result_no_trees')}" for r in rows
             if r.get("result_no_trees") and r.get("result_no_trees") != r.get("result"))) else ["(none)"]),
         "",
+        f"{h} Where the 45 t's street set-up read its width (lots the step was tried on)",
+        "",
+        *(table(srcs, "45t_street status: width") if (srcs := collections.Counter(
+            f"{r.get('45t_street')}: {r.get('45t_street_width') or 'no pad'}" for r in rows
+            if r.get("45t_street") and r.get("45t_street") != "not tried")) else ["(none)"]),
+        "",
         f"{h} Failing checks of each IC-80 step (every lot; a lot counts once per check)",
         "",
         *_checks(rows),
@@ -477,6 +521,12 @@ def main(argv: list[str] | None = None) -> int:
                         help="a GeoTIFF of Metro's Canopy 2019 (EPSG:2913): trees in the IC-80's way")
     for key in ("s4", "s5o", "roads", "curbs", "dem"):
         parser.add_argument(f"--{key}", type=Path, default=None, help=f"override meta.json's {key}")
+    parser.add_argument("--widths", type=Path, action="append", default=None,
+                        help="another acquire snapshot holding pavement-width datasets (repeatable)")
+    parser.add_argument("--fabric", type=Path, default=None,
+                        help="the whole taxlot file for the width estimate (default: s1_lots.parquet beside s4)")
+    parser.add_argument("--no-estimate", dest="estimate", action="store_false",
+                        help="no width estimate off the right-of-way")
     args = parser.parse_args(argv)
     gears = ("light", "heavy") if args.gear == "both" else (args.gear,)
     if args.walls_flat:
@@ -504,8 +554,20 @@ def main(argv: list[str] | None = None) -> int:
             parser.error(f"no {key} file: {meta.get(key)} (pass --{key})")
     if not meta.get("curbs"):
         print("set access: no curbs snapshot -- every street set-up and curb truck is unmeasured")
+    meta["widths"] = [str(w) for w in (args.widths or ())]
+    for w in meta["widths"]:
+        if not Path(w).is_dir():
+            parser.error(f"no widths snapshot: {w}")
+    fabric = args.fabric or Path(meta["s4"]).parent / "s1_lots.parquet"
+    meta["fabric"] = str(fabric) if args.estimate and fabric.exists() else None
+    if args.estimate and not meta["fabric"]:
+        print(f"set access: no taxlot fabric at {fabric} -- no street width is estimated")
 
-    lots = pd.read_parquet(args.run / "lots.parquet", columns=["TLID", "jurisdiction", "zone", "colour", "drawing"])
+    import pyarrow.parquet as pq
+
+    want = ["TLID", "jurisdiction", "zone", "colour", "drawing", "layer_id"]
+    have = set(pq.read_schema(args.run / "lots.parquet").names)
+    lots = pd.read_parquet(args.run / "lots.parquet", columns=[c for c in want if c in have])
     picked = _pick(lots, args)
     if not len(picked):
         parser.error("no lot matches the sample")

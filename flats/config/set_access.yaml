@@ -745,3 +745,41 @@ whole_loads:
     length_ft: "25"
     landing: "26 x 9"
     within_ft: "~50"
+
+# The street's pavement width where no source records it (FOLLOWUPS 145
+# part B, Steph 2026-11-15: "estimate the rest, always labelled as
+# estimated"). Read by flats/geom/street_width.py for the 45 t's street
+# set-up and the delivery truck at the curb in front of it, and nowhere else
+# (no lot colour, no fire hose). The right-of-way is the gap between the
+# private lots either side of the centreline, read square to it; the
+# pavement is taken as that gap less `allowance_ft` (sidewalk, planter strip
+# and the strip behind the walk) on EACH side, then no wider than `cap_ft`
+# where a cap is held. A key is a jurisdiction layer or a county; the
+# nearest one up the path governs, else `default`. Every figure cites the
+# stored line it is read from, or is marked [est].
+street_width:
+  allowance_ft:
+    default:
+      value: 12
+      cite: >-
+        [est] no street standard read for the place: a 6 ft sidewalk, a
+        5.5 ft planter strip and 0.5 ft behind the walk, a little wider than
+        the one standard read (Oregon City, 11 ft), so the estimate errs
+        narrow
+    or/clackamas/oregon-city:
+      value: 11
+      cite: >-
+        OCMC 16.12 street design standards, Local / Residential: 54 ft
+        right-of-way, 32 ft pavement; 0.5 ft public access + 5 ft sidewalk
+        + 5.5 ft landscape strip each side (54 - 32 = 2 x 11)
+      quote: "or/clackamas/oregon-city/16.12.streets.txt#L411"
+      header: "or/clackamas/oregon-city/16.12.streets.txt#L394-L395"
+  cap_ft:
+    or/clackamas/oregon-city:
+      value: 32
+      cite: >-
+        OCMC 16.12 street design standards, Local / Residential pavement
+        width 32 ft (the narrowest class; a wider street is capped to it,
+        which only narrows the estimate)
+      quote: "or/clackamas/oregon-city/16.12.streets.txt#L411"
+      header: "or/clackamas/oregon-city/16.12.streets.txt#L394-L395"

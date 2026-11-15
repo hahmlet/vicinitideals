@@ -56,7 +56,7 @@ def test_summary_counts_results_and_reasons() -> None:
     text = _summary(rows, {"law_on": "2026-11-14"}, _args(), 60.0)
     assert "| IC-80 one face (front) | 1 |" in text
     assert "| jurisdiction | IC-80 front | IC-80 back | IC-80 both faces | 45 t on site |" in text
-    assert "| Portland | 1 | 0 | 0 | 1 | 0 | 1 | 0 | 0 |" in text
+    assert "| Portland | 1 | 0 | 0 | 1 | 0 | 0 | 1 | 0 | 0 |" in text
     assert "long face" not in text  # those columns only where a front could not be told
     assert "IC-80 one face (front): lifts: Upper back wall (Upper back wall, 63.1% at 32.0 ft)" in text
     assert "the street in front is # ft wide at most" in text
