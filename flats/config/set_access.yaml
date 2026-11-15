@@ -210,6 +210,12 @@ ic80:
     back_walls: ["34-36", "28-30", 24]
     end_and_party_walls: [34, 28, 24]
   one_face_wall_rigging_lb: "~400-500"
+  # The two wall-gear cases the sample reports side by side (coordinator,
+  # slice 3c: "light wall-lifting gear (the spec's <=400-500 lb, one face
+  # enough)" and "heavy gear (~800 lb)"): spec 3.6's 400 lb and 800 lb
+  # columns. Only the WALLS take the case; every other piece keeps
+  # rigging_lb (spec 3.3).
+  wall_gear_lb: {light: 400, heavy: 800}
 
   # Spec 3.7 pick and carry [vendor, calc]. "Carry on the over-front,
   # on-rubber column only, boom straight ahead ... at creep speed, 2 mph or

@@ -124,6 +124,8 @@ def test_config_holds_the_spec_figures(rules: sa.Rules) -> None:
     assert t.chart.deductions_lb == 450 and t.rigging_lb == 1300
     assert t.whole_rigging_lb == 2600 and t.max_piece_radius_ft == 80 and t.level_pct == 1
     assert len(rules.pieces) == 16
+    # Slice 3c: the sample's two wall-gear cases, spec 3.6's 400 and 800 lb columns.
+    assert ic.wall_gear_lb == {"light": 400, "heavy": 800} and ic.wall_rigging_lb is None
     # Spec 3.4's per-piece hook table (high ends) and its Load column.
     hooks = {p.key: p.hook_ft for p in rules.pieces}
     assert hooks["ground_front_wall"] == 16 and hooks["upper_back_wall"] == 25
@@ -293,6 +295,47 @@ def test_heavier_rigging_needs_both_faces(rules: sa.Rules) -> None:
     assert trailer.detail.startswith("load 1: ") and "load 4: at the curb, every piece within reach" in trailer.detail
     assert sorted(lf.key for lf in both.lifts if lf.carried) == ["ground_back_wall", "upper_back_wall"]
     assert not rep.result.startswith("IC-80")
+
+
+def test_stack_order_follows_the_crane_face(front: sa.Report, back: sa.Report) -> None:
+    """DECISIONS S-wallstack: the far face's walls on top; from the back the
+    stack is flipped."""
+    assert front.row()["stack"] == "back walls on top, end and party walls in the middle, front walls at the bottom"
+    assert back.row()["stack"] == "front walls on top, end and party walls in the middle, back walls at the bottom"
+
+
+CORNER = Site(BACK_LOT, FRONT_POD, BACK_STREETS, street())  # NOT A REAL LOT: BACK_LOT without the tree
+
+
+def test_heavy_gear_both_faces_with_one_move(rules: sa.Rules) -> None:
+    """Slice 3c (option A): with 800 lb wall gear the far walls need both
+    faces. Each wall load is stacked back walls on top; the trailer parks
+    at the back for the back, end and party walls, then moves once to the
+    front for the front walls. Still four deliveries."""
+    light = sa.report(CORNER, sa.with_wall_gear(rules, "light"), grade_of=level)
+    assert light.result == "IC-80 one face (front)"
+    heavy = sa.report(CORNER, sa.with_wall_gear(rules, "heavy"), grade_of=level)
+    assert heavy.result == sa.IC80_BOTH
+    row = heavy.row()
+    assert row["truck"] == "1 lot at the back, then curb at the front, 2 lot, 3 lot at the back, then curb at the front, 4 lot"
+    assert row["stack"].startswith("back walls on top") and row["stack"].endswith(
+        "the trailer moves once, back to front (loads 1 and 3)"
+    )
+    trailer = next(c for c in heavy.plan.checks if c.name == "trailer")
+    assert "load 1: parked at the back for the back walls, end and party walls" in trailer.detail
+    # Only the walls take the gear.
+    roof = _lift(heavy.plan, "roof_cassette_full4")
+    assert roof.gross_lb == rules.piece("roof_cassette_full4").weight_lb + 400 + 90
+    wall = _lift(heavy.plan, "ground_back_wall")
+    assert wall.gross_lb == rules.piece("ground_back_wall").weight_lb + 800 + 90
+
+
+def test_heavy_gear_needs_a_park_on_both_faces(rules: sa.Rules) -> None:
+    """No trailer spot reaches the back face: the move cannot help."""
+    heavy = sa.report(Site(FRONT_LOT, FRONT_POD, SOUTH, street()), sa.with_wall_gear(rules, "heavy"), grade_of=level)
+    assert not heavy.result.startswith("IC-80")
+    both = _attempt(heavy, "ic80_both")
+    assert both.status == sa.FAIL and "moved once" not in next(c for c in both.plan.checks if c.name == "trailer").detail
 
 
 def test_working_strip_level_within_one_percent(rules: sa.Rules) -> None:

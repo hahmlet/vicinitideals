@@ -13,16 +13,26 @@ and the run's elevation models (``dem``) for the fall across the IC-80's
 working strip and the 45 t's pad (both must be within 1%; ``--no-grade``
 skips it, and level is then unmeasured on every lot).
 
+Each lot is run once per wall-gear case (slice 3c; ``ic80.wall_gear_lb``,
+spec 3.6): ``light`` (400 lb, one face enough) and ``heavy`` (800 lb, the
+far walls then need both faces). ``--gear light`` or ``--gear heavy`` runs
+one. Only the walls take the case; every other piece keeps its rigging.
+
 Writes into ``--out``:
 
-* ``set_access.csv`` -- one row per lot: TLID, jurisdiction, zone, colour,
+* ``set_access.csv`` -- one row per lot and gear case: TLID, jurisdiction,
+  zone, colour, the gear case and its wall rigging, the wall-load stacking
+  order (``stack``), each load's trailer spot (``truck``),
   the result (``IC-80 one face (front|back)`` / ``IC-80 both faces`` /
   ``45 t on site`` / ``45 t in the street`` / ``not viable`` /
   ``unmeasured``), the binding check, the hardest lift with its chart row,
   capacity and percent of chart, the IC-80's wall-rigging limit, each
   step's status, notes ("power lines not checked") and why the earlier
   steps failed.
-* ``summary.md`` -- the counts by result, by jurisdiction, the binding
+* ``summary.md`` -- for each gear case, the lots on each result (IC-80 one
+  face, IC-80 both faces, 45 t on site, 45 t in the street, not viable,
+  unmeasured) side by side, the lots the heavy gear moves, the stacking
+  orders; then per case the counts by result, by jurisdiction, the binding
   checks and lifts, and the commonest reasons.
 
 Run on LXC 137 when its heavy lock is free (never on production), e.g.::
@@ -55,14 +65,17 @@ if str(REPO_ROOT) not in sys.path:
 _W: dict[str, Any] = {}
 
 
-def _init(meta: dict[str, Any], grade: bool) -> None:
-    """Per process: the corpus layers, the street data, the terrain."""
+def _init(meta: dict[str, Any], grade: bool, gears: tuple[str, ...] = ("light", "heavy")) -> None:
+    """Per process: the corpus layers, the street data, the terrain, and
+    the set-access rules for each wall-gear case."""
     from flats.fit import fire
     from flats.fit import set_access as sa
     from flats.geom.curbs import load as load_street_edges
     from flats.rules.loader import load_rules
 
     _W["layers"] = load_rules()
+    base = sa.load_rules()
+    _W["gears"] = {g: sa.with_wall_gear(base, g) for g in gears}
     edges = load_street_edges(Path(meta["curbs"])) if meta.get("curbs") else None
     lines, _ = fire.truck_lines(Path(meta["roads"]), edges)
     _W["reader"] = sa.street_reader(edges, lines, fire.MAX_GAP_FT) if edges is not None else None
@@ -73,7 +86,8 @@ def _init(meta: dict[str, Any], grade: bool) -> None:
         _W["terrain"] = terrain_at(Path(meta["dem"]))
 
 
-def _one(row: dict[str, Any], picked: dict[str, Any]) -> dict[str, Any]:
+def _one(row: dict[str, Any], picked: dict[str, Any]) -> list[dict[str, Any]]:
+    """The lot once per wall-gear case."""
     from flats.fit import set_access as sa
     from flats.ingest import quadfit
 
@@ -89,10 +103,12 @@ def _one(row: dict[str, Any], picked: dict[str, Any]) -> dict[str, Any]:
         street = tuple(dict.fromkeys(quadfit._street_lines(lot) + quadfit._side_street_lines(lot)))
         drawing = json.loads(picked["drawing"])
         site = sa.site_from_drawing(lot.lot_geom, drawing, street, _W["reader"])
+        gears = _W["gears"]
         if site is None:
-            return {**base, "result": "unmeasured", "why": "no drawn building"}
+            return [{**base, **_gear(g, r), "result": "unmeasured", "why": "no drawn building"} for g, r in gears.items()]
         if not street:
-            return {**base, "result": "unmeasured", "why": "no street lot line traced"}
+            return [{**base, **_gear(g, r), "result": "unmeasured", "why": "no street lot line traced"}
+                    for g, r in gears.items()]
         terrain = _W.get("terrain")
         grade_of = None
         if terrain is not None:
@@ -101,14 +117,25 @@ def _one(row: dict[str, Any], picked: dict[str, Any]) -> dict[str, Any]:
                 g = terrain.grade([poly])
                 return None if g is None else g.pct
 
-        rep = sa.report(site, grade_of=grade_of)
-        return {**base, **rep.row(), "seconds": round(time.time() - t0, 2)}
+        out = []
+        for g, rules in gears.items():
+            t1 = time.time()
+            rep = sa.report(site, rules, grade_of=grade_of)
+            out.append({**base, **_gear(g, rules), **rep.row(), "seconds": round(time.time() - t1, 2)})
+        return out
     except Exception as exc:  # noqa: BLE001 -- one bad lot is reported, not fatal
-        return {**base, "result": "error", "why": f"{type(exc).__name__}: {exc}"}
+        why = f"{type(exc).__name__}: {exc}"
+        return [{**base, **_gear(g, r), "result": "error", "why": why} for g, r in _W.get("gears", {}).items()] or [
+            {**base, "result": "error", "why": why, "seconds": round(time.time() - t0, 2)}
+        ]
+
+
+def _gear(case: str, rules: Any) -> dict[str, Any]:
+    return {"gear": case, "wall_rigging_lb": round(rules.ic80.wall_rigging_lb)}
 
 
 def _work(batch: list[tuple[dict[str, Any], dict[str, Any]]]) -> list[dict[str, Any]]:
-    return [_one(r, p) for r, p in batch]
+    return [row for r, p in batch for row in _one(r, p)]
 
 
 def _pick(lots: Any, args: argparse.Namespace) -> Any:
@@ -154,15 +181,81 @@ _SHORT = {
     "IC-80 one face (long face 2)": "IC-80 face 2",
 }
 _WORKS = ("IC-80", "45 t")
+#: The gear comparison's rows: the ladder's answers, one face taken together.
+_GROUPS = ("IC-80 one face", "IC-80 both faces", "45 t on site", "45 t in the street", "not viable", "unmeasured")
+
+
+def _group(result: Any) -> str:
+    r = str(result)
+    return "IC-80 one face" if r.startswith("IC-80 one face") else r
+
+
+def _table(counter: collections.Counter, head: str) -> list[str]:
+    out = [f"| {head} | lots |", "|---|---|"]
+    out += [f"| {k} | {v:,} |" for k, v in counter.most_common()]
+    return out
 
 
 def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Namespace, seconds: float) -> str:
     from flats.fit.set_access import NOT_CHECKED
 
-    def table(counter: collections.Counter, head: str) -> list[str]:
-        out = [f"| {head} | lots |", "|---|---|"]
-        out += [f"| {k} | {v:,} |" for k, v in counter.most_common()]
-        return out
+    gears = list(dict.fromkeys(r.get("gear") for r in rows))
+    lots = len({r.get("TLID") for r in rows}) if gears != [None] else len(rows)
+    lines = [
+        "# Set access sample (FOLLOWUPS 145, report only)",
+        "",
+        f"Run: `{args.run}` (law on {meta.get('law_on')}); colour `{args.colour}`; "
+        f"{lots:,} lots in {seconds / 60:.1f} min.",
+        "",
+        "Not checked on any lot: " + ", ".join(NOT_CHECKED) + ".",
+        "",
+    ]
+    if gears == [None]:
+        return "\n".join(lines + _body(rows, "##")) + "\n"
+    by_gear = {g: [r for r in rows if r.get("gear") == g] for g in gears}
+    lb = {g: next((r.get("wall_rigging_lb") for r in by_gear[g] if r.get("wall_rigging_lb") is not None), None)
+          for g in gears}
+    names = [f"{g} gear ({lb[g]} lb)" if lb[g] is not None else f"{g} gear" for g in gears]
+    counts = {g: collections.Counter(_group(r.get("result")) for r in by_gear[g]) for g in gears}
+    extra = [k for g in gears for k in counts[g] if k not in _GROUPS]
+    lines += [
+        "## Lots on each result, by wall gear",
+        "",
+        "Wall-lifting gear (spec 3.6): light = one face is enough; heavy = the far walls need both faces. "
+        "Only the walls take the gear.",
+        "",
+        "| result | " + " | ".join(names) + " |",
+        "|---|" + "---|" * len(gears),
+        *(f"| {k} | " + " | ".join(f"{counts[g][k]:,}" for g in gears) + " |" for k in (*_GROUPS, *dict.fromkeys(extra))),
+        "| total | " + " | ".join(f"{len(by_gear[g]):,}" for g in gears) + " |",
+        "",
+    ]
+    if len(gears) >= 2:
+        a, b = gears[0], gears[1]
+        res_b = {r.get("TLID"): _group(r.get("result")) for r in by_gear[b]}
+        moves = collections.Counter(
+            f"{_group(r.get('result'))} -> {res_b[r.get('TLID')]}"
+            for r in by_gear[a]
+            if r.get("TLID") in res_b and _group(r.get("result")) != res_b[r.get("TLID")]
+        )
+        lines += [f"## Lots whose answer moves from {a} to {b} gear", ""]
+        lines += _table(moves, f"{a} -> {b}") if moves else ["(none)"]
+        lines.append("")
+    stacks = collections.Counter(
+        f"{r.get('gear')}: {r.get('stack')}" for r in rows if str(r.get("result")).startswith("IC-80") and r.get("stack")
+    )
+    lines += ["## Wall-load stacking order (lots the IC-80 sets)", ""]
+    lines += _table(stacks, "gear: stack") if stacks else ["(none)"]
+    lines.append("")
+    for g, name in zip(gears, names):
+        lines += [f"## {name[0].upper()}{name[1:]}", ""]
+        lines += _body(by_gear[g], "###")
+        lines.append("")
+    return "\n".join(lines).rstrip("\n") + "\n"
+
+
+def _body(rows: list[dict[str, Any]], h: str) -> list[str]:
+    table = _table
 
     def works(r: dict[str, Any]) -> bool:
         return str(r.get("result") or "").startswith(_WORKS)
@@ -171,18 +264,11 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
     # The long-face columns only where a lot's front could not be told.
     cols = [c for c in RESULTS if "long face" not in c or c in seen]
     lines = [
-        "# Set access sample (FOLLOWUPS 145, report only)",
-        "",
-        f"Run: `{args.run}` (law on {meta.get('law_on')}); colour `{args.colour}`; "
-        f"{len(rows):,} lots in {seconds / 60:.1f} min.",
-        "",
-        "Not checked on any lot: " + ", ".join(NOT_CHECKED) + ".",
-        "",
-        "## Result",
+        f"{h} Result",
         "",
         *table(collections.Counter(str(r.get("result")) for r in rows), "result"),
         "",
-        "## By jurisdiction",
+        f"{h} By jurisdiction",
         "",
         "| jurisdiction | " + " | ".join(_SHORT.get(c, c) for c in cols) + " |",
         "|---|" + "---|" * len(cols),
@@ -195,7 +281,7 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
         lines.append(f"| {j} | " + " | ".join(str(c[k]) for k in cols) + " |")
     lines += [
         "",
-        "## Binding check and hardest lift (lots where a crane works)",
+        f"{h} Binding check and hardest lift (lots where a crane works)",
         "",
         *table(
             collections.Counter(
@@ -207,7 +293,7 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
             "result: binding",
         ),
         "",
-        "## Commonest reasons (every step before the answer)",
+        f"{h} Commonest reasons (every step before the answer)",
         "",
     ]
     why: collections.Counter = collections.Counter()
@@ -216,7 +302,7 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
             if w:
                 why[_generic(w)] += 1
     lines += table(why, "reason") if why else ["(none)"]
-    return "\n".join(lines) + "\n"
+    return lines
 
 
 def _generic(reason: str) -> str:
@@ -240,9 +326,14 @@ def main(argv: list[str] | None = None) -> int:
         "--no-grade", dest="grade", action="store_false",
         help="do not read the strip's and pad's fall off the run's elevation models (level is then unmeasured)",
     )
+    parser.add_argument(
+        "--gear", default="both", choices=["both", "light", "heavy"],
+        help="the wall-gear case(s): light 400 lb, heavy 800 lb (ic80.wall_gear_lb); default both",
+    )
     for key in ("s4", "s5o", "roads", "curbs", "dem"):
         parser.add_argument(f"--{key}", type=Path, default=None, help=f"override meta.json's {key}")
     args = parser.parse_args(argv)
+    gears = ("light", "heavy") if args.gear == "both" else (args.gear,)
 
     import pandas as pd
 
@@ -274,14 +365,14 @@ def main(argv: list[str] | None = None) -> int:
 
         size = max(1, math.ceil(len(pairs) / (args.processes * 8)))
         batches = [pairs[i : i + size] for i in range(0, len(pairs), size)]
-        with ProcessPoolExecutor(args.processes, initializer=_init, initargs=(meta, args.grade)) as pool:
+        with ProcessPoolExecutor(args.processes, initializer=_init, initargs=(meta, args.grade, gears)) as pool:
             for got in pool.map(_work, batches):
                 out_rows.extend(got)
-                print(f"set access: {len(out_rows):,}/{len(pairs):,}", flush=True)
+                print(f"set access: {len(out_rows) // len(gears):,}/{len(pairs):,}", flush=True)
     else:
-        _init(meta, args.grade)
+        _init(meta, args.grade, gears)
         for i, pair in enumerate(pairs, 1):
-            out_rows.append(_one(*pair))
+            out_rows.extend(_one(*pair))
             if i % 25 == 0:
                 print(f"set access: {i:,}/{len(pairs):,}", flush=True)
     seconds = time.time() - t0

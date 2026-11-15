@@ -83,7 +83,7 @@ NOT_CHECKED: tuple[str, ...] = (
     "ground firm and drained; what the mats bear",
     "trees in the swing room",
     "how close the IC-80's pads may stand to the new slab edge (FOLLOWUPS 220)",
-    "the wall rigging (not designed; taken as 400 lb, FOLLOWUPS 215)",
+    "the wall rigging (not designed, FOLLOWUPS 215; taken as 400 lb unless a wall-gear case is named)",
     "other buildings and walls on the lot",
     "whether the IC-80's way in bears ~17,600 lb",
     "the 45 t's and the trailer's turning paths",
@@ -342,6 +342,15 @@ class IC80:
     #: Steph 2026-11-14: the IC-80 may stand in the street for the
     #: container lift (that lift only).
     container_street: bool = False
+    #: The walls' rigging (spec 3.6: "The wall rigging is not designed");
+    #: None = ``rigging_lb``. The sample runs each of ``wall_gear_lb``.
+    wall_rigging_lb: float | None = None
+    wall_gear_lb: Mapping[str, float] = field(default_factory=dict)
+
+    def rigging_for(self, piece: Piece) -> float:
+        if piece.group == "wall" and self.wall_rigging_lb is not None:
+            return self.wall_rigging_lb
+        return self.rigging_lb
 
     def hook_at(self, radius_ft: float) -> float | None:
         """Hook height at ``radius_ft``: the next longer listed radius's (the
@@ -513,6 +522,7 @@ def _ic80(raw: Mapping[str, Any], pct: float) -> IC80:
         container_sling_lb=_hi(raw["container"]["sling_lb"]),
         container_within_ft=_hi_len(raw["container"]["within_ft"]),
         container_street=bool(raw["container"].get("street_allowed", False)),
+        wall_gear_lb={k: float(v) for k, v in (raw.get("wall_gear_lb") or {}).items()},
     )
 
 
@@ -1040,6 +1050,9 @@ class IC80Plan:
     sets: tuple[Lift, ...] = ()
     #: Where each trailer load parks (``lot`` / ``curb``), by load number.
     trailer_spots: Mapping[int, str] = field(default_factory=dict)
+    #: How each wall load is stacked (DECISIONS S-wallstack): the walls set
+    #: first on top.
+    stack: str | None = None
 
     @property
     def binding(self) -> Lift | None:
@@ -1157,6 +1170,7 @@ class Report:
             else round(p.rigging_limit_lb),
             "grade_pct": _round(p.strip_grade_pct if isinstance(p, IC80Plan) else getattr(p, "slope_pct", None)),
             "container": None if not isinstance(p, IC80Plan) or p.container is None else p.container.status,
+            "stack": p.stack if isinstance(p, IC80Plan) else None,
             "notes": "; ".join(self.notes),
             "why": "; ".join(self.why),
         }
@@ -1526,15 +1540,33 @@ def _ic80_load(
     ), None, {}, set()
 
 
+@dataclass(frozen=True, slots=True)
+class TwoParks:
+    """Both faces (slice 3c, Steph 2026-11-14, option A): a wall load is
+    stacked back walls on top, end and party walls in the middle, front
+    walls at the bottom (DECISIONS S-wallstack, FOLLOWUPS 223). The trailer
+    parks at the back first and the IC-80 sets the back walls, then the end
+    and party walls, from the back face; the trailer then moves once to the
+    front and the IC-80 sets the front walls from the front face."""
+
+    first: np.ndarray  # crane spots on the face the trailer parks at first
+    then: np.ndarray  # crane spots on the other face
+    first_name: str
+    then_name: str
+
+
 def _ic80_trailer(
-    lot: _Lot, S: np.ndarray, masks: dict[str, np.ndarray], reach: dict[str, float], working: BaseGeometry
-) -> tuple[Status, str, dict[int, tuple[str, Polygon]], dict[str, float], set[str]]:
+    lot: _Lot, S: np.ndarray, masks: dict[str, np.ndarray], reach: dict[str, float], working: BaseGeometry,
+    two: TwoParks | None = None,
+) -> tuple[Status, str, dict[int, tuple[str, Polygon]], dict[str, float], set[str], set[int]]:
     """Where each trailer load parks. Steph 2026-11-14: "the empty trailer
     leaves before the new full trailer arrives", so each of the four loads
-    takes whichever spot suits it, one after another (one spot still serves
-    the whole of a load). Returns the worst load's status, the detail by
-    load, each load's (place, deck), each kind's pick radius (the farthest
-    over the loads it rides), and the kinds carried."""
+    takes whichever spot suits it, one after another. One spot serves the
+    whole of a load, except a wall load on both faces (``two``), which may
+    park at the first face and then move once to the other. Returns the
+    worst load's status, the detail by load, each load's (place, deck),
+    each kind's pick radius (the farthest over the loads it rides), the
+    kinds carried, and the loads that moved."""
     rules = lot.rules
     trucks = Spots.join([s for s, place in ((lot.lot_spots, "lot"), (lot.curb_spots, "curb")) if place in rules.places])
     if len(trucks):
@@ -1545,7 +1577,7 @@ def _ic80_trailer(
         st: Status = UNMEASURED if curb_open else FAIL
         return st, "no place for the trailer clear of the working strip" + (
             "; the curb in front is not measured" if curb_open else ""
-        ), {}, {}, set()
+        ), {}, {}, set(), set()
     far_r = max(reach.values()) if reach else 0.0
     seg = shapely.linestrings(S) if len(S) > 1 else Point(*S[0])
     centre_d = shapely.distance(shapely.points(trucks.centres), seg)
@@ -1554,28 +1586,52 @@ def _ic80_trailer(
         st = UNMEASURED if curb_open else FAIL
         return st, "every trailer spot is beyond the IC-80's reach" + (
             "; the curb in front is not measured" if curb_open else ""
-        ), {}, {}, set()
+        ), {}, {}, set(), set()
     loads = sorted({n for p in rules.pieces for n in p.loads})
     statuses: list[Status] = []
     details: list[str] = []
     spots: dict[int, tuple[str, Polygon]] = {}
     picks: dict[str, float] = {}
     carried: set[str] = set()
+    moved: set[int] = set()
     for n in loads:
         kinds = [p for p in rules.pieces if n in p.loads and p.key in reach]
         if not kinds:
             continue
         st, detail, i, got, carry = _ic80_load(lot, S, masks, reach, trucks, kinds, curb_open)
+        spot = (str(trucks.place[i]), Polygon(trucks.corners[i])) if i is not None else None
+        fronts = [p for p in kinds if p.place == "front_wall"]
+        rest = [p for p in kinds if p.place != "front_wall"]
+        if two is not None and st != PASS and fronts and rest:
+            # Option A: park at the first face for the back walls, the end
+            # and party walls; then move once for the front walls.
+            first = {k: m & two.first for k, m in masks.items()}
+            then = {k: m & two.then for k, m in masks.items()}
+            st1, d1, i1, got1, carry1 = _ic80_load(lot, S, first, reach, trucks, rest, curb_open)
+            st2, d2, i2, got2, carry2 = _ic80_load(lot, S, then, reach, trucks, fronts, curb_open)
+            st12 = _worst([st1, st2])
+            if (_ORDER[st12], len(carry1 | carry2)) < (_ORDER[st], len(carry)):
+                st, carry, got = st12, carry1 | carry2, {**got1, **got2}
+                detail = (
+                    f"parked at the {two.first_name} for the {two.first_name} walls, end and party walls: {d1}; "
+                    f"then moved once to the {two.then_name} for the {two.then_name} walls: {d2}"
+                )
+                spot = (
+                    f"{trucks.place[i1] if i1 is not None else 'none'} at the {two.first_name}, then "
+                    f"{trucks.place[i2] if i2 is not None else 'none'} at the {two.then_name}",
+                    Polygon(trucks.corners[i1]) if i1 is not None else None,
+                ) if i1 is not None or i2 is not None else None
+                moved.add(n)
         statuses.append(st)
         details.append(f"load {n}: {detail}")
-        if i is not None:
-            spots[n] = (str(trucks.place[i]), Polygon(trucks.corners[i]))
+        if spot is not None:
+            spots[n] = spot  # type: ignore[assignment]
         for k, r in got.items():
             picks[k] = max(picks.get(k, 0.0), r)
         carried |= carry
     if not statuses:
-        return FAIL, "no piece can be set", {}, {}, set()
-    return _worst(statuses), "; ".join(details), spots, picks, carried
+        return FAIL, "no piece can be set", {}, {}, set(), set()
+    return _worst(statuses), "; ".join(details), spots, picks, carried, moved
 
 
 def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
@@ -1643,7 +1699,7 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
         picks_r: dict[str, float] = {}
         sets: dict[str, float] = {}
         for p in rules.pieces:
-            gross = p.weight_lb + ic.rigging_lb + ic.hook_lb
+            gross = p.weight_lb + ic.rigging_for(p) + ic.hook_lb
             uv = local_points(frame, p, rules.homes, f)
             P = frame.worlds(uv)
             r_set, d = _set_radius(S, su, P, uv[:, 0], ic, p.points_at_crane)
@@ -1659,8 +1715,13 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
     # Each "front" reading is tried with the trailer; where the front is not
     # known, the worse governs (the heavier walls may be the far ones).
     results = []
-    for lifts, masks, reach, sets in lifts_by_front:
-        t_status, t_detail, spots, picks, carried = _ic80_trailer(lot, S, masks, reach, working)
+    side_of = np.repeat(np.asarray(sides), len(S) // max(len(sides), 1))
+    for f, (lifts, masks, reach, sets) in zip(fronts, lifts_by_front):
+        two = (
+            TwoParks(side_of == -f, side_of == f, _face_name(-f, lot.front), _face_name(f, lot.front))
+            if len(sides) == 2 else None
+        )
+        t_status, t_detail, spots, picks, carried, moved = _ic80_trailer(lot, S, masks, reach, working, two)
         final: list[Lift] = []
         for lf in lifts:
             p = rules.piece(lf.key)
@@ -1683,9 +1744,10 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
         )
         lift_status = _worst(lf.status for lf in final)
         hardest = max((lf.pct_of_chart or 0.0) for lf in final) if final else 0.0
-        results.append((t_status, t_detail, spots, final, limit, lift_status, lifts, hardest))
+        stack = _stack_order(lot, sides, f, moved)
+        results.append((t_status, t_detail, spots, final, limit, lift_status, lifts, hardest, stack))
     results.sort(key=lambda r: (_ORDER[_worst([r[0], r[5]])], r[7]), reverse=True)
-    t_status, t_detail, spots, final, limit, lift_status, set_lifts, _ = results[0]
+    t_status, t_detail, spots, final, limit, lift_status, set_lifts, _, stack = results[0]
     checks.append(Check("trailer", t_status, t_detail))
     checks.append(_ic80_route(lot, ground, S))
     bad = [lf for lf in final if lf.status != PASS]
@@ -1698,6 +1760,7 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
     first = spots.get(min(spots)) if spots else None
     deck = first[1] if first else None
     place = first[0] if first else None
+    load1 = spots.get(1)
     return IC80Plan(
         faces=faces,
         checks=tuple(checks),
@@ -1710,10 +1773,33 @@ def ic80_plan(lot: _Lot, sides: Sequence[int]) -> IC80Plan:
         strip_grade_pct=grade,
         rigging_limit_lb=limit,
         sets=tuple(set_lifts),
-        container=_ic80_container(lot, working.union(swing), spots[1][1] if 1 in spots else None,
-                                  spots[1][0] if 1 in spots else None),
+        container=_ic80_container(lot, working.union(swing), load1[1] if load1 else None,
+                                  load1[0] if load1 else None),
+        stack=stack,
         setup="site",
     )
+
+
+def _stack_order(lot: _Lot, sides: Sequence[int], f: int, moved: set[int]) -> str:
+    """The wall-load stack (spec 3.5, DECISIONS S-wallstack: "far-face
+    walls on top", FOLLOWUPS 223). One face: the far face's walls on top,
+    so from the back the stack is flipped (front walls on top). Both faces:
+    the trailer parks at the back first, so the back walls are on top."""
+    if len(sides) == 2:
+        top, bottom = _face_name(-f, lot.front), _face_name(f, lot.front)
+    else:
+        top, bottom = _face_name(-sides[0], lot.front), _face_name(sides[0], lot.front)
+    text = f"{top} walls on top, end and party walls in the middle, {bottom} walls at the bottom"
+    if moved:
+        text += f"; the trailer moves once, {top} to {bottom} (load{'s' if len(moved) > 1 else ''} " + \
+            " and ".join(str(n) for n in sorted(moved)) + ")"
+    return text
+
+
+def with_wall_gear(rules: Rules, case: str) -> Rules:
+    """``rules`` with the walls lifted on the ``ic80.wall_gear_lb`` case
+    (``light`` / ``heavy``)."""
+    return dataclasses.replace(rules, ic80=dataclasses.replace(rules.ic80, wall_rigging_lb=rules.ic80.wall_gear_lb[case]))
 
 
 def _ic80_set_lift(ic: IC80, rules: Rules, p: Piece, gross: float, r_set: float, R: float | None) -> Lift:
@@ -1736,7 +1822,7 @@ def _ic80_carry_lift(ic: IC80, rules: Rules, p: Piece, set_lift: Lift) -> Lift:
         return dataclasses.replace(set_lift, carried=True, status=UNMEASURED, why="rides the cargo deck; route not checked")
     key = "wall_24_ft" if p.plan_ft[0] >= 24 - EPS else "wall_20_ft"
     r = ic.carry_radius_ft[key]
-    gross = p.weight_lb + ic.rigging_lb + ic.hook_lb
+    gross = p.weight_lb + ic.rigging_for(p) + ic.hook_lb
     carried = _lift(ic.carry_chart, "piece", p.key, p.label + " (carried)", p.count, gross, r, 0.0, rules.max_pct,
                     why_unmeasured="carried: a paved, level route is not checked", carried=True)
     return carried

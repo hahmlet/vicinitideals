@@ -64,6 +64,31 @@ def test_summary_counts_results_and_reasons() -> None:
     assert "overhead power lines" in text
 
 
+def test_summary_sets_the_gear_cases_side_by_side() -> None:
+    def row(tlid: str, gear: str, result: str, **kw) -> dict:
+        lb = {"light": 400, "heavy": 800}[gear]
+        return {"TLID": tlid, "jurisdiction": "Portland", "gear": gear, "wall_rigging_lb": lb, "result": result, **kw}
+
+    stack = "back walls on top, end and party walls in the middle, front walls at the bottom"
+    rows = [
+        row("A", "light", "IC-80 one face (front)", stack=stack),
+        row("A", "heavy", "IC-80 both faces", stack=stack + "; the trailer moves once, back to front (loads 1 and 3)"),
+        row("B", "light", "IC-80 one face (back)"),
+        row("B", "heavy", "45 t on site"),
+        row("C", "light", "not viable"),
+        row("C", "heavy", "not viable"),
+    ]
+    text = _summary(rows, {"law_on": "2026-11-14"}, _args(), 60.0)
+    assert "3 lots in" in text
+    assert "| result | light gear (400 lb) | heavy gear (800 lb) |" in text
+    assert "| IC-80 one face | 2 | 0 |" in text and "| IC-80 both faces | 0 | 1 |" in text
+    assert "| 45 t on site | 0 | 1 |" in text and "| not viable | 1 | 1 |" in text
+    assert "| 45 t in the street | 0 | 0 |" in text and "| unmeasured | 0 | 0 |" in text
+    assert "| IC-80 one face -> IC-80 both faces | 1 |" in text and "| IC-80 one face -> 45 t on site | 1 |" in text
+    assert "## Light gear (400 lb)" in text and "### Result" in text
+    assert "heavy: " + stack + "; the trailer moves once" in text
+
+
 def test_grade_is_read_by_default() -> None:
     import scripts.flats_set_access_sample as sample
 
