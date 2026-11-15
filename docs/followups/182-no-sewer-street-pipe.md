@@ -1,19 +1,9 @@
 # 182. No-sewer rule: outside every district but a city pipe in the street (lane no-sewer, 2026-11-10)
 
-[Claude] [scan: YES -- false greens only] [release: rel8, not a rel7 cherry-pick]
+[Claude] [scan: YES -- false greens only] [release: rel8]
 
-Lane no-sewer (flats/no-sewer 2a52ec1b) built the 11-10 "no public sewer = RED"
-ruling: outside every sewer district/service area AND own provider has no main
-within 800 ft (state septic rule, 200 ft x 4 homes) -> RED. ~398 greens -> RED
-(391 Lake Oswego fringe, uninc. Clackamas; 5 Sandy, 1 Gladstone, 1 Gresham PV).
-~263 get a "sewer not mapped" note (Canby login-only map, Estacada none, uninc.
-Multnomah, ~148 fringe lots with another city's pipe in their street).
-Needs sewer layers re-acquired before its bound (bridge refuses without them);
-command in ../vicinitideals-worktrees/no-sewer.handoff.md.
-Open for Steph: the example lot 6055 SW Shakespeare St has a Lake Oswego main
-26 ft away in its street (earlier review lacked LO pipes) -> keeps colour + note.
-Should lots outside every district but with a city pipe in their street go
-RED (~148 more), stay as-is with the note, or YELLOW + flag (hook-up needs the
-city's agreement / annexation)? Recommended: YELLOW + flag.
-Not read: CWS / WES / Gresham sewer rules (800 ft is state rule only).
-RULED 2026-11-11: lots outside every district with a city main in their street -> YELLOW + flag (hook-up needs the provider's agreement / annexation), ruling 2026-11-11-sewer-pipe-in-street-yellow. Change flats/no-sewer (today: keeps colour + note) before rel8.
+RULED 2026-11-11 (2026-11-11-sewer-pipe-in-street-yellow): outside every district with a city main in the street -> YELLOW + flag (SEWER-STREET-MAIN).
+RULED 2026-11-10: no public sewer within 800 ft (state septic rule) -> RED.
+BUILT flats/no-sewer 4592039a, merged into flats/rel8 (cb445efa), bound running 11-13: ~398 G->R (391 Lake Oswego fringe, 5 Sandy, 1 Gladstone,
+1 Gresham PV), ~148 G->Y, ~115 flag-only (SEWER-UNMEASURED: Canby, Estacada, uninc. Multnomah). The bound must re-acquire the 15 sewer layers
+(command in ../vicinitideals-worktrees/no-sewer.handoff.md). Not read (note only): CWS / WES / Gresham sewer rules (800 ft is the state rule only).

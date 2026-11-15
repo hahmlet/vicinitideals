@@ -15,3 +15,6 @@ None is a false GREEN; all are possible false YELLOW/RED.
   after the 1009 strip change; retry other placements before RED.
 - F1 (note only) Eldorado 22E08AC02500: the fg4 lane's "missed by 0.2 ft" was wrong; it is 24.5 ft
   short and correctly RED.
+
+- F5 DONE 766dd02d: West Linn sewer root (GoDaddy TLS Root CA - R1) pinned in flats/config/ca/, trusted beside certifi by the ingest clients (flats/ingest/tls.py); live acquire from 137 verified.
+- F6 DONE (recipe, no repo commit): /root/recipes/bound_splice/body.sh has an acquire() helper that passes `--root $D/flats/sources`; acquire.py default root left as is.

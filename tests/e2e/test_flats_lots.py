@@ -210,7 +210,9 @@ def test_a_pocket_lot_page_says_whose_zoning_it_was_screened_under(
 
 #: fits with room to spare, but the far wall is 176 ft of hose from the street
 #: (FOLLOWUPS 28, run 55): RED on the fire code alone.
-FIRE_LOT = "/flats/lots/multnomah/1N1E06DB%20%20-00800"
+#: 2026-11-12 (run 124, pod80x30@1): the old lot 1N1E06DB  -00800 now misses on fit
+#: and never reaches the hose check; 5215 SE 32nd Ave (R7) is red on the hose alone.
+FIRE_LOT = "/flats/lots/multnomah/1S1E13BD%20%20-03200"
 
 
 def test_a_lot_page_says_how_far_a_fire_hose_walks_and_when_that_is_too_far(
@@ -223,7 +225,7 @@ def test_a_lot_page_says_how_far_a_fire_hose_walks_and_when_that_is_too_far(
     page.goto(f"{base_url}{FIRE_LOT}")
     if page.locator("#lot-verdict").count() == 0:
         pytest.skip("the fire lot is not in this run")
-    row = page.locator("tr#fire-pod80x25-2")
+    row = page.locator("tr[id^='fire-']").first  # any design key
     expect(row).to_contain_text("Fire truck reach")
     expect(row).to_contain_text("ft from the street to the farthest wall, walked around the building")
     expect(row.locator(".badge-red")).to_have_text("farther than the fire code allows (150 ft)")

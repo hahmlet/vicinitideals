@@ -385,38 +385,281 @@ def _headings(
     """
     mine = tuple(own_ids)
     found: set[str] = set()
+    #: The headings that stood clear of a wrapped line. Only these say how a
+    #: level is numbered (see :func:`_printed_in_full`).
+    clear: set[str] = set()
+    captions: set[str] = set()
     prev = ""
     for line in text.splitlines():
+        wrapped = bool(prev and _WRAPPED.search(prev.rstrip()))
         m = _HEADING.match(line)
         if m:
             num = m.group("num").rstrip(".")
-            if (owns is None or num.partition(".")[0] in owns) and (
+            if (owns is None or _owned(num, owns)) and (
                 # A number under this document's own id is a heading whatever
                 # precedes it: 33.110.250 in 33.110.txt is not a wrap, and the
                 # sections of a held chapter resolve on nothing else.
                 any(num == own or num.startswith(f"{own}.") for own in mine)
-                or not (prev and _WRAPPED.search(prev.rstrip()))
+                or not wrapped
             ):
                 found.add(num)
+                if not wrapped:
+                    clear.add(num)
+        c = _CAPTION.match(line)
+        if c and not wrapped and (owns is None or _owned(c.group("tok"), owns)):
+            captions.add(f"{c.group('kind').title()} {c.group('tok')}")
         if line.strip():
             prev = line
-    return found
+    # Which of those headings this document holds as its own, rather than
+    # merely owns by chapter -- see :data:`_HELD`. A file whose name claims
+    # nothing vouches for nothing, even where ``owns=None`` lets it print
+    # headings: Sherwood's 16.106/chapter-16.108.txt is two lines, the word
+    # "Sections:" and the chapter title, and is not Chapter 16.108.
+    anchored = {
+        f"{_HELD}{num}"
+        for num in found
+        if any(num == o or num.startswith(f"{o}.") or num.startswith(f"{o}-") for o in mine)
+    }
+    return found | captions | anchored | _printed_in_full(clear, mine)
 
 
-def _resolves(ref: str, ids: set[str], headings: set[str]) -> bool:
-    """Whether some held document answers for this reference.
+def _owned(num: str, owns: set[str]) -> bool:
+    """Whether a printed number belongs to a document owning these chapters.
 
-    Generous on purpose. A whole-title fetch answers for every section inside
-    it, so a reference resolves when a document *claims* the chapter and the
-    number is printed in it, or when any document prints the number at all --
-    and a bare chapter reference resolves when we hold anything under it.
+    The first dotted component, as it always was -- and, failing that, the
+    part before a hyphen. Washington County numbers its code with hyphens:
+    ``cdc.431.transit-design.txt`` holds Section 431 and prints "431-8 ..." at
+    the start of a line, and the first dotted component of that is "431-8",
+    which no document owns. Every subsection the file prints read as a section
+    nobody had fetched (FOLLOWUPS 105 item 4). Only the printed number is
+    split: ``307-7.txt`` owns "307-7", and a stray "307-3" at the start of one
+    of its lines is still a sibling's number, not its own.
     """
+    head = num.partition(".")[0]
+    return head in owns or head.partition("-")[0] in owns
+
+
+#: A table caption: the word and the number, opening a line. The number is
+#: read whole -- "Table 60.30.10.5.A", "Table 12.70.020-1" -- because a caption
+#: is matched against the reference exactly, and a table with a letter is a
+#: different table from the one without.
+#:
+#: Tables only. A table is text and extraction keeps its cells under the
+#: caption; a figure is a drawing and extraction keeps only its caption.
+#: Beaverton's 70.20.10.txt prints "Figure 70.20.10.6.2 Active Frontage Design
+#: Map" on line 498, and that map -- which streets are Type A -- is exactly
+#: what the corpus does not hold (FOLLOWUPS 105 item 1). A figure is held when
+#: somebody stores and reads it, which no caption can say.
+_CAPTION = re.compile(r"^\s*(?P<kind>Table)\s+(?P<tok>\d[\w.\-]*\w)", re.I)
+#: A reference to a table or figure, which may name several: "Figures
+#: 18.910.3, 18.910.4 and 18.910.5". Every number in the list is a caption
+#: reference; the second and third are not section numbers just because the
+#: word was printed once.
+_CAPTIONED = re.compile(
+    r"\b(?P<kind>Table|Figure)s?\s+"
+    r"(?P<list>\d[\w.\-]*\w(?:\s*(?:,|and|or|&)\s*\d[\w.\-]*\w)*)"
+)
+_CAPTION_TOKEN = re.compile(r"\d[\w.\-]*\w")
+
+#: Prefix of the marker :func:`_headings` adds for a level a document prints
+#: in full ("full:16.12." -- the sections of 16.12 are printed with their whole
+#: number). See :func:`_printed_in_full`. A marker never opens with a digit and
+#: never equals a reference, so every other reader of the heading set passes
+#: over it.
+_FULL = "full:"
+
+#: Prefix of the marker for a heading printed in a document named for it or
+#: for a number above it ("held:12.61.700"). Ownership by first component is
+#: what :func:`_headings` asks, and it is loose: every Portland file owns "33",
+#: so a wrapped "33.245, Inclusionary Housing ..." opening a line in 33.140 is
+#: a "heading" for a chapter the store does not hold. That much was already
+#: true of the exact test; :func:`_covered` would have spread it to every
+#: section under 33.245, so it answers only from a number a file vouches for.
+_HELD = "held:"
+
+#: One numbering step up: "60.05.15.7" -> ("60.05.15", "."), "431-8" ->
+#: ("431", "-"), "12.61.700G" -> ("12.61.700", "").
+_STEP = re.compile(r"(?P<up>.+)(?:(?P<sep>[.\-])\d+|(?<=\d)(?P<letter>[A-Z]))")
+
+
+def _ancestors(ref: str) -> list[tuple[str, str]]:
+    """Every number above this one, nearest first, each with the separator below it.
+
+    A trailing letter is a subsection only under a section -- Hillsboro's
+    12.61.700G is part G of 12.61.700 -- and never under a chapter: Tualatin's
+    73A is a chapter of its own, not part A of Chapter 73. So a letter step is
+    taken only from a number of three groups or more.
+    """
+    out: list[tuple[str, str]] = []
+    s = ref
+    while (m := _STEP.fullmatch(s)) is not None:
+        up = m.group("up")
+        if m.group("letter") and len(re.split(r"[.\-]", up)) < 3:
+            break
+        out.append((up, m.group("sep") or ""))
+        s = up
+    return out
+
+
+def _printed_in_full(found: set[str], mine: Iterable[str]) -> set[str]:
+    """Markers for the levels a document numbers in full.
+
+    A code either prints a subsection's whole number ("16.12.010", "307-7.1")
+    or prints it locally ("7." under 60.05.15), and the store can only answer
+    for an unprinted part in the second case. Oregon City's Chapter 16.12
+    prints every section in full, so a 16.12.110 printed nowhere is a section
+    the store does not have -- not a part of 16.12 it holds without saying so.
+    Beaverton's 60.05.15 prints its subsections "1." to "9.", and 60.05.15.7
+    is in the file. Washington's 307-7 prints 307-7.1 and 307-7.2 and nothing
+    else, and its 307-7.5 is a number the code cites and does not have.
+
+    Per document, and only for a level the document is named for (its own
+    number or one under it): 60.05.12.txt prints "60.05.15.5 or 60.05.35.5"
+    as a table cell, and that says nothing about how 60.05.15 numbers itself.
+    And only from ``found`` headings that stood clear of a wrapped line: the
+    60.05.15 file's own "...requirements of / Section 60.05.15.3 by 25
+    percent." is a reference that wrapped, not the section printing its
+    subsections in full.
+    """
+    own = tuple(mine)
+
+    def holds(up: str) -> bool:
+        return any(
+            up == o or up.startswith(f"{o}.") or up.startswith(f"{o}-") for o in own
+        )
+
+    out: set[str] = set()
+    for num in found:
+        for up, sep in _ancestors(num):
+            if holds(up):
+                out.add(f"{_FULL}{up}{sep}")
+    # A document named for its own whole number is that number printed in
+    # full one level down: Tigard's 18.40/18.40.010.txt says Chapter 18.40
+    # numbers its sections in full, whether or not any one file prints the
+    # chapter's own heading.
+    for o in own:
+        if (step := _ancestors(o)) and re.search(r"[.\-]", step[0][0]):
+            out.add(f"{_FULL}{step[0][0]}{step[0][1]}")
+    return out
+
+
+def _range(ref: str) -> list[str] | None:
+    """The sections a printed range names, or None where it is not a range.
+
+    Gresham writes "Section 4.1531-4.1534" and Tualatin "73A.020-060"; both are
+    ranges of the last group. A hyphen with no dot before it is Washington
+    County's own numbering ("430-46" is a subsection, not sections 430 down to
+    46) and is never read as a range.
+    """
+    lo, sep, hi = ref.partition("-")
+    if not sep or "." not in lo or "-" in hi:
+        return None
+    head, _, first = lo.rpartition(".")
+    if "." in hi:
+        hi_head, _, last = hi.rpartition(".")
+        if hi_head != head:
+            return None
+    else:
+        last = hi
+    if not (first.isdigit() and last.isdigit()) or not 0 < int(last) - int(first) <= 100:
+        return None
+    # Width preserved, as in :func:`_spanned`: 73A.030, not 73A.30.
+    wide = len(first) if len(first) == len(last) else 0
+    return [
+        f"{head}.{n:0{wide}d}" if wide else f"{head}.{n}"
+        for n in range(int(first), int(last) + 1)
+    ]
+
+
+def _exact(ref: str, ids: set[str], headings: set[str]) -> bool:
+    """The original test: the number, or something under it, is held."""
     if ref in headings or ref in ids:
         return True
     # "Chapter 52" against a store holding 52.010, 52.020, ...
     return any(h.startswith(f"{ref}.") for h in headings) or any(
         i == ref or i.startswith(f"{ref}.") for i in ids
     )
+
+
+def _covered(ref: str, ids: set[str], headings: set[str]) -> bool:
+    """Whether a held section answers for an unprinted part of itself.
+
+    The nearest held number above the reference decides, and it answers only
+    where its document numbers that level locally (:func:`_printed_in_full`).
+    A bare chapter number answers for nothing. Printed, it is as often a page
+    number as a heading; claimed by a file name it is as often one zone of the
+    chapter as the chapter -- Multnomah's ``39.c-3.txt`` holds the C-3 zone and
+    claims "39", and read as all of Chapter 39 it answered for 59 sections of
+    that chapter the store does not have.
+    """
+    for up, sep in _ancestors(ref):
+        if not re.search(r"[.\-]", up):
+            return False
+        if up in ids or f"{_HELD}{up}" in headings:
+            return f"{_FULL}{up}{sep}" not in headings
+        if up in headings:
+            return False
+    return False
+
+
+def _mention_caption(line: str, m: re.Match[str]) -> str | None:
+    """:func:`_caption_at` for a match of :data:`_REF`."""
+    for group in ("named", "abbrev", "dotted"):
+        if m.group(group):
+            return _caption_at(line, m.start(group))
+    return None
+
+
+def _caption_at(line: str, start: int) -> str | None:
+    """The caption a reference names, where it is introduced as a table or figure.
+
+    "Table 18.320.1" for the number in "are provided in Table 18.320.1.", and
+    None where the number at ``start`` is not introduced that way.
+    """
+    for m in _CAPTIONED.finditer(line):
+        if not m.start("list") <= start < m.end("list"):
+            continue
+        base = m.start("list")
+        for t in _CAPTION_TOKEN.finditer(m.group("list")):
+            if base + t.start() == start:
+                return f"{m.group('kind').title()} {t.group()}"
+    return None
+
+
+def _resolves(
+    ref: str, ids: set[str], headings: set[str], caption: str | None = None
+) -> bool:
+    """Whether some held document answers for this reference.
+
+    Generous where it is safe. A whole-title fetch answers for every section
+    inside it, so a reference resolves when a document *claims* the chapter and
+    the number is printed in it, or when any document prints the number at all
+    -- and a bare chapter reference resolves when we hold anything under it.
+
+    Strict everywhere else, because a reference that resolves wrongly hides a
+    chapter nobody read, which is worse than a false "unfetched" (FOLLOWUPS
+    105 item 4):
+
+    * a part of a held section resolves only where that section numbers its
+      parts locally (:func:`_covered`) -- "7." under 60.05.15, part G of
+      12.61.700;
+    * a range resolves only if every member of it does;
+    * a table (``caption``, from :func:`_caption_at`) resolves to a table
+      caption the stored text prints, a figure to nothing new (see
+      :data:`_CAPTION`), and neither on being "under" a held section --
+      Beaverton's Figure 70.20.10.6.2 sits under the held 70.20.10 and is the
+      one map the corpus does not have.
+    """
+    if _exact(ref, ids, headings):
+        return True
+    if caption is not None:
+        return caption in headings
+    members = _range(ref)
+    if members is not None:
+        return all(
+            _exact(m, ids, headings) or _covered(m, ids, headings) for m in members
+        )
+    return _covered(ref, ids, headings)
 
 
 #: Stands in for a field name where the nearby citation is a zone that borrows
@@ -557,15 +800,30 @@ def opens(layer: Layer, store: ProvenanceStore | None = None) -> Callable[[str],
     # 179 of them. Found and fixed in the reading ledger and the fetch
     # queue on 2026-09-04; both left a comment saying the other was its
     # twin, and neither of them looked here. Fixed 2026-09-08.
-    paths = store.documents_of(layer.layer)
-    ids = _held_ids(store, layer.layer, paths)
+    ids, headings = _answers(store, layer.layer)
+    return lambda ref: _resolves(ref, ids, headings)
+
+
+def _answers(
+    store: ProvenanceStore, layer_id: str, texts: dict[str, str] | None = None
+) -> tuple[set[str], set[str]]:
+    """The two sets :func:`_resolves` is asked against, for one layer.
+
+    ``texts`` is the layer's documents already read, where the caller has them.
+    """
+    paths = list(texts) if texts is not None else store.documents_of(layer_id)
+    ids = _held_ids(store, layer_id, paths)
     headings: set[str] = set()
     for path in paths:
-        text = store.text_path(path).read_text(encoding="utf-8")
+        text = (
+            texts[path]
+            if texts is not None
+            else store.text_path(path).read_text(encoding="utf-8")
+        )
         own = _doc_ids([path])
         owns = {i.partition(".")[0] for i in own} if own else None
         headings |= _headings(text, owns, own)
-    return lambda ref: _resolves(ref, ids, headings)
+    return ids, headings
 
 
 def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Dangling]:
@@ -582,12 +840,7 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
         return []
 
     texts = {p: store.text_path(p).read_text(encoding="utf-8") for p in paths}
-    ids = _held_ids(store, layer.layer, paths)
-    headings: set[str] = set()
-    for path, text in texts.items():
-        own = _doc_ids([path])
-        owns = {i.partition(".")[0] for i in own} if own else None
-        headings |= _headings(text, owns, own)
+    ids, headings = _answers(store, layer.layer, texts)
     cited = _cited_lines(layer)
 
     mentions: dict[str, int] = defaultdict(int)
@@ -617,7 +870,7 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
                 ).rstrip(".")
                 if not ref or ref.isdigit() and len(ref) < 2:
                     continue
-                if _resolves(ref, ids, headings):
+                if _resolves(ref, ids, headings, _mention_caption(line, m)):
                     continue
                 mentions[ref] += 1
                 sources[ref][path.removeprefix(f"{layer.layer}/")] += 1

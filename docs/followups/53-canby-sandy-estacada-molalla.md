@@ -1,31 +1,8 @@
 # 53. Canby, Sandy, Estacada, Molalla.
 
-53. [Claude] [Steph: (b) Molalla PDFs; (c)-(d) HUMAN_TODO 30; (f) Downtown yes/no] [scan: Estacada + Canby/Sandy DONE in run 73; Sandy REVERSED by r3 (83a7683d on main), rides the weekly ~2026-10-19; (b)-(f) below still open] **Canby, Sandy, Estacada, Molalla.**
-   Steph's by-right-only ruling (2026-10-08) made Canby and Sandy RED in every zone
-   (register `2026-10-08-by-right-only`, `2026-10-08-canby-no-state-fourplex-backstop`,
-   `2026-10-08-sandy-no-state-fourplex-backstop`; each zone note
-   opens "RED BY RULING" so the ruling can be reversed). REVIEW TIERS (Steph 2026-10-14, r3;
-   register `2026-10-14-review-tiers`): Sandy R-1/R-2/R-3 come back YELLOW -- the 17.90.40 B
-   design review applies stated standards but may add conditions (REVIEW-CONDITIONS). Bound
-   on run 74's inputs: 0 green / 108 yellow / 1,853 red of 1,961 (R-1 779 red, 719 on fit;
-   R-2 69 y / 510 r and R-3 39 y / 564 r, mostly the landscaped-area minimum). Canby
-   re-checked and stays RED: the 16.49.030 Type III review is a one-off judgement (zone notes
-   quote it). Steph 2026-10-15 (item 85, not merged yet): judgement-only red and the "may add
-   conditions" tier both become GREEN with a flag inside a UGB -- the clear-objective bound
-   shows newly admitted Canby 108 green / 35 yellow and Estacada R-3 10 red -> 6 green / 4
-   yellow, so Sandy's yellows move again when 85 merges.
-   Estacada (run 73 LIVE): 14 green / 7 yellow / 2,860 red of 2,881; admits C-2, CMU, R-3
-   (townhouse lots only) and NCR (only within 200 ft of Eagle Creek Rd or Hinman Rd,
-   `near_named_street_200ft`, flats/geom/named_street.py); the 16.132.015 planning-staff
-   review Steph ruled by-right (register `2026-10-08-estacada-staff-review-by-right`). All 14
-   greens read by hand; doubts, none changed: 34E17 02000 (30941 SE River Mill Rd) is a
-   split-zone lot, 47% NCR, its band not checked against the zone line; 34E20AB01200 (30905
-   SE Eagle Creek Rd) is an occupied apartment complex ($3.9M of buildings); 34E20AC00200/00201
-   (1015 NW Wade St) are two COM lots whose owner the roll does not give; `inside_ugb` was
-   false on all 14 (the UGB layer was not read -- fixed f003fd49 on flats/clear-objective).
-   Checks Steph asked for (2026-10-08): wetlands overlay = the NWI layer already applied;
-   historic overlay = inventoried buildings only; 33% geotechnical = already stricter in
-   slope.yaml (15%). Still open:
+53. [Claude] [Steph: (b) Molalla PDFs; (c)-(d) HUMAN_TODO 30; (f) Downtown yes/no] [scan: see file] **Canby, Sandy, Estacada, Molalla** -- Estacada, Canby, Sandy LIVE (Sandy yellow via r3 83a7683d; item 85 merged c20ea3a1). Waits on Steph: Molalla PDFs (HUMAN_TODO 29), Estacada q1-5 (HUMAN_TODO 30), Downtown zone yes/no. Owed, Claude: re-read the Canby/Sandy doubts now 85 has landed; (e) min density.
+   DONE (one line): by-right-only ruling 2026-10-08 (register `2026-10-08-*`); Sandy R-1/R-2/R-3 YELLOW (`2026-10-14-review-tiers`); item 85: judgement-only path = GREEN + flag inside a UGB (c20ea3a1, f003fd49 UGB read); Estacada run 73: 14 green / 7 yellow / 2,860 red, NCR only near Eagle Creek Rd / Hinman Rd (flats/geom/named_street.py), staff review ruled by-right (`2026-10-08-estacada-staff-review-by-right`); wetlands, historic and 33% geotechnical checks answered. Estacada doubts read, none changed: 34E17 02000 (split-zone lot, 47% NCR), 34E20AB01200 (occupied apartment complex), 34E20AC00200/00201 (owner not on the roll).
+   Still open:
    (b) Molalla (HUMAN_TODO 29, Steph's PDFs): 7 of 11 chapters (2.3, 2.4, 3.2, 4.4 still 429)
    -- layer files parked outside the repo unless all 11 land (copy in /tmp/fg53/molalla_parked
    + the new 5.1); gate already read: admits R-2, R-3, R-5, refuses R-1, C-1, C-2, M-1, M-2,

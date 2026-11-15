@@ -59,19 +59,6 @@ crossrefs:
       for 50 ft. Maximum Height of Structures in Residential Areas." A city charter ceiling of 50
       ft, quoted in four of the dimensional table's cross-reference blocks. The pod is 26 ft, and
       every Lake Oswego height standard already encoded caps lower than the charter does.
-  "50.04.003.4":
-    outcome: narrows_only
-    note: >-
-      "General Exception to Structure Height Limitations", cited in the same blocks as the charter
-      reference and again in two table footnotes that call it "maximum height exception". A
-      section granting exceptions to a height limit can only let a building stand taller than the
-      table allows, so reading it could only admit lots this screen already rejects on height.
-  "50.04.003.10":
-    outcome: narrows_only
-    note: >-
-      "Exceptions to the Minimum Density Requirement for All Zones", cited by the minimum-density
-      sentence in the R-2/R-0 and R-5/R-6 blocks. It relieves a floor, and a floor relieved can
-      only admit.
   "50.03.003.2":
     outcome: other_building
     note: >-

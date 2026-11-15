@@ -56,6 +56,7 @@ from flats.encode.crossrefs import (
     _doc_ids,
     _held_ids,
     _headings,
+    _mention_caption,
     _resolves,
 )
 from flats.encode.legible import is_grid, legible
@@ -820,7 +821,7 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
                 ).rstrip(".")
                 if not ref or (ref.isdigit() and len(ref) < 2):
                     continue
-                if _resolves(ref, ids, headings):
+                if _resolves(ref, ids, headings, _mention_caption(line, m)):
                     continue
                 if _below_a_section(ref):
                     continue

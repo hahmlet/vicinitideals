@@ -1,47 +1,8 @@
-# 2. Neighbour zoning per lot line -- loose ends after the measurement (4b25df09 + the carve fix cfc8c033; run 12 PROMOTED 2026-09-22; Wood Village TC 28850154 and the whole-block answer 86b06340 in run 16; the nine `AHEAD_OF_QUADFIT` zones 0504ef84 in run 14).
+# 2. Neighbour zoning per lot line -- loose ends after the measurement (4b25df09 + cfc8c033; run 12 PROMOTED 2026-09-22; 86b06340, 0504ef84).
 
-2. [Claude] [scan: YES] **Neighbour zoning per lot line -- loose ends after the measurement
-   (4b25df09 + the carve fix cfc8c033; run 12 PROMOTED 2026-09-22; Wood
-   Village TC 28850154 and the whole-block answer 86b06340 in run 16;
-   the nine `AHEAD_OF_QUADFIT` zones 0504ef84 in run 14).** s4 reads the
-   zone across every non-street line; FLATS answers
-   `abuts_nonresidential_zone` in Portland / Troutdale / Fairview and
-   `abuts_residential_zone` + `abuts_lower_density_zone` in Oregon City (ANY
-   line tightens, EVERY line relaxes; anything unresolved stays UNKNOWN).
-   2026-11-08 branch `flats/neighbour-zoning` (off rescreen-1110 0f2620b3):
-   (a) DONE on the branch, AWAITS ITS BOUND: Oregon City R-2 Table 17.12.040
-   note 1 encoded (side 10 + parking strip 10 when `abuts_lower_density_zone`,
-   both plats; OC declares the fact, true_for R-10/R-8/R-6). Item 43's
-   easement ruling was what changed it: note 2's `utility_easement` cap is
-   answered by the bridge since 2026-10-05, so note 1's cap had become the
-   only thing holding every R-2 lot. quadfit rules.yaml left at side 5 (FLATS
-   cuts its own envelope; see the hand-off). (d) CHECKED: from RICAP 11
-   (2026-11-01) a CI1 home takes RM1's setbacks, which carry no neighbour
-   lever, so the OS problem is CI2's alone; the old guard read the codified
-   block's caps and passed vacuously after Nov 1 -- a second guard now
-   resolves CI1/CI2 on the law in force. Still owed, most lots first:
-   (c) 1,938 lots in the turning zones still lean on the fact (September
-   count; re-count on 137): 813 a blank point across a line (park / ROW /
-   fabric gap), 802 no non-street line at all (ANSWERED 86b06340 where s4
-   traced the lot and it is not irregular: 1,565 lots; the tier-C and
-   untraced ones stay unanswered), 272 a split-zone neighbour, 46 both, 5 a
-   neighbour in another city. `abuts_park` BUILT a89a3b9b from RLIS ORCA
-   (live in run 42; only Troutdale conditions on a park in the corpus). ORCA
-   was never acquired into snapshot 2026-09-18 -- check whether the run-111
-   county refresh acquired it (`rlis_orca` is registered in pipeline.yaml).
-   (d) CI2 still needs its own list and the across-the-street reading
-   (33.910) if its `site_specific_limitation` cap ever lifts (guard tests).
-   (e) Troutdale's 5 ft side against HDR is unread -- SIZED 2026-09-23: at
-   most 13 MU lots see an HDR neighbour, the unread half only relaxes
-   (7.5/15 -> 5), and reading it needs a fourth neighbour fact ("every line
-   non-residential OR HDR"); recommend leaving it unless those lots come up.
-- 2026-11-09 (flats/leftovers-a): (a) merged into flats/rel5 (9057467b + e354dc4c via c0705462),
-  awaits the rel5 bound. (c) RE-COUNTED on rescreen-1110: 5,102 lots lean on an unknown neighbour
-  fact (177 green, 3,944 red, 981 yellow). ORCA IS acquired (rlis_orca in snapshots 2026-09-18,
-  10-01, 10-07; s4 park_across_json filled on 432,992 of 447,705 lots; nothing leans on abuts_park).
-  The biggest block was Beaverton, whose yards turn on both facts with NO lists declared: BUILT
-  a14f4e43 -- lists off BDC 10.25 (residential = its six Residential Districts, as 20.22 note 9
-  states; HDR districts multiple-use; Downtown's relaxing 0 keeps HDR, RC-DT, ROW, WAcnty off).
-  On Beaverton's 1,754 leaning lots 1,276 answers settle (928 relaxing, 348 tightening); rides
-  the next bound. Left: the blank/split/other-city points everywhere else. (d) on hold (only if CI2's cap
-  lifts). (e) parked as the item recommends (<=13 lots, relaxing only, needs a fourth fact).
+2. [Claude] [scan: YES] **Neighbour zoning per lot line -- loose ends after the measurement** -- (a) Oregon City R-2 note 1 + Beaverton lists LIVE (run 124); (c) lots leaning on an unknown neighbour fact still open (5,102 on 11-09; re-count); (d) guard done, CI2 on hold; (e) parked.
+   DONE (one line): s4 reads the zone across every non-street line (4b25df09, carve fix cfc8c033, 86b06340, 0504ef84, `abuts_park` a89a3b9b); (a) OC R-2 Table 17.12.040 note 1 encoded 9057467b + e354dc4c, Beaverton neighbour lists off BDC 10.25 a14f4e43 (merged via rel6, in main); (d) CI1/CI2 guard now resolves the law in force.
+   STILL OPEN, most lots first:
+   - (c) RE-COUNTED 2026-11-09 on rescreen-1110: 5,102 lots lean on an unknown neighbour fact (177 green, 3,944 red, 981 yellow) -- a blank point across a line (park / ROW / fabric gap), no non-street line at all, a split-zone neighbour, a neighbour in another city. ORCA is acquired (nothing leans on abuts_park). Beaverton's block (1,754 lots, 1,276 now answered) is built; the rest is the blank/split/other-city points everywhere else. Re-count on run 124.
+   - (d) CI2 still needs its own list and the across-the-street reading (33.910) if its `site_specific_limitation` cap ever lifts (guard tests). On hold.
+   - (e) Troutdale's 5 ft side against HDR is unread -- at most 13 MU lots, only relaxes, needs a fourth neighbour fact; parked as recommended.

@@ -26,23 +26,11 @@
    `scripts/flats_flags.py sync` then `check` on 114 (nightly sync 10:30
    UTC). An ambiguous rule set binds nothing, so ~0.07% of rows stay yellow
    despite a 50+ ft fit miss (Wilsonville R, Hillsboro SCR-V) -- by design.
-   (iii) BUILT on flats/flag-leftovers (2026-11-08, awaiting bound): Gresham
-   note 5 re-pointed to `at_street_end` + dead ends measured (8fbae177,
-   a530e67c, 2026-10-04); now ENCODED at its worst reading -- 25 ft max
-   front setback, no street named (every street line), on the True answer
-   in LDR-5/LDR-7/TLDR/TR; MDR-12/MDR-24/OFR/CMF already hold a stricter
-   20 ft max; the 5 ft min is never stricter. caps.json drops at_street_end,
-   so the severity-0 bound tries both answers (sidewalk_easement no longer
-   holds those lots since 972caa17). (e) OPEN: note 5 is the first capped
-   footnote given its direction; the other 29 `unmeasured` notes turn on
-   data nobody holds (easements, water features, LO net developable area,
-   site-specific limits) and have no figure to bound. Unknown facts needing
-   a title report: utility_easement 28k, sidewalk_easement 20k (run 63
-   yellow lots). Plan gaps: flag history across county refreshes; bulk
-   writes through the loader. (f) CLOSED 2026-11-08: the screen runs one
-   fixed design (pod80x30, 0f2620b3), so no pod spec is owed; FLATS_PLAN
-   Phase 4 set access is FOLLOWUPS 145.
-- 2026-11-09 (flats/leftovers-a): (iii) merged into flats/rel5 (c37b8b54 via 4d9e7666), awaits the
-  rel5 bound. (e) nothing buildable: the 29 notes turn on data no source holds (no figure to
-  bound); "flag history across county refreshes" and "bulk writes through the loader" are
-  unspecified plan gaps, a feature to scope with Steph first. (f) closed.
+   (iii) DONE and live (main, run 124): Gresham note 5 encoded at its worst reading
+   (c37b8b54 via flats/flag-leftovers, merged into rel5 as 4d9e7666); (f) CLOSED 2026-11-08 (one fixed
+   design; set access is FOLLOWUPS 145).
+   STILL OPEN: (e) the other 29 `unmeasured` notes turn on data nobody holds (easements, water
+   features, LO net developable area, site-specific limits) and have no figure to bound -- nothing
+   buildable; unknown facts needing a title report: utility_easement 28k, sidewalk_easement 20k (run 63
+   yellow lots). Plan gaps "flag history across county refreshes" and "bulk writes through the loader"
+   are unspecified: a feature to scope with Steph before building.
