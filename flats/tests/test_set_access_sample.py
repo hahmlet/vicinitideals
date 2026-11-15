@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
 import pandas as pd
 
@@ -41,15 +42,30 @@ def test_pick_stratifies_by_jurisdiction() -> None:
     assert got.groupby("jurisdiction").size().to_dict() == {"Gresham": 2, "Portland": 2}
 
 
-def test_summary_counts_cranes_and_reasons() -> None:
+def test_summary_counts_results_and_reasons() -> None:
     rows = [
-        {"jurisdiction": "Portland", "crane": "45 t", "setup": "site", "binding": "2 Floor cassettes"},
-        {"jurisdiction": "Portland", "crane": "neither", "setup": None,
-         "why": "28 t site: the street in front is 24 ft wide at most; the 28 t pad needs 26 ft"},
-        {"jurisdiction": "Gresham", "crane": "unmeasured", "setup": None, "why": "x"},
+        {"jurisdiction": "Portland", "result": "IC-80 one face (front)", "binding_check": "lifts: Upper back wall",
+         "hardest_lift": "Upper back wall", "pct_of_chart": 63.1, "chart_row_ft": 32.0},
+        {"jurisdiction": "Portland", "result": "45 t on site", "binding_check": "lifts: Ground-wall stack (load 1)",
+         "hardest_lift": "Ground-wall stack (load 1)", "pct_of_chart": 47.2, "chart_row_ft": 25.0,
+         "why": "IC-80 one face (front): swing room: less than 12 ft beyond a wall end inside the lot"},
+        {"jurisdiction": "Portland", "result": "not viable",
+         "why": "45 t in the street: the street in front is 24 ft wide at most; the 45 t pad needs 28 ft"},
+        {"jurisdiction": "Gresham", "result": "unmeasured", "why": "x"},
     ]
     text = _summary(rows, {"law_on": "2026-11-14"}, _args(), 60.0)
-    assert "| 45 t / site | 1 |" in text
-    assert "| Portland | 0 | 1 | 1 | 0 | 0 |" in text
+    assert "| IC-80 one face (front) | 1 |" in text
+    assert "| jurisdiction | IC-80 front | IC-80 back | IC-80 both faces | 45 t on site |" in text
+    assert "| Portland | 1 | 0 | 0 | 1 | 0 | 1 | 0 | 0 |" in text
+    assert "long face" not in text  # those columns only where a front could not be told
+    assert "IC-80 one face (front): lifts: Upper back wall (Upper back wall, 63.1% at 32.0 ft)" in text
     assert "the street in front is # ft wide at most" in text
+    assert "less than # ft beyond a wall end" in text
     assert "overhead power lines" in text
+
+
+def test_grade_is_read_by_default() -> None:
+    import scripts.flats_set_access_sample as sample
+
+    src = Path(sample.__file__).read_text(encoding="utf-8")
+    assert '"--no-grade", dest="grade", action="store_false"' in src

@@ -1,5 +1,6 @@
-"""Set access over a sample of a finished bridge run: which crane works on
-each lot, where it sets up, and its binding lift (FOLLOWUPS 145, slice 2).
+"""Set access over a sample of a finished bridge run: which crane sets the
+pod on each lot, from where, and what binds (FOLLOWUPS 145, slice 3: the
+IC-80 from one or both long faces, then the hired 45 t; crane spec S3e).
 
 A REPORT. It reads a run's ``lots.parquet`` and writes beside nothing of
 it: no colour, reason, flag or result is touched (Steph 2026-11-14: "Don't
@@ -8,24 +9,27 @@ the run's own stage files (``meta.json``'s ``s4``/``s5o``), takes the pod
 where the screen drew it (the row's ``drawing``), and runs
 :func:`flats.fit.set_access.report` with the run's own street data: the
 truck centrelines (``roads``) and the curbs and pavement widths (``curbs``),
-and, with ``--grade``, the run's elevation models (``dem``) for the pad's
-fall.
+and the run's elevation models (``dem``) for the fall across the IC-80's
+working strip and the 45 t's pad (both must be within 1%; ``--no-grade``
+skips it, and level is then unmeasured on every lot).
 
 Writes into ``--out``:
 
 * ``set_access.csv`` -- one row per lot: TLID, jurisdiction, zone, colour,
-  the crane that works (``28 t`` / ``45 t`` / ``neither`` / ``unmeasured``),
-  where it sets up (``site`` / ``street``), the method and truck place, the
-  binding lift with its chart row, boom, capacity and percent of chart, each
-  ladder step's status, notes ("power lines not checked") and why.
-* ``summary.md`` -- the counts by crane and set-up, by jurisdiction, the
-  binding lifts, and the commonest reasons.
+  the result (``IC-80 one face (front|back)`` / ``IC-80 both faces`` /
+  ``45 t on site`` / ``45 t in the street`` / ``not viable`` /
+  ``unmeasured``), the binding check, the hardest lift with its chart row,
+  capacity and percent of chart, the IC-80's wall-rigging limit, each
+  step's status, notes ("power lines not checked") and why the earlier
+  steps failed.
+* ``summary.md`` -- the counts by result, by jurisdiction, the binding
+  checks and lifts, and the commonest reasons.
 
 Run on LXC 137 when its heavy lock is free (never on production), e.g.::
 
     cd /root/vicinitideals && uv run python scripts/flats_set_access_sample.py \\
         --run <RUN_DIR> --colour green --per-jurisdiction 40 \\
-        --out /root/set_access_sample_$(date +%F) --processes 4 --grade
+        --out /root/set_access_sample_$(date +%F) --processes 4
 
 ``--colour any`` with ``--per-jurisdiction`` gives a stratified sample of
 every lot the pod was drawn on; ``--tlids FILE`` (one TLID per line) runs
@@ -86,9 +90,9 @@ def _one(row: dict[str, Any], picked: dict[str, Any]) -> dict[str, Any]:
         drawing = json.loads(picked["drawing"])
         site = sa.site_from_drawing(lot.lot_geom, drawing, street, _W["reader"])
         if site is None:
-            return {**base, "crane": "unmeasured", "why": "no drawn building"}
+            return {**base, "result": "unmeasured", "why": "no drawn building"}
         if not street:
-            return {**base, "crane": "unmeasured", "why": "no street lot line traced"}
+            return {**base, "result": "unmeasured", "why": "no street lot line traced"}
         terrain = _W.get("terrain")
         grade_of = None
         if terrain is not None:
@@ -100,7 +104,7 @@ def _one(row: dict[str, Any], picked: dict[str, Any]) -> dict[str, Any]:
         rep = sa.report(site, grade_of=grade_of)
         return {**base, **rep.row(), "seconds": round(time.time() - t0, 2)}
     except Exception as exc:  # noqa: BLE001 -- one bad lot is reported, not fatal
-        return {**base, "crane": "error", "why": f"{type(exc).__name__}: {exc}"}
+        return {**base, "result": "error", "why": f"{type(exc).__name__}: {exc}"}
 
 
 def _work(batch: list[tuple[dict[str, Any], dict[str, Any]]]) -> list[dict[str, Any]]:
@@ -130,6 +134,28 @@ def _pick(lots: Any, args: argparse.Namespace) -> Any:
     return frame
 
 
+#: The summary's result columns, in the viability order.
+RESULTS = (
+    "IC-80 one face (front)",
+    "IC-80 one face (back)",
+    "IC-80 one face (long face 1)",
+    "IC-80 one face (long face 2)",
+    "IC-80 both faces",
+    "45 t on site",
+    "45 t in the street",
+    "not viable",
+    "unmeasured",
+    "error",
+)
+_SHORT = {
+    "IC-80 one face (front)": "IC-80 front",
+    "IC-80 one face (back)": "IC-80 back",
+    "IC-80 one face (long face 1)": "IC-80 face 1",
+    "IC-80 one face (long face 2)": "IC-80 face 2",
+}
+_WORKS = ("IC-80", "45 t")
+
+
 def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Namespace, seconds: float) -> str:
     from flats.fit.set_access import NOT_CHECKED
 
@@ -138,6 +164,12 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
         out += [f"| {k} | {v:,} |" for k, v in counter.most_common()]
         return out
 
+    def works(r: dict[str, Any]) -> bool:
+        return str(r.get("result") or "").startswith(_WORKS)
+
+    seen = {r.get("result") for r in rows}
+    # The long-face columns only where a lot's front could not be told.
+    cols = [c for c in RESULTS if "long face" not in c or c in seen]
     lines = [
         "# Set access sample (FOLLOWUPS 145, report only)",
         "",
@@ -146,39 +178,43 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
         "",
         "Not checked on any lot: " + ", ".join(NOT_CHECKED) + ".",
         "",
-        "## Which crane works",
+        "## Result",
         "",
-        *table(collections.Counter(f"{r.get('crane')} / {r.get('setup') or '-'}" for r in rows), "crane / set-up"),
+        *table(collections.Counter(str(r.get("result")) for r in rows), "result"),
         "",
         "## By jurisdiction",
         "",
-        "| jurisdiction | 28 t | 45 t | neither | unmeasured | error |",
-        "|---|---|---|---|---|---|",
+        "| jurisdiction | " + " | ".join(_SHORT.get(c, c) for c in cols) + " |",
+        "|---|" + "---|" * len(cols),
     ]
     by: dict[str, collections.Counter] = collections.defaultdict(collections.Counter)
     for r in rows:
-        by[str(r.get("jurisdiction"))][str(r.get("crane"))] += 1
+        by[str(r.get("jurisdiction"))][str(r.get("result"))] += 1
     for j in sorted(by):
         c = by[j]
-        lines.append(f"| {j} | {c['28 t']} | {c['45 t']} | {c['neither']} | {c['unmeasured']} | {c['error']} |")
+        lines.append(f"| {j} | " + " | ".join(str(c[k]) for k in cols) + " |")
     lines += [
         "",
-        "## Binding lift (lots where a crane works)",
+        "## Binding check and hardest lift (lots where a crane works)",
         "",
         *table(
-            collections.Counter(f"{r.get('crane')}: {r.get('binding')}" for r in rows if r.get("crane") in ("28 t", "45 t")),
-            "crane: lift",
+            collections.Counter(
+                f"{r.get('result')}: {r.get('binding_check')} ({r.get('hardest_lift')}, "
+                f"{r.get('pct_of_chart')}% at {r.get('chart_row_ft')} ft)"
+                for r in rows
+                if works(r)
+            ),
+            "result: binding",
         ),
         "",
-        "## Commonest reasons (lots where none works)",
+        "## Commonest reasons (every step before the answer)",
         "",
     ]
     why: collections.Counter = collections.Counter()
     for r in rows:
-        if r.get("crane") not in ("28 t", "45 t"):
-            for w in str(r.get("why") or "").split("; "):
-                if w:
-                    why[_generic(w)] += 1
+        for w in str(r.get("why") or "").split("; "):
+            if w:
+                why[_generic(w)] += 1
     lines += table(why, "reason") if why else ["(none)"]
     return "\n".join(lines) + "\n"
 
@@ -200,7 +236,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--tlids", type=Path, default=None, help="a file of TLIDs, one per line")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--processes", type=int, default=1)
-    parser.add_argument("--grade", action="store_true", help="read the pad's fall off the run's elevation models")
+    parser.add_argument(
+        "--no-grade", dest="grade", action="store_false",
+        help="do not read the strip's and pad's fall off the run's elevation models (level is then unmeasured)",
+    )
     for key in ("s4", "s5o", "roads", "curbs", "dem"):
         parser.add_argument(f"--{key}", type=Path, default=None, help=f"override meta.json's {key}")
     args = parser.parse_args(argv)
