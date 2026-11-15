@@ -928,6 +928,79 @@ datasets:
       Width (ft) on 1,608 of 1,609 segments, edited 2026; one Proposed and
       one Out of Service street are not fetched.
 
+  # --- pavement widths for the crane report only (flats/geom/street_width.py)
+  # FOLLOWUPS 145 (Steph 2026-11-15, parts A and B): the 45 t crane's street
+  # set-up needs the pavement width in front of the lot. These four are read
+  # by the set-access REPORT alone -- never by the fire hose
+  # (flats/geom/curbs.py keeps its four), never by a lot's colour -- so a
+  # bridge run does not need them and refuses nothing without them. Found by
+  # the 2026-11-15 scout (../vicinitideals-worktrees/street-width-scout.md);
+  # no licence is stated on any of them and none asks for one to be accepted.
+
+  pave_width_washington:
+    kind: arcgis
+    label: Washington County Paved Roads (county-maintained roads)
+    provides: streets
+    url: https://gispub.co.washington.or.us/server/rest/services/AMS/Ops_AMS_Assets/MapServer/13
+    geometry: polyline
+    where: Width_Rd >= 10
+    fields: [Road_Name, Road_Number, Width_Rd, Lanes, lastMaintenanceCalendarYear]
+    serves: [or/washington]
+    notes: >-
+      4,434 county-maintained road sections (maintenance years to 2023),
+      drawn down the road's middle; Width_Rd is the paved width in feet
+      (10-104, mean 28). County roads only, some inside cities; a city's own
+      residential streets are not in it. Values like 61 and 71 on two-lane
+      roads suggest shoulders or turn lanes are counted -- read as recorded.
+
+  pave_width_tualatin:
+    kind: arcgis
+    label: Tualatin Striping Inventory (width between curbs)
+    provides: streets
+    url: https://tualgis.ci.tualatin.or.us/server/rest/services/Transportation_Explorer/MapServer/76
+    geometry: polyline
+    native_srid: 3857
+    where: Pav_Width >= 10
+    fields: [STREET_NAM, CLASS, Pav_Width, Num_Trav_Lanes]
+    serves: [or/clackamas/tualatin]
+    notes: >-
+      257 segments measured off the 2018 6-inch orthophoto; Pav_Width is
+      "Total Width Between Curbs" (ft). Arterials and collectors mostly; no
+      local residential streets.
+
+  roadway_hillsboro:
+    kind: arcgis
+    label: Hillsboro planimetric Roadway polygons (public and private streets)
+    provides: streets
+    url: https://gis.hillsboro-oregon.gov/public/rest/services/public/HillsboroBase/MapServer/14
+    geometry: polygon
+    native_srid: 3857
+    where: TYPE IN ('Public Local', 'Private Streets')
+    fields: [TYPE, EDITDATE, DATA_SOURCE]
+    serves: [or/washington/hillsboro]
+    notes: >-
+      The paved street shapes off Hillsboro's annual aerial audit (EDITDATE
+      per polygon): 185 Public Local and 1,146 Private Streets fetched; the
+      1,505 Parking Lots, 3 Runway and 1 untyped polygons are not, so no
+      parking lot widens a street. The width is read straight across the
+      shape at the lot's frontage, square to the centreline
+      (flats/geom/street_width.py).
+
+  pave_edge_oregon_city:
+    kind: arcgis
+    label: Oregon City Edge of Pavement lines
+    provides: streets
+    url: https://maps.orcity.org/arcgis/rest/services/Transportation_PUBLIC/MapServer/13
+    geometry: polyline
+    where: LAYER = 'T-ROAD-PAVE'
+    fields: [LAYER, CreateDate, LastEditDate]
+    serves: [or/clackamas/oregon-city]
+    notes: >-
+      6,774 CAD edge-of-pavement lines (layer T-ROAD-PAVE; the one NR-CURB
+      and 189 unlayered lines are not fetched), not tagged left or right and
+      patchy across the city. A width counts only where an edge is found on
+      BOTH sides of the centreline, square to it, at the lot's frontage.
+
   # --- transit (flats/geom/transit.py) ---------------------------------------
   # Measured once per transit release into a per-lot distance file
   # (flats/ingest/transit.py), not once per screen. Metro republishes these
