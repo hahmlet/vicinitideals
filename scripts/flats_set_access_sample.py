@@ -342,6 +342,10 @@ def _summary(rows: list[dict[str, Any]], meta: dict[str, Any], args: argparse.Na
         f"Run: `{args.run}` (law on {meta.get('law_on')}); colour `{args.colour}`; "
         f"{lots:,} lots in {seconds / 60:.1f} min.",
         "",
+        "Street widths: measured from "
+        + (", ".join(f"`{w}`" for w in meta.get("widths") or ()) or "NO width snapshot (--widths not passed)")
+        + (f"; estimated off the taxlot fabric `{meta['fabric']}`." if meta.get("fabric") else "; no estimate."),
+        "",
         "Not checked on any lot: " + ", ".join(NOT_CHECKED) + ".",
         "",
     ]

@@ -15,6 +15,7 @@ import dataclasses
 import numpy as np
 import pytest
 import shapely
+import yaml
 from shapely.geometry import LineString, box
 
 from flats.fit import set_access as sa
@@ -302,6 +303,28 @@ def test_the_allowance_is_the_place_s_own_or_derived_or_the_default() -> None:
     assert SHIPPED.allowance("or/multnomah/portland") == 12.0
     assert SHIPPED.allowance_basis("or/multnomah/portland") == "no street standard read, 12 ft a side [est]"
     assert SHIPPED.allowance_basis("or/washington/cornelius") == "Cornelius PWS 5.04(a) Local Street, 11 ft a side"
+
+
+def test_the_unmatched_strip_switch_reads_the_widest_or_the_local_street_strip() -> None:
+    # Shipped: the widest strip of every tied section (Steph's answer pending).
+    assert SHIPPED.allowance("or/washington/_unincorporated") == 16.0  # NR-1 60 / 28
+    assert SHIPPED.allowance("or/washington/beaverton") == 13.0  # NR3 50 / 24
+    raw = yaml.safe_load(sw.CONFIG.read_text(encoding="utf-8"))
+    raw["street_width"]["unmatched_strip"] = "local_street_strip"
+    local = sw.rules_from(raw)
+    # Ordinary local streets only: Washington County L-1 50 / 24, Beaverton L1-L3,
+    # Hillsboro's residential rows, Sherwood's standard residential.
+    assert local.allowance("or/washington/_unincorporated") == 13.0
+    assert local.allowance("or/washington/beaverton") == 12.0
+    assert local.allowance("or/washington/hillsboro") == 11.0
+    assert local.allowance("or/washington/sherwood") == 12.0
+    # A place with no neighbourhood route is the same either way; printed pieces never move.
+    assert local.allowance("or/multnomah/gresham") == SHIPPED.allowance("or/multnomah/gresham") == 16.0
+    assert local.allowance("or/washington/cornelius") == 11.0
+    assert "local-street sections" in local.allowance_cite("or/washington/_unincorporated")
+    raw["street_width"]["unmatched_strip"] = "narrowest"
+    with pytest.raises(ValueError, match="unmatched_strip"):
+        sw.rules_from(raw)
 
 
 def test_the_estimate_names_the_section_and_centres_it() -> None:

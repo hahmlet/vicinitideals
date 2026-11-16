@@ -145,6 +145,10 @@ class Section:
     #: Whether the place's derived allowance reads this section (not a
     #: plan district's widened right-of-way, ``row_add``).
     derive: bool = True
+    #: An ordinary local street (not a neighbourhood route, ``class:
+    #: neighbourhood_route``): what ``unmatched_strip: local_street_strip``
+    #: derives the allowance from.
+    local: bool = True
 
     @property
     def tied(self) -> bool:
@@ -247,13 +251,27 @@ def _unit(entry: Mapping[str, Any], where: str) -> float:
     return FT_PER_M if unit == "m" else 1.0
 
 
+#: How a place's allowance is derived from its sections where it prints none
+#: (``street_width.unmatched_strip``): the widest strip a side of every tied
+#: section, or of its ordinary local-street sections only (Steph's answer
+#: pending, 2026-11-16; widest_strip until then).
+STRIP_RULES = ("widest_strip", "local_street_strip")
+#: The section classes a row may name (``class:``); absent is ``local``.
+SECTION_CLASSES = ("local", "neighbourhood_route")
+
+
 def rules_from(raw: Mapping[str, Any]) -> EstimateRules:
     """Parse ``street_width``: every figure needs a ``cite``, and every one
     not marked [est] a stored ``quote``. A place with ``sections`` and no
     allowance of its own takes the widest strip a side of its tied sections
     (right-of-way less pavement, halved: the cautious one); with no cap of
-    its own, its widest printed pavement."""
+    its own, its widest printed pavement. ``unmatched_strip:
+    local_street_strip`` derives the strip from the ordinary local-street
+    sections only (every tied section where a place marks none local)."""
     sw = raw.get("street_width") or {}
+    strip = str(sw.get("unmatched_strip") or STRIP_RULES[0])
+    if strip not in STRIP_RULES:
+        raise ValueError(f"street_width.unmatched_strip: {strip!r} (one of {', '.join(STRIP_RULES)})")
     tables: dict[str, dict[str, float]] = {"allowance_ft": {}, "cap_ft": {}}
     cites: dict[str, str] = {}
     labels: dict[str, str] = {}
@@ -287,15 +305,23 @@ def rules_from(raw: Mapping[str, Any]) -> EstimateRules:
             add = float(row.get("row_add") or 0.0) * unit
             r_lo, r_hi = _span(row["row"], unit, w)
             p_lo, p_hi = _span(row["pave"], unit, w)
-            secs.append(Section(str(row["name"]), r_lo + add, r_hi + add, p_lo, p_hi, derive=not add))
+            cls = str(row.get("class") or SECTION_CLASSES[0])
+            if cls not in SECTION_CLASSES:
+                raise ValueError(f"{w}: class {cls!r} (one of {', '.join(SECTION_CLASSES)})")
+            secs.append(
+                Section(str(row["name"]), r_lo + add, r_hi + add, p_lo, p_hi, derive=not add, local=cls == "local")
+            )
         k = str(key)
         sections[k] = tuple(secs)
         std = str(place.get("label") or place["standard"])
         labels[f"sections:{k}"] = std
         tied = [s for s in secs if s.tied and s.derive]
+        which = "tied sections"
+        if strip == "local_street_strip" and any(s.local for s in tied):
+            tied, which = [s for s in tied if s.local], "tied local-street sections"
         if k not in tables["allowance_ft"] and tied:
             tables["allowance_ft"][k] = max((s.row_lo - s.pave_lo) / 2.0 for s in tied)
-            cites[f"allowance_ft:{k}"] = f"derived: the widest strip a side of the tied sections of {place['standard']}"
+            cites[f"allowance_ft:{k}"] = f"derived: the widest strip a side of the {which} of {place['standard']}"
             labels[f"allowance_ft:{k}"] = std
         if k not in tables["cap_ft"]:
             tables["cap_ft"][k] = max(s.pave_hi for s in secs)
@@ -691,7 +717,9 @@ __all__ = [
     "ESTIMATED",
     "EstimateRules",
     "FT_PER_M",
+    "SECTION_CLASSES",
     "SECTION_TOL_FT",
+    "STRIP_RULES",
     "Section",
     "KEYS",
     "MAX_PAVE_FT",
