@@ -46,6 +46,7 @@ the full one.)
 
 ## 1. Claude -- priority
 
+195. [Claude] [scan: YES -- toward yellow, possible FALSE GREEN] **Building minimum frontage share counted in 1 ft steps: a pass exactly at the minimum may be under it** -- same fix as rel9 F1 the other way; rel10 lane. [file](followups/195-building-share-step.md)
 152. [Claude] [Steph] **ci-runner: optional OOM protection for its Postgres** -- run cap + Postgres check shipped (70c1cb75); only the optional OOMScoreAdjust=-900 unit setting on 138 is left, Steph's call (only if Postgres is OOM-killed again). [file](followups/152-ci-runner-overload.md)
 147. [Claude] **Maximum front setback never checked on its own** -- DONE and live; last open lot 1S2E17BA -14300 re-checked 11-13: true RED (corner, 18 ft off SE 71st; small-fixes-9 hand-off). Remove at rel9 merge. [file](followups/147-max-front-setback-unchecked.md)
 
@@ -76,7 +77,7 @@ the full one.)
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-(none -- rel8 LIVE run 126 2026-11-15; rel9 dfb512a3 bound DONE 11-16 (572 moves, md5 ed47c704); move read BLOCK: 3 Beaverton greens pass the frontage cap at exactly 50% on 1 ft steps -- fix on flats/rel9 building, then scoped re-bound + release)
+(none -- rel8 LIVE run 126 2026-11-15; rel9 dfb512a3 bound DONE 11-16 (572 moves, md5 ed47c704); move read BLOCK on frontage rounding -- FIXED flats/rel9 2b166a6b, scoped re-bound running /root/rel9_fr, then release)
 
 ### 1c. The rest, most urgent first (dated items first)
 194. [Claude] [scan: YES -- toward green] **rel8/rel9 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R), Gresham unmapped street class (~46), one fire route** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)
