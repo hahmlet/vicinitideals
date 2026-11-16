@@ -146,3 +146,7 @@ Sources added 2026-11-15 (open, no licence): Washington County Paved Roads, Tual
 Offered Steph: sidewalk allowance -- keep 12 ft, use 11 ft, or read each city's street standard (43 sample lots fail at exactly 26 ft). Recommend reading the standards, 12 ft meanwhile.
 
 Steph 11-15: "Each cities standard". Building on set-access-3 (per-jurisdiction cross-section, cautious = narrower pavement, 12 ft [est] fallback); sample -> /root/set_access_sample_rel8_s4d; hand-off set-access-6.handoff.md.
+
+## 11-15 city street standards BUILT: flats/set-access-3 da78aaf5 (report only)
+17 places encoded (Oregon City, Estacada, Canby, Clackamas Co, Gladstone, Sandy, Happy Valley, West Linn, Wilsonville, Gresham, Multnomah Co, Washington Co, Beaverton, Hillsboro, Cornelius, Sherwood, Durham); Portland (draft manual), Troutdale (1994 only), Milwaukie (ranges, review copy) stay on 12 ft [est]. Hillsboro read from an Internet Archive copy; Happy Valley/Wilsonville LID/Beaverton sections read off images (unverified). Sample s4d queued on 137 (waits for 10 GB free behind the rel9 bound); compare with python3 /root/set_access_s4d_compare.py /root/set_access_sample_rel8_s4c /root/set_access_sample_rel8_s4d. Hand-off ../vicinitideals-worktrees/set-access-6.handoff.md.
+Offered Steph: a street whose ROW matches no standard section takes off the WIDEST strip the city prints anywhere (Gresham, Washington Co 16 ft a side: an old 50 ft Gresham street reads 18 ft), or the ordinary local street's strip (Washington Co 13 ft, Gresham stays 16). Recommend ordinary local street.
