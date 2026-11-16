@@ -76,7 +76,7 @@ the full one.)
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-(none -- rel8 LIVE run 126 2026-11-15; rel9 re-merged dfb512a3, FULL bound running vs run 126 -> /root/rel9_bound)
+(none -- rel8 LIVE run 126 2026-11-15; rel9 dfb512a3 bound DONE 11-16 (572 moves, md5 ed47c704); move read running)
 
 ### 1c. The rest, most urgent first (dated items first)
 194. [Claude] [scan: YES -- toward green] **rel8 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R)** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)
