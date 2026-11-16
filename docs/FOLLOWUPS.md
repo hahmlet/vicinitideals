@@ -76,10 +76,10 @@ the full one.)
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-(none -- rel8 LIVE run 126 2026-11-15; rel9 dfb512a3 bound DONE 11-16 (572 moves, md5 ed47c704); move read running)
+(none -- rel8 LIVE run 126 2026-11-15; rel9 dfb512a3 bound DONE 11-16 (572 moves, md5 ed47c704); move read BLOCK: 3 Beaverton greens pass the frontage cap at exactly 50% on 1 ft steps -- fix on flats/rel9 building, then scoped re-bound + release)
 
 ### 1c. The rest, most urgent first (dated items first)
-194. [Claude] [scan: YES -- toward green] **rel8 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R)** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)
+194. [Claude] [scan: YES -- toward green] **rel8/rel9 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R), Gresham unmapped street class (~46), one fire route** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)
 
 100. [Claude] [scan: YES (yellows only go green)] **Driveway street: measure it instead of asking** -- MERGED e63617b8, LIVE (run 124). Open: (a) measure the street line the drawn drive crosses; (b) a Happy Valley street-class map -- until then MEASURE-DRIVE-STREET / ACCESS-STREET-RANK-UNKNOWN yellows stay. [file](followups/100-driveway-street.md)
 86. [Claude] [Steph: (B) unattributed rulings] [scan: NO] **Agents could not recall a property ruling** -- A, B, C1, C2 merged and live (CI1 live in run 124); (B) leftovers (Tigard MUR, Portland total-turn, Hillsboro SCR, Milwaukie aisle) wait on Steph; RICAP MP5/MP4/TA9 not encoded; DLCD watch weekly. [file](followups/86-ruling-recall.md)
