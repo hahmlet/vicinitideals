@@ -48,9 +48,10 @@ does not close within :data:`flats.fit.fire_roads.RAY_FT` on a side (no
 facing lot: a park, the edge of the map), where the foot stands on a lot,
 where the centreline bends more than :data:`CURVE_DEG` within
 :data:`CURVE_RUN_FT` (a curve, a cul-de-sac bulb, a corner), where it is far
-off the gap's middle, or where the allowance would leave under
-:data:`flats.geom.curbs.MIN_WIDTH_FT` of pavement (a lane with no
-sidewalks: the allowance does not describe it).
+off the gap's middle, or where the stated default allowance would leave
+under :data:`flats.geom.curbs.MIN_WIDTH_FT` of pavement (a lane with no
+sidewalks: the default does not describe it). A place's own standard is
+read however narrow it leaves the street (at least 0).
 """
 
 from __future__ import annotations
@@ -177,6 +178,12 @@ class EstimateRules:
                 return path, table[path]
             path = path.rpartition("/")[0]
         return ("default", table["default"]) if "default" in table else (None, None)
+
+    def reads_standard(self, layer: str | None) -> bool:
+        """Whether the place's allowance is its own standard's (printed or
+        derived), not the stated default."""
+        key, _ = self._lookup(self.allowance_ft, layer)
+        return key not in (None, "default")
 
     def allowance(self, layer: str | None) -> float:
         _, v = self._lookup(self.allowance_ft, layer)
@@ -586,8 +593,15 @@ class StreetWidths:
                 cap = self.rules.cap(layer)
                 if cap is not None:
                     est = np.minimum(est, cap)
-                take = open_ & np.isfinite(est) & (est >= MIN_WIDTH_FT)
-                width[take] = est[take]
+                # Under MIN_WIDTH_FT the stated default does not describe the
+                # street (a lane with no sidewalks): unestimated. A place's
+                # own standard still does: a right-of-way narrower than any
+                # section it prints is read as its strips leave it, however
+                # narrow (at least 0), never left unread (FOLLOWUPS 145,
+                # 2026-11-16).
+                keep = (est >= MIN_WIDTH_FT) | self.rules.reads_standard(layer)
+                take = open_ & np.isfinite(est) & keep
+                width[take] = np.maximum(est[take], 0.0)
                 for i in np.flatnonzero(take):
                     src[i] = f"{ESTIMATED}:{basis[i]}"
                 curb[take] = _near_from_run(side[take], lo0[take], hi0[take]) + off[take]

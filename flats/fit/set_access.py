@@ -1066,8 +1066,12 @@ def curb_truck_spots(site: Site, rules: Rules, *, estimates: bool = False) -> tu
         # The curb under the deck's two ends and middle: the farthest of
         # them, so the whole deck stands on the pavement.
         pts = np.concatenate([a + np.clip(us + k, 0, length)[:, None] * d for k in (-L / 2, 0.0, L / 2)])
-        curb, _, src = _street_read(site, pts, estimates)
-        unread = (~np.isfinite(curb) & _on_street(site, pts)).reshape(3, -1)
+        curb, width, src = _street_read(site, pts, estimates)
+        # An estimated street narrower than the truck is read, and holds no
+        # truck: no spot, and not an unread curb.
+        narrow = is_estimated(src) & (width < W)
+        unread = (~np.isfinite(curb) & ~narrow & _on_street(site, pts)).reshape(3, -1)
+        curb = np.where(narrow, np.nan, curb)
         curb, src = curb.reshape(3, -1), src.reshape(3, -1)
         ok = np.isfinite(curb).all(axis=0)
         if unread.any():

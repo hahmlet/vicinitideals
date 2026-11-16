@@ -229,6 +229,18 @@ def test_estimates_never_place_the_on_site_crane_s_curb_truck(rules: sa.Rules) -
     assert len(spots) and measured and set(spots.place) == {sa.CURB_EST}
 
 
+def test_an_estimated_street_narrower_than_the_truck_holds_none_and_is_not_unread(rules: sa.Rules) -> None:
+    # The s4e Gresham lots (2026-11-16): a 40 ft right-of-way less 16 ft a side.
+    site = Site(FULL_LOT, FULL_POD, FULL_STREET, _street("estimated:Gresham DC A5.501, 16 ft a side", width=8.0))
+    spots, measured = sa.curb_truck_spots(site, rules, estimates=True)
+    assert not len(spots) and measured
+    rep = sa.report(site, rules, grade_of=_level)
+    st = next(a for a in rep.attempts if a.step == "45t_street")
+    assert st.status == sa.FAIL
+    assert any("8 ft wide at most (estimated off the right-of-way: Gresham DC A5.501, 16 ft a side)" in w
+               for w in st.why)
+
+
 def test_a_frontage_past_every_centreline_is_no_curb_left_unmeasured(rules: sa.Rules) -> None:
     """The lookup miss (scout 2026-11-15): a street lot line's end more than
     the reach from any centreline counted as an unmeasured curb, so a lot
@@ -341,6 +353,26 @@ def test_the_estimate_names_the_section_and_centres_it() -> None:
     # The default where no standard is read.
     _, width, src = _read(_fabric(OWN_LOT, FACING_LOT, rules=SHIPPED), [0.0], layer="or/multnomah/portland")
     assert width == pytest.approx([32.0]) and src[0] == "estimated:no street standard read, 12 ft a side [est]"
+
+
+def test_a_place_s_standard_is_read_however_narrow_it_leaves_the_street() -> None:
+    # 40 ft between the lots in Gresham matches no section; less 16 ft a side
+    # leaves 8 ft: still the standard's estimate (FOLLOWUPS 145, 2026-11-16),
+    # not unread. The stated default leaves such a street unread (a lane).
+    def read(half: float, layer: str):
+        lots = _fabric(box(-300, half, 300, 130), box(-300, -130, 300, -half), rules=SHIPPED)
+        return lots.read(np.array([[0.0, half]]), np.array([[0.0, 0.0]]), [CENTRE], layer)
+
+    curb, width, src = read(20.0, "or/multnomah/gresham")
+    assert width == pytest.approx([8.0]) and curb == pytest.approx([16.0])
+    assert src[0] == "estimated:Gresham DC A5.501, 16 ft a side"
+    # Portland, on the default, 40 less 12 a side is 16 ft; at 30 ft (a lane) it is unread.
+    assert read(20.0, "or/multnomah/portland")[1] == pytest.approx([16.0])
+    _, width, src = read(15.0, "or/multnomah/portland")
+    assert np.isnan(width).all() and list(src) == [""]
+    # A strip wider than half the right-of-way reads 0 ft, not a negative width.
+    assert read(14.0, "or/multnomah/gresham")[1] == pytest.approx([0.0])
+    assert SHIPPED.reads_standard("or/multnomah/gresham") and not SHIPPED.reads_standard("or/multnomah/portland")
 
 
 def test_a_section_needs_a_stored_quote_and_a_figure() -> None:
