@@ -118,17 +118,55 @@ CONFIG = Path(__file__).resolve().parents[1] / "config" / "set_access.yaml"
 # --------------------------------------------------------------------------
 
 
+#: A right-of-way read within this of a standard section's printed width (or
+#: of either end of its printed range) takes that section's pavement. The
+#: taxlot fabric places a lot line to about a foot, and the printed
+#: sections step by 2 ft or more, so a foot either way reads one width as
+#: one section and never as its neighbour.
+SECTION_TOL_FT = 1.0
+#: Feet in a metre, for a standard printed in metres (Multnomah County).
+FT_PER_M = 1.0 / 0.3048
+#: The basis of an estimate taken off the stated default.
+DEFAULT_BASIS = "no street standard read"
+
+
+@dataclass(frozen=True)
+class Section:
+    """One street cross-section a standard prints: its right-of-way (one
+    width, or a printed range ``row_lo``-``row_hi``) and its pavement
+    (curb to curb; a printed range keeps both ends). The estimate takes
+    ``pave_lo``, the narrower end (the cautious pick)."""
+
+    name: str
+    row_lo: float
+    row_hi: float
+    pave_lo: float
+    pave_hi: float
+    #: Whether the place's derived allowance reads this section (not a
+    #: plan district's widened right-of-way, ``row_add``).
+    derive: bool = True
+
+    @property
+    def tied(self) -> bool:
+        """One right-of-way printed with one pavement."""
+        return self.row_lo == self.row_hi and self.pave_lo == self.pave_hi
+
+
 @dataclass(frozen=True)
 class EstimateRules:
     """``street_width`` of ``set_access.yaml``: per place, the sidewalk and
-    planter allowance taken off EACH side of the right-of-way, and the
-    widest the estimate may read."""
+    planter allowance taken off EACH side of the right-of-way, the widest
+    the estimate may read, and the street cross-sections its standard ties
+    to a right-of-way width (``sections``). ``labels`` name where each came
+    from (``allowance_ft:<key>``, ``sections:<key>``)."""
 
     allowance_ft: Mapping[str, float]
     cap_ft: Mapping[str, float] = field(default_factory=dict)
     cites: Mapping[str, str] = field(default_factory=dict)
+    sections: Mapping[str, tuple[Section, ...]] = field(default_factory=dict)
+    labels: Mapping[str, str] = field(default_factory=dict)
 
-    def _lookup(self, table: Mapping[str, float], layer: str | None) -> tuple[str | None, float | None]:
+    def _lookup(self, table: Mapping[str, Any], layer: str | None) -> tuple[str | None, Any]:
         path = (layer or "").strip("/")
         while path:
             if path in table:
@@ -150,31 +188,135 @@ class EstimateRules:
         key, _ = self._lookup(self.allowance_ft, layer)
         return self.cites.get(f"allowance_ft:{key}", "")
 
+    def allowance_basis(self, layer: str | None) -> str:
+        """What an allowance estimate rests on, for its label: the standard
+        (or the stated default) and the allowance a side."""
+        key, v = self._lookup(self.allowance_ft, layer)
+        label = self.labels.get(f"allowance_ft:{key}")
+        if label is None:
+            label = DEFAULT_BASIS if key == "default" else str(key)
+        est = " [est]" if self.cites.get(f"allowance_ft:{key}", "").startswith("[est]") else ""
+        return f"{label}, {round(float(v), 1):g} ft a side{est}"
+
+    def section_pave(self, layer: str | None, row: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        """For each right-of-way width: the pavement of the place's standard
+        section it matches (the narrowest where several do) and that
+        section's label; NaN and "" where none matches."""
+        row = np.asarray(row, dtype=float)
+        pave = np.full(row.shape, np.nan)
+        basis = np.full(row.shape, "", dtype=object)
+        key, secs = self._lookup(self.sections, layer)
+        if not secs:
+            return pave, basis
+        std = self.labels.get(f"sections:{key}", str(key))
+        for s in secs:
+            hit = (row >= s.row_lo - SECTION_TOL_FT) & (row <= s.row_hi + SECTION_TOL_FT) & ~(pave <= s.pave_lo)
+            pave[hit], basis[hit] = s.pave_lo, f"{std}, {s.name}"
+        return pave, basis
+
+
+def _span(value: Any, unit: float, where: str) -> tuple[float, float]:
+    """A printed figure: a number, or a range "lo-hi", in the place's unit."""
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return float(value) * unit, float(value) * unit
+    parts = str(value).replace("–", "-").split("-")
+    try:
+        nums = [float(p.strip()) for p in parts if p.strip()]
+    except ValueError as exc:
+        raise ValueError(f"{where}: {value!r} is not a figure") from exc
+    if len(nums) not in (1, 2):
+        raise ValueError(f"{where}: {value!r} is not a figure")
+    return min(nums) * unit, max(nums) * unit
+
+
+def _figure(entry: Mapping[str, Any], unit: float, where: str) -> float:
+    """An allowance or cap: ``value`` (a printed range takes its wider end,
+    the cautious one for an allowance), or ``pieces`` summed (each piece's
+    wider end)."""
+    if entry.get("pieces") is not None:
+        return sum(_span(p, unit, where)[1] for p in entry["pieces"])
+    if entry.get("value") is not None:
+        return _span(entry["value"], unit, where)[1]
+    raise ValueError(f"{where}: no value")
+
+
+def _unit(entry: Mapping[str, Any], where: str) -> float:
+    unit = str(entry.get("unit") or "ft")
+    if unit not in ("ft", "m"):
+        raise ValueError(f"{where}: unit {unit!r}")
+    return FT_PER_M if unit == "m" else 1.0
+
 
 def rules_from(raw: Mapping[str, Any]) -> EstimateRules:
     """Parse ``street_width``: every figure needs a ``cite``, and every one
-    not marked [est] a stored ``quote``."""
+    not marked [est] a stored ``quote``. A place with ``sections`` and no
+    allowance of its own takes the widest strip a side of its tied sections
+    (right-of-way less pavement, halved: the cautious one); with no cap of
+    its own, its widest printed pavement."""
     sw = raw.get("street_width") or {}
     tables: dict[str, dict[str, float]] = {"allowance_ft": {}, "cap_ft": {}}
     cites: dict[str, str] = {}
+    labels: dict[str, str] = {}
     for name, table in tables.items():
         for key, entry in (sw.get(name) or {}).items():
-            if not isinstance(entry, Mapping) or entry.get("value") is None:
-                raise ValueError(f"street_width.{name}.{key}: no value")
+            where = f"street_width.{name}.{key}"
+            if not isinstance(entry, Mapping) or (entry.get("value") is None and entry.get("pieces") is None):
+                raise ValueError(f"{where}: no value")
             cite = str(entry.get("cite") or "").strip()
             if not cite:
-                raise ValueError(f"street_width.{name}.{key}: no cite")
+                raise ValueError(f"{where}: no cite")
             if not cite.startswith("[est]") and not entry.get("quote"):
-                raise ValueError(f"street_width.{name}.{key}: not [est] and no stored quote")
-            table[str(key)] = float(entry["value"])
+                raise ValueError(f"{where}: not [est] and no stored quote")
+            table[str(key)] = _figure(entry, _unit(entry, where), where)
             cites[f"{name}:{key}"] = cite
+            if entry.get("label"):
+                labels[f"{name}:{key}"] = str(entry["label"])
+    sections: dict[str, tuple[Section, ...]] = {}
+    for key, place in (sw.get("sections") or {}).items():
+        where = f"street_width.sections.{key}"
+        if not isinstance(place, Mapping) or not place.get("standard") or not place.get("rows"):
+            raise ValueError(f"{where}: needs a standard and rows")
+        unit = _unit(place, where)
+        secs = []
+        for i, row in enumerate(place["rows"]):
+            w = f"{where}.rows[{i}]"
+            if not row.get("name") or row.get("row") is None or row.get("pave") is None:
+                raise ValueError(f"{w}: needs a name, a row and a pave")
+            if not row.get("quote"):
+                raise ValueError(f"{w}: no stored quote")
+            add = float(row.get("row_add") or 0.0) * unit
+            r_lo, r_hi = _span(row["row"], unit, w)
+            p_lo, p_hi = _span(row["pave"], unit, w)
+            secs.append(Section(str(row["name"]), r_lo + add, r_hi + add, p_lo, p_hi, derive=not add))
+        k = str(key)
+        sections[k] = tuple(secs)
+        std = str(place.get("label") or place["standard"])
+        labels[f"sections:{k}"] = std
+        tied = [s for s in secs if s.tied and s.derive]
+        if k not in tables["allowance_ft"] and tied:
+            tables["allowance_ft"][k] = max((s.row_lo - s.pave_lo) / 2.0 for s in tied)
+            cites[f"allowance_ft:{k}"] = f"derived: the widest strip a side of the tied sections of {place['standard']}"
+            labels[f"allowance_ft:{k}"] = std
+        if k not in tables["cap_ft"]:
+            tables["cap_ft"][k] = max(s.pave_hi for s in secs)
+            cites[f"cap_ft:{k}"] = f"derived: the widest pavement printed in {place['standard']}"
     if "default" not in tables["allowance_ft"]:
         raise ValueError("street_width.allowance_ft needs a default")
-    return EstimateRules(tables["allowance_ft"], tables["cap_ft"], cites)
+    return EstimateRules(tables["allowance_ft"], tables["cap_ft"], cites, sections, labels)
 
 
 def load_rules(path: Path = CONFIG) -> EstimateRules:
     return rules_from(yaml.safe_load(path.read_text(encoding="utf-8")))
+
+
+def is_estimated(src: Any) -> np.ndarray:
+    """Whether each source label is an estimate (``estimated`` or
+    ``estimated:<basis>``)."""
+    arr = np.asarray(src, dtype=object)
+    out = np.zeros(arr.shape, dtype=bool)
+    for i, s in np.ndenumerate(arr):
+        out[i] = str(s).startswith(ESTIMATED)
+    return out
 
 
 # --------------------------------------------------------------------------
@@ -408,12 +550,21 @@ class StreetWidths:
                 row, lo0, hi0 = _read3(lo, hi, n)
                 allow = self.rules.allowance(layer)
                 est = row - 2.0 * allow
+                off = np.full(n, allow)
+                basis = np.full(n, self.rules.allowance_basis(layer), dtype=object)
+                # A right-of-way the place's standard ties to a section
+                # takes that section's pavement, centred in it.
+                pave, named = self.rules.section_pave(layer, row)
+                hit = np.isfinite(pave)
+                est[hit], basis[hit], off[hit] = pave[hit], named[hit], (row[hit] - pave[hit]) / 2.0
                 cap = self.rules.cap(layer)
                 if cap is not None:
                     est = np.minimum(est, cap)
                 take = open_ & np.isfinite(est) & (est >= MIN_WIDTH_FT)
-                width[take], src[take] = est[take], ESTIMATED
-                curb[take] = _near_from_run(side[take], lo0[take], hi0[take]) + allow
+                width[take] = est[take]
+                for i in np.flatnonzero(take):
+                    src[i] = f"{ESTIMATED}:{basis[i]}"
+                curb[take] = _near_from_run(side[take], lo0[take], hi0[take]) + off[take]
         return curb, width, src
 
 
@@ -539,12 +690,16 @@ __all__ = [
     "EDGE_KEYS",
     "ESTIMATED",
     "EstimateRules",
+    "FT_PER_M",
+    "SECTION_TOL_FT",
+    "Section",
     "KEYS",
     "MAX_PAVE_FT",
     "MEASURED",
     "POLYGON_KEYS",
     "StreetWidths",
     "edge_runs",
+    "is_estimated",
     "load",
     "load_rules",
     "polygon_runs",

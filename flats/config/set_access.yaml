@@ -748,15 +748,39 @@ whole_loads:
 
 # The street's pavement width where no source records it (FOLLOWUPS 145
 # part B, Steph 2026-11-15: "estimate the rest, always labelled as
-# estimated"). Read by flats/geom/street_width.py for the 45 t's street
-# set-up and the delivery truck at the curb in front of it, and nowhere else
-# (no lot colour, no fire hose). The right-of-way is the gap between the
-# private lots either side of the centreline, read square to it; the
-# pavement is taken as that gap less `allowance_ft` (sidewalk, planter strip
-# and the strip behind the walk) on EACH side, then no wider than `cap_ft`
-# where a cap is held. A key is a jurisdiction layer or a county; the
-# nearest one up the path governs, else `default`. Every figure cites the
-# stored line it is read from, or is marked [est].
+# estimated"; and, 2026-11-15, "Each city's standard"). Read by
+# flats/geom/street_width.py for the 45 t's street set-up and the delivery
+# truck at the curb in front of it, and nowhere else (no lot colour, no fire
+# hose). The right-of-way is the gap between the private lots either side of
+# the centreline, read square to it. Then, by place (a key is a
+# jurisdiction layer; the nearest one up the path governs, else `default`):
+#
+# 1. `sections`: where the place's street standard ties a right-of-way width
+#    (or a printed range of them) to a pavement width, a right-of-way within
+#    1 ft of a section's takes that section's pavement (curb to curb). Where
+#    several sections match, the NARROWEST pavement is taken, and a printed
+#    pavement range takes its narrow end (the cautious pick). Alternative
+#    sections a city engineer may approve are listed too: they are built,
+#    and only ever narrow the pick. Commercial / industrial, rural, hillside
+#    and superseded sections are left out (none is a residential lot's
+#    street, or still adopted).
+# 2. Otherwise the pavement is the gap less `allowance_ft` (sidewalk,
+#    planter strip, curb, the strip behind the walk) on EACH side: the
+#    place's own where its standard prints the pieces, else the widest strip
+#    a side of its tied sections (the loader derives it), else `default`.
+# 3. No wider than `cap_ft`: the place's own, else the widest pavement its
+#    standard prints (the loader derives it).
+#
+# Every figure is the standard's printed figure and cites where it is
+# printed: stored code as `path#Lnn` (flats/provenance/docs/), a downloaded
+# standard as `books/street-standards/<place>/<file>` with its page (the
+# books are gitignored under data/flats/books/; the line where the text
+# layer holds it), or is marked [est]. Places left on the default: Portland
+# (PBOT's Development Review Manual is marked DRAFT UPDATES 5.11.22),
+# Troutdale (only the 1994 Construction Standards were found; Resolution
+# 1229 adopted a 1996 edition, not found), Milwaukie (PWS 5.0030 prints
+# right-of-way and part ranges only, in a 2026 "for review" copy), and every
+# place with no standard read.
 street_width:
   allowance_ft:
     default:
@@ -764,16 +788,79 @@ street_width:
       cite: >-
         [est] no street standard read for the place: a 6 ft sidewalk, a
         5.5 ft planter strip and 0.5 ft behind the walk, a little wider than
-        the one standard read (Oregon City, 11 ft), so the estimate errs
-        narrow
+        most standards read (11-12 ft), so the estimate errs narrow
     or/clackamas/oregon-city:
       value: 11
+      label: OCMC 16.12 Local/Residential
       cite: >-
         OCMC 16.12 street design standards, Local / Residential: 54 ft
         right-of-way, 32 ft pavement; 0.5 ft public access + 5 ft sidewalk
         + 5.5 ft landscape strip each side (54 - 32 = 2 x 11)
       quote: "or/clackamas/oregon-city/16.12.streets.txt#L411"
       header: "or/clackamas/oregon-city/16.12.streets.txt#L394-L395"
+    or/clackamas/canby:
+      pieces: [6, "0-8"]
+      label: Canby PWDS Att. A (TSP Fig 7-6)
+      cite: >-
+        Canby Public Works Design Standards (rev. Dec 2019), Attachment A,
+        TSP Figure 7-6, Standard and Low-Volume Local Street: 6 ft sidewalk
+        and a 0-8 ft buffer each side; the wider end taken (14 ft). The
+        figure prints right-of-way RANGES (50-62, 40-60 ft), so no width
+        ties to one section.
+      quote: "books/street-standards/canby/2020_public_works_standards.pdf p.42 (figure, image)"
+      url: https://www.canbyoregon.gov/sites/default/files/fileattachments/streets_and_sewer/page/22533/2020_public_works_standards.pdf
+    or/clackamas/gladstone:
+      pieces: [6, "5-6"]
+      label: Gladstone TSP 2017 Table 19
+      cite: >-
+        Gladstone TSP (Adoption Draft Dec 2017; GMC 17.50.040 defers to its
+        Table 16), Table 19 Local Street Cross Section Standards: sidewalks
+        6 ft, landscape strips 5-6 ft (the wider end taken: 12 ft a side).
+        Table 16 prints one right-of-way range for every local street
+        (34-64 ft) and Exhibit 8 titles the pavements only (34, 28, 24 ft),
+        so no width ties to a section.
+      quote: "books/street-standards/gladstone/gladstone_tsp_2017_vol1.txt#L2830-L2840 (PDF p.80, printed p.59)"
+      header: "books/street-standards/gladstone/gladstone_tsp_2017_vol1.txt#L2730-L2737"
+      url: https://digitalcollections.library.oregon.gov/assets/downloadwiz/342270
+    or/clackamas/sandy:
+      pieces: [6.5, 5.5]
+      label: Sandy TSP 2023 Fig 17
+      cite: >-
+        Sandy TSP 2023 (Ord. 2023-24, adopted 6/21/2023), Table 4 / Figure 17
+        Local: 54 ft right-of-way (also SDC 17.100.60), 6.5 ft sidewalk and
+        5.5 ft planter strip / curb each side
+      quote: "books/street-standards/sandy/tsp-2023-exhibit-a.txt#L1780 (PDF p.59, Figure 17)"
+      header: "or/clackamas/sandy/sdc.17.100.txt#L1324"
+      url: https://www.ci.sandy.or.us/sites/default/files/exhibit_a._2023_sandy_transportation_system_plan.pdf
+    or/clackamas/wilsonville:
+      value: "10.5-12"
+      label: Wilsonville PWS RD-1015
+      cite: >-
+        Wilsonville Public Works Standards drawing RD-1015 Residential Street
+        (4/2/14): "10.5' - 12'" back of curb to right-of-way each side (5 ft
+        minimum walk, 5.5 ft planter); the wider end taken
+      quote: "books/street-standards/wilsonville/rd-residential-street.pdf p.1 (drawing, image)"
+      url: https://wilsonvilleoregon.gov/773/Detail-Drawings
+    or/multnomah/_unincorporated:
+      pieces: [1.5, "0-1.5"]
+      unit: m
+      label: Multnomah Co. DCM Table 2.2.4
+      cite: >-
+        Multnomah County Design and Construction Manual, Part I, Table 2.2.4
+        Urban Local Cross Sections, Local Residential: sidewalk 1.5 m,
+        planting strip 0-1.5 m (the wider end taken: 3.0 m a side)
+      quote: "books/street-standards/multnomah-county/dcm.pdf p.30 (table, image; dcm.txt#L1034)"
+      url: https://multco.us/file/multnomah_county_design_and_construction_manual/download
+    or/washington/cornelius:
+      pieces: [6, 5]
+      label: Cornelius PWS 5.04(a) Local Street
+      cite: >-
+        Cornelius Public Works Standards (3-13-20) 5.04(a) base right-of-way,
+        Local Street: two 10 ft travel lanes, two 6 ft parkway strips (face
+        of curb to sidewalk), two 5 ft sidewalks, 42 ft; parking bays widen
+        the right-of-way by their own width, so the strip a side is 11 ft
+      quote: "books/street-standards/cornelius/pws.txt#L858-L869 (PDF p.24; the text layer jumbles the rows, read off the page)"
+      url: https://www.corneliusor.gov/DocumentCenter/View/429/City-of-Cornelius-Public-Works-Standards-PDF
   cap_ft:
     or/clackamas/oregon-city:
       value: 32
@@ -783,3 +870,279 @@ street_width:
         which only narrows the estimate)
       quote: "or/clackamas/oregon-city/16.12.streets.txt#L411"
       header: "or/clackamas/oregon-city/16.12.streets.txt#L394-L395"
+    or/clackamas/canby:
+      value: 34
+      cite: Canby TSP Figure 7-6, Standard Local Street "Paved = 34'"
+      quote: "books/street-standards/canby/2020_public_works_standards.pdf p.42 (figure, image)"
+    or/clackamas/gladstone:
+      value: 34
+      cite: Gladstone TSP 2017 Exhibit 8, "34-foot Local (Parking on Both Sides)", the widest local
+      quote: "books/street-standards/gladstone/gladstone_tsp_2017_vol1.pdf p.80 (Exhibit 8, image)"
+    or/clackamas/sandy:
+      pieces: [7, 16, 7]
+      cite: Sandy TSP 2023 Figure 17 Local, 7 ft parking + 16 ft shared lane + 7 ft parking
+      quote: "books/street-standards/sandy/tsp-2023-exhibit-a.pdf p.59 (Figure 17)"
+    or/multnomah/_unincorporated:
+      value: 10.8
+      unit: m
+      cite: Multnomah County DCM Table 2.2.4 Local Residential paved width, maximum 10.8 m
+      quote: "books/street-standards/multnomah-county/dcm.pdf p.30 (table, image)"
+  sections:
+    or/clackamas/oregon-city:
+      standard: OCMC 16.12 street design standards
+      label: OCMC 16.12
+      rows:
+        - name: Local/Residential (54 ft ROW, 32 ft)
+          row: 54
+          pave: 32
+          quote: "or/clackamas/oregon-city/16.12.streets.txt#L411"
+    or/clackamas/estacada:
+      standard: EMC 16.116.030 Roadway Classifications and Standards (Ord. 2024-005, 10/14/2024)
+      label: EMC 16.116.030
+      rows:
+        - name: Local (standard)
+          row: 56
+          pave: 36
+          quote: "or/clackamas/estacada/emc.16.116.txt#L269"
+        - name: Local (alternative, City Engineer approval)
+          row: 52
+          pave: 34
+          quote: "or/clackamas/estacada/emc.16.116.txt#L270"
+        - name: Neighborhood local (standard)
+          row: 40
+          pave: 28
+          quote: "or/clackamas/estacada/emc.16.116.txt#L271"
+        - name: Neighborhood local (alternative)
+          row: 37
+          pave: 27
+          quote: "or/clackamas/estacada/emc.16.116.txt#L272"
+    or/clackamas/canby:
+      standard: Canby Public Works Design Standards, Attachment A (TSP Figure 7-6)
+      label: Canby TSP Fig 7-6
+      url: https://www.canbyoregon.gov/sites/default/files/fileattachments/streets_and_sewer/page/22533/2020_public_works_standards.pdf
+      rows:
+        - name: Standard Local Street (ROW 50-62 ft, paved 34 ft)
+          row: "50-62"
+          pave: 34
+          quote: "books/street-standards/canby/2020_public_works_standards.pdf p.42 (figure, image)"
+        - name: Low-Volume Local Street (ROW 40-60 ft, paved 28 ft)
+          row: "40-60"
+          pave: 28
+          quote: "books/street-standards/canby/2020_public_works_standards.pdf p.42 (figure, image)"
+    or/clackamas/_unincorporated:
+      standard: Clackamas County Roadway Standards, Standard Drawing C110 Local/Connector Roadway Sections (approved 6/1/2020, rev. 11/20)
+      label: Clackamas Co. C110
+      url: https://dochub.clackamas.us/documents/drupal/db482d80-83ae-4347-a179-4e147e3074a3
+      rows:
+        - name: Urban (54 ft ROW, 32 ft)
+          row: 54
+          pave: 32
+          quote: "books/street-standards/clackamas-unincorporated/C110.pdf p.2 (table; C110.txt#L45-L53 garbled)"
+        - name: Urban Alternate 1 (48 ft ROW, 26 ft)
+          row: 48
+          pave: 26
+          quote: "books/street-standards/clackamas-unincorporated/C110.pdf p.2"
+        - name: Urban Alternate 2 (42 ft ROW, 20 ft)
+          row: 42
+          pave: 20
+          quote: "books/street-standards/clackamas-unincorporated/C110.pdf p.2"
+    or/clackamas/happy-valley:
+      standard: Happy Valley 2019 Combined Detail Drawings (4/1/2019)
+      label: Happy Valley DWG
+      url: https://www.happyvalleyor.gov/wp-content/uploads/2019/04/2019-Combined-Detail-Drawings.pdf
+      rows:
+        - name: DWG 100 Local Street (53 ft ROW, 32 ft)
+          row: 53
+          pave: 32
+          quote: "books/street-standards/happy-valley/2019-combined-detail-drawings.pdf p.2 (drawing; .txt#L14-L16 title)"
+        - name: DWG 105 Neighborhood Street (55 ft ROW, 34 ft)
+          row: 55
+          pave: 34
+          quote: "books/street-standards/happy-valley/2019-combined-detail-drawings.pdf p.3 (drawing; .txt#L18-L19 title)"
+    or/clackamas/west-linn:
+      standard: West Linn TSP Exhibit 9 Local Street Cross Sections (ORD 1714, 2020)
+      label: West Linn TSP Exh. 9
+      url: https://westlinnoregon.gov/sites/default/files/fileattachments/planning/project/48541/ord_1714_tsp_amendments-signed.pdf
+      rows:
+        - name: 34-foot Local (58 ft ROW)
+          row: 58
+          pave: 34
+          quote: "books/street-standards/west-linn/ord1714-tsp-amendments.pdf p.3 (figure; .txt#L7 title)"
+        - name: 28-foot Local (52 ft ROW)
+          row: 52
+          pave: 28
+          quote: "books/street-standards/west-linn/ord1714-tsp-amendments.pdf p.3 (figure; .txt#L7 title)"
+        - name: 24-foot Local (48 ft ROW)
+          row: 48
+          pave: 24
+          quote: "books/street-standards/west-linn/ord1714-tsp-amendments.pdf p.3 (figure; .txt#L9 title)"
+        - name: Local Constrained (36 ft ROW, 24 ft)
+          row: 36
+          pave: 24
+          quote: "books/street-standards/west-linn/ord1714-tsp-amendments.pdf p.3 (figure; .txt#L9 title)"
+    or/clackamas/wilsonville:
+      standard: Wilsonville Public Works Standards RD-1015 (4/2/14) and RD-1020 (4/12/16)
+      label: Wilsonville PWS
+      url: https://wilsonvilleoregon.gov/773/Detail-Drawings
+      rows:
+        - name: RD-1015 Residential Street (ROW 49-56 ft, 28-32 ft)
+          row: "49-56"
+          pave: "28-32"
+          quote: "books/street-standards/wilsonville/rd-residential-street.pdf p.1 (drawing); pwcs-2017.txt#L4333-L4335"
+        - name: RD-1020 LID Local Street (ROW 41-52 ft, 20-28 ft, City Engineer approval)
+          row: "41-52"
+          pave: "20-28"
+          quote: "books/street-standards/wilsonville/rd-lid-local-street.pdf p.1 (drawing); pwcs-2017.txt#L4337-L4339"
+    or/multnomah/gresham:
+      standard: Gresham Development Code Appendix 5.000 Table A5.501 (06/26) and PWS Standard Detail 605 (July 2026)
+      label: Gresham DC A5.501
+      url: https://greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-appendix-5.000.pdf?id=7825
+      rows:
+        - name: Local Queuing (58 ft ROW, 26 ft)
+          row: 58
+          pave: 26
+          quote: "books/street-standards/gresham/dc-appendix-5.000.txt#L847; details-transportation-2026.txt#L303 (PDF p.6)"
+        - name: Local Transitional (64 ft ROW, 32 ft)
+          row: 64
+          pave: 32
+          quote: "books/street-standards/gresham/dc-appendix-5.000.txt#L849-L850; details-transportation-2026.txt#L299-L301"
+        - name: Local Queuing in Pleasant Valley / Springwater / Kelley Creek (58 + 4 ft ROW)
+          row: 58
+          row_add: 4
+          pave: 26
+          quote: "books/street-standards/gresham/dc-appendix-5.000.txt#L847, note 2 #L863"
+        - name: Local Transitional in Pleasant Valley / Springwater / Kelley Creek (64 + 4 ft ROW)
+          row: 64
+          row_add: 4
+          pave: 32
+          quote: "books/street-standards/gresham/dc-appendix-5.000.txt#L849, note 2 #L863"
+    or/multnomah/_unincorporated:
+      standard: Multnomah County Design and Construction Manual, Part I, Table 2.2.4 Urban Local Cross Sections
+      label: Multnomah Co. DCM Table 2.2.4
+      unit: m
+      url: https://multco.us/file/multnomah_county_design_and_construction_manual/download
+      rows:
+        - name: Local Residential (ROW 15.2-17.1 m, paved 9.0-10.8 m)
+          row: "15.2-17.1"
+          pave: "9.0-10.8"
+          quote: "books/street-standards/multnomah-county/dcm.pdf p.30 (table, image)"
+    or/washington/_unincorporated:
+      standard: Washington County Road Design and Construction Standards (Ord. 738, eff. 3/18/2011), Exhibits 3 and 4
+      label: Washington Co. RDCS
+      url: https://www.washingtoncountyor.gov/lut/documents/road-design-and-construction-standards-ordinance/download
+      rows:
+        - name: L-1 (50 ft ROW, 24 ft, interim)
+          row: 50
+          pave: 24
+          quote: "books/street-standards/washington-county/rdcs.txt#L667 (Exhibit 4, PDF p.20)"
+        - name: L-2 (38 ft ROW, 32 ft)
+          row: 38
+          pave: 32
+          quote: "books/street-standards/washington-county/rdcs.txt#L668"
+        - name: L-3 (34 ft ROW, 28 ft)
+          row: 34
+          pave: 28
+          quote: "books/street-standards/washington-county/rdcs.txt#L669"
+        - name: L-4 (30 ft ROW, 24 ft)
+          row: 30
+          pave: 24
+          quote: "books/street-standards/washington-county/rdcs.txt#L670"
+        - name: L-5 (26 ft ROW, 20 ft)
+          row: 26
+          pave: 20
+          quote: "books/street-standards/washington-county/rdcs.txt#L671-L672"
+        - name: NR-1 (60 ft ROW, 28 ft, interim)
+          row: 60
+          pave: 28
+          quote: "books/street-standards/washington-county/rdcs.txt#L625 (Exhibit 3, PDF p.19)"
+        - name: NR-2 (60 ft ROW, 32 ft, interim)
+          row: 60
+          pave: 32
+          quote: "books/street-standards/washington-county/rdcs.txt#L627"
+        - name: NR-3 (60 ft ROW, 36 ft)
+          row: 60
+          pave: 36
+          quote: "books/street-standards/washington-county/rdcs.txt#L629"
+        - name: NR-4 (60 ft ROW, 36 ft)
+          row: 60
+          pave: 36
+          quote: "books/street-standards/washington-county/rdcs.txt#L631"
+        - name: NR-5 (50 ft ROW, 28 ft)
+          row: 50
+          pave: 28
+          quote: "books/street-standards/washington-county/rdcs.txt#L633"
+        - name: NR-6 (50 ft ROW, 32 ft)
+          row: 50
+          pave: 32
+          quote: "books/street-standards/washington-county/rdcs.txt#L635"
+    or/washington/beaverton:
+      standard: Beaverton Engineering Design Manual Standard Drawings 200-3 and 200-4 (June 2018)
+      label: Beaverton EDM 200-3/200-4
+      url: https://content.civicplus.com/api/assets/c3c24a4c-9f32-43c9-baeb-a400f9ea4df8
+      rows:
+        - name: L1 (58 ft ROW, 34 ft)
+          row: 58
+          pave: 34
+          quote: "books/street-standards/beaverton/stddwg.txt#L666 (200-4, PDF p.15)"
+        - name: L2 (52 ft ROW, 28 ft)
+          row: 52
+          pave: 28
+          quote: "books/street-standards/beaverton/stddwg.txt#L688 (200-4, PDF p.15)"
+        - name: L3 (44 ft ROW, 20 ft)
+          row: 44
+          pave: 20
+          quote: "books/street-standards/beaverton/stddwg.txt#L710 (200-4, PDF p.15)"
+        - name: NR1 (60 ft ROW, 34 ft)
+          row: 60
+          pave: 34
+          quote: "books/street-standards/beaverton/stddwg.txt#L587 (200-3, PDF p.14)"
+        - name: NR2 (54 ft ROW, 28 ft)
+          row: 54
+          pave: 28
+          quote: "books/street-standards/beaverton/stddwg.txt#L604 (200-3, PDF p.14)"
+        - name: NR3 (50 ft ROW, 24 ft)
+          row: 50
+          pave: 24
+          quote: "books/street-standards/beaverton/stddwg.txt#L631 (200-3, PDF p.14)"
+    or/washington/hillsboro:
+      standard: Hillsboro Design and Construction Standards Section 200 (September 2025), Figures 210.3 and 210.4
+      label: Hillsboro DCS Fig 210.3/210.4
+      url: https://www.hillsboro-oregon.gov/home/showpublisheddocument/18188/638932854908670000
+      rows:
+        - name: Local Residential, parking both sides (54 ft ROW, 32 ft)
+          row: 54
+          pave: 32
+          quote: "books/street-standards/hillsboro/dcs-sec200-wayback.txt#L104 (Fig 210.4, printed p.47)"
+        - name: Local Residential, parking one side (50 ft ROW, 28 ft)
+          row: 50
+          pave: 28
+          quote: "books/street-standards/hillsboro/dcs-sec200-wayback.txt#L105"
+        - name: Local Residential, no parking (46 ft ROW, 24 ft)
+          row: 46
+          pave: 24
+          quote: "books/street-standards/hillsboro/dcs-sec200-wayback.txt#L106"
+        - name: Neighborhood Route Residential (60 ft ROW, 36 ft)
+          row: 60
+          pave: 36
+          quote: "books/street-standards/hillsboro/dcs-sec200-wayback.txt#L93 (Fig 210.3, printed p.46)"
+    or/washington/sherwood:
+      standard: Sherwood TSP 2014 Figure 16D as amended by Ord. 2022-005 (6/13/2022)
+      label: Sherwood TSP Fig 16D
+      url: https://www.sherwoodoregon.gov/wp-content/uploads/2025/08/sherwood_tsp_volume_1.pdf
+      rows:
+        - name: 36' Standard Residential (60 ft ROW min.)
+          row: 60
+          pave: 36
+          quote: "books/street-standards/sherwood/ord-2022-005.pdf p.4 (figure, image)"
+        - name: 36' Neighborhood Route (64 ft ROW min.)
+          row: 64
+          pave: 36
+          quote: "books/street-standards/sherwood/tsp-vol1.pdf p.59 (Figure 16D, image)"
+    or/washington/durham:
+      standard: Durham Development Code 3.9.1 (Rev. 11.13.2025)
+      label: Durham DC 3.9.1
+      rows:
+        - name: Local street and cul-de-sac (40 ft ROW, 26 ft paved)
+          row: 40
+          pave: 26
+          quote: "or/washington/durham/ddc.3.site-design.txt#L529"

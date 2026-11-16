@@ -767,11 +767,22 @@ def set_points(frame: PodFrame, piece: Piece, homes: int, front: int = 0) -> np.
 #: street's near curb and the recorded pavement width there, feet; NaN
 #: where nothing measures them (:func:`street_reader`). A reader may add a
 #: third array, where each width came from (``measured:<dataset>``,
-#: :data:`WIDTH_ESTIMATED`, "" where none: :func:`flats.geom.street_width.reader`);
+#: ``estimated:<basis>``, "" where none: :func:`flats.geom.street_width.reader`);
 #: without it every width read is taken as measured.
 StreetReading = Callable[[np.ndarray], tuple[np.ndarray, ...]]
-#: The label of a width estimated off the right-of-way (FOLLOWUPS 145 part B).
+#: The label of a width estimated off the right-of-way (FOLLOWUPS 145 part
+#: B), alone or as ``estimated:<basis>`` naming the street standard (or the
+#: stated default) it rests on.
 WIDTH_ESTIMATED = "estimated"
+
+
+def is_estimated(src: Any) -> np.ndarray:
+    """Whether each width source label is an estimate."""
+    arr = np.asarray(src, dtype=object)
+    out = np.zeros(arr.shape, dtype=bool)
+    for i, s in np.ndenumerate(arr):
+        out[i] = str(s).startswith(WIDTH_ESTIMATED)
+    return out
 #: Given points on street lot lines (N, 2), the distance from each to its
 #: street's centreline, feet; NaN where no centreline is held near
 #: (:func:`centre_reader`).
@@ -1023,7 +1034,7 @@ def _street_read(site: Site, pts: np.ndarray, estimates: bool) -> tuple[np.ndarr
     else:
         src = np.where(np.isfinite(width), "measured", "").astype(object)
     if not estimates:
-        est = src == WIDTH_ESTIMATED
+        est = is_estimated(src)
         curb[est], width[est] = np.nan, np.nan
         src = np.where(est, "", src).astype(object)
     return curb, width, src
@@ -1066,7 +1077,7 @@ def curb_truck_spots(site: Site, rules: Rules, *, estimates: bool = False) -> tu
         off = curb.max(axis=0)[ok]
         centre = a + us[ok][:, None] * d + (off + W / 2)[:, None] * n
         corners = _corners(centre, d, L, W)
-        est = (src == WIDTH_ESTIMATED).any(axis=0)[ok]
+        est = is_estimated(src).any(axis=0)[ok]
         out.append(
             Spots(
                 centre, corners, corners, np.where(est, CURB_EST, "curb").astype(object),
@@ -2654,7 +2665,9 @@ def _curbs_for(lot: _Lot, setup: str) -> tuple[Spots, bool]:
 def _width_source(pad_source: str | None, truck_place: str) -> str | None:
     """A plan's width label: estimated where the pad's width or the truck's
     curb rests on an estimate, else the pad's measured source."""
-    if pad_source == WIDTH_ESTIMATED or truck_place == CURB_EST:
+    if pad_source is not None and pad_source.startswith(WIDTH_ESTIMATED):
+        return pad_source
+    if truck_place == CURB_EST:
         return WIDTH_ESTIMATED
     return pad_source
 
@@ -2701,6 +2714,18 @@ def _site_pads(lot: _Lot, crane: Crane45, sets: list[np.ndarray]) -> tuple[list[
     return pads, []
 
 
+def _est_label(src: np.ndarray, width: np.ndarray, flag: np.ndarray) -> str:
+    """The estimate label of a pad's three readings: the narrowest
+    estimated one's (it names the standard the width came from)."""
+    i = int(np.argmin(np.where(flag, width, np.inf)))
+    return str(src[i]) or WIDTH_ESTIMATED
+
+
+def _basis(label: str) -> str:
+    """What an estimate label rests on (``estimated:<basis>``)."""
+    return label.partition(":")[2]
+
+
 def _street_pads(lot: _Lot, crane: Crane45, sets: list[np.ndarray]) -> tuple[list[tuple[np.ndarray, np.ndarray, str, str]], Status, list[str]]:
     """Pads in the street in front of the lot: along a street lot line, the
     near side at the near curb, where the pavement width holds the pad's
@@ -2712,7 +2737,7 @@ def _street_pads(lot: _Lot, crane: Crane45, sets: list[np.ndarray]) -> tuple[lis
         return [], UNMEASURED, ["the street in front is not measured (no curb or width data)"]
     pads: list[tuple[np.ndarray, np.ndarray, str, str]] = []
     narrowest: float | None = None
-    narrowest_est = False
+    narrowest_est = ""
     any_measured = False
     for a, d, n, length in _segments(site):
         us = _along(length, rules.street_step_ft)
@@ -2726,24 +2751,27 @@ def _street_pads(lot: _Lot, crane: Crane45, sets: list[np.ndarray]) -> tuple[lis
             continue
         any_measured = True
         w = width.min(axis=0)
-        est = (src == WIDTH_ESTIMATED).any(axis=0)
+        flag = is_estimated(src)
+        est = flag.any(axis=0)
         top = int(np.flatnonzero(ok)[np.argmax(w[ok])])
         if narrowest is None or float(w[top]) > narrowest:
-            narrowest, narrowest_est = float(w[top]), bool(est[top])
+            narrowest = float(w[top])
+            narrowest_est = _est_label(src[:, top], width[:, top], flag[:, top]) if est[top] else ""
         fits = ok & (w >= crane.pad_w_ft - EPS)
         for j in np.flatnonzero(fits):
             off = float(curb[:, j].max())
             centre = a + us[j] * d + n * (off + crane.pad_w_ft / 2)
-            source = WIDTH_ESTIMATED if est[j] else str(src[1, j])
+            source = _est_label(src[:, j], width[:, j], flag[:, j]) if est[j] else str(src[1, j])
             pads.append((centre, d.copy(), STRAIGHT, source))
     if not any_measured:
         return [], UNMEASURED, ["the street's pavement width in front is not recorded"]
     if not pads:
-        how = " (estimated off the right-of-way)" if narrowest_est else ""
+        basis = _basis(narrowest_est)
+        how = f" (estimated off the right-of-way{': ' + basis if basis else ''})" if narrowest_est else ""
         return [], FAIL, [
             f"the street in front is {narrowest:.0f} ft wide at most{how}; the {crane.short} pad needs {crane.pad_w_ft:g} ft"
         ]
-    pads.sort(key=lambda t: (t[3] == WIDTH_ESTIMATED, float(max(np.hypot(*(s - t[0]).T).max() for s in sets))))
+    pads.sort(key=lambda t: (t[3].startswith(WIDTH_ESTIMATED), float(max(np.hypot(*(s - t[0]).T).max() for s in sets))))
     return pads[: rules.pads_kept], PASS, []
 
 
@@ -2914,7 +2942,7 @@ def report(
 def _result_of(a: Attempt) -> str:
     if a.step in ("ic80_front", "ic80_back"):
         return f"{IC80_ONE} ({a.plan.faces[0]})"  # type: ignore[union-attr]
-    if a.step == "45t_street" and isinstance(a.plan, Plan) and a.plan.width_source == WIDTH_ESTIMATED:
+    if a.step == "45t_street" and isinstance(a.plan, Plan) and str(a.plan.width_source or "").startswith(WIDTH_ESTIMATED):
         return T45_STREET_EST
     return {"ic80_both": IC80_BOTH, "45t_site": T45_SITE}.get(a.step, T45_STREET)
 
@@ -3027,6 +3055,7 @@ __all__ = [
     "T45_STREET",
     "T45_STREET_EST",
     "WIDTH_ESTIMATED",
+    "is_estimated",
     "Trees",
     "UNMEASURED_ANSWER",
     "box",

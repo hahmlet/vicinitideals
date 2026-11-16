@@ -117,7 +117,8 @@ def _fabric(*lots, rules: sw.EstimateRules = RULES) -> sw.StreetWidths:
 def test_the_estimate_is_the_right_of_way_less_the_allowance_each_side() -> None:
     curb, width, src = _read(_fabric(OWN_LOT, FACING_LOT), [0.0])
     # 56 ft between the lots, less 12 ft a side (the stated default, [est]).
-    assert width == pytest.approx([32.0]) and list(src) == [sw.ESTIMATED]
+    assert width == pytest.approx([32.0]) and list(src) == ["estimated:no street standard read, 12 ft a side"]
+    assert sw.is_estimated(src).all()
     # The curb the allowance in from the lot's own line.
     assert curb == pytest.approx([12.0])
 
@@ -156,15 +157,15 @@ def test_a_measured_width_is_never_replaced_by_an_estimate() -> None:
 def test_the_reader_finds_the_foot_and_stops_past_the_reach() -> None:
     read = sw.reader(_fabric(OWN_LOT, FACING_LOT), np.asarray([CENTRE], dtype=object), 50.0)
     curb, width, src = read(np.array([[0.0, 30.0], [0.0, 80.0]]))
-    assert width[0] == pytest.approx(32.0) and src[0] == sw.ESTIMATED
+    assert width[0] == pytest.approx(32.0) and src[0].startswith(sw.ESTIMATED + ":")
     assert np.isnan(width[1]) and src[1] == ""
 
 
 def test_the_shipped_register_cites_every_figure() -> None:
     rules = sw.load_rules()
     assert rules.allowance(None) == 12.0 and rules.allowance("or/clackamas/oregon-city") == 11.0
-    assert rules.cap("or/clackamas/oregon-city") == 32.0 and rules.cap("or/clackamas/gladstone") is None
-    assert rules.allowance_cite("or/multnomah/gresham").startswith("[est]")
+    assert rules.cap("or/clackamas/oregon-city") == 32.0 and rules.cap("or/multnomah/portland") is None
+    assert rules.allowance_cite("or/multnomah/portland").startswith("[est]")
     with pytest.raises(ValueError, match="no stored quote"):
         sw.rules_from({"street_width": {"allowance_ft": {"default": {"value": 9, "cite": "a guess"}}}})
 
@@ -248,3 +249,92 @@ def test_a_frontage_past_every_centreline_is_no_curb_left_unmeasured(rules: sa.R
     assert measured and len(spots)
     blind = Site(FULL_LOT, FULL_POD, FULL_STREET, street)
     assert not sa.curb_truck_spots(blind, rules)[1]
+
+
+# --- each place's street standard (Steph 2026-11-15: "Each city's standard")
+
+
+SHIPPED = sw.load_rules()
+
+
+def _row(layer: str | None, *gaps: float):
+    return SHIPPED.section_pave(layer, np.asarray(gaps, dtype=float))
+
+
+def test_each_place_reads_its_own_standard_section() -> None:
+    # Gresham DC Table A5.501: Local Queuing 58 / 26, Local Transitional 64 / 32.
+    pave, name = _row("or/multnomah/gresham", 58.0, 64.4)
+    assert list(pave) == [26.0, 32.0]
+    assert name[0] == "Gresham DC A5.501, Local Queuing (58 ft ROW, 26 ft)"
+    # Durham DC 3.9.1 (stored code): local street 40 ft, 26 ft paved.
+    assert list(_row("or/washington/durham", 40.0)[0]) == [26.0]
+    # Estacada EMC 16.116.030: the neighborhood local 40 / 28.
+    assert list(_row("or/clackamas/estacada", 39.2)[0]) == [28.0]
+    # Multnomah County prints metres: 15.2-17.1 m right-of-way, 9.0 m paved at least.
+    pave, _ = _row("or/multnomah/_unincorporated", 50.0)
+    assert pave[0] == pytest.approx(9.0 / 0.3048)
+    # A right-of-way no section prints takes nothing here.
+    assert np.isnan(_row("or/multnomah/gresham", 50.0)[0]).all()
+
+
+def test_where_several_sections_match_the_narrowest_pavement_is_taken() -> None:
+    # Washington County at 50 ft: L-1 24 (interim), NR-5 28, NR-6 32.
+    pave, name = _row("or/washington/_unincorporated", 50.0)
+    assert pave[0] == 24.0 and "L-1" in name[0]
+    # Canby's ranges overlap: Standard Local 50-62 / 34 and Low-Volume 40-60 / 28.
+    assert list(_row("or/clackamas/canby", 55.0, 61.5)[0]) == [28.0, 34.0]
+    # Wilsonville prints a pavement range (28-32): the narrow end; the LID
+    # local (41-52 / 20-28) is narrower still where it overlaps.
+    assert list(_row("or/clackamas/wilsonville", 54.0, 50.0)[0]) == [28.0, 20.0]
+    # Happy Valley's 53 / 32 and 55 / 34 both lie within a foot of 54.
+    assert list(_row("or/clackamas/happy-valley", 54.0)[0]) == [32.0]
+
+
+def test_the_allowance_is_the_place_s_own_or_derived_or_the_default() -> None:
+    # Printed pieces: Cornelius 6 ft parkway + 5 ft walk; Canby 6 ft walk + 0-8 ft buffer (wider end).
+    assert SHIPPED.allowance("or/washington/cornelius") == 11.0
+    assert SHIPPED.allowance("or/clackamas/canby") == 14.0
+    # Derived from tied sections, the widest strip a side (Gresham 58 / 26 and 64 / 32);
+    # the plan districts' widened right-of-way does not count.
+    assert SHIPPED.allowance("or/multnomah/gresham") == 16.0
+    assert SHIPPED.cap("or/multnomah/gresham") == 32.0
+    # No standard read (Portland's manual is a draft): the stated default.
+    assert SHIPPED.allowance("or/multnomah/portland") == 12.0
+    assert SHIPPED.allowance_basis("or/multnomah/portland") == "no street standard read, 12 ft a side [est]"
+    assert SHIPPED.allowance_basis("or/washington/cornelius") == "Cornelius PWS 5.04(a) Local Street, 11 ft a side"
+
+
+def test_the_estimate_names_the_section_and_centres_it() -> None:
+    # A 58 ft right-of-way in Gresham: the 26 ft Local Queuing pavement, its
+    # curb (58 - 26) / 2 = 16 ft in from the lot's line.
+    lots = _fabric(OWN_LOT, box(-300, -130, 300, -28), rules=SHIPPED)
+    curb, width, src = _read(lots, [0.0], layer="or/multnomah/gresham")
+    assert width == pytest.approx([26.0]) and curb == pytest.approx([16.0])
+    assert src[0] == "estimated:Gresham DC A5.501, Local Queuing (58 ft ROW, 26 ft)"
+    # A 56 ft right-of-way there matches no section: 16 ft a side.
+    curb, width, src = _read(_fabric(OWN_LOT, FACING_LOT, rules=SHIPPED), [0.0], layer="or/multnomah/gresham")
+    assert width == pytest.approx([24.0]) and curb == pytest.approx([16.0])
+    assert src[0] == "estimated:Gresham DC A5.501, 16 ft a side"
+    # The default where no standard is read.
+    _, width, src = _read(_fabric(OWN_LOT, FACING_LOT, rules=SHIPPED), [0.0], layer="or/multnomah/portland")
+    assert width == pytest.approx([32.0]) and src[0] == "estimated:no street standard read, 12 ft a side [est]"
+
+
+def test_a_section_needs_a_stored_quote_and_a_figure() -> None:
+    base = {"allowance_ft": {"default": {"value": 12, "cite": "[est] x"}}}
+    with pytest.raises(ValueError, match="no stored quote"):
+        sw.rules_from({"street_width": {**base, "sections": {"x": {"standard": "S", "rows": [
+            {"name": "a", "row": 50, "pave": 28}]}}}})
+    with pytest.raises(ValueError, match="not a figure"):
+        sw.rules_from({"street_width": {**base, "sections": {"x": {"standard": "S", "rows": [
+            {"name": "a", "row": "fifty", "pave": 28, "quote": "q"}]}}}})
+
+
+def test_a_failure_on_an_estimate_names_its_standard(rules: sa.Rules) -> None:
+    label = "estimated:Gresham DC A5.501, 16 ft a side"
+    rep = sa.report(Site(FULL_LOT, FULL_POD, FULL_STREET, _street(label, width=24.0)), rules, grade_of=_level)
+    assert any("24 ft wide at most (estimated off the right-of-way: Gresham DC A5.501, 16 ft a side)" in w
+               for w in rep.why)
+    rep, est = _street_attempt(rules, label)
+    assert est.plan.width_source == label and rep.row()["45t_street_width"] == label
+    assert sa._result_of(dataclasses.replace(est, status=sa.PASS)) == sa.T45_STREET_EST

@@ -28,7 +28,8 @@ where none reads a point, an ESTIMATE off the right-of-way in the taxlot
 fabric (``--fabric``, default quadfit s1's ``s1_lots.parquet`` beside
 ``s4``) less the ``street_width`` allowance of ``set_access.yaml``.
 ``--no-estimate`` leaves the estimate out. A row's ``width_source`` (and
-``45t_street_width``) says ``measured:<dataset>`` or ``estimated``; a 45 t
+``45t_street_width``) says ``measured:<dataset>`` or ``estimated:<basis>``
+(the street standard, or the stated default, it rests on); a 45 t
 street answer on an estimate reads ``45 t in the street (width estimated)``.
 
 Each lot is run once per carry case (slice 4b, ``--combos``): ``spec``
