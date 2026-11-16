@@ -942,6 +942,13 @@ class LotFacts:
     #: City 17.16.060.D.1). Measured with the share and from the same
     #: drawing; None leaves that check unrun.
     parking_frontage_run_ft: float | None = None
+    #: The share and the run at the most the measuring looks allow
+    #: (:func:`flats.fit.frontage.parking_share_bounded`): the looks are a
+    #: foot apart, so a share counted at a cap may be over it. A count
+    #: within the cap whose most is over it is unanswered (``tolerated``),
+    #: never a pass. None (nobody measured the bound) reads the count alone.
+    parking_frontage_share_most_pct: float | None = None
+    parking_frontage_run_most_ft: float | None = None
     #: The shortest of the lot's streets, in feet: one street's run of
     #: street lot line, corner to corner (:func:`flats.fit.frontage.street_chains`).
     #: ``frontage_ft`` is the SUM of every street line, and a cap on a share
@@ -1548,6 +1555,19 @@ def _checks(
             return
         out.append(policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where))
 
+    def counted(name: str, observed: float, most: float | None, cap: float) -> None:
+        """A ceiling on a quantity counted on a grid of looks, ``most`` the
+        highest the grid allows (:func:`flats.fit.frontage.street_runs_bounded`).
+        A count within the cap whose most is over it is ``tolerated``: the
+        lot is held, a measurement question, never a pass (rel9 move read
+        F1, Beaverton 60.05.60.2 S11 lots counted at exactly 50.0 percent)."""
+        got = policy.evaluate(name, observed, cap, is_maximum=True, jurisdiction=where)
+        if got.verdict is Verdict.passes and most is not None and most > cap:
+            got = dataclasses.replace(
+                got, tolerance=float(most) - float(observed), verdict=Verdict.tolerated
+            )
+        out.append(got)
+
     if where == "or/washington/durham" and lot.durham_apron_clearance_ft is not None:
         clearance = lot.durham_apron_clearance_ft
         threshold = DURHAM_APRON_MIN_CLEARANCE_FT
@@ -1883,11 +1903,11 @@ def _checks(
         if lot.parking_frontage_share_pct is None:
             unchecked.append("parking_frontage_share")
         else:
-            check(
+            counted(
                 "parking_frontage_share",
                 lot.parking_frontage_share_pct,
+                lot.parking_frontage_share_most_pct,
                 float(parking_cap),
-                is_maximum=True,
             )
         # The same sentence's ceiling in feet, where the code prints one
         # beside the share and binds "whichever is less" (Oregon City
@@ -1898,11 +1918,11 @@ def _checks(
             if lot.parking_frontage_run_ft is None:
                 unchecked.append("parking_frontage_width")
             else:
-                check(
+                counted(
                     "parking_frontage_width",
                     lot.parking_frontage_run_ft,
+                    lot.parking_frontage_run_most_ft,
                     float(width_cap),
-                    is_maximum=True,
                 )
     # The building's share of the street frontage (FOLLOWUPS 109).
     _building_frontage(rules, lot, design, beside, check, unchecked, unmeasured)

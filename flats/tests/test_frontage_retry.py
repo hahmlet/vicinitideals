@@ -86,7 +86,11 @@ def test_rusk_rd_is_not_red_on_the_share_another_placement_passes(corpus: RuleSe
     share = check(s.screening, "parking_frontage_share")
     assert share is not None
     assert share.threshold == 50.0
-    assert share.verdict is Verdict.passes
+    # 20 looks of 41 (48.78 percent) counted; with the look of doubt where
+    # the court stops along the line it may be 51.22, so the share is held,
+    # never failed and never a pass (rel9 move read F1, 2026-11-16).
+    assert share.verdict is Verdict.tolerated
+    assert share.observed == pytest.approx(48.78, abs=0.01)
     assert s.screening.colour is not Colour.red
 
 

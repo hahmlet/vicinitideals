@@ -84,11 +84,11 @@ from flats.fit.frontage import (
     _runs,
     _streets_of_run,
     building_runs,
-    parking_share,
+    parking_share_bounded,
     side_street_takes_drive,
     street_chains,
     street_lines_to_curve_ft,
-    street_runs,
+    street_runs_bounded,
 )
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
@@ -2424,10 +2424,12 @@ def front_parking_allowed(
     parked = shapely.make_valid(court).intersection(ground)
     if parked.is_empty:
         return False
-    runs = street_runs(ground, edges, parked, building)
+    # At the most the looks allow (:func:`street_runs_bounded`): a court
+    # counted at the cap may be over it, and the hold stays (rel9 F1).
+    runs = street_runs_bounded(ground, edges, parked, building)
     if not runs:
         return False
-    return max(pct for pct, _ in runs) <= float(cap)
+    return max(r[2] for r in runs) <= float(cap)
 
 
 #: Shortest street lot line whose direction the doors may face
@@ -4118,6 +4120,8 @@ def _screen_on(
                     facts,
                     parking_frontage_share_pct=share[0],
                     parking_frontage_run_ft=share[1],
+                    parking_frontage_share_most_pct=share[2],
+                    parking_frontage_run_most_ft=share[3],
                 )
                 result = screen(
                     got, facts, design, fit, policy=policy, relief=relief, config=config
@@ -7678,11 +7682,13 @@ def parking_frontage(
     env: Envelope,
     *,
     front: float | None = None,
-) -> tuple[float, float] | None:
+) -> tuple[float, float, float, float] | None:
     """The parking's share of the worst street frontage this plan has, in
     percent, and the longest run of one street it faces, in feet
-    (FOLLOWUPS 80(a), 84; :func:`flats.fit.frontage.parking_share`), or None
-    where it cannot be measured.
+    (FOLLOWUPS 80(a), 84; :func:`flats.fit.frontage.parking_share`), then
+    both at the most the measuring looks allow
+    (:func:`flats.fit.frontage.parking_share_bounded`), or None where it
+    cannot be measured.
 
     ``streets`` is the lot's edges as the streets lie, before a reading of
     a through lot renamed its far end the rear: the far street is still a
@@ -7702,7 +7708,7 @@ def parking_frontage(
     if here.lot_geom is None or streets is None or fit.beside or fit.column:
         return None
     if len(street_chains(streets)) < 2:
-        return 0.0, 0.0
+        return 0.0, 0.0, 0.0, 0.0
     street: tuple[tuple[float, float, float, float], ...] = ()
     if here.edges is not None:
         street = tuple((e.x1, e.y1, e.x2, e.y2) for e in here.edges.of_class(EdgeClass.front))
@@ -7717,7 +7723,7 @@ def parking_frontage(
         and got.get("parking_area_frontage_any_street") is not True
     ):
         front_deg = front if front is not None else _code_front(streets, got)
-    return parking_share(
+    return parking_share_bounded(
         here.lot_geom, streets, drawn.rows, drawn.building, front_deg=front_deg
     )
 

@@ -408,6 +408,27 @@ def street_runs(
     only: Sequence[bool] | None = None,
 ) -> tuple[tuple[float, float], ...]:
     """Each street's ``(share in percent, feet)`` of frontage that the
+    parking ``rows`` face, as :func:`street_runs_bounded` counts them
+    without the bound."""
+    return tuple(
+        (pct, ft)
+        for pct, ft, _, _ in street_runs_bounded(
+            lot, edges, rows, building, front_deg=front_deg, only=only
+        )
+    )
+
+
+def street_runs_bounded(
+    lot: BaseGeometry,
+    edges: LotEdges,
+    rows: BaseGeometry,
+    building: BaseGeometry,
+    *,
+    front_deg: float | None = None,
+    only: Sequence[bool] | None = None,
+) -> tuple[tuple[float, float, float, float], ...]:
+    """Each street's ``(share in percent, feet, share at most, feet at
+    most)`` of frontage that the
     parking ``rows`` face, in :func:`street_chains` order (``only``, one
     flag per street in that order, keeps the streets flagged True). The feet are what
     a cap in feet reads (Oregon City 17.16.060.D.1, "forty feet wide or fifty
@@ -417,11 +438,21 @@ def street_runs(
     ``front_deg`` keeps only the streets along the named front (both ends of
     a through lot): a cap on parking "in the front yard" where the code names
     one front (``parking_area_frontage_front_yard``, Oregon City 17.16.060.D
-    with 17.04.490 and 17.04.1515). None reads every street."""
+    with 17.04.490 and 17.04.1515). None reads every street.
+
+    The share is counted on looks :data:`STEP_FT` apart, so it is good to a
+    look at each place along the line where the parking starts or stops: a
+    look decides its whole piece of line, and the true edge of the parking
+    can lie anywhere between two looks. The "at most" pair adds one look
+    per such place (theory says half a look; the rel9 move read re-measured
+    1S121BB06800 at 0.1 ft and found 51.33 percent where the looks counted
+    50.0, a full look on its line). A share that meets a cap only when
+    counted, not at most, is unanswered, never a pass
+    (:func:`flats.score.screen._checks`)."""
     minx, miny, maxx, maxy = lot.bounds
     reach = math.hypot(maxx - minx, maxy - miny) + 1.0
     corners = shapely.points(np.asarray(shapely.get_coordinates(building)))
-    out: list[tuple[float, float]] = []
+    out: list[tuple[float, float, float, float]] = []
     for k, chain in enumerate(street_chains(edges)):
         if front_deg is not None and not along(chain, front_deg):
             continue
@@ -444,9 +475,14 @@ def street_runs(
         # same 40 looks of 80 came out 50.00000000000001 percent and failed
         # a 50 percent cap they meet (FOLLOWUPS 175 side check).
         looked = len(pts)
-        share = 100.0 * float(seen.sum()) / looked
-        run = frontage * float(seen.sum()) / looked
-        out.append((share, run))
+        count = int(seen.sum())
+        share = 100.0 * count / looked
+        run = frontage * count / looked
+        # One look of doubt at each place the parking starts or stops along
+        # the line (the docstring): never past the whole line.
+        edges_seen = int(np.count_nonzero(seen[1:] != seen[:-1]))
+        most = min(looked, count + edges_seen)
+        out.append((share, run, 100.0 * most / looked, frontage * most / looked))
     return tuple(out)
 
 
@@ -472,8 +508,24 @@ def parking_share(
     *,
     front_deg: float | None = None,
 ) -> tuple[float, float] | None:
-    """``(percent, feet)``: the worst street's share of frontage and the
-    longest run of frontage in feet that the parking faces, both read off
+    """``(percent, feet)`` of :func:`parking_share_bounded`, without the
+    bound."""
+    got = parking_share_bounded(lot, edges, rows, building, front_deg=front_deg)
+    return None if got is None else (got[0], got[1])
+
+
+def parking_share_bounded(
+    lot: BaseGeometry,
+    edges: LotEdges,
+    rows: Sequence[BaseGeometry],
+    building: BaseGeometry | None,
+    *,
+    front_deg: float | None = None,
+) -> tuple[float, float, float, float] | None:
+    """``(percent, feet, percent at most, feet at most)``: the worst
+    street's share of frontage and the longest run of frontage in feet that
+    the parking faces, each also at the most the looks allow
+    (:func:`street_runs_bounded`), all read off
     the SAME way of standing the row -- the one with the smallest worst
     share (the feet break a tie). Pairing the share of one row with the feet
     of another would pass a plan no single drawing passes. None where
@@ -482,17 +534,24 @@ def parking_share(
     """
     if building is None or building.is_empty or not rows:
         return None
-    best: tuple[float, float] | None = None
+    best: tuple[float, float, float, float] | None = None
     for row in rows:
         if row is None or row.is_empty:
             continue
-        runs = street_runs(lot, edges, row.intersection(lot), building, front_deg=front_deg)
+        runs = street_runs_bounded(
+            lot, edges, row.intersection(lot), building, front_deg=front_deg
+        )
         if not runs:
             if front_deg is not None and street_chains(edges):
-                runs = ((0.0, 0.0),)
+                runs = ((0.0, 0.0, 0.0, 0.0),)
             else:
                 return None
-        worst = (max(pct for pct, _ in runs), max(ft for _, ft in runs))
+        worst = (
+            max(r[0] for r in runs),
+            max(r[1] for r in runs),
+            max(r[2] for r in runs),
+            max(r[3] for r in runs),
+        )
         best = worst if best is None else min(best, worst)
     return best
 
@@ -562,8 +621,10 @@ __all__ = [
     "along",
     "building_runs",
     "parking_share",
+    "parking_share_bounded",
     "parking_share_pct",
     "street_chains",
     "street_runs",
+    "street_runs_bounded",
     "street_shares",
 ]
