@@ -13,3 +13,8 @@ From the rel8 move read (../vicinitideals-worktrees/rel8-moves.findings.md, F2/F
    use a touch tolerance (one lot is 5e-11 ft off) and keep outside-district lots within 800 ft YELLOW.
 
 Build as one lane cut from the rel10 base so it rides rel10.
+
+## From the rel9 move read (../vicinitideals-worktrees/rel9-moves.findings.md), also fix-forward
+3. **1N336BD00100 fire route 157 ft vs 150 ft (R)** -- fix-189 F3 now finds the turnaround and measures it red; the hand-off said F3 only moves toward green. Re-check the route.
+4. **~70 lots lost GREEN only for an unmapped street class** (~46 Gresham) under drive-spacing. Find or trace the class (unranked = yellow is a standing ruling, so this is data, not policy).
+5. **24 Beaverton type-A lots went yellow->red** (RC-OT 14, RC-BC 10), though the hand-off said no colour move. The reader ruled them right (toward red); the hand-off expectation was wrong. Note only.
