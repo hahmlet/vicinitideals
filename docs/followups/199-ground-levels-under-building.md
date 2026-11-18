@@ -30,3 +30,5 @@ NEEDED from Steph: the part of that spec ABOVE this list (definitions of ground 
 - hazards at the footprint (reuses 198 layers); frost + seismic design category from the Oregon Design Criteria Hub (also check it against 197); vacant/built, year built, assessor basement; zone, permit route, step-free entry rule + exemptions (Portland 33.110.265.E.3);
 - provisional ground class + relief class; then the 8-part summary back to the foundation research.
 Start when the soil lane (196) lands; hazard lane (198) told to make its measuring take any polygon.
+
+2026-11-18 Steph (before going away ~9 h): do NOT wait for the 80 ft 4 in re-screen; measure now on run 128 greens; for the 4 in "just flag a column counting the number where the 4 in is known or is too close to call without a rescan" -- first draft, getting the foundation research going matters most. RUNNING: flats/fd2-pass1 (report-only job on 137, /root/fd2_pass1/); outputs fd2-pass1-summary.md + fd2-pass1.handoff.md in ../vicinitideals-worktrees/. Re-run after rel10.
