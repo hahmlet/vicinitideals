@@ -577,3 +577,53 @@ def test_the_bridge_measures_the_drawn_share_and_holds_a_wide_lot(corpus: RuleSe
     assert check(wide.screening, BUILDING_SHARE) is None
     assert "FRONTAGE-MORE-BUILDINGS" in codes(wide.screening)
     assert wide.screening.colour is not Colour.green
+
+
+# --- the grid: a share counted at the minimum is unanswered (FOLLOWUPS 195) --
+
+
+def test_the_least_takes_a_look_off_where_the_building_starts_or_stops() -> None:
+    from flats.fit.frontage import building_runs_bounded
+
+    interior = _edges([(0, 0, 80, 0, F), (80, 0, 80, 120, S), (80, 120, 0, 120, R), (0, 120, 0, 0, S)], [0.0])
+    near = box(4, 10, 60, 46)
+    ((pct, net, least),) = building_runs_bounded(LOT, interior, near, 16.0)
+    assert (pct, net) == building_runs(LOT, interior, near, 16.0)[0]
+    # The building starts and stops along the 80 ft line (80 looks): two
+    # looks of doubt, never more than the count.
+    assert least == pytest.approx(pct - 2 * 100.0 / 80)
+    # Seen along the whole line: no edge, no doubt.
+    whole = box(0, 10, 80, 46)
+    ((all_pct, _, all_least),) = building_runs_bounded(LOT, interior, whole, 16.0)
+    assert all_least == all_pct == pytest.approx(100.0)
+    # The driveway crossing's ends widen the net frontage the least is read on.
+    lane = box(62, 0, 76, 120)
+    ((lane_pct, _, lane_least),) = building_runs_bounded(LOT, interior, near, 16.0, lane=lane)
+    assert lane_least < lane_pct
+
+
+def test_a_share_counted_at_the_minimum_is_held_not_passed() -> None:
+    # Gresham 1S3E17BA -02700 / 1S3E06AD -08700: 50.0 counted against 50.
+    half = {"building_frontage_min_pct": 50, "setback_front_max_ft": 16, "setback_side_ft": 30}
+    at = run(
+        facts(street_lines_ft=(90.0,), building_frontage_pct=(62.0,), building_frontage_least_pct=(48.9,)),
+        rules(**{**half, "building_frontage_min_pct": 62}),
+    )
+    share = check(at, BUILDING_SHARE)
+    assert share.verdict is Verdict.tolerated
+    assert share.tolerance == pytest.approx(62.0 - 48.9)
+    assert at.colour is Colour.yellow
+    assert "MEASURE-TOLERANCE" in codes(at)
+    # The least clears too: GREEN as before.
+    clear = run(
+        facts(street_lines_ft=(90.0,), building_frontage_pct=(64.0,), building_frontage_least_pct=(62.5,)),
+        rules(**{**half, "building_frontage_min_pct": 62}),
+    )
+    assert check(clear, BUILDING_SHARE).verdict is Verdict.passes
+    assert clear.colour is Colour.green
+    # Nobody measured the least: the count alone, as before the fix.
+    old = run(
+        facts(street_lines_ft=(90.0,), building_frontage_pct=(62.0,)),
+        rules(**{**half, "building_frontage_min_pct": 62}),
+    )
+    assert check(old, BUILDING_SHARE).verdict is Verdict.passes

@@ -236,6 +236,18 @@ CLOSER_LOOK_ENTRANCE_SIDE = "CLOSER_LOOK_ENTRANCE_SIDE"
 #: would say yellow." The standards were read from the one district the lot
 #: screens under.
 CLOSER_LOOK_SPLIT_ZONE = "CLOSER_LOOK_SPLIT_ZONE"
+#: The drawn lane or parking court stands past the lot line by more than the
+#: drawing's tolerance (:func:`flats.ingest.quadfit.plan_on_lot_checked`,
+#: FOLLOWUPS 201: Portland 1N1E23CB -21200, a through lot whose side-yard
+#: overlap put the lane and court 4 ft past the far street line). The plan
+#: the fit passed is not one the lot holds: never GREEN on that drawing.
+CLOSER_LOOK_PLAN_OFF_LOT = "CLOSER_LOOK_PLAN_OFF_LOT"
+#: No street meets the lot along as much line as the narrowest driveway the
+#: code allows here (:func:`flats.ingest.quadfit.drive_touch_checked`,
+#: FOLLOWUPS 201: Portland 1N2E25DA -10200 touches NE San Rafael St along
+#: 8 ft, and 33.266.120.D.2 asks 9 ft of a driveway on private property).
+#: The drive to the court would cross another lot: never GREEN on it.
+CLOSER_LOOK_DRIVE_TOUCH = "CLOSER_LOOK_DRIVE_TOUCH"
 #: The pod is taken here only through a review whose decider may add
 #: conditions, or whose criteria weigh judgement words beside the measurable
 #: standards (:func:`review_with_conditions`). Steph 2026-10-14: "If it's
@@ -1034,6 +1046,12 @@ class LotFacts:
     #: (``building_frontage_min_pct``); None where nobody measured it, which
     #: holds the lot out of GREEN.
     building_frontage_pct: tuple[float, ...] | None = None
+    #: The same shares at the least the measuring looks allow
+    #: (:func:`flats.fit.frontage.building_runs_bounded`, FOLLOWUPS 195): a
+    #: share counted at a minimum may be under it. A count that meets the
+    #: minimum whose least does not is unanswered (``tolerated``), never a
+    #: pass. None (nobody measured the bound) reads the count alone.
+    building_frontage_least_pct: tuple[float, ...] | None = None
     #: Distances to transit, feet, as ``(measure, ft)`` pairs
     #: (:data:`flats.rules.model.TRANSIT_MEASURES`), measured once per
     #: transit release by :mod:`flats.ingest.transit` and read by the rules
@@ -1588,16 +1606,22 @@ def _checks(
             return
         out.append(policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where))
 
-    def counted(name: str, observed: float, most: float | None, cap: float) -> None:
-        """A ceiling on a quantity counted on a grid of looks, ``most`` the
-        highest the grid allows (:func:`flats.fit.frontage.street_runs_bounded`).
-        A count within the cap whose most is over it is ``tolerated``: the
+    def counted(
+        name: str, observed: float, most: float | None, cap: float, *, is_maximum: bool = True
+    ) -> None:
+        """A limit on a quantity counted on a grid of looks, ``most`` the
+        farthest the grid allows toward failing it: the highest for a
+        ceiling (:func:`flats.fit.frontage.street_runs_bounded`), the lowest
+        for a floor (:func:`flats.fit.frontage.building_runs_bounded`). A
+        count that meets the limit whose bound does not is ``tolerated``: the
         lot is held, a measurement question, never a pass (rel9 move read
-        F1, Beaverton 60.05.60.2 S11 lots counted at exactly 50.0 percent)."""
-        got = policy.evaluate(name, observed, cap, is_maximum=True, jurisdiction=where)
-        if got.verdict is Verdict.passes and most is not None and most > cap:
+        F1, Beaverton 60.05.60.2 S11 lots counted at exactly 50.0 percent;
+        FOLLOWUPS 195, Gresham building shares counted at exactly 50.0)."""
+        got = policy.evaluate(name, observed, cap, is_maximum=is_maximum, jurisdiction=where)
+        beyond = most is not None and (most > cap if is_maximum else most < cap)
+        if got.verdict is Verdict.passes and beyond:
             got = dataclasses.replace(
-                got, tolerance=float(most) - float(observed), verdict=Verdict.tolerated
+                got, tolerance=abs(float(observed) - float(most)), verdict=Verdict.tolerated
             )
         out.append(got)
 
@@ -1958,7 +1982,7 @@ def _checks(
                     float(width_cap),
                 )
     # The building's share of the street frontage (FOLLOWUPS 109).
-    _building_frontage(rules, lot, design, beside, check, unchecked, unmeasured)
+    _building_frontage(rules, lot, design, beside, check, unchecked, unmeasured, counted=counted)
     # The front yard's share in vehicle area (Portland 33.266.120.C.1.b, 40
     # percent; Milwaukie 19.607.1.D, 50). An AREA share of the ground between
     # the front lot line and the building, which the pod's drive crosses
@@ -4369,6 +4393,8 @@ def _building_frontage(
     check: Callable[..., None],
     unchecked: list[str],
     unmeasured: set[str],
+    *,
+    counted: Callable[..., None] | None = None,
 ) -> None:
     """The building's share of the street frontage (FOLLOWUPS 109):
     Beaverton 60.05.15.6.A and Downtown 70.20.05.4 S1-S2, Washington County
@@ -4498,13 +4524,29 @@ def _building_frontage(
         unchecked.append(BUILDING_SHARE)
         unmeasured.add(BUILDING_FRONTAGE)
         return
+    # The shares at the least the measuring looks allow (FOLLOWUPS 195): a
+    # pass that holds only as counted is tolerated, never a pass.
+    low = lot.building_frontage_least_pct
+    if low is not None and len(low) != len(drawn):
+        low = None
+
+    def passed(observed: float, least: float | None, threshold: float, name: str = BUILDING_SHARE) -> None:
+        if counted is None or least is None:
+            check(name, observed, threshold, is_maximum=False)
+        else:
+            counted(name, observed, least, threshold, is_maximum=False)
+
     if primaries is not None:
         # The primary is held: the share is owed there, and the other streets
         # owe what the code asks of them, if anything.
         for a in primaries:
             rest = [float(drawn[b]) for b in range(len(drawn)) if b != a]
             if float(drawn[a]) >= need and (other is None or all(x >= other for x in rest)):
-                check(BUILDING_SHARE, float(drawn[a]), need, is_maximum=False)
+                passed(float(drawn[a]), None if low is None else float(low[a]), need)
+                if other is not None and low is not None and rest:
+                    least_rest = min(float(low[b]) for b in range(len(low)) if b != a)
+                    if least_rest < other:
+                        passed(min(rest), least_rest, float(other), BUILDING_OTHER_SHARE)
                 return
         unchecked.append(BUILDING_SHARE)
         if any(most(max(w, d), lines[a]) >= need for a in primaries):
@@ -4513,7 +4555,7 @@ def _building_frontage(
             unmeasured.add(FRONTAGE_STREET)
         return
     if min(drawn) >= need:
-        check(BUILDING_SHARE, min(drawn), need, is_maximum=False)
+        passed(min(drawn), None if low is None else min(float(x) for x in low), need)
         return
     unchecked.append(BUILDING_SHARE)
     if len(lines) == 1 and most(max(w, d), lines[0]) >= need:
@@ -5233,6 +5275,8 @@ __all__ = [
     "CLOSER_LOOK_MIN_FAR",
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_SPLIT_ZONE",
+    "CLOSER_LOOK_PLAN_OFF_LOT",
+    "CLOSER_LOOK_DRIVE_TOUCH",
     "CLOSER_LOOK_SECOND_APPROACH",
     "CLOSER_LOOK_ROOF_CORNICE",
     "CLOSER_LOOK_HEIGHT_AS_MEASURED",

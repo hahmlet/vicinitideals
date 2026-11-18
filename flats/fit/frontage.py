@@ -646,7 +646,23 @@ def building_runs(
     *,
     lane: BaseGeometry | None = None,
 ) -> tuple[tuple[float, float], ...]:
-    """Each street's ``(share in percent, net frontage in feet)`` that the
+    """Each street's ``(share in percent, net frontage in feet)``, as
+    :func:`building_runs_bounded` counts them without the bound."""
+    return tuple(
+        (pct, net) for pct, net, _ in building_runs_bounded(lot, edges, building, band_ft, lane=lane)
+    )
+
+
+def building_runs_bounded(
+    lot: BaseGeometry,
+    edges: LotEdges,
+    building: BaseGeometry,
+    band_ft: float,
+    *,
+    lane: BaseGeometry | None = None,
+) -> tuple[tuple[float, float, float], ...]:
+    """Each street's ``(share in percent, net frontage in feet, share at
+    least)`` that the
     BUILDING occupies within ``band_ft`` of the street line, in
     :func:`street_chains` order (FOLLOWUPS 109): the feet of street line from
     which the first thing seen straight into the lot is the building, no
@@ -659,10 +675,19 @@ def building_runs(
     ``lane`` given, the feet where the lane is seen at the street line come
     off that street's frontage before the share is taken (Beaverton
     60.05.15.6.A.4.a, 70.20.05.4 S1.g.I: the driveway's width is subtracted).
+
+    The share is counted on looks :data:`STEP_FT` apart, so a share that
+    meets a MINIMUM only as counted may be under it (FOLLOWUPS 195, the
+    mirror of the parking cap's bound in :func:`street_runs_bounded`): the
+    "at least" share takes one look off the building's count at each place
+    along the line where the building starts or stops being seen, and adds
+    one look to the net frontage at each place the driveway crossing starts
+    or stops. A count at the minimum whose least is under it is unanswered,
+    never a pass (:func:`flats.score.screen._building_frontage`).
     """
     minx, miny, maxx, maxy = lot.bounds
     reach = math.hypot(maxx - minx, maxy - miny) + 1.0
-    out: list[tuple[float, float]] = []
+    out: list[tuple[float, float, float]] = []
     for chain in street_chains(edges):
         frontage = sum(math.hypot(e.x2 - e.x1, e.y2 - e.y1) for e in chain)
         if frontage <= 0:
@@ -677,13 +702,22 @@ def building_runs(
         # float dust on a share that is exactly the minimum.
         looked = len(pts)
         kept = looked
+        cross_edges = 0
         if lane is not None and not lane.is_empty:
             drive = _first_seen(pts, lines, lane)
             crossing = (drive <= DRIVE_AT_LINE_FT) & (drive < built)
             kept = looked - int(crossing.sum())
+            cross_edges = int(np.count_nonzero(crossing[1:] != crossing[:-1]))
         net = frontage * kept / looked
-        share = 100.0 * min(int(held.sum()), kept) / kept if kept > 0 else 100.0
-        out.append((share, net))
+        count = min(int(held.sum()), kept)
+        share = 100.0 * count / kept if kept > 0 else 100.0
+        # One look of doubt at each place the building starts or stops along
+        # the line, and at each end of the driveway crossing (the docstring).
+        held_edges = int(np.count_nonzero(held[1:] != held[:-1]))
+        fewest = max(0, count - held_edges)
+        widest = min(looked, kept + cross_edges)
+        least = 100.0 * fewest / widest if widest > 0 else share
+        out.append((share, net, min(share, least)))
     return tuple(out)
 
 
@@ -693,6 +727,7 @@ __all__ = [
     "STEP_FT",
     "along",
     "building_runs",
+    "building_runs_bounded",
     "parking_share",
     "parking_share_bounded",
     "parking_share_pct",

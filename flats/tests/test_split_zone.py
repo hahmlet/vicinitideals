@@ -100,6 +100,26 @@ def test_a_lot_whose_own_district_the_maps_do_not_show_is_the_worst_case() -> No
     assert not sz.governed(got, sz.Ruling("majority", cite="x"))
 
 
+def test_a_split_marked_lot_with_no_ground_of_its_own_district_is_the_worst_case() -> None:
+    # FOLLOWUPS 201, Cornelius 1N335CD01200: the lot is read R-10 by hand off
+    # the city's printed map, and the regional layer carries no R-10 at all --
+    # only a hair of another district's polygon touches the lot. Nothing over
+    # the noise line to name, and nothing of its own: before the fix this read
+    # as "not split" and the lot stayed GREEN with no flag.
+    got = split_of(("AF-5", (0, 0.2)), own_codes=("R-10",))
+
+    assert got.pieces == ()
+    assert got.own_sqft == pytest.approx(0)
+    assert got.unresolved
+    assert got
+    assert not sz.governed(got, sz.Ruling("majority_within", ft=20, inclusive=False, cite="x"))
+    # Its own ground only a sliver: the same worst case.
+    sliver = split_of(("R5", (0, 0.5)), ("CM2", (0.5, 100)))
+    assert sliver.unresolved
+    # The round trip keeps it.
+    assert sz.decode(sz.encode(got)).unresolved
+
+
 # --- what a city's code says --------------------------------------------
 
 
@@ -347,6 +367,18 @@ def test_a_lot_whose_own_district_the_maps_cannot_find_is_flagged_wherever_the_p
     _, _, s = screened(corpus, policies, split=sz.Split((CORNER,), unresolved=True))
 
     assert [f.code for f in zone_flags(s)] == ["ZONE-SPLIT"]
+    assert s.signed.colour is flag_plan.Colour.yellow
+
+
+def test_a_lot_whose_own_district_is_unmapped_and_nothing_else_named_is_flagged(
+    corpus, policies  # noqa: F811
+) -> None:
+    # FOLLOWUPS 201: unresolved with no piece to name still raises ZONE-SPLIT
+    # (split zones are YELLOW by ruling 2026-10-14) and says what is missing.
+    _, _, s = screened(corpus, policies, split=sz.Split((), unresolved=True))
+
+    (flag,) = zone_flags(s)
+    assert sz.UNMAPPED in flag.source
     assert s.signed.colour is flag_plan.Colour.yellow
 
 

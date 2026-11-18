@@ -83,7 +83,7 @@ from flats.fit.draw import (
 from flats.fit.frontage import (
     _runs,
     _streets_of_run,
-    building_runs,
+    building_runs_bounded,
     parking_share_bounded,
     side_street_takes_drive,
     street_chains,
@@ -252,6 +252,8 @@ from flats.score.screen import (
     AREA_REVIEWS,
     PARKING_FRONT_SHARE,
     BUILDING_SHARE,
+    CLOSER_LOOK_DRIVE_TOUCH,
+    CLOSER_LOOK_PLAN_OFF_LOT,
     CLOSER_LOOK_SPLIT_ZONE,
     FRONT_MAX,
     FRONT_MAX_DRAWN_TOL_FT,
@@ -4153,13 +4155,15 @@ def _screen_on(
             # The zone asks the building to fill a share of the street
             # frontage (FOLLOWUPS 109): measure this plan's share on the
             # drawn plan and screen again on it.
-            built = building_frontage(here, streets, design, got, fit, fitter, env)
-            if built is not None and not _same_streets(streets, facts.street_lines_ft):
+            bounded = building_frontage_bounded(here, streets, design, got, fit, fitter, env)
+            if bounded is not None and not _same_streets(streets, facts.street_lines_ft):
                 # Drawn on other streets than the lot's facts name: the shares
                 # would be read against the wrong lines and the wrong ranks.
-                built = None
-            if built is not None:
-                facts = dataclasses.replace(facts, building_frontage_pct=built)
+                bounded = None
+            if bounded is not None:
+                facts = dataclasses.replace(
+                    facts, building_frontage_pct=bounded[0], building_frontage_least_pct=bounded[1]
+                )
                 result = screen(
                     got, facts, design, fit, policy=policy, relief=relief, config=config
                 )
@@ -4378,6 +4382,10 @@ def split_zone_checked(s: Screened, lot: QuadfitLot) -> Screened:
     plan = s.drawing
     if split.unresolved or plan is None:
         zones = tuple(p.zone for p in split.pieces)
+        if split.unresolved and not zones:
+            # The lot's own district is not on the maps and nothing else is
+            # big enough to name: every plan is in doubt (FOLLOWUPS 201).
+            zones = (split_zones.UNMAPPED,)
     else:
         zones = split_zones.reached(split, _plan_shapes(plan))
     if not zones:
@@ -4391,6 +4399,118 @@ def split_zone_checked(s: Screened, lot: QuadfitLot) -> Screened:
 
     def ask(x: Screening) -> Screening:
         reasons = x.reasons if CLOSER_LOOK_SPLIT_ZONE in x.reasons else (*x.reasons, CLOSER_LOOK_SPLIT_ZONE)
+        triage = Triage.yellow if x.triage is Triage.green else x.triage
+        flags = x.flags
+        if not any(f.code == flag.code for f in flags):
+            flags = (*flags, flag)
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
+def plan_on_lot_checked(s: Screened, lot: QuadfitLot) -> Screened:
+    """``s`` held out of GREEN where its drawn lane or court stands past the
+    lot line by more than :data:`PLAN_OFF_LOT_FT` (FOLLOWUPS 201).
+
+    The fit takes a lane and court overlap of the side setback on trust
+    (:func:`flats.score.paper.side_yard_lane_overlap_ft`), and the court's
+    ground check (FOLLOWUPS 33) reads only the court's run past the window's
+    far end; on a through lot the flank can face a street line, so the
+    overlap strip lands past it (Portland 1N1E23CB -21200: lane 322 sq ft and
+    court 203 sq ft off the lot, GREEN on run 128). Nothing measured the
+    drawing against the lot, so this does, last: a GREEN plan whose lane or
+    court leaves the lot is YELLOW with MEASURE-PLAN-OFF-LOT, never moved
+    toward GREEN, and a red lot keeps its colour (the flag rides along).
+    No drawing, a drawing that did not fit, or no lot polygon, is not
+    asked: other checks hold those."""
+    plan = s.drawing
+    geom = lot.lot_geom
+    if not plan or not plan.get("fits") or geom is None or geom.is_empty:
+        # A plan that did not fit is drawn as far as it goes, past the lot
+        # where it must: the fit's own miss answers it.
+        return s
+    from shapely.geometry import Polygon
+
+    grown = geom.buffer(PLAN_OFF_LOT_FT)
+    off: list[str] = []
+    for name in ("lane", "court"):
+        ring = plan.get(name)
+        if not ring or len(ring) < 4:
+            continue
+        shape = Polygon(ring)
+        if not shape.is_valid:
+            shape = shape.buffer(0)
+        past = shape.difference(grown).area
+        if past > PLAN_OFF_LOT_MIN_SQFT:
+            off.append(f"{name} {past:,.0f} sq ft")
+    if not off:
+        return s
+    flag = flag_plan.Flag(
+        PLAN_OFF_LOT,
+        flag_plan.LOT,
+        CLOSER_LOOK_PLAN_OFF_LOT,
+        source=f"drawn past the lot line by more than {PLAN_OFF_LOT_FT:g} ft: {', '.join(off)}",
+    )
+
+    def ask(x: Screening) -> Screening:
+        reasons = x.reasons if CLOSER_LOOK_PLAN_OFF_LOT in x.reasons else (*x.reasons, CLOSER_LOOK_PLAN_OFF_LOT)
+        triage = Triage.yellow if x.triage is Triage.green else x.triage
+        flags = x.flags
+        if not any(f.code == flag.code for f in flags):
+            flags = (*flags, flag)
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
+DRIVE_TOUCH = "ACCESS-DRIVE-TOUCH"
+
+
+def drive_touch_checked(s: Screened) -> Screened:
+    """``s`` held out of GREEN where no street meets the lot along as much
+    line as the narrowest driveway the code allows here (FOLLOWUPS 201).
+
+    s4 cuts each street line where the right-of-way stops abutting it, so a
+    street's run of line is the stretch a drive can cross
+    (:func:`flats.fit.frontage.side_street_takes_drive`, FOLLOWUPS 172, asks
+    the same of a corner lot's side street). Portland 1N2E25DA -10200 (R7,
+    16001 NE San Rafael St) touches the street along 8.0 ft, the rest of its
+    street side held off by a strip lot of its own (1N2E25DA -10300), and
+    33.266.120.D.2 asks "The minimum driveway width on private property is 9
+    feet" (``portland/33.266.txt#L332``): no drive reaches the court on the
+    lot's own ground, yet it was GREEN on run 128. A shared driveway across
+    the neighbour (33.266.120.D.3, a recorded easement) or a plan without
+    parking may still answer it, so the lot is YELLOW with
+    ACCESS-DRIVE-TOUCH, never RED here, and never moved toward GREEN.
+
+    The width asked is the narrowest any reading lets this lot use: the
+    screened reading's drive (:func:`flats.score.paper.drive_width`) or a
+    ruled narrow lane (``driveway_lane_narrow_ft``), whichever is less. Not
+    asked where the court is fed from an alley (the alley is the lane), where
+    no drawing fit, or where nothing measured the lot's lines."""
+    plan = s.drawing
+    edges = s.street_edges or s.lot.edges
+    if not plan or not plan.get("fits") or edges is None or not edges.edges:
+        return s
+    if any(e.alley for e in edges.edges) or s.lot.facts.alley_at_rear:
+        return s
+    width = drive_width(s.rules, s.design.parking.lane_width_ft)
+    narrow = s.rules.get("driveway_lane_narrow_ft")
+    if isinstance(narrow, (int, float)) and not isinstance(narrow, bool):
+        width = min(width, float(narrow))
+    runs = [sum(e.length_ft for e in c) for c in street_chains(edges)]
+    longest = max(runs, default=0.0)
+    if longest >= width:
+        return s
+    flag = flag_plan.Flag(
+        DRIVE_TOUCH,
+        flag_plan.LOT,
+        CLOSER_LOOK_DRIVE_TOUCH,
+        source=f"the longest street line is {longest:.1f} ft; the narrowest drive allowed here is {width:g} ft",
+    )
+
+    def ask(x: Screening) -> Screening:
+        reasons = x.reasons if CLOSER_LOOK_DRIVE_TOUCH in x.reasons else (*x.reasons, CLOSER_LOOK_DRIVE_TOUCH)
         triage = Triage.yellow if x.triage is Triage.green else x.triage
         flags = x.flags
         if not any(f.code == flag.code for f in flags):
@@ -4537,6 +4657,16 @@ def _same_numbers(a: ZoneResolution, b: ZoneResolution) -> bool:
 #: and still ends the search).
 FIRE_ROUTE_UNFOUND = "MEASURE-FIRE-ROUTE"
 ZONE_SPLIT = "ZONE-SPLIT"
+PLAN_OFF_LOT = "MEASURE-PLAN-OFF-LOT"
+
+#: How far past the lot line a drawn lane or court may stand before the plan
+#: is not one the lot holds, feet: the drawing's raster (0.5 ft cells) twice
+#: over. The class hunt's nine 11-43 sq ft court slivers on Portland greens
+#: spread along 100 ft or more of line, under half a foot deep; the lot that
+#: found this stood 4 ft past (FOLLOWUPS 201).
+PLAN_OFF_LOT_FT = 1.0
+#: Ground past that line smaller than this is rounding, square feet.
+PLAN_OFF_LOT_MIN_SQFT = 1.0
 
 
 def _bounded(
@@ -5714,6 +5844,8 @@ def _screen_lot_once(
         won = sight_corner_court_checked(won, lot, policy=policy, relief=relief)
         won = entrance_drawn_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
+        won = plan_on_lot_checked(won, lot)
+        won = drive_touch_checked(won)
         won = road_standin_checked(won, lot)
         # The run's law day (fixed once in _init_worker), so a run that crosses
         # midnight on a dated provision's day screens every lot alike.
@@ -6487,10 +6619,41 @@ def _drawn_share(s: Screened) -> tuple[float, ...] | None:
         if s.rules.get("building_frontage_less_drive") is True and lane_ring and len(lane_ring) >= 4
         else None
     )
-    runs = building_runs(s.lot.lot_geom, streets, Polygon(ring), band, lane=lane)
+    runs = building_runs_bounded(s.lot.lot_geom, streets, Polygon(ring), band, lane=lane)
     if not runs or len(runs) != len(held):
         return None
-    return tuple(min(was, pct) for was, (pct, _) in zip(held, runs))
+    return tuple(min(was, pct) for was, (pct, _, _) in zip(held, runs))
+
+
+def _drawn_least(s: Screened) -> tuple[float, ...] | None:
+    """:func:`_drawn_share`'s shares at the least the looks allow
+    (FOLLOWUPS 195), never more than the least already held. None where the
+    drawing cannot be measured or no least was held."""
+    from shapely.geometry import Polygon
+
+    held = s.facts.building_frontage_least_pct if s.facts is not None else None
+    drawing = s.drawing or {}
+    ring = drawing.get("building")
+    streets = getattr(s, "street_edges", None) or s.lot.edges
+    band = share_band(s.rules)
+    if (
+        held is None
+        or s.lot.lot_geom is None
+        or streets is None
+        or band is None
+        or not (drawing.get("fits") and ring and len(ring) >= 4)
+    ):
+        return None
+    lane_ring = drawing.get("lane")
+    lane = (
+        Polygon(lane_ring)
+        if s.rules.get("building_frontage_less_drive") is True and lane_ring and len(lane_ring) >= 4
+        else None
+    )
+    runs = building_runs_bounded(s.lot.lot_geom, streets, Polygon(ring), band, lane=lane)
+    if not runs or len(runs) != len(held):
+        return None
+    return tuple(min(was, least) for was, (_, _, least) in zip(held, runs))
 
 
 def _share_redrawn(s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy) -> Screened:
@@ -6499,9 +6662,12 @@ def _share_redrawn(s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy) ->
     if s.facts is None or s.facts.building_frontage_pct is None:
         return s
     share = _drawn_share(s)
-    if share == s.facts.building_frontage_pct:
+    least = _drawn_least(s) if share is not None else None
+    if share == s.facts.building_frontage_pct and (
+        least is None or least == s.facts.building_frontage_least_pct
+    ):
         return s
-    facts = dataclasses.replace(s.facts, building_frontage_pct=share)
+    facts = dataclasses.replace(s.facts, building_frontage_pct=share, building_frontage_least_pct=least)
     result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
     shadow = _if_signed(
         s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
@@ -7778,7 +7944,21 @@ def building_frontage(
     fitter: Fitter,
     env: Envelope,
 ) -> tuple[float, ...] | None:
-    """The building's share of each street frontage on this plan, percent,
+    """The shares of :func:`building_frontage_bounded`, without the bound."""
+    measured = building_frontage_bounded(here, streets, design, got, fit, fitter, env)
+    return None if measured is None else measured[0]
+
+
+def building_frontage_bounded(
+    here: QuadfitLot,
+    streets: LotEdges | None,
+    design: Design,
+    got: ZoneResolution,
+    fit: Fit,
+    fitter: Fitter,
+    env: Envelope,
+) -> tuple[tuple[float, ...], tuple[float, ...]] | None:
+    """``(shares, shares at least)`` (FOLLOWUPS 195). The building's share of each street frontage on this plan, percent,
     in :func:`flats.fit.frontage.street_chains` order (FOLLOWUPS 109;
     :func:`flats.fit.frontage.building_runs`), or None where it cannot be
     measured: no lot polygon, no maximum front setback to bound the band,
@@ -7803,10 +7983,10 @@ def building_frontage(
     if drawn is None or drawn.building is None or drawn.building.is_empty:
         return None
     lane = drawn.lane if got.get("building_frontage_less_drive") is True else None
-    runs = building_runs(here.lot_geom, streets, drawn.building, band, lane=lane)
+    runs = building_runs_bounded(here.lot_geom, streets, drawn.building, band, lane=lane)
     if not runs:
         return None
-    return tuple(pct for pct, _ in runs)
+    return tuple(pct for pct, _, _ in runs), tuple(least for _, _, least in runs)
 
 
 def _largest_left(

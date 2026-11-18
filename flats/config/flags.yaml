@@ -1007,6 +1007,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_SPLIT_ZONE]
+  MEASURE-PLAN-OFF-LOT:
+    description: "The drawn driveway lane or parking court stands more than 1 ft past the lot line: the plan the fit passed is not one this lot holds (FOLLOWUPS 201, Portland 1N1E23CB -21200, a through lot whose side-yard overlap put the lane and court past the far street line)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Draw the plan with the lane and court inside the lot (another placement may hold them), or survey the lot line"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_PLAN_OFF_LOT]
+  ACCESS-DRIVE-TOUCH:
+    description: "No street meets the lot along as much line as the narrowest driveway the code allows here, so the drive to the parking court would cross another lot (FOLLOWUPS 201, Portland 1N2E25DA -10200: 8 ft of street line against 33.266.120.D.2's 9 ft driveway)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Check the street line on a survey; a shared driveway with a recorded easement (Portland 33.266.120.D.3) or a plan without parking may answer it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_DRIVE_TOUCH]
   # --- Portland's overlays (flats/geom/pdx_overlays.py, FOLLOWUPS 109) ------
   PDX-MAIN-STREET-TRANSIT:
     description: "The townhouse form on a lot in Portland's Centers Main Street overlay (\"m\"): PCC 33.415.300.B bars \"Houses, attached houses, and duplexes\" within 100 ft of a transit street, and four homes each on its own lot are attached houses unless the lots come from a middle housing land division (33.910). No map of the city's transit streets is held, so every street is taken as one. The apartment form (a fourplex) is not barred."
