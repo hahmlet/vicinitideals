@@ -193,7 +193,7 @@ def _screen(lot: Any, designs: Any) -> list[Any]:
 
 def _green(results: list[Any]) -> Any:
     for s in results:
-        if s.signed.triage.value == "green":
+        if s.signed.colour.value == "green":  # the map colour (row_for "colour")
             return s
     return None
 
@@ -214,7 +214,7 @@ def work_patched(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         win = _green(base)
         if win is None:
             rec.update({"alt_status": "not searched", "alt_why": "not green in this re-screen",
-                        "colour_now": base[0].signed.triage.value if base else None})
+                        "colour_now": base[0].signed.colour.value if base else None})
         else:
             key = (win.design.key, _ring_key(win.drawing))
             rec.update({"design": win.design.key, "live_ring": json.dumps((win.drawing or {}).get("building"))})
