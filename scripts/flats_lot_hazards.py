@@ -109,6 +109,11 @@ def find_gdb(path: Path) -> Path:
     return found[0]
 
 
+def _names(values: Any) -> list[str]:
+    """pyogrio's field names (a numpy array, never tested for truth)."""
+    return [] if values is None else [str(v) for v in values]
+
+
 def inspect(gdb: Path) -> dict[str, Any]:
     import pyogrio
 
@@ -117,7 +122,7 @@ def inspect(gdb: Path) -> dict[str, Any]:
     for name, geom_type in pyogrio.list_layers(gdb):
         info = pyogrio.read_info(gdb, layer=name)
         out["vector"][str(name)] = {"geometry": geom_type, "features": int(info.get("features") or 0),
-                                    "fields": list(info.get("fields") or []), "crs": info.get("crs")}
+                                    "fields": _names(info.get("fields")), "crs": info.get("crs")}
     try:
         import rasterio
 
@@ -199,7 +204,7 @@ def read_vector(spec: LayerSpec, gdb: Path, layer: str, *, part: Any = None) -> 
     import shapely
 
     info = pyogrio.read_info(gdb, layer=layer)
-    fields = list(info.get("fields") or [])
+    fields = _names(info.get("fields"))
     fmap = _field_map(fields)
     needed = [f for f in (spec.class_field, spec.label_field) if f and part is None]
     missing = [f for f in needed if f.lower() not in fmap]
@@ -291,12 +296,69 @@ def read_held(spec: LayerSpec, snapshot: Path) -> tuple[list[Feature], dict[str,
     return feats, meta
 
 
-def check_raster(spec: LayerSpec, gdb: Path) -> dict[str, Any]:
-    """Open a geodatabase raster, check its sampled values against the legend."""
+def _gdal_lib() -> Any:
+    """The GDAL library bundled with pyogrio, through ctypes.
+
+    rasterio's wheels leave out the OpenFileGDB raster driver; pyogrio's GDAL
+    (3.7+) reads file-geodatabase rasters. Only GDALTranslate is used, to copy a
+    raster out to a GeoTIFF that rasterio then reads."""
+    import ctypes
+    import glob
+    import os
+
+    import pyogrio
+
+    base = os.path.dirname(pyogrio.__file__)
+    found = sorted(glob.glob(os.path.join(base, "..", "pyogrio.libs", "*gdal*")) + glob.glob(os.path.join(base, "*gdal*.dll")))
+    if not found:
+        raise SystemExit("no GDAL library found beside pyogrio")
+    lib = ctypes.CDLL(found[0])
+    lib.GDALAllRegister()
+    lib.GDALOpenEx.restype = ctypes.c_void_p
+    lib.GDALOpenEx.argtypes = [ctypes.c_char_p, ctypes.c_uint, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p]
+    lib.GDALTranslateOptionsNew.restype = ctypes.c_void_p
+    lib.GDALTranslateOptionsNew.argtypes = [ctypes.POINTER(ctypes.c_char_p), ctypes.c_void_p]
+    lib.GDALTranslate.restype = ctypes.c_void_p
+    lib.GDALTranslate.argtypes = [ctypes.c_char_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.POINTER(ctypes.c_int)]
+    lib.GDALTranslateOptionsFree.argtypes = [ctypes.c_void_p]
+    lib.GDALClose.argtypes = [ctypes.c_void_p]
+    return lib
+
+
+def copy_gdb_raster(gdb: Path, layer: str, out: Path, *, bbox_2913: tuple[float, float, float, float] | None = None) -> Path:
+    """Copy one geodatabase raster to a tiled, compressed GeoTIFF, cut to
+    ``bbox_2913`` (xmin, ymin, xmax, ymax in EPSG:2913) when given. Values and
+    cells are copied as stored (no resampling)."""
+    import ctypes
+
+    lib = _gdal_lib()
+    src = lib.GDALOpenEx(f'OpenFileGDB:"{gdb}":{layer}'.encode(), 0x02 | 0x40, None, None, None)
+    if not src:
+        raise SystemExit(f"{gdb}: raster {layer} does not open")
+    args = ["-of", "GTiff", "-co", "COMPRESS=DEFLATE", "-co", "TILED=YES", "-co", "BIGTIFF=IF_SAFER"]
+    if bbox_2913 is not None:
+        xmin, ymin, xmax, ymax = bbox_2913
+        args += ["-projwin_srs", "EPSG:2913", "-projwin", str(xmin), str(ymax), str(xmax), str(ymin)]
+    argv = (ctypes.c_char_p * (len(args) + 1))(*[a.encode() for a in args], None)
+    opts = lib.GDALTranslateOptionsNew(argv, None)
+    err = ctypes.c_int(0)
+    dst = lib.GDALTranslate(str(out).encode(), src, opts, ctypes.byref(err))
+    lib.GDALTranslateOptionsFree(opts)
+    if dst:
+        lib.GDALClose(dst)
+    lib.GDALClose(src)
+    if not dst or err.value:
+        raise SystemExit(f"{gdb}: copying raster {layer} failed")
+    return out
+
+
+def check_raster(spec: LayerSpec, gdb: Path | None = None, *, path: str | None = None) -> dict[str, Any]:
+    """Open a raster (a GeoTIFF copy, or the geodatabase's own where this GDAL
+    reads it), check its sampled values against the legend."""
     import numpy as np
     import rasterio
 
-    path = f"OpenFileGDB:{gdb}:{spec.layer}"
+    path = path or f"OpenFileGDB:{gdb}:{spec.layer}"
     with rasterio.open(path) as ds:
         step = max(1, max(ds.width, ds.height) // 2000)
         sample = ds.read(1, out_shape=(max(1, ds.height // step), max(1, ds.width // step)))
@@ -345,7 +407,10 @@ def extract(
     held: Path | None,
     keys: list[str] | None = None,
     registry: Registry | None = None,
+    bbox_2913: tuple[float, float, float, float] | None = None,
 ) -> dict[str, Any]:
+    """Class every wanted layer into ``out``. Rasters are copied to GeoTIFFs,
+    cut to ``bbox_2913`` (EPSG:2913) when given -- the lots' extent."""
     registry = registry or load_registry()
     out.mkdir(parents=True, exist_ok=True)
     (out / LAYER_DIR).mkdir(exist_ok=True)
@@ -376,7 +441,10 @@ def extract(
             gdb = resolved[pub]
             entry["gdb"] = str(gdb)
             if spec.kind == "raster":
-                entry["raster"] = check_raster(spec, gdb)
+                tif = copy_gdb_raster(gdb, spec.layer, out / LAYER_DIR / f"{key}.tif", bbox_2913=bbox_2913)
+                entry["raster"] = check_raster(spec, path=str(tif.resolve()))
+                entry["raster"]["copied_from"] = f"{gdb}:{spec.layer}"
+                entry["raster"]["bbox_2913"] = list(bbox_2913) if bbox_2913 else None
             else:
                 import pyogrio
 
@@ -403,6 +471,20 @@ def extract(
 
 
 # --- build -----------------------------------------------------------------------
+
+
+def lots_bbox(path: Path, margin_ft: float = 2_000.0) -> tuple[float, float, float, float]:
+    """The EPSG:2913 extent of every lot of normalize's ``lots.parquet``, plus a margin."""
+    import shapely
+
+    xs0, ys0, xs1, ys1 = [], [], [], []
+    for lot in read_lots(path):
+        x0, y0, x1, y1 = shapely.bounds(lot["geom"])
+        xs0.append(x0)
+        ys0.append(y0)
+        xs1.append(x1)
+        ys1.append(y1)
+    return (min(xs0) - margin_ft, min(ys0) - margin_ft, max(xs1) + margin_ft, max(ys1) + margin_ft)
 
 
 def read_lots(path: Path) -> list[dict[str, Any]]:
@@ -447,7 +529,8 @@ def open_layers(extract_dir: Path, registry: Registry, keys: list[str] | None = 
         if spec.coverage and spec.coverage not in coverages:
             raise SystemExit(f"{key}: its coverage {spec.coverage} is not in the extract")
         if spec.kind == "raster":
-            layers.append(RasterLayer(spec, entry["raster"]["path"], working_srid=OUT_SRID))
+            tif = extract_dir / LAYER_DIR / f"{key}.tif"  # the extract's own copy, wherever it now sits
+            layers.append(RasterLayer(spec, str(tif) if tif.exists() else entry["raster"]["path"], working_srid=OUT_SRID))
         else:
             layers.append(VectorLayer(spec, read_layer(extract_dir / LAYER_DIR / f"{key}.parquet")))
     return layers, coverages
@@ -715,6 +798,8 @@ def main(argv: list[str] | None = None) -> int:
     ex.add_argument("--held", type=Path, default=None, help="an acquire snapshot directory (the flood layers)")
     ex.add_argument("--out", type=Path, required=True, help="a new, empty directory")
     ex.add_argument("--layers", default=None, help="comma-separated layer keys (default: all)")
+    ex.add_argument("--bbox", default=None, help="xmin,ymin,xmax,ymax in EPSG:2913: cut the rasters to it (the lots' extent)")
+    ex.add_argument("--bbox-from-lots", type=Path, default=None, help="normalize's lots.parquet: --bbox is its extent plus 2,000 ft")
     bu = sub.add_parser("build", help="cut the extract against every lot of a lot table")
     bu.add_argument("--extract", type=Path, required=True)
     bu.add_argument("--lots", type=Path, required=True, help="normalize's lots.parquet")
@@ -738,7 +823,10 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "extract":
         if args.out.exists() and any(args.out.iterdir()):
             raise SystemExit(f"{args.out} is not empty; an extract goes in a new directory")
-        meta = extract(args.out, gdbs=_gdb_args(args.gdb), held=args.held, keys=keys)
+        bbox = tuple(float(v) for v in args.bbox.split(",")) if args.bbox else None
+        if args.bbox_from_lots is not None:
+            bbox = lots_bbox(args.bbox_from_lots)
+        meta = extract(args.out, gdbs=_gdb_args(args.gdb), held=args.held, keys=keys, bbox_2913=bbox)
         print(json.dumps({k: {x: v.get(x) for x in ("pieces", "classes", "label_disagreements", "raster")}
                           for k, v in meta["layers"].items()}, indent=2, default=str))
         return 0
