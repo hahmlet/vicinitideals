@@ -46,13 +46,14 @@ the full one.)
 
 ## 1. Claude -- priority
 
-197. [Claude] [scan: NO -- note only] **Frost depth per jurisdiction, as a note** -- Steph ask 11-18; state baseline plus what each building department actually enforces (Gresham differs); scout running. [file](followups/197-frost-depth.md)
+200. [Claude] [scan: YES -- toward yellow/red, FALSE GREEN] **Building is 80 ft 4 in long, live run screens 80 ft** -- Steph 11-18; new dimension + full bound in rel10; count tight greens first. [file](followups/200-building-80ft4.md)
+199. [Claude] [scan: NO -- report only, greens] **FD2 pass 1: ground levels at the building, flattest spot, soil/hazard/frost/seismic at the footprint, summary to the foundation research** -- Steph go 11-18; starts when soil lane 196 lands. [file](followups/199-ground-levels-under-building.md)
+198. [Claude] [scan: NO -- note only] **Mapped landslide, liquefaction and flood areas per lot, as notes** -- foundation agent ask 11-18; flood already held, landslide + liquefaction from the state geology maps (detailed landslide map covers only part of the area); Steph yes 11-18; BUILDING flats/hazard-notes. [file](followups/198-ground-hazard-notes.md)
+197. [Claude] [scan: NO -- note only] **Frost depth per jurisdiction, as a note** -- Steph ask 11-18; state baseline plus what each building department actually enforces scout back: 10 found, 11 silent, 5 unresolved (4 blocked sites need Steph download); only Gresham differs (18 in vs 12); register + note to build. [file](followups/197-frost-depth.md)
 196. [Claude] [scan: NO -- note only] **Soil type per lot from the USDA soil survey, as a note** -- Steph yes 11-17; greens first, then all lots; BUILDING flats/soil-notes. [file](followups/196-soil-notes.md)
 195. [Claude] [scan: YES -- toward yellow, possible FALSE GREEN] **Building minimum frontage share counted in 1 ft steps: a pass exactly at the minimum may be under it** -- same fix as rel9 F1 the other way; rel10 lane. [file](followups/195-building-share-step.md)
 152. [Claude] [Steph] **ci-runner: optional OOM protection for its Postgres** -- run cap + Postgres check shipped (70c1cb75); only the optional OOMScoreAdjust=-900 unit setting on 138 is left, Steph's call (only if Postgres is OOM-killed again). [file](followups/152-ci-runner-overload.md)
-147. [Claude] **Maximum front setback never checked on its own** -- DONE and live; last open lot 1S2E17BA -14300 re-checked 11-13: true RED (corner, 18 ft off SE 71st; small-fixes-9 hand-off). Remove at rel9 merge. [file](followups/147-max-front-setback-unchecked.md)
 
-148. [Claude] [scan: YES -- toward yellow] **Minimum floor area: red only when more pods clearly cannot fit** -- LIVE since run 118; fix-forward BUILT flats/small-fixes-9 6ed32c51 (4 Portland part-overlay lots R->Y), rides rel9. [file](followups/148-min-floor-area-more-pods.md)
 
 185. [Claude] [scan: YES -- every lot] **Screen the 80 x 25 pod, 20 ft tall, 9'2" storeys** -- RULED 11-12 (three rulings); BUILT c6f46146, LIVE run 126 (2026-11-15). Open later: trace Kenton 33.538.230 Map 538-4 (held YELLOW whole now). [file](followups/185-pod-depth-30.md)
 
@@ -63,7 +64,7 @@ the full one.)
 
 ### 1a. The weekly re-screen: traps to honour before it, moves to read after it
 
-- Weekly re-screen state -- run 126 PROMOTED 2026-11-15 (rel8, pod80x25@3, + Hillsboro downtown fix); NEXT rel9 full bound. [file](followups/weekly-rescreen.md)
+- Weekly re-screen state -- run 128 PROMOTED 2026-11-18 (rel9, 623 moves, main 6b1665c5; 137 snapshot scan-run128-2026-11-18); NEXT rel10 pack. [file](followups/weekly-rescreen.md)
 77. [Claude] **Road land to the centre line in the cities** -- all built and live (7cbc3346, d3b6db52, 19ee2d97, e67b7193); only the no-centre-line case (34 lots) left conservative, needs a new centreline source. [file](followups/77-city-road-dedication.md)
 78. [Claude] [Steph: confirm 2029 transit-street RED vs YELLOW] **Portland false GREENs: main street minimum floor area and protected historic buildings are RED** -- all built and live (4ed70036, 8d1597ef, bc380601); only Steph's confirm that a 2029 mapped-transit-street lot is RED (built under no-variances) left. [file](followups/78-portland-false-greens.md)
 80. [Claude] [Steph: (c) human copy of Wood Village 235.400/490] **Readings for Steph from item 64 round 2** -- (a)(b)(d) ruled/built and live; 1S113BA07700 ruled 11-03 (show green), build not recorded; (c) waits on a copy; (e) flag_instances staleness unchecked. [file](followups/80-item64-round2-readings.md)
@@ -75,11 +76,11 @@ the full one.)
 44. [Claude] [scan: NO new code, check after the weekly run] **Readings ranked on the map's colour, and 43's hose edge** -- SHIPPED 51577bb8 (on main, live); the spot-check of the 34 lots is not recorded (status unverified 11-13). [file](followups/44-reading-rank.md)
 8. [Claude] [scan: YES if (b) is taken up] **Pockets + corridors -- leftovers** -- all code live, both checks DONE 2026-11-09; only (b) open: 66 ZONE_POCKET lots (Troutdale NSA, Oregon City County, Beaverton WAcnty). [file](followups/8-pockets-corridors.md)
 21. [Claude] [Steph: worktree go; HUMAN_TODO 26] [scan: YES for (a)-(c); NO for (d)-(e)] **Post-2027 world** -- (b) built and live (runs 46, 49); (a) state layer to adopted Div 46 and (c) Oregon Homes path wait on Steph's worktree go. [file](followups/21-post-2027-world.md)
-64. [Claude] [scan: NO] **Measure the false-GREEN rate** -- rounds 1-3 done (pooled ~4%, stopping signal not met); 11-17 offered Steph a deep Fable round (class hunt over every GREEN + blind sample) once rel9 is live. [file](followups/64-false-green-rate.md)
+64. [Claude] [scan: NO] **Measure the false-GREEN rate** -- rounds 1-3 pooled ~4%; round 4 RUNNING on run 128 (Steph go 11-18, Fable): class hunt over every GREEN + blind sample (Multnomah half reading; Wash+Clack half not started). [file](followups/64-false-green-rate.md)
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-(none -- rel8 LIVE run 126 2026-11-15; rel9 dfb512a3 bound DONE 11-16 (572 moves, md5 ed47c704); move read BLOCK on frontage rounding -- FIXED flats/rel9 2b166a6b, re-bound clean (54 G->Y, combined 623, md5 16efb06d); release running)
+(none -- rel9 LIVE run 128 2026-11-18; rel10 to pack: pagecheck-34, corner-th-191, crossref-5, rulings-1114, rlis-taxcode + items 194, 195, 200 (80 ft 4 in building) + RLIS November refresh)
 
 ### 1c. The rest, most urgent first (dated items first)
 194. [Claude] [scan: YES -- toward green] **rel8/rel9 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R), Gresham unmapped street class (~46), one fire route** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)
@@ -134,15 +135,13 @@ the full one.)
 146. [Claude] [scan: YES -- reds/yellows only go green] **Let the drive lane (and court) use the side setback where the code allows it** -- BUILT and LIVE (e92ca641..add83c5f, rescreen-1110); open: read of the side-yard moves not recorded, King City 16.124.110 C buffer unencoded. [file](followups/146-parking-in-side-yards.md)
 156. [Claude] [scan: YES (envelopes only)] **Gladstone quadfit rules follow Ordinance 1545** -- quadfit mirror DONE cd5ba695 (main/live); citation pass 33a2a406 LIVE run 126; optional R5/MR/C2/C3 provenance tidy left. [file](followups/156-gladstone-ordinance-1545.md)
 158. [Claude] [scan: YES] **17 fire-reach / front-max reds left after rel4-fixes** -- 14 resolved or read (Hillsboro 45 deg fixed 89aa02bd, live); OPEN: 3 lots whose envelope shrank in rel4, cause untraced (RED = safe side). [file](followups/158-fire-front-max-17-reds.md)
-161. [Claude] [scan: YES -- toward yellow] **Sight triangles at corners and driveways** -- open parts BUILT flats/sight-leftovers 2fe743d5 (King City read; alley corners + parking-in-triangle YELLOW+flag; 0 run-124 greens reached), rides rel9; held YELLOW (moot today): OC/Hillsboro engineer-set size, 450 vs 500 ft at 45 mph. [file](followups/161-sight-triangles.md)
-162. [Claude] [scan: YES -- toward red, false-GREEN risk] **Tigard entrance rules outside TMU** -- BUILT d35ef11a on flats/tigard-entrances, 0 moves; NOT in main or rel8 (earlier 'rides rel7' was wrong) -- needs a release slot (rel9). [file](followups/162-tigard-entrances.md)
-163. [Claude] [scan: YES -- toward green] **Fire retry at the drawing's angle** -- BUILT 7ae34393 on flats/retry-drawing-angle; NOT in main or rel8 (earlier 'rides rel7' was wrong) -- needs a release slot (rel9) and a gain read. [file](followups/163-retry-drawing-angle.md)
+161. [Claude] [scan: YES -- toward yellow] **Sight triangles at corners and driveways** -- open parts BUILT flats/sight-leftovers 2fe743d5 (King City read; alley corners + parking-in-triangle YELLOW+flag; 0 run-124 greens reached), LIVE run 128 (rel9); held YELLOW (moot today): OC/Hillsboro engineer-set size, 450 vs 500 ft at 45 mph. [file](followups/161-sight-triangles.md)
 170. [Claude] [Steph] [scan: YES if read the other way] **Hillsboro SCR 5 ft maximum side setback: one wall or both?** -- RULED 11-09 both walls, BUILT + LIVE (84b08a72, 6d5b84d0, rel7); OPEN: city email parked by Steph (offer again). [file](followups/170-hillsboro-side-max.md)
 
 ## 2. Waiting on Steph
 
 179. [Claude] [Steph] [scan: YES if adopted] **End-door variant: windows needed** -- 80x25 recount 11-12: 15% rule = 7 windows + door (5 at ~20 ft); ~10,500 lots back; state rule checked, does not reach a single pod; Steph 11-14: perfecting doors on the LONG walls first; end-wall door assessed later (parked). [file](followups/179-end-door-variant.md)
-178. [Claude] [scan: YES -- toward yellow] **False-green round 4: driveway spacing tables** -- BUILT flats/drive-spacing e122ec48 (Gresham, OC, West Linn, Milwaukie, Fairview, Sherwood, Wilsonville; 787 greens in reach), rides rel9; judgement 150 ft queue reach (no code figure) -- read Sherwood greens near busier cross streets. [file](followups/178-fg-round4-questions.md)
+178. [Claude] [scan: YES -- toward yellow] **False-green round 4: driveway spacing tables** -- BUILT flats/drive-spacing e122ec48 (Gresham, OC, West Linn, Milwaukie, Fairview, Sherwood, Wilsonville; 787 greens in reach), LIVE run 128 (rel9); judgement 150 ft queue reach (no code figure) -- read Sherwood greens near busier cross streets. [file](followups/178-fg-round4-questions.md)
 176. [Claude] [Steph] [scan: YES if (f) answered the loose way] **Questions the rel7 lanes raised** -- (a)(b)(c)(g)(h) answered and live in rel7; open: Steph to drop Sandy Title 17 + Hillsboro Ord 6514/6516 documents (d), Sandy walkway entrance question (f) unanswered (built held), Rivergrove retry (e). [file](followups/176-lane-questions-1110.md)
 128. [Claude] [scan: NO] **CI takes an hour or more per push** -- BUILT 2026-10-30: pushes tested on LXC 138 ci-runner (~16 min), GitHub daily; open (optional): quadfit 7 min long pole. [file](followups/128-ci-speed.md)
 127. [Claude] [scan: NO] **Cut token spend** -- (a)(b)(e)(f) DONE (7 profiles d387fd7c, 2849fa9a, 90f56c9f); open: Copilot after reset (c), reading pilot, local pre-sort (d). [file](followups/127-token-spend.md)
