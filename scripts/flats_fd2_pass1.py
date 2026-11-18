@@ -116,21 +116,26 @@ def soil_prep(gpkg: Path, extract: Path, out: Path, *, sda: bool = True) -> dict
     conn.close()
     reasons: dict[str, list[tuple[float, str]]] = defaultdict(list)
     sda_rows = 0
+    sda_error = None
     if sda:
         import httpx
 
-        with httpx.Client(headers={"User-Agent": "flats-fd2-report"}) as client:
-            for i in range(0, len(cokeys), 400):
-                chunk = ",".join(f"'{int(k)}'" for k in cokeys[i:i + 400])
-                for row in _sda(client, (
-                    "SELECT cokey, ruledepth, rulename, interphr, interphrc FROM cointerp "
-                    f"WHERE cokey IN ({chunk}) AND ruledepth = 1 AND mrulename = '{DWELLINGS}'"
-                )):
-                    sda_rows += 1
-                    v = fd2._num(row.get("interphr"))
-                    name = str(row.get("rulename") or row.get("interphrc") or "").strip()
-                    if v is not None and v > 0 and name:
-                        reasons[str(row["cokey"])].append((v, name))
+        try:
+            with httpx.Client(headers={"User-Agent": "flats-fd2-report"}) as client:
+                for i in range(0, len(cokeys), 400):
+                    chunk = ",".join(f"'{int(k)}'" for k in cokeys[i:i + 400])
+                    for row in _sda(client, (
+                        "SELECT cokey, ruledepth, rulename, interphr, interphrc FROM cointerp "
+                        f"WHERE cokey IN ({chunk}) AND ruledepth = 1 AND mrulename = '{DWELLINGS}'"
+                    )):
+                        sda_rows += 1
+                        v = fd2._num(row.get("interphr"))
+                        name = str(row.get("rulename") or row.get("interphrc") or "").strip()
+                        if v is not None and v > 0 and name:
+                            reasons[str(row["cokey"])].append((v, name))
+        except Exception as exc:  # noqa: BLE001 -- the reasons stay missing; ``fill-reasons`` adds them later
+            reasons.clear()
+            sda_error = repr(exc)[:300]
     by_unit: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for c in comps:
         k = c["cokey"]
@@ -155,10 +160,57 @@ def soil_prep(gpkg: Path, extract: Path, out: Path, *, sda: bool = True) -> dict
         for mk, u in units.items()
     }
     meta = {"gpkg": str(gpkg), "extract": str(extract), "units": len(out_units), "components": len(comps),
-            "sda_reason_rows": sda_rows, "sda_url": SDA_URL if sda else None,
+            "sda_reason_rows": sda_rows, "sda_url": SDA_URL if sda else None, "sda_error": sda_error,
             "made_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     out.write_text(json.dumps({"meta": meta, "units": out_units}), encoding="utf-8")
     return meta
+
+
+def fill_reasons(out: Path) -> dict[str, Any]:
+    """Fetch the "dwellings without basements" reasons from Soil Data Access
+    for the components the lots stand on, and write them into the outputs
+    (for a run made while Soil Data Access was down)."""
+    import httpx
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    table = pq.read_table(out / "fd2_lots.parquet")
+    recs = table.to_pylist()
+    cokeys = sorted({str(r["cokey"]) for r in recs if r.get("cokey")})
+    reasons: dict[str, list[tuple[float, str]]] = defaultdict(list)
+    rows = 0
+    with httpx.Client(headers={"User-Agent": "flats-fd2-report"}) as client:
+        for i in range(0, len(cokeys), 200):
+            chunk = ",".join(f"'{int(k)}'" for k in cokeys[i:i + 200])
+            for row in _sda(client, (
+                "SELECT cokey, ruledepth, rulename, interphr, interphrc FROM cointerp "
+                f"WHERE cokey IN ({chunk}) AND ruledepth = 1 AND mrulename = '{DWELLINGS}'"
+            )):
+                rows += 1
+                v = fd2._num(row.get("interphr"))
+                name = str(row.get("rulename") or row.get("interphrc") or "").strip()
+                if v is not None and v > 0 and name:
+                    reasons[str(row["cokey"])].append((v, name))
+    words = {k: "; ".join(f"{n} ({v:.2f})" for v, n in sorted(found, key=lambda vn: (-vn[0], vn[1])))
+             for k, found in reasons.items()}
+    filled = 0
+    for r in recs:
+        k = str(r.get("cokey") or "")
+        if k in words:
+            r["dwellings_reasons"] = words[k]
+            filled += 1
+    keys = table.column_names
+    pq.write_table(pa.table({k: [r.get(k) for r in recs] for k in keys}), out / "fd2_lots.parquet")
+    with open(out / "fd2_lots.csv", "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=keys)
+        w.writeheader()
+        for r in recs:
+            w.writerow({k: r.get(k) for k in keys})
+    meta = json.loads((out / "fd2_meta.json").read_text(encoding="utf-8"))
+    meta["fill_reasons"] = {"components": len(cokeys), "sda_rows": rows, "lots_filled": filled,
+                            "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+    (out / "fd2_meta.json").write_text(json.dumps(meta, indent=2, default=str), encoding="utf-8")
+    return meta["fill_reasons"]
 
 
 # --- run -------------------------------------------------------------------------
@@ -320,6 +372,7 @@ def _component_facts(c: dict[str, Any]) -> dict[str, Any]:
     res = fd2.restrictions(c.get("restrictions") or [])
     water_cm, water_months = fd2.high_water(c.get("months"))
     return {
+        "cokey": c.get("cokey"),
         **{k: v for k, v in layer.items() if k != "layer_horizons"},
         **res,
         "restrictions_known": bool(c.get("horizons")),
@@ -790,8 +843,12 @@ def main(argv: list[str] | None = None) -> int:
     m = sub.add_parser("summary")
     m.add_argument("--out", required=True)
     m.add_argument("--seed", type=int, default=199)
+    f = sub.add_parser("fill-reasons")
+    f.add_argument("--out", required=True)
     args = p.parse_args(argv)
-    if args.cmd == "soil-prep":
+    if args.cmd == "fill-reasons":
+        print(json.dumps(fill_reasons(Path(args.out)), indent=2))
+    elif args.cmd == "soil-prep":
         print(json.dumps(soil_prep(Path(args.gpkg), Path(args.extract), Path(args.out), sda=not args.no_sda), indent=2))
     elif args.cmd == "run":
         meta = run(args)
