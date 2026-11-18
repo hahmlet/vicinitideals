@@ -27,6 +27,7 @@ import json
 from functools import lru_cache
 from typing import Any
 
+from flats.geom.split_zone import PIECE_MIN_SQFT
 from flats.rules.loader import AREAS_ROOT
 
 #: At least this share of the lot inside the area is inside.
@@ -66,3 +67,30 @@ def observed_drawn(lot_geom: Any, area: Any) -> bool | None:
     if share <= OUTSIDE_SHARE:
         return False
     return None
+
+
+#: The other side of an answered lot smaller than this is the tracing's line
+#: failing to meet the taxlot fabric, not ground the lot holds on that side:
+#: the split-zone reading's own noise line, so a district line and a zone line
+#: are read alike.
+EDGE_MIN_SQFT = PIECE_MIN_SQFT
+
+
+def edge_piece(lot_geom: Any, area: Any, answer: bool) -> Any | None:
+    """The ground of a lot answered ``answer`` that lies on the other side of
+    ``area``'s line (FOLLOWUPS 188): outside it for a lot answered inside, in
+    it for one answered outside. None where that ground is under
+    :data:`EDGE_MIN_SQFT` or the lot has no shape.
+
+    An answered lot is at least :data:`INSIDE_SHARE` on one side, so the
+    district's rules were applied (or not) to the whole of it; a building
+    standing on this piece stands where the other answer holds -- the same
+    question a lot in two zoning districts asks (ruling 2026-10-14-split-zones).
+    """
+    if lot_geom is None or lot_geom.is_empty or lot_geom.area <= 0:
+        return None
+    lot = lot_geom if lot_geom.is_valid else lot_geom.buffer(0)
+    piece = lot.difference(area) if answer else lot.intersection(area)
+    if piece.is_empty or piece.area < EDGE_MIN_SQFT:
+        return None
+    return piece

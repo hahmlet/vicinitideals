@@ -1007,6 +1007,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_SPLIT_ZONE]
+  DISTRICT-EDGE:
+    description: "The lot was answered inside (or outside) a traced district because 90 % or more of it lies on that side, and its building, lane or court stands on the piece across the district's line, where the other side's rules govern and were not read (FOLLOWUPS 188; read as ZONE-SPLIT is, Steph 2026-10-14: \"first check if the city has a rule on this. If no, I would say yellow\")"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot]
+    path: "Ask the planning counter whether the district's rules reach the part of the lot the building stands on, or have a survey say where the district line runs"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_DISTRICT_EDGE]
   MEASURE-PLAN-OFF-LOT:
     description: "The drawn driveway lane or parking court stands more than 1 ft past the lot line: the plan the fit passed is not one this lot holds (FOLLOWUPS 201, Portland 1N1E23CB -21200, a through lot whose side-yard overlap put the lane and court past the far street line)"
     kind: categorical
