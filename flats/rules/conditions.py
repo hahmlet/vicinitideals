@@ -1375,6 +1375,25 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "beaverton_significant_grove",
+        "site_fact",
+        "The lot lies in a Significant Grove mapped on Beaverton's Inventory "
+        "of Significant Trees and Groves (BDC Chapter 90): a project there "
+        "preserves at least 25 percent of the surveyed trees' DBH (15 percent "
+        "in a Multiple Use zone) or goes to a Tree Plan Three public hearing "
+        "(BDC 60.60.15.2.C), and removing trees in the grove is a Tree Plan "
+        "application whose criteria are judgement (40.90.15). Inside an urban "
+        "growth boundary it is GREEN with CLEAR-OBJECTIVE (Steph 2026-10-15); "
+        "where the statute does not reach the lot it is YELLOW with "
+        "REVIEW-CONDITIONS. Answered from the city's own grove polygons, "
+        "traced as Beaverton's drawn_areas (FOLLOWUPS 204).",
+        evidence=(
+            "City of Beaverton pubNaturalResources MapServer layers 2-4, "
+            "2009 TI - Significant Grove (a), (b) and (c), retrieved 2026-11-18"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "east_hillsboro_city_standards",
         "site_fact",
         "The lot is an R-5 or R-24 lot in the Reedville or Tualatin Valley Highway "
@@ -2089,6 +2108,7 @@ PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
 #: inside a zone -- on a map nobody publishes as data, in a layer the city
 #: publishes apart from its zoning, or along a line the code names in words.
 DRAWN_CONDITIONS: tuple[str, ...] = (
+    "beaverton_significant_grove",
     "bethany_asc_1",
     "bethany_asc_1a",
     "bethany_asc_3",

@@ -29,11 +29,17 @@ HISTORIC_DIR = ROOT / "flats" / "config" / "historic"
 # 2026-11-08 (rel4-fixes): the state files as --write leaves them on the
 # rescreen_1110 lot table, committed (the rel4 bound ran on a tree without
 # them). Tigard 3 -> 2: a row placed by the state's own record (state_points).
+# 2026-11-18 (overlay-fixes-b, FOLLOWUPS 204 items 3, 5, 6): Beaverton's inventory
+# (3 points in the street whose own taxlot is gone), Milwaukie's layer (every row
+# draws its lot) and Washington County's Goal 5 layer (40 records gone, removed, or
+# naming no lot the table holds).
 UNMATCHED: dict[str, int] = {
+    "beaverton": 3,
     "gresham": 0,
+    "milwaukie": 0,
     "tigard": 2,
     "troutdale": 3,
-    "washington-county": 0,
+    "washington-county": 40,
     "west-linn": 0,
     "nps-2026-11-06": 1,
     "shpo-2026-11-06": 84,
@@ -52,6 +58,16 @@ TROUTDALE_LOT = "1N3E25DB  -00800"
 TROUTDALE_TREE_LOT = "1S3E01BA  -08500"
 # 11333 SW Gaarde St: Tigard's Historic Sites map, nothing held shows the overlay.
 UNSETTLED_LIST_LOT = "2S103DC01700"
+# 13880 SW Farmington Rd, Cavaness Residence II: Beaverton's inventory, "Important";
+# designation by the Council is not held.
+BEAVERTON_LOT = "1S116BD01800"
+# 4141 SE King Rd: Milwaukie's layer, "contributing"; demolition is only stayed.
+MILWAUKIE_LOT = "11E25DD11100"
+# 17138 NW Holcomb Dr: the county's note puts the Ida Ediger Residence on this lot.
+WASHCO_NOTE_LOT = "1N119AC04300"
+# 1N119DB03600: the Stoller Farm record's polygon reaches it, but the county's note
+# says the resource stands on 19DB TL 2500 (CDC 373-5 reaches only that structure).
+WASHCO_NOT_THE_RESOURCE_LOT = "1N119DB03600"
 
 
 def _flat(text: str) -> str:
@@ -110,7 +126,7 @@ def test_historic_list_csvs_parse_with_expected_columns() -> None:
 def test_every_list_has_a_reading_and_every_row_loads() -> None:
     policy = hl.load_policy()
     assert {p.stem for p in HISTORIC_DIR.glob("*.csv")} == set(policy)
-    assert sum(x.list_name in policy for x in hl.load_lists()) == 85
+    assert sum(x.list_name in policy for x in hl.load_lists()) == 285
 
 
 def test_a_list_row_with_no_lot_is_reported_not_dropped(tmp_path) -> None:
@@ -208,6 +224,8 @@ def test_only_the_codes_that_clearly_protect_read_protected() -> None:
         "troutdale": hl.PROTECTED,
         "tigard": hl.DOUBTFUL,
         "washington-county": hl.DOUBTFUL,
+        "beaverton": hl.DOUBTFUL,
+        "milwaukie": hl.DOUBTFUL,
     }
 
 
@@ -240,11 +258,19 @@ def test_a_taxlot_is_found_however_its_spaces_fall() -> None:
         (TROUTDALE_LOT, hl.PROTECTED),
         (TROUTDALE_TREE_LOT, hl.DOUBTFUL),
         (UNSETTLED_LIST_LOT, hl.DOUBTFUL),
+        (BEAVERTON_LOT, hl.DOUBTFUL),
+        (MILWAUKIE_LOT, hl.DOUBTFUL),
+        (WASHCO_NOTE_LOT, hl.DOUBTFUL),
     ],
 )
 def test_the_lots_read_as_the_code_and_the_match_allow(tlid, standing) -> None:
     listing = next(x for x in hl.listings_on(tlid) if x.list_name in hl.load_policy())
     assert listing.standing == standing
+
+
+def test_a_county_record_lands_on_the_lot_its_note_names() -> None:
+    assert not [x for x in hl.listings_on(WASHCO_NOT_THE_RESOURCE_LOT) if x.list_name == "washington-county"]
+    assert [x.name for x in hl.listings_on("1N119DB02500") if x.list_name == "washington-county"] == ["Stoller Farm"]
 
 
 def test_a_fuzzy_match_on_a_protected_list_is_never_red() -> None:
