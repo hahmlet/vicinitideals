@@ -515,6 +515,103 @@ def test_a_real_rear_alley_that_stops_short_leaves_the_north_of_the_line_uncover
 
 
 # ---------------------------------------------------------------------------
+# s4 -- a lot line on a road too wide for the 50 ft midpoint test
+# ---------------------------------------------------------------------------
+
+
+def _classify_wide(lot, streets, lots, rows=(), barriers=(), wide=True):
+    """s4 as it runs since 2026-11-18: the fabric (this lot, private
+    neighbours ``lots``, right-of-way ``rows``, river/rail/water
+    ``barriers``) and the public street centrelines the open-way test looks
+    across to. ``wide=False`` is s4 before that day."""
+    from s4_edges import classify_lot
+
+    sg = np.array(streets, dtype=object)
+    lg = np.array([lot, *lots, *rows, *barriers], dtype=object)
+    private = np.array([True] * (1 + len(lots)) + [False] * (len(rows) + len(barriers)))
+    barrier = np.array([False] * (1 + len(lots) + len(rows)) + [True] * len(barriers))
+    extra = dict(way_tree=STRtree(sg), way_geoms=sg, lot_barrier=barrier) if wide else {}
+    return classify_lot(
+        lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL,
+        lot_tree=STRtree(lg), lot_geoms=lg, lot_private=private, **extra,
+    )
+
+
+def _farmington():
+    """1S117CA01500 (15970 SW Farmington Rd, Washington County R-9), squared
+    off: 263 ft along Farmington Rd on the north, its centreline 60 ft out
+    (the lot line's midpoint is 59.8 ft from it in s1_streets); 127 ft along
+    SW 160th Ave on the west, its centreline 36 ft out; private lots south
+    and east."""
+    lot = Polygon([(0, 0), (263, 0), (263, 127), (0, 127)])
+    farmington = LineString([(-300, 187), (600, 187)])
+    sw_160th = LineString([(-36, -300), (-36, 400)])
+    neighbours = [shapely.box(0, -100, 263, 0), shapely.box(263, 0, 400, 127)]
+    return lot, [farmington, sw_160th], neighbours
+
+
+def test_a_corner_on_a_wide_arterial_is_a_corner_lot():
+    """FOLLOWUPS 201 item 5: the Farmington line's midpoint is past the 50 ft
+    test, so s4 read the corner lot as a one-street lot on 160th and the
+    busy-road driveway spacing check never ran -- a false GREEN. With the
+    right-of-way open across the line, it is a street line and the lot a
+    corner lot."""
+    lot, streets, neighbours = _farmington()
+    before = _classify_wide(lot, streets, neighbours, wide=False)
+    assert [e[4] for e in before["edges"]].count("F") == 1
+    assert before["tier"] == "A"
+
+    for rows in ([], [shapely.box(-300, 127, 600, 247)]):  # a gap, or a ROADS polygon
+        r = _classify_wide(lot, streets, neighbours, rows)
+        fronts = [e for e in r["edges"] if e[4] == "F"]
+        assert len(fronts) == 2
+        assert r["tier"] == "B"
+        assert r["frontage_ft"] == pytest.approx(263 + 127, abs=1)
+        north = [e for e in fronts if min(e[1], e[3]) > 120]
+        assert len(north) == 1 and abs(north[0][2] - north[0][0]) == pytest.approx(263, abs=1)
+
+
+def test_a_wide_road_behind_a_neighbours_lot_is_not_frontage():
+    """The 50 ft threshold stays: a street 60 ft away across a neighbour's
+    lot (audit_landlocked's 6,947) is not frontage, however open the rest of
+    the gap is."""
+    lot, streets, neighbours = _farmington()
+    between = shapely.box(-10, 127, 300, 160)
+    r = _classify_wide(lot, streets, [*neighbours, between])
+    assert [e[4] for e in r["edges"]].count("F") == 1
+    assert r["tier"] == "A"
+
+
+def test_a_street_beyond_a_river_or_rail_line_is_not_frontage():
+    """A river, rail or water polygon is not private land, but a street on
+    its far side is not one the lot abuts."""
+    lot, streets, neighbours = _farmington()
+    river = shapely.box(-300, 140, 600, 170)
+    r = _classify_wide(lot, streets, neighbours, barriers=[river])
+    assert [e[4] for e in r["edges"]].count("F") == 1
+
+
+def test_a_lot_on_the_wide_road_alone_stays_landlocked():
+    """The open-way test adds a missed second street; it does not give a
+    landlocked lot its first. Without 160th the lot keeps tier D (RED) --
+    recovering those lots moves them toward GREEN, a separate change."""
+    lot, (farmington, _sw_160th), neighbours = _farmington()
+    west = shapely.box(-100, 0, 0, 127)
+    r = _classify_wide(lot, [farmington], [*neighbours, west])
+    assert r["tier"] == "D"
+    assert r["edges"] == []
+
+
+def test_a_short_stretch_of_open_road_does_not_make_the_line_a_street():
+    """Three rays of five must find the road: a neighbour across most of the
+    line, the road open only past its east end, leaves it a side line."""
+    lot, streets, neighbours = _farmington()
+    across = shapely.box(-10, 127, 200, 160)  # covers the 10/30/50/70 % rays
+    r = _classify_wide(lot, streets, [*neighbours, across])
+    assert [e[4] for e in r["edges"]].count("F") == 1
+
+
+# ---------------------------------------------------------------------------
 # s4 -- the zone across each lot line
 # ---------------------------------------------------------------------------
 
