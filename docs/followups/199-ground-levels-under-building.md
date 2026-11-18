@@ -32,3 +32,5 @@ NEEDED from Steph: the part of that spec ABOVE this list (definitions of ground 
 Start when the soil lane (196) lands; hazard lane (198) told to make its measuring take any polygon.
 
 2026-11-18 Steph (before going away ~9 h): do NOT wait for the 80 ft 4 in re-screen; measure now on run 128 greens; for the 4 in "just flag a column counting the number where the 4 in is known or is too close to call without a rescan" -- first draft, getting the foundation research going matters most. RUNNING: flats/fd2-pass1 (report-only job on 137, /root/fd2_pass1/); outputs fd2-pass1-summary.md + fd2-pass1.handoff.md in ../vicinitideals-worktrees/. Re-run after rel10.
+
+2026-11-18 Steph, change of plan: "I'm actually going to have the design agent design the buildings to absorb the 4 in. So 80x25 is your finished-surface dimensions." The live 80 x 25 screen is correct; item 200 withdrawn; the fd2-pass1 job told to drop the lengthening and the 4 in column.
