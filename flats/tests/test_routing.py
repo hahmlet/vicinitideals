@@ -289,6 +289,15 @@ OPEN = {
     # "are subject to" pattern no longer sees it. Set aside as before (trees out
     # of the screen, ruling 2026-11-01-trees-ignored-entered-per-lot).
     "or/multnomah/portland 33.537.140 -> 33.537.125",
+    # 2026-11-18 (FOLLOWUPS 204): arrived when the scenic corridor setback was
+    # quoted from 33.480.040.B.2.a. The pointer is B.2.e(1)-(3) (33.480.txt
+    # L157-L173): "When alterations are made to a site with an existing
+    # nonconforming use, allowed use, limited use, or conditional use, and the
+    # alterations are over the threshold stated in 33.258.070.D.2.a", the
+    # landscaping is brought up to standard. Alterations to a site that keeps
+    # its use; the pod is new development, which provides the landscaping "at
+    # the time of development" (L155-L156). Nothing is quoted from 33.258.
+    "or/multnomah/portland 33.480.040 -> 33.258.070",
     "or/multnomah/portland 33.537.150 -> 33.537.125",
     "or/clackamas/_unincorporated 401.04 -> 401.07",
     "or/clackamas/_unincorporated 406.04 -> 406.07",

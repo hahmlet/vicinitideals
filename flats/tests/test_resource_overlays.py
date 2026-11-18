@@ -22,6 +22,7 @@ from flats.ingest.sources import load_pipeline
 from flats.ingest.quadfit import (
     GREENWAY_ANSWERS,
     GREENWAY_COLUMN,
+    GREENWAY_COLUMNS,
     S5O_COLUMNS,
     lot_from_row,
     observed_facts,
@@ -42,9 +43,16 @@ OVERLAYS = Path(__file__).resolve().parents[2] / "Lot Analysis" / "quadfit" / "c
 #: Portland's three environmental zones are both: a lot the z covers is RED
 #: on 33.418 (``constrained_sites_overlay``), and one the z map leaves out
 #: is a permit flag.
-KILLS_AS_FACTS = {"milwaukie_greenway": "willamette_greenway_zone"}
+KILLS_AS_FACTS = {
+    "milwaukie_greenway": "willamette_greenway_zone",
+    # OCMC 17.48 (FOLLOWUPS 204 item 3, 2026-11-18), held as Milwaukie's is.
+    "oregon_city_greenway": "willamette_greenway_zone",
+}
 
 MILWAUKIE = "or/clackamas/milwaukie"
+OREGON_CITY = "or/clackamas/oregon-city"
+#: Every Oregon City zone that opens the fourplex, each closed in the WRG.
+OREGON_CITY_OPEN = ("R-10", "R-8", "R-6", "R-5", "R-3.5", "R-2", "MUC-1", "MUC-2", "MUD", "C", "WFDD")
 GREENWAY = "willamette_greenway_zone"
 
 
@@ -238,6 +246,7 @@ def test_no_permit_names_an_overlay_quadfit_does_not_measure(quadfit_overlays) -
 def test_the_bridge_reads_every_permit_column_and_the_greenway() -> None:
     assert set(COLUMNS) <= set(S5O_COLUMNS)
     assert GREENWAY_COLUMN in S5O_COLUMNS
+    assert set(GREENWAY_COLUMNS.values()) <= set(S5O_COLUMNS)
     assert len(COLUMNS) == len(PERMITS) == len(BY_KEY)
 
 
@@ -370,6 +379,9 @@ def test_no_other_zone_turns_on_the_greenway(layers) -> None:
         # conditional use and by-right only means no hearing variant. It can
         # only refuse the zone's one open path, never open anything.
         and not (name == MILWAUKIE and zone in {"DMU", "GMU"} and field == "quadplex_allowed")
+        # Oregon City's WRG (OCMC 17.48, FOLLOWUPS 204 item 3): `value: false`
+        # on every zone that opens the fourplex, and no way in.
+        and not (name == OREGON_CITY and zone in OREGON_CITY_OPEN and field == "quadplex_allowed")
     ]
     assert stray == []
 
@@ -381,9 +393,128 @@ def test_no_other_zone_turns_on_the_greenway(layers) -> None:
         ("milwaukie", False, False),
         ("milwaukie", None, None),
         ("gladstone", True, None),
+        # Another city's map is not this one: Milwaukie's column says nothing
+        # about an Oregon City lot.
+        ("oregon_city", True, None),
     ],
 )
 def test_the_bridge_answers_the_greenway_in_milwaukie_only(juris, value, expected) -> None:
     got = observed_facts(row(jurisdiction=juris, ovl_milwaukie_greenway=value))
     assert got.get(GREENWAY) is expected
-    assert GREENWAY_ANSWERS == {"milwaukie"}
+    assert GREENWAY_ANSWERS == {"milwaukie", "oregon_city"}
+
+
+# --- Oregon City's Willamette River Greenway (FOLLOWUPS 204 item 3) --------
+
+
+@pytest.mark.parametrize(
+    ("juris", "value", "expected"),
+    [
+        ("oregon_city", True, True),
+        ("oregon_city", False, False),
+        ("oregon_city", None, None),
+        ("milwaukie", True, None),
+        ("west_linn", True, None),
+    ],
+)
+def test_the_bridge_answers_oregon_city_s_greenway_off_its_own_map(juris, value, expected) -> None:
+    got = observed_facts(row(jurisdiction=juris, ovl_oregon_city_greenway=value))
+    assert got.get(GREENWAY) is expected
+
+
+@pytest.mark.parametrize("zone", OREGON_CITY_OPEN)
+def test_oregon_city_s_greenway_closes_the_fourplex_with_no_way_in(rules, zone) -> None:
+    """OCMC 17.48.050: a Greenway permit for all developments, decided on
+    judgement (17.48.080). Held as Milwaukie's is, and no relief is encoded."""
+    assert rules.resolve(OREGON_CITY, zone).get("quadplex_allowed") is True
+    got = rules.resolve(OREGON_CITY, zone, conditions=[GREENWAY]).values["quadplex_allowed"]
+    assert got.value is False
+    assert not any(GREENWAY in when for when, _, _ in got.relief)
+    again = rules.resolve(OREGON_CITY, zone, conditions=[GREENWAY, "state_middle_housing"])
+    assert again.get("quadplex_allowed") is False
+
+
+def test_oregon_city_s_greenway_quotes_its_sentences(layers) -> None:
+    held = layers[OREGON_CITY].zones["R-6"].values["quadplex_allowed"]
+    [variant] = [v for v in held.variants if v.when == (GREENWAY,)]
+    text = " ".join(ProvenanceStore().quote(variant.prov.quote).split())
+    assert "A Willamette River Greenway permit shall be required for all developments" in text
+    assert "considerations shall be applicable to all Willamette River Greenway permits" in text
+    assert "approved only if the following findings are made by the planning commission" in text
+
+
+def test_oregon_city_s_greenway_is_a_kill_on_oregon_city_only(quadfit_specs) -> None:
+    spec = quadfit_specs["oregon_city_greenway"]
+    assert spec["action"] == "kill" and spec["jurisdictions"] == ["oregon_city"]
+    assert "17.48.050" in spec["citation"]
+    held = load_pipeline().datasets["overlay_oregon_city_greenway"]
+    assert held.url.endswith("/WaterAndNaturalResources/MapServer/10")
+    assert list(held.serves) == [OREGON_CITY]
+
+
+# --- Oregon City's Geologic Hazards Overlay (FOLLOWUPS 204 item 2) ----------
+
+
+def test_oregon_city_s_geologic_hazards_carve_the_core_and_flag_the_site(quadfit_specs) -> None:
+    """OCMC 17.44.060.H: no pod, court or drive on a mapped landslide, its
+    buffer or a 25 percent slope (two dwellings an acre; none over 35
+    percent) -- carved. 17.44.025: the review reaches any property that
+    contains a mapped area -- flagged, whole overlay, slope buffer included."""
+    site, core = quadfit_specs["oregon_city_geohazard"], quadfit_specs["oregon_city_geohazard_core"]
+    assert site["action"] == "flag" and core["action"] == "carve"
+    assert site["jurisdictions"] == core["jurisdictions"] == ["oregon_city"]
+    assert core["source"] == "oregon_city_geohazard" and core.get("buffer_ft", 0) == 0
+    assert core["keep_where"] == {"IN_LANDSLIDE": ["Y"], "IN_LANDSLIDE_BUFFER": ["Y"], "IN_SLOPE": ["Y"]}
+    assert "keep_where" not in site and "IN_SLOPE_BUFFER" not in core["keep_where"]
+    assert "17.44.025" in site["citation"] and "H.2.a" in core["citation"]
+    # the carve takes the ground and says nothing; the flag is the site's
+    assert "oregon_city_geohazard" in BY_KEY and "oregon_city_geohazard_core" not in BY_KEY
+    assert "oregon_city_geohazard_core" not in CLEARED
+    assert permits_on({"ovl_oregon_city_geohazard_core": True}) == ()
+    held = load_pipeline().datasets["overlay_oregon_city_geohazard"]
+    assert held.url.endswith("/HazardsAndFloodInfo_PUBLIC/MapServer/11")
+    assert {"IN_SLOPE", "IN_LANDSLIDE", "IN_LANDSLIDE_BUFFER"} <= set(held.fields)
+
+
+def test_a_lot_holding_any_of_the_geologic_hazards_overlay_is_a_closer_look() -> None:
+    """The pod clear of the carved ground still owes the 17.44 review, whose
+    authority "may impose any conditions": YELLOW, as Happy Valley's steep
+    slopes overlay is (ruling 2026-10-14-review-tiers)."""
+    area = BY_KEY["oregon_city_geohazard"]
+    assert "17.44.025" in area.cite and area.column in S5O_COLUMNS
+    inside = lot_from_row(row(jurisdiction="oregon_city", ovl_oregon_city_geohazard=True)).facts
+    assert inside.resource_permits == ("oregon_city_geohazard",)
+    got = run(lot=replace(LOT, resource_permits=inside.resource_permits))
+    assert got.triage is Triage.yellow and got.colour is flag_plan.Colour.yellow
+    assert got.reasons == (CLOSER_LOOK_RESOURCE,)
+    slope = run(lot=replace(LOT, resource_permits=("happy_valley_slope",)))
+    assert (slope.triage, slope.colour) == (got.triage, got.colour)
+    # clear of the overlay, and a row s5o wrote before the layer existed: nothing said
+    clear = lot_from_row(row(jurisdiction="oregon_city", ovl_oregon_city_geohazard=False)).facts
+    assert clear.resource_permits == ()
+    assert lot_from_row(row(jurisdiction="oregon_city")).facts.resource_permits == ()
+
+
+def test_the_geologic_hazards_review_quotes_its_sentences() -> None:
+    store = ProvenanceStore()
+    doc = "or/clackamas/oregon-city/17.zoning.txt"
+    trigger = " ".join(store.quote(f"{doc}#L10778-L10786").split())
+    assert "on a property that contains an area mapped within the adopted Oregon City Geologic Hazards Overlay Zone" in trigger
+    density = " ".join(store.quote(f"{doc}#L11121-L11142").split())
+    assert "the density shall not exceed two dwelling units per acre" in density
+    assert "within any portion of the mapped landslide or buffer zone" in density
+    assert "development shall be prohibited" in density
+
+
+# --- Portland's Scenic Resource overlay (FOLLOWUPS 204 item 1) --------------
+
+
+def test_portland_s_scenic_overlay_is_flagged_not_carved(quadfit_specs) -> None:
+    """PCC 33.480: the setback is a street line's (test_scenic_corridor.py);
+    the overlay itself only makes the lot a closer look."""
+    spec = quadfit_specs["pdx_scenic"]
+    assert spec["action"] == "flag" and spec["jurisdictions"] == ["portland"]
+    assert "33.480.035" in spec["citation"]
+    assert "pdx_scenic" in BY_KEY and "pdx_scenic" not in CLEARED
+    held = load_pipeline().datasets["overlay_pdx_scenic"]
+    assert held.url.endswith("/BPS_Zoning_Code_Layers/MapServer/137")

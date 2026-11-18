@@ -360,6 +360,9 @@ def oc_row(
         "ovl_oregon_city_nrod_sqft": 0.0,
         "ovl_fema_sfha": False,
         "ovl_fema_floodway": False,
+        # 2026-11-18 (FOLLOWUPS 204): Oregon City's greenway is measured now
+        # (OCMC 17.48); a row with no answer is held, so the lot says it is clear.
+        "ovl_oregon_city_greenway": False,
         "sewer_main_dist_ft": 12.0,
         "in_sewer_district": None,
         # 2026-11-13 (drive-spacing, FOLLOWUPS 178): this city now holds a

@@ -344,3 +344,115 @@ def test_dem_stats_on_synthetic_ramp(tmp_path):
     # tile_of: inside -> 0, outside -> None (drives the tile-sorted loop).
     assert dem.tile_of(poly) == 0
     assert dem.tile_of(far) is None
+
+
+# --- FOLLOWUPS 204 (2026-11-18): Portland "s", Oregon City 17.44 and 17.48 ---
+
+
+def _one(key):
+    from common import load_overlays
+
+    [spec] = [o for o in load_overlays().overlays if o.key == key]
+    return spec
+
+
+def test_portland_scenic_overlay_flags_portland_lots_only():
+    """PCC 33.480: every Portland lot the "s" overlay touches is flagged; the
+    scenic corridor setback itself is FLATS's, per street line."""
+    from shapely.geometry import box
+
+    from s0_acquire import PHASE2_LAYERS
+    from s5o_overlays import overlay_columns
+
+    spec = _one("pdx_scenic")
+    assert spec.action == "flag" and spec.jurisdictions == ["portland"] and spec.buffer_ft == 0
+    assert "33.480.035" in spec.citation
+    assert PHASE2_LAYERS["overlay_pdx_scenic"]["url"].endswith("/BPS_Zoning_Code_Layers/MapServer/137")
+
+    s = [box(50, 0, 200, 100)]
+    lot = box(0, 0, 100, 100)
+    lots = _lots([
+        {"jurisdiction": "portland", "lot_geom": lot},                         # half inside
+        {"jurisdiction": "portland", "lot_geom": box(400, 0, 500, 100)},       # clear of it
+        {"jurisdiction": "gresham", "lot_geom": lot},                          # inside, not Portland
+        {"jurisdiction": "portland", "lot_geom": box(-50, 0, 50, 100)},        # the overlay stops at its line
+    ])
+    flags, sqft = overlay_columns(lots, spec, s)
+    assert list(flags) == [True, False, False, False]
+    assert sqft[0] == pytest.approx(50 * 100, rel=1e-6)
+
+
+def test_oregon_city_geologic_hazards_flag_the_site_and_carve_the_core(tmp_path, monkeypatch):
+    """OCMC 17.44: the whole overlay flags the property (17.44.025); the
+    landslide, landslide-buffer and slope polygons are carved (17.44.060.H);
+    the slope buffer alone is flagged and not carved."""
+    from shapely.geometry import box, mapping
+
+    import s5o_overlays
+    from s0_acquire import PHASE2_LAYERS
+    from s5o_overlays import carve_regions, overlay_columns
+
+    site, core = _one("oregon_city_geohazard"), _one("oregon_city_geohazard_core")
+    assert (site.action, site.layer) == ("flag", "oregon_city_geohazard")
+    assert (core.action, core.layer, core.buffer_ft) == ("carve", "oregon_city_geohazard", 0)
+    assert site.jurisdictions == core.jurisdictions == ["oregon_city"]
+    assert not site.keep_where
+    assert core.keep_where == {"IN_LANDSLIDE": ["Y"], "IN_LANDSLIDE_BUFFER": ["Y"], "IN_SLOPE": ["Y"]}
+    held = PHASE2_LAYERS["overlay_oregon_city_geohazard"]
+    assert held["url"].endswith("/HazardsAndFloodInfo_PUBLIC/MapServer/11")
+    assert set(core.keep_where) <= set(held["fields"])
+
+    def marks(**yes):
+        base = dict.fromkeys(("IN_SLOPE", "IN_SLOPE_BUFFER", "IN_LANDSLIDE", "IN_LANDSLIDE_BUFFER"), "N")
+        base.update({k: "Y" for k in yes})
+        return base
+
+    monkeypatch.setattr(s5o_overlays, "RAW_DIR", tmp_path)
+    _write_layer(tmp_path / "overlay_oregon_city_geohazard.geojson", [
+        (marks(IN_LANDSLIDE=1), mapping(box(0, 0, 20, 100))),            # a mapped landslide
+        (marks(IN_LANDSLIDE_BUFFER=1), mapping(box(20, 0, 40, 100))),    # its buffer
+        (marks(IN_SLOPE=1), mapping(box(200, 0, 220, 100))),             # a 25 percent slope
+        (marks(IN_SLOPE_BUFFER=1), mapping(box(220, 0, 260, 100))),      # the slope's buffer
+    ])
+    whole = s5o_overlays._load_layer_geoms("overlay_oregon_city_geohazard")
+    kept = s5o_overlays._load_layer_geoms("overlay_oregon_city_geohazard", keep_where=core.keep_where)
+    assert len(whole) == 4 and sorted(g.bounds[0] for g in kept) == [0, 20, 200]
+
+    lots = _lots([
+        {"jurisdiction": "oregon_city", "lot_geom": box(0, 0, 100, 100)},      # landslide and buffer on it
+        {"jurisdiction": "oregon_city", "lot_geom": box(210, 0, 300, 100)},    # slope and slope buffer
+        {"jurisdiction": "oregon_city", "lot_geom": box(230, 0, 300, 100)},    # the slope buffer only
+        {"jurisdiction": "oregon_city", "lot_geom": box(400, 0, 500, 100)},    # clear of the overlay
+        {"jurisdiction": "west_linn", "lot_geom": box(0, 0, 100, 100)},        # inside, not Oregon City
+    ])
+    flags, _ = overlay_columns(lots, site, whole)
+    assert list(flags) == [True, True, True, False, False]
+    region = carve_regions(lots, [core], {"oregon_city_geohazard_core": kept})
+    assert region[0].equals(box(0, 0, 40, 100))
+    assert region[1].equals(box(210, 0, 220, 100))
+    assert region[2] is None and region[3] is None and region[4] is None
+
+
+def test_oregon_city_greenway_kills_oregon_city_lots_only():
+    """OCMC 17.48.050: a Greenway permit for all developments, as Milwaukie's
+    conditional use is -- a kill, measured on Oregon City ground alone."""
+    from shapely.geometry import box
+
+    from s0_acquire import PHASE2_LAYERS
+    from s5o_overlays import overlay_columns
+
+    spec, mil = _one("oregon_city_greenway"), _one("milwaukie_greenway")
+    assert spec.action == mil.action == "kill"
+    assert spec.jurisdictions == ["oregon_city"] and "17.48.050" in spec.citation
+    assert PHASE2_LAYERS["overlay_oregon_city_greenway"]["url"].endswith(
+        "/WaterAndNaturalResources/MapServer/10")
+
+    wrg = [box(0, 0, 150, 100)]
+    lots = _lots([
+        {"jurisdiction": "oregon_city", "lot_geom": box(0, 0, 100, 100)},      # whole lot inside
+        {"jurisdiction": "oregon_city", "lot_geom": box(100, 0, 200, 100)},    # part inside
+        {"jurisdiction": "oregon_city", "lot_geom": box(400, 0, 500, 100)},    # outside
+        {"jurisdiction": "milwaukie", "lot_geom": box(0, 0, 100, 100)},        # inside, not Oregon City
+    ])
+    flags, _ = overlay_columns(lots, spec, wrg)
+    assert list(flags) == [True, True, False, False]

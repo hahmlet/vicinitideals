@@ -879,6 +879,68 @@ overlays:
     coverage:
       oregon_city: {grade: A, note: "city-adopted regulatory map, 130 polygons; boundary may be re-delineated smaller under 17.49.030(2) or expanded under 17.49.035, so carving the adopted map errs conservative"}
 
+  # OCMC 17.44, the Geologic Hazards Overlay (FOLLOWUPS 204 item 2, chapter
+  # read whole 2026-11-18). Two entries on one layer, the way hillsboro_snro
+  # and troutdale_veco are held: the ground no building, court or drive may
+  # use is CARVED, and the site that holds any of the overlay is FLAGGED.
+  #
+  # The carve. 17.44.060.H caps density "Notwithstanding any contrary
+  # dimensional or density requirements of the underlying zone": two dwelling
+  # units per acre on slopes of 25 to 35 percent (H.1.b) and "where the
+  # structure or ground disturbance will be located within any portion of
+  # the mapped landslide or buffer zone" (H.2.a), and no development at all
+  # over 35 percent (H.1.c). Four dwellings at two per acre want two acres of
+  # that ground, so a pod, its court or its drive on it is out. The city's
+  # layer marks each polygon IN_LANDSLIDE, IN_LANDSLIDE_BUFFER, IN_SLOPE and
+  # IN_SLOPE_BUFFER; the first three are carved. The slope BUFFER is not: H.1
+  # counts slopes, and names a buffer for landslides only.
+  #
+  # The flag. 17.44.025 asks the chapter's permit of any building "on a
+  # property that contains an area mapped within the adopted Oregon City
+  # Geologic Hazards Overlay Zone", so a lot whose pod stands clear still
+  # owes the review: a geotechnical report (17.44.050), a cap on graded and
+  # covered ground (17.44.060.I.2) that nothing here measures, and a review
+  # authority that may impose conditions (17.44.060.L). A measurable review
+  # that may add conditions is a closer look (Steph 2026-10-14), the
+  # treatment happy_valley_slope already gives a mapped hazard overlay.
+  - key: oregon_city_geohazard
+    name: "Oregon City Geologic Hazards Overlay Zone -- the property that contains any of it"
+    action: flag
+    jurisdictions: [oregon_city]
+    citation: "OCMC 17.44.025: no building 'on a property that contains an area mapped within the adopted Oregon City Geologic Hazards Overlay Zone without first obtaining permits or approvals as required by this chapter'; 17.44.030.C (Type II where nothing else brings review); 17.44.050 (geotechnical report); 17.44.060.I.2: a lot 'with slopes between twenty-five and thirty-five percent or located within any portion of a mapped landslide and buffer zone, shall have no more than fifty percent or four thousand square feet of the surface area, whichever is smaller, graded or stripped of vegetation or covered with structures or impermeable surfaces'; 17.44.060.L (the review authority may impose conditions)"
+    confidence: verified
+    coverage:
+      oregon_city: {grade: A, note: "the city's Geologic Hazards layer (HazardsAndFloodInfo_PUBLIC layer 11, 5,319 polygons: slopes, landslides and the buffer of each). Touch-only, which is the chapter's own trigger ('a property that contains')"}
+  - key: oregon_city_geohazard_core
+    source: oregon_city_geohazard
+    keep_where: {IN_LANDSLIDE: [Y], IN_LANDSLIDE_BUFFER: [Y], IN_SLOPE: [Y]}
+    name: "Oregon City Geologic Hazards -- mapped landslides, their buffer, and slopes of 25 percent and over"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [oregon_city]
+    citation: "OCMC 17.44.060.H.1.b: 'For those areas with slopes of twenty-five to thirty-five percent between grade breaks, the density shall not exceed two dwelling units per acre'; H.1.c: 'For those areas with slopes over thirty-five percent between grade breaks, development shall be prohibited'; H.2.a: 'where the structure or ground disturbance will be located within any portion of the mapped landslide or buffer zone, the density shall not exceed two dwelling units per acre'"
+    confidence: verified
+    coverage:
+      oregon_city: {grade: B, note: "the polygons the city marks IN_LANDSLIDE, IN_LANDSLIDE_BUFFER or IN_SLOPE. Over-carves where two acres or more of that ground could carry four dwellings at two per acre, and where subsection I's exceptions would be shown; the city's slope polygons do not split 25-35 percent from over 35"}
+
+  # OCMC 17.48, the Willamette River Greenway (FOLLOWUPS 204 item 3, read
+  # whole 2026-11-18), held the way Milwaukie's is: a KILL here and the
+  # site fact willamette_greenway_zone in FLATS, whose rule file closes
+  # quadplex_allowed on it. 17.48.050 asks a Greenway permit of "all
+  # developments" (its exceptions A to O do not reach a new dwelling), and
+  # 17.48.080 decides it on judgement alone ("to the maximum extent
+  # practicable", "to the greatest possible degree", a setback the
+  # approving body "shall establish"); within 150 ft of low water 17.48.100
+  # sends it to the Planning Commission.
+  - key: oregon_city_greenway
+    name: "Oregon City Willamette River Greenway Overlay District (WRG)"
+    action: kill
+    jurisdictions: [oregon_city]
+    citation: "OCMC 17.48.040: 'any development, change of use or intensification of use shall be subject, in addition to the provisions of the underlying district, to the provisions of this chapter'; 17.48.050: 'A Willamette River Greenway permit shall be required for all developments and changes or intensification of uses' (exceptions A-O do not include a new dwelling); 17.48.080 (considerations decided on judgement); 17.48.100 (compatibility review within 150 ft of low water)"
+    confidence: verified
+    coverage:
+      oregon_city: {grade: A, note: "the city's Willamette River Greenway layer (WaterAndNaturalResources layer 10, 1 polygon). Touch-only"}
+
   # ---------------- Milwaukie -----------------------------------------------
   # The first jurisdiction whose single overlay chapter yields two different
   # actions. MMC 19.401 (Willamette Greenway) makes every land use action and
@@ -1281,3 +1343,25 @@ overlays:
     confidence: verified
     coverage:
       portland: {grade: B, note: "Portland Maps Hazard layer 30 (180 polygons, no edition date on the service)"}
+
+  # PCC 33.480, the Scenic Resource overlay zone, map letter "s" (FOLLOWUPS
+  # 204 item 1, chapter read whole 2026-11-18). A FLAG, not a carve: the one
+  # number the chapter states for every lot -- the scenic corridor setback of
+  # 33.480.040.B.2.a -- is about ONE street lot line and leaves a driveway
+  # through it (B.2.e), so FLATS holds it per line (setback_scenic_corridor_ft,
+  # flats/geom/corridor.py LINE_MAPS) and a carve, which also takes the drive,
+  # would be the wrong tool. The rest of the chapter applies to "Any changes
+  # to land or development ... within the Scenic Resource zone" (33.480.035)
+  # and nothing here measures it: the side setbacks and 80 percent structure
+  # length along the corridor (B.2.b, c), the landscaped setback with its 25
+  # percent paving cap (B.2.e), the trees kept in it (B.2.h, else tree review,
+  # 33.480.050), and the view-corridor heights the plans set (A.2.a). So every
+  # lot the overlay touches is a closer look.
+  - key: pdx_scenic
+    name: "Portland Scenic Resource overlay zone (s)"
+    action: flag
+    jurisdictions: [portland]
+    citation: "PCC 33.480.035: 'Any changes to land or development, including rights-of-way, within the Scenic Resource zone are subject to the regulations of this chapter'; 33.480.040.B.2.a and Table 480-1 (scenic corridor setback along street lot lines that abut the Scenic Corridor, 20 ft in most base zones); B.2.c (structure length), B.2.e (setback landscaped, 25 percent paving cap), B.2.h and 33.480.050 (trees); 33.480.040.A.2.a (view corridor height limits)"
+    confidence: verified
+    coverage:
+      portland: {grade: A, note: "BPS zoning code layer 137, the adopted s overlay (978 polygons). Touch-only. The overlay does not say whether a lot is in a view corridor or along a scenic corridor; both are a closer look"}

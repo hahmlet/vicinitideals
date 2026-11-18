@@ -163,8 +163,13 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     the layer's parking_max_per_unit exemption. The table now prints the
     maximum in the quadplex row (2.0 per non-studio unit), held as a value,
     and the new note 4 (non-surface parking may be exempted) is dismissed.
+
+    94 -> 95 on 2026-11-18 (FOLLOWUPS 204), Portland: Table 480-1 note [1]
+    ("Larger minimum setbacks in overlay zone and plan district supersede
+    this setback"), held as setback_scenic_corridor_ft 20 taken per street
+    line as the larger of it and the line's own setback.
     """
-    assert len(rows) == 94
+    assert len(rows) == 95
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

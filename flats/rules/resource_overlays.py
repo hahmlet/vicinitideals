@@ -308,6 +308,29 @@ PERMITS: tuple[Permit, ...] = (
         "above the 1996 flood (1 ft by the Columbia); 24.50.060 F.2.a lowest floor at or above it, "
         "G.2.c 1:1 compensating excavation for fill",
     ),
+    # Portland's Scenic Resource overlay "s" (FOLLOWUPS 204 item 1,
+    # 2026-11-18). The scenic corridor setback is drawn per street line
+    # (setback_scenic_corridor_ft); the chapter's other standards are not
+    # measured, so the lot is a closer look whether or not the pod clears it.
+    Permit(
+        "pdx_scenic",
+        "Portland's Scenic Resource overlay zone (s)",
+        "PCC 33.480.035 (any development within the zone); 33.480.040.B.2 (the scenic corridor "
+        "setback, structure length, landscaped setback and the trees in it); 33.480.040.A.2.a "
+        "(view corridor height limits); 33.480.050 (tree review)",
+    ),
+    # Oregon City's Geologic Hazards Overlay (FOLLOWUPS 204 item 2,
+    # 2026-11-18): the review reaches the whole property, so a pod standing
+    # clear of the carved landslide and slope ground still owes it. A
+    # measurable review that may add conditions (Steph 2026-10-14), held as
+    # happy_valley_slope is.
+    Permit(
+        "oregon_city_geohazard",
+        "Oregon City's Geologic Hazards Overlay Zone",
+        "OCMC 17.44.025 (a property that contains a mapped area needs the chapter's approval); "
+        "17.44.050 (geotechnical report); 17.44.060.I.2 (graded and covered ground capped at half "
+        "the lot or 4,000 sq ft); 17.44.060.L (the review authority may impose conditions)",
+    ),
 )
 
 BY_KEY: Mapping[str, Permit] = {p.key: p for p in PERMITS}

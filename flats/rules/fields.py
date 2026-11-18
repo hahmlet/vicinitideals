@@ -191,6 +191,7 @@ _LABELS: dict[str, str] = {
     "setback_alley_side_ft": "alley-side setback",
     "setback_street_off_corridor_ft": "street setback off a mapped corridor",
     "setback_street_across_nonresidential_ft": "street setback facing no residential zone",
+    "setback_scenic_corridor_ft": "scenic corridor setback",
     "row_to_centerline_local_ft": "right-of-way to centerline, local street",
     "row_to_centerline_neighborhood_route_ft": "right-of-way to centerline, neighborhood route",
     "row_to_centerline_collector_ft": "right-of-way to centerline, collector",
@@ -283,6 +284,17 @@ _F: tuple[FieldDef, ...] = (
         "the shared number would open the far side yard too. The envelope "
         "applies it to the side edge on the alley and to no other; absent, "
         "that line takes setback_side_ft.",
+        False,
+    ),
+    FieldDef(
+        "setback_scenic_corridor_ft",
+        "length_ft",
+        "Minimum setback from a street lot line that abuts a mapped scenic "
+        "corridor (Portland 33.480.040.B.2.a and Table 480-1: 20 ft in most "
+        "base zones, 3 ft in RM2). A fact about ONE street line, so it is "
+        "held apart from setback_front_ft and read per line: the envelope "
+        "gives a street edge flagged on_scenic the larger of this and its "
+        "class's number, and no other edge; absent, no line takes it.",
         False,
     ),
     FieldDef(
@@ -2288,6 +2300,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # CX, 33.130.215.B.1.b), and a zone silent about it keeps the
         # across-the-street number on every street line.
         "setback_street_across_nonresidential_ft",
+        # The setback on a street line that abuts a mapped scenic corridor:
+        # one code in the corpus states it (Portland 33.480.040.B.2.a), and a
+        # code silent about it has no scenic corridor setback.
+        "setback_scenic_corridor_ft",
         # The right-of-way a lot gives up to reach a distance from the street's
         # centre line: one county's Middle Housing sections state it (Washington
         # County CDC 302-2.14 C(1) to 306), so silence is the ordinary case.

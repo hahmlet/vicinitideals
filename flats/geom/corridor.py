@@ -199,6 +199,29 @@ CORRIDOR_MAPS: dict[str, str] = {
 #: because a false hit is.
 TIGHTENS: frozenset[str] = frozenset({"civic_corridor_setback"})
 
+#: Registry dataset -> the name of a map read PER STREET LINE and nowhere
+#: else: it answers no lot-level fact, it only marks the lot lines on it
+#: (:func:`on_line_maps`). Portland's Scenic Corridors (PCC 33.480.040.B.2.a:
+#: the scenic corridor setback "applies along street lot lines that abut the
+#: Scenic Corridor"), which carry ``setback_scenic_corridor_ft`` to that line
+#: alone. True tightens, so it takes the liberal reading of
+#: :data:`TIGHTENS` -- the street the line abuts, or the drawn line within
+#: :data:`REACH_FT`; the city's layer carries no street names, so the street
+#: reading is the centreline coinciding with the drawn line.
+LINE_MAPS: dict[str, str] = {
+    "scenic_corridors_pdx": "scenic_corridor",
+}
+
+#: The feature values a per-line map keeps, per dataset: the Scenic Corridors
+#: layer also draws scenic waterways, trails and the aerial tram, which are
+#: not streets a "street lot line" can abut.
+LINE_KEEP: dict[str, dict[str, frozenset[str]]] = {
+    "scenic_corridors_pdx": {"Subtype": frozenset({"Scenic Drive"})},
+}
+
+#: The per-line maps' names: never a fact, never a relief.
+LINE_ONLY: frozenset[str] = frozenset(LINE_MAPS.values())
+
 #: A map's ANY-line condition -> its partner, true only when EVERY street
 #: line of the lot is on the corridor by the street reading. Map 130-1's
 #: 20 ft maximum front setback (33.130.215.C.1) relaxes the 10 ft one, so it
@@ -467,12 +490,18 @@ def load_maps(
     manifest_path = sources / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.is_file() else {}
     found: list[tuple[str, tuple[str, ...], list[Any], list[str]]] = []
-    for key, condition in CORRIDOR_MAPS.items():
+    for key, condition in {**CORRIDOR_MAPS, **LINE_MAPS}.items():
         ds = pipeline.datasets.get(key)
         path = _dataset_path(sources, manifest, key)
         if ds is None or not path.is_file():
             continue
-        feats = [f for f in iter_features(path) if f.get("geometry")]
+        keep = LINE_KEEP.get(key) or {}
+        feats = [
+            f
+            for f in iter_features(path)
+            if f.get("geometry")
+            and all(str((f.get("properties") or {}).get(k) or "") in v for k, v in keep.items())
+        ]
         geoms = [shape(f["geometry"]) for f in feats]
         names = [_name_of(f.get("properties") or {}) for f in feats]
         found.append((condition, tuple(ds.serves), geoms, names))
@@ -572,7 +601,8 @@ def _on_at(point: Any, own: float, cmap: CorridorMap, near: list[int], strict: b
     if strict and cmap.streets is None:
         return False
     drawn = any(_abreast(corridor.lines[i], point, own, REACH_FT) for i in near)
-    if cmap.streets is None or (drawn and cmap.condition in TIGHTENS and not strict):
+    liberal = cmap.condition in TIGHTENS or cmap.condition in LINE_ONLY
+    if cmap.streets is None or (drawn and liberal and not strict):
         return drawn
     s = _fronted(point, own, cmap.streets)
     if s is None:
@@ -668,6 +698,28 @@ def off_corridor_lines(
     )
 
 
+def on_line_maps(
+    edges: Iterable[Sequence[object]], layer_id: str | None, maps: Sequence[Corridor], name: str
+) -> tuple[bool, ...]:
+    """Per s4 edge, in order: a street line on the per-line map ``name``
+    (:data:`LINE_MAPS`) where it serves the lot's layer (:func:`on_corridor`,
+    the liberal reading: True tightens).
+
+    All False where no such map serves the layer or the snapshot does not
+    hold it, and False on every edge that is not a street line.
+    """
+    edges = list(edges)
+    serving = [m for m in maps if isinstance(m, CorridorMap) and m.condition == name and m.covers(layer_id)]
+    if not serving:
+        return tuple(False for _ in edges)
+    return tuple(
+        len(e) >= 5
+        and e[4] == STREET_CLASS
+        and any(on_corridor(e, m) for m in serving)  # type: ignore[arg-type]
+        for e in edges
+    )
+
+
 def on_corridor(edge: Sequence[float], cmap: CorridorMap, *, strict: bool = False) -> bool:
     """Whether one street lot line ``(x1, y1, x2, y2)`` abuts a corridor.
 
@@ -723,7 +775,7 @@ def observed_corridors(
     street = [e for e in edges if len(e) >= 5 and e[4] == STREET_CLASS]
     out: dict[str, bool] = {}
     for cmap in maps:
-        if not cmap.covers(layer_id):
+        if not cmap.covers(layer_id) or cmap.condition in LINE_ONLY:
             continue
         if isinstance(cmap, NamedCorridor):
             if zone is None or str(zone) not in cmap.spec.zones:

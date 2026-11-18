@@ -816,6 +816,7 @@
         "protected_water_feature"
       ],
       "quadplex_allowed": [
+        "protected_water_feature",
         "utility_easement"
       ],
       "setback_front_ft": [

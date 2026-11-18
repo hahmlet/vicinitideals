@@ -116,6 +116,7 @@ from flats.geom.corridor import (
     Corridor,
     observed_corridors,
     off_corridor_lines,
+    on_line_maps,
 )
 from flats.geom.corridor import load_maps as load_corridor_maps
 from flats.geom.corner import (
@@ -340,11 +341,26 @@ NROD_SQFT = "ovl_oregon_city_nrod_sqft"
 #: anything, and s2's False there is only "outside Portland's map".
 Z_ANSWERS: frozenset[str] = frozenset({"portland", "multnomah_unincorporated"})
 
-#: Where the Willamette Greenway map answers ``willamette_greenway_zone``:
-#: Milwaukie's WG zone off the city's own Zoning Map service (quadfit
-#: ``milwaukie_greenway``, which s5o measures for Milwaukie lots only).
-GREENWAY_ANSWERS: frozenset[str] = frozenset({"milwaukie"})
-GREENWAY_COLUMN = "ovl_milwaukie_greenway"
+#: Where a Willamette Greenway map answers ``willamette_greenway_zone``, and
+#: the s5o column that does: Milwaukie's WG zone off the city's own Zoning
+#: Map service (quadfit ``milwaukie_greenway``), and Oregon City's WRG
+#: overlay district off the city's (``oregon_city_greenway``, FOLLOWUPS 204,
+#: 2026-11-18). s5o measures each for its own city's lots only, and another
+#: city's map is not this one.
+GREENWAY_COLUMNS: dict[str, str] = {
+    "milwaukie": "ovl_milwaukie_greenway",
+    "oregon_city": "ovl_oregon_city_greenway",
+}
+GREENWAY_ANSWERS: frozenset[str] = frozenset(GREENWAY_COLUMNS)
+#: Milwaukie's column, under the name it had while it was the only one.
+GREENWAY_COLUMN = GREENWAY_COLUMNS["milwaukie"]
+
+#: s5o's any-touch column for Portland's Scenic Resource overlay (quadfit
+#: ``pdx_scenic``). PCC 33.480.035 applies the chapter to development
+#: "within the Scenic Resource zone", so a lot the overlay is answered NOT to
+#: touch owes no scenic corridor setback, whatever street it is on
+#: (:func:`lot_edges`); a row without the answer keeps the setback.
+SCENIC_COLUMN = "ovl_pdx_scenic"
 
 #: Where the assessor roll answers ``no_existing_dwelling``: Wilsonville, whose
 #: Village zone writes its quadplex standards for lots "previously developed
@@ -394,7 +410,7 @@ S5O_COLUMNS: tuple[str, ...] = (
     "wkb",
     "env_setbacks_json",
     "carve_wkb",
-    GREENWAY_COLUMN,
+    *GREENWAY_COLUMNS.values(),
     # The mapped areas a house goes up in only with a permit
     # (:mod:`flats.rules.resource_overlays`); the FEMA fringe is already
     # above, and pandas refuses a column named twice.
@@ -559,8 +575,9 @@ def observed_facts(
     * ``constrained_sites_overlay`` -- Portland and its pockets only
       (:data:`Z_ANSWERS`), off the "z" letters on Portland's zoning map: True
       where any part of the lot is inside one (PCC 33.418.040 is "any portion").
-    * ``willamette_greenway_zone`` -- Milwaukie only (:data:`GREENWAY_ANSWERS`),
-      off the city's WG zone: True where any part of the lot is inside it.
+    * ``willamette_greenway_zone`` -- Milwaukie and Oregon City only
+      (:data:`GREENWAY_ANSWERS`), each off its own city's greenway map: True
+      where any part of the lot is inside it.
     * ``split_zone`` -- s2's majority rule: the winning zone covers under
       90 % of the lot. A sliver under that is read by quadfit as zoning-map
       noise against the taxlot fabric, and the bridge carries that reading
@@ -696,8 +713,9 @@ def observed_facts(
         out["protected_water_feature"] = nrod > 0
     if row.get("jurisdiction") in Z_ANSWERS and _answered(row.get("has_z_overlay")):
         out["constrained_sites_overlay"] = _is_true(row.get("has_z_overlay"))
-    if row.get("jurisdiction") in GREENWAY_ANSWERS and _answered(row.get(GREENWAY_COLUMN)):
-        out["willamette_greenway_zone"] = _is_true(row.get(GREENWAY_COLUMN))
+    greenway = GREENWAY_COLUMNS.get(str(row.get("jurisdiction")))
+    if greenway is not None and _answered(row.get(greenway)):
+        out["willamette_greenway_zone"] = _is_true(row.get(greenway))
     if row.get("jurisdiction") in DWELLING_ANSWERS:
         vacant = no_existing_dwelling(row)
         if vacant is not None:
@@ -1220,7 +1238,10 @@ def lot_edges(
     With the corridor maps in hand, a street edge read surely off every Map
     130-1 stretch serving the lot carries ``off_corridor``
     (:func:`flats.geom.corridor.off_corridor_lines`), for
-    ``setback_street_off_corridor_ft``. Without them no edge does.
+    ``setback_street_off_corridor_ft``. Without them no edge does. A street
+    edge read on a scenic corridor serving the lot carries ``on_scenic``
+    (:func:`flats.geom.corridor.on_line_maps`), for
+    ``setback_scenic_corridor_ft``, on the same terms.
 
     With the corpus in hand and s4's ``street_across_json`` on the row, a
     street edge whose every ray across the street found a zone the lot's
@@ -1237,6 +1258,15 @@ def lot_edges(
     # alley edge with none on record, so the envelope vouches for no stretch.
     cover = _cover(row, raw) or [None] * len(raw)
     off = off_corridor_lines(raw, _layer_id(row), corridors) if corridors else (False,) * len(raw)
+    # The scenic corridor setback reaches a lot in the Scenic Resource zone
+    # only (PCC 33.480.035): a lot s5o answered clear of the overlay is not
+    # read; one with no answer is, the tight side.
+    in_scenic = not _answered(row.get(SCENIC_COLUMN)) or _is_true(row.get(SCENIC_COLUMN))
+    scenic = (
+        on_line_maps(raw, _layer_id(row), corridors, "scenic_corridor")
+        if corridors and in_scenic
+        else (False,) * len(raw)
+    )
     clear = _across_clear(row, len(raw), layers)
     facing = _across_zones(row, len(raw), layers)
     # Each street line's class rank off the city's TSP map
@@ -1257,8 +1287,8 @@ def lot_edges(
     if len(kinds) != len(raw):
         kinds = [None] * len(raw)
     edges: list[Edge] = []
-    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line, rank, kind, faces in zip(
-        raw, cover, off, clear, ranks, kinds, facing, strict=True
+    for (x1, y1, x2, y2, letter), stretch, off_line, scenic_line, clear_line, rank, kind, faces in zip(
+        raw, cover, off, scenic, clear, ranks, kinds, facing, strict=True
     ):
         x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
         road = widths.get(dedication.key(x1, y1, x2, y2)) if letter == STREET_CLASS else None
@@ -1278,6 +1308,7 @@ def lot_edges(
                 alley=letter == ALLEY_CLASS,
                 cover=(stretch or "") if letter == ALLEY_CLASS else None,
                 off_corridor=bool(off_line),
+                on_scenic=bool(scenic_line),
                 across_clear=bool(clear_line) and letter == STREET_CLASS,
                 street_rank=int(rank) if rank is not None and letter == STREET_CLASS else None,
                 half_width_ft=None if road is None or road[4] is None else float(road[4]),
@@ -1417,6 +1448,10 @@ def setbacks_for(
         street_side_ft=street_side,
         alley_side_ft=alley_side_ft,
         street_off_corridor_ft=off_corridor,
+        # The scenic corridor setback (Portland 33.480.040.B.2.a): a minimum
+        # on a street line read on a scenic corridor, beside whatever the
+        # line takes (:meth:`flats.geom.envelope.Setbacks._plain`).
+        scenic_corridor_ft=number("setback_scenic_corridor_ft"),
         alley_rear_ft=alley_rear,
         street_clear_ft=clear,
         north_ft=north,

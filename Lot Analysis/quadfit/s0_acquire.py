@@ -212,6 +212,13 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_pdx_flood_1996": {
         "url": f"{_PDX}/Hazard/MapServer/30",
         "fields": ["OBJECTID"]},
+    # PCC 33.480: the Scenic Resource overlay "s" (FOLLOWUPS 204, 2026-11-18);
+    # flagged (overlays.yaml pdx_scenic). The scenic corridor LINES its
+    # setback is read against are FLATS's own (pipeline.yaml
+    # scenic_corridors_pdx), not a quadfit layer.
+    "overlay_pdx_scenic": {
+        "url": f"{_PDX}/BPS_Zoning_Code_Layers/MapServer/137",
+        "fields": ["OVRLY", "ZONE", "PLDIST"]},
     # Gresham natural resource / hazard overlays
     "overlay_gresham_wetlands": {
         "url": f"{_GRE}/Environmental/MapServer/15",
@@ -465,6 +472,19 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_oregon_city_nrod": {
         "url": "https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/2",
         "fields": ["NROD", "Acres"]},
+    # OCMC 17.44, the Geologic Hazards Overlay (FOLLOWUPS 204, 2026-11-18):
+    # layer 11 is the whole overlay, each polygon marked for the slope, the
+    # landslide and the buffer of each (layers 9 and 10 are its parts).
+    # Flagged whole and carved where IN_LANDSLIDE, IN_LANDSLIDE_BUFFER or
+    # IN_SLOPE (overlays.yaml oregon_city_geohazard, _core).
+    "overlay_oregon_city_geohazard": {
+        "url": "https://maps.orcity.org/arcgis/rest/services/HazardsAndFloodInfo_PUBLIC/MapServer/11",
+        "fields": ["IN_SLOPE", "IN_SLOPE_BUFFER", "IN_LANDSLIDE", "IN_LANDSLIDE_BUFFER"]},
+    # OCMC 17.48, the Willamette River Greenway (FOLLOWUPS 204, 2026-11-18):
+    # a kill, as Milwaukie's is (overlays.yaml oregon_city_greenway).
+    "overlay_oregon_city_greenway": {
+        "url": "https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/10",
+        "fields": ["OBJECTID"]},
     # ---------------- Tualatin (the last unscreened jurisdiction) ----------
     # The service was recorded as "confirmed, layers not enumerated" on
     # 2026-09-01 and stayed that way because Tualatin had no green to lose.
