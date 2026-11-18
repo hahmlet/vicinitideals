@@ -1,0 +1,33 @@
+{# Mapped ground hazards (FOLLOWUPS 198): landslide, liquefaction, flood. Notes, never a colour. #}
+<div id="lot-hazards" style="margin-top:12px;font-size:12px">
+  <strong>Ground hazards (mapped)</strong>
+  {% if hazards and hazards.measured %}
+    <div class="muted" style="font-size:11px;margin-top:2px">A note only: it never changes the lot's colour.</div>
+    {% for g in hazards.groups %}
+      <div class="hazard-group" data-hazard="{{ g.hazard }}" style="margin-top:8px">
+        <div><strong>{{ g.title }}</strong></div>
+        {% for x in g.shown %}
+          <div class="hazard-layer" data-layer="{{ x.layer }}" data-status="{{ x.status }}" style="margin-top:4px">
+            <div>{{ x.title }}: {{ x.words }}{% if x.worst and x.status in ("mapped", "mapped_low") and x.classes|length > 1 %} Worst: <strong>{{ x.worst.words }}</strong>{% if x.worst.level_words and x.worst.level_words|lower != (x.worst.words or "")|lower %} ({{ x.worst.level_words }}){% endif %}.{% endif %}</div>
+            <div class="muted" style="font-size:10px">{{ x.publication.publisher }}, {{ x.publication.number }}, {{ x.publication.date }}{% if x.publication.scale %} ({{ x.publication.scale }}){% endif %}.{% if x.source %} Read: {{ x.source }}.{% endif %}</div>
+            {% if x.classes %}
+            <details style="font-size:10px">
+              <summary class="muted">as printed</summary>
+              <table class="data-table" style="font-size:10px">
+                <tbody>
+                  {% for c in x.classes %}
+                  <tr data-class-state="{{ c.state }}"><td>{% if c.state == "class" %}{{ x.class_field or "class" }} {{ c.class_code if c.class_code is not none else "(empty)" }}{% if c.class_label and c.class_label != c.class_code %} &middot; {{ c.class_label }}{% endif %}{% else %}{{ c.state|replace("_", " ") }}{% endif %}</td><td>{% if x.kind in ("line", "point") %}{{ (c.detail or {}).get("count", 0) }} found{% else %}{{ "{:,.0f}".format(c.area_sqft) }} sq ft ({{ c.share_pct }}%){% endif %}</td></tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </details>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <div class="muted" style="font-size:11px;margin-top:6px" data-hazard-caveat>{{ hazards.caveat }}</div>
+  {% else %}
+    <span class="muted">not measured yet</span>
+  {% endif %}
+</div>

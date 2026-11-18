@@ -290,6 +290,13 @@ def source_label(meta: dict[str, Any]) -> str:
     return f"{SOURCE_NAME}{published}: {areas}"
 
 
+def unit_source(meta: dict[str, Any], unit: dict[str, Any]) -> str:
+    """The source of one map unit: the agency, the product and the unit's own
+    survey area with its version date (fits ``soil_map_units.source``)."""
+    published = f", state download of {meta['published']}" if meta.get("published") else ""
+    return f"{SOURCE_NAME}{published}: {unit.get('areasymbol')} {unit.get('areaname')} ({unit.get('saverest')})"
+
+
 # --- sda (optional fill) -----------------------------------------------------------
 
 
@@ -502,8 +509,9 @@ async def load(
     import asyncpg
 
     meta = json.loads((build_dir / META_FILE).read_text(encoding="utf-8"))
-    source = source_label(meta)[:400]
-    report: dict[str, Any] = {"snapshot_id": snapshot_id, "dry_run": dry_run, "source": source, "colour": colour}
+    report: dict[str, Any] = {
+        "snapshot_id": snapshot_id, "dry_run": dry_run, "source": source_label(meta), "colour": colour,
+    }
     units = read_csv(build_dir / MAPUNITS_FILE)
     comps = read_csv(build_dir / COMPONENTS_FILE)
     conn = await asyncpg.connect(_dsn(db_url))
@@ -519,7 +527,7 @@ async def load(
                 f"({', '.join(f'${i + 1}' for i in range(len(MAP_UNIT_COLUMNS) + 1))}) "
                 f"ON CONFLICT (mukey) DO UPDATE SET "
                 + ", ".join(f"{c} = EXCLUDED.{c}" for c in (*MAP_UNIT_COLUMNS[1:], "source")),
-                [(*_typed(u, MAP_UNIT_COLUMNS, _UNIT_NUM), source) for u in units],
+                [(*_typed(u, MAP_UNIT_COLUMNS, _UNIT_NUM), unit_source(meta, u)) for u in units],
             )
             ccols = ", ".join(COMPONENT_COLUMNS)
             places = ", ".join(

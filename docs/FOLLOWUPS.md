@@ -46,11 +46,10 @@ the full one.)
 
 ## 1. Claude -- priority
 
-201. [Claude] [scan: YES -- toward yellow/red, FALSE GREEN] **Round 4 class hunt: condominium common ground shows GREEN (4 lots) + 3 single lots; narrow-frontage flag lots to hunt next** -- found 11-18, rel10 lane. [file](followups/201-fg4-class-hunt-fixes.md)
+202. [Claude] [scan: YES -- toward yellow, FALSE GREEN] **Portland never checked against FEMA flood maps (city filed under its own map ID): 13 greens should be yellow; 5,524 lots unknown to the screen** -- found 11-18; fix BUILDING flats/rel10-fema, rides rel10 as a scoped re-bound; Title 24.50 / 33.475 to download. [file](followups/202-portland-fema-gap.md)
+201. [Claude] [scan: YES -- toward yellow/red, FALSE GREEN] **Round 4 class hunt: condominium common ground shows GREEN (4 lots) + 3 single lots + corner second street missed on a wide road + Beaverton driveway offset** -- found 11-18; condo RED ruled; in the rel10 pack. [file](followups/201-fg4-class-hunt-fixes.md)
 199. [Claude] [scan: NO -- report only, greens] **FD2 pass 1: ground levels at the building, flattest spot, soil/hazard/frost/seismic at the footprint, summary to the foundation research** -- Steph go 11-18; starts when soil lane 196 lands. [file](followups/199-ground-levels-under-building.md)
-198. [Claude] [scan: NO -- note only] **Mapped landslide, liquefaction and flood areas per lot, as notes** -- foundation agent ask 11-18; flood already held, landslide + liquefaction from the state geology maps (detailed landslide map covers only part of the area); Steph yes 11-18; BUILDING flats/hazard-notes. [file](followups/198-ground-hazard-notes.md)
-197. [Claude] [scan: NO -- note only] **Frost depth per jurisdiction, as a note** -- Steph ask 11-18; state baseline plus what each building department actually enforces scout back: 10 found, 11 silent, 5 unresolved (4 blocked sites need Steph download); only Gresham differs (18 in vs 12); register + note to build. [file](followups/197-frost-depth.md)
-196. [Claude] [scan: NO -- note only] **Soil type per lot from the USDA soil survey, as a note** -- Steph yes 11-17; greens first, then all lots; BUILDING flats/soil-notes. [file](followups/196-soil-notes.md)
+197. [Claude] [scan: NO -- note only] **Frost depth per jurisdiction, as a note** -- sources settled 11-18: state 12 in below 2,500 ft in all three counties, Gresham 18 in by practice, Estacada unresolved; register + lot note to build; six building chapters still to read. [file](followups/197-frost-depth.md)
 195. [Claude] [scan: YES -- toward yellow, possible FALSE GREEN] **Building minimum frontage share counted in 1 ft steps: a pass exactly at the minimum may be under it** -- same fix as rel9 F1 the other way; rel10 lane. [file](followups/195-building-share-step.md)
 152. [Claude] [Steph] **ci-runner: optional OOM protection for its Postgres** -- run cap + Postgres check shipped (70c1cb75); only the optional OOMScoreAdjust=-900 unit setting on 138 is left, Steph's call (only if Postgres is OOM-killed again). [file](followups/152-ci-runner-overload.md)
 
@@ -76,11 +75,11 @@ the full one.)
 44. [Claude] [scan: NO new code, check after the weekly run] **Readings ranked on the map's colour, and 43's hose edge** -- SHIPPED 51577bb8 (on main, live); the spot-check of the 34 lots is not recorded (status unverified 11-13). [file](followups/44-reading-rank.md)
 8. [Claude] [scan: YES if (b) is taken up] **Pockets + corridors -- leftovers** -- all code live, both checks DONE 2026-11-09; only (b) open: 66 ZONE_POCKET lots (Troutdale NSA, Oregon City County, Beaverton WAcnty). [file](followups/8-pockets-corridors.md)
 21. [Claude] [Steph: worktree go; HUMAN_TODO 26] [scan: YES for (a)-(c); NO for (d)-(e)] **Post-2027 world** -- (b) built and live (runs 46, 49); (a) state layer to adopted Div 46 and (c) Oregon Homes path wait on Steph's worktree go. [file](followups/21-post-2027-world.md)
-64. [Claude] [scan: NO] **Measure the false-GREEN rate** -- rounds 1-3 pooled ~4%; round 4 RUNNING on run 128 (Steph go 11-18, Fable): class hunt DONE (1 class, 4 greens of 9,517 -> item 201); blind sample both halves reading. [file](followups/64-false-green-rate.md)
+64. [Claude] [scan: NO] **Measure the false-GREEN rate** -- ROUND 4 DONE on run 128: pooled 1 wrong + 2 doubtful of 100 (1%, was ~4%); class hunt 1 class / 4 lots of 9,517; fixes in item 201 (rel10); after rel10 propose the stopping signal to Steph. [file](followups/64-false-green-rate.md)
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-(none -- rel9 LIVE run 128 2026-11-18; rel10 to pack: pagecheck-34, corner-th-191, crossref-5, rulings-1114, rlis-taxcode + items 194, 195, 201 + RLIS November refresh)
+(rel10 PACKED flats/rel10 04bd6129 11-18, full bound RUNNING on 137 -> rel10-bound.result.md; then move read, then release. Left out: wide-road corner (own lane, sizing), 194(1)(3)(4). RLIS November copy needed right after release.)
 
 ### 1c. The rest, most urgent first (dated items first)
 194. [Claude] [scan: YES -- toward green] **rel8/rel9 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R), Gresham unmapped street class (~46), one fire route** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)

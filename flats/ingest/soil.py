@@ -439,6 +439,20 @@ def unit_words(found: LotUnit) -> dict[str, Any]:
     rated = rated_component(found.components)
     main = main_component(found.components)
     data = unit_has_data(unit, found.components)
+    words = wet_season_words(unit.get("wet_season_status"), _num(unit.get("wet_season_cm")),
+                             unit.get("wet_season_months"))
+    wettest = next((c for c in found.components
+                    if unit.get("wet_season_cokey") and str(c.get("cokey")) == str(unit.get("wet_season_cokey"))), None)
+    wettest_is_minor = bool(wettest and rated and str(wettest.get("cokey")) != str(rated.get("cokey")))
+    # The unit's winter high is its shallowest component, often a small
+    # inclusion; lead with the soil the figures come from, then name it.
+    headline = words
+    if wettest_is_minor:
+        main_words = wet_season_words(rated.get("wet_season_status"), _num(rated.get("wet_season_cm")),
+                                      rated.get("wet_season_months"))
+        headline = (f"{rated.get('compname')} ({_int(rated.get('comppct_r'))}% of the unit): {main_words}. "
+                    f"Wettest part: {wettest.get('compname')} ({_int(wettest.get('comppct_r'))}% of the unit), "
+                    f"{words}")
     return {
         "mukey": found.mukey,
         "area_sqft": round(found.area_sqft, 1),
@@ -461,8 +475,11 @@ def unit_words(found: LotUnit) -> dict[str, Any]:
         "wet_season_cm": _num(unit.get("wet_season_cm")),
         "wet_season_months": _months_list(unit.get("wet_season_months")),
         "wet_season_cokey": unit.get("wet_season_cokey"),
-        "wet_season_words": wet_season_words(unit.get("wet_season_status"), _num(unit.get("wet_season_cm")),
-                                             unit.get("wet_season_months")),
+        "wet_season_words": words,
+        "wet_season_from": {"cokey": str(wettest.get("cokey")), "compname": wettest.get("compname"),
+                            "comppct_r": _int(wettest.get("comppct_r")), "minor": wettest_is_minor}
+                           if wettest else None,
+        "wet_season_headline": headline,
         "source_words": (f"{SOURCE_NAME}: {unit.get('areaname') or unit.get('areasymbol')}"
                          f" ({unit.get('areasymbol')}), survey version of {unit.get('saverest')}")
                         if unit.get("areasymbol") else SOURCE_NAME,

@@ -79,6 +79,7 @@ from app.models.flats import (
 )
 from app.models.org import MembershipStatus, User
 from app.services import flats_flags as flag_history
+from app.services import flats_hazards
 from app.services import flats_price
 from app.services import flats_refresh as refresh_service
 from app.services.flats_refresh import refresh_notices
@@ -3272,7 +3273,7 @@ async def _lot_soil(session: DBSession, lot_id: int) -> dict[str, Any] | None:
             await session.execute(select(FlatsSoilComponent).where(FlatsSoilComponent.mukey.in_(mukeys)))
         ).scalars():
             components.setdefault(comp.mukey, []).append(plain(comp))
-    source = next((u.get("source") for u in units.values() if u.get("source")), None)
+    source = "; ".join(sorted({u["source"] for u in units.values() if u.get("source")})) or None
     return describe_soil(
         [{"mukey": r.mukey, "area_sqft": float(r.area_sqft), "share": float(r.share)} for r in rows],
         units,
@@ -4924,6 +4925,8 @@ async def flats_lot(
             "soil": await _lot_soil(session, lot.id),
             "quadfit": _quadfit_words(facts.get("quadfit") or {}),
             "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",
+            # Mapped ground hazards (FOLLOWUPS 198): notes, never a colour.
+            "hazards": await flats_hazards.lot_hazards(session, lot),
             "outline": _outline(geojson),
             "lat": lat,
             "lon": lon,

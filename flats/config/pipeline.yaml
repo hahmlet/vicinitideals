@@ -1098,7 +1098,10 @@ datasets:
     label: FEMA National Flood Hazard Layer
     provides: overlay
     url: https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28
-    fields: [FLD_ZONE, ZONE_SUBTY, SFHA_TF, STATIC_BFE]
+    # V_DATUM, DEPTH and LEN_UNIT added 2026-11-18 for the flood note
+    # (FOLLOWUPS 198, hazard_notes below): a STATIC_BFE is unreadable without
+    # its vertical datum. The screen reads none of the three.
+    fields: [FLD_ZONE, ZONE_SUBTY, SFHA_TF, STATIC_BFE, V_DATUM, DEPTH, LEN_UNIT]
     where: '"DFIRM_ID" IN (''41051C'', ''41005C'', ''41067C'', ''410183'')'
     serves: [or/multnomah, or/clackamas, or/washington]
     notes: >-
@@ -1482,3 +1485,241 @@ datasets:
       from 2026-09-30 urban Washington County west to Forest Grove (-123.15). Two lidar
       projects overlap the area (OR_OLCMetro_2019, OR_PortlandMetro); newest
       tile wins per cell.
+
+# --- ground-hazard notes (FOLLOWUPS 198) ------------------------------------
+# Mapped landslide, earthquake-liquefaction and flood areas, measured per lot
+# and shown as NOTES on the lot page and in the lot report (Steph 2026-11-18:
+# "Yes"). Read only by flats/ingest/hazards.py and scripts/flats_lot_hazards.py.
+# Nothing that screens reads this section: load_pipeline ignores it, the acquire
+# stage never fetches it, and no colour, reason or flag comes from it. The two
+# DOGAMI downloads are fetched on LXC 137 by hand (hand-off of the hazard-notes
+# lane); the flood layers are the ones already held above.
+hazard_notes:
+  #: DOGAMI's use constraint, as printed in the metadata of every DOGAMI layer
+  #: below (e.g. https://pubs.oregon.gov/dogami/SLIDO/4.5/XML/Deposits_metadata.xml
+  #: <useconst>, and ofr/O-19-09/metadata/Liquefaction_Classes_metadata.xml),
+  #: then its <distliab> warranty sentence, shortened. Shown once on the lot page.
+  caveat: >-
+    DOGAMI: "This product is for informational purposes and may not have been
+    prepared for or be suitable for legal, engineering, or surveying purposes.
+    This publication cannot substitute for site-specific investigations by
+    qualified practitioners. Site-specific data may give results that differ
+    from the results shown in the publication." No warranty, expressed or
+    implied, is made by DOGAMI.
+
+  publications:
+    slido_4_5:
+      publisher: Oregon Department of Geology and Mineral Industries (DOGAMI)
+      title: Statewide Landslide Information Database for Oregon, Release 4.5 (SLIDO-4.5)
+      number: SLIDO-4.5
+      date: "2024-04-12"
+      page: https://www.oregon.gov/dogami/slido/Pages/data.aspx
+      download:
+        url: https://pubs.oregon.gov/dogami/SLIDO/4.5/SLIDO_Release_4p5_wMetadata.gdb.zip
+        bytes: 598643575
+        last_modified: "2024-04-12T19:18:19Z"
+      notes: >-
+        One Esri file geodatabase: the inventory (Deposits, Scarps, Scarp_Flanks,
+        Historic_Landslide_Points), the detailed lidar susceptibility
+        (Detailed_Shallow_Landslide_Susceptibility raster,
+        Detailed_Deep_Landslide_Susceptibility polygons, their footprint
+        Detailed_Susceptibility_Map_Index) and the statewide overview raster
+        (Statewide_Landslide_Susceptibility_Overview); names as in the
+        publication's per-layer metadata files (SLIDO/4.5/XML/<name>_metadata.xml).
+        The page also mentions a SLIDO-4.6 geodatabase with no date or link.
+    o_16_02:
+      publisher: Oregon Department of Geology and Mineral Industries (DOGAMI)
+      title: Landslide susceptibility overview map of Oregon (Burns, Mickelson and Madin)
+      number: Open-File Report O-16-02
+      date: "2016"
+      page: https://pubs.oregon.gov/dogami/ofr/p-O-16-02.htm
+      scale: 1:500,000, an overview, not lot-scale
+      notes: >-
+        Read from SLIDO-4.5's copy, Statewide_Landslide_Susceptibility_Overview,
+        whose metadata says it "is not intended to be used at scales other than
+        the published map data scale (1:500,000). See DOGAMI Open File Report
+        O-16-02". The publication's own GIS zip
+        (https://pubs.oregon.gov/dogami/ofr/O-16-02_GIS.zip, 312,995,304 bytes)
+        is therefore not fetched.
+    o_19_09:
+      publisher: Oregon Department of Geology and Mineral Industries (DOGAMI)
+      title: >-
+        Coseismic landslide susceptibility, liquefaction susceptibility, and soil
+        amplification class maps, Clackamas, Columbia, Multnomah, and Washington
+        Counties, Oregon (Appleby, Burns, Hairston-Porter and Bauer)
+      number: Open-File Report O-19-09
+      date: "2019"
+      page: https://pubs.oregon.gov/dogami/ofr/p-O-19-09.htm
+      download:
+        url: https://pubs.oregon.gov/dogami/ofr/O-19-09/O-19-09_GIS-data-bundle.zip
+        bytes: 319912605
+        last_modified: "2023-05-12T18:07:47Z"
+      notes: >-
+        DOGAMI's own geodatabase (report p. v: Coseismic_geohazard_datasets.gdb,
+        feature class "Liquefaction Susceptibility"), NOT the Multnomah County
+        service copy, whose Class and LQ_Label disagree (hazard scout
+        2026-11-18). Fields per ofr/O-19-09/metadata/Liquefaction_Classes_metadata.xml:
+        Unit, Name, LQ_Label ("Classes are None, Very Low, Low, Moderate, High,
+        Very High"), Class ("Numerical Hazus classification. Classes range from
+        0 to 5"), REF_ID_COD. The classes assume full saturation (metadata abstract).
+    fema_nfhl:
+      publisher: Federal Emergency Management Agency (FEMA)
+      title: National Flood Hazard Layer, Flood Hazard Zones
+      number: NFHL MapServer layer 28
+      date: as held (the acquire snapshot's fetch date)
+      page: https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28
+    metro_title3:
+      publisher: Metro
+      title: Title 3 water quality and flood management areas
+      number: Title_3_Land FeatureServer layer 0
+      date: as held (the acquire snapshot's fetch date)
+      page: https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Title_3_Land/FeatureServer/0
+    west_linn_flood:
+      publisher: City of West Linn
+      title: Flood management area
+      number: FloodManagement MapServer layer 1
+      date: as held (the acquire snapshot's fetch date)
+      page: https://geo.westlinnoregon.gov/server/rest/services/Operational/FloodManagement/MapServer/1
+
+  #: One entry per measured layer. An area layer's rows sum to the lot: its
+  #: classes, plus the part outside the map's coverage and the part it leaves
+  #: unmapped. A line or point layer counts the features on the lot instead.
+  #: ``level`` is FLATS's plain-English rank of a printed class, for "worst
+  #: class present" and the page's words; it never reaches the screen.
+  layers:
+    landslide_detailed_index:
+      hazard: landslide
+      kind: coverage
+      title: Detailed lidar susceptibility study areas
+      publication: slido_4_5
+      layer: Detailed_Susceptibility_Map_Index
+    landslide_shallow:
+      hazard: landslide
+      kind: raster
+      title: Shallow landslide susceptibility (detailed lidar map)
+      publication: slido_4_5
+      layer: Detailed_Shallow_Landslide_Susceptibility
+      coverage: landslide_detailed_index
+      coverage_mode: inside
+      class_field: Value
+      #: Detailed_Shallow_Landslide_Susceptibility_metadata.xml, attribute
+      #: Susceptibility: "1=Low, 2=Moderate, 3=High".
+      classes:
+        - {code: "1", label: Low, level: low}
+        - {code: "2", label: Moderate, level: moderate}
+        - {code: "3", label: High, level: high}
+    landslide_deep:
+      hazard: landslide
+      kind: polygon
+      title: Deep landslide susceptibility (detailed lidar map)
+      publication: slido_4_5
+      layer: Detailed_Deep_Landslide_Susceptibility
+      coverage: landslide_detailed_index
+      coverage_mode: inside
+      #: Detailed_Deep_Landslide_Susceptibility_metadata.xml: one attribute,
+      #: Suscept; the map service legend prints Low, Moderate, High.
+      class_field: Suscept
+      classes:
+        - {code: Low, label: Low, level: low}
+        - {code: Moderate, label: Moderate, level: moderate}
+        - {code: High, label: High, level: high}
+    landslide_overview:
+      hazard: landslide
+      kind: raster
+      title: Landslide susceptibility (coarse statewide map, 1:500,000, not lot-scale)
+      publication: o_16_02
+      download_from: slido_4_5
+      layer: Statewide_Landslide_Susceptibility_Overview
+      #: Used only where the detailed lidar map does not reach.
+      coverage: landslide_detailed_index
+      coverage_mode: outside
+      class_field: Value
+      #: Statewide_Landslide_Susceptibility_Overview_metadata.xml, attribute
+      #: Description: "1=Low, 2=Moderate, 3=High, 4=Very high".
+      classes:
+        - {code: "1", label: Low, level: low}
+        - {code: "2", label: Moderate, level: moderate}
+        - {code: "3", label: High, level: high}
+        - {code: "4", label: Very high, level: very_high}
+    landslide_inventory:
+      hazard: landslide
+      kind: polygon
+      title: Mapped existing landslides (deposits and scarp flanks)
+      publication: slido_4_5
+      #: Two feature classes measured as one layer; a deposit outranks a flank
+      #: where they overlap.
+      parts:
+        - {layer: Deposits, code: Deposit, label: Landslide deposit, level: very_high}
+        - {layer: Scarp_Flanks, code: Scarp flank, label: Scarp flank, level: high}
+      detail_fields: [UNIQUE_ID, NAME, CONFIDENCE, AGE, DEEP_SHAL, TYPE_MOVE, MOVE_CLASS, DATE_MOVE, YEAR, REF_ID_COD]
+      list_features: true
+      #: 2026-11-18 (FD2 foundation screen): per class, the distance in feet to
+      #: the nearest mapped deposit / flank ("within 100 ft"), searched to 1,000 ft.
+      nearest_ft: 1000
+    landslide_scarps:
+      hazard: landslide
+      kind: line
+      title: Mapped landslide scarps touching the lot
+      publication: slido_4_5
+      layer: Scarps
+      code: Scarp
+      level: high
+      detail_fields: [REF_ID_COD]
+    landslide_historic:
+      hazard: landslide
+      kind: point
+      title: Historic landslide points on the lot
+      publication: slido_4_5
+      layer: Historic_Landslide_Points
+      code: Historic landslide point
+      level: very_high
+      detail_fields: [UNIQUE_ID, SLIDE_NAME, YEAR, DATE_RANGE, TYPE_MOVE, DEEP_SHAL, DAMAGES, LOC_METHOD, REF_ID_COD]
+      nearest_ft: 1000
+    liquefaction:
+      hazard: liquefaction
+      kind: polygon
+      title: Earthquake liquefaction susceptibility (assumes saturated ground)
+      publication: o_19_09
+      #: Report p. v names it "Liquefaction Susceptibility"; the metadata file
+      #: is Liquefaction_Classes_metadata.xml (entity "Classes"). The extract
+      #: takes the one match among these and refuses if none or several.
+      layer_candidates: [Liquefaction_Susceptibility, Liquefaction_Classes, Liquefaction]
+      class_field: Class
+      label_field: LQ_Label
+      detail_fields: [Unit, Name, REF_ID_COD]
+      list_features: true
+      #: Liquefaction_Classes_metadata.xml abstract: "Liquefaction classes range
+      #: from none to very high, which range numerically from 0 - 5, respectively."
+      classes:
+        - {code: "0", label: None, level: none}
+        - {code: "1", label: Very Low, level: very_low}
+        - {code: "2", label: Low, level: low}
+        - {code: "3", label: Moderate, level: moderate}
+        - {code: "4", label: High, level: high}
+        - {code: "5", label: Very High, level: very_high}
+    flood_fema:
+      hazard: flood
+      kind: polygon
+      title: FEMA flood zone
+      publication: fema_nfhl
+      held: overlay_fema_flood
+      rule: fema
+      class_field: FLD_ZONE
+      label_field: ZONE_SUBTY
+      detail_fields: [SFHA_TF, STATIC_BFE, V_DATUM, DEPTH, LEN_UNIT]
+    flood_title3:
+      hazard: flood
+      kind: polygon
+      title: Metro Title 3 flood areas
+      publication: metro_title3
+      held: overlay_metro_title3
+      rule: title3
+    flood_west_linn:
+      hazard: flood
+      kind: polygon
+      title: West Linn flood management area
+      publication: west_linn_flood
+      held: overlay_west_linn_flood
+      code: Flood management area
+      level: high
+      serves: [or/clackamas/west-linn]
