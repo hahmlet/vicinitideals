@@ -73,11 +73,11 @@ the full one.)
 44. [Claude] [scan: NO new code, check after the weekly run] **Readings ranked on the map's colour, and 43's hose edge** -- SHIPPED 51577bb8 (on main, live); the spot-check of the 34 lots is not recorded (status unverified 11-13). [file](followups/44-reading-rank.md)
 8. [Claude] [scan: YES if (b) is taken up] **Pockets + corridors -- leftovers** -- all code live, both checks DONE 2026-11-09; only (b) open: 66 ZONE_POCKET lots (Troutdale NSA, Oregon City County, Beaverton WAcnty). [file](followups/8-pockets-corridors.md)
 21. [Claude] [Steph: worktree go; HUMAN_TODO 26] [scan: YES for (a)-(c); NO for (d)-(e)] **Post-2027 world** -- (b) built and live (runs 46, 49); (a) state layer to adopted Div 46 and (c) Oregon Homes path wait on Steph's worktree go. [file](followups/21-post-2027-world.md)
-64. [Claude] [scan: NO] **Measure the false-GREEN rate** -- rounds 1-3 done (pooled ~4%, stopping signal not met); round 4 next on a post-rel6 live run. [file](followups/64-false-green-rate.md)
+64. [Claude] [scan: NO] **Measure the false-GREEN rate** -- rounds 1-3 done (pooled ~4%, stopping signal not met); 11-17 offered Steph a deep Fable round (class hunt over every GREEN + blind sample) once rel9 is live. [file](followups/64-false-green-rate.md)
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-(none -- rel8 LIVE run 126 2026-11-15; rel9 dfb512a3 bound DONE 11-16 (572 moves, md5 ed47c704); move read BLOCK on frontage rounding -- FIXED flats/rel9 2b166a6b, scoped re-bound running /root/rel9_fr, then release)
+(none -- rel8 LIVE run 126 2026-11-15; rel9 dfb512a3 bound DONE 11-16 (572 moves, md5 ed47c704); move read BLOCK on frontage rounding -- FIXED flats/rel9 2b166a6b, re-bound clean (54 G->Y, combined 623, md5 16efb06d); release running)
 
 ### 1c. The rest, most urgent first (dated items first)
 194. [Claude] [scan: YES -- toward green] **rel8/rel9 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R), Gresham unmapped street class (~46), one fire route** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)
