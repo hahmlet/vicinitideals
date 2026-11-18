@@ -1,0 +1,111 @@
+"""How close the drawn drive lane comes to a lot line that is not a street,
+against a code's floor on it (FOLLOWUPS 201 add-on G).
+
+Beaverton BDC Table 60.05.60.2 S12: "driveways may be located as close as 3
+or 6 feet from property lines depending on sidewalk type classified by the
+EDM" (``beaverton/60.05/60.05.60.txt#L397-L399``). The sidewalk type is not
+held, so the figure is an unmeasured site fact: the screen asks the larger
+figure for GREEN. The figures live in ``flats/config/driveway_lot_line.yaml``.
+
+:func:`measure` reads one drawing: the lane's gap to the nearest such line,
+and how far the plan could slide away from that line before the building
+(its side setback) or the court (its own clearance) meets the line opposite.
+A plan drawn hugging a line with room to spare is not held for where the
+drawing happened to put it.
+"""
+
+from __future__ import annotations
+
+import functools
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+import yaml
+
+from flats.geom.edges import EdgeClass, LotEdges, bearing_delta
+
+CONFIG = Path(__file__).resolve().parents[1] / "config" / "driveway_lot_line.yaml"
+
+#: Lines within this many degrees of the nearest line are taken as the one
+#: opposite it, the line the plan slides toward.
+PARALLEL_DEG = 30.0
+
+
+@dataclass(frozen=True, slots=True)
+class Place:
+    zones: frozenset[str]
+    figures_ft: tuple[float, ...]
+    unmeasured: str
+    quote: str
+
+
+@functools.lru_cache(maxsize=1)
+def load(path: Path = CONFIG) -> dict[str, Place]:
+    doc = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    out: dict[str, Place] = {}
+    for place, body in (doc.get("places") or {}).items():
+        figures = tuple(sorted(float(f) for f in body["figures_ft"]))
+        out[str(place)] = Place(
+            zones=frozenset(str(z).upper() for z in body.get("zones") or ()),
+            figures_ft=figures,
+            unmeasured=" ".join(str(body.get("unmeasured") or "").split()),
+            quote=str(body["quote"]),
+        )
+    return out
+
+
+def place_for(layer_id: str | None, zone: str | None) -> Place | None:
+    """The floor that reaches a lot in ``zone`` of ``layer_id``, or None."""
+    got = load().get(str(layer_id or ""))
+    if got is None or (got.zones and str(zone or "").upper() not in got.zones):
+        return None
+    return got
+
+
+@dataclass(frozen=True, slots=True)
+class Gap:
+    #: The drawn lane's gap to the nearest lot line that is not a street.
+    drawn_ft: float
+    #: The most that gap could be with the plan slid away from that line;
+    #: None where no line opposite it was found (nothing measured the slide).
+    reach_ft: float | None
+
+
+def measure(
+    edges: LotEdges,
+    lane: Any,
+    building: Any,
+    court: Any | None,
+    *,
+    building_clear_ft: float,
+    court_clear_ft: float,
+) -> Gap | None:
+    """The lane's :class:`Gap`, or None where the lot has no line that is not
+    a street or an alley (nothing to keep the drive off)."""
+    from shapely.geometry import LineString
+
+    lines = [
+        (e, LineString(((e.x1, e.y1), (e.x2, e.y2))))
+        for e in edges.edges
+        if e.cls in (EdgeClass.side, EdgeClass.rear) and not e.alley
+    ]
+    if not lines:
+        return None
+    gaps = [lane.distance(line) for _, line in lines]
+    i = min(range(len(lines)), key=gaps.__getitem__)
+    near_edge, near = lines[i]
+    opposite = [
+        line
+        for j, (e, line) in enumerate(lines)
+        if j != i
+        and bearing_delta(e.bearing_deg, near_edge.bearing_deg) <= PARALLEL_DEG
+        and line.distance(near) > 0
+    ]
+    if not opposite:
+        return Gap(gaps[i], None)
+    far = max(opposite, key=lane.distance)
+    room = building.distance(far) - building_clear_ft
+    if court is not None and not court.is_empty:
+        room = min(room, court.distance(far) - court_clear_ft)
+    return Gap(gaps[i], gaps[i] + max(0.0, room))

@@ -1037,6 +1037,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_DRIVE_TOUCH]
+  ACCESS-DRIVEWAY-SIDEWALK-TYPE:
+    description: "The drive lane clears the smaller of the code's two gaps to a lot line but not the larger, and the sidewalk type that picks one is not held (Beaverton BDC Table 60.05.60.2 S12: 3 or 6 ft by the EDM's sidewalk type; FOLLOWUPS 201 add-on G, 1S112CC06300)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Find the street's sidewalk type in the Beaverton Engineering Design Manual; at the 3 ft type the plan stands"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_DRIVEWAY_SIDEWALK]
   # --- Portland's overlays (flats/geom/pdx_overlays.py, FOLLOWUPS 109) ------
   PDX-MAIN-STREET-TRANSIT:
     description: "The townhouse form on a lot in Portland's Centers Main Street overlay (\"m\"): PCC 33.415.300.B bars \"Houses, attached houses, and duplexes\" within 100 ft of a transit street, and four homes each on its own lot are attached houses unless the lots come from a middle housing land division (33.910). No map of the city's transit streets is held, so every street is taken as one. The apartment form (a fourplex) is not barred."

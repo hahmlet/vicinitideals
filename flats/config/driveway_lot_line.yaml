@@ -1,0 +1,41 @@
+# How close a driveway may come to a lot line that is not a street
+# (FOLLOWUPS 201 add-on G, the fg4-rate-B blind read, lot 41 1S112CC06300).
+#
+# Read by flats.geom.driveway_lot_line; the screen step is
+# flats.ingest.quadfit.driveway_lot_line_checked. Stored as printed: the
+# code's two figures and the condition that chooses between them.
+#
+# A place's figures are a floor on the gap between the drawn drive lane and
+# every lot line that is not a street (or an alley) -- the conservative
+# reading of "may be located as close as". The condition that picks the
+# figure is an unmeasured site fact here (`unmeasured`), so the screen takes
+# the larger figure for GREEN; a plan that clears only the smaller is YELLOW
+# with ACCESS-DRIVEWAY-SIDEWALK-TYPE; one that misses the smaller too fails
+# the standard.
+
+places:
+  or/washington/beaverton:
+    # 60.05.60.1.A: "the standards and guidelines in this section apply to
+    # single-detached dwellings ... and middle housing in the RMA, RMB, RMC,
+    # and CM-RM zoning districts" (60.05/60.05.60.txt#L5).
+    zones: [RMA, RMB, RMC, CM-RM]
+    figures_ft: [3, 6]
+    unmeasured: >-
+      the sidewalk type the Beaverton Engineering Design Manual classifies for
+      the street, which picks 3 ft or 6 ft; no layer holds it
+    cite: >-
+      Beaverton BDC Table 60.05.60.2 S12 (plexes): "Notwithstanding the corner
+      clearance for driveway standards in the Beaverton Engineering Design
+      Manual (EDM), driveways may be located as close as 3 or 6 feet from
+      property lines depending on sidewalk type classified by the EDM. This
+      standard does not apply to shared driveways serving two lots."; Table
+      60.05.60.3 S12.a (townhouses) prints the same 3 or 6 feet for lot lines
+      external to the development site
+    quote: "or/washington/beaverton/60.05/60.05.60.txt#L397-L399"
+    quote_also: "or/washington/beaverton/60.05/60.05.60.txt#L876"
+    via: "or/washington/beaverton/60.05/60.05.60.txt#L5"
+    # NOT CHANGED HERE (item 194's list, toward GREEN, needs a gain read):
+    # S12 opens "Notwithstanding the corner clearance for driveway standards
+    # in the ... EDM", so for these zones the EDM 210.21 C corner clearance
+    # the screen applies to Beaverton (driveway_spacing.yaml, 25 / 50 / 150
+    # ft from the cross street) may be stricter than the code asks of the pod.

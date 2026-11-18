@@ -248,6 +248,14 @@ CLOSER_LOOK_PLAN_OFF_LOT = "CLOSER_LOOK_PLAN_OFF_LOT"
 #: 8 ft, and 33.266.120.D.2 asks 9 ft of a driveway on private property).
 #: The drive to the court would cross another lot: never GREEN on it.
 CLOSER_LOOK_DRIVE_TOUCH = "CLOSER_LOOK_DRIVE_TOUCH"
+#: The drive lane clears the smaller of a code's two floors on its gap to a
+#: lot line but not the larger, and the site fact that picks one is not held
+#: (:func:`flats.ingest.quadfit.driveway_lot_line_checked`: Beaverton S12, 3
+#: or 6 ft by the EDM's sidewalk type). Never GREEN on the smaller figure.
+CLOSER_LOOK_DRIVEWAY_SIDEWALK = "CLOSER_LOOK_DRIVEWAY_SIDEWALK"
+#: The drive lane misses even the smaller floor, with the plan slid as far
+#: from the line as the building and court allow: the standard fails.
+DRIVEWAY_LOT_LINE = "DRIVEWAY_LOT_LINE"
 #: The pod is taken here only through a review whose decider may add
 #: conditions, or whose criteria weigh judgement words beside the measurable
 #: standards (:func:`review_with_conditions`). Steph 2026-10-14: "If it's
@@ -5277,6 +5285,8 @@ __all__ = [
     "CLOSER_LOOK_SPLIT_ZONE",
     "CLOSER_LOOK_PLAN_OFF_LOT",
     "CLOSER_LOOK_DRIVE_TOUCH",
+    "CLOSER_LOOK_DRIVEWAY_SIDEWALK",
+    "DRIVEWAY_LOT_LINE",
     "CLOSER_LOOK_SECOND_APPROACH",
     "CLOSER_LOOK_ROOF_CORNICE",
     "CLOSER_LOOK_HEIGHT_AS_MEASURED",

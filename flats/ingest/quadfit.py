@@ -193,7 +193,7 @@ from flats.geom.durham_apron import (
     load_street_network,
     maximum_clearance_ft,
 )
-from flats.geom import driveway_spacing
+from flats.geom import driveway_lot_line, driveway_spacing
 from flats.geom import sewer
 from flats.ingest.flatter import (
     _angles as _flatter_angles,
@@ -242,6 +242,7 @@ from flats.score.paper import (
     lot_line_buffer_ft,
     side_column,
     side_column_across,
+    side_yard_mode,
     side_court,
     side_yard_court_overlap_ft,
     side_yard_lane_overlap_ft,
@@ -253,7 +254,9 @@ from flats.score.screen import (
     PARKING_FRONT_SHARE,
     BUILDING_SHARE,
     CLOSER_LOOK_DRIVE_TOUCH,
+    CLOSER_LOOK_DRIVEWAY_SIDEWALK,
     CLOSER_LOOK_PLAN_OFF_LOT,
+    DRIVEWAY_LOT_LINE,
     CLOSER_LOOK_SPLIT_ZONE,
     FRONT_MAX,
     FRONT_MAX_DRAWN_TOL_FT,
@@ -4520,6 +4523,100 @@ def drive_touch_checked(s: Screened) -> Screened:
     return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
 
 
+DRIVEWAY_SIDEWALK = "ACCESS-DRIVEWAY-SIDEWALK-TYPE"
+#: Raster slack on a drawn gap.
+DRIVEWAY_GAP_TOL_FT = 0.1
+
+
+def driveway_lot_line_checked(s: Screened) -> Screened:
+    """``s`` measured against a code's floor on the gap between the drive
+    lane and the lot lines that are not streets (FOLLOWUPS 201 add-on G,
+    ``flats/config/driveway_lot_line.yaml``).
+
+    Beaverton BDC Table 60.05.60.2 S12: "driveways may be located as close as
+    3 or 6 feet from property lines depending on sidewalk type classified by
+    the EDM" (``beaverton/60.05/60.05.60.txt#L397-L399``). The fit draws the
+    lane into the side yard with no such gap (1S112CC06300, RMC: about 1 ft
+    off the east line, GREEN on run 128). The sidewalk type is not held, so
+    the larger figure is the one GREEN needs (an unmeasured condition takes
+    the conservative value): a plan that clears it, drawn or slid away from
+    the line as far as its building's side setback and its court allow
+    (:func:`flats.geom.driveway_lot_line.measure`), is untouched; one that
+    clears only the smaller is YELLOW with ACCESS-DRIVEWAY-SIDEWALK-TYPE; one
+    that misses the smaller too fails the standard, RED with
+    DRIVEWAY_LOT_LINE -- but only where the slide was measured; where it was
+    not (no line opposite, no side setback stated) it is YELLOW with the
+    flag. Never moves a lot toward GREEN."""
+    plan = s.drawing
+    if not plan or not plan.get("fits") or s.signed.triage is Triage.red and s.screening.triage is Triage.red:
+        return s
+    place = driveway_lot_line.place_for(s.lot.layer_id, s.lot.zone)
+    if place is None:
+        return s
+    edges = s.lot.edges
+    lane_ring, building_ring = plan.get("lane"), plan.get("building")
+    if edges is None or not lane_ring or len(lane_ring) < 4 or not building_ring or len(building_ring) < 4:
+        return s
+    from shapely.geometry import Polygon
+
+    def shape(ring: Any) -> Any:
+        got = Polygon(ring)
+        return got if got.is_valid else got.buffer(0)
+
+    court_ring = plan.get("court")
+    court = shape(court_ring) if court_ring and len(court_ring) >= 4 else None
+    side = s.rules.get("setback_side_ft")
+    side_ft = float(side) if isinstance(side, (int, float)) and not isinstance(side, bool) else None
+    court_clear = (
+        lot_line_buffer_ft(s.rules)
+        if side_yard_mode(s.rules) == "lane_and_court" or side_ft is None
+        else side_ft
+    )
+    gap = driveway_lot_line.measure(
+        edges,
+        shape(lane_ring),
+        shape(building_ring),
+        court,
+        building_clear_ft=side_ft if side_ft is not None else 0.0,
+        court_clear_ft=court_clear,
+    )
+    if gap is None:
+        return s
+    least, most = place.figures_ft[0], place.figures_ft[-1]
+    reach = gap.reach_ft if side_ft is not None else None
+    best = max(gap.drawn_ft, reach if reach is not None else gap.drawn_ft)
+    if best + DRIVEWAY_GAP_TOL_FT >= most:
+        return s
+    said = (
+        f"drive lane drawn {gap.drawn_ft:.1f} ft from a lot line"
+        + (f", at most {reach:.1f} ft with the plan slid away from it" if reach is not None else "")
+        + f"; the code asks {least:g} or {most:g} ft by {place.unmeasured} ({place.quote})"
+    )
+    if reach is not None and best + DRIVEWAY_GAP_TOL_FT < least:
+        bind = flag_plan.Bind(DRIVEWAY_LOT_LINE, round(best, 1), least, round(best - least, 1), source=said)
+
+        def red(x: Screening) -> Screening:
+            if any(b.check == DRIVEWAY_LOT_LINE for b in x.binds):
+                return x
+            reasons = x.reasons if DRIVEWAY_LOT_LINE in x.reasons else (*x.reasons, DRIVEWAY_LOT_LINE)
+            return dataclasses.replace(x, triage=Triage.red, binds=(*x.binds, bind), reasons=reasons)
+
+        return dataclasses.replace(s, screening=red(s.screening), signed=red(s.signed))
+    flag = flag_plan.Flag(DRIVEWAY_SIDEWALK, flag_plan.LOT, CLOSER_LOOK_DRIVEWAY_SIDEWALK, source=said)
+
+    def ask(x: Screening) -> Screening:
+        reasons = (
+            x.reasons
+            if CLOSER_LOOK_DRIVEWAY_SIDEWALK in x.reasons
+            else (*x.reasons, CLOSER_LOOK_DRIVEWAY_SIDEWALK)
+        )
+        triage = Triage.yellow if x.triage is Triage.green else x.triage
+        flags = x.flags if any(f.code == flag.code for f in x.flags) else (*x.flags, flag)
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
 def _plan_shapes(drawing: Mapping[str, Any]) -> list[Any]:
     """The building, lane and court of a stored drawing as polygons."""
     from shapely.geometry import Polygon
@@ -5846,6 +5943,7 @@ def _screen_lot_once(
         won = split_zone_checked(won, lot)
         won = plan_on_lot_checked(won, lot)
         won = drive_touch_checked(won)
+        won = driveway_lot_line_checked(won)
         won = road_standin_checked(won, lot)
         # The run's law day (fixed once in _init_worker), so a run that crosses
         # midnight on a dated provision's day screens every lot alike.
