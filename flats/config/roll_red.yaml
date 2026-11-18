@@ -43,6 +43,29 @@ tiers:
   tract:
     enabled: true
     words: a tract or common parcel the county values at $0
+  condo_common:
+    # Steph RULED 2026-11-18 (rulings.yaml 2026-11-18-condo-common-ground-red,
+    # FOLLOWUPS 201): "Condo shared ground is red". A condominium's common
+    # element is owned in shares by the unit owners; it cannot be bought and
+    # built on. Two readings, either one:
+    # (1) the intake's own mark (flats/normalize/condo.py): a Multnomah
+    #     condominium property code (102, 122, 132, 202) on a parcel of
+    #     2,000 sq ft or more -- the common-element land, stored by normalize
+    #     as condo_reason SUSPECT_CONDO_COMMON_AREA. Before this tier nothing
+    #     in scoring read the mark (class hunt round 4: 3 greens, 18 yellows).
+    # (2) property code 702 (Multnomah; class 7 multi-family, the same x02
+    #     ending as the condominium codes, and its siblings on the roll are
+    #     "UNIT #n" records) where the roll shows exactly the common-element
+    #     pattern of the marked lots: land, building, total and assessed value
+    #     all $0, no building square feet, and the county's common-element lot
+    #     number 6xxxx or 7xxxx (1N1E22DD -70000). 702 is NOT added to the
+    #     intake's code list, which would drop small 702 parcels as air units.
+    enabled: true
+    condo_reasons: [SUSPECT_CONDO_COMMON_AREA]
+    pattern: '^702$'
+    counties: [multnomah]
+    lot_pattern: '^[67]\d{4}$'
+    words: a condominium's shared (common-element) ground, owned by the unit owners
   open_space:
     enabled: true
     # 8xx recreation; 0x5 miscellaneous open space.

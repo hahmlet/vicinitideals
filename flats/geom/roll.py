@@ -51,6 +51,11 @@ class Tier:
     built_since: int | None = None
     built_lots: int = 0
     built_within_ft: float = 0.0
+    #: ``condo_common``: the intake's condo reasons that mark common ground.
+    condo_reasons: frozenset[str] = frozenset()
+    #: ``condo_common``: the lot number (last five characters) the county
+    #: gives a condominium's common element.
+    lot_pattern: re.Pattern[str] | None = None
 
 
 @dataclass(frozen=True)
@@ -77,6 +82,8 @@ def load_rules(path: Path = CONFIG) -> RollRules:
             built_since=int(keep["since"]) if (keep := body.get("keep_checked_when_block_built")) else None,
             built_lots=int(keep["lots"]) if keep else 0,
             built_within_ft=float(keep["within_ft"]) if keep else 0.0,
+            condo_reasons=frozenset(body.get("condo_reasons") or ()),
+            lot_pattern=re.compile(body["lot_pattern"]) if body.get("lot_pattern") else None,
         )
         for key, body in (doc.get("tiers") or {}).items()
     )
@@ -189,6 +196,20 @@ def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str
         elif tier.key == "tract":
             if zero and tract_number(tlid):
                 return hit(tier.key, f"{county} roll, parcel number {tlid}, value $0")
+        elif tier.key == "condo_common":
+            reason = str(row.get("condo_reason") or "")
+            if reason and reason in tier.condo_reasons:
+                return hit(tier.key, f"{county} roll code {code}, marked {reason} at intake")
+            if (
+                zero
+                and county in tier.counties
+                and tier.pattern
+                and tier.pattern.match(code)
+                and _number(row.get("BLDGSQFT")) == 0
+                and tier.lot_pattern
+                and tier.lot_pattern.match(re.sub(r"\s+", "", tlid)[-5:])
+            ):
+                return hit(tier.key, f"{county} roll code {code}, parcel number {tlid}, value $0, no building")
         elif tier.key == "open_space":
             if zero and tier.pattern and tier.pattern.match(code):
                 return hit(tier.key, f"{county} roll code {code}, value $0")

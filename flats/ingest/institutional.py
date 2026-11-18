@@ -74,7 +74,11 @@ def measure(lots: Any, land: Land) -> Any:
     return mark_whole(pd.DataFrame(rows, columns=list(COLUMNS[:-1])), tlids)
 
 
-ROLL_COLUMNS = ("county", "tlid", "PROP_CODE", "LANDVAL", "BLDGVAL", "TOTALVAL", "ASSESSVAL", "site_address", "YEARBUILT", "wkb")
+ROLL_COLUMNS = (
+    "county", "tlid", "PROP_CODE", "LANDVAL", "BLDGVAL", "TOTALVAL", "ASSESSVAL", "site_address", "YEARBUILT", "wkb",
+    # condo_common (FOLLOWUPS 201): the intake's mark and the building size.
+    "BLDGSQFT", "condo_reason",
+)
 
 
 def measure_roll(lots: Any, taken: set[tuple[str, str]] | None = None) -> Any:
