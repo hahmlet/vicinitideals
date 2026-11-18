@@ -74,7 +74,7 @@ the full one.)
 44. [Claude] [scan: NO new code, check after the weekly run] **Readings ranked on the map's colour, and 43's hose edge** -- SHIPPED 51577bb8 (on main, live); the spot-check of the 34 lots is not recorded (status unverified 11-13). [file](followups/44-reading-rank.md)
 8. [Claude] [scan: YES if (b) is taken up] **Pockets + corridors -- leftovers** -- all code live, both checks DONE 2026-11-09; only (b) open: 66 ZONE_POCKET lots (Troutdale NSA, Oregon City County, Beaverton WAcnty). [file](followups/8-pockets-corridors.md)
 21. [Claude] [Steph: worktree go; HUMAN_TODO 26] [scan: YES for (a)-(c); NO for (d)-(e)] **Post-2027 world** -- (b) built and live (runs 46, 49); (a) state layer to adopted Div 46 and (c) Oregon Homes path wait on Steph's worktree go. [file](followups/21-post-2027-world.md)
-64. [Claude] [scan: NO] **Measure the false-GREEN rate** -- rounds 1-3 done (pooled ~4%, stopping signal not met); 11-17 offered Steph a deep Fable round (class hunt over every GREEN + blind sample) once rel9 is live. [file](followups/64-false-green-rate.md)
+64. [Claude] [scan: NO] **Measure the false-GREEN rate** -- rounds 1-3 pooled ~4%; round 4 RUNNING on run 128 (Steph go 11-18, Fable): class hunt over every GREEN + blind sample (Multnomah half reading; Wash+Clack half not started). [file](followups/64-false-green-rate.md)
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
