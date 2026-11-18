@@ -94,6 +94,20 @@ error this test makes: mostly lots on very wide arterials, 252 of them within
 calling a street 93 ft away, across somebody's front garden, frontage for the
 other 6,947. If it is ever worth closing, the audit's test is the way -- front
 the lot when nothing private is in the gap, whatever its width.
+
+It was worth closing (FOLLOWUPS 201 item 5, 2026-11-18): the same miss on a
+lot that HAS a street makes a corner lot a one-street lot, and every check of
+the missed street never runs. 1S117CA01500 (15970 SW Farmington Rd, Washington
+County R-9) fronts SW 160th Ave (127 ft) and Farmington Rd (263 ft); the
+Farmington line's midpoint is 59.8 ft from the centreline, so it read as a
+side line and the busy-road driveway spacing check never ran -- a false GREEN.
+170 GREEN lots of run 128 had such a line. So an edge the 50 ft test misses
+is a street edge when the right-of-way is open across it (`_open_way`): of
+five rays cast square out of it, three cross a public street centreline
+(not an alley, a private road or a drive) within `WIDE_ROAD_RAY_FT` before
+they enter any private taxlot or a river, rail or water polygon. The
+threshold is unchanged, so a street across a neighbour's front garden is
+still not frontage.
 """
 
 from __future__ import annotations
@@ -138,6 +152,20 @@ ALLEY_COVER_INSET_FT = 2.5
 #: names this lot and anything stacked on it so neither is its own
 #: neighbour. Sampled at `ALLEY_SAMPLES` along the edge.
 NEIGHBOUR_OFFSET_FT = 2.0
+#: A lot line on a road too wide for the 50 ft midpoint test (`_open_way`):
+#: how far square out of the line its rays look for the centreline. The
+#: widest right-of-way a lot line was found on in run 128 is I-84's, its
+#: centreline 137-149 ft beyond the rear lines of the R7 lots along NE
+#: Fargo and Klickitat; Farmington Rd's is 60 ft out.
+WIDE_ROAD_RAY_FT = 150.0
+#: A private taxlot the ray runs into for less than this is a corner clip or
+#: a sliver of fabric overlap, not land standing between the line and the
+#: road (`audit_landlocked.CROSSING_MIN_FT`).
+WIDE_ROAD_CROSS_MIN_FT = 5.0
+#: Taxlot-file polygons that are not private land and not road either: a
+#: river, a rail line, water. A ray that crosses one before the centreline
+#: reaches a street on the far side of it, not one the lot abuts.
+WIDE_ROAD_BARRIER_RE = r"(?:-RIV|-RR|WATER)$"
 #: How far out of a STREET edge the lot across the street is looked for
 #: (`street_across`). A ray from each of the five `ALLEY_SAMPLES` points,
 #: square to the edge, runs over the right-of-way (public polygons and gaps
@@ -447,6 +475,59 @@ def _street_touch(x1: float, y1: float, x2: float, y2: float, outward: float,
     return [(a * step, b * step, s) for a, b, s in runs()]
 
 
+def _open_way(x1: float, y1: float, x2: float, y2: float, outward: float,
+              lot_tree, lot_geoms, lot_private, lot_barrier, way_tree, way_geoms) -> bool:
+    """Whether a public street lies across this edge with nothing private
+    between -- a lot line on a road too wide for the midpoint test.
+
+    Five rays (`ALLEY_SAMPLES` along the edge) cast square out of the lot,
+    `WIDE_ROAD_RAY_FT` long. A ray finds the street when it crosses one of
+    ``way_geoms`` (public street centrelines: no alley, private road or
+    drive) nearer than the first private taxlot it runs into for more than
+    `WIDE_ROAD_CROSS_MIN_FT` and nearer than any polygon ``lot_barrier``
+    marks (river, rail, water). The polygon holding the point
+    `NEIGHBOUR_OFFSET_FT` inside the line -- this lot, and anything stacked
+    on it -- is not in the way. Three rays of five (`ALLEY_SAMPLES_MIN_HIT`)
+    make the edge a street edge; `_street_touch` then cuts it where a
+    neighbour stands across it, as it does every street edge.
+    """
+    from shapely.geometry import LineString, Point
+
+    ln = math.hypot(x2 - x1, y2 - y1)
+    ex, ey = (x2 - x1) / ln, (y2 - y1) / ln
+    nx, ny = outward * ey, -outward * ex
+    found = 0
+    for k, s in enumerate(ALLEY_SAMPLES):
+        px, py = x1 + s * ln * ex, y1 + s * ln * ey
+        p = Point(px, py)
+        inside = Point(px - NEIGHBOUR_OFFSET_FT * nx, py - NEIGHBOUR_OFFSET_FT * ny)
+        ray = LineString([(px, py), (px + WIDE_ROAD_RAY_FT * nx, py + WIDE_ROAD_RAY_FT * ny)])
+        street = math.inf
+        for j in way_tree.query(ray):
+            x = ray.intersection(way_geoms[j])
+            if not x.is_empty:
+                street = min(street, x.distance(p))
+        if street < math.inf:
+            for j in lot_tree.query(ray):
+                g = lot_geoms[j]
+                if g.contains(inside):
+                    continue
+                x = ray.intersection(g)
+                if x.is_empty:
+                    continue
+                if lot_barrier is not None and lot_barrier[j]:
+                    blocked = True
+                else:
+                    blocked = lot_private[j] and x.length > WIDE_ROAD_CROSS_MIN_FT
+                if blocked and x.distance(p) <= street:
+                    street = math.inf
+                    break
+        found += street < math.inf
+        if found >= ALLEY_SAMPLES_MIN_HIT or found + len(ALLEY_SAMPLES) - k - 1 < ALLEY_SAMPLES_MIN_HIT:
+            break
+    return found >= ALLEY_SAMPLES_MIN_HIT
+
+
 def dead_ends(street_geoms) -> list:
     """Where the streets end: every centreline endpoint, snapped to the foot,
     that exactly one segment touches, as shapely Points.
@@ -512,7 +593,8 @@ def fronts_cul_de_sac(edges, dead_tree, dead_points) -> bool:
 
 def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
                  simplify_tol: float, *, alley_tree=None, alley_geoms=None,
-                 lot_tree=None, lot_geoms=None, lot_private=None) -> dict:
+                 lot_tree=None, lot_geoms=None, lot_private=None,
+                 way_tree=None, way_geoms=None, lot_barrier=None) -> dict:
     """Classify one lot polygon. Returns dict of edge/tier attributes.
 
     ``alley_tree``/``alley_geoms`` hold the alley centerlines separately from
@@ -529,6 +611,14 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
     alley across the lot's alley edges is returned as ``alley_width_ft``.
     Not given, the centreline alone decides, as it did until 2026-09-13,
     and the width is None.
+
+    ``way_tree``/``way_geoms`` hold the public street centrelines (no alley,
+    private road or drive) and ``lot_barrier`` which fabric polygons are a
+    river, rail or water. Given with the fabric, an edge the midpoint test
+    misses and no alley claims is a street edge when the right-of-way is open
+    across it to one of those centrelines (`_open_way`): a lot line on a road
+    too wide for the 50 ft test. Not given, the midpoint test alone decides,
+    as it did until 2026-11-18.
     """
     import shapely
     from shapely.geometry import LineString, Point
@@ -574,6 +664,13 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
                 if width is None:
                     is_alley = False
                     demoted += 1
+        if (not is_front and not is_alley and way_tree is not None and lot_tree is not None
+                and dist <= WIDE_ROAD_RAY_FT + ln / 2):
+            # A road too wide for the midpoint test (FOLLOWUPS 201 item 5):
+            # the right-of-way open across the line to a public street.
+            is_front = _open_way(x1, y1, x2, y2, outward, lot_tree, lot_geoms,
+                                 lot_private, lot_barrier, way_tree, way_geoms)
+            front_flags[-1] = is_front
         alley_flags.append(is_alley)
         alley_widths.append(width)
 
@@ -1269,8 +1366,17 @@ def main() -> None:
     fabric_juris = s2["jurisdiction"].astype(object).where(s2["jurisdiction"].notna(), None).to_numpy(dtype=object)
     fabric_zone = s2["zone_raw"].astype(object).where(s2["zone_raw"].notna(), None).to_numpy(dtype=object)
     fabric_split = s2["split_zone"].fillna(False).astype(bool).to_numpy()
+    lot_barrier = s2["TLID"].astype(str).str.contains(WIDE_ROAD_BARRIER_RE, regex=True).to_numpy()
     del s2
     tree_lots = STRtree(lot_geoms)
+    # The public streets a lot line on a too-wide road is looked across to
+    # (`_open_way`): no alley, no private road, no drive. Without TYPE in
+    # s1 a drive cannot be told from a street, and the test is not run.
+    if all_types is not None:
+        way_geoms = all_geoms[~is_alley & ~np.isin(all_types, list(DRIVE_TYPES))]
+        tree_ways = STRtree(way_geoms)
+    else:
+        way_geoms, tree_ways = None, None
     thr = rules.defaults.street_threshold_ft
     tol = rules.defaults.simplify_tolerance_ft
     alley_is_street = {
@@ -1291,12 +1397,14 @@ def main() -> None:
             results.append(classify_lot(
                 geom, tree_all, all_geoms, thr, tol,
                 lot_tree=tree_lots, lot_geoms=lot_geoms, lot_private=lot_private,
+                way_tree=tree_ways, way_geoms=way_geoms, lot_barrier=lot_barrier,
             ))
         else:
             results.append(classify_lot(
                 geom, tree_streets, street_geoms, thr, tol,
                 alley_tree=tree_alleys, alley_geoms=alley_geoms,
                 lot_tree=tree_lots, lot_geoms=lot_geoms, lot_private=lot_private,
+                way_tree=tree_ways, way_geoms=way_geoms, lot_barrier=lot_barrier,
             ))
         if n and n % 20000 == 0:
             print(f"  {n:,}/{len(lots):,}")
