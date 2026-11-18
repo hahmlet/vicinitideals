@@ -817,8 +817,24 @@ def summary(out: Path, *, seed: int = 199) -> str:
               "dwellings_reasons", "corrosion_steel", "corrosion_concrete", "hydric", "susc_source", "slide_mapped",
               "liq_class", "fema_zone", "occupied", "year_built", "basement", "frost_hub_in", "frost_register_in",
               "hub_sdc", "visit_status"]
-    rows = [[f, sum(1 for r in recs if r.get(f) in (None, "")), round(100 * sum(1 for r in recs if r.get(f) in (None, "")) / total, 1)]
+    def gone(r: dict[str, Any], f: str) -> bool:
+        # A held component with no wet layer or no restrictive layer reads
+        # "none", not missing: missing is no monthly / horizon rows held.
+        if f == "water_cm":
+            return not r.get("water_months_held")
+        if f == "restriction_cm":
+            return not r.get("restrictions_known")
+        if f == "year_built":
+            return r.get("occupied") == "built" and r.get(f) is None
+        return r.get(f) in (None, "")
+
+    rows = [[f, sum(1 for r in recs if gone(r, f)), round(100 * sum(1 for r in recs if gone(r, f)) / total, 1)]
             for f in fields]
+    rows.append(["(water_cm: none within the survey's depth, rows held)",
+                 sum(1 for r in recs if r.get("water_months_held") and r.get("water_cm") is None), ""])
+    rows.append(["(restriction_cm: no restrictive layer, horizons held)",
+                 sum(1 for r in recs if r.get("restrictions_known") and r.get("restriction_cm") is None), ""])
+    rows.append(["(year_built: counted on built lots only)", sum(1 for r in recs if r.get("occupied") == "built"), ""])
     parts.append("## 6. Missing per input\n" + _table(["input", "lots missing", "% missing"], rows))
     parts.append("Elevation source: " + json.dumps(Counter(f"{r.get('elev_source')} cell {r.get('elev_cell_m')} m" for r in recs)))
     parts.append("Errors: " + json.dumps(Counter(str(r.get("errors"))[:80] for r in recs).most_common(12)))
