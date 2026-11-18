@@ -46,6 +46,7 @@ the full one.)
 
 ## 1. Claude -- priority
 
+198. [Claude] [scan: NO -- note only] **Mapped landslide, liquefaction and flood areas per lot, as notes** -- foundation agent ask 11-18; flood already held, landslide + liquefaction need the state geology layers; scout running. [file](followups/198-ground-hazard-notes.md)
 197. [Claude] [scan: NO -- note only] **Frost depth per jurisdiction, as a note** -- Steph ask 11-18; state baseline plus what each building department actually enforces (Gresham differs); scout running. [file](followups/197-frost-depth.md)
 196. [Claude] [scan: NO -- note only] **Soil type per lot from the USDA soil survey, as a note** -- Steph yes 11-17; greens first, then all lots; BUILDING flats/soil-notes. [file](followups/196-soil-notes.md)
 195. [Claude] [scan: YES -- toward yellow, possible FALSE GREEN] **Building minimum frontage share counted in 1 ft steps: a pass exactly at the minimum may be under it** -- same fix as rel9 F1 the other way; rel10 lane. [file](followups/195-building-share-step.md)
