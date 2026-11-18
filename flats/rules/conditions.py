@@ -464,6 +464,26 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "gresham_first_floor_uses_street",
+        "site_fact",
+        "A street line of the Gresham Downtown lot abuts, at any point, a "
+        "stretch where GDC 4.1121(A) requires 75 percent of a building's "
+        "ground floor within 40 feet of the right-of-way in Commercial or "
+        "Civic uses: the north side of E Powell between NW Miller and NE "
+        "Roberts, N Main between E Powell and NE 4th, NE 3rd between N Main "
+        "and NE Hood, and the north side of NE 3rd between NE Hood and NE "
+        "Kelly. The code names the stretches in words; the RLIS centrelines "
+        "are typed by them "
+        "(flats/config/areas/or/multnomah/gresham/downtown-first-floor-uses.geojson, "
+        "flats.geom.first_floor_uses). Answered per Downtown lot from its "
+        "street lines: True at any point on a named stretch (from the north "
+        "side where only that side is named), False when every street line "
+        "reads another traced centreline, unanswered -- out of GREEN -- where "
+        "a street line no traced centreline explains lies near a named stretch.",
+        evidence="GDC 4.1121(A) named stretches, typed onto RLIS centrelines, against the lot's s4 street lines",
+        assume=None,
+    ),
+    ConditionDef(
         "hillsboro_active_use_street",
         "site_fact",
         "A street line of the Hillsboro lot abuts, at any point, a South "

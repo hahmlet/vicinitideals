@@ -5988,6 +5988,26 @@ zones:
       cite: "GDC 3.0100, Primary Street: for the Downtown Design District the street type hierarchy of Map 4.1140 (Urban Boulevard, Main Avenue, Urban Local, other Unique Streets, Downtown Local)"
       quote: "or/multnomah/gresham/3/3.0103.txt#L762-L766"
       via: "or/multnomah/gresham/3/3.0103.txt#L220-L221"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Downtown. MAXIMUM front setback 15-20 ft + >=50% frontage occupancy
       (7.0420(J)) effectively force the long axis parallel to the street — axis_required. Max-front-setback
       placement band not modeled (blind spot).'
@@ -6230,6 +6250,26 @@ zones:
       cite: "GDC 3.0100, Primary Street: for the Downtown Design District the street type hierarchy of Map 4.1140 (Urban Boulevard, Main Avenue, Urban Local, other Unique Streets, Downtown Local)"
       quote: "or/multnomah/gresham/3/3.0103.txt#L762-L766"
       via: "or/multnomah/gresham/3/3.0103.txt#L220-L221"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Same as DRL-1; height 50 ft.'
   DCC:
     section: ["4.11", "7.042"]
@@ -6661,6 +6701,26 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: 'OPENED 2026-10-29 (FOLLOWUPS 109 chunk 5) as four townhouses on four unit lots, on the Townhouse P of Table 4.1120 and the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row of Table 4.1130, read as DMU reads them: front 10, street side 10, garage 15, side 5, rear 10 (3 on an alley), the row''s long face to the street (4.1152 S6; 7.0431 does not list DCC or DTM), the Downtown Local curb-cut permission as a judgement review, and Map 4.1140''s street-type bars (gresham_downtown_barred_street). The townhouse row''s maximum front setback (10 to 20 by street type) is not encoded here, as the plex row''s is not. The one-lot plex below is unchanged. Read against Tables 4.1120 and 4.1130 on 2026-08-19. The Downtown Commercial Core is the largest unencoded district in Gresham and it screens closed, which is worth stating precisely because the reason is narrow. A quadplex is not prohibited here; it is allowed on a small legacy lot -- 7,600 sq ft or less, 70 feet of frontage or less, north of NE 8th Street -- and two of those three gates are facts nobody has measured. The lot-area gate is measured and rides on the variant as a band, so the day frontage and that street line are computed the permission opens on the right lots rather than on all of them. Every dimensional standard comes from the Table 4.1130 row headed "Single-detached, duplex, triplex, and quadplex dwellings in any district" (L492): its numbers are identical across all six street-type columns, so nothing here turns on which street the lot fronts. Height 85 and floor area ratio 3.0 are the DCC column of a table whose second column is not a district but the N Main Avenue strip -- 45 feet and 1.5 -- and note 1 sends any part of a site within 110 feet of that centre line to it. Both of those numbers still clear a 26 ft pod, so the strip is ruled in the footnote ledger rather than encoded as a variant. The MAXIMUM front setback of this row (L508) is 20 feet on four street types and 15 on Beech; not encoded, for the same reason it is not encoded on DRL-1 and DRL-2, and the same blind spot.'
   DTM:
     section: ["4.11", "7.042"]
@@ -7088,6 +7148,26 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: 'OPENED 2026-10-29 (FOLLOWUPS 109 chunk 5) as four townhouses on four unit lots, on the Townhouse P of Table 4.1120 and the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row of Table 4.1130, read as DMU reads them: front 10, street side 10, garage 15, side 5, rear 10 (3 on an alley), the row''s long face to the street (4.1152 S6; 7.0431 does not list DCC or DTM), the Downtown Local curb-cut permission as a judgement review, and Map 4.1140''s street-type bars (gresham_downtown_barred_street). The townhouse row''s maximum front setback (10 to 20 by street type) is not encoded here, as the plex row''s is not. The one-lot plex below is unchanged. Read against Tables 4.1120 and 4.1130 on 2026-08-19. Downtown Transit Mid-Rise, and the same L1 limitation as DCC without the geography: a quadplex is allowed on a lot of record 6,500 sq ft or smaller with 70 feet of street frontage or less. The lot-area half is measured and rides on the variant as a band; the frontage maximum is not, so the base false binds. Read together with the minimum lot size the same table states for this building -- 5,000 sq ft -- the permission is a window rather than a threshold: between 5,000 and 6,500 sq ft, and nothing outside it. That is the shape a screen gets wrong by taking either number alone. Height 85 and floor area ratio 3.0 from the DTM column; minimum net density 20 units per acre, which four units clear on any lot small enough to qualify. Dimensional standards from the L492 row, identical across every street type.'
   DMU:
     section: ["4.11"]
@@ -7389,6 +7469,26 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: >-
       Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
       unit lots, under Steph's 2026-10-15 ruling. Table 4.1120 reads NP for a
@@ -7713,6 +7813,26 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: >-
       Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
       unit lots, under Steph's 2026-10-15 ruling. Table 4.1120 reads NP for a
@@ -8038,6 +8158,26 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: >-
       Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
       unit lots, under Steph's 2026-10-15 ruling. Table 4.1120 reads NP for a

@@ -171,6 +171,47 @@ CLOSER_LOOK_MIN_FAR = "CLOSER_LOOK_MIN_FAR"
 #: Minimum amount-of-building checks stay soft unless the more-pods ruling
 #: proves a missed minimum FAR cannot physically fit.
 SOFT_FLOOR_CHECKS: frozenset[str] = MIN_DENSITY_CHECKS | {"min_far"}
+#: The lot misses a minimum density the code writes into the use permission
+#: itself (``min_density_conditions_use``: Estacada EMC 16.26.020 (D)(4)(2),
+#: a fourplex "provided that ... the residential density of the development
+#: is not less than sixteen (16) dwelling units per acre"). Not the big-lot
+#: flag below the yellow line: the use depends on more homes than one pod, so
+#: the lot is held YELLOW with DENSITY-USE (FOLLOWUPS 203).
+CLOSER_LOOK_USE_DENSITY = "CLOSER_LOOK_USE_DENSITY"
+#: Steph may rule that such a miss is RED (the use is not allowed at the
+#: density one pod gives). The one-line switch: True makes the miss a wall.
+USE_DENSITY_MISS_IS_WALL = False
+#: The code requires part of the ground floor near the street in commercial
+#: use (``ground_floor_commercial_min_pct``: Gresham GDC 4.1121(A)) and the pod
+#: is four homes. Whether any of the building stands within the code's
+#: distance of that street is not measured, so YELLOW, never GREEN
+#: (FOLLOWUPS 203).
+CLOSER_LOOK_GROUND_FLOOR_USE = "CLOSER_LOOK_GROUND_FLOOR_USE"
+
+
+def use_density(rules: ZoneResolution) -> bool:
+    """Whether the zone's use permission itself turns on its minimum density."""
+    return rules.get("min_density_conditions_use") is True
+
+
+def ground_floor_commercial_owed(rules: ZoneResolution) -> float | None:
+    """The ground-floor commercial share the code asks of this lot, percent;
+    None where it asks none. The pod's ground floor is all homes."""
+    need = rules.get("ground_floor_commercial_min_pct")
+    if need is None or isinstance(need, bool) or float(need) <= 0:
+        return None
+    return float(need)
+
+
+def _soft_floor(check: str, rules: ZoneResolution, min_far_no_room: bool) -> bool:
+    """Whether a miss of ``check`` is a soft floor -- a flag or a closer look,
+    never a wall: a minimum density (unless it conditions the use and
+    :data:`USE_DENSITY_MISS_IS_WALL`), or a minimum FAR more pods could meet."""
+    if check == "min_far":
+        return not min_far_no_room
+    if check in MIN_DENSITY_CHECKS:
+        return not (USE_DENSITY_MISS_IS_WALL and use_density(rules))
+    return False
 
 #: The lot standards each `lot_of_record_relief` lets an existing lot of
 #: record off, by check name. `lot_dimensions` also lifts the minimum density
@@ -4095,11 +4136,15 @@ def screen(
     # offers around it (Steph, 2026-10-02): the lot is big enough that the
     # city wants more homes on it than four, which is a closer look -- a
     # bigger plan, or a split (FOLLOWUPS 31) -- and not a lot to throw away.
-    walls = [
-        o for o in outcomes
-        if o.check not in SOFT_FLOOR_CHECKS or (o.check == "min_far" and min_far_no_room)
-    ]
-    closer = (CLOSER_LOOK_MIN_DENSITY,) if any(o.check in MIN_DENSITY_CHECKS for o in outcomes) else ()
+    walls = [o for o in outcomes if not _soft_floor(o.check, rules, min_far_no_room)]
+    density_missed = any(
+        o.check in MIN_DENSITY_CHECKS and _soft_floor(o.check, rules, min_far_no_room)
+        for o in outcomes
+    )
+    # A density the use itself depends on is a closer look of its own
+    # (FOLLOWUPS 203), not the big-lot flag.
+    density_closer = CLOSER_LOOK_USE_DENSITY if use_density(rules) else CLOSER_LOOK_MIN_DENSITY
+    closer = (density_closer,) if density_missed else ()
     if any(o.check == "min_far" for o in outcomes) and not min_far_no_room:
         closer = (*closer, CLOSER_LOOK_MIN_FAR)
     # A pad on a grade between Steph's two lines: buildable, at a price.
@@ -4113,6 +4158,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_ENTRANCE_SIDE)
     if roof_elements_owed(rules, design) is not None:
         closer = (*closer, CLOSER_LOOK_ROOF_ELEMENTS)
+    if ground_floor_commercial_owed(rules) is not None:
+        closer = (*closer, CLOSER_LOOK_GROUND_FLOOR_USE)
     if roof_book_unread(rules, design):
         closer = (*closer, CLOSER_LOOK_ROOF_BOOK)
     if review is not None and not reach:
@@ -5058,8 +5105,7 @@ def _account(
     curb_route = lot.fire_route_curb_ft
     walls = [
         c for c in checks
-        if c.verdict is Verdict.fails
-        and (c.check not in SOFT_FLOOR_CHECKS or (c.check == "min_far" and min_far_no_room))
+        if c.verdict is Verdict.fails and not _soft_floor(c.check, rules, min_far_no_room)
     ]
     if curb_route is not None and use_path is None and [c.check for c in walls] == ["fire_access_ft"]:
         (c,) = walls
@@ -5068,9 +5114,22 @@ def _account(
     # A minimum density missed is a flag, never a bind (Steph 2026-10-02:
     # "Make it a flag for sure ... It would just be a low risk flag").
     for c in checks:
-        if c.check in MIN_DENSITY_CHECKS and c.verdict is Verdict.fails:
+        if (
+            c.check in MIN_DENSITY_CHECKS
+            and c.verdict is Verdict.fails
+            and _soft_floor(c.check, rules, min_far_no_room)
+        ):
             span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
-            flag("DENSITY-MIN", CLOSER_LOOK_MIN_DENSITY, bounds=span, source=c.check)
+            if use_density(rules):
+                # The use itself depends on the density (FOLLOWUPS 203).
+                flag(
+                    "DENSITY-USE",
+                    CLOSER_LOOK_USE_DENSITY,
+                    bounds=span,
+                    source=_cite(rules, "min_density_conditions_use"),
+                )
+            else:
+                flag("DENSITY-MIN", CLOSER_LOOK_MIN_DENSITY, bounds=span, source=c.check)
         if c.check == "min_far" and c.verdict is Verdict.fails and not min_far_no_room:
             span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
             flag("FAR-MIN", CLOSER_LOOK_MIN_FAR, bounds=span, source=_cite(rules, "min_far"))
@@ -5122,6 +5181,15 @@ def _account(
             CLOSER_LOOK_ROOF_ELEMENTS,
             bounds=(0.0, float(elements)),
             source=_cite(rules, "roof_design_elements_min"),
+        )
+    commercial = ground_floor_commercial_owed(rules)
+    if commercial is not None:
+        # The pod's ground floor is all homes (FOLLOWUPS 203).
+        flag(
+            "GROUND-FLOOR-USE",
+            CLOSER_LOOK_GROUND_FLOOR_USE,
+            bounds=(0.0, commercial),
+            source=_cite(rules, "ground_floor_commercial_min_pct"),
         )
     if roof_book_unread(rules, design):
         flag(
@@ -5184,10 +5252,7 @@ def _account(
     if rules.trusted:
         paths = {o.check: o for o in outcomes}
         for c in checks:
-            if c.verdict is not Verdict.fails or (
-                c.check in SOFT_FLOOR_CHECKS
-                and not (c.check == "min_far" and min_far_no_room)
-            ):
+            if c.verdict is not Verdict.fails or _soft_floor(c.check, rules, min_far_no_room):
                 continue
             # A Durham apron miss is a flag, not a bind: YELLOW, never RED on
             # this ground alone (2026-11-09-busy-road-driveway-spacing-yellow).
@@ -5281,6 +5346,9 @@ __all__ = [
     "THROUGH_FRONT_GUESSED",
     "CLOSER_LOOK_MIN_DENSITY",
     "CLOSER_LOOK_MIN_FAR",
+    "CLOSER_LOOK_USE_DENSITY",
+    "CLOSER_LOOK_GROUND_FLOOR_USE",
+    "USE_DENSITY_MISS_IS_WALL",
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_SPLIT_ZONE",
     "CLOSER_LOOK_PLAN_OFF_LOT",

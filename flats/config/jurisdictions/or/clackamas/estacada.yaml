@@ -747,6 +747,18 @@ zones:
       value: 16
       cite: Estacada EMC 16.26.020 (D)(4)(2), the residential density of the development is not less than sixteen dwelling units per acre
       quote: "or/clackamas/estacada/16.26/16.26.020.txt#L16"
+    min_density_conditions_use:
+      # FOLLOWUPS 203 (2026-11-18). The sixteen an acre is not a row of the
+      # standards (16.26.040) but the second of the three conditions on which
+      # the fourplex is permitted at all ("provided that the following
+      # standards are met"). One pod reaches it only on a lot of 10,890 sq ft
+      # or less; on a bigger lot the use depends on more homes than one pod,
+      # so the lot is held YELLOW (DENSITY-USE), not green with the big-lot
+      # flag. More pods could reach it, hence not RED; Steph may rule RED
+      # (flats.score.screen.USE_DENSITY_MISS_IS_WALL).
+      value: true
+      cite: Estacada EMC 16.26.020 (D)(4), multi-family dwelling, triplex or fourplex "provided that the following standards are met", the second being a residential density of not less than sixteen dwelling units per acre
+      quote: "or/clackamas/estacada/16.26/16.26.020.txt#L11,L16"
     min_lot_sqft:
       exempt: true
       cite: Estacada EMC 16.26.040 (A)(1), minimum lot size none
@@ -835,7 +847,8 @@ zones:
       (downtown-back-streets.geojson); everywhere else in D the fourplex stays
       refused. Front and street side 5 (min and max), side and rear 10,
       17-65 ft, no lot minimum or coverage, landscaping 5 percent, parking not
-      in front, sixteen units an acre (a flag where missed). The committee
+      in front, sixteen units an acre (a condition of the use: YELLOW with
+      DENSITY-USE where missed, FOLLOWUPS 203). The committee
       design review is a judgement review (green with a flag inside the
       UGB). Doubts, all toward RED or more yard: the 20 percent parking
       reduction (16.26.040 (B)(2)) and the no-minimum within 100 ft of

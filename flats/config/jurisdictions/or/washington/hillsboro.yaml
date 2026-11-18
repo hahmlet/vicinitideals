@@ -3162,7 +3162,8 @@ zones:
   #   applies to parcels "containing only residential development", which is
   #   the pod's case, and minimum FAR to parcels with only non-residential
   #   development. The MU-C, MU-VTC and SCR-V minimum FARs carry no such
-  #   carve-out; no field holds a minimum FAR, so none is encoded, a doubt.
+  #   carve-out. MU-VTC's is encoded (2026-11-04) and SCR-V's (2026-11-18,
+  #   FOLLOWUPS 203); MU-C's is not yet, a doubt.
   # - NOT ENCODED: "Front Property Line Coverage" (UC-RM, UC-MU, UC-AC,
   #   UC-NC, UC-OR), a share of the primary street frontage the first two
   #   or three stories of the front facade must occupy. No field holds a
@@ -3833,6 +3834,34 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.460-1, maximum density does not apply to quadplexes
       quote: "or/washington/hillsboro/12.24/12.24.460.txt#L12,L26-L28"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 12.24.460-1: "Minimum FAR - < 1,300
+      # feet from an LRT station 0.5 - > 1,300 feet from an LRT station 0.4",
+      # banded on the measured distance to a MAX station like the density
+      # above; a lot at exactly 1,300 ft, which neither row names, stays on
+      # the 0.5. 12.50.150.B.1: "projects developed after September 4, 2014
+      # must comply with the minimum FAR standard of the applicable base
+      # zone". FAR is gross floor area over net lot area (12.01.500); the
+      # pod's floor area over the whole lot is the lowest it can score, so a
+      # pass there is certain. Missed, it is the more-pods rule (rulings.yaml
+      # 2026-11-04-min-floor-area-more-pods): YELLOW with FAR-MIN, RED only
+      # where the pods it needs clearly cannot stand. The 12.50.150.C.1
+      # exemption needs an approved Concept Development Plan, which the pod
+      # does not have.
+      #
+      # A DOUBT, held: 12.50.150.A says the floors "are intended to achieve
+      # an increased intensity of non-residential development", and the UC
+      # zones' carve-out for residential-only parcels (12.24.030 G.4) is not
+      # written for SCR-V. The purpose words are not a rule; the floor is held.
+      value: 0.5
+      cite: Hillsboro CDC Table 12.24.460-1, Minimum FAR, < 1,300 feet from an LRT station; 12.50.150.B.1
+      quote: "or/washington/hillsboro/12.24/12.24.460.txt#L12-L13,L33-L34"
+      via: "or/washington/hillsboro/12.50/12.50.150.txt#L4,L7"
+      variants:
+        - value: 0.4
+          band: {measure: lrt_station_ft, more_than: 1300}
+          cite: Hillsboro CDC Table 12.24.460-1, Minimum FAR, > 1,300 feet from an LRT station
+          quote: "or/washington/hillsboro/12.24/12.24.460.txt#L12-L13,L33,L35"
     min_lot_width_ft:
       # Front-yard garage access 20, rear-yard 15; the pod has no garage and
       # the larger is held.

@@ -1843,7 +1843,10 @@ notes:
       neither carries this marker -- but the section it cites, 4.1121,
       is a first-floor requirement that names its locations rather than
       a use category, so it is worth re-reading if a DCC lot on N Main
-      Avenue or E Powell Boulevard ever screens GREEN
+      Avenue or E Powell Boulevard ever screens GREEN. Re-read
+      2026-11-18 (FOLLOWUPS 203): 4.1121(A) is now encoded in every
+      Downtown sub-district as ground_floor_commercial_min_pct, asked only
+      of a lot on a named stretch (flats.geom.first_floor_uses)
 
   - quote: "or/multnomah/gresham/4/4.1120.txt#L128-L129"
     digest: "9d04139cdbbb"

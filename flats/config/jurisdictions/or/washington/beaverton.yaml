@@ -551,11 +551,12 @@ defaults:
 # Beaverton street line takes no strip; the county-zoned pockets inside the
 # city read the county's 25 to 45 feet. A doubt (FOLLOWUPS 77).
 #
-# NOT ENCODED: minimum FAR. The Multiple Use table prints a minimum floor
-# area ratio (row B.1, 0.30 to 0.60; 20.20.15.txt#L20-L22)
-# and the Cooper Mountain table one for CM-CS and CM-HDR (row I.1, 0.4;
-# 20.22.15.txt#L75). No field holds a floor on FAR. A
-# four-unit pod on a large lot can fall under it; a doubt.
+# ENCODED 2026-11-18 (FOLLOWUPS 203): the Multiple Use table's minimum floor
+# area ratio (row B.1, 0.30 to 0.60; 20.20.15.txt#L20-L22) as `min_far` in
+# RC-E, TC-MU, TC-HDR, SC-MU, SC-HDR and SC-S. NOT ENCODED: the Cooper
+# Mountain table's (row I.1, 0.4 for CM-CS and CM-HDR; 20.22.15.txt#L75) and
+# the Downtown zones' (Chapter 70), outside that item's two tables; a
+# four-unit pod on a large lot can fall under them; a doubt.
 #
 # ENCODED 2026-10-21 (FOLLOWUPS 109): the frontage occupancy of
 # 60.05.15.6.A, "At least 60 percent of the site's Primary Frontage ...
@@ -2765,8 +2766,8 @@ zones:
   # BDC 20.20, Multiple Use Zoning Districts. Table 20.20.15 (columns
   # RC-E OI-WS C-WS TC-MU TC-HDR SC-MU SC-HDR SC-S SC-E1 SC-E3) and Table
   # 20.20.20.A. No row states a minimum lot area, a lot width or a height
-  # for the zones that admit the pod. NOT ENCODED: B.1 minimum FAR (no
-  # field). Note 70 (the South Cooper Mountain housing-variety rule) asks
+  # for the zones that admit the pod. B.1 minimum FAR encoded 2026-11-18
+  # (`min_far`, FOLLOWUPS 203). Note 70 (the South Cooper Mountain housing-variety rule) asks
   # one housing type of a site up to 15 acres, which the pod is.
   # ------------------------------------------------------------------
   RC-E:
@@ -2940,6 +2941,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L44"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (RC-E 0.30); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.30
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (RC-E 0.30); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 12 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -3116,6 +3138,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L47"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (TC-MU 0.50); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.50
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (TC-MU 0.50); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -3292,6 +3335,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L48"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (TC-HDR 0.30); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.30
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (TC-HDR 0.30); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -3477,6 +3541,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L50"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (SC-MU 0.40); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.40
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (SC-MU 0.40); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
@@ -3663,6 +3748,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L51"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (SC-HDR 0.40); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.40
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (SC-HDR 0.40); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
@@ -3847,6 +3953,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L52"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (SC-S 0.60); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.60
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (SC-S 0.60); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
