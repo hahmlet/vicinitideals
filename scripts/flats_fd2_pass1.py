@@ -219,6 +219,98 @@ def _ring_key(ring: Any) -> tuple[tuple[float, float], ...] | None:
     return tuple((round(float(x), 1), round(float(y), 1)) for x, y in ring)
 
 
+def _write_outputs(out: Path, recs: list[dict[str, Any]], keys: list[str]) -> None:
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    pq.write_table(pa.table({k: [r.get(k) for r in recs] for k in keys}), out / "fd2_lots.parquet")
+    with open(out / "fd2_lots.csv", "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=keys)
+        w.writeheader()
+        for r in recs:
+            w.writerow({k: r.get(k) for k in keys})
+
+
+def fix_flood(out: Path, assign: Path, nfhl: Path | None) -> dict[str, Any]:
+    """Post-step for a run made before two fixes, safe to run twice:
+
+    * a footprint with no held FEMA polygon reads flood_100 missing (it read
+      False), and, where ``nfhl`` (a GeoJSON of FEMA NFHL flood hazard zones,
+      layer 28, EPSG:4326, fetched for the lots the held layer misses) is
+      given, is measured on it instead;
+    * O-19-09's class "None" carries its code, so a spreadsheet keeps it.
+
+    The ground class is worked out again on the corrected record."""
+    import numpy as np
+    import pyarrow.parquet as pq
+    import shapely
+    from pyproj import Transformer
+    from shapely.geometry import Polygon, shape
+    from shapely.strtree import STRtree
+
+    recs = pq.read_table(out / "fd2_lots.parquet").to_pylist()
+    keys = list(recs[0])
+    for k in ("fema_source",):
+        if k not in keys:
+            keys.append(k)
+    tree = geoms = props = None
+    if nfhl is not None:
+        data = json.loads(nfhl.read_text(encoding="utf-8"))
+        tf = Transformer.from_crs(4326, 2913, always_xy=True)
+        geoms, props = [], []
+        for f in data.get("features", []):
+            if not f.get("geometry"):
+                continue
+            g = shapely.make_valid(shapely.transform(shape(f["geometry"]), lambda xy: np.column_stack(
+                tf.transform(xy[:, 0], xy[:, 1]))))
+            geoms.append(g)
+            props.append(f.get("properties") or {})
+        tree = STRtree(geoms)
+    rings = {}
+    if tree is not None:
+        for r in pq.read_table(assign, columns=["TLID", "colour", "drawing"]).to_pylist():
+            if r["colour"] == "green" and r.get("drawing"):
+                ring = (json.loads(r["drawing"]) or {}).get("building")
+                if ring:
+                    rings[r["TLID"]] = Polygon(ring)
+    n = Counter()
+    code_of = {str(r["liq_class"]): int(r["liq_class_code"]) for r in recs
+               if r.get("liq_class") and r.get("liq_class_code") is not None and "(" not in str(r["liq_class"])}
+    for r in recs:
+        for k in ("liq_class", "liq_majority"):
+            v = r.get(k)
+            if v and "(" not in str(v) and str(v) in code_of:
+                r[k] = f"{v} ({code_of[str(v)]})"
+        if r.get("fema_zone") == "not mapped":
+            r["flood_100"], r["fema_source"] = None, None
+            fp = rings.get(r["TLID"])
+            if tree is not None and fp is not None:
+                hit = [i for i in tree.query(fp, predicate="intersects")
+                       if shapely.area(shapely.intersection(fp, geoms[i])) > 0]
+                if hit:
+                    zones = sorted({str(props[i].get("FLD_ZONE")) + (f" ({props[i].get('ZONE_SUBTY')})"
+                                    if props[i].get("ZONE_SUBTY") else "") for i in hit})
+                    r["fema_zone"] = ", ".join(zones)
+                    r["flood_100"] = any(str(props[i].get("SFHA_TF")).upper() == "T" for i in hit)
+                    r["fema_source"] = "FEMA NFHL service (layer 28), fetched 2026-11-18"
+            n["nfhl_measured" if r.get("fema_source") else "fema_missing"] += 1
+        elif r.get("fema_zone") and not r.get("fema_source"):
+            r["fema_source"] = "held overlay_fema_flood"
+        g, unread, pan = fd2.ground_class(r)
+        if g != r.get("ground_class"):
+            n[f"class {r.get('ground_class')} -> {g}"] += 1
+        r["ground_class"], r["ground_class_unread"], r["pan"] = g, ",".join(unread) or None, pan
+        if r.get("alt_ground_class") and r.get("flood_100") and r["alt_ground_class"] not in ("HAZ-SLIDE", "HAZ-LIQ"):
+            r["alt_ground_class"] = "FLOOD"
+        n[("flood_100", r.get("flood_100"))] += 1
+    _write_outputs(out, recs, keys)
+    meta = json.loads((out / "fd2_meta.json").read_text(encoding="utf-8"))
+    meta["fix_flood"] = {"nfhl": str(nfhl) if nfhl else None, "counts": {str(k): v for k, v in n.items()},
+                         "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+    (out / "fd2_meta.json").write_text(json.dumps(meta, indent=2, default=str), encoding="utf-8")
+    return meta["fix_flood"]
+
+
 def merge_alt(out: Path, assign: Path) -> dict[str, Any]:
     """Fold stage B (scripts/flats_fd2_alt.py, ``<out>/stageB/*.jsonl``) into
     the outputs as ``flat_*`` columns: the smallest-relief workable position,
@@ -455,6 +547,12 @@ def _component_facts(c: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _liq_label(r: dict[str, Any]) -> str:
+    """O-19-09's label with its code: its lowest class is labelled "None",
+    which a spreadsheet reads as an empty cell."""
+    return f"{r['class_label']} ({int(r['class_code'])})"
+
+
 _SHALLOW = {"1": 1, "2": 2, "3": 3}
 _DEEP = {"Low": 1, "Moderate": 2, "High": 3}
 _OVER = {"1": 1, "2": 2, "3": 3, "4": 4}
@@ -535,12 +633,12 @@ def _hazards(fp: Any, layer_id: str | None) -> dict[str, Any]:
         out["liq_class"], out["liq_top2"], out["liq_share"] = None, None, 0.0
     else:
         topr = max(liq, key=lambda r: int(r["class_code"]))
-        out["liq_class"] = str(topr["class_label"])
+        out["liq_class"] = _liq_label(topr)
         out["liq_class_code"] = int(topr["class_code"])
         out["liq_share"] = round(sum(r["share"] for r in liq), 3)
         out["liq_top2"] = int(topr["class_code"]) >= 4
         major = max(liq, key=lambda r: r["share"])
-        out["liq_majority"] = str(major["class_label"])
+        out["liq_majority"] = _liq_label(major)
 
     # Flood.
     fema = [r for r in by.get("flood_fema", []) if r["state"] == "class"]
@@ -549,7 +647,10 @@ def _hazards(fp: Any, layer_id: str | None) -> dict[str, Any]:
     else:
         out["fema_zone"] = ", ".join(sorted({str(r["class_code"]) + (f" ({r['class_label']})" if r["class_label"] else "")
                                              for r in fema})) or "not mapped"
-        out["flood_100"] = any((r["detail"] or {}).get("in_100_year") for r in fema)
+        # No FEMA polygon held under the footprint is no map, not "outside
+        # the 100-year zone": the held layer has no panels for Portland.
+        out["flood_100"] = any((r["detail"] or {}).get("in_100_year") for r in fema) if fema else None
+        out["fema_source"] = "held overlay_fema_flood" if fema else None
     out["flood_title3"] = any(r["state"] == "class" for r in by.get("flood_title3", [])) if "flood_title3" in have else None
     out["flood_west_linn"] = any(r["state"] == "class" for r in by.get("flood_west_linn", [])) if "flood_west_linn" in have else None
     return out
@@ -875,7 +976,7 @@ def summary(out: Path, *, seed: int = 199) -> str:
               "steepest_10ft_pct", "steepest_25ft_pct", "mukey", "comp_name", "unified_1_5ft", "drainage",
               "water_cm", "restriction_cm", "lep_1_5ft_pct", "frag_gt3in_pct", "dwellings_rating",
               "dwellings_reasons", "corrosion_steel", "corrosion_concrete", "hydric", "susc_source", "slide_mapped",
-              "liq_class", "fema_zone", "occupied", "year_built", "basement", "frost_hub_in", "frost_register_in",
+              "liq_class", "fema_zone", "flood_100", "occupied", "year_built", "basement", "frost_hub_in", "frost_register_in",
               "hub_sdc", "visit_status"]
     def gone(r: dict[str, Any], f: str) -> bool:
         # A held component with no wet layer or no restrictive layer reads
@@ -991,11 +1092,17 @@ def main(argv: list[str] | None = None) -> int:
     m.add_argument("--seed", type=int, default=199)
     f = sub.add_parser("fill-reasons")
     f.add_argument("--out", required=True)
+    h = sub.add_parser("fix-flood")
+    h.add_argument("--out", required=True)
+    h.add_argument("--assign", required=True)
+    h.add_argument("--nfhl", help="GeoJSON of FEMA NFHL layer 28 for the lots the held layer misses")
     g = sub.add_parser("merge-alt")
     g.add_argument("--out", required=True)
     g.add_argument("--assign", required=True)
     args = p.parse_args(argv)
-    if args.cmd == "merge-alt":
+    if args.cmd == "fix-flood":
+        print(json.dumps(fix_flood(Path(args.out), Path(args.assign), Path(args.nfhl) if args.nfhl else None), indent=2))
+    elif args.cmd == "merge-alt":
         print(json.dumps(merge_alt(Path(args.out), Path(args.assign)), indent=2))
     elif args.cmd == "fill-reasons":
         print(json.dumps(fill_reasons(Path(args.out)), indent=2))
