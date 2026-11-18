@@ -20,6 +20,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from scripts.flats_load_bridge import (
+    assessor_facts,
     LOT_COLUMNS,
     LOTS_FILE,
     RESULT_COLUMNS,
@@ -492,7 +493,7 @@ def _make_snapshot_run(tmp_path: Path) -> tuple[Path, Path, Path, Path, Path]:
 
     normalized = tmp_path / "normalized"
     normalized.mkdir()
-    roll = {"LANDVAL": 250000, "BLDGVAL": 180000, "TOTALVAL": 430000, "ASSESSVAL": 310500, "YEARBUILT": 1948, "BLDGSQFT": 1250, "SALEDATE": "20210615", "SALEPRICE": 415000, "PROP_CODE": "101", "STATECLASS": "101", "LANDUSE": "SFR"}
+    roll = {"LANDVAL": 250000, "BLDGVAL": 180000, "TOTALVAL": 430000, "ASSESSVAL": 310500, "YEARBUILT": 1948, "BLDGSQFT": 1250, "SALEDATE": "20210615", "SALEPRICE": 415000, "PROP_CODE": "101", "STATECLASS": "101", "LANDUSE": "SFR", "TAXCODE": "001"}
     pd.DataFrame(
         [
             {"county": "multnomah", "tlid": LOT_A, "juris_city": "PO", "jurisdiction": "or/multnomah/portland", "site_address": "1234 SE MAIN ST", "area_sqft": 5000.0, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": "R5", "zone": "R5", "zone_frac": 1.0, "split_zone": False, "inside_ugb": True, "gate": None, **roll, "wkb": shapely.to_wkb(POLY_A)},
@@ -539,7 +540,7 @@ def test_a_snapshot_fed_run_exports_every_lot_as_a_candidate(tmp_path: Path) -> 
     assert (a["jurisdiction"], a["zone"], a["condo_verdict"]) == ("or/multnomah/portland", "R5", "land")
     facts = json.loads(a["facts"])
     assert facts["quadfit_jurisdiction"] == "portland" and facts["geometry_tier"] == "A"
-    assert facts["assessor"] == {"land_value": 250000.0, "building_value": 180000.0, "total_value": 430000.0, "assessed_value": 310500.0, "year_built": 1948, "building_sqft": 1250.0, "sale_date": "20210615", "sale_price": 415000.0, "prop_code": "101", "state_class": "101", "land_use": "SFR"}
+    assert facts["assessor"] == {"land_value": 250000.0, "building_value": 180000.0, "total_value": 430000.0, "assessed_value": 310500.0, "year_built": 1948, "building_sqft": 1250.0, "sale_date": "20210615", "sale_price": 415000.0, "prop_code": "101", "state_class": "101", "land_use": "SFR", "tax_code": "001"}
     assert facts["condo"] == {"verdict": "land", "reason": None}
     assert facts["snapshot_zone"] == {"raw": "R5", "zone": "R5", "gate": None, "of": None}
     b = lots[LOT_B]
@@ -1102,3 +1103,11 @@ async def test_a_bundle_whose_colour_count_does_not_match_its_files_is_refused(
     (bundle / RUN_FILE).write_text(json.dumps(run), encoding="utf-8")
     report = await load(bundle, _test_db_url, snapshot_id=copy)
     assert report["colour"] == {"none": 4}
+
+
+def test_tax_code_area_is_an_assessor_fact_and_absent_is_none() -> None:
+    """FOLLOWUPS 13: RLIS TAXCODE is carried as ``tax_code``; a copy taken before the
+    field was declared (no column, or a blank) reads None, never a guess."""
+    assert assessor_facts({"TAXCODE": " 001 "})["tax_code"] == "001"
+    assert assessor_facts({})["tax_code"] is None
+    assert assessor_facts({"TAXCODE": ""})["tax_code"] is None

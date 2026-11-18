@@ -116,7 +116,7 @@ def snapshot(tmp_path: Path, layers) -> Path:
     c_zone = list(layers["or/clackamas/_unincorporated"].zones)[0]
     taxlots = [
         # Portland, R5 whole, land.
-        feature("1N1E01AA  -00100", square(0, 0)),
+        feature("1N1E01AA  -00100", square(0, 0), TAXCODE="001"),
         # Portland, split-zoned: 60 % R5 / 40 % a code the rules do not hold ("QQ9").
         feature("1N1E01AA  -00200", square(200, 0)),
         # Portland, wholly under the unknown code with Portland's lowercase suffix: "QQ9a" -> "QQ9".
@@ -277,6 +277,15 @@ def test_assessor_condo_and_geometry_columns(result):
     assert geom.geom_type == "Polygon" and geom.area == 10_000 and land["part_count"] == 1
     for col in nz.ASSESSOR_FIELDS:
         assert col in land
+    # FOLLOWUPS 13: the tax code area rides with the roll; a lot whose source
+    # row has none carries None, never a guess.
+    assert land["TAXCODE"] == "001"
+    assert rows[("multnomah", "1N1E01AA  -00200")]["TAXCODE"] is None
+
+
+def test_the_registry_declares_taxcode_on_the_taxlots():
+    """FOLLOWUPS 13: acquire keeps only declared fields, so TAXCODE must be one."""
+    assert "TAXCODE" in load_pipeline().datasets["rlis_taxlots"].fields
 
 
 def test_summary_md_reads_in_plain_english(result):

@@ -88,9 +88,11 @@ datasets:
     fields:
       [TLID, SITEADDR, SITECITY, SITEZIP, JURIS_CITY, COUNTY, PROP_CODE,
        STATECLASS, LANDUSE, YEARBUILT, BLDGSQFT, LANDVAL, BLDGVAL, TOTALVAL,
-       ASSESSVAL, SALEDATE, SALEPRICE]
+       ASSESSVAL, SALEDATE, SALEPRICE, TAXCODE]
     notes: >-
-      The regional shapefile carries the three Metro counties; the filter keeps
+      TAXCODE (the tax code area, FOLLOWUPS 13) is carried into the lot's
+      assessor facts as tax_code, so the tax-impact snapshot joins on the lot
+      row. The regional shapefile carries the three Metro counties; the filter keeps
       the ones FLATS covers (Washington from 2026-09-30). Holes must be read through pyshp's
       __geo_interface__ — the delta helper's own converter splits interior rings
       into separate polygons, which inflates lot areas.
