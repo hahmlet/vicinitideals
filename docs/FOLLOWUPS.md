@@ -46,7 +46,8 @@ the full one.)
 
 ## 1. Claude -- priority
 
-199. [Claude] [Steph] [scan: NO -- note only] **Ground levels at the building corners + per-lot check of each foundation method** -- offered 11-18; waits on Steph go and the foundation agent's method table. [file](followups/199-ground-levels-under-building.md)
+200. [Claude] [scan: YES -- toward yellow/red, FALSE GREEN] **Building is 80 ft 4 in long, live run screens 80 ft** -- Steph 11-18; new dimension + full bound in rel10; count tight greens first. [file](followups/200-building-80ft4.md)
+199. [Claude] [scan: NO -- report only, greens] **FD2 pass 1: ground levels at the building, flattest spot, soil/hazard/frost/seismic at the footprint, summary to the foundation research** -- Steph go 11-18; starts when soil lane 196 lands. [file](followups/199-ground-levels-under-building.md)
 198. [Claude] [scan: NO -- note only] **Mapped landslide, liquefaction and flood areas per lot, as notes** -- foundation agent ask 11-18; flood already held, landslide + liquefaction from the state geology maps (detailed landslide map covers only part of the area); Steph yes 11-18; BUILDING flats/hazard-notes. [file](followups/198-ground-hazard-notes.md)
 197. [Claude] [scan: NO -- note only] **Frost depth per jurisdiction, as a note** -- Steph ask 11-18; state baseline plus what each building department actually enforces scout back: 10 found, 11 silent, 5 unresolved (4 blocked sites need Steph download); only Gresham differs (18 in vs 12); register + note to build. [file](followups/197-frost-depth.md)
 196. [Claude] [scan: NO -- note only] **Soil type per lot from the USDA soil survey, as a note** -- Steph yes 11-17; greens first, then all lots; BUILDING flats/soil-notes. [file](followups/196-soil-notes.md)
@@ -79,7 +80,7 @@ the full one.)
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-(none -- rel9 LIVE run 128 2026-11-18; rel10 to pack: pagecheck-34, corner-th-191, crossref-5, rulings-1114, rlis-taxcode + items 194, 195 + RLIS November refresh)
+(none -- rel9 LIVE run 128 2026-11-18; rel10 to pack: pagecheck-34, corner-th-191, crossref-5, rulings-1114, rlis-taxcode + items 194, 195, 200 (80 ft 4 in building) + RLIS November refresh)
 
 ### 1c. The rest, most urgent first (dated items first)
 194. [Claude] [scan: YES -- toward green] **rel8/rel9 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R), Gresham unmapped street class (~46), one fire route** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)

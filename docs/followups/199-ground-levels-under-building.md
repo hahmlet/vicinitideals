@@ -23,3 +23,10 @@ Foundation agent's return list (pasted by Steph 11-18) -- what it wants back, as
 7. Twenty random lots with all raw values.
 8. Anything noticed that these classes hide.
 NEEDED from Steph: the part of that spec ABOVE this list (definitions of ground class, relief class, the soil attributes, step-free entry rule). Seismic design category is NOT held -- new per-jurisdiction fact to collect (same sources as frost, 197).
+
+2026-11-18 Steph: GO, report only, GREEN lots only ("I'm only interested in green lots at this time"). Spec = C:\Users\Steph\Repos\Factory-Sim\docs\research\FD2-lot-screen-handoff.md (FD2 pass 1: measure and summarise; NO foundation verdicts in pass 1). This item is now "FD2 pass 1":
+- ground shape at the placed footprint (4 corners + long-side midpoints, fall_along, fall_across, relief, high side, lot slope, street-to-front-setback rise, steepest ground within 10/25 ft); where more than one workable position, report the one with the smallest relief and say so (report only -- does not move the drawn building);
+- soil AT THE FOOTPRINT with the extra attributes FD2 lists (Unified class 1-5 ft, drainage, seasonal high water + months, restrictive layer, linear extensibility, fragments > 3 in, dwellings-without-basements rating + reasons, steel/concrete corrosion, hydric; flag Urban land / no component data) -- extends 196;
+- hazards at the footprint (reuses 198 layers); frost + seismic design category from the Oregon Design Criteria Hub (also check it against 197); vacant/built, year built, assessor basement; zone, permit route, step-free entry rule + exemptions (Portland 33.110.265.E.3);
+- provisional ground class + relief class; then the 8-part summary back to the foundation research.
+Start when the soil lane (196) lands; hazard lane (198) told to make its measuring take any polygon.
