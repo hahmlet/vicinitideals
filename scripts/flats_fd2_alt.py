@@ -126,11 +126,22 @@ def _search(s1: Any, lot: Any, terrain: Any, fitter: Any) -> dict[str, Any]:
             if r is not None and r <= base - GAIN_FT:
                 ranked.append((r, angle, at, drawn))
     ranked.sort(key=lambda t: (t[0], t[1]))
+    from flats.ingest import wall_openings as wo
+
+    # A spot whose walls stand nearer a side or rear line than the
+    # no-openings floor is moved by the wall-openings step, so it is not
+    # put up as a candidate (the pinned re-screen would reject it anyway).
+    floor = wo._applies(s1)
+    edges = getattr(lot, "edges", None)
     keep = []
     lines = None
     for r, angle, at, drawn in ranked:
         if len(keep) >= VERIFY_MAX:
             break
+        if floor is not None and edges is not None:
+            gap = wo.gap_ft(drawn["building"], edges.edges, wo._street_edges(s1))
+            if gap is not None and gap < floor:
+                continue
         if not fl._drive_clear(drawn, at, street):
             continue
         if cap is not None:
@@ -177,7 +188,9 @@ def flatter_patched(s: Any, lot: Any, terrain: Any, fitter: Any, *, rules: Any, 
             except Exception as exc:  # noqa: BLE001 -- a lot's search failing is reported, not fatal
                 _ST["calls"][key] = {"searched": False, "why": f"search error {exc!r}"[:160]}
         return s1
-    if mode == "pin" and key == _ST["pin_key"] and not _ST.get("pinned"):
+    # Every pass of the chain that reaches the live spot (the screen runs it
+    # again for other forms and lanes) is stood on the candidate.
+    if mode == "pin" and key == _ST["pin_key"]:
         c = _ST["pin"]
         _ST["pinned"] = True
         return _pinned(s1, c["at"], c["drawn"], lot, terrain, rules=rules, policy=policy, relief=relief,
