@@ -533,42 +533,6 @@ def visitability(layer_id: str | None, zone: str | None, slope_pct: float | None
             "visit_cite": OPTION_ONLY.get(layer_id or ""), "visit_exempt_cite": None}
 
 
-#: The frost register (../vicinitideals-worktrees/frost-scout.md, 2026-11-18)
-#: with the owner's rulings of the same day: inches, level, note. None where
-#: unresolved.
-FROST_REGISTER: dict[str, tuple[int | None, str, str]] = {
-    "portland": (12, "state", "residential silent; city page 12 in for commercial/engineered"),
-    "gresham": (18, "city", "practice: 2008 inspection checklist, 18 in below finished grade (owner)"),
-    "troutdale": (12, "state", "silent"),
-    "fairview": (12, "state", "silent: MC 15.05 adopts state code (owner 2026-11-18); issues its own "
-                 "permits (Multnomah County service-providers page, Aug 2026), so Gresham's 18 in does not reach it"),
-    "wood_village": (12, "state", "silent: MC 15.04 adopts state code (owner 2026-11-18)"),
-    "multnomah_unincorporated": (12, "state", "county silent; permits by contracted city (Gresham-area may be 18)"),
-    "happy_valley": (12, "state", "silent"),
-    "milwaukie": (12, "state", "silent"),
-    "oregon_city": (12, "state", "silent"),
-    "gladstone": (12, "county", "Clackamas County criteria page"),
-    "canby": (12, "county", "Clackamas County criteria page"),
-    "sandy": (12, "city", "design-criteria sheet 2024"),
-    "estacada": (None, "unresolved", "image-only PDF not read"),
-    "west_linn": (12, "state", "silent"),
-    "tualatin": (12, "city", "sheet: 12 in below 400 ft elevation"),
-    "wilsonville": (12, "state", "silent"),
-    "lake_oswego": (12, "state", "silent"),
-    "clackamas_unincorporated": (12, "county", "below 2,500 ft"),
-    "washington_unincorporated": (12, "county", "below 400 ft (2024 copy); older sheet 18 in at 500 ft+"),
-    "hillsboro": (12, "state", "silent: owner's search of the municipal code 2026-11-18"),
-    "beaverton": (12, "city", "design-criteria sheet"),
-    "sherwood": (12, "state", "silent"),
-    "king_city": (12, "state", "silent"),
-    "durham": (12, "city", "Tualatin's sheet by contract"),
-    "cornelius": (12, "state", "silent"),
-    "tigard": (12, "state", "silent: owner's search of the municipal code 2026-11-18"),
-}
-#: Places whose stated figure holds only below an elevation (feet).
-FROST_BELOW_FT = {"tualatin": 400.0, "washington_unincorporated": 400.0, "durham": 400.0}
-
-
 #: The state frost line depth by county: the figure each table prints, and its
 #: elevation note. Both ORSC editions may be used until 2027-04-01.
 #: * 2023 ORSC Table R301.2 (BCD "2023 ORSC Summary of Amendments" p.29, errata
@@ -609,22 +573,35 @@ def frost_state(county: str | None, elevation_ft: float | None) -> dict[str, Any
     return {"frost_state_in": printed, "frost_state_basis": "at or above 2,500 ft: printed figure"}
 
 
-def frost(jurisdiction: str | None, elevation_ft: float | None, hub_in: float | None,
-          county: str | None = None) -> dict[str, Any]:
-    """The register's frost depth beside the hub's printed county figure and the
-    footnote-adjusted state figure, and the flags: the register and the state
-    figure disagree; or the lot stands above the elevation band the place's
-    figure is stated for."""
-    reg = FROST_REGISTER.get(jurisdiction or "")
-    inches, level, note = reg if reg else (None, "not in register", "")
-    above = None
-    cap = FROST_BELOW_FT.get(jurisdiction or "")
-    if cap is not None and elevation_ft is not None:
-        above = elevation_ft >= cap
+def frost(register: dict[str, Any] | None, county: str | None, elevation_ft: float | None,
+          hub_in: float | None) -> dict[str, Any]:
+    """The live frost register's figure for a lot beside the hub's printed county
+    figure and the footnote-adjusted state figure.
+
+    ``register`` is the register's note for the lot's place (built outside
+    flats/ by the report script; this module never reads the register itself).
+    ``frost_register_in`` is the register's figure for its lowest elevation band,
+    as the register shows it; ``frost_above_stated_band`` is True where the lot's
+    ground stands at or above the top of that band. A place the register has
+    not read has no figure (its reference figure is kept apart). ``frost_disagree``
+    is the register against the state figure."""
+    reg = register or {}
+    inches = reg.get("inches")
+    below = reg.get("below_ft")
+    above = None if below is None or elevation_ft is None else elevation_ft >= float(below)
     state = frost_state(county, elevation_ft)
     st = state["frost_state_in"]
-    disagree = None if inches is None or st is None else float(inches) != float(st)
+    ref = reg.get("reference") or {}
     return {
-        "frost_register_in": inches, "frost_register_level": level, "frost_register_note": note,
-        "frost_hub_in": hub_in, **state, "frost_disagree": disagree, "frost_above_stated_band": above,
+        "frost_register_in": inches,
+        "frost_register_level": reg.get("level") or ("not resolved" if reg else None),
+        "frost_register_outcome": reg.get("outcome"),
+        "frost_register_kind": reg.get("kind"),
+        "frost_register_below_ft": below,
+        "frost_register_reference_in": ref.get("inches"),
+        "frost_register_cite": reg.get("cite"),
+        "frost_register_note": " | ".join(reg.get("caveats") or []) or None,
+        "frost_hub_in": hub_in, **state,
+        "frost_disagree": None if inches is None or st is None else float(inches) != float(st),
+        "frost_above_stated_band": above,
     }

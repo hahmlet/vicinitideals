@@ -201,15 +201,20 @@ def test_visitability_portland():
 
 
 def test_frost_register_and_state_figure():
+    from flats import frost as register  # the live register, read as the report script reads it
+
     # Gresham's 18 in is practice; the state figure below 2,500 ft is 12 (note e).
-    got = fd2.frost("gresham", 300.0, 18.0, "multnomah")
+    got = fd2.frost(register.describe("or/multnomah/gresham", "multnomah"), "multnomah", 300.0, 18.0)
     assert got["frost_register_in"] == 18 and got["frost_state_in"] == 12 and got["frost_disagree"] is True
     assert got["frost_hub_in"] == 18.0  # the hub's printed figure is kept as read
-    got = fd2.frost("portland", 200.0, 18.0, "multnomah")
+    got = fd2.frost(register.describe("or/multnomah/portland", "multnomah"), "multnomah", 200.0, 18.0)
     assert got["frost_register_in"] == 12 and got["frost_disagree"] is False
-    assert fd2.frost("tualatin", 420.0, 12.0, "washington")["frost_above_stated_band"] is True
-    assert fd2.frost("estacada", 400.0, 18.0, "clackamas")["frost_disagree"] is None
-    assert fd2.frost("canby", 150.0, 18.0, "clackamas")["frost_state_in"] == 12
+    got = fd2.frost(register.describe("or/washington/_unincorporated", "washington"), "washington", 420.0, 12.0)
+    assert got["frost_above_stated_band"] is True and got["frost_register_below_ft"] == 400
+    got = fd2.frost(register.describe("or/clackamas/oregon-city", "clackamas"), "clackamas", 100.0, 18.0)
+    assert got["frost_register_in"] is None and got["frost_disagree"] is None
+    assert got["frost_register_outcome"] == "not_read" and got["frost_register_reference_in"] == 12
+    assert fd2.frost(None, "clackamas", 150.0, 18.0)["frost_state_in"] == 12
 
 
 def test_frost_state_elevation_note():

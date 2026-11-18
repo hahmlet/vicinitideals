@@ -356,6 +356,19 @@ def _usgs_cells(cells: list[tuple[float, float]], cache: Path, pause_s: float = 
     return got
 
 
+_FROST_NOTES: dict[tuple[str | None, str | None], dict[str, Any]] = {}
+
+
+def _frost_note(layer_id: str | None, county: str | None) -> dict[str, Any]:
+    """The live frost register's note for a place (flats/frost.py), cached."""
+    from flats import frost as register
+
+    key = (layer_id, (county or "").lower() or None)
+    if key not in _FROST_NOTES:
+        _FROST_NOTES[key] = register.describe(layer_id, county)
+    return _FROST_NOTES[key]
+
+
 def state_figures(out: Path, *, call_usgs: bool = True) -> dict[str, Any]:
     """Post-step, safe to run twice: the footnote-adjusted state frost depth
     (and ``frost_disagree`` re-read as register vs that figure), and the
@@ -364,14 +377,17 @@ def state_figures(out: Path, *, call_usgs: bool = True) -> dict[str, Any]:
 
     recs = pq.read_table(out / "fd2_lots.parquet").to_pylist()
     keys = list(recs[0])
-    for k in ("frost_state_in", "frost_state_basis", *SDC_COLS):
+    for k in ("frost_register_outcome", "frost_register_kind", "frost_register_below_ft",
+              "frost_register_reference_in", "frost_register_cite", "frost_state_in", "frost_state_basis", *SDC_COLS):
         if k not in keys:
             keys.insert(keys.index("frost_disagree") if k.startswith("frost_") else len(keys), k)
     n: Counter = Counter()
     for r in recs:
-        r.update(fd2.frost(r.get("jurisdiction"), r.get("ground_mean_ft"), r.get("frost_hub_in"), r.get("county")))
+        r.update(fd2.frost(_frost_note(r.get("layer_id"), r.get("county")), r.get("county"),
+                           r.get("ground_mean_ft"), r.get("frost_hub_in")))
         n[("frost_state_in", r["frost_state_in"])] += 1
         n[("frost_disagree", r["frost_disagree"])] += 1
+        n[("frost_register", r["frost_register_in"], r["frost_register_outcome"])] += 1
 
     def cell(v: Any) -> float | None:
         return None if v is None else round(round(float(v) / USGS_GRID_DEG) * USGS_GRID_DEG, 2)
@@ -826,8 +842,8 @@ def _one(item: dict[str, Any]) -> dict[str, Any]:
     rec["year_built"] = int(yb) if yb and yb > 0 else None
     rec["basement"] = None  # the assessor's basement field is not held
     rec.update(fd2.visitability(a.get("layer_id"), a.get("zone"), rec["lot_slope_pct"], rec.get("street_rise_ft")))
-    rec.update(fd2.frost(a.get("jurisdiction"), rec.get("ground_mean_ft"), item.get("hub_frost_in"),
-                         item.get("county")))
+    rec.update(fd2.frost(_frost_note(a.get("layer_id"), item.get("county")), item.get("county"),
+                         rec.get("ground_mean_ft"), item.get("hub_frost_in")))
     rec["hub_sdc"] = None
     g, unread, pan = fd2.ground_class(rec)
     rec["ground_class"], rec["ground_class_unread"], rec["pan"] = g, ",".join(unread) or None, pan
@@ -1047,12 +1063,13 @@ def summary(out: Path, *, seed: int = 199) -> str:
 
     # 4. Jurisdiction x SDC x frost.
     n = Counter((r.get("jurisdiction"), r.get("sdc_usgs_asce716_rc2_siteD"), r.get("frost_hub_in"),
-                 r.get("frost_state_in"), r.get("frost_register_in"), r.get("frost_register_level"),
-                 r.get("frost_disagree")) for r in recs)
+                 r.get("frost_state_in"), r.get("frost_register_in"), r.get("frost_register_outcome"),
+                 r.get("frost_register_level"), r.get("frost_register_kind"), r.get("frost_disagree")) for r in recs)
     parts.append("## 4. Jurisdiction, seismic design category, frost depth\n" + _table(
         ["jurisdiction", "SDC (USGS ASCE 7-16, RC II, site D)", "frost hub printed in", "frost state in",
-         "frost register in", "register level", "register vs state differ", "lots"],
-        [[*k, v] for k, v in sorted(n.items(), key=lambda kv: -kv[1])] + [["total", "", "", "", "", "", "", total]]))
+         "frost register in", "register outcome", "register level", "register kind", "register vs state differ",
+         "lots"],
+        [[*k, v] for k, v in sorted(n.items(), key=lambda kv: -kv[1])] + [["total", *[""] * 8, total]]))
     for col, title in (("frost_state_in", "Frost, state figure (footnote-adjusted)"),
                        ("frost_register_in", "Frost, register"),
                        ("sdc_usgs_asce716_rc2_siteD", "SDC (USGS ASCE 7-16, RC II, site D, from SDS)")):
