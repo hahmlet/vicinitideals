@@ -355,16 +355,28 @@ def _soil(fp: Any) -> dict[str, Any]:
                 "comp_is_urban_land": str(dom.get("compname") or "").strip().lower() == "urban land",
                 "comp_has_data": has})
     out["soil_no_data"] = bool(out["comp_is_urban_land"] or not has)
-    use = dom
+    out.update(_component_facts(dom))
     if out["soil_no_data"]:
-        alt = next((c for c in comps if _has_data(c)), None)
-        out["largest_with_data"] = (f"{alt.get('compname')} {alt.get('comppct_r')}%" if alt else None)
-    out.update(_component_facts(use))
+        # Not part of the brief's class: the largest named soil series in the
+        # unit (its horizons held), so a reader can see what sits under the
+        # "Urban land" label. Reported in alt_* columns only.
+        alt = next((c for c in comps if _has_data(c)
+                    and str(c.get("compname") or "").strip().lower() != "urban land"), None)
+        if alt is not None:
+            out["alt_comp"] = alt.get("compname")
+            out["alt_comp_pct"] = alt.get("comppct_r")
+            out["_alt"] = _component_facts(alt)
     return out
 
 
 def _has_data(c: dict[str, Any]) -> bool:
-    return bool(c.get("horizons") or c.get("drainagecl") or c.get("dwellings_rating") or c.get("months"))
+    """A component carries soil data when its horizon rows are held."""
+    return bool(c.get("horizons"))
+
+
+ALT_FIELDS = ("unified_1_5ft", "lep_1_5ft_pct", "frag_gt3in_pct", "restriction_cm", "restriction_kind",
+              "bedrock_cm", "pan_cm", "pan_kind", "drainage", "hydric", "water_cm", "water_months",
+              "dwellings_rating", "corrosion_steel", "corrosion_concrete")
 
 
 def _component_facts(c: dict[str, Any]) -> dict[str, Any]:
@@ -567,6 +579,14 @@ def _one(item: dict[str, Any]) -> dict[str, Any]:
     rec["hub_sdc"] = None
     g, unread, pan = fd2.ground_class(rec)
     rec["ground_class"], rec["ground_class_unread"], rec["pan"] = g, ",".join(unread) or None, pan
+    alt = rec.pop("_alt", None)
+    if alt is not None:
+        for k in ALT_FIELDS:
+            rec[f"alt_{k}"] = alt.get(k)
+        # What the named series would sort as with this lot's hazards (the
+        # brief's class stays NO-DATA; this column is for "what the classes hide").
+        g2, _u2, pan2 = fd2.ground_class({**rec, **alt, "soil_no_data": False})
+        rec["alt_ground_class"], rec["alt_pan"] = g2, pan2
     rec["relief_class"] = fd2.relief_class(rec.get("relief_ft"))
     rec["errors"] = "; ".join(errs) or None
     _ = np  # numpy is imported for the readers above
@@ -810,8 +830,42 @@ def summary(out: Path, *, seed: int = 199) -> str:
     parts.append("## 7. Twenty random lots (seed %d)\n" % seed + "\n".join(
         "- " + json.dumps({k: p.get(k) for k in keys}, default=str) for p in pick))
 
+    # 8. What the classes hide (inputs for the write-up).
+    nod = [r for r in recs if r.get("ground_class") == "NO-DATA"]
+    parts.append("## 8a. NO-DATA lots: what the largest named series would sort as (not the brief's class)\n"
+                 + _table(["alt ground class", "alt PAN", "lots"], [[*k, v] for k, v in sorted(Counter(
+                     (r.get("alt_ground_class"), r.get("alt_pan")) for r in nod).items(), key=lambda kv: -kv[1])]
+                     + [["total", "", len(nod)]]))
+    alts = Counter((r.get("musym"), r.get("alt_comp"), r.get("alt_comp_pct"), r.get("alt_unified_1_5ft"),
+                    r.get("alt_drainage"), r.get("alt_water_cm"), r.get("alt_pan_kind"), r.get("alt_pan_cm"),
+                    r.get("alt_lep_1_5ft_pct"), r.get("alt_ground_class")) for r in nod)
+    parts.append("### NO-DATA map units and their named series\n" + _table(
+        ["musym", "series", "%", "Unified 1-5 ft", "drainage", "high water cm", "pan", "pan cm", "LEP", "alt class",
+         "lots"], [[*k, v] for k, v in alts.most_common(25)]))
+    parts.append("### Checks a lot's class could not make (input missing), by class\n" + _table(
+        ["ground class", "unread checks", "lots"], [[*k, v] for k, v in sorted(Counter(
+            (r.get("ground_class"), r.get("ground_class_unread")) for r in recs
+            if r.get("ground_class_unread")).items(), key=lambda kv: -kv[1])]))
+    steep = Counter((r.get("relief_class"), fd2.ft_bin((r.get("steepest_25ft_pct") or 0) / 10)
+                     if r.get("steepest_25ft_pct") is not None else "missing") for r in recs)
+    parts.append("### Relief class x steepest ground within 25 ft (bins of 10 %)\n" + _table(
+        ["relief class", "steepest 25 ft, 10% bin", "lots"],
+        [[*k, v] for k, v in sorted(steep.items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1])))]))
+    parts.append("### Street rise (ft, 1 ft bins, signed: + = setback above street)\n" + _table(
+        ["bin", "lots"], [[k, v] for k, v in sorted(Counter(
+            "missing" if r.get("street_rise_ft") is None else str(math.floor(r["street_rise_ft"]))
+            for r in recs).items(), key=lambda kv: (kv[0] == "missing", float(kv[0]) if kv[0] != "missing" else 0))]))
+    parts.append("### Liquefaction (worst class touching the footprint) and FEMA zone\n" + _table(
+        ["liquefaction", "lots"], [[k, v] for k, v in Counter(str(r.get("liq_class")) for r in recs).most_common()])
+        + "\n\n" + _table(["FEMA zone", "lots"], [[k, v] for k, v in Counter(
+            str(r.get("fema_zone")) for r in recs).most_common()]))
+    parts.append("### Landslide susceptibility (source, top class)\n" + _table(
+        ["source", "shallow", "deep", "overview", "lots"], [[*k, v] for k, v in Counter(
+            (r.get("susc_source"), r.get("susc_shallow"), r.get("susc_deep"), r.get("susc_overview"))
+            for r in recs).most_common()]))
+
     # Gates.
-    bad = [r["TLID"] for r in recs if r.get("relief_ft") is not None and (
+    bad =[r["TLID"] for r in recs if r.get("relief_ft") is not None and (
         (r.get("fall_along_ft") is not None and r["relief_ft"] + 1e-6 < abs(r["fall_along_ft"]))
         or (r.get("fall_across_ft") is not None and r["relief_ft"] + 1e-6 < abs(r["fall_across_ft"])))]
     parts.append(f"## Gates\nrelief >= |falls| failures: {len(bad)} {bad[:10]}\nrows {total} vs greens {meta.get('greens')}")
