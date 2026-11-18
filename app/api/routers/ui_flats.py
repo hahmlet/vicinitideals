@@ -76,6 +76,7 @@ from app.models.flats import (
 )
 from app.models.org import MembershipStatus, User
 from app.services import flats_flags as flag_history
+from app.services import flats_hazards
 from app.services import flats_price
 from app.services import flats_refresh as refresh_service
 from app.services.flats_refresh import refresh_notices
@@ -4880,6 +4881,8 @@ async def flats_lot(
             "occupancy": await _lot_occupancy(session, lot.id),
             "quadfit": _quadfit_words(facts.get("quadfit") or {}),
             "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",
+            # Mapped ground hazards (FOLLOWUPS 198): notes, never a colour.
+            "hazards": await flats_hazards.lot_hazards(session, lot),
             "outline": _outline(geojson),
             "lat": lat,
             "lon": lon,

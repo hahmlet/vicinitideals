@@ -1567,3 +1567,58 @@ class FlatsFlagReport(Base):
     #: or open instance is incomplete.
     ok: Mapped[bool] = mapped_column(Boolean, nullable=False)
     report: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")
+
+
+class FlatsLotHazard(Base):
+    """One mapped ground-hazard class (or unmapped, outside or superseded part)
+    of one layer on one lot: landslide, liquefaction or flood (FOLLOWUPS 198,
+    :mod:`flats.ingest.hazards`). A NOTE, never a colour: nothing that screens
+    reads it. ``layer`` is a ``hazard_notes`` key of ``flats/config/pipeline.yaml``;
+    ``class_code`` and ``class_label`` are as the source prints them; an area
+    layer's rows sum to the lot (EPSG:2913 square feet), a line or point layer
+    has one row counting its features in ``detail``. A layer with no rows on a
+    lot was not loaded there. Filled by ``scripts/flats_lot_hazards.py load``.
+    """
+
+    __tablename__ = "lot_hazards"
+    __table_args__ = (
+        Index("ix_flats_lot_hazards_lot", "lot_id"),
+        Index("ix_flats_lot_hazards_snapshot_layer", "snapshot_id", "layer"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    lot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.lots.id", ondelete="CASCADE"), nullable=False
+    )
+    snapshot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="CASCADE"), nullable=False
+    )
+    hazard: Mapped[str] = mapped_column(String(20), nullable=False)
+    layer: Mapped[str] = mapped_column(String(40), nullable=False)
+    #: ``class`` / ``not_mapped`` / ``outside`` / ``superseded``.
+    state: Mapped[str] = mapped_column(String(20), nullable=False)
+    class_code: Mapped[str | None] = mapped_column(String(120))
+    class_label: Mapped[str | None] = mapped_column(String(240))
+    area_sqft: Mapped[float] = mapped_column(Numeric(14, 1), nullable=False)
+    share: Mapped[float] = mapped_column(Numeric(8, 5), nullable=False)
+    #: The printed attributes behind the row (features listed, BFE and datum,
+    #: counts and scarp length for a line or point layer).
+    detail: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+
+
+class FlatsHazardLayer(Base):
+    """Where one hazard layer of one snapshot's lots came from (FOLLOWUPS 198):
+    the publication, the file and layer read, the fetch date of a held layer.
+    Written by ``scripts/flats_lot_hazards.py load`` beside the lot rows."""
+
+    __tablename__ = "hazard_layers"
+    __table_args__ = {"schema": SCHEMA}
+
+    snapshot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="CASCADE"), primary_key=True
+    )
+    layer: Mapped[str] = mapped_column(String(40), primary_key=True)
+    source: Mapped[str] = mapped_column(String(600), nullable=False)
+    detail: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    loaded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
