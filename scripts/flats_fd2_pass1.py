@@ -717,7 +717,7 @@ def _cell(v: Any) -> Any:
 def _table(head: list[str], rows: list[list[Any]]) -> str:
     def f(v: Any) -> str:
         return "" if v is None else str(v)
-    lines = ["| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
+    lines = ["| " + " | ".join(f(h) for h in head) + " |", "|" + "---|" * len(head)]
     lines += ["| " + " | ".join(f(v) for v in r) + " |" for r in rows]
     return "\n".join(lines)
 
