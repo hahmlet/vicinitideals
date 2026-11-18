@@ -117,6 +117,12 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # What stands on each lot (0150, FOLLOWUPS 125): a label and a
         # filter from the footprint map and the roll, never a colour.
         "lot_occupancy",
+        # The USDA soil survey under each lot (0151, FOLLOWUPS 196): every map
+        # unit's share of the lot, with the map units and their components
+        # stored once by mukey / cokey. A note, never a colour.
+        "lot_soil",
+        "soil_map_units",
+        "soil_components",
         # Per-lot human marks (0148), separate from the run's own results.
         "lot_marks",
         "lot_results",
