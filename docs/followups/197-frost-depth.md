@@ -13,3 +13,5 @@ What to collect, for every jurisdiction FLATS screens (cities + the three uninco
 - where a department's figure is practice rather than adopted text, log it as "practice" with the document that states it; where nothing is published, log "not published" -- no guessing, no contacting the city.
 
 Then: a small register (flats/config/frost_depth.yaml, store as printed) shown on the lot page next to the soil note and in the lot report. Note only -- no colour, no flag.
+
+Steph ruling 2026-11-18: where a department is genuinely silent (we found where the figure would be stated and it gives none), the county figure, else the state figure, is used and is valid, flagged as state/county level. This does NOT cover "could not find where it would be stated" -- that stays unresolved. Recorded in rulings.yaml.
