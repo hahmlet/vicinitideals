@@ -79,7 +79,7 @@ the full one.)
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-(none -- rel9 LIVE run 128 2026-11-18; rel10 to pack: pagecheck-34, corner-th-191, crossref-5, rulings-1114, rlis-taxcode + items 194, 195, 201 + RLIS November refresh)
+(rel10 PACKED flats/rel10 04bd6129 11-18, full bound RUNNING on 137 -> rel10-bound.result.md; then move read, then release. Left out: wide-road corner (own lane, sizing), 194(1)(3)(4). RLIS November copy needed right after release.)
 
 ### 1c. The rest, most urgent first (dated items first)
 194. [Claude] [scan: YES -- toward green] **rel8/rel9 false REDs: Portland front maximum (8), Happy Valley sewer (177 Y->R), Gresham unmapped street class (~46), one fire route** -- fix forward, rel10 lane. [file](followups/194-rel8-false-reds.md)
