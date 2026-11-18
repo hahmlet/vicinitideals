@@ -16,3 +16,5 @@ Also feeds the crane check's "firm ground: not checked" (145) later.
 
 Order: live GREEN lots first (report to Steph), then every lot.
 Branch flats/soil-notes; hand-off ../vicinitideals-worktrees/soil-notes.handoff.md.
+
+Steph 2026-11-17 (later): (1) log EVERY soil map unit on a lot with its square feet and share (not only dominant/worst); (2) keep the technical identifiers for later technical analysis: areasymbol + version date, musym, mukey, nationalmusym, muname, map unit kind; per component cokey, name, percent, major flag, taxonomic class. Map-unit and component tables stored once, lot rows point at mukey. Passed to the builder.
