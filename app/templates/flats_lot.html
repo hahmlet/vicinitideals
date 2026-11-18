@@ -297,6 +297,59 @@
           <span class="muted">not measured yet</span>
         {% endif %}
       </div>
+      {# The USDA soil survey under the lot (FOLLOWUPS 196): a note, never a colour. #}
+      <div id="lot-soil" style="margin-top:12px;font-size:12px">
+        <strong>Soil (USDA survey)</strong>
+        {% if soil %}
+          <div class="muted" style="font-size:11px;margin-top:2px" data-soil-caveat>{{ soil.caveat }}</div>
+          {% if not soil.covered %}
+            <div style="margin-top:4px" data-soil-none>{{ soil.no_coverage_words }}</div>
+          {% else %}
+            {% set d = soil.dominant %}
+            <div style="margin-top:4px" data-soil-dominant="{{ d.mukey }}">
+              Mostly <strong>{{ d.muname }}</strong> ({{ d.share_pct }}% of the lot).
+              {% if d.has_data %}Building on it: {{ d.dwellings or "not rated" }} for houses without basements, {{ d.small_commercial or "not rated" }} for small commercial buildings.{% else %}{{ d.no_data_words }}{% endif %}
+            </div>
+            {% if soil.worst %}
+              <div style="margin-top:2px" data-soil-worst="{{ soil.worst.mukey }}">Worst-rated part: <strong>{{ soil.worst.muname }}</strong> ({{ soil.worst.share_pct }}% of the lot), {{ soil.worst.dwellings or "not rated" }} for houses without basements.</div>
+            {% elif soil.spans_several %}
+              <div class="muted" style="margin-top:2px">No other part of the lot is rated worse.</div>
+            {% endif %}
+            {% for u in soil.units %}
+              <div class="soil-unit" data-mukey="{{ u.mukey }}" style="margin-top:8px;border-top:1px solid var(--border, #ddd);padding-top:4px">
+                <div><strong>{{ u.muname }}</strong> &mdash; {{ "{:,.0f}".format(u.area_sqft) }} sq ft ({{ u.share_pct }}% of the lot)</div>
+                {% if u.has_data %}
+                  <table class="data-table" style="font-size:12px;margin-top:4px">
+                    <tbody>
+                      <tr><td class="col-muted">Houses without basements</td><td>{{ u.dwellings or "not rated" }}{% if u.rated and u.rated.dwellings_reasons %} ({{ u.rated.dwellings_reasons }}){% endif %}</td></tr>
+                      <tr><td class="col-muted">Small commercial buildings</td><td>{{ u.small_commercial or "not rated" }}{% if u.rated and u.rated.small_commercial_reasons %} ({{ u.rated.small_commercial_reasons }}){% endif %}</td></tr>
+                      <tr><td class="col-muted">Seasonal high water (Nov&ndash;Apr)</td><td data-wet-season="{{ u.wet_season_status }}">{{ u.wet_season_words }}</td></tr>
+                      <tr><td class="col-muted">Drainage</td><td>{{ u.drainage or "not stated" }}</td></tr>
+                      {% if u.rated %}
+                        <tr><td class="col-muted">Shrink-swell</td><td>{% if u.rated.lep_max is not none %}{{ u.rated.lep_max }}% linear extensibility ({{ u.rated.lep_class }}*){% else %}not stated{% endif %}</td></tr>
+                        <tr><td class="col-muted">Hard layer or bedrock</td><td>{{ u.rated.restriction_words or "none recorded" }}</td></tr>
+                      {% endif %}
+                      <tr><td class="col-muted">Runoff group</td><td>{{ u.hydrologic_group or "not stated" }}</td></tr>
+                      <tr><td class="col-muted">Wetland (hydric) soil</td><td>{% if u.hydric_pct is not none %}{{ u.hydric_pct }}% of the map unit{% else %}not stated{% endif %}</td></tr>
+                    </tbody>
+                  </table>
+                  {% if u.rated and not u.main_has_data %}<div class="muted" style="font-size:11px">The main part is {{ u.main_name }} ({{ u.main_pct }}%), which the survey does not describe; the soil figures are for {{ u.rated.compname }} ({{ u.rated.comppct_r }}%).</div>{% endif %}
+                {% else %}
+                  <div style="margin-top:2px">{{ u.no_data_words }}</div>
+                {% endif %}
+                <div class="muted" style="font-size:10px;margin-top:2px" data-soil-technical>{{ u.technical }}</div>
+                {% for c in u.components %}<div class="muted" style="font-size:10px">{{ c.technical }}</div>{% endfor %}
+                <div class="muted" style="font-size:10px">Source: {{ u.source_words }}.</div>
+              </div>
+            {% endfor %}
+            {% if soil.uncovered_sqft %}<div style="margin-top:6px" data-soil-uncovered>No survey coverage: {{ "{:,.0f}".format(soil.uncovered_sqft) }} sq ft ({{ soil.uncovered_pct }}% of the lot).</div>{% endif %}
+            <div class="muted" style="font-size:10px;margin-top:4px">* Shrink-swell class from the NRCS National Soil Survey Handbook, Part 618.</div>
+          {% endif %}
+          <div class="muted" style="font-size:11px;margin-top:2px">Source: USDA Natural Resources Conservation Service (NRCS) soil survey, SSURGO.</div>
+        {% else %}
+          <span class="muted">not measured yet</span>
+        {% endif %}
+      </div>
       {% if source %}<div class="muted" style="font-size:11px;margin-top:6px">Facts read from {{ source }}{% if quadfit_jurisdiction %} ({{ quadfit_jurisdiction }}){% endif %}.</div>{% endif %}
       {% for net in net_land %}
       <div class="net-land" id="net-land-{{ loop.index }}" style="margin-top:12px;font-size:12px">

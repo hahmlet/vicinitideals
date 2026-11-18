@@ -525,6 +525,119 @@ class FlatsLotOccupancy(Base):
     source: Mapped[str | None] = mapped_column(String(160), nullable=True)
 
 
+class FlatsSoilMapUnit(Base):
+    """One USDA NRCS SSURGO map unit, keyed by its ``mukey`` (FOLLOWUPS 196,
+    :mod:`flats.ingest.soil`). A NOTE, never a colour: nothing that screens
+    reads it. Values as the survey prints them; the two building ratings are
+    the dominant condition of the map unit's components. Filled by
+    ``scripts/flats_lot_soil.py load``.
+    """
+
+    __tablename__ = "soil_map_units"
+    __table_args__ = {"schema": SCHEMA}
+
+    mukey: Mapped[str] = mapped_column(String(30), primary_key=True)
+    areasymbol: Mapped[str] = mapped_column(String(20), nullable=False)
+    areaname: Mapped[str | None] = mapped_column(String(160))
+    #: The survey area's version date, as ``sacatalog.saverest`` prints it.
+    saverest: Mapped[str | None] = mapped_column(String(40))
+    musym: Mapped[str | None] = mapped_column(String(20))
+    nationalmusym: Mapped[str | None] = mapped_column(String(20))
+    muname: Mapped[str | None] = mapped_column(String(240))
+    mukind: Mapped[str | None] = mapped_column(String(40))
+    drclassdcd: Mapped[str | None] = mapped_column(String(60))
+    hydgrpdcd: Mapped[str | None] = mapped_column(String(10))
+    #: Percent of the map unit rated hydric (``muaggatt.hydclprs``).
+    hydclprs: Mapped[float | None] = mapped_column(Numeric(6, 1))
+    #: Shallowest annual depth to a wet layer, cm (``muaggatt.wtdepannmin``).
+    wtdepannmin: Mapped[float | None] = mapped_column(Numeric(8, 1))
+    #: Shallowest depth to bedrock, cm (``muaggatt.brockdepmin``).
+    brockdepmin: Mapped[float | None] = mapped_column(Numeric(8, 1))
+    #: The survey's own dwellings rating, dominant condition, as printed.
+    engdwobdcd: Mapped[str | None] = mapped_column(String(40))
+    dwellings_dcd: Mapped[str | None] = mapped_column(String(40))
+    small_commercial_dcd: Mapped[str | None] = mapped_column(String(40))
+    #: Shallowest wet layer over November-April across its components.
+    wet_season_status: Mapped[str | None] = mapped_column(String(20))
+    wet_season_cm: Mapped[float | None] = mapped_column(Numeric(8, 1))
+    wet_season_months: Mapped[str | None] = mapped_column(String(120))
+    wet_season_cokey: Mapped[str | None] = mapped_column(String(30))
+    #: The agency, product, survey areas and dates the row came from.
+    source: Mapped[str | None] = mapped_column(String(400))
+
+
+class FlatsSoilComponent(Base):
+    """One component of a SSURGO map unit, keyed by its ``cokey``, with every
+    property value the lot note reads (FOLLOWUPS 196). A NOTE, never a colour."""
+
+    __tablename__ = "soil_components"
+    __table_args__ = (
+        Index("ix_flats_soil_components_mukey", "mukey"),
+        {"schema": SCHEMA},
+    )
+
+    cokey: Mapped[str] = mapped_column(String(30), primary_key=True)
+    mukey: Mapped[str] = mapped_column(
+        String(30), ForeignKey(f"{SCHEMA}.soil_map_units.mukey", ondelete="CASCADE"), nullable=False
+    )
+    compname: Mapped[str | None] = mapped_column(String(120))
+    comppct_r: Mapped[float | None] = mapped_column(Numeric(6, 1))
+    majcompflag: Mapped[str | None] = mapped_column(String(10))
+    compkind: Mapped[str | None] = mapped_column(String(60))
+    taxclname: Mapped[str | None] = mapped_column(String(240))
+    taxorder: Mapped[str | None] = mapped_column(String(60))
+    taxsuborder: Mapped[str | None] = mapped_column(String(60))
+    taxgrtgroup: Mapped[str | None] = mapped_column(String(60))
+    taxsubgrp: Mapped[str | None] = mapped_column(String(120))
+    taxpartsize: Mapped[str | None] = mapped_column(String(120))
+    drainagecl: Mapped[str | None] = mapped_column(String(60))
+    hydricrating: Mapped[str | None] = mapped_column(String(20))
+    hydgrp: Mapped[str | None] = mapped_column(String(10))
+    #: Shallowest wet layer in any month, cm, and the month.
+    water_table_cm: Mapped[float | None] = mapped_column(Numeric(8, 1))
+    water_table_month: Mapped[str | None] = mapped_column(String(20))
+    #: Highest linear extensibility percent of any layer (``chorizon.lep_r``).
+    lep_max: Mapped[float | None] = mapped_column(Numeric(6, 2))
+    restriction_cm: Mapped[float | None] = mapped_column(Numeric(8, 1))
+    restriction_kind: Mapped[str | None] = mapped_column(String(80))
+    dwellings_rating: Mapped[str | None] = mapped_column(String(40))
+    dwellings_reasons: Mapped[str | None] = mapped_column(Text)
+    small_commercial_rating: Mapped[str | None] = mapped_column(String(40))
+    small_commercial_reasons: Mapped[str | None] = mapped_column(Text)
+    wet_season_status: Mapped[str | None] = mapped_column(String(20))
+    wet_season_cm: Mapped[float | None] = mapped_column(Numeric(8, 1))
+    wet_season_months: Mapped[str | None] = mapped_column(String(120))
+    #: One entry per month: ``monthseq``, ``month``, ``wet_top_cm``, ``flood``, ``pond``.
+    months: Mapped[list[dict[str, Any]] | None] = mapped_column(JSONB)
+
+
+class FlatsLotSoil(Base):
+    """One SSURGO map unit on one lot, with its square feet (EPSG:2913) and
+    share; ``mukey`` NULL is the part no survey covers (FOLLOWUPS 196). A lot's
+    rows sum to its area. A NOTE, never a colour: nothing that screens reads it.
+    A lot with no rows was not measured."""
+
+    __tablename__ = "lot_soil"
+    __table_args__ = (
+        Index("ix_flats_lot_soil_lot", "lot_id"),
+        Index("ix_flats_lot_soil_snapshot", "snapshot_id"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    lot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.lots.id", ondelete="CASCADE"), nullable=False
+    )
+    snapshot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="CASCADE"), nullable=False
+    )
+    mukey: Mapped[str | None] = mapped_column(
+        String(30), ForeignKey(f"{SCHEMA}.soil_map_units.mukey", ondelete="CASCADE"), nullable=True
+    )
+    area_sqft: Mapped[float] = mapped_column(Numeric(14, 1), nullable=False)
+    share: Mapped[float] = mapped_column(Numeric(8, 5), nullable=False)
+
+
 class FlatsLotWorksAs(Base):
     """For one lot, one design, one run: whether the pod comes out GREEN as an
     apartment and as townhomes. The Lots page's "Works as" filter reads this
