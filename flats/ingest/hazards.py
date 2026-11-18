@@ -626,7 +626,9 @@ class RasterLayer:
         arr = ds.read(1, window=win)
         if arr.dtype not in (np.uint8, np.int16, np.uint16, np.int32, np.float32):
             arr = arr.astype(np.int32)
-        mask = (arr != ds.nodata) if ds.nodata is not None else np.ones(arr.shape, dtype=bool)
+        # The dataset's validity mask: its nodata value, or the per-dataset mask
+        # a geodatabase raster carries (copied into the GeoTIFF) -- never a class.
+        mask = ds.read_masks(1, window=win) > 0
         if not mask.any():
             return []
         out = []

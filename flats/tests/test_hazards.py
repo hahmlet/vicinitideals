@@ -316,3 +316,27 @@ def test_a_raster_is_cut_cell_exact_in_its_own_crs(tmp_path: Path) -> None:
     # The lot sits wholly west of the High part (it spans 100-200 ft east of x0
     # in 2913; the axes of the two CRSs differ by well under a degree here).
     assert by["1"]["area_sqft"] == pytest.approx(10_000, rel=0.02)
+
+
+def test_a_masked_raster_cell_is_never_a_class(tmp_path: Path) -> None:
+    """A geodatabase raster has no nodata value; its empty cells sit behind a
+    per-dataset mask, which the GeoTIFF copy keeps. Masked cells are not mapped."""
+    rasterio = pytest.importorskip("rasterio")
+    import numpy as np
+    from rasterio.transform import from_origin
+
+    lot = box(7_650_000, 680_000, 7_650_100, 680_100)
+    arr = np.zeros((40, 40), dtype=np.uint8)
+    arr[:, 20:] = 2  # Moderate in the east half, masked zeros in the west
+    path = tmp_path / "masked.tif"
+    with rasterio.Env(GDAL_TIFF_INTERNAL_MASK=True):
+        with rasterio.open(path, "w", driver="GTiff", height=40, width=40, count=1, dtype="uint8", crs="EPSG:2913",
+                           transform=from_origin(7_649_950, 680_150, 5, 5)) as ds:
+            ds.write(arr, 1)
+            ds.write_mask(np.where(arr > 0, 255, 0).astype(np.uint8))
+    feats = hz.RasterLayer(REG.layers["landslide_shallow"], str(path)).features(lot)
+    assert {f.code for f in feats} == {"2"}
+    rows = hz.measure_area(REG.layers["landslide_shallow"], lot, 10_000.0, feats, box(7_640_000, 670_000, 7_660_000, 690_000))
+    by = {(r["state"], r["class_code"]): r["area_sqft"] for r in rows}
+    assert by[(hz.CLASS, "2")] == pytest.approx(5_000)
+    assert by[(hz.NOT_MAPPED, None)] == pytest.approx(5_000)
