@@ -311,6 +311,96 @@ def fix_flood(out: Path, assign: Path, nfhl: Path | None) -> dict[str, Any]:
     return meta["fix_flood"]
 
 
+USGS_ASCE716 = "https://earthquake.usgs.gov/ws/building-codes/asce7-16/calculate"
+USGS_GRID_DEG = 0.05
+#: Column names say what the figure is: the USGS design-maps service, ASCE 7-16,
+#: Risk Category II, Site Class D (default), standing in for ORSC Figure
+#: R301.2.2.1 (a map image that cannot be queried).
+SDC_COLS = ("sdc_usgs_asce716_rc2_siteD", "sds_usgs_asce716_rc2_siteD", "sd1_usgs_asce716_rc2_siteD",
+            "sdc_overall_usgs_asce716_rc2_siteD", "usgs_sd1_note", "usgs_grid_lat", "usgs_grid_lon")
+
+
+def _usgs_cells(cells: list[tuple[float, float]], cache: Path, pause_s: float = 0.5) -> dict[str, Any]:
+    """One call per 0.05-degree cell, serial and polite: a short pause, three
+    tries with back-off, and a stop after five cells in a row fail. Answers
+    are cached in ``cache`` so a re-run calls only what is missing."""
+    import httpx
+
+    got: dict[str, Any] = json.loads(cache.read_text(encoding="utf-8")) if cache.exists() else {}
+    fails = 0
+    with httpx.Client(headers={"User-Agent": "flats-fd2-report"}, timeout=60) as client:
+        for lat, lon in cells:
+            key = f"{lat:.2f},{lon:.2f}"
+            if key in got and not got[key].get("error"):
+                continue
+            ans: dict[str, Any] = {}
+            for wait in (0, 4, 16):
+                time.sleep(wait or pause_s)
+                try:
+                    resp = client.get(USGS_ASCE716, params={"latitude": f"{lat:.2f}", "longitude": f"{lon:.2f}",
+                                                            "riskCategory": "II", "siteClass": "D", "title": "fd2"})
+                    if resp.status_code in (403, 429):
+                        ans = {"error": f"HTTP {resp.status_code}: service refused"}
+                        break
+                    resp.raise_for_status()
+                    d = resp.json()["response"]["data"]
+                    ans = {k: d.get(k) for k in ("sds", "sd1", "sdcs", "sdc", "sdc1", "ss", "s1", "fv_note")}
+                    break
+                except Exception as exc:  # noqa: BLE001 -- retried, then recorded
+                    ans = {"error": repr(exc)[:200]}
+            got[key] = ans
+            cache.write_text(json.dumps(got, indent=1), encoding="utf-8")
+            fails = fails + 1 if ans.get("error") else 0
+            if fails >= 5 or str(ans.get("error", "")).startswith("HTTP 4"):
+                break
+    return got
+
+
+def state_figures(out: Path, *, call_usgs: bool = True) -> dict[str, Any]:
+    """Post-step, safe to run twice: the footnote-adjusted state frost depth
+    (and ``frost_disagree`` re-read as register vs that figure), and the
+    seismic design category from the USGS design-maps service."""
+    import pyarrow.parquet as pq
+
+    recs = pq.read_table(out / "fd2_lots.parquet").to_pylist()
+    keys = list(recs[0])
+    for k in ("frost_state_in", "frost_state_basis", *SDC_COLS):
+        if k not in keys:
+            keys.insert(keys.index("frost_disagree") if k.startswith("frost_") else len(keys), k)
+    n: Counter = Counter()
+    for r in recs:
+        r.update(fd2.frost(r.get("jurisdiction"), r.get("ground_mean_ft"), r.get("frost_hub_in"), r.get("county")))
+        n[("frost_state_in", r["frost_state_in"])] += 1
+        n[("frost_disagree", r["frost_disagree"])] += 1
+
+    def cell(v: Any) -> float | None:
+        return None if v is None else round(round(float(v) / USGS_GRID_DEG) * USGS_GRID_DEG, 2)
+
+    for r in recs:
+        r["usgs_grid_lat"], r["usgs_grid_lon"] = cell(r.get("lat")), cell(r.get("lon"))
+    cells = sorted({(r["usgs_grid_lat"], r["usgs_grid_lon"]) for r in recs if r["usgs_grid_lat"] is not None})
+    got = _usgs_cells(cells, out / "usgs_asce716_cells.json") if call_usgs else {}
+    for r in recs:
+        a = got.get(f"{r['usgs_grid_lat']:.2f},{r['usgs_grid_lon']:.2f}") if r["usgs_grid_lat"] is not None else None
+        a = a if a and not a.get("error") else {}
+        r["sdc_usgs_asce716_rc2_siteD"] = a.get("sdcs")
+        r["sds_usgs_asce716_rc2_siteD"] = a.get("sds")
+        r["sd1_usgs_asce716_rc2_siteD"] = a.get("sd1")
+        r["sdc_overall_usgs_asce716_rc2_siteD"] = a.get("sdc")
+        r["usgs_sd1_note"] = a.get("fv_note")
+        n[("sdc", r["sdc_usgs_asce716_rc2_siteD"])] += 1
+    _write_outputs(out, recs, keys)
+    meta = json.loads((out / "fd2_meta.json").read_text(encoding="utf-8"))
+    meta["state_figures"] = {
+        "usgs": {"endpoint": USGS_ASCE716, "riskCategory": "II", "siteClass": "D", "grid_deg": USGS_GRID_DEG,
+                 "cells": len(cells), "answered": sum(1 for v in got.values() if not v.get("error")),
+                 "errors": sum(1 for v in got.values() if v.get("error"))},
+        "counts": {str(k): v for k, v in n.items()},
+        "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+    (out / "fd2_meta.json").write_text(json.dumps(meta, indent=2, default=str), encoding="utf-8")
+    return meta["state_figures"]
+
+
 def merge_alt(out: Path, assign: Path) -> dict[str, Any]:
     """Fold stage B (scripts/flats_fd2_alt.py, ``<out>/stageB/*.jsonl``) into
     the outputs as ``flat_*`` columns: the smallest-relief workable position,
@@ -736,7 +826,8 @@ def _one(item: dict[str, Any]) -> dict[str, Any]:
     rec["year_built"] = int(yb) if yb and yb > 0 else None
     rec["basement"] = None  # the assessor's basement field is not held
     rec.update(fd2.visitability(a.get("layer_id"), a.get("zone"), rec["lot_slope_pct"], rec.get("street_rise_ft")))
-    rec.update(fd2.frost(a.get("jurisdiction"), rec.get("ground_mean_ft"), item.get("hub_frost_in")))
+    rec.update(fd2.frost(a.get("jurisdiction"), rec.get("ground_mean_ft"), item.get("hub_frost_in"),
+                         item.get("county")))
     rec["hub_sdc"] = None
     g, unread, pan = fd2.ground_class(rec)
     rec["ground_class"], rec["ground_class_unread"], rec["pan"] = g, ",".join(unread) or None, pan
@@ -955,11 +1046,23 @@ def summary(out: Path, *, seed: int = 199) -> str:
         str(r.get("high_end")) for r in recs).most_common()]))
 
     # 4. Jurisdiction x SDC x frost.
-    n = Counter((r.get("jurisdiction"), r.get("hub_sdc"), r.get("frost_hub_in"), r.get("frost_register_in"),
-                 r.get("frost_register_level"), r.get("frost_disagree")) for r in recs)
+    n = Counter((r.get("jurisdiction"), r.get("sdc_usgs_asce716_rc2_siteD"), r.get("frost_hub_in"),
+                 r.get("frost_state_in"), r.get("frost_register_in"), r.get("frost_register_level"),
+                 r.get("frost_disagree")) for r in recs)
     parts.append("## 4. Jurisdiction, seismic design category, frost depth\n" + _table(
-        ["jurisdiction", "SDC (hub)", "frost hub in", "frost register in", "register level", "disagree", "lots"],
-        [[*k, v] for k, v in sorted(n.items(), key=lambda kv: -kv[1])] + [["total", "", "", "", "", "", total]]))
+        ["jurisdiction", "SDC (USGS ASCE 7-16, RC II, site D)", "frost hub printed in", "frost state in",
+         "frost register in", "register level", "register vs state differ", "lots"],
+        [[*k, v] for k, v in sorted(n.items(), key=lambda kv: -kv[1])] + [["total", "", "", "", "", "", "", total]]))
+    for col, title in (("frost_state_in", "Frost, state figure (footnote-adjusted)"),
+                       ("frost_register_in", "Frost, register"),
+                       ("sdc_usgs_asce716_rc2_siteD", "SDC (USGS ASCE 7-16, RC II, site D, from SDS)")):
+        parts.append(f"### {title}\n" + _table([col, "lots"], [[k, v] for k, v in sorted(
+            Counter(str(r.get(col)) for r in recs).items(), key=lambda kv: -kv[1])] + [["total", total]]))
+    sds = [r["sds_usgs_asce716_rc2_siteD"] for r in recs if r.get("sds_usgs_asce716_rc2_siteD") is not None]
+    if sds:
+        parts.append(f"SDS range: {min(sds):.3f} to {max(sds):.3f} g over {len(sds)} lots; "
+                     f"SD1 held on {sum(1 for r in recs if r.get('sd1_usgs_asce716_rc2_siteD') is not None)} lots. "
+                     "USGS: " + json.dumps((meta.get("state_figures") or {}).get("usgs")))
     above = Counter(r.get("jurisdiction") for r in recs if r.get("frost_above_stated_band"))
     parts.append("Lots above the elevation their place's frost figure is stated for: " + json.dumps(above))
     parts.append("Hub readings: " + json.dumps({k: {"frost_in": v.get("frost_in"), "raw": v.get("raw")}
@@ -976,8 +1079,9 @@ def summary(out: Path, *, seed: int = 199) -> str:
               "steepest_10ft_pct", "steepest_25ft_pct", "mukey", "comp_name", "unified_1_5ft", "drainage",
               "water_cm", "restriction_cm", "lep_1_5ft_pct", "frag_gt3in_pct", "dwellings_rating",
               "dwellings_reasons", "corrosion_steel", "corrosion_concrete", "hydric", "susc_source", "slide_mapped",
-              "liq_class", "fema_zone", "flood_100", "occupied", "year_built", "basement", "frost_hub_in", "frost_register_in",
-              "hub_sdc", "visit_status"]
+              "liq_class", "fema_zone", "flood_100", "occupied", "year_built", "basement", "frost_hub_in", "frost_state_in",
+              "frost_register_in", "hub_sdc", "sdc_usgs_asce716_rc2_siteD", "sds_usgs_asce716_rc2_siteD",
+              "sd1_usgs_asce716_rc2_siteD", "visit_status"]
     def gone(r: dict[str, Any], f: str) -> bool:
         # A held component with no wet layer or no restrictive layer reads
         # "none", not missing: missing is no monthly / horizon rows held.
@@ -1099,8 +1203,13 @@ def main(argv: list[str] | None = None) -> int:
     g = sub.add_parser("merge-alt")
     g.add_argument("--out", required=True)
     g.add_argument("--assign", required=True)
+    sf = sub.add_parser("state-figures")
+    sf.add_argument("--out", required=True)
+    sf.add_argument("--no-usgs", action="store_true")
     args = p.parse_args(argv)
-    if args.cmd == "fix-flood":
+    if args.cmd == "state-figures":
+        print(json.dumps(state_figures(Path(args.out), call_usgs=not args.no_usgs), indent=2, default=str))
+    elif args.cmd == "fix-flood":
         print(json.dumps(fix_flood(Path(args.out), Path(args.assign), Path(args.nfhl) if args.nfhl else None), indent=2))
     elif args.cmd == "merge-alt":
         print(json.dumps(merge_alt(Path(args.out), Path(args.assign)), indent=2))

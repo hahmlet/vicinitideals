@@ -540,7 +540,8 @@ FROST_REGISTER: dict[str, tuple[int | None, str, str]] = {
     "portland": (12, "state", "residential silent; city page 12 in for commercial/engineered"),
     "gresham": (18, "city", "practice: 2008 inspection checklist, 18 in below finished grade (owner)"),
     "troutdale": (12, "state", "silent"),
-    "fairview": (12, "state", "silent: MC 15.05 adopts state code (owner 2026-11-18)"),
+    "fairview": (12, "state", "silent: MC 15.05 adopts state code (owner 2026-11-18); issues its own "
+                 "permits (Multnomah County service-providers page, Aug 2026), so Gresham's 18 in does not reach it"),
     "wood_village": (12, "state", "silent: MC 15.04 adopts state code (owner 2026-11-18)"),
     "multnomah_unincorporated": (12, "state", "county silent; permits by contracted city (Gresham-area may be 18)"),
     "happy_valley": (12, "state", "silent"),
@@ -568,18 +569,62 @@ FROST_REGISTER: dict[str, tuple[int | None, str, str]] = {
 FROST_BELOW_FT = {"tualatin": 400.0, "washington_unincorporated": 400.0, "durham": 400.0}
 
 
-def frost(jurisdiction: str | None, elevation_ft: float | None, hub_in: float | None) -> dict[str, Any]:
-    """The register's frost depth beside the Design Criteria Hub's, and the
-    flags: the two disagree; or the lot stands above the elevation band the
-    place's figure is stated for."""
+#: The state frost line depth by county: the figure each table prints, and its
+#: elevation note. Both ORSC editions may be used until 2027-04-01.
+#: * 2023 ORSC Table R301.2 (BCD "2023 ORSC Summary of Amendments" p.29, errata
+#:   April 2024; stored data/flats/books/frost/state-baseline/orsc/
+#:   23orsc-summaryofamendments.pdf): Clackamas 12, Multnomah 18 note e,
+#:   Washington 12. Note e: "The frost line depth for site elevations below
+#:   2,500 feet in Jackson, Josephine and Multnomah Counties is 12 inches."
+#: * 2026 ORSC: table text not published; the Design Criteria Hub's 2026 ORSC
+#:   layer (FeatureServer/21, edited 2026-09-22) prints Clackamas 18, Multnomah
+#:   18, Washington 12. The 2025 OSSC Table 1809.5 adds Clackamas to the
+#:   12-below-2,500-ft note (BCD 2025 OSSC matrix p.19, item 18-8); the 2026
+#:   ORSC "aligns with OSSC" (BCD 2026 ORSC matrix p.1).
+#: Read with the owner's instruction of 2026-11-18: 12 in below 2,500 ft in all
+#: three counties, the printed figure (the larger edition's) at or above.
+FROST_STATE: dict[str, dict[str, Any]] = {
+    "multnomah": {"orsc_2023": 18, "orsc_2026": 18, "below_ft": 2500.0, "below_in": 12,
+                  "basis_below": "2023 ORSC Table R301.2 note e (and 2026 ORSC/2025 OSSC note)"},
+    "clackamas": {"orsc_2023": 12, "orsc_2026": 18, "below_ft": 2500.0, "below_in": 12,
+                  "basis_below": "2023 ORSC Table R301.2 prints 12; 2026 ORSC/2025 OSSC print 18, 12 below 2,500 ft"},
+    "washington": {"orsc_2023": 12, "orsc_2026": 12, "below_ft": None, "below_in": None,
+                   "basis_below": "2023 and 2026 ORSC Table R301.2 print 12, no elevation note"},
+}
+
+
+def frost_state(county: str | None, elevation_ft: float | None) -> dict[str, Any]:
+    """The footnote-adjusted state frost depth for a lot's ground elevation.
+    Unread elevation takes the printed figure (the deeper reading)."""
+    row = FROST_STATE.get((county or "").lower())
+    if row is None:
+        return {"frost_state_in": None, "frost_state_basis": "county not in the state table read"}
+    printed = max(row["orsc_2023"], row["orsc_2026"])
+    if row["below_ft"] is None:
+        return {"frost_state_in": printed, "frost_state_basis": row["basis_below"]}
+    if elevation_ft is None:
+        return {"frost_state_in": printed, "frost_state_basis": "elevation unread: printed figure"}
+    if elevation_ft < row["below_ft"]:
+        return {"frost_state_in": row["below_in"], "frost_state_basis": row["basis_below"]}
+    return {"frost_state_in": printed, "frost_state_basis": "at or above 2,500 ft: printed figure"}
+
+
+def frost(jurisdiction: str | None, elevation_ft: float | None, hub_in: float | None,
+          county: str | None = None) -> dict[str, Any]:
+    """The register's frost depth beside the hub's printed county figure and the
+    footnote-adjusted state figure, and the flags: the register and the state
+    figure disagree; or the lot stands above the elevation band the place's
+    figure is stated for."""
     reg = FROST_REGISTER.get(jurisdiction or "")
     inches, level, note = reg if reg else (None, "not in register", "")
     above = None
     cap = FROST_BELOW_FT.get(jurisdiction or "")
     if cap is not None and elevation_ft is not None:
         above = elevation_ft >= cap
-    disagree = None if inches is None or hub_in is None else float(inches) != float(hub_in)
+    state = frost_state(county, elevation_ft)
+    st = state["frost_state_in"]
+    disagree = None if inches is None or st is None else float(inches) != float(st)
     return {
         "frost_register_in": inches, "frost_register_level": level, "frost_register_note": note,
-        "frost_hub_in": hub_in, "frost_disagree": disagree, "frost_above_stated_band": above,
+        "frost_hub_in": hub_in, **state, "frost_disagree": disagree, "frost_above_stated_band": above,
     }

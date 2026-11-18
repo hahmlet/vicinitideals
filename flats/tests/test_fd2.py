@@ -200,10 +200,21 @@ def test_visitability_portland():
     assert fd2.visitability("or/clackamas/milwaukie", "R-5", 2.0, 0.0)["visit_status"] == "not_read"
 
 
-def test_frost_register_and_hub():
-    got = fd2.frost("gresham", 300.0, 18.0)
-    assert got["frost_register_in"] == 18 and got["frost_disagree"] is False
-    got = fd2.frost("portland", 200.0, 18.0)
-    assert got["frost_register_in"] == 12 and got["frost_disagree"] is True
-    assert fd2.frost("tualatin", 420.0, 12.0)["frost_above_stated_band"] is True
-    assert fd2.frost("estacada", 400.0, 12.0)["frost_disagree"] is None
+def test_frost_register_and_state_figure():
+    # Gresham's 18 in is practice; the state figure below 2,500 ft is 12 (note e).
+    got = fd2.frost("gresham", 300.0, 18.0, "multnomah")
+    assert got["frost_register_in"] == 18 and got["frost_state_in"] == 12 and got["frost_disagree"] is True
+    assert got["frost_hub_in"] == 18.0  # the hub's printed figure is kept as read
+    got = fd2.frost("portland", 200.0, 18.0, "multnomah")
+    assert got["frost_register_in"] == 12 and got["frost_disagree"] is False
+    assert fd2.frost("tualatin", 420.0, 12.0, "washington")["frost_above_stated_band"] is True
+    assert fd2.frost("estacada", 400.0, 18.0, "clackamas")["frost_disagree"] is None
+    assert fd2.frost("canby", 150.0, 18.0, "clackamas")["frost_state_in"] == 12
+
+
+def test_frost_state_elevation_note():
+    assert fd2.frost_state("multnomah", 2600.0)["frost_state_in"] == 18
+    assert fd2.frost_state("clackamas", 2500.0)["frost_state_in"] == 18
+    assert fd2.frost_state("clackamas", None)["frost_state_in"] == 18  # unread: deeper printed figure
+    assert fd2.frost_state("washington", 3000.0)["frost_state_in"] == 12
+    assert fd2.frost_state("lane", 100.0)["frost_state_in"] is None
