@@ -1099,15 +1099,23 @@ datasets:
     provides: overlay
     url: https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28
     fields: [FLD_ZONE, ZONE_SUBTY, SFHA_TF, STATIC_BFE]
-    where: '"DFIRM_ID" IN (''41051C'', ''41005C'', ''41067C'')'
+    where: '"DFIRM_ID" IN (''41051C'', ''41005C'', ''41067C'', ''410183'')'
     serves: [or/multnomah, or/clackamas, or/washington]
     notes: >-
       NFHL rejects the unquoted form of the where clause intermittently — keep
-      the quoting exactly as written. DFIRM_ID is the county FIPS: 41051C
-      Multnomah, 41005C Clackamas, 41067C Washington (added 2026-09-30). The clause named Multnomah alone until the
+      the quoting exactly as written. DFIRM_ID is FEMA's flood study ID. A
+      countywide study is the county FIPS plus C: 41051C Multnomah, 41005C
+      Clackamas, 41067C Washington (added 2026-09-30). A community mapped on
+      its own is filed under its NFIP community ID instead: 410183 is the City
+      of Portland (all three counties, plus Maywood Park and county pockets
+      inside it), added 2026-11-18 -- until then every Portland lot was
+      measured against no FEMA data (the county studies hold only edge
+      slivers of the city). NFHL layer 22 (Political Jurisdictions) queried
+      2026-11-18 with "CO_FIPS" IN ('051', '005', '067') AND "ST_FIPS" = '41'
+      names exactly these four studies. The clause named Multnomah alone until the
       first acquire snapshot (2026-09-18) showed 3,476 features for a dataset
-      serving both counties; a third county needs its ID added here in the
-      same breath as its jurisdictions.
+      serving both counties. A new jurisdiction needs its study found in
+      layer 22 and added here in the same breath (test_pipeline holds the map).
 
   # --- Clackamas city overlays ---------------------------------------------
   # The environmental layers quadfit's s5o screens against, registered here
