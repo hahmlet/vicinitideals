@@ -3569,3 +3569,18 @@
     place where the document could not be found or opened gets no fallback and
     stays unresolved. Note only; no colour (FOLLOWUPS 197).
   source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-condo-common-ground-red
+  kind: ruling
+  date: 2026-11-18
+  scope: {}
+  question: >-
+    Condominium shared (common) ground -- parcels the roll shows at $0 with no
+    building, which intake already marks as suspect -- showed GREEN on four
+    lots. Red like other non-buildable tracts, or yellow for review?
+  ruling: '"Condo shared ground is red"'
+  effect: >-
+    A parcel marked as condominium common ground is RED. Four run-128 GREENs
+    affected (1N1E35AA  -60000, 1S2E03DA  -70000, 1N2E25AC  -04000, and
+    1N1E22DD  -70000 if its roll evidence matches). Built on flats/rel10
+    (FOLLOWUPS 201).
+  source: Steph 2026-11-18 (chat, question sheet item 30), ../vicinitideals-worktrees/fg4-class-hunt.md
