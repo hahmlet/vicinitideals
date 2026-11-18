@@ -4,12 +4,10 @@ FOLLOWUPS 198. Landslide, earthquake-liquefaction and flood classes per lot,
 a note beside the lot, never a colour: nothing that screens reads these
 tables. Filled by ``scripts/flats_lot_hazards.py load``.
 
-Numbered 0152 because the soil-notes lane (FOLLOWUPS 196, branch
-flats/soil-notes) holds 0151. Whichever of the two merges second points its
-``down_revision`` at the other.
+Follows 0151 (the soil notes, FOLLOWUPS 196), which reached main first.
 
 Revision ID: 0152
-Revises: 0150
+Revises: 0151
 """
 
 from __future__ import annotations
@@ -19,7 +17,7 @@ from alembic import op
 from sqlalchemy.dialects.postgresql import JSONB
 
 revision = "0152"
-down_revision = "0150"
+down_revision = "0151"
 branch_labels = None
 depends_on = None
 

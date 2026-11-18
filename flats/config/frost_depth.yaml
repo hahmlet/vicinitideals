@@ -1,0 +1,466 @@
+# Frost depth per jurisdiction (FOLLOWUPS 197). A NOTE on the lot report and the
+# lot page for the foundation-design reader downstream: it never changes a
+# lot's colour, a check or a flag.
+#
+# Stored as printed: every `figure` is the token the source prints, and it must
+# appear inside its `quote`; the loader (flats/frost.py) derives the inches.
+# `cite` is the stored copy (gitignored, under data/flats/books/frost/) and the
+# page or `html` where the quote sits; `url` is where it was fetched.
+#
+# Outcome of each place:
+#   found    - the place's own department prints a figure (its `kind` says
+#              whether it is adopted code text or department practice: a
+#              handout, checklist or design-criteria sheet).
+#   silent   - we read where the figure would be stated and it states none.
+#              Steph's ruling 2026-11-18-frost-depth-silent-falls-back: the
+#              county department's figure, else the state figure, is used and
+#              is valid, flagged with its level.
+#   not_read - the document could not be obtained. No fallback is claimed: the
+#              note says so and shows the state figure for reference only.
+# A lot whose jurisdiction has no row here (a `juris_city:` lot) is not_read.
+#
+# Elevation: no lot elevation is held, so a figure is shown for the lowest
+# elevation band and every higher band is listed as a caveat on the note.
+
+read_on: 2026-11-18
+
+state:
+  # Oregon Residential Specialty Code (ORSC) Table R301.2, the county table the
+  # 4-unit townhouse is designed under (R403.1.4.1: footings meet the frost
+  # depth of Table R301.2). Read in BCD's own 2023 ORSC Summary of Amendments.
+  edition: 2023 Oregon Residential Specialty Code, Table R301.2
+  document: BCD, 2023 ORSC Summary of Amendments (errata April 2024), p.29
+  url: https://www.oregon.gov/bcd/codes-stand/Documents/23orsc-summaryofamendments.pdf
+  cite: data/flats/books/frost/state-baseline/orsc/23orsc-summaryofamendments.pdf#p29
+  minimum_depth:
+    figure: 12 inches
+    quote: >-
+      R403.1.4 Minimum depth. Exterior footings shall be placed not less than
+      12 inches (305 mm) below finished grade on the undisturbed ground surface.
+    cite: data/flats/books/frost/state-baseline/orsc/23orsc-summaryofamendments.pdf#p88
+  next_edition: >-
+    The 2026 ORSC (in force since 2026-10-01, mandatory 2027-04-01; either
+    edition may be used until then) adopts a new Oregon table aligned with the
+    2025 OSSC. BCD's 2025 OSSC matrix (item 18-8, 1809.5) records Clackamas
+    moving from 12 to 18 inches, with 12 inches below 2,500 ft and 24 inches
+    above 4,000 ft. The 2026 ORSC table itself is not yet published (read
+    2026-11-18).
+  next_edition_cite: data/flats/books/frost/state-baseline/ossc/2025-ossc-matrix.pdf#p19
+  counties:
+    multnomah:
+      bands:
+        - below_ft: 2500
+          figure: 12 inches
+          quote: >-
+            e. The frost line depth for site elevations below 2,500 feet in
+            Jackson, Josephine and Multnomah Counties is 12 inches.
+        - from_ft: 2500
+          figure: 18e
+          quote: Multnomah Note a 98 98 Note c Moderate 18e Moderate ≤ 1,500
+    clackamas:
+      bands:
+        - figure: "12"
+          quote: Clackamas Note a 98 98 Note c Moderate 12 Moderate ≤ 1,500
+      higher_ground_next_edition: >-
+        Under the 2026 ORSC / 2025 OSSC: 18 inches from 2,500 ft, 24 inches
+        above 4,000 ft.
+    washington:
+      bands:
+        - figure: "12"
+          quote: Washington Note a 97 - Note c Moderate 12 Moderate ≤ 1,500
+
+# The county building departments. Used for the unincorporated county and, by
+# the 2026-11-18 ruling, as the fallback for a silent city in that county.
+counties:
+  multnomah:
+    name: Multnomah County
+    outcome: silent
+    permits_by: >-
+      No county building department: unincorporated Multnomah is served by
+      Portland, Gresham or Troutdale by area (county service-providers page).
+    read:
+      - document: Multnomah County Code Chapter 29 (building) and fee resolution
+        cite: data/flats/books/frost/multnomah-unincorporated/mcc-29/doc.pdf
+      - document: Multnomah County service providers page (reviewed 2026-08-03)
+        url: https://multco.us/landuse/service-providers-and-regional-land-use-partners
+        cite: data/flats/books/frost/multnomah-unincorporated/service-providers-page/page.html#html
+    caveat: >-
+      Where Gresham issues the permit, Gresham's 18 inch practice may apply.
+  clackamas:
+    name: Clackamas County Building Codes Division
+    outcome: found
+    kind: practice
+    document: Clackamas County design criteria page (OSSC 1809.5 heading)
+    url: https://www.clackamas.us/building/criteria.html
+    cite: data/flats/books/frost/clackamas-unincorporated/criteria.html#html
+    read_on: 2026-11-18
+    bands:
+      - below_ft: 2500
+        figure: 12 inches
+        quote: >-
+          Frost depth Project site elevation Minimum frost depth to bottom of
+          footing Below 2,500 ft 12 inches 2,500 to 4,000 ft 18 inches Above
+          4,000 ft 24 inches
+      - from_ft: 2500
+        below_ft: 4000
+        figure: 18 inches
+        quote: 2,500 to 4,000 ft 18 inches
+      - from_ft: 4000
+        figure: 24 inches
+        quote: Above 4,000 ft 24 inches
+  washington:
+    name: Washington County Building Services
+    outcome: found
+    kind: practice
+    document: >-
+      Washington County design criteria page (Wayback copy 2024-07-19; the live
+      page is gone)
+    url: http://web.archive.org/web/20240719063838/https://www.washingtoncountyor.gov/lut/building-services/design-criteria
+    cite: data/flats/books/frost/washington-unincorporated/wayback-2024-07-19-design-criteria.html#html
+    read_on: 2026-11-18
+    bands:
+      - below_ft: 400
+        figure: 12 inches
+        quote: Minimum frost depth is 12 inches for elevations less than 400 feet.
+    caveat: >-
+      The current page gives no figure from 400 ft up. An older county sheet
+      (2015) printed 18 inches from 500 ft: "Minimum frost depth is 18- inches
+      for elevations greater than or equal to 500-ft unless the Building
+      Official determines that a deeper frost depth is required for the site."
+    caveat_cite: data/flats/books/frost/washington-unincorporated/engineering-structural-design-criteria.pdf#p1
+
+places:
+  or/multnomah/portland:
+    name: Portland
+    permits_by: City of Portland, Permitting & Development
+    outcome: found
+    kind: practice
+    document: Portland "Commercial structures" structural-engineering page (undated)
+    url: https://www.portland.gov/ppd/structural-engineering/commercial-structures
+    cite: data/flats/books/frost/portland/commercial-structures-page/page.html#html
+    read_on: 2026-11-18
+    bands:
+      - figure: 12 inches
+        quote: Soil frost depth is 12 inches.
+    caveat: >-
+      Printed on the commercial (engineered) structures page; Portland's
+      residential pages and building code guides state no figure.
+
+  or/multnomah/gresham:
+    name: Gresham
+    permits_by: City of Gresham, own plan review and inspection
+    outcome: found
+    kind: practice
+    document: Gresham residential inspection checklist (August 2008)
+    url: https://greshamoregon.gov/link/64dc806b31c14c0e98e8afba62305d82.aspx?id=352
+    cite: data/flats/books/frost/gresham/id=352/doc.pdf#p1
+    read_on: 2026-11-18
+    bands:
+      - figure: 18 inches
+        quote: >-
+          bottom of footing 18 inches minimum below finished grade for frost
+          protection.
+    caveat: >-
+      Department practice, not adopted code, and an old document: Gresham's
+      2021 residential design criteria sheet states no frost figure. Page 2
+      repeats it: "Set bottom of isolated footings outside the crawl space to
+      frost depth of 18 inches below grade."
+
+  or/multnomah/troutdale:
+    name: Troutdale
+    permits_by: City of Troutdale
+    outcome: silent
+    read:
+      - document: >-
+          TMC 15.04.040 Adoption of Codes (adopts the State Building Code per
+          ORS 455, no frost change), as enacted by Ordinance 746 (2004)
+        url: https://ormswd2.synergydcs.com/HPRMWebDrawer/Record/5382108/File/document
+        cite: data/flats/books/frost/troutdale/tmc-15.04/rec5382108.pdf
+      - document: Ordinance 818 (amends TMC 15.04.040 and 15.04.050)
+        url: https://ormswd2.synergydcs.com/HPRMWebDrawer/Record/5383024/File/document
+        cite: data/flats/books/frost/troutdale/tmc-15.04/rec5383024.pdf
+      - document: Troutdale building and permit-requirements pages
+        url: https://www.troutdaleoregon.gov/building
+        cite: data/flats/books/frost/troutdale/building-page
+    caveat: >-
+      Read from the enacting ordinances; the consolidated online code sits
+      behind a bot check and was not opened.
+
+  or/multnomah/fairview:
+    name: Fairview
+    permits_by: City of Fairview, own staff
+    outcome: silent
+    read:
+      - document: Fairview MC 15.05 (adopts the ORSC "as amended or revised by the state of Oregon")
+        url: https://ecode360.com/FA4439
+        cite: data/flats/books/frost/fairview/fairview-mc-15.05-building-code-2026-11-18.pdf#p2
+      - document: whole-code search for "frost" (no results)
+        url: https://ecode360.com/FA4439/search?query=frost
+        cite: data/flats/books/frost/fairview/fmc-search/ecode360-search-frost-2026-11-18.html#html
+
+  or/multnomah/wood-village:
+    name: Wood Village
+    permits_by: City of Wood Village (an older agreement names Troutdale's building official)
+    outcome: silent
+    read:
+      - document: Wood Village MC 15.04 (adopts the state codes; current through Ord. 6-2024)
+        url: https://woodvillage.municipal.codes/WVMC/15.04.020
+        cite: data/flats/books/frost/wood-village/wood-village-mc-15.04-state-codes-2026-11-18.pdf
+
+  or/multnomah/_unincorporated:
+    name: Unincorporated Multnomah County
+    use_county: multnomah
+
+  or/clackamas/happy-valley:
+    name: Happy Valley
+    permits_by: City of Happy Valley Building Division
+    outcome: silent
+    read:
+      - document: HVMC 15.08.010(E) (enforces the 2023 ORSC as adopted by OAR 918-480-005, unmodified)
+        url: https://ecode360.com/43523385
+        cite: data/flats/books/frost/happy-valley/hvmc/hvmc-ch15.08-fetched-2026-11-18.html#html
+      - document: HVMC Chapter 15.04 General Provisions
+        url: https://ecode360.com/43523298
+        cite: data/flats/books/frost/happy-valley/hvmc/hvmc-ch15.04-fetched-2026-11-18.html#html
+      - document: whole-code search for "frost" (one hit, "frosted" sign bulbs)
+        url: https://ecode360.com/HA4934/search?query=frost
+        cite: data/flats/books/frost/happy-valley/hvmc/ecode360-search-frost-2026-11-18.html#html
+      - document: building division operating plan, SFD and deck checklists
+        cite: data/flats/books/frost/happy-valley
+
+  or/clackamas/milwaukie:
+    name: Milwaukie
+    permits_by: City of Milwaukie Building Division
+    outcome: silent
+    read:
+      - document: MMC 15.04.070(E) (enforces the ORSC as adopted by OAR 918-480-0005 to -0010; no frost modification)
+        url: https://ecode360.com/43858596
+        cite: data/flats/books/frost/milwaukie/mmc-15.04/mmc-15.04-fetched-2026-11-18.html#html
+      - document: whole-code search for "frost" (one hit, "frosted windows" in 19.505.3)
+        url: https://ecode360.com/MI4969/search?query=frost
+        cite: data/flats/books/frost/milwaukie/mmc-search/ecode360-search-frost-2026-11-18.html#html
+    caveat: >-
+      The city hosts a state deck handout ("Valid for 2008") listing Clackamas
+      among counties with a 12 inch frost depth; it is the state's, not the
+      city's.
+
+  or/clackamas/oregon-city:
+    name: Oregon City
+    permits_by: City of Oregon City Building Division
+    outcome: not_read
+    read:
+      - document: building, residential permit, application and checklist pages; the current Oregon specialty codes page (no frost wording)
+        cite: data/flats/books/frost/oregon-city
+    reason: >-
+      Oregon City's building chapter (OCMC Title 15) was not read: the code
+      host refuses automated readers, and its web-archive copy of 2024-04-06
+      is an empty page shell with no code text
+      (data/flats/books/frost/oregon-city/ocmc-15/municode-tit15-wayback-20240406.html).
+      The department's own pages, which were read, state no figure.
+
+  or/clackamas/gladstone:
+    name: Gladstone
+    permits_by: Clackamas County Building Codes Division
+    use_county: clackamas
+
+  or/clackamas/canby:
+    name: Canby
+    permits_by: Clackamas County Building Codes Division
+    use_county: clackamas
+
+  or/clackamas/sandy:
+    name: Sandy
+    permits_by: City of Sandy Building Division
+    outcome: found
+    kind: practice
+    document: Sandy design criteria sheet (2024-11-14)
+    url: https://www.ci.sandy.or.us/sites/default/files/fileattachments/building/page/15131/design_criteria_11_14_24.pdf
+    cite: data/flats/books/frost/sandy/design-criteria-2024/sandy-design-criteria-11-14-24.pdf#p1
+    read_on: 2026-11-18
+    bands:
+      - figure: 12”
+        quote: "FROST DEPTH: 12”"
+
+  or/clackamas/estacada:
+    name: Estacada
+    permits_by: Northwest Code Professionals, under contract (its site is suspended)
+    outcome: found
+    kind: practice
+    drawn: true
+    document: Estacada "Sample Details Needed for a Building Permit" ("EASY PLANS" typical section, image only)
+    url: https://www.cityofestacada.org/wp-content/uploads/2332.pdf
+    cite: data/flats/books/frost/estacada/2332.pdf#p1
+    read_on: 2026-11-18
+    bands:
+      - figure: 12"
+        quote: >-
+          drawn dimension, read by eye: 12" from natural grade (N.G.) down to
+          the bottom of the footing, both foundation walls
+    caveat: >-
+      A dimension on the city's sample drawing, not a stated frost depth; the
+      sheet never uses the word frost. Estacada's building chapter was not
+      located.
+
+  or/clackamas/west-linn:
+    name: West Linn
+    permits_by: City of West Linn Building Division
+    outcome: silent
+    read:
+      - document: WLMC 8.070 (ORSC "as adopted by OAR 918-480-0005 and 918-480-0010" adopted and enforced, no modification); whole Chapter 8 has no frost or footing text
+        url: http://web.archive.org/web/20260412092234/https://www.codepublishing.com/OR/WestLinn/html/WestLinn08.html
+        cite: data/flats/books/frost/west-linn/wlmc-ch8/wlmc-ch8-wayback-20260412.html#html
+      - document: Local Design Values page (no number; links to the state hub)
+        cite: data/flats/books/frost/west-linn/local-design-values.html#html
+    caveat: >-
+      Chapter 8 read from the Wayback copy of 2026-04-12; the live code site
+      sits behind a bot check.
+
+  or/clackamas/tualatin:
+    name: Tualatin
+    permits_by: City of Tualatin Building Division
+    outcome: found
+    kind: practice
+    document: Tualatin construction design criteria page (old city site)
+    url: https://old.tualatinoregon.gov/building/construction-design-criteria
+    cite: data/flats/books/frost/tualatin/construction-design-criteria_old-site.html#html
+    read_on: 2026-11-18
+    bands:
+      - below_ft: 400
+        figure: 12 inches
+        quote: Minimum frost depth is 12 inches for elevations less than 400 feet.
+    caveat: >-
+      Tualatin's currently-adopted-codes sheet (REV 04/23) prints "Frost Depth
+      – 12”" with no elevation limit and "without local amendments". The
+      design-criteria page gives no figure from 400 ft up.
+
+  or/clackamas/wilsonville:
+    name: Wilsonville
+    permits_by: City of Wilsonville Building Division
+    outcome: silent
+    read:
+      - document: Wilsonville Code Chapter 9 as enacted by Ordinance 839 (2019); no frost or footing text
+        url: http://web.archive.org/web/20251028171414/https://www.wilsonvilleoregon.gov/sites/default/files/fileattachments/ordinance/96976/cr_001.pdf
+        cite: data/flats/books/frost/wilsonville/wc-ch9/ord839-chapter9-wayback-20251028.pdf
+      - document: Resolution 3110 adopting the 2023 ORSC with city amendments (none on frost)
+        url: http://web.archive.org/web/20251029125325/https://www.wilsonvilleoregon.gov/sites/default/files/fileattachments/ordinance/128125/resolution_no._3110.pdf
+        cite: data/flats/books/frost/wilsonville/wc-ch9/res3110-orsc2023-wayback-20251029.pdf
+      - document: design standards hub, plan submittal and intake checklists ("Reference ORSC Chapter 4")
+        cite: data/flats/books/frost/wilsonville
+    caveat: >-
+      Read from Wayback copies: the city's new website dropped the old
+      documents. Later resolutions (e.g. 3252, the 2025 OSSC) were not read.
+
+  or/clackamas/lake-oswego:
+    name: Lake Oswego
+    permits_by: City of Lake Oswego Building Division
+    outcome: silent
+    read:
+      - document: LOC 45.09.040 (ORSC "as adopted by OAR 918-480-0005 through 918-480-0010, except as modified by this chapter"; no frost modification)
+        url: https://ecode360.com/43073412
+        cite: data/flats/books/frost/lake-oswego/loc-ch45/loc-art45.09-fetched-2026-11-18.html#html
+      - document: whole-code search for "frost" (two hits, both erosion definitions)
+        url: https://ecode360.com/LA4508/search?query=frost
+        cite: data/flats/books/frost/lake-oswego/loc-search/ecode360-search-frost-2026-11-18.html#html
+
+  or/clackamas/_unincorporated:
+    name: Unincorporated Clackamas County
+    use_county: clackamas
+
+  or/washington/_unincorporated:
+    name: Unincorporated Washington County
+    use_county: washington
+
+  or/washington/hillsboro:
+    name: Hillsboro
+    permits_by: City of Hillsboro (not confirmed)
+    outcome: silent
+    read:
+      - document: >-
+          Steph's search of the Hillsboro municipal code for "frost",
+          "foundation" and "seismic", 2026-11-18 (nothing); department handouts
+          not seen
+    caveat: The city's website refuses automated readers; its handouts were not read.
+
+  or/washington/beaverton:
+    name: Beaverton
+    permits_by: City of Beaverton Building Division
+    outcome: found
+    kind: practice
+    document: Beaverton Specific Design Criteria (B70-1096 REV 10/26)
+    url: https://content.civicplus.com/api/assets/5f8990fa-7f7f-4d5b-a9c2-e9a332aceb6d
+    cite: data/flats/books/frost/beaverton/specific-design-criteria.pdf#p1
+    read_on: 2026-11-18
+    bands:
+      - figure: 12”
+        quote: "Frost line depth: 12” below grade"
+
+  or/washington/sherwood:
+    name: Sherwood
+    permits_by: City of Sherwood Building Division
+    outcome: not_read
+    read:
+      - document: building, code-administration, submittal and deck pages
+        url: https://www.sherwoodoregon.gov/building/
+        cite: data/flats/books/frost/sherwood
+      - document: Ordinance 2021-006 Exhibit A, which rewrites only SMC 15.04.150 (the ORSC "as adopted by OAR 918-480-0005 through 918-480-0010(2021)"); no frost, footing or foundation text
+        url: http://web.archive.org/web/20240421004537/https://www.sherwoodoregon.gov/sites/default/files/fileattachments/ordinance/48800/ordinance_2021-006_building_code_updates_2021.pdf
+        cite: data/flats/books/frost/sherwood/smc-15.04/ord-2021-006-wayback-20240421.pdf#p4
+    reason: >-
+      Sherwood's building chapter (SMC 15.04) was not read whole: only the one
+      section the 2021 ordinance rewrote was seen. The code host refuses
+      automated readers and the web archive holds no copy of the chapter.
+
+  or/washington/king-city:
+    name: King City
+    permits_by: Clair Company, under contract
+    outcome: silent
+    read:
+      - document: building code services page and the contractor's site search
+        url: https://www.ci.king-city.or.us/building_code_services/index.php
+        cite: data/flats/books/frost/king-city/building-code-services-page.html#html
+      - document: Ordinance O-2020-02, which restates Title 15 (Buildings and Construction) whole; it adopts the dwelling code "as adopted by OAR Chapter 918, Division 480" and has no frost, footing or foundation text
+        url: https://cms6.revize.com/revize/kingcityornew/document_center/Government/Agendas%20&%20Minutes/2020/Packets/20201216%20City%20Council%20Packet.pdf
+        cite: data/flats/books/frost/king-city/kcmc-15/council-packet-2020-12-16.pdf#p4-12
+    caveat: >-
+      Title 15 read as restated in the December 2020 council packet; any later
+      amendment was not seen.
+
+  or/washington/durham:
+    name: Durham
+    permits_by: Tualatin inspects under contract; plan review not stated
+    outcome: silent
+    read:
+      - document: Durham building page
+        cite: data/flats/books/frost/durham/durham-building-page.html#html
+      - document: Ordinance 275-26, the Building Code (passed 2026-05-26); "footing" appears only in the retaining-wall exemption and the easement rule, no frost depth
+        url: https://durham-oregon.us/wp-content/uploads/2026/05/Ord-275-26-Building-Ordinance.pdf
+        cite: data/flats/books/frost/durham/ord/ord-275-26.pdf
+      - document: Resolution 697-26, building code standards; no frost depth
+        url: https://durham-oregon.us/wp-content/uploads/2026/05/Res-697-26-Building-Code-Standards.pdf
+        cite: data/flats/books/frost/durham/ord/res-697-26.pdf
+    caveat: >-
+      Tualatin, which inspects for Durham, prints 12 inches below 400 ft. The
+      ordinance copy read carries a blank signature line.
+
+  or/washington/tigard:
+    name: Tigard
+    permits_by: City of Tigard (not confirmed)
+    outcome: silent
+    read:
+      - document: >-
+          Steph's search of the Tigard municipal code for "frost", "foundation"
+          and "seismic", 2026-11-18 (nothing); department handouts not seen
+    caveat: The city's website refuses automated readers; its handouts were not read.
+
+  or/washington/cornelius:
+    name: Cornelius
+    permits_by: Forest Grove, under contract
+    outcome: silent
+    read:
+      - document: Cornelius building permits page; Forest Grove residential plan requirements ("using current code design values")
+        url: https://www.forestgrove-or.gov/DocumentCenter/View/2117/Residential-Plan-Requirements
+        cite: data/flats/books/frost/cornelius/forest-grove-residential-plan-requirements.pdf
+      - document: CMC 15.05, the Cornelius building code, whole (15.05.030 adopts the current state specialty codes); no frost, footing or foundation text
+        url: http://web.archive.org/web/20240420161925/https://www.codepublishing.com/OR/Cornelius/html/Cornelius15/Cornelius1505.html
+        cite: data/flats/books/frost/cornelius/cmc-15.05/cmc-15.05-wayback-20240420.html#html
+    caveat: Chapter 15.05 read from the web-archive copy of 2024-04-20; the live code site refuses automated readers.

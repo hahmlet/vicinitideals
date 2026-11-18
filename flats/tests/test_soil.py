@@ -222,6 +222,35 @@ def test_the_dominant_is_the_most_ground_and_the_worst_the_worst_rating():
     assert urban["no_data_words"] == "Mapped as Urban land, 0 to 3 percent slopes: the survey holds no soil data for it."
 
 
+def test_a_winter_high_from_a_small_inclusion_leads_with_the_main_soil():
+    """Production, run 128: on most green lots the map unit's shallowest winter
+    water is a 1-4% inclusion (Powell, Dayton). The page leads with the soil the
+    unit's figures come from and names the inclusion with its share."""
+    unit = {"mukey": "M", "areasymbol": "OR051", "muname": "Urban land-Multnomah complex, 0 to 3 percent slopes",
+            "wet_season_status": WATER_RECORDED, "wet_season_cm": "15", "wet_season_months": "January,February",
+            "wet_season_cokey": "m3"}
+    comps = [
+        {"cokey": "m1", "compname": "Urban land", "comppct_r": "50", "majcompflag": "Yes"},
+        {"cokey": "m2", "compname": "Multnomah", "comppct_r": "45", "majcompflag": "Yes",
+         "drainagecl": "Well drained", "wet_season_status": WATER_NONE_RECORDED},
+        {"cokey": "m3", "compname": "Powell", "comppct_r": "2", "majcompflag": "No",
+         "drainagecl": "Somewhat poorly drained", "wet_season_status": WATER_RECORDED, "wet_season_cm": "15",
+         "wet_season_months": "January,February"},
+    ]
+    u = describe([{"mukey": "M", "area_sqft": 5000, "share": 1.0}], {"M": unit}, {"M": comps})["units"][0]
+    assert u["wet_season_from"] == {"cokey": "m3", "compname": "Powell", "comppct_r": 2, "minor": True}
+    assert u["wet_season_headline"] == (
+        "Multnomah (45% of the unit): none recorded: the survey shows no wet layer from November to April. "
+        "Wettest part: Powell (2% of the unit), 15 cm (0 ft 6 in) below the surface at its highest, "
+        "November to April (January, February)")
+    # The stored figure is still the unit's shallowest, as asked.
+    assert u["wet_season_cm"] == 15
+    # Where the rated soil is itself the wettest, the headline is the figure alone.
+    a = describe([{"mukey": "A", "area_sqft": 1, "share": 1.0}],
+                 {"A": {**UNITS["A"], "wet_season_cokey": "a1"}}, COMPONENTS)["units"][0]
+    assert a["wet_season_headline"] == a["wet_season_words"] and a["wet_season_from"]["minor"] is False
+
+
 def test_a_dominant_unit_that_is_also_the_worst_has_no_separate_worst():
     rows = [{"mukey": "C", "area_sqft": 4000, "share": 0.8}, {"mukey": "A", "area_sqft": 1000, "share": 0.2}]
     note = describe(rows, UNITS, COMPONENTS)

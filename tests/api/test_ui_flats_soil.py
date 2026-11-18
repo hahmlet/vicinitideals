@@ -180,7 +180,8 @@ async def test_a_build_loads_green_lots_first_then_the_rest(
     comp = await session.get(FlatsSoilComponent, "2001")
     assert comp.months[0]["wet_top_cm"] == 46
     unit = await session.get(FlatsSoilMapUnit, "1001")
-    assert unit.source.startswith("USDA Natural Resources Conservation Service")
+    assert unit.source == ("USDA Natural Resources Conservation Service (NRCS) soil survey, SSURGO, state download "
+                           "of 2026-10-01: OR051 Multnomah County Area, Oregon (09/08/2026 19:50:15)")
 
     # The page for the lot with no survey coverage says so plainly.
     await _login(client, session)

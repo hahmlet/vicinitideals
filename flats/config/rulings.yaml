@@ -3569,3 +3569,33 @@
     place where the document could not be found or opened gets no fallback and
     stays unresolved. Note only; no colour (FOLLOWUPS 197).
   source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-condo-common-ground-red
+  kind: ruling
+  date: 2026-11-18
+  scope: {}
+  question: >-
+    Condominium shared (common) ground -- parcels the roll shows at $0 with no
+    building, which intake already marks as suspect -- showed GREEN on four
+    lots. Red like other non-buildable tracts, or yellow for review?
+  ruling: '"Condo shared ground is red"'
+  effect: >-
+    A parcel marked as condominium common ground is RED. Four run-128 GREENs
+    affected (1N1E35AA  -60000, 1S2E03DA  -70000, 1N2E25AC  -04000, and
+    1N1E22DD  -70000 if its roll evidence matches). Built on flats/rel10
+    (FOLLOWUPS 201).
+  source: Steph 2026-11-18 (chat, question sheet item 30), ../vicinitideals-worktrees/fg4-class-hunt.md
+- id: 2026-11-18-river-e-clear-stays-green
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: multnomah, city: portland}
+  question: >-
+    A lot touches Portland's River Environmental overlay zone ("e", PCC
+    33.475.400-.440) but the building, parking court and drive all sit clear
+    of it. Stay GREEN, or a closer-look flag as the c, p and v overlays carry?
+  ruling: '"Leave it green."'
+  effect: >-
+    The "e" zone is carved out of the buildable ground; a lot whose drawn
+    building, court and lane sit clear of it stays GREEN with no flag. One
+    run-128 GREEN affected (1S1E14DB  -17000). Built on flats/rel10d
+    (FOLLOWUPS 202).
+  source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/title3-greens.findings.md
