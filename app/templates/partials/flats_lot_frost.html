@@ -1,0 +1,24 @@
+{# Frost depth for the lot's place (FOLLOWUPS 197, flats/config/frost_depth.yaml). A note, never a colour. #}
+<div id="lot-frost" style="margin-top:12px;font-size:12px"{% if frost %} data-frost-outcome="{{ frost.outcome }}" data-frost-level="{{ frost.level or '' }}"{% endif %}>
+  <strong>Frost depth (footings)</strong>
+  {% if frost %}
+    <div class="muted" style="font-size:11px;margin-top:2px">A note only: it never changes the lot's colour.</div>
+    <div style="margin-top:4px" data-frost-words>{% if frost.inches is not none %}<strong>{{ frost.inches }} in</strong> &middot; {% endif %}{{ frost.words }}</div>
+    {% if frost.quote %}
+      <div class="muted" style="font-size:10px;margin-top:2px" data-frost-quote>As printed: &ldquo;{{ frost.quote }}&rdquo;{% if frost.document %} &mdash; {{ frost.document }}{% endif %}{% if frost.read_on %}, read {{ frost.read_on }}{% endif %}.{% if frost.url %} <a href="{{ frost.url }}" target="_blank" rel="noopener">source</a>{% endif %}</div>
+    {% endif %}
+    <div style="margin-top:2px" data-frost-elevation>{{ frost.elevation_words }}</div>
+    {% if frost.permits_by %}<div class="muted" style="font-size:11px;margin-top:2px">Building permits: {{ frost.permits_by }}.</div>{% endif %}
+    {% for c in frost.caveats %}<div class="muted" style="font-size:11px;margin-top:2px" data-frost-caveat>{{ c }}</div>{% endfor %}
+    {% if frost.read %}
+      <details style="font-size:10px">
+        <summary class="muted">what was read</summary>
+        <ul style="margin:2px 0 0 16px;padding:0">
+          {% for r in frost.read %}<li>{% if r.url %}<a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.document }}</a>{% else %}{{ r.document }}{% endif %}</li>{% endfor %}
+        </ul>
+      </details>
+    {% endif %}
+  {% else %}
+    <span class="muted">not read</span>
+  {% endif %}
+</div>
