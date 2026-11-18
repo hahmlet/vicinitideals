@@ -3033,6 +3033,9 @@ clear_vision:
     exempt_no_setback: true
     source: data/flats/books/sight-manuals/troutdale/tdc_full.txt#L6336-L6342
     cite: TDC 5.040(B)(1), Figure 5.040(A); 5.040(D)(9)
+    # Parked vehicles (FOLLOWUPS 161): 5.040(C) 'no vehicle, fence, wall, hedge'.
+    vehicles: true
+    vehicles_quote: data/flats/books/sight-manuals/troutdale/tdc_full.txt#L6362
     note: 'The curb lines extended, measured as Figure 5.040(A) draws (110 ft by 15 ft; which street takes
       which is unmapped, so both); 5.040(C) bars ''structure''; 5.040(D)(9) exempts ''Lots for which no
       setback is required'' (tdc_full.txt#L6394). Curb basis: the middle way.'

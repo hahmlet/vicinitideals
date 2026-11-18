@@ -32,7 +32,7 @@ import pytest
 import shapely
 from shapely.geometry import box
 
-from flats.fit.frontage import parking_share, street_runs
+from flats.fit.frontage import parking_share, street_runs, street_runs_bounded
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
 from flats.score import relief, slack
@@ -561,3 +561,67 @@ def test_beaverton_holds_a_corner_lots_drive_to_its_short_street(corpus: RuleSet
     assert "driveway_frontage_share" in s.screening.unchecked
     assert any(f.code == "MEASURE-DRIVE-STREET" for f in s.screening.flags)
     assert s.screening.colour is not Colour.green
+
+
+# --- the grid: a share counted at the cap is unanswered (rel9 F1) -----------
+
+
+def test_the_bound_adds_a_look_where_the_parking_starts_or_stops() -> None:
+    through = _edges([(0, 0, 80, 0, F), (80, 0, 80, 120, S), (80, 120, 0, 120, F), (0, 120, 0, 0, S)], [0.0])
+    runs = street_runs_bounded(LOT, through, ROW, BUILDING)
+    assert [(p, f) for p, f, _, _ in runs] == list(street_runs(LOT, through, ROW, BUILDING))
+    (near, near_ft, near_most, near_most_ft), (far, far_ft, far_most, far_most_ft) = runs
+    # Nothing faces the near street: no edge, no doubt.
+    assert near == near_most == 0.0 and near_ft == near_most_ft == 0.0
+    # The far street's run starts and stops along the line: two looks of
+    # doubt on an 80 ft line (80 looks), never less than the count.
+    assert far_most == pytest.approx(far + 2 * 100.0 / 80)
+    assert far_most_ft == pytest.approx(far_ft + 2.0)
+
+
+def test_a_share_counted_at_the_cap_is_held_not_passed() -> None:
+    # Beaverton 60.05.60.2 S11's lots: 50.0 percent counted, 51.3 at most.
+    at = run(
+        facts(
+            parking_frontage_share_pct=50.0,
+            parking_frontage_run_ft=37.5,
+            parking_frontage_share_most_pct=51.33,
+            parking_frontage_run_most_ft=38.5,
+        ),
+        rules(**CAP),
+    )
+    share = check(at, "parking_frontage_share")
+    assert share.verdict is Verdict.tolerated
+    assert share.tolerance == pytest.approx(1.33)
+    assert at.colour is Colour.yellow
+    assert any(f.code == "MEASURE-TOLERANCE" for f in at.flags)
+
+
+def test_a_share_comfortably_under_the_cap_stays_green() -> None:
+    under = run(
+        facts(
+            parking_frontage_share_pct=36.0,
+            parking_frontage_run_ft=36.0,
+            parking_frontage_share_most_pct=38.0,
+            parking_frontage_run_most_ft=38.0,
+        ),
+        rules(**CAP),
+    )
+    assert check(under, "parking_frontage_share").verdict is Verdict.passes
+    assert check(under, "parking_frontage_width").verdict is Verdict.passes
+    assert under.colour is Colour.green
+
+
+def test_feet_counted_at_the_forty_feet_are_held_not_passed() -> None:
+    at = run(
+        facts(
+            parking_frontage_share_pct=36.0,
+            parking_frontage_run_ft=40.0,
+            parking_frontage_share_most_pct=37.0,
+            parking_frontage_run_most_ft=41.0,
+        ),
+        rules(**CAP),
+    )
+    assert check(at, "parking_frontage_share").verdict is Verdict.passes
+    assert check(at, "parking_frontage_width").verdict is Verdict.tolerated
+    assert at.colour is Colour.yellow

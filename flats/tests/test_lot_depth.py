@@ -130,6 +130,10 @@ def lot(
         frontage_ft=frontage,
         lot_width_ft=wide,
         lot_depth_ft=deep,
+        # 2026-11-13 (drive-spacing, FOLLOWUPS 178): this city now holds a
+        # driveway-spacing rule; the lot's frontage is read clear, as it would be
+        # mid-block on a local street. These tests are not about spacing.
+        driveway_spacing="clear",
     )
 
 

@@ -37,9 +37,20 @@
 #
 # NOT HELD: spacing between two driveways on a local street (Clackamas
 # County 25 ft, Tualatin 40 ft on one property, Washington County 10 ft from
-# Point B for separated approaches): the pod has one driveway, and the
-# neighbours' driveways are not mapped. Durham 3.7.1.7 stays its own check
-# (flats/geom/durham_apron.py).
+# Point B for separated approaches; Fairview 50 ft, FMC 19.162.020(G)(1);
+# West Linn's Local Commercial Street 50 ft, TSP Table 15): the pod has one
+# driveway, and the neighbours' driveways are not mapped. On every class
+# above a local street a printed driveway-to-driveway figure bars the
+# frontage. Durham 3.7.1.7 stays its own check (flats/geom/durham_apron.py).
+# Gresham PWS 6.03 A (no new driveway within 30 ft of a commercial or
+# industrial property line) is not held here: it is a lot-line rule, not a
+# street-class one (FOLLOWUPS 178 hand-off).
+#
+# `unread` (FOLLOWUPS 178): a class whose frontage the code holds to a rule
+# nothing measures -- every frontage on it is unread (YELLOW). An
+# intersection rule's `unread_cross`: the cross classes beside which the
+# code adds such a rule; within 150 ft of one (the module's
+# UNREAD_CROSS_REACH_FT, not a code figure) a driveway is never shown clear.
 
 jurisdictions:
   or/washington/tigard:
@@ -313,3 +324,339 @@ jurisdictions:
         cite: EDM 210.21 C, for lots fronting on Local Streets the minimum distance between face of curb of intersecting street and nearside edge of driveway 25 feet
         quote: or/washington/beaverton/edm.210.21.driveways.txt#L23
         quote_also: or/washington/beaverton/edm.210.21.driveways.txt#L13-L15
+  # --- FOLLOWUPS 178 (2026-11-13): the cities whose stored code holds a
+  # spacing rule the screen did not apply. Each map was already registered
+  # for the corner-lot lowest-class rule and serves its own city.
+
+  or/multnomah/gresham:
+    map: street_class_gresham
+    # Description verbatim. The layer draws local streets too, so a street
+    # it leaves out is unread. Principal Arterial (ODOT) and Freeway (ODOT)
+    # are left unnamed: unread (ODOT's own spacing is not held).
+    #
+    # PWS 6.03 holds a new driveway's centreline back from the curb return
+    # of an intersecting street: 100 ft from a Major or Standard Arterial
+    # (6.03 B and Table 6.03), 45 ft from any other street in Table 6.03's
+    # RESIDENTIAL column. The pod is housing; the COMMERCIAL/INDUSTRIAL
+    # column (100 ft on minor arterials and collectors) names those uses
+    # (a judgement, FOLLOWUPS 178 hand-off). The table's FUNCTIONAL
+    # CLASSIFICATION does not say whether it is the driveway's street or the
+    # intersecting one; on a local or collector frontage both readings give
+    # the same figures, 100 ft from a Major or Standard Arterial and 45 ft
+    # from any other street, so the two rules below hold either reading.
+    # A driveway onto an arterial is also held "beyond the prevailing queue
+    # length" at an adjacent intersection, a figure no map holds, and note 3
+    # may refuse direct access where an alternative exists: arterial
+    # frontages are unread. The curb return lies past the cross street's
+    # curb: the pass bound measures from its right-of-way line plus the
+    # 35 ft return allowance (`curb_return`), the fail bound centreline to
+    # centreline. Note 1 ("unless this prohibits access to the site") and
+    # 6.03's restricted-turn driveway are the engineer's call the flag names.
+    classes:
+      Local: local
+      Minor Collector: collector
+      Standard Collector: collector
+      Major Collector: collector
+      Minor Arterial: minor_arterial
+      Standard Arterial: standard_arterial
+      Major Arterial: major_arterial
+    frontage: {}
+    unread:
+      minor_arterial:
+        cite: Gresham PWS 6.03, driveways entering onto Arterials adjacent to street intersections located beyond the prevailing queue length (not measured); Table 6.03 note 3, direct access to this street may not be allowed if an alternative exists
+        quote: or/multnomah/gresham/pws.6.03-6.04.txt#L55-L57
+        quote_also: or/multnomah/gresham/pws.6.03-6.04.txt#L41,L50
+      standard_arterial:
+        cite: Gresham PWS 6.03, as for minor arterials (queue length not measured; Table 6.03 note 3)
+        quote: or/multnomah/gresham/pws.6.03-6.04.txt#L55-L57
+        quote_also: or/multnomah/gresham/pws.6.03-6.04.txt#L40,L50
+      major_arterial:
+        cite: Gresham PWS 6.03, as for minor arterials (queue length not measured; Table 6.03 note 3)
+        quote: or/multnomah/gresham/pws.6.03-6.04.txt#L55-L57
+        quote_also: or/multnomah/gresham/pws.6.03-6.04.txt#L39,L50
+    from_intersections:
+      - driveway_on: [local, collector]
+        cross: [major_arterial, standard_arterial]
+        figure_ft: 100
+        basis: curb_return
+        cite: Gresham PWS 6.03 B, no new driveway within 100 feet of the curb return of an intersecting Major or Standard Arterial street, measured to the driveway centerline; Table 6.03, Major and Standard Arterial 100 feet residential
+        quote: or/multnomah/gresham/pws.6.03-6.04.txt#L24-L28
+        quote_also: or/multnomah/gresham/pws.6.03-6.04.txt#L36-L40
+      - driveway_on: [local, collector]
+        cross: [local, collector, minor_arterial]
+        figure_ft: 45
+        basis: curb_return
+        cite: Gresham PWS Table 6.03, minimum distance from driveway centerline to curb return, residential, 45 feet (Minor Arterial, Collectors, Local, Minor Access Street)
+        quote: or/multnomah/gresham/pws.6.03-6.04.txt#L36-L45
+
+  or/clackamas/oregon-city:
+    map: street_class_oregon_city
+    # FunctionalClass verbatim; Expressway, Freeway and the two Unclassified
+    # values are left unnamed: unread. The map draws local streets too.
+    #
+    # Table 16.12.035.A's rows end "for all uses other than detached
+    # single-family dwellings, duplexes, triplexes, quadplexes and
+    # townhouses", but 16.12.035.B brings those dwellings back to the
+    # table's minimum distance from a street corner (not its spacing between
+    # driveways): 175 ft on an arterial, 100 on a collector, 25 on a local
+    # street, measured along the right-of-way from the edge of the
+    # intersecting right-of-way to the nearest portion of the driveway
+    # (note 3). The figure is the frontage street's. B's relief for a lot
+    # smaller than the distance (as far from the intersection as possible,
+    # approved by the city engineer) is the engineer's call the flag names.
+    classes:
+      Local: local
+      Collector: collector
+      Minor Arterial: arterial
+      Major Arterial: arterial
+    frontage: {}
+    from_intersections:
+      - driveway_on: [arterial]
+        cross: [local, collector, arterial]
+        figure_ft: 175
+        basis: right_of_way_line
+        cite: OCMC Table 16.12.035.A, Major and Minor Arterial Streets, minimum distance from a street corner to a driveway 175 feet; 16.12.035.B, quadplexes and townhouses meet the minimum distance from a street corner standard
+        quote: or/clackamas/oregon-city/16.12/16.12.035.txt#L9-L12
+        quote_also: or/clackamas/oregon-city/16.12/16.12.035.txt#L21-L22
+      - driveway_on: [collector]
+        cross: [local, collector, arterial]
+        figure_ft: 100
+        basis: right_of_way_line
+        cite: OCMC Table 16.12.035.A, Collector Streets, minimum distance from a street corner to a driveway 100 feet; 16.12.035.B
+        quote: or/clackamas/oregon-city/16.12/16.12.035.txt#L13-L14
+        quote_also: or/clackamas/oregon-city/16.12/16.12.035.txt#L21-L22
+      - driveway_on: [local]
+        cross: [local, collector, arterial]
+        figure_ft: 25
+        basis: right_of_way_line
+        cite: OCMC Table 16.12.035.A, Local Streets, minimum distance from a street corner to a driveway 25 feet; 16.12.035.B
+        quote: or/clackamas/oregon-city/16.12/16.12.035.txt#L18
+        quote_also: or/clackamas/oregon-city/16.12/16.12.035.txt#L21-L22
+
+  or/clackamas/west-linn:
+    map: street_class_west_linn
+    # CITYCLASS codes as the map legend decodes them: 9 Local, 7
+    # Neighborhood Route, 6 Collector, 5 Minor Arterial, 3 Major Arterial;
+    # 1 / 99 Freeway, 11 Alley, 20 Misc and 10 unlabelled are left unnamed:
+    # unread. The map draws every street and names none.
+    #
+    # CDC 48.025(B)(6)(a) applies "the access spacing standards found in
+    # Tables 14 and 15 of the TSP and in CDC 48.060" to curb cuts, and
+    # (B)(6)(b) private drives to 48.060. Both are held and the stricter
+    # figure governs. 48.060(C) holds a curb cut from the intersecting
+    # street's right-of-way line (35 ft on a local street); TSP Table 15
+    # holds a driveway 35 ft from an intersection on a Local Residential
+    # Street and 50 ft on a Local Commercial Street. The map does not tell
+    # the two local streets apart, so 50 ft (a pass from the right-of-way
+    # line). Driveway-to-driveway spacing is printed for the Neighborhood
+    # Route (50), collector (48.060(D) 75, Table 15 150) and arterial
+    # (48.060(D) 150, Table 15 300): those frontages are barred. Table 14
+    # (Highway 43, ODOT's 500 / 350 ft) reads through the map's arterial.
+    # 48.060(E)'s rolled curb "in lieu of curb cuts and access separation
+    # requirements" and the TSP's spacing adjustments are the engineer's
+    # call the flag names. The TSP excerpt is the 2016 plan as adopted
+    # (Ord. 1646); a later amendment (Ord. 1714) was not read for Table 15.
+    classes:
+      '9': local
+      '7': neighborhood_route
+      '6': collector
+      '5': arterial
+      '3': arterial
+    frontage:
+      neighborhood_route:
+        figure_ft: 50
+        cite: West Linn TSP (2016) Table 15, Neighborhood Route, minimum spacing between driveways 50 feet (CDC 48.025(B)(6)(a) applies Table 15 to curb cuts)
+        quote: or/clackamas/west-linn/tsp.access-spacing.txt#L58
+        quote_also: or/clackamas/west-linn/48/48.025.txt#L37-L42
+      collector:
+        figure_ft: 75
+        cite: West Linn CDC 48.060(D)(2), minimum distance between adjacent curb cuts on a collector street 75 feet; TSP Table 15, Collector, between driveways 150 feet
+        quote: or/clackamas/west-linn/48/48.060.txt#L22-L26
+        quote_also: or/clackamas/west-linn/tsp.access-spacing.txt#L57
+      arterial:
+        figure_ft: 150
+        cite: West Linn CDC 48.060(D)(1), minimum distance between adjacent curb cuts on an arterial street 150 feet; TSP Table 15, Minor Arterial (urban), between driveways 300 feet
+        quote: or/clackamas/west-linn/48/48.060.txt#L22-L24
+        quote_also: or/clackamas/west-linn/tsp.access-spacing.txt#L55
+    from_intersections:
+      - driveway_on: [local]
+        cross: [local, neighborhood_route, collector, arterial]
+        figure_ft: 50
+        basis: right_of_way_line
+        cite: West Linn TSP (2016) Table 15, Local Commercial Street, between street intersections and driveways 50 feet (Local Residential Street 35 feet); CDC 48.060(C)(6), no curb cut on a local street closer to an intersecting street right-of-way line than 35 feet
+        quote: or/clackamas/west-linn/tsp.access-spacing.txt#L59-L60
+        quote_also: or/clackamas/west-linn/48/48.060.txt#L8,L20
+
+  or/clackamas/milwaukie:
+    map: street_class_milwaukie
+    # RoadwayClassification verbatim; the Proposed values are left unnamed:
+    # unread. The map draws local streets too.
+    #
+    # MMC 12.16.040(B)(1) spaces accessways along arterial (600 ft) and
+    # collector (300 ft) streets "as identified in the Milwaukie
+    # Transportation System Plan", measured between driveway aprons: no map
+    # holds driveways, so those frontages are barred. On local and
+    # neighborhood streets the only figure is (B)(5)(a)'s 45 ft from an
+    # intersection for plex development and townhouses of four or fewer
+    # units, and its own next sentence relieves an existing lot ("located
+    # as far from the nearest intersection street face of curb as
+    # practicable; in such cases a formal modification is not required",
+    # 12.16.040.txt#L64-L65): every taxlot is an existing lot (Steph
+    # 2026-10-21, lots are legal), so a local or Neighborhood Route
+    # frontage holds no spacing rule. (B)(5)(c)-(d) (300 / 600 ft or beyond
+    # the peak-hour queue) fall on frontages already barred.
+    classes:
+      Local Street: local
+      Neighborhood Routes: neighborhood_route
+      Collector: collector
+      Arterial: arterial
+      Local Access Arterial: arterial
+      Multimodal Travel Priority Arterial: arterial
+      Through Movement Priority Arterial: arterial
+    frontage:
+      collector:
+        figure_ft: 300
+        cite: MMC 12.16.040(B)(1)(b), spacing for accessways on collector streets a minimum of 300 feet, measured between the closest edges of driveway aprons
+        quote: or/clackamas/milwaukie/12.16/12.16.040.txt#L30
+        quote_also: or/clackamas/milwaukie/12.16/12.16.040.txt#L20
+      arterial:
+        figure_ft: 600
+        cite: MMC 12.16.040(B)(1)(a), spacing for accessways on arterial streets a minimum of 600 feet
+        quote: or/clackamas/milwaukie/12.16/12.16.040.txt#L26
+        quote_also: or/clackamas/milwaukie/12.16/12.16.040.txt#L64-L65
+    from_intersections: []
+
+  or/multnomah/fairview:
+    map: street_class_fairview
+    # FClassification verbatim; Interstate is left unnamed (ODOT, unread).
+    # 182 of the Local lines are private roads, read as local streets.
+    #
+    # FMC 19.162.020(G)(1): 50 ft separation from street intersections on
+    # local streets ("streets not designated as collectors or arterials"),
+    # measured from the side of the street (a pass from the right-of-way
+    # line). (G)(2) leaves spacing on collectors and arterials, and at
+    # controlled intersections (four-way stop or signal), to the city's
+    # TSP, which this corpus does not hold: collector and arterial
+    # frontages are unread, and a local frontage beside a collector or
+    # arterial (where stops and signals stand) is held unread within reach.
+    # A controlled local-local intersection is not mapped (hand-off
+    # question). (G)(3)'s access at the property line farthest from an
+    # intersection is the city's call the flag names.
+    classes:
+      Local: local
+      Neighborhood Collector: collector
+      Major Collector: collector
+      Minor Arterial: arterial
+      Major Arterial: arterial
+    frontage: {}
+    unread:
+      collector:
+        cite: FMC 19.162.020(G)(2), access spacing on collector and arterial streets determined by the city's transportation system plan (not held)
+        quote: or/multnomah/fairview/19.162/19.162.020.txt#L109
+      arterial:
+        cite: FMC 19.162.020(G)(2), as for collectors (TSP not held); Interstate 84 is ODOT's
+        quote: or/multnomah/fairview/19.162/19.162.020.txt#L109-L110
+    from_intersections:
+      - driveway_on: [local]
+        cross: [local, collector, arterial]
+        figure_ft: 50
+        basis: right_of_way_line
+        cite: FMC 19.162.020(G)(1), a minimum of 50 feet separation from street intersections on local streets, measured from the sides of the driveway and street
+        quote: or/multnomah/fairview/19.162/19.162.020.txt#L105
+        quote_also: or/multnomah/fairview/19.162/19.162.020.txt#L100-L101
+        unread_cross: [collector, arterial]
+        unread_cite: FMC 19.162.020(G)(2), access spacing at controlled intersections (four-way stop sign or traffic signal) determined by the TSP (not held; which intersections are controlled is not mapped)
+        unread_quote: or/multnomah/fairview/19.162/19.162.020.txt#L109
+
+  or/washington/sherwood:
+    map: street_class_sherwood
+    # kai_func_class verbatim (the TSP update's webmap); a street the map
+    # does not draw ranks local only where Metro and OpenStreetMap both call
+    # it residential (the map's `unlisted`).
+    #
+    # SZCDC 16.106.040.M.2: a local-street access not within 10 ft of
+    # Point "B" (25 ft of Point "A" where no radius exists), and beyond the
+    # standing queues of an intersection with a Neighborhood Route,
+    # collector or arterial (AASHTO, not measured); a Neighborhood Route
+    # spaces driveways 50 ft apart except for middle housing on residential
+    # lots in a recorded subdivision (which the screen does not read) and
+    # adds the queue rule; a collector refuses direct access within 100 ft
+    # of Point "A" and spaces driveways 100 ft apart (and refuses uses with
+    # less than 150 ft of frontage unless no alternative exists); an
+    # arterial or 99W grants middle housing no permanent driveway. The
+    # access diagram that places Points A, B and C is a drawing the stored
+    # text does not hold: Point B is read as the end of the right-of-way
+    # radius at the corner, so the pass bound measures 10 ft past the cross
+    # street's right-of-way line plus the 35 ft return allowance
+    # (`curb_return`, which also covers 25 ft from Point A at the P.I.) and
+    # the fail bound centreline to centreline (a judgement, hand-off).
+    classes:
+      Local: local
+      Neighborhood: neighborhood_route
+      Collector: collector
+      Arterial: arterial
+      Principal Arterial: arterial
+    unlisted: local
+    frontage:
+      collector:
+        figure_ft: 100
+        cite: SZCDC 16.106.040.M.2.c, no direct access to a Collector within 100 feet of any present Point A; minimum spacing between driveways (Point C to Point C) 100 feet; uses with less than 150 feet of frontage not permitted direct access unless no other alternative exists
+        quote: or/washington/sherwood/16.106/16.106.040.txt#L88-L92
+      arterial:
+        cite: SZCDC 16.106.040.M.2.d(1), middle housing dwellings on individual residential lots shall not be granted permanent driveway ingress or egress from Highway 99W or arterials
+        quote: or/washington/sherwood/16.106/16.106.040.txt#L95-L99
+    unread:
+      neighborhood_route:
+        cite: SZCDC 16.106.040.M.2.b, driveways 50 feet apart (Point C to Point C) except middle housing on residential lots in a recorded subdivision (not read), and beyond the influence of standing queues of an intersection with a Neighborhood Route, Collector or Arterial (not measured)
+        quote: or/washington/sherwood/16.106/16.106.040.txt#L79-L84
+    from_intersections:
+      - driveway_on: [local]
+        cross: [local, neighborhood_route, collector, arterial]
+        figure_ft: 10
+        basis: curb_return
+        cite: SZCDC 16.106.040.M.2.a, on Local Streets access not permitted within 10 feet of Point B, or within 25 feet of Point A where no radius exists; distances measured to the nearest edge of the access
+        quote: or/washington/sherwood/16.106/16.106.040.txt#L75-L78
+        quote_also: or/washington/sherwood/16.106/16.106.040.txt#L63-L67
+        unread_cross: [neighborhood_route, collector, arterial]
+        unread_cite: SZCDC 16.106.040.M.2.a, access points near an intersection with a Neighborhood Route, Collector or Arterial located beyond the influence of standing queues of the intersection (AASHTO; not measured)
+        unread_quote: or/washington/sherwood/16.106/16.106.040.txt#L77-L78
+
+  or/clackamas/wilsonville:
+    map: street_class_wilsonville
+    # Functional_Class verbatim (the TSP's four classes). The map draws
+    # local streets too; a street it leaves out is unread.
+    #
+    # The Public Works Standards' driveway rules reach middle housing in one
+    # sentence only, Planning Code 4.113(.14)D.4.c.ii (triplexes and
+    # quadplexes; G.5.c.ii says the same of cluster housing): a lot with more
+    # than one frontage, every one a collector or arterial, meets the
+    # access standards of the Public Works Standards (the route the
+    # wilsonville.yaml refusal of pws.201.2.23 records). There PWS
+    # 201.2.23(g) Table 2.12 spaces access along a collector (100 ft
+    # minimum) and arterials (600 / 1,000 ft): barred, as no map holds
+    # driveways. A lot with any local frontage, or with one frontage, is
+    # not reached. 201.2.23(g)(2)'s deviation is the engineer's call the
+    # flag names.
+    classes:
+      Local Street: local
+      Collector: collector
+      Minor Arterial: arterial
+      Major Arterial: arterial
+    applies:
+      cite: Wilsonville Planning Code 4.113(.14)D.4.c.ii, lots or parcels with more than one frontage and frontages only on collectors and/or arterial streets must meet the access standards in the Wilsonville Public Works Standards
+      quote: or/clackamas/wilsonville/4/4.113.txt#L353-L357
+      quote_also: or/clackamas/wilsonville/pws.201.2.23.txt#L24-L25
+      when: every_frontage_busy
+      busy: [collector, arterial]
+    frontage:
+      collector:
+        figure_ft: 100
+        cite: Wilsonville PWS 201.2.23(g) Table 2.12, Collector access spacing minimum 100 feet (desired 300)
+        quote: or/clackamas/wilsonville/pws.201.2.23.txt#L44
+        quote_also: or/clackamas/wilsonville/pws.201.2.23.txt#L34-L41
+      arterial:
+        figure_ft: 600
+        cite: Wilsonville PWS 201.2.23(g) Table 2.12, Minor Arterial access spacing minimum 600 feet (Major Arterial 1000)
+        quote: or/clackamas/wilsonville/pws.201.2.23.txt#L43
+        quote_also: or/clackamas/wilsonville/pws.201.2.23.txt#L42
+    from_intersections: []

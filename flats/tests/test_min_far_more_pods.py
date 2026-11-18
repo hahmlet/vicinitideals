@@ -163,10 +163,53 @@ def test_portland_more_pods_room_is_measured_only_inside_the_overlay_part() -> N
         reading,
     )
 
+    # One pod moved onto the overlay part meets the 2,500 sf it needs, so the
+    # floor of two pods the whole-lot count keeps does not apply here
+    # (FOLLOWUPS 148 move-read F1, 1N1E36CB01100).
     assert envelope.area >= 2 * FOOTPRINT_SQFT
-    assert envelope.intersection(overlay_part).area < 2 * FOOTPRINT_SQFT
+    assert FOOTPRINT_SQFT <= envelope.intersection(overlay_part).area < 2 * FOOTPRINT_SQFT
+    assert result.signed.triage is Triage.yellow
+    assert result.signed.binds == ()
+    assert "FAR-MIN" in {flag.code for flag in result.signed.flags}
+
+
+def _part(overlay_part, envelope, building):
+    reading = pdx.Reading(
+        True,
+        ("Inner",),
+        main_street_share=overlay_part.area / 10_000,
+        main_street_part_wkb=shapely.to_wkb(overlay_part, hex=True),
+    )
+    return pdx.checked(_portland(envelope, building=building), reading)
+
+
+def test_a_part_overlay_lot_is_red_only_when_its_overlay_ground_cannot_hold_the_floor() -> None:
+    # Overlay 5,000 sf needs 2,500 sf of floor; 1,000 sf of buildable ground on
+    # it holds at most 2 x 1,000 sf whatever stands there.
+    overlay_part = shapely.box(0, 0, 50, 100)
+    envelope = shapely.union_all([shapely.box(40, 0, 50, 100), shapely.box(50, 0, 100, 100)])
+    building = shapely.box(44, 0, 100, DESIGN.footprint.depth_ft)
+
+    result = _part(overlay_part, envelope, building)
+
+    assert envelope.intersection(overlay_part).area * DESIGN.stories < 0.5 * 5_000
     assert result.signed.triage is Triage.red
     assert [bind.check for bind in result.signed.binds] == [pdx.MIN_FAR_CHECK]
+
+
+def test_a_part_overlay_strip_narrower_than_a_pod_is_yellow_when_a_straddling_pod_could_meet_it() -> None:
+    # 1N1E22DD12801 (CM3, 16% in overlay): the overlay ground is smaller than
+    # one pod, but a pod across its line stands enough floor on it.
+    overlay_part = shapely.box(0, 0, 16, 100)
+    envelope = shapely.box(10, 0, 100, 100)
+    building = shapely.box(44, 0, 100, DESIGN.footprint.depth_ft)
+
+    result = _part(overlay_part, envelope, building)
+
+    assert envelope.intersection(overlay_part).area < FOOTPRINT_SQFT
+    assert result.signed.triage is Triage.yellow
+    assert result.signed.binds == ()
+    assert "FAR-MIN" in {flag.code for flag in result.signed.flags}
 
 
 def test_a_pod_meeting_min_far_keeps_the_existing_green_result() -> None:

@@ -5735,6 +5735,9 @@ clear_vision:
     basis: travel_lane
     source: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L2027
     cite: Clackamas County Roadway Standards 240; CCC 7.03
+    # Parked vehicles (FOLLOWUPS 161): 240.2 'no person shall place objects in the right-of-way or private property' (CCC 7.03 B.9 'Natural or man-made objects', ccc-title7.txt#L1106) -- a parked car read as an object (judgement).
+    vehicles: true
+    vehicles_quote: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L1972-L1973
     note: 'A sight-DISTANCE rule, not a triangle: no object on private property may limit the intersection
       sight distance of Tables 2-6 to 2-10 (280/240/205 ft at 25 mph), measured 14.5 ft back from the
       edge of the nearest travel lane. The street''s speed is not mapped; 450 ft is taken as the largest

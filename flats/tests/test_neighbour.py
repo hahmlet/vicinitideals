@@ -276,6 +276,10 @@ def test_the_layers_that_read_their_lot_lines(corpus: dict) -> None:
         # 2026-11-09: BDC 10.25 Residential Districts; Downtown 70.15.10 (FOLLOWUPS 2(c)).
         ("or/washington/beaverton", "abuts_residential_zone"),
         ("or/washington/beaverton", "abuts_nonresidential_zone"),
+        # 2026-11-13: KCMC 16.124.110 C, the buffer against a lesser zone
+        # (FOLLOWUPS 146, kc-buffer).
+        ("or/washington/king-city", "abuts_lower_density_zone"),
+        ("or/washington/king-city", "abuts_residential_zone"),
     }
 
 

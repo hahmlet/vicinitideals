@@ -2613,6 +2613,9 @@ clear_vision:
     says: AASHTO Policy on Geometric Design of Highways and Streets
     source: data/flats/books/sight-manuals/clackamas-county/roadway.txt#L2027
     cite: MMC 12.24.040; AASHTO ISD as reproduced in the Clackamas County Roadway Standards
+    # Parked vehicles (FOLLOWUPS 161): 'planting, fence, wall, structure, or temporary or permanent obstruction' -- a parked car read as a temporary obstruction (judgement).
+    vehicles: true
+    vehicles_quote: or/clackamas/milwaukie/12.24.clear-vision.txt#L52
     ruling: 2026-11-10-milwaukie-clear-vision-aashto-held
     note: >-
       The size is 'that area described in the most recent edition of the AASHTO

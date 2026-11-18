@@ -468,6 +468,8 @@ CLEAR_VISION_BASES = (
 #: never RED on it. ``none`` -- the rule keeps nothing off the lot (it
 #: covers the right of way only, or bars no building).
 CLEAR_VISION_STATUSES = ("read", "unsettled", "none")
+#: :attr:`SightRule.alley`.
+CLEAR_VISION_ALLEY = ("read", "unread", "none")
 
 
 class SightRule(BaseModel):
@@ -519,6 +521,37 @@ class SightRule(BaseModel):
     #: Colour untouched, a note only (Portland, rulings.yaml
     #: 2026-11-09-portland-driveway-clear-zone-note).
     note_only: bool = False
+    #: Corners: the area keeps out a parked vehicle or a parking area too
+    #: (Gresham PWS 6.04 "parked vehicle", Tigard 18.930.030.B "vehicles",
+    #: a "temporary ... obstruction"), so the drawn court is checked against
+    #: it after the drawing (FOLLOWUPS 161). ``vehicles_quote`` holds the
+    #: words, ``path#Lnn`` (store or manual).
+    vehicles: bool = False
+    #: Corners: the area keeps out a driveway (Gresham PWS 6.04 "No driveway
+    #: or off-street parking area shall be located in the Clear Vision
+    #: Area"): the drawn lane is checked too.
+    driveways: bool = False
+    vehicles_quote: str | None = None
+    #: Corners where a street meets an ALLEY (FOLLOWUPS 161): ``read`` --
+    #: the code sizes them, ``alley_legs_ft`` along both lines from the
+    #: corner (``alley_quote`` holds the words); ``unread`` -- the corner
+    #: rule's own largest figure is taken; ``none`` -- the code's area is at
+    #: street corners only (``alley_quote`` cites the words that say so).
+    #: Never RED on an alley corner: where the alley's paving runs is not
+    #: mapped, so a building there is held YELLOW
+    #: (:data:`flats.score.screen.SIGHT_CORNER_ALLEY`).
+    alley: str = "unread"
+    alley_legs_ft: tuple[float, ...] = ()
+    alley_quote: str | None = None
+    #: Corners whose figure turns on the streets' class (Tigard 18.930.040:
+    #: 35 ft at an arterial, 30 ft otherwise): the TSP map
+    #: (:data:`flats.geom.street_class.CLASS_MAPS`) whose ranks the lot
+    #: lines carry (:attr:`flats.geom.edges.Edge.street_rank`), and the
+    #: lowest rank that takes the LARGEST figure. A corner both of whose
+    #: streets rank below it takes the smallest; a street the map does not
+    #: rank leaves the corner's figures as options.
+    class_map: str | None = None
+    class_rank_min: int | None = None
     quote: str | None = None
     says: str | None = None
     source: str | None = None

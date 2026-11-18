@@ -324,11 +324,22 @@ AREA_REVIEWS: dict[str, str] = {
 }
 
 
-def area_review(config: Configuration | None) -> str | None:
-    """The first traced-area review (:data:`AREA_REVIEWS`) this lot holds."""
+def area_review(config: Configuration | None, lot: LotFacts | None = None) -> str | None:
+    """The first traced-area review (:data:`AREA_REVIEWS`) this lot holds,
+    or that the area's line cuts through (:attr:`LotFacts.drawn_cut`).
+
+    A cut lot is asked the review as if inside (FOLLOWUPS 188): the review
+    only adds to what the lot is asked, so the inside reading is the worse of
+    the two, and taking it is answering both sides at once. Outside the reach
+    of ORS 197A.400 that is a closer look; inside it the lot keeps its colour
+    with CLEAR-OBJECTIVE, as a lot wholly inside does.
+    """
     if config is None:
         return None
-    return next((n for n in sorted(AREA_REVIEWS) if n in config.conditions), None)
+    cut = lot.drawn_cut if lot is not None else ()
+    return next(
+        (n for n in sorted(AREA_REVIEWS) if n in config.conditions or n in cut), None
+    )
 
 
 #: The code requires one driveway approach for every N dwelling units and the
@@ -464,7 +475,21 @@ SIGHT_DRIVEWAY = "SIGHT_DRIVEWAY"
 #: building: a note only, the colour unchanged (rulings.yaml
 #: 2026-11-09-portland-driveway-clear-zone-note).
 SIGHT_DRIVEWAY_NOTE = "SIGHT_DRIVEWAY_NOTE"
+#: The building stands clear of every street corner's clear-vision area but
+#: where a street meets an alley, and this city's area reaches alley corners
+#: (Hillsboro 12.50.260 B.1.a.ii, Oregon City 10.32.040: "street" includes
+#: alley; Gresham, Sandy, Canby state an alley figure). Where the alley's
+#: paving runs is not mapped, so YELLOW with a flag, never RED.
+SIGHT_CORNER_ALLEY = "SIGHT_CORNER_ALLEY"
+#: The drawn parking court (where the city's area keeps parked vehicles
+#: out) or the drawn drive (where it keeps driveways out: Gresham
+#: 9.0200.A.5) reaches the corner clear-vision area at its largest. The
+#: court's and drive's place is not searched for this, so YELLOW with a
+#: flag, never RED (:attr:`LotFacts.sight_corner_parking`).
+SIGHT_CORNER_PARKING = "SIGHT_CORNER_PARKING"
 SIGHT_RULINGS = {
+    SIGHT_CORNER_ALLEY: "2026-11-09-sight-triangle-corner-check",
+    SIGHT_CORNER_PARKING: "2026-11-09-sight-triangle-corner-check",
     SIGHT_CORNER_CURB: "2026-11-09-curb-position-middle-way",
     SIGHT_CORNER_UNSETTLED: "2026-11-09-sight-triangle-corner-check",
     SIGHT_DRIVEWAY: "2026-11-09-curb-position-middle-way",
@@ -917,6 +942,13 @@ class LotFacts:
     #: City 17.16.060.D.1). Measured with the share and from the same
     #: drawing; None leaves that check unrun.
     parking_frontage_run_ft: float | None = None
+    #: The share and the run at the most the measuring looks allow
+    #: (:func:`flats.fit.frontage.parking_share_bounded`): the looks are a
+    #: foot apart, so a share counted at a cap may be over it. A count
+    #: within the cap whose most is over it is unanswered (``tolerated``),
+    #: never a pass. None (nobody measured the bound) reads the count alone.
+    parking_frontage_share_most_pct: float | None = None
+    parking_frontage_run_most_ft: float | None = None
     #: The shortest of the lot's streets, in feet: one street's run of
     #: street lot line, corner to corner (:func:`flats.fit.frontage.street_chains`).
     #: ``frontage_ft`` is the SUM of every street line, and a cap on a share
@@ -1150,6 +1182,13 @@ class LotFacts:
     #: 33(c)), so the court the fit passed may stand in a front or side yard.
     #: Holds the lot out of GREEN. False where nothing measured it.
     court_ground_unread: bool = False
+    #: Site facts a traced area answers (``drawn_areas``) whose line cuts
+    #: through this lot, so the fact is unanswered -- kept only for the areas
+    #: no standard's lever reaches (:data:`AREA_REVIEWS`, :data:`AREA_FLAGS`),
+    #: whose rule the screen applies itself. Every other drawn fact left
+    #: unanswered holds the lot through its lever (FOLLOWUPS 188). Empty
+    #: where nothing was traced, or nothing cut.
+    drawn_cut: tuple[str, ...] = ()
     #: Why the corner clear-vision area holds this lot out of GREEN
     #: (:data:`SIGHT_CORNER_CURB` or :data:`SIGHT_CORNER_UNSETTLED`), set by
     #: the bridge when the fit stands only on the smaller of the two areas
@@ -1160,6 +1199,10 @@ class LotFacts:
     #: :attr:`sight_driveway_note` (:data:`SIGHT_DRIVEWAY_NOTE`).
     sight_driveway_doubt: bool = False
     sight_driveway_note: bool = False
+    #: The drawn court (a rule with ``vehicles``) or lane (``driveways``)
+    #: reaches the corner clear-vision area at its largest
+    #: (:data:`SIGHT_CORNER_PARKING`).
+    sight_corner_parking: bool = False
     #: The code the sight area was read from, for the flag.
     sight_cite: str | None = None
     #: The drawing finally kept stands the building with its door face more
@@ -1512,6 +1555,19 @@ def _checks(
             return
         out.append(policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where))
 
+    def counted(name: str, observed: float, most: float | None, cap: float) -> None:
+        """A ceiling on a quantity counted on a grid of looks, ``most`` the
+        highest the grid allows (:func:`flats.fit.frontage.street_runs_bounded`).
+        A count within the cap whose most is over it is ``tolerated``: the
+        lot is held, a measurement question, never a pass (rel9 move read
+        F1, Beaverton 60.05.60.2 S11 lots counted at exactly 50.0 percent)."""
+        got = policy.evaluate(name, observed, cap, is_maximum=True, jurisdiction=where)
+        if got.verdict is Verdict.passes and most is not None and most > cap:
+            got = dataclasses.replace(
+                got, tolerance=float(most) - float(observed), verdict=Verdict.tolerated
+            )
+        out.append(got)
+
     if where == "or/washington/durham" and lot.durham_apron_clearance_ft is not None:
         clearance = lot.durham_apron_clearance_ft
         threshold = DURHAM_APRON_MIN_CLEARANCE_FT
@@ -1847,11 +1903,11 @@ def _checks(
         if lot.parking_frontage_share_pct is None:
             unchecked.append("parking_frontage_share")
         else:
-            check(
+            counted(
                 "parking_frontage_share",
                 lot.parking_frontage_share_pct,
+                lot.parking_frontage_share_most_pct,
                 float(parking_cap),
-                is_maximum=True,
             )
         # The same sentence's ceiling in feet, where the code prints one
         # beside the share and binds "whichever is less" (Oregon City
@@ -1862,11 +1918,11 @@ def _checks(
             if lot.parking_frontage_run_ft is None:
                 unchecked.append("parking_frontage_width")
             else:
-                check(
+                counted(
                     "parking_frontage_width",
                     lot.parking_frontage_run_ft,
+                    lot.parking_frontage_run_most_ft,
                     float(width_cap),
-                    is_maximum=True,
                 )
     # The building's share of the street frontage (FOLLOWUPS 109).
     _building_frontage(rules, lot, design, beside, check, unchecked, unmeasured)
@@ -3907,7 +3963,7 @@ def screen(
         # Where ORS 197A.400 reaches, a condition the review adds must itself
         # be clear and objective (Steph 2026-10-15): flagged, not yellow.
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
-    elif area_review(config) is not None and not reach:
+    elif area_review(config, lot) is not None and not reach:
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
     if approaches_missing(rules, design):
         closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
@@ -3925,6 +3981,8 @@ def screen(
         closer = (*closer, lot.sight_corner_doubt)
     if lot.sight_driveway_doubt:
         closer = (*closer, SIGHT_DRIVEWAY)
+    if lot.sight_corner_parking:
+        closer = (*closer, SIGHT_CORNER_PARKING)
 
     # A Durham apron miss is no longer RED: it stays in ``reasons`` and holds
     # the lot YELLOW with its flag (2026-11-09-busy-road-driveway-spacing-yellow).
@@ -4764,6 +4822,7 @@ def _account(
     sight = {
         SIGHT_CORNER_CURB: "SIGHT-CORNER-CURB",
         SIGHT_CORNER_UNSETTLED: "SIGHT-CORNER-UNSETTLED",
+        SIGHT_CORNER_ALLEY: "SIGHT-CORNER-ALLEY",
     }
     if lot.sight_corner_doubt in sight:
         flag(
@@ -4774,6 +4833,11 @@ def _account(
         flag("SIGHT-DRIVEWAY", SIGHT_DRIVEWAY, source=lot.sight_cite or SIGHT_RULINGS[SIGHT_DRIVEWAY])
     if lot.sight_driveway_note:
         flag("SIGHT-DRIVEWAY-NOTE", SIGHT_DRIVEWAY_NOTE, source=SIGHT_RULINGS[SIGHT_DRIVEWAY_NOTE])
+    if lot.sight_corner_parking:
+        flag(
+            "SIGHT-CORNER-PARKING", SIGHT_CORNER_PARKING,
+            source=lot.sight_cite or SIGHT_RULINGS[SIGHT_CORNER_PARKING],
+        )
     if parking_setback_doubt:
         flag(
             "PARKING-SETBACK-DOUBT",
@@ -4862,12 +4926,14 @@ def _account(
         flag(code, by, fact=review, source=_cite(rules, REVIEW_FIELDS[review]))
     if cleared_use is not None:
         flag("CLEAR-OBJECTIVE", CLEAR_OBJECTIVE, fact=cleared_use[0], source=cleared_use[1])
-    if (area := area_review(config)) is not None:
+    if (area := area_review(config, lot)) is not None:
         code, by = ("CLEAR-OBJECTIVE", CLEAR_OBJECTIVE) if reach else ("REVIEW-CONDITIONS", CLOSER_LOOK_REVIEW_CONDITIONS)
         flag(code, by, fact=area, source=AREA_REVIEWS[area])
     if config is not None:
         for name, (code, by) in sorted(AREA_FLAGS.items()):
-            if name in config.conditions:
+            # A lot the area's line cuts carries the record too: it is below
+            # the yellow line, so it costs the lot nothing (FOLLOWUPS 188).
+            if name in config.conditions or name in lot.drawn_cut:
                 flag(code, by, fact=name, source="drawn")
     for name, (code, by) in sorted(LEVER_FLAGS.items()):
         if name in rules.levers:
@@ -5025,6 +5091,8 @@ __all__ = [
     "SIGHT_CORNER_UNSETTLED",
     "SIGHT_DRIVEWAY",
     "SIGHT_DRIVEWAY_NOTE",
+    "SIGHT_CORNER_ALLEY",
+    "SIGHT_CORNER_PARKING",
     "ALLEY_COURT_OFF_STRETCH",
     "ALLEY_COURT_OFF_STRETCH_RULING",
     "COURT_GROUND_UNREAD",

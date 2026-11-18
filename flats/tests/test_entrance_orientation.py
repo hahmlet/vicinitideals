@@ -243,6 +243,38 @@ def test_tigard_tmu_residence_doors_take_45_degrees(rule_set: RuleSet) -> None:
     assert got.values["entrance_angle_max_deg"].prov.quote.endswith("18.660.080.txt#L54-L55")
 
 
+@pytest.mark.parametrize(
+    ("zone", "quote"),
+    [
+        *((z, "18.280.040.txt#L159-L162") for z in ("RES-A", "RES-B", "RES-C", "RES-D", "RES-E", "MUR", "MUC")),
+        ("MU-CBD", "18.650.080.txt#L54"),
+    ],
+)
+def test_tigard_rowhouse_doors_face_the_street_with_no_angle(
+    rule_set: RuleSet, zone: str, quote: str
+) -> None:
+    """FOLLOWUPS 162: outside TMU the pod is a rowhouse, whose main entrance
+    "must face the street" (18.280.040.H; MU-CBD 18.650.080.A), "Face" being
+    "To front upon" (18.30) -- no angle printed, none held. The zone already
+    stands the long face to the street (axis_required), so the doors are
+    never searched turned and nothing is left unsettled."""
+    got = rule_set.resolve("or/washington/tigard", zone)
+    assert got.get("entrance_faces_street") == "required"
+    assert got.get("entrance_angle_max_deg") is None
+    assert got.values["entrance_faces_street"].prov.quote.endswith(quote)
+    assert faces_the_street(got, POD)
+    assert door_limit(got, POD) is None
+    assert not entrance_unsettled(got, POD)
+
+
+def test_tigard_bridgeport_village_reads_its_own_chapter(rule_set: RuleSet) -> None:
+    """FOLLOWUPS 162: Bridgeport Village rowhouses take 18.620, not 18.280
+    (18.280.020.B); 18.620.080.B makes the main entrance face the street."""
+    got = rule_set.resolve("or/washington/tigard", "MUC", conditions=("tigard_bridgeport_village",))
+    assert got.get("entrance_faces_street") == "required"
+    assert got.values["entrance_faces_street"].prov.quote.endswith("18.620.080.txt#L5,L11-L12")
+
+
 def test_sandy_stores_its_45_degrees_but_stays_unsettled(rule_set: RuleSet) -> None:
     """FOLLOWUPS 159: Sandy's "Facing" (17.10.30) is up to 45 degrees, but
     entrance_faces_street stays `unclear` (the pedestrian-way alternative),

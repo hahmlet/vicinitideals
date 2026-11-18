@@ -9,3 +9,7 @@ STILL OPEN (Claude work, no Steph answer needed):
 - Not done: Clackamas SCMU 1005.09 frontage share (needs Map 1005-1 which FLATS does not hold); 1005.02(E)(1) 20 ft front setback option (stricter reading kept).
 - Known, not fixed: 1S1E23BA  -03601 Portland R5 through lot (court between building and a second street, KNOWN-154).
 - Beaverton plexes: Claude kept the court-in-front reading (code bans front parking only for townhouses, caps at half frontage); a move-read check of the gains is the safety net.
+Spacing table gaps DONE 11-13 (flats/drive-spacing off rel8, rides rel9): Gresham, Oregon City,
+West Linn (+ TSP Table 15 stored), Milwaukie, Fairview, Sherwood, Wilsonville encoded in
+driveway_spacing.yaml; unread rules hold YELLOW (G->Y only). Hand-off
+../vicinitideals-worktrees/drive-spacing.handoff.md.

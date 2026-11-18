@@ -70,7 +70,10 @@ PORTLAND = {"open_space_min_sqft": 250, "open_space_min_dimension_ft": 12}
 #: Milwaukie's patio: 96 a home, multiplied out by the loader for four.
 MILWAUKIE = {"open_space_min_sqft": 4 * 96, "private_open_space_min_dimension_ft": 5}
 
-LOT = LotFacts(lot_sqft=8000, frontage_ft=80, lot_width_ft=80)
+# 2026-11-13 (drive-spacing, FOLLOWUPS 178): this city now holds a
+# driveway-spacing rule; the lot's frontage is read clear, as it would be
+# mid-block on a local street. These tests are not about spacing.
+LOT = LotFacts(lot_sqft=8000, frontage_ft=80, lot_width_ft=80, driveway_spacing="clear")
 
 
 def rules(where: str = "or/multnomah/portland", **overrides) -> ZoneResolution:

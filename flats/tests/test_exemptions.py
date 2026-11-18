@@ -255,10 +255,17 @@ pytestmark = pytest.mark.unit
 # the all-other-districts row ticks it (zdo.1001.txt#L31-L32,L94,L99-L105, read by column
 # position). The quoted lines print section numbers, so numeric; a blank cell states nothing.
 # rel7 add-ons 2026-11-10: roof-ban (+4) and fg4-fixes 4a (+9) land together: 246 -> 259 numeric.
+EXPECTED = {"stated": 484, "numeric": 272, "marker": 0, "dash": 2, "silent": 7}
+# rel9 merge of rel8 final 2026-11-15: kc-buffer (+4, 266 -> 270) and the Hillsboro hold (+2) together: 272.
+# 266 -> 270 numeric on 2026-11-13 (FOLLOWUPS 146, kc-buffer): King City's 16.124.110 C buffer
+# is owed only "on all portions of the lot abutting a lesser zone" (kcc.16.124.landscaping.txt
+# #L193-L198), so `parking_lot_line_buffer_ft` is exempt off that fact in the defaults, KTTC and
+# KTBB, with the ten-foot rows as variants on abuts_lower_density_zone / abuts_residential_zone;
+# and exempt outright in R-9, which admits no multi-dwelling (16.84.010) and so is no
+# multi-family or commercial property C buffers.
 # 2026-11-14 (rel8 hold, FOLLOWUPS 193): 266 -> 268 numeric. Hillsboro R-7 and MR-1 hold
 # min_roof_pitch_in_12 exempt: true outside the traced Downtown Plan District, the 4/12 in a
 # variant under hillsboro_downtown_plan_district (Steph 2026-11-14: every lot inside the line).
-EXPECTED = {"stated": 484, "numeric": 268, "marker": 0, "dash": 2, "silent": 7}
 # 259 -> 266 numeric on 2026-11-11 (FOLLOWUPS 187, wall glass): Oregon City's window count
 # (17.21.080.A, 17.22.080.A) is exempt off the Park Place and South End concept plan areas on
 # the six residential zones (17.21.020, 17.22.020; a quadplex elsewhere meets only the

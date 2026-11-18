@@ -114,6 +114,14 @@ JOG_FT = 5.0
 STATION_FT = 10.0
 #: A width is read only where both sides find private land within this.
 RAY_FT = 60.0
+#: How far either side of the centreline, square to it, the room at a dead
+#: end's station is also read (:func:`_room_to_turn`): a street file's
+#: centreline need not run through the middle of the right-of-way, and a
+#: bulb drawn off to one side of it (22E08DA01100, SE Thorville Ave: an
+#: 80 ft bulb whose middle stands 16 ft east of the line) is a bulb all the
+#: same. Read every 5 ft out to :data:`RAY_FT`, never past the edge of the
+#: right-of-way the centreline stands in.
+ACROSS_FT: tuple[float, ...] = tuple(float(k) for k in range(5, int(RAY_FT) + 1, 5))
 #: A narrow stretch must hold over this many stations in a row (10 ft at
 #: :data:`STATION_FT`): one station under the width is a lot corner drawn a
 #: foot into the street as often as a pinch.
@@ -352,6 +360,9 @@ def _room_to_turn(
     "supersede[s] and prevail[s] over" the fire code's (ORS 368.039(1),
     ``or/ofc.2022.applications-guide.txt#L13-L16``) -- or room for a
     hammerhead's arm (:data:`HAMMER_ARM_FT`) to either side near the end.
+    The room round a point and the half-width are read on the centreline
+    and again across the right-of-way (:func:`_room_across`), so a bulb
+    the centreline runs past off-centre is found (FOLLOWUPS 189 F3).
     :data:`NO_ROOM` where none of them is there and the right-of-way does
     not widen by even :data:`JOG_FT`: a street that simply stops.
     :data:`UNSURE` where it widens by less than a bulb and more than a jog:
@@ -391,7 +402,63 @@ def _room_to_turn(
         reach = _first_hit(origins, np.repeat(d[None, :], len(origins), axis=0), HAMMER_ARM_FT, tree, lots)
         if (reach >= HAMMER_ARM_FT).any():
             return ROOM
+    # The same two readings across the right-of-way, not only on its
+    # centreline (:data:`ACROSS_FT`): a bulb drawn off to one side of the
+    # line, measured against the street's own half-width read the same way.
+    across = max(_room_across(road, k, tree, lots, every) for k in np.arange(0.0, BULB_REACH_FT + 1e-6, STATION_FT))
+    if across >= TURN_RADIUS_FT or across - _room_across(road, HALF_BACK_FT, tree, lots, every) >= BULB_FT:
+        return ROOM
     return NO_ROOM if widen < JOG_FT else UNSURE
+
+
+def _room_across(
+    road: LineString, at: float, tree: shapely.STRtree, lots: np.ndarray, every: shapely.STRtree
+) -> float:
+    """The most clear room at ``at`` along ``road``: the distance to the
+    nearest private lot from the centreline there, or from any point square
+    to it out to :data:`ACROSS_FT` that the right-of-way reaches -- the
+    straight line out to it crosses no private lot and no other parcel of
+    the fabric than the ones the centreline stands in (the street's own
+    right-of-way). Where the fabric maps no parcel under the centreline
+    (an unmapped gap, whose edges say nothing of a bulb), only the
+    centreline is read. Room out there ends at the nearest private lot or
+    other parcel of the fabric, whichever is nearer. A point out there with no
+    private lot within :data:`RAY_FT` is not counted: open ground beside
+    the street is not room the street holds. Infinite only where the
+    centreline itself has no private lot within :data:`RAY_FT`, as
+    :func:`_room_to_turn` reads it."""
+    at = min(at, road.length)
+    q = road.interpolate(at)
+    near = tree.query(q, predicate="dwithin", distance=RAY_FT)
+    if not len(near):
+        return math.inf
+    best = float(shapely.distance(q, lots[near]).min())
+    own = set(every.query(q, predicate="intersects").tolist())
+    if not own:
+        return best
+    shapes = np.asarray(every.geometries)
+    xy = np.asarray(q.coords[0])[:2]
+    normal = _normals(road, np.array([at]))[0]
+    for d in (normal, -normal):
+        for k in ACROSS_FT:
+            p = xy + d * k
+            out = LineString([xy, p])
+            if len(tree.query(out, predicate="intersects")) or any(
+                i not in own for i in every.query(out, predicate="intersects").tolist()
+            ):
+                break
+            pt = Point(*p)
+            hit = tree.query(pt, predicate="dwithin", distance=RAY_FT)
+            if not len(hit):
+                continue
+            room = float(shapely.distance(pt, lots[hit]).min())
+            # Nor is ground another parcel holds (water, a tract): the room
+            # out here ends at the right-of-way's own edge.
+            other = [i for i in every.query(pt, predicate="dwithin", distance=RAY_FT).tolist() if i not in own]
+            if other:
+                room = min(room, float(shapely.distance(pt, shapes[other]).min()))
+            best = max(best, room)
+    return best
 
 
 def build(

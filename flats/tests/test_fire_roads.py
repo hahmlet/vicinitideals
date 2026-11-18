@@ -481,3 +481,63 @@ def test_the_screen_holds_a_lot_reached_only_along_a_narrow_row_yellow() -> None
     )
     codes = {f.code for f in result.flags}
     assert "FIRE-DEAD-END" in codes and "FIRE-NARROW-STREET" not in codes
+
+
+# --- a bulb the centreline runs past off-centre (FOLLOWUPS 189 F3) ----------
+
+
+def _room(lots: list, others: list) -> str:
+    """:func:`fire_roads._room_to_turn` at the end of the lane from (0, 0)
+    to (0, 400): ``lots`` private, ``others`` the fabric's other parcels
+    (the right-of-way, water)."""
+    arr = np.asarray(lots, dtype=object)
+    every = shapely.STRtree(np.asarray([*lots, *others], dtype=object))
+    road = LineString([(0, 400), (0, 0)])
+    return fire_roads._room_to_turn(road, shapely.STRtree(arr), arr, every)
+
+
+def _off_centre(*, mapped: bool, bulb: bool = True, water: bool = False) -> tuple[list, list]:
+    """The lane's 50 ft right-of-way, its bulb (radius 40 ft) drawn 16 ft east
+    of the centreline's end, as SE Thorville Ave's is (22E08DA01100: an 80 ft
+    bulb whose middle stands 16 ft off the line). ``water``: the bulb's ground
+    is a water parcel, not the street's."""
+    hole = shapely.Point(16, 385).buffer(40)
+    lots = [lot.difference(hole) for lot in _dead_end_lots(bulb=False)] if bulb else _dead_end_lots(bulb=False)
+    row = box(-25, -25, 25, 400)
+    others = []
+    if water:
+        others += [row, hole.difference(row)]
+    elif mapped:
+        others.append(shapely.union_all([row, hole]) if bulb else row)
+    return lots, others
+
+
+def test_a_bulb_drawn_off_the_centreline_is_room_to_turn() -> None:
+    lots, others = _off_centre(mapped=True)
+    # On the centreline alone the end reads ~24 ft against a 25 ft half-width:
+    # the bulb was missed, and the lots past 150 ft read FIRE-DEAD-END.
+    road = LineString([(0, 400), (0, 0)])
+    arr = np.asarray(lots, dtype=object)
+    tree = shapely.STRtree(arr)
+    centre = max(float(shapely.distance(road.interpolate(k), arr).min()) for k in range(0, 61, 10))
+    assert centre < 25.0 + fire_roads.BULB_FT
+    assert _room(lots, others) == fire_roads.ROOM
+    every = shapely.STRtree(np.asarray([*lots, *others], dtype=object))
+    assert fire_roads._room_across(road, 15.0, tree, arr, every) >= 38.0
+
+
+def test_a_centreline_off_the_middle_of_a_plain_street_is_no_bulb() -> None:
+    lots, others = _off_centre(mapped=True, bulb=False)
+    # Read across the right-of-way, the street's own half-width is read the
+    # same way: a straight 50 ft street that stops is still no room.
+    assert _room(lots, others) == fire_roads.NO_ROOM
+
+
+def test_an_unmapped_or_foreign_widening_is_not_read_across() -> None:
+    # No parcel under the centreline: the gap's edges say nothing of a bulb,
+    # and only the centreline is read -- as before.
+    lots, others = _off_centre(mapped=False)
+    assert _room(lots, others) == fire_roads.NO_ROOM
+    # The widening is another parcel (water): not the street's ground.
+    lots, others = _off_centre(mapped=True, water=True)
+    assert _room(lots, others) == fire_roads.NO_ROOM

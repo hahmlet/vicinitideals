@@ -201,6 +201,16 @@ class ZoneResolution:
     #: again on unit lots -- and it offered no toggles at all while splitting
     #: the plat changed a number a lot is bound by.
     exempt_levers: frozenset[str] = frozenset()
+    #: Conditions a standard is stated inside or outside of (a value's
+    #: ``only_when`` and ``unless``), whether this configuration applied it
+    #: or left it silent. Held for the same reason as ``exempt_levers``: a
+    #: standard stated only inside a traced district is silent on a lot the
+    #: district's line cuts (the fact is unanswered, so not held), and that
+    #: silence carried no lever -- the lot passed a rule it was never tested
+    #: against (FOLLOWUPS 188). Named here, the unanswered fact is one the
+    #: standards lean on, so the lot is held out of GREEN on it unless every
+    #: answer clears (:func:`flats.ingest.quadfit._bounded`).
+    gate_levers: frozenset[str] = frozenset()
     #: Zone codes whose standards this resolution read through a reference,
     #: least authoritative first.
     borrowed_from: tuple[str, ...] = ()
@@ -221,7 +231,7 @@ class ZoneResolution:
             if self.values
             else frozenset()
         )
-        return held | self.exempt_levers
+        return held | self.exempt_levers | self.gate_levers
 
     @property
     def unencoded(self) -> frozenset[str]:
@@ -464,6 +474,9 @@ class RuleSet:
         # Per name rather than one flat set, so a more specific layer that
         # states the standard takes its lever back out with it.
         exempt_levers: dict[str, frozenset[str]] = {}
+        # Per name, the conditions the standard in force (or a silenced one a
+        # later layer did not replace) is gated on (ZoneResolution.gate_levers).
+        gates: dict[str, frozenset[str]] = {}
 
         def apply(
             values: dict[str, Value], layer: str, origin: str, via: str | None = None
@@ -471,16 +484,27 @@ class RuleSet:
             for name, val in values.items():
                 if val.large_city_only and target.large_city is False:
                     continue
+                gate = frozenset((*val.unless, *val.only_when))
                 if val.unless and not set(val.unless).isdisjoint(held):
                     # This layer's rule addresses a building this configuration
                     # is not. Silence, not an exemption: a more specific layer
                     # may still have a standard, and cancelling it here would
                     # answer a question this rule never asked.
+                    gates[name] = gates.get(name, frozenset()) | gate
                     continue
                 if val.only_when and not set(val.only_when) <= set(held):
                     # A standard stated only inside an area (or for a
-                    # configuration) this lot is not: silence, as above.
+                    # configuration) this lot is not: silence, as above. The
+                    # gate is kept: where the fact is unanswered (a lot the
+                    # district's line cuts) the silence is not an answer.
+                    gates[name] = gates.get(name, frozenset()) | gate
                     continue
+                if name in locked or name in locked_exempt:
+                    # A preempting ancestor spoke first; this value may not
+                    # replace it, so the earlier gates still stand.
+                    gates[name] = gates.get(name, frozenset()) | gate
+                else:
+                    gates[name] = gate
                 eff = val.under(held, lot)
                 if eff.exempt:
                     # Not a pass by a wide margin -- the test does not exist
@@ -664,6 +688,7 @@ class RuleSet:
                 if exempt_levers
                 else frozenset()
             ),
+            gate_levers=frozenset().union(*gates.values()) if gates else frozenset(),
             chain=chain_ids,
             conditions=held,
             ambiguous=ambiguous,

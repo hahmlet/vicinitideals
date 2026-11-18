@@ -395,6 +395,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [SIGHT_DRIVEWAY_NOTE]
+  SIGHT-CORNER-ALLEY:
+    description: "The building stands where the city's clear-vision area at a street-and-alley corner may reach; where the alley's paving runs is not mapped (FOLLOWUPS 161)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Find the alley's paved edge and the street's curb; draw the alley corner's area from them and check the building stands outside it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_CORNER_ALLEY]
+  SIGHT-CORNER-PARKING:
+    description: "The drawn parking court or drive reaches the corner clear-vision area, which this city keeps parked cars (or driveways) out of; moving them may clear it (FOLLOWUPS 161)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Find the curb; draw the corner area from it and place the court and drive outside it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_CORNER_PARKING]
   SIDE-YARD-PARKING-SILENT:
     description: "The fit depends on side-yard parking the code neither allows nor forbids; Steph's silent-code ruling keeps the lot yellow"
     kind: categorical
@@ -2424,8 +2454,8 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
-  FACT-BEAVERTON-TYPE-A-FRONTAGE:
-    description: "Whether the Beaverton Downtown lot fronts a Type A frontage of Figure 70.20.10.6.2 (or is an Area C or D tax lot), where the ground floor must be at least 16 ft floor to floor (BDC 70.20.10.6 S1.a, 70.20.10.6.D.2) against the pod's 12 ft"
+  FACT-BEAVERTON-ACTIVE-FRONTAGE:
+    description: "Whether every street line of the Beaverton Downtown lot is on a street of Figure 70.20.10.6.2 (Type A or B; or the lot is an Area C tax lot), where the ground floor must be at least 12 ft floor to floor (BDC 70.20.10.6 S2.c, 70.20.10.6.D.3) against the pod's 9 ft 2 in"
     kind: categorical
     risk: possible
     severity: 5
@@ -2433,7 +2463,22 @@ types:
     resolution: measurement
     scope: shared
     key: [jurisdiction, fact]
-    path: "Fetch Figure 70.20.10.6.2 (the Active Frontage Design Map, BDC Chapter 70) and trace its Type A streets onto the RLIS centrelines (FOLLOWUPS 105): a lot on one fails the 16 ft ground floor; a lot on none is cleared"
+    path: "Check the lot against the traced Figure 70.20.10.6.2 (flats/config/areas/or/washington/beaverton/active-frontage-design.geojson, FOLLOWUPS 105): a lot on a mapped and an unmapped street, within 60 ft of a traced line's end, or an Area D tax lot is held; read which facade fronts the mapped street within the zone's minimum and maximum setback (70.20.10.6.D.1), and for Area D whether the SW Millikan Way extension is dedicated"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-BEAVERTON-TYPE-A-FRONTAGE:
+    description: "Whether the Beaverton Downtown lot fronts a Type A frontage of Figure 70.20.10.6.2 (or is an Area C tax lot), where the ground floor must be at least 16 ft floor to floor (BDC 70.20.10.6 S1.a, 70.20.10.6.D.2) against the pod's 9 ft 2 in"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Check the lot against the traced Figure 70.20.10.6.2 (flats/config/areas/or/washington/beaverton/active-frontage-design.geojson, FOLLOWUPS 105): a lot on a Type A frontage fails the 16 ft ground floor, on Type B alone the 12 ft one; a lot clear of every mapped line is exempt"
     priority: later
     status: pending
     approved_by: null
@@ -2740,6 +2785,21 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "The Hayden Island outline on Portland Maps; a lot the outline cuts is read by hand"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-KENTON-BUILDING-LINE:
+    description: "Whether a commercial lot has a site frontage on Kenton plan district Map 538-4 (PCC 33.538.230), where the building must stand at the street lot line with exterior walls at least 25 feet high"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the lot against Map 538-4: a lot the traced frontage lots cut is unanswered"
     priority: later
     status: pending
     approved_by: null

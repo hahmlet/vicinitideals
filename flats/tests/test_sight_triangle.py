@@ -205,8 +205,17 @@ def test_every_eligible_city_declares_its_clear_vision_rule(layers) -> None:
     assert unsettled == {
         "or/clackamas/_unincorporated", "or/clackamas/gladstone",
         "or/clackamas/oregon-city", "or/multnomah/_unincorporated", "or/washington/hillsboro",
-        "or/washington/king-city",
     }
+    # 2026-11-13: King City read (16.144.020-.030): buildings barred, 20 or 35
+    # ft in Kingston Terrace, and the pod's four-unit drive is no exception.
+    kc = layers["or/washington/king-city"].clear_vision
+    assert kc.corner.zone_legs_ft["KTC"] == (20.0, 35.0) and kc.corner.vehicles
+    assert kc.driveway.status == "read" and kc.driveway.legs_ft == (20.0, 35.0)
+    assert layers["or/washington/hillsboro"].clear_vision.corner.sight_ft == (500.0,)
+    gresham = layers["or/multnomah/gresham"].clear_vision.corner
+    assert gresham.vehicles and gresham.driveways and gresham.alley_legs_ft == (25.0,)
+    tigard = layers["or/washington/tigard"].clear_vision.corner
+    assert tigard.class_map == "street_class_tigard" and tigard.class_rank_min == 3
     assert layers["or/multnomah/gresham"].clear_vision.corner.legs_ft == (40.0,)
     assert layers["or/washington/beaverton"].clear_vision.corner.legs_ft == (15.0,)
     # Steph 2026-11-10: Milwaukie takes the held AASHTO figures, read, the curb middle way.
@@ -327,3 +336,141 @@ def test_the_bridge_cuts_green_yellow_and_red_corner_lots() -> None:
     tiny = Polygon([(1, 1), (14, 1), (1, 14)])
     ((env, _),) = _cuts(rule(legs_ft=(40.0,)), tiny)
     assert env.geom.is_empty
+
+
+# --- alley corners, class figures, parked cars (2026-11-13) -----------------
+
+
+def alley_lot() -> tuple[Polygon, LotEdges]:
+    """100 ft square, a street along its south line and an alley along its west."""
+    lot, edges = _lot([(0, 0), (100, 0), (100, 100), (0, 100)], [FRONT, SIDE, REAR, SIDE])
+    west = dataclasses.replace(edges.edges[3], alley=True)
+    return lot, dataclasses.replace(edges, edges=(*edges.edges[:3], west))
+
+
+def test_an_alley_corner_is_held_yellow_at_the_alley_figure_never_red() -> None:
+    from flats.score.screen import SIGHT_CORNER_ALLEY
+
+    lot, edges = alley_lot()
+    (c,) = sight.alley_corners(lot, edges)
+    assert c.alley and (c.a.px, c.a.py) == pytest.approx((0.0, 0.0))
+    read = sight.corner_areas(lot, edges, rule(alley="read", alley_legs_ft=(25.0,), alley_quote="a#L1"))
+    assert read.reason == SIGHT_CORNER_ALLEY and read.low.is_empty
+    assert read.high.area == pytest.approx(25 * 25 / 2)
+    # Unread: the street corner's figure; none: the area is at street corners only.
+    unread = sight.corner_areas(lot, edges, rule())
+    assert unread.high.area == pytest.approx(20 * 20 / 2)
+    assert sight.corner_areas(lot, edges, rule(alley="none", alley_quote="a#L1")) is None
+    # A lot without an alley has no alley corner.
+    assert sight.alley_corners(*square()) == ()
+
+
+def test_an_alley_corner_does_not_hide_a_street_corners_own_doubt() -> None:
+    from flats.score.screen import SIGHT_CORNER_CURB
+
+    lot, edges = _lot([(0, 0), (100, 0), (100, 100), (0, 100)], [FRONT, SIDE, SIDE, STREET])
+    east = dataclasses.replace(edges.edges[1], alley=True)
+    edges = dataclasses.replace(edges, edges=(edges.edges[0], east, *edges.edges[2:]))
+    areas = sight.corner_areas(lot, edges, rule(basis="curb"))
+    assert areas.reason == SIGHT_CORNER_CURB
+
+
+def _ranked(a: int | None, b: int | None) -> tuple[Polygon, LotEdges]:
+    lot, edges = square()
+    ring = list(edges.edges)
+    ring[0] = dataclasses.replace(ring[0], street_rank=a)
+    ring[3] = dataclasses.replace(ring[3], street_rank=b)
+    return lot, dataclasses.replace(edges, edges=tuple(ring))
+
+
+def test_a_class_figure_is_chosen_from_the_streets_ranks() -> None:
+    r = rule(legs_ft=(30.0, 35.0), class_map="street_class_tigard", class_rank_min=3)
+    local = sight.corner_areas(*_ranked(0, 1), r)
+    assert local.high.area == pytest.approx(30 * 30 / 2) and local.low.area == pytest.approx(local.high.area)
+    busy = sight.corner_areas(*_ranked(3, 0), r)
+    assert busy.high.area == pytest.approx(35 * 35 / 2) and busy.low.area == pytest.approx(busy.high.area)
+    # An unranked street leaves both as options: the fit between is YELLOW.
+    open_ = sight.corner_areas(*_ranked(None, 0), r)
+    assert open_.high.area == pytest.approx(35 * 35 / 2)
+    assert open_.low.area == pytest.approx(30 * 30 / 2)
+
+
+def test_the_new_clear_vision_keys_are_checked_at_load() -> None:
+    from flats.rules.loader import _parse_clear_vision
+
+    base = {"status": "read", "legs_ft": 20, "source": "b.txt#L1", "note": "x" * 40}
+    for bad in (
+        {"vehicles": True},
+        {"driveways": True},
+        {"alley": "read", "alley_quote": "a#L1"},
+        {"alley": "read", "alley_legs_ft": 25},
+        {"alley": "sometimes"},
+        {"class_map": "street_class_tigard"},
+        {"class_map": "street_class_tigard", "class_rank_min": "3"},
+    ):
+        problems: list[str] = []
+        _parse_clear_vision({"corner": {**base, **bad}}, where="w", problems=problems)
+        assert problems, bad
+    ok = _parse_clear_vision({"corner": {
+        **base, "vehicles": True, "driveways": True, "vehicles_quote": "v#L2",
+        "alley": "read", "alley_legs_ft": 25, "alley_quote": "a#L1",
+        "class_map": "street_class_tigard", "class_rank_min": 3,
+    }}, where="w", problems=[])
+    c = ok.corner
+    assert c.vehicles and c.driveways and c.alley == "read" and c.alley_legs_ft == (25.0,)
+    assert c.class_rank_min == 3
+
+
+def test_a_court_or_drive_in_the_corner_area_is_yellow_with_its_flag() -> None:
+    from flats.score.screen import SIGHT_CORNER_PARKING, Triage
+
+    held = _screen(sight_corner_parking=True, sight_cite="GCDC 9.0200")
+    assert held.triage is Triage.yellow and SIGHT_CORNER_PARKING in held.reasons
+    assert any(f.code == "SIGHT-CORNER-PARKING" for f in held.flags)
+
+
+@dataclasses.dataclass(frozen=True)
+class _S:
+    facts: object
+    screening: object
+    signed: object
+    drawing: dict
+    rules: object = None
+    design: object = None
+    fit: object = None
+    config: object = None
+
+
+def _ring(x0: float, y0: float, x1: float, y1: float) -> list[list[float]]:
+    return [[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]]
+
+
+def test_the_bridge_holds_a_court_or_drive_in_the_corner_area(monkeypatch) -> None:
+    from flats.ingest import quadfit
+    from flats.score.screen import LotFacts, Triage
+
+    monkeypatch.setattr(quadfit, "screen", lambda *a, **k: "rescreened")
+    monkeypatch.setattr(quadfit, "_if_signed", lambda *a, **k: "signed")
+    lot_geom, edges = square()
+
+    def run(r: SightRule, court: list, lane: list):
+        lot = SimpleNamespace(
+            clear_vision=SimpleNamespace(corner=r, driveway=None),
+            lot_geom=lot_geom, edges=edges, zone="R",
+        )
+        green = SimpleNamespace(triage=Triage.green, colour=None)
+        s = _S(LotFacts(lot_sqft=10000), green, green,
+               {"fits": True, "court": court, "lane": lane, "building": _ring(50, 50, 90, 90)})
+        return quadfit.sight_corner_court_checked(s, lot, policy=None, relief=None)
+
+    corner_court, far_court = _ring(2, 2, 30, 30), _ring(60, 2, 95, 40)
+    corner_lane = _ring(0, 0, 12, 40)
+    parked = rule(vehicles=True, vehicles_quote="v#L1")
+    held = run(parked, corner_court, far_court)
+    assert held.facts.sight_corner_parking and held.screening == "rescreened"
+    assert not run(parked, far_court, corner_lane).facts.sight_corner_parking
+    # The drive only where the city keeps driveways out too (Gresham).
+    both = rule(vehicles=True, driveways=True, vehicles_quote="v#L1")
+    assert run(both, far_court, corner_lane).facts.sight_corner_parking
+    # A city silent on parked cars: nothing read.
+    assert not run(rule(), corner_court, corner_lane).facts.sight_corner_parking

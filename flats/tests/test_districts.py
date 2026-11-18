@@ -1092,6 +1092,15 @@ RULINGS: dict[str, dict[str, str]] = {
             "(tdc.18.910.improvement-standards L177)."
         ),
     },
+    "or/clackamas/west-linn": {
+        # tsp.access-spacing (the 2016 TSP's access tables, stored 2026-11-13
+        # for the driveway spacing check, FOLLOWUPS 178) prints STA.
+        "STA": (
+            "not-a-zone: Special Transportation Area, an ODOT highway access "
+            "designation the TSP describes for OR 43 (tsp.access-spacing.txt "
+            "L18-L37), not a base zone."
+        ),
+    },
     "or": {
         # 2026-11-06, FOLLOWUPS 87: OAR 660-023-0200 stored at the state root.
         "PL 89-665": (

@@ -92,7 +92,10 @@ def run(zone: ZoneResolution, *, lot_sqft: float = 12000.0, frontage: float = 80
     lane = court_across(DESIGN, zone).lane_ft
     return screen(
         zone,
-        LotFacts(lot_sqft=lot_sqft, frontage_ft=frontage, lot_width_ft=frontage),
+        # 2026-11-13 (drive-spacing, FOLLOWUPS 178): this city now holds a
+        # driveway-spacing rule; the lot's frontage is read clear, as it would be
+        # mid-block on a local street. These tests are not about spacing.
+        LotFacts(lot_sqft=lot_sqft, frontage_ft=frontage, lot_width_ft=frontage, driveway_spacing="clear"),
         DESIGN, fit(lane), policy=POLICY,
     )
 
