@@ -31,6 +31,13 @@ ingest:
   juris_city_codes:
   - CORNELIUS
 crossrefs:
+  # FOLLOWUPS 105 round 5 (2026-11-13).
+  "18.175":
+    outcome: other_building
+    note: >-
+      The sign code. Every mention is a sign: "all applications for a sign permit subject to the
+      provisions of the sign code, Chapter 18.175 CMC" (18.100/18.100.040.txt#L3), and each
+      zone's "Signs within the ... zone" line. The pod builds no sign.
   "11.20.01":
     outcome: misread
     note: >-

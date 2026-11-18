@@ -316,6 +316,16 @@ code:
   allow_thin: true
 
 crossrefs:
+  # FOLLOWUPS 105 round 5 (2026-11-13).
+  "197.360":
+    outcome: other_path
+    note: >-
+      ORS 197.360 to 197.380, the expedited land division: "Middle housing land divisions shall
+      be processed pursuant to the expedited land division procedures" (17.10/17.10.30.txt#L315-
+      L316; 17.100/17.100.50.txt#L10; 17.18/17.18.120.txt#L5). Renumbered 197A.140-197A.142 in
+      2025 and fetched (or/ors.197a.140-146.txt#L1-L53): a 63-day, no-hearing procedure for
+      dividing land. The pod is placed on the lot as it stands; the split plat is a path no pod
+      declares. It stands beside the "Facing" definition only by alphabet.
   # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
   "100":
     outcome: other_path

@@ -975,6 +975,20 @@ code:
   title: Clackamas County ZDO Section 1001 - General Provisions (Table 1001-1, Applicability of Section 1000), Last Amended 9/9/2024
   start: "1001.01"
   allow_thin: true
+# ZDO 825, Manufactured Dwelling Parks (FOLLOWUPS 105 round 5, 2026-11-13), the
+# section ZDO 1001.02(A) sends "Redevelopment of a manufactured dwelling park with
+# a different use" to. The page prints the text itself (no PDF). Read: 825.01 sizes
+# a park (one acre, perimeter setbacks); 825.02 bars redevelopment until the
+# County Administrator approves a tenant relocation plan, and adds a payment per
+# terminated space ($11,000 / $16,000 / $20,500 by width, CPI-adjusted, less the
+# state payment), zdo.825.txt#L13-L28. Money and a ministerial approval, never
+# ground: `fee_in_lieu` in shape, and it reaches only a lot that is a park today.
+- id: zdo.825
+  url: https://www.clackamas.us/planning/zdo825
+  title: Clackamas County ZDO Section 825 - Manufactured Dwelling Parks
+  start: "825.01 Standards"
+  end: "Return to the"
+  allow_thin: true
 # Where eight of those eleven districts' standards actually live. Table 510-1
 # notes 12 and 14 send a FREESTANDING quadplex -- which is the only kind this
 # building is -- to "the development and dimensional standards applicable to

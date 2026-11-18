@@ -1346,6 +1346,22 @@ definitions:
     cite: "MCC 39.2000, Lot (Corner)"
 
 crossrefs:
+  # --- FOLLOWUPS 105 round 5 (2026-11-13) ---
+  "17.38":
+    outcome: other_path
+    note: >-
+      Portland Title 17, Drainage and Water Quality, and the Stormwater Management Manual:
+      "Stormwater runoff from parking lots is regulated by the Bureau of Environmental Services.
+      See Chapter 17.38" (33.266.txt#L487-L488). The same ruling as Portland's layer: a public
+      works title sized to the impervious area made, never a distance on the lot.
+  "33.120":
+    outcome: other_path
+    note: >-
+      The multi-dwelling zones chapter, named in the list of single-dwelling zones only to say
+      what "R zones" means: "both the single-dwelling zones in this chapter and the multi-dwelling
+      zones in Chapter 33.120" (33.110.txt#L74-L75). Every Portland-code district this layer
+      screens (R5, R7, R10, R20, RF) is single-dwelling and read under 33.110; it maps no RM
+      zone.
 
   # --- FOLLOWUPS 105 round 3 (2026-11-08): the binding rows left in this layer ---
   "39.6850":

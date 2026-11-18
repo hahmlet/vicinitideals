@@ -133,6 +133,18 @@ code:
   start: "197A.400 Clear"
   end: "Note: Sections 7 to 9, chapter 330"
   allow_thin: true
+# Expedited land division (FOLLOWUPS 105 round 5, 2026-11-13). Sandy's code still
+# cites "ORS 197.360 to 197.380"; the ORS 197 chapter page shows those numbers
+# renumbered in 2025 (197.360 -> 197A.142, 197.365 -> 197A.140). Read: a land
+# division procedure (63-day decision, no hearing, applicant-only appeal) whose
+# eligibility needs residential land inside a UGB and a plat at 80 percent of
+# maximum density. It divides land; the pod is placed on the lot as it stands.
+- id: ors.197a.140-146
+  url: https://www.oregonlegislature.gov/bills_laws/ors/ors197A.html
+  title: ORS 197A.140-197A.146 Expedited land division; eligibility; expedited residential process
+  start: "197A.140 Expedited land division; procedures"
+  end: "PLANNING"
+  allow_thin: true
 # The post-2027 sources (FOLLOWUPS 21; Steph 2026-09-29: "design the system
 # for a post-2027 world"). Stored so they can be quoted and watched for
 # change; nothing cites them yet. HB 2138 (2025) rewrites ORS 197A.420 and

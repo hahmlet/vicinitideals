@@ -1872,6 +1872,13 @@ code:
 # rear wall, in front of no facade. A street on neither list owes no ban, which the encoded ban only
 # over-asks. The rest of 16.41.060 is objectives and design vocabulary.
 crossrefs:
+  # FOLLOWUPS 105 round 5 (2026-11-13).
+  "10.1.20":
+    outcome: misread
+    note: >-
+      Not a reference: the 1984 ordinance's own numbering in the definitions' history notes,
+      "(Ord. 740 section 10.1.20(B) [part], 1984)" after each defined term (cmc.16.04.030.txt#L3
+      and sixty-five more). Every mention is that note; the same shape as 10.3.05 below.
   # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
   # Eight of them are the 1984 ordinance's own numbering printed in the history notes.
   "10.3.05":
