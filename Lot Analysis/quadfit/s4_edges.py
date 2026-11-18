@@ -107,7 +107,10 @@ five rays cast square out of it, three cross a public street centreline
 (not an alley, a private road or a drive) within `WIDE_ROAD_RAY_FT` before
 they enter any private taxlot or a river, rail or water polygon. The
 threshold is unchanged, so a street across a neighbour's front garden is
-still not frontage.
+still not frontage. The test runs only on a lot the midpoint test already
+put on a street or alley: it adds a missed second street, which moves a lot
+toward YELLOW or RED. A tier-D lot on an open right-of-way stays D (and
+RED); recovering those moves lots toward GREEN and is its own change.
 """
 
 from __future__ import annotations
@@ -617,8 +620,9 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
     river, rail or water. Given with the fabric, an edge the midpoint test
     misses and no alley claims is a street edge when the right-of-way is open
     across it to one of those centrelines (`_open_way`): a lot line on a road
-    too wide for the 50 ft test. Not given, the midpoint test alone decides,
-    as it did until 2026-11-18.
+    too wide for the 50 ft test -- on a lot the midpoint test already put on
+    a street or alley only; a lot it found landlocked stays tier D. Not
+    given, the midpoint test alone decides, as it did until 2026-11-18.
     """
     import shapely
     from shapely.geometry import LineString, Point
@@ -646,6 +650,7 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
     front_flags = []
     alley_flags = []
     alley_widths = []
+    dists = []
     demoted = 0
     for x1, y1, x2, y2, ln, _b in edges:
         mid = Point((x1 + x2) / 2, (y1 + y2) / 2)
@@ -664,15 +669,23 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
                 if width is None:
                     is_alley = False
                     demoted += 1
-        if (not is_front and not is_alley and way_tree is not None and lot_tree is not None
-                and dist <= WIDE_ROAD_RAY_FT + ln / 2):
-            # A road too wide for the midpoint test (FOLLOWUPS 201 item 5):
-            # the right-of-way open across the line to a public street.
-            is_front = _open_way(x1, y1, x2, y2, outward, lot_tree, lot_geoms,
-                                 lot_private, lot_barrier, way_tree, way_geoms)
-            front_flags[-1] = is_front
+        dists.append(dist)
         alley_flags.append(is_alley)
         alley_widths.append(width)
+
+    # A road too wide for the midpoint test (FOLLOWUPS 201 item 5): an edge
+    # no street or alley claimed is a street edge where the right-of-way is
+    # open across it to a public street. Only on a lot the midpoint test
+    # already put on a public way: it adds the corner's second street, the
+    # through lot's other one. A lot it found landlocked stays tier D and
+    # RED -- giving it a frontage moves it toward GREEN, which is a separate
+    # change with its own read (audit_landlocked.py), not this one.
+    if way_tree is not None and lot_tree is not None and (any(front_flags) or any(alley_flags)):
+        for k, ((x1, y1, x2, y2, ln, _b), dist) in enumerate(zip(edges, dists)):
+            if front_flags[k] or alley_flags[k] or dist > WIDE_ROAD_RAY_FT + ln / 2:
+                continue
+            front_flags[k] = _open_way(x1, y1, x2, y2, outward, lot_tree, lot_geoms,
+                                       lot_private, lot_barrier, way_tree, way_geoms)
 
     # A lot with an alley and no street: the alley is its frontage, as it
     # was before alleys were told apart. Demoting it would make the lot

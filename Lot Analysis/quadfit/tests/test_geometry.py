@@ -591,6 +591,17 @@ def test_a_street_beyond_a_river_or_rail_line_is_not_frontage():
     assert [e[4] for e in r["edges"]].count("F") == 1
 
 
+def test_a_lot_on_the_wide_road_alone_stays_landlocked():
+    """The open-way test adds a missed second street; it does not give a
+    landlocked lot its first. Without 160th the lot keeps tier D (RED) --
+    recovering those lots moves them toward GREEN, a separate change."""
+    lot, (farmington, _sw_160th), neighbours = _farmington()
+    west = shapely.box(-100, 0, 0, 127)
+    r = _classify_wide(lot, [farmington], [*neighbours, west])
+    assert r["tier"] == "D"
+    assert r["edges"] == []
+
+
 def test_a_short_stretch_of_open_road_does_not_make_the_line_a_street():
     """Three rays of five must find the road: a neighbour across most of the
     line, the road open only past its east end, leaves it a side line."""
