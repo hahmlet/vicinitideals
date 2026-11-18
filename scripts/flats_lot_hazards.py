@@ -537,10 +537,20 @@ def open_layers(extract_dir: Path, registry: Registry, keys: list[str] | None = 
 
 
 def summarise(rows: list[dict[str, Any]], registry: Registry) -> dict[str, Any]:
+    layers: dict[str, Counter] = defaultdict(Counter)
+    worst_gap = _tally(rows, registry, layers)
+    return {
+        "layers": {k: dict(sorted(v.items())) for k, v in sorted(layers.items())},
+        "largest_sum_gap_share": round(worst_gap, 6),
+        "sum_tolerance": SUM_TOLERANCE,
+    }
+
+
+def _tally(rows: list[dict[str, Any]], registry: Registry, layers: dict[str, Counter]) -> float:
+    """Count ``rows`` (whole lots) into ``layers``; the largest sum gap seen."""
     per_lot_layer: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
     for r in rows:
         per_lot_layer[(r["county"], r["tlid"], r["layer"])].append(r)
-    layers: dict[str, Counter] = defaultdict(Counter)
     worst_gap = 0.0
     for (_c, _t, key), lot_rows in per_lot_layer.items():
         spec = registry.layers[key]
@@ -567,11 +577,7 @@ def summarise(rows: list[dict[str, Any]], registry: Registry) -> dict[str, Any]:
             area = float(lot_rows[0]["lot_area_sqft"])
             if area:
                 worst_gap = max(worst_gap, abs(total - area) / area)
-    return {
-        "layers": {k: dict(sorted(v.items())) for k, v in sorted(layers.items())},
-        "largest_sum_gap_share": round(worst_gap, 6),
-        "sum_tolerance": SUM_TOLERANCE,
-    }
+    return worst_gap
 
 
 def build(extract_dir: Path, lots_path: Path, out: Path, *, processes: int = 1, chunk: int = 2000,
@@ -584,29 +590,44 @@ def build(extract_dir: Path, lots_path: Path, out: Path, *, processes: int = 1, 
     lots = read_lots(lots_path)
     _LAYERS, _COVERAGES = open_layers(extract_dir, registry, keys)
     batches = [lots[i:i + chunk] for i in range(0, len(lots), chunk)]
-    rows: list[dict[str, Any]] = []
-    if processes > 1:
-        import multiprocessing as mp
-
-        with mp.get_context("fork").Pool(processes) as pool:
-            for part in pool.imap(_measure_chunk, batches):
-                rows.extend(part)
-    else:
-        for batch in batches:
-            rows.extend(_measure_chunk(batch))
     out.mkdir(parents=True, exist_ok=True)
+    counted: dict[str, Counter] = defaultdict(Counter)
+    worst_gap = 0.0
+    n_rows = 0
+    # Rows stream to the file chunk by chunk (whole lots each): ~10 million
+    # rows never sit in memory at once.
     with gzip.open(out / LOT_FILE, "wt", encoding="utf-8", newline="") as fh:
         writer = csv.DictWriter(fh, fieldnames=list(LOT_COLUMNS))
         writer.writeheader()
-        for r in rows:
-            writer.writerow({k: ("" if r.get(k) is None else r.get(k)) for k in LOT_COLUMNS})
+
+        def take(part: list[dict[str, Any]], done: int) -> None:
+            nonlocal worst_gap, n_rows
+            for r in part:
+                writer.writerow({k: ("" if r.get(k) is None else r.get(k)) for k in LOT_COLUMNS})
+            n_rows += len(part)
+            worst_gap = max(worst_gap, _tally(part, registry, counted))
+            if done % 25 == 0 or done == len(batches):
+                print(f"build: {done}/{len(batches)} chunks, {n_rows:,} rows, {round(time.time() - started)} s",
+                      file=sys.stderr, flush=True)
+
+        if processes > 1:
+            import multiprocessing as mp
+
+            with mp.get_context("fork").Pool(processes) as pool:
+                for i, part in enumerate(pool.imap(_measure_chunk, batches), 1):
+                    take(part, i)
+        else:
+            for i, batch in enumerate(batches, 1):
+                take(_measure_chunk(batch), i)
     shutil.copyfile(extract_dir / META_FILE, out / META_FILE)
     summary = {
         "lots_file": str(lots_path),
         "lots_read": len(lots),
         "layers": [layer.spec.key for layer in _LAYERS],
-        "rows": len(rows),
-        **summarise(rows, registry),
+        "rows": n_rows,
+        "layers_counted": {k: dict(sorted(v.items())) for k, v in sorted(counted.items())},
+        "largest_sum_gap_share": round(worst_gap, 6),
+        "sum_tolerance": SUM_TOLERANCE,
         "processes": processes,
         "seconds": round(time.time() - started, 1),
     }
