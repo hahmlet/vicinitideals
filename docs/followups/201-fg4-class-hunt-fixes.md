@@ -20,3 +20,5 @@ PLAN: one scoped re-bound on top of the rel10 full bound carrying wide-road-corn
 
 
 2026-11-18 COMBINED: flats/rel10b cf0e1aa3 = rel10 + wide-road-corner + rel10-fema + main 5c77ec77 (hand-off ../vicinitideals-worktrees/rel10b.handoff.md; full FLATS suite 8,315 passed; union scope 10,286 lots, 27 in both; splice step now accepts changed measurement rows only for lots the partial run re-screened). Expected: 168 wide-road greens down, 13 Portland greens to yellow. Zone-mirror test fails on Hillsboro UC-RM frontage 25 vs 18 until the quadfit rules are re-ported (release step). ORDER: rel10 full bound (137 /root/rel10_bound, started bridge 11:39 UTC, ~5 h) -> rel10b scoped re-bound -> move read -> release.
+
+2026-11-18 SUPERSEDED: scoped re-bound now runs from flats/rel10c 1d60989a (rel10c.handoff.md, scope 10,350). TIMING CORRECTED: a full bridge with an empty cache takes ~21 h (rel8 21.5 h, rel9 21 h on 137), not 5 h; rel10 bridge started 11-18 11:39 UTC, expect done ~11-19 09:00-14:00 UTC. FD2 stage B waits behind it on heavy.lock.
