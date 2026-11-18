@@ -213,6 +213,66 @@ def fill_reasons(out: Path) -> dict[str, Any]:
     return meta["fill_reasons"]
 
 
+def _ring_key(ring: Any) -> tuple[tuple[float, float], ...] | None:
+    if not ring:
+        return None
+    return tuple((round(float(x), 1), round(float(y), 1)) for x, y in ring)
+
+
+def merge_alt(out: Path, assign: Path) -> dict[str, Any]:
+    """Fold stage B (scripts/flats_fd2_alt.py, ``<out>/stageB/*.jsonl``) into
+    the outputs as ``flat_*`` columns: the smallest-relief workable position,
+    or "not searched" and why. A lot whose re-screened position is not the
+    live drawing's is reported "not searched" (the re-screen did not
+    reproduce the live spot), never compared on another spot."""
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    got: dict[str, dict[str, Any]] = {}
+    for f in sorted((out / "stageB").glob("*.jsonl")):
+        for ln in f.read_text(encoding="utf-8").splitlines():
+            if ln.strip():
+                r = json.loads(ln)
+                got[r["TLID"]] = r
+    live = {r["TLID"]: _ring_key((json.loads(r["drawing"]) if r.get("drawing") else {}).get("building"))
+            for r in pq.read_table(assign, columns=["TLID", "colour", "drawing"]).to_pylist()
+            if r["colour"] == "green"}
+    table = pq.read_table(out / "fd2_lots.parquet")
+    recs = table.to_pylist()
+    n = Counter()
+    for r in recs:
+        b = got.get(r["TLID"])
+        for k in ("flat_status", "flat_why", "flat_relief_ft", "flat_angle_deg", "flat_ring", "flat_differs",
+                  "flat_listed", "flat_candidates", "flat_tried", "flat_rejects", "flat_live_match"):
+            r[k] = None
+        if b is None:
+            r["flat_status"], r["flat_why"] = "not searched", "no stage B record"
+        else:
+            match = (_ring_key(json.loads(b["live_ring"])) == live.get(r["TLID"])) if b.get("live_ring") else None
+            r["flat_live_match"] = match
+            r["flat_status"], r["flat_why"] = b.get("alt_status"), b.get("alt_why")
+            if b.get("alt_status") == "searched" and match is False:
+                r["flat_status"], r["flat_why"] = "not searched", "re-screen did not reproduce the live position"
+            elif b.get("alt_status") == "searched":
+                r.update({"flat_relief_ft": b.get("alt_relief_ft"), "flat_angle_deg": b.get("alt_angle_deg"),
+                          "flat_ring": b.get("alt_ring"), "flat_differs": bool(b.get("differs")),
+                          "flat_listed": b.get("listed"), "flat_candidates": b.get("candidates"),
+                          "flat_tried": b.get("tried"), "flat_rejects": "; ".join(b.get("rejects") or []) or None})
+        n[(r["flat_status"], r["flat_why"], r["flat_differs"])] += 1
+    keys = list(dict.fromkeys([*table.column_names, *(k for k in recs[0] if k.startswith("flat_"))]))
+    pq.write_table(pa.table({k: [r.get(k) for r in recs] for k in keys}), out / "fd2_lots.parquet")
+    with open(out / "fd2_lots.csv", "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=keys)
+        w.writeheader()
+        for r in recs:
+            w.writerow({k: r.get(k) for k in keys})
+    meta = json.loads((out / "fd2_meta.json").read_text(encoding="utf-8"))
+    meta["merge_alt"] = {"stage_b_records": len(got), "counts": {json.dumps(k): v for k, v in n.items()},
+                         "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+    (out / "fd2_meta.json").write_text(json.dumps(meta, indent=2, default=str), encoding="utf-8")
+    return meta["merge_alt"]
+
+
 # --- run -------------------------------------------------------------------------
 
 _W: dict[str, Any] = {}
@@ -846,6 +906,22 @@ def summary(out: Path, *, seed: int = 199) -> str:
     parts.append("## 7. Twenty random lots (seed %d)\n" % seed + "\n".join(
         "- " + json.dumps({k: p.get(k) for k in keys}, default=str) for p in pick))
 
+    # Smallest-relief workable position (stage B).
+    if any("flat_status" in r for r in recs):
+        parts.append("## Smallest-relief workable position (stage B)\n" + _table(
+            ["status", "why / differs", "lots"], [[*k, v] for k, v in sorted(Counter(
+                (r.get("flat_status"), r.get("flat_why") if r.get("flat_status") != "searched"
+                 else ("differs" if r.get("flat_differs") else "live spot is the flattest workable"))
+                for r in recs).items(), key=lambda kv: -kv[1])] + [["total", "", total]]))
+        moved = [r for r in recs if r.get("flat_differs")]
+        parts.append("### Where it differs: relief class live -> flattest workable\n" + _table(
+            ["live", "flattest", "lots"], [[*k, v] for k, v in sorted(Counter(
+                (r.get("relief_class"), fd2.relief_class(r.get("flat_relief_ft"))) for r in moved).items())]))
+        parts.append("### Candidates rejected on the full re-screen (reasons)\n" + _table(
+            ["reject", "lots"], [[k, v] for k, v in Counter(
+                x.split(" colour")[0] for r in recs for x in str(r.get("flat_rejects") or "").split("; ") if x
+            ).most_common(20)]))
+
     # 8. What the classes hide (inputs for the write-up).
     nod = [r for r in recs if r.get("ground_class") == "NO-DATA"]
     parts.append("## 8a. NO-DATA lots: what the largest named series would sort as (not the brief's class)\n"
@@ -915,8 +991,13 @@ def main(argv: list[str] | None = None) -> int:
     m.add_argument("--seed", type=int, default=199)
     f = sub.add_parser("fill-reasons")
     f.add_argument("--out", required=True)
+    g = sub.add_parser("merge-alt")
+    g.add_argument("--out", required=True)
+    g.add_argument("--assign", required=True)
     args = p.parse_args(argv)
-    if args.cmd == "fill-reasons":
+    if args.cmd == "merge-alt":
+        print(json.dumps(merge_alt(Path(args.out), Path(args.assign)), indent=2))
+    elif args.cmd == "fill-reasons":
         print(json.dumps(fill_reasons(Path(args.out)), indent=2))
     elif args.cmd == "soil-prep":
         print(json.dumps(soil_prep(Path(args.gpkg), Path(args.extract), Path(args.out), sda=not args.no_sda), indent=2))
