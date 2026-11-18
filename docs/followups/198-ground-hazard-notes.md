@@ -9,3 +9,5 @@ Foundation agent ask 2026-11-18 (via Steph): "mapped landslide, earthquake-lique
 - Landslide and liquefaction: NOT held as their own layers. Expected source is the state geology agency (DOGAMI): statewide landslide susceptibility, the mapped landslide inventory (SLIDO), and earthquake liquefaction susceptibility. Scout to confirm layer, date, licence, download route and resolution.
 
 Build after the scout: acquire the layers into the county copy, measure each lot's share in each class, show as notes beside the soil note and in the lot report. Note only -- no colour, no flag -- unless Steph later rules otherwise. Same lane pattern as 196 (greens first).
+
+Steph 2026-11-18: "Yes" -- build the landslide, liquefaction and flood notes as soon as the scout reports; no need to show the findings first.
