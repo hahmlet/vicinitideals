@@ -323,7 +323,7 @@
                     <tbody>
                       <tr><td class="col-muted">Houses without basements</td><td>{{ u.dwellings or "not rated" }}{% if u.rated and u.rated.dwellings_reasons %} ({{ u.rated.dwellings_reasons }}){% endif %}</td></tr>
                       <tr><td class="col-muted">Small commercial buildings</td><td>{{ u.small_commercial or "not rated" }}{% if u.rated and u.rated.small_commercial_reasons %} ({{ u.rated.small_commercial_reasons }}){% endif %}</td></tr>
-                      <tr><td class="col-muted">Seasonal high water (Nov&ndash;Apr)</td><td data-wet-season="{{ u.wet_season_status }}">{{ u.wet_season_words }}</td></tr>
+                      <tr><td class="col-muted">Seasonal high water (Nov&ndash;Apr)</td><td data-wet-season="{{ u.wet_season_status }}">{{ u.wet_season_headline }}</td></tr>
                       <tr><td class="col-muted">Drainage</td><td>{{ u.drainage or "not stated" }}</td></tr>
                       {% if u.rated %}
                         <tr><td class="col-muted">Shrink-swell</td><td>{% if u.rated.lep_max is not none %}{{ u.rated.lep_max }}% linear extensibility ({{ u.rated.lep_class }}*){% else %}not stated{% endif %}</td></tr>
