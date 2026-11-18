@@ -70,7 +70,10 @@ def _full_of(bridge: Path, meta: dict[str, Any]) -> dict[str, Any]:
     return {"bridge": str(bridge.resolve()), "finished_at": meta.get("finished_at")}
 
 
-def _only_added(base_file: Path, partial_file: Path, scope: set[str], added_columns: tuple[str, ...] = ()) -> str | None:
+def _only_added(
+    base_file: Path, partial_file: Path, scope: set[str], added_columns: tuple[str, ...] = (),
+    screened: set[str] | None = None,
+) -> str | None:
     """Why ``partial_file`` is not ``base_file`` plus new lots; None when it is.
 
     A partial run may measure from a re-run of quadfit that kept lots the old
@@ -84,7 +87,15 @@ def _only_added(base_file: Path, partial_file: Path, scope: set[str], added_colu
     it is DECLARED: nothing here can tell which lots the new column moves, so
     the person splicing names it and answers for the scope covering every lot
     it can change (the item 50 ``ovl_*_site`` twins, FOLLOWUPS 49(k)). Every
-    old column must still match on every old lot.
+    old column must still match on every old lot the partial run did not
+    screen.
+
+    A lot the partial run screened (``screened``) may be RE-MEASURED: its row
+    in the new files may differ, because the partial run replaces every row
+    that lot has (a quadfit fix re-run on a copy of its inputs -- the s4
+    wide-road street line, the FEMA layer that gained Portland's study --
+    rel10b, 2026-11-18). A change on any lot outside it is still another
+    county. ``screened`` defaults to ``scope``.
     """
     import pandas as pd
 
@@ -103,14 +114,17 @@ def _only_added(base_file: Path, partial_file: Path, scope: set[str], added_colu
         return f"{len(added - scope):,} added lots are outside the partial run's scope"
     a = a.set_index("TLID").sort_index()
     b = b[~b["TLID"].isin(added)].set_index("TLID").sort_index()
+    remeasured = pd.Index(sorted(screened if screened is not None else scope))
+    outside = ~a.index.isin(remeasured)
     for col in a.columns:
         x, y = a[col], b[col]
         try:
             same = ((x == y) | (x.isna() & y.isna())).astype(bool)
         except (TypeError, ValueError):
             same = x.astype(str) == y.astype(str)
-        if not same.all():
-            return f"{int((~same).sum()):,} measured lots changed {col!r}"
+        changed = ~same.to_numpy() & outside
+        if changed.any():
+            return f"{int(changed.sum()):,} measured lots changed {col!r} outside the partial run's scope"
     return None
 
 
@@ -190,7 +204,8 @@ def splice(base: Path, partial: Path, out: Path, *, change: str, added_columns: 
     grown: dict[str, str] = {}
     for key in ("s4", "s5o"):
         if Path(bm[key]).resolve() != Path(pm[key]).resolve():
-            why = _only_added(Path(bm[key]), Path(pm[key]), touched | left_out, added_columns if key == "s5o" else ())
+            why = _only_added(Path(bm[key]), Path(pm[key]), touched | left_out, added_columns if key == "s5o" else (),
+                              screened=touched)
             if why:
                 raise SystemExit(f"{key} differs: base {bm[key]} vs partial {pm[key]} ({why})")
             grown[key] = pm[key]
