@@ -205,7 +205,8 @@ def rule_set() -> RuleSet:
         ("or/clackamas/milwaukie", "DMU", "required"),
         ("or/clackamas/_unincorporated", "R7", "required"),
         ("or/washington/hillsboro", "R-7", "required"),
-        ("or/washington/_unincorporated", "R-6 NB", "unclear"),
+        ("or/washington/_unincorporated", "R-6 NB", "required"),
+        ("or/washington/_unincorporated", "R-24 NB", "unclear"),
         ("or/washington/beaverton", "RC-OT", "required"),
         ("or/clackamas/tualatin", "RL", "not_required"),
     ],
@@ -214,6 +215,21 @@ def test_each_place_reads_its_own_rule(rule_set: RuleSet, where: str, zone: str,
     got = rule_set.resolve(where, zone)
     assert got.get("entrance_faces_street") == value
     assert got.values["entrance_faces_street"].prov.quote.startswith(where + "/")
+
+
+@pytest.mark.parametrize("zone", ["R-6 NB", "R-9 NB", "R-15 NB"])
+def test_north_bethany_middle_housing_districts_take_430_84_entry(rule_set: RuleSet, zone: str) -> None:
+    """FOLLOWUPS 112 (pagecheck-34): 390-20.3 C binds "Multi-dwelling
+    buildings", which 106-143 starts at five units (rulings.yaml
+    2026-09-29-definitions-literal), so it never reached the pod; read off
+    it, these three districts held `unclear`. 430-84 lists them (L3-L6) and
+    its entry orientation governs, as in the county default. R-24 NB is not
+    on 430-84's list and keeps `unclear`."""
+    got = rule_set.resolve("or/washington/_unincorporated", zone)
+    assert got.get("entrance_faces_street") == "required"
+    prov = got.values["entrance_faces_street"].prov
+    assert prov.quote.endswith("cdc.430-84.middle-housing.txt#L156-L171")
+    assert prov.via.endswith("cdc.430-84.middle-housing.txt#L3-L6")
 
 
 def test_wood_village_confines_the_pod_to_the_street(rule_set: RuleSet) -> None:
