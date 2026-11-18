@@ -123,6 +123,11 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         "lot_soil",
         "soil_map_units",
         "soil_components",
+        # Mapped ground hazards under each lot (0152, FOLLOWUPS 198): landslide,
+        # liquefaction and flood classes with their share of the lot, and the
+        # source each layer was loaded from. A note, never a colour.
+        "lot_hazards",
+        "hazard_layers",
         # Per-lot human marks (0148), separate from the run's own results.
         "lot_marks",
         "lot_results",
