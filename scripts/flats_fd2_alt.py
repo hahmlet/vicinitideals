@@ -272,7 +272,9 @@ def _accept(fin: Any, c: dict[str, Any], win: Any, rec: dict[str, Any], pinned: 
         rec["rejects"].append("design gone")
         return False
     if _ring_key(fin.drawing) != _ring_key(c["drawn"]):
-        rec["rejects"].append(f"moved after pinning ({c.get('pins')} passes pinned)")
+        where = "live spot" if _ring_key(fin.drawing) == _ring_key(win.drawing) else "another spot"
+        rec["rejects"].append(f"moved after pinning to {where} ({c.get('pins')} passes pinned,"
+                              f" colour {fin.signed.colour.value})")
         return False
     if not fl._no_worse(win, fin):
         rec["rejects"].append("worse: " + ",".join(sorted(
