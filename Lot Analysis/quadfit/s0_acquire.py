@@ -548,15 +548,24 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     # is what a missing layer looks like rather than a dry county: the NFHL holds
     # 2,592 flood areas under 41005C.
     #
-    # DFIRM_ID is FEMA's study identifier and its first five digits are the
-    # county FIPS code -- 41051 Multnomah, 41005 Clackamas. Any third county
-    # added to rules.yaml needs its ID added here in the same breath, or it
-    # inherits the same silent pass.
+    # DFIRM_ID is FEMA's study identifier. A countywide study is the county
+    # FIPS code plus C -- 41051C Multnomah, 41005C Clackamas, 41067C
+    # Washington -- but a community mapped on its own is filed under its NFIP
+    # community ID instead, and the county studies then hold only slivers of
+    # it. The City of Portland is one: 410183. The filter named the three
+    # county studies alone until 2026-11-18, so every Portland lot was measured
+    # against no FEMA data and read "not in a flood area" (5,524 Portland lots
+    # touch the 100-year zone; 13 were GREEN that the fringe ruling holds
+    # YELLOW). NFHL layer 22 (Political Jurisdictions), queried 2026-11-18 for
+    # "CO_FIPS" IN ('051', '005', '067'), names exactly these four studies.
+    # tests/test_overlay_coverage.py maps every jurisdiction to its study; a new
+    # jurisdiction needs its study looked up there and added here in the same
+    # breath, or it inherits the same silent pass.
     "overlay_fema_flood": {
         "url": "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28",
         "fields": ["FLD_ZONE", "ZONE_SUBTY", "SFHA_TF", "STATIC_BFE"],
         # NFHL rejects the unquoted/spaceless form intermittently — keep quoted
-        "where": "\"DFIRM_ID\" IN ('41051C', '41005C', '41067C')"},
+        "where": "\"DFIRM_ID\" IN ('41051C', '41005C', '41067C', '410183')"},
     # Sewer mains (split-candidate proximity; water skipped — see caveats)
     "util_sewer_portland": {
         "url": f"{_PDX}/Utilities_Sewer/MapServer/3",

@@ -8,6 +8,7 @@ a bucket nobody looked at.
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pytest
@@ -126,6 +127,67 @@ def test_every_source_lands_in_the_working_crs() -> None:
 
 #: County path -> the FIPS FEMA keys its flood panels by.
 _FIPS = {"or/multnomah": "41051C", "or/clackamas": "41005C", "or/washington": "41067C"}
+
+#: Every jurisdiction pipeline.yaml lists -> the FEMA studies its flood areas
+#: are filed under. A countywide study is the county FIPS plus C; a community
+#: FEMA maps on its own is filed under its NFIP community ID, and the county
+#: studies then hold only slivers of it. Portland is one (410183): the clause
+#: named the three county studies alone until 2026-11-18, so every Portland lot
+#: was measured against no FEMA data and 13 read GREEN in the 100-year zone.
+#: Source: NFHL MapServer layer 22 (Political Jurisdictions), queried
+#: 2026-11-18 with ``"CO_FIPS" IN ('051', '005', '067') AND "ST_FIPS" = '41'``:
+#: 559 rows, four studies. Portland is listed under its own study alone (the
+#: county studies name its boundary but marked 7 of its 183,300 lots).
+_FEMA_STUDIES = {
+    "or/multnomah/portland": ("410183",),
+    "or/multnomah/gresham": ("41051C",),
+    "or/multnomah/troutdale": ("41051C",),
+    "or/multnomah/fairview": ("41051C",),
+    "or/multnomah/wood-village": ("41051C",),
+    "or/multnomah/maywood-park": ("41051C", "410183"),
+    "or/multnomah/_unincorporated": ("41051C", "410183"),
+    "or/clackamas/happy-valley": ("41005C",),
+    "or/clackamas/milwaukie": ("41005C", "41051C"),
+    "or/clackamas/oregon-city": ("41005C",),
+    "or/clackamas/gladstone": ("41005C",),
+    "or/clackamas/canby": ("41005C",),
+    "or/clackamas/sandy": ("41005C",),
+    "or/clackamas/estacada": ("41005C",),
+    "or/clackamas/west-linn": ("41005C",),
+    "or/clackamas/tualatin": ("41005C", "41067C"),
+    "or/clackamas/wilsonville": ("41005C", "41067C"),
+    "or/clackamas/lake-oswego": ("41005C", "41051C", "41067C"),
+    "or/clackamas/johnson-city": ("41005C",),
+    "or/clackamas/rivergrove": ("41005C", "41067C"),
+    "or/clackamas/_unincorporated": ("41005C",),
+    "or/washington/_unincorporated": ("41067C", "41005C", "410183"),
+    "or/washington/hillsboro": ("41067C",),
+    "or/washington/beaverton": ("41067C",),
+    "or/washington/sherwood": ("41067C",),
+    "or/washington/king-city": ("41067C",),
+    "or/washington/durham": ("41067C",),
+    "or/washington/tigard": ("41067C",),
+    "or/washington/cornelius": ("41067C",),
+}
+
+
+def test_every_jurisdiction_is_inside_a_fetched_flood_study() -> None:
+    # The county test below could not see a city filed under its own study
+    # ID: Portland passed it while its flood maps were never fetched. Every
+    # jurisdiction the registry lists (on or off) must be in the map above,
+    # and every study it is filed under must be in the FEMA clause.
+    p = load_pipeline()
+    fema = p.datasets["overlay_fema_flood"]
+    named = set(re.findall(r"'(\d{5}[0-9A-Z])'", fema.where or ""))
+    missing = []
+    for j in sorted(p.jurisdictions):
+        assert j in _FEMA_STUDIES, f"{j}: look its FEMA study up in NFHL layer 22 and add it here"
+        assert fema.covers(j), f"{j}: the FEMA layer does not serve it"
+        missing += [(j, s) for s in _FEMA_STUDIES[j] if s not in named]
+    assert not missing, f"jurisdictions whose FEMA study is not fetched: {missing}"
+    used = {s for studies in _FEMA_STUDIES.values() for s in studies}
+    assert named <= used, f"FEMA clause fetches studies nothing uses: {named - used}"
+    assert "410183" in named
 
 
 def test_a_where_clause_that_names_a_county_names_every_county_it_serves() -> None:
