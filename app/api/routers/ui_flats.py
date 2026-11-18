@@ -64,6 +64,9 @@ from app.models.flats import (
     FlatsLot,
     FlatsLotMark,
     FlatsLotOccupancy,
+    FlatsLotSoil,
+    FlatsSoilComponent,
+    FlatsSoilMapUnit,
     FlatsLotPrice,
     FlatsLotResult,
     FlatsLotWorksAs,
@@ -111,6 +114,7 @@ from flats.ingest.occupancy import DISAGREEMENT_WORDS as OCCUPANCY_DISAGREEMENT_
 from flats.ingest.occupancy import LABEL_SHORT as OCCUPANCY_SHORT
 from flats.ingest.occupancy import LABEL_WORDS as OCCUPANCY_WORDS
 from flats.ingest.occupancy import LABELS as OCCUPANCY_LABELS
+from flats.ingest.soil import describe as describe_soil
 from flats.encode.words import orders as word_orders
 from flats.encode.words import tally as word_tally
 from flats.provenance import books, pages as page_map
@@ -3239,6 +3243,40 @@ async def _lot_occupancy(session: DBSession, lot_id: int) -> dict[str, Any] | No
     }
 
 
+async def _lot_soil(session: DBSession, lot_id: int) -> dict[str, Any] | None:
+    """What the USDA soil survey says lies under the lot (FOLLOWUPS 196): every
+    map unit largest first, the dominant and worst-rated one, or None when the
+    lot was not measured. A note, never a colour."""
+    rows = list((await session.execute(select(FlatsLotSoil).where(FlatsLotSoil.lot_id == lot_id))).scalars())
+    if not rows:
+        return None
+    mukeys = sorted({r.mukey for r in rows if r.mukey})
+
+    def plain(obj: Any) -> dict[str, Any]:
+        return {
+            c.key: (float(v) if isinstance(v, Decimal) else v)
+            for c in obj.__table__.columns
+            for v in (getattr(obj, c.key),)
+        }
+
+    units: dict[str, dict[str, Any]] = {}
+    components: dict[str, list[dict[str, Any]]] = {}
+    if mukeys:
+        for unit in (await session.execute(select(FlatsSoilMapUnit).where(FlatsSoilMapUnit.mukey.in_(mukeys)))).scalars():
+            units[unit.mukey] = plain(unit)
+        for comp in (
+            await session.execute(select(FlatsSoilComponent).where(FlatsSoilComponent.mukey.in_(mukeys)))
+        ).scalars():
+            components.setdefault(comp.mukey, []).append(plain(comp))
+    source = "; ".join(sorted({u["source"] for u in units.values() if u.get("source")})) or None
+    return describe_soil(
+        [{"mukey": r.mukey, "area_sqft": float(r.area_sqft), "share": float(r.share)} for r in rows],
+        units,
+        components,
+        source=source,
+    )
+
+
 def _form_fails(name: str, form: Mapping[str, Any]) -> str:
     """Why one form does not work, in a sentence: what it misses where it is
     red, what is still open where it is yellow."""
@@ -4879,6 +4917,7 @@ async def flats_lot(
             "facts": _fact_rows(facts),
             "net_land": _net_land(lot),
             "occupancy": await _lot_occupancy(session, lot.id),
+            "soil": await _lot_soil(session, lot.id),
             "quadfit": _quadfit_words(facts.get("quadfit") or {}),
             "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",
             # Mapped ground hazards (FOLLOWUPS 198): notes, never a colour.

@@ -3551,3 +3551,36 @@
     GREEN). About 3 rel8 GREENs (1N231DA04600, 1N231DA01800, 1S205BB04500)
     and 5 held lots are affected. Built on flats/rel8 (FOLLOWUPS 193).
   source: Steph 2026-11-14 (chat, question sheet item 28), ../vicinitideals-worktrees/rel8-moves.findings.md F1
+- id: 2026-11-18-frost-depth-silent-falls-back
+  kind: ruling
+  date: 2026-11-18
+  scope: {}
+  question: >-
+    Where a building department states no frost depth of its own, what figure
+    does the lot note carry?
+  ruling: >-
+    "If a jurisdiction genuinely logs nothing, not because we can't find it,
+    but because we found where it would be and they don't say, we can just use
+    the State and/or County data, flagged that it's State/County, but still
+    valid."
+  effect: >-
+    A department that is silent where it would state the figure takes the
+    county figure, else the state figure, marked with its source level. A
+    place where the document could not be found or opened gets no fallback and
+    stays unresolved. Note only; no colour (FOLLOWUPS 197).
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-condo-common-ground-red
+  kind: ruling
+  date: 2026-11-18
+  scope: {}
+  question: >-
+    Condominium shared (common) ground -- parcels the roll shows at $0 with no
+    building, which intake already marks as suspect -- showed GREEN on four
+    lots. Red like other non-buildable tracts, or yellow for review?
+  ruling: '"Condo shared ground is red"'
+  effect: >-
+    A parcel marked as condominium common ground is RED. Four run-128 GREENs
+    affected (1N1E35AA  -60000, 1S2E03DA  -70000, 1N2E25AC  -04000, and
+    1N1E22DD  -70000 if its roll evidence matches). Built on flats/rel10
+    (FOLLOWUPS 201).
+  source: Steph 2026-11-18 (chat, question sheet item 30), ../vicinitideals-worktrees/fg4-class-hunt.md

@@ -1,5 +1,7 @@
 # Weekly re-screen state
 
+   DONE 2026-11-18: rel9 (main 6b1665c5) loaded as run 128 and PROMOTED; 623 moves vs run 126, md5 16efb06daf56c57e4ac42bfe91fb4c4c matched the bound (g>y 525, r>y 48, y>r 27, y>g 15, r>g 8); drift 825 answers, 0 unexplained; splice base /root/bridge_spliced_rel9_fr, assign /root/assign_rel9_fr; 137 snapshot scan-run128-2026-11-18 (run126 snapshot dropped); E2E 16 passed.
+
    DONE 2026-10-28: FULL weekly 2026-10-27 (tag 2026-10-27_weekly) loaded as run 87 and PROMOTED on the
    standing word (gate clean: 72 datasets whole, lots drift +0.0%, no blocks/warnings); prune retired run 82
    (runs kept 84, 85, 87; plain VACUUM done, VACUUM FULL of flats.lot_results still owed when disk allows).

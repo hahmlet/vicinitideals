@@ -275,6 +275,30 @@ loaded, or when the footprint layer has moved (the fetch's `data_last_edit`).
 | O2 | Build | 137 (or a laptop with the lot table) | `python scripts/flats_lot_occupancy.py build --footprints data/flats/footprints/<date> --lots data/flats/normalized/<snapshot date>/lots.parquet --out data/flats/occupancy/<snapshot date>` | ~7 min for the three counties; `summary.json` labels and disagreements per county and city; `disagreements.csv.gz` lists the lots |
 | O3 | Load | 114 api container | copy the build directory to `/root/stacks/vicinitideals/data/flats/occupancy/<snapshot date>`, then `docker compose run --rm api python scripts/flats_lot_occupancy.py load --build /app/data/flats/occupancy/<snapshot date> --snapshot <flats.snapshots id> [--dry-run]` | `written` equals the snapshot's lot count less `file_rows_without_a_lot`; the Lots page's "What stands there" filter answers |
 
+### The soil under the lot (FOLLOWUPS 196) -- a note, never a colour
+
+Each lot's USDA NRCS soil survey (SSURGO) map units, with square feet and share,
+their components and the values the note reads (`flats/ingest/soil.py`). Not a
+stage of the screen; it moves no colour, adds no reason and holds no flag. The
+source is NRCS's state GeoPackage on its public soils share
+(https://nrcs.app.box.com/v/soils -> SSURGO -> SQLite SSURGO (Geopackages) ->
+States -> `SQLite_SSURGO_OR.7z`, ~820 MB; the October 2026 file was published
+2026-10-01 and holds OR051 Multnomah (saverest 09/08/2026), OR610 Clackamas
+(09/08/2026), OR067 Washington (09/08/2026) and the three National Forest /
+reservation areas at the county edges). Soil Data Access serves the same tables;
+the state file lacks the building ratings' limiting reasons and
+`nationalmusym`, which the `sda` step fills when that service answers. Rebuild
+after each copy is loaded (lot ids are per snapshot), or when NRCS publishes a
+new annual refresh (each area's `saverest` in `meta.json`).
+
+| # | Step | Where | Command | Done when |
+|---|---|---|---|---|
+| S1 | Download | 137 | `curl -L -o data/flats/soil/download_<date>/SQLite_SSURGO_OR.7z "https://nrcs.app.box.com/index.php?rm=box_download_shared_file&vanity_name=soils&file_id=f_2514029586635"` (a new, empty directory), then unpack with `py7zr` (`/root/soil_tools`) | `SQLite_SSURGO_OR.gpkg` (~3 GB) and `_ReadMe.txt` (its publication date) |
+| S2 | Extract | 137 | `python scripts/flats_lot_soil.py extract --gpkg <...>/SQLite_SSURGO_OR.gpkg --published <ReadMe date> --out data/flats/soil/extract_<date>` | ~10 s; `meta.json` lists every survey area with `saverest`, 807 map units, 1,926 components, 0 unreadable polygons |
+| S2b | Fill from Soil Data Access (optional) | anywhere with the internet | `python scripts/flats_lot_soil.py sda --extract data/flats/soil/extract_<date>` | `meta.json` `sda_fill.reasons_filled` above 0; then reload with `load --tables-only` |
+| S3 | Build | 137 | `python scripts/flats_lot_soil.py build --extract data/flats/soil/extract_<date> --lots data/flats/normalized/<snapshot>/lots.parquet --out data/flats/soil/build_<snapshot> --processes 10` | ~20 s for 587,815 lots; `summary.json` `largest_sum_gap_share` under 0.005 |
+| S4 | Load | 114 api container | copy the build directory to `/root/stacks/vicinitideals/data/flats/soil/<name>`, then `docker compose run --rm api python scripts/flats_lot_soil.py load --build /app/data/flats/soil/<name> --snapshot <flats.snapshots id> [--colour green] [--dry-run]` | `--colour green`: `lots_written` equals `lots_in_colour`; without it `lots_with_soil_in_snapshot` equals `lots_in_snapshot`; the lot page's "Soil (USDA survey)" block answers |
+
 **Filling the lot pages without a re-screen** (first done 2026-09-30, run
 48): copy the assign dir of the run in use under a new name (`cp -a
 /root/assign_<tag> /root/assign_<tag>_transit` -- the new path is a new
