@@ -137,7 +137,7 @@ def _make_run(tmp_path: Path) -> tuple[Path, Path, Path, Path]:
     pd.DataFrame(
         [
             {"TLID": LOT_A, "envelope_sqft": 2100.0, "sewer_main_dist_ft": 12.0, "in_sewer_district": None, "ovl_fema_sfha": False, "ovl_fema_floodway": False},
-            {"TLID": LOT_B, "envelope_sqft": 3300.0, "sewer_main_dist_ft": 400.0, "in_sewer_district": None, "ovl_fema_sfha": True, "ovl_fema_floodway": False},
+            {"TLID": LOT_B, "envelope_sqft": 3300.0, "sewer_main_dist_ft": 400.0, "in_sewer_district": None, "ovl_fema_sfha": True, "ovl_fema_floodway": False, "ovl_pdx_flood_1996": True},
         ]
     ).to_parquet(s5o, index=False)
     results = tmp_path / "lots_results.csv"
@@ -226,6 +226,10 @@ def test_the_bundle_carries_the_run_the_lots_and_the_verdicts(tmp_path: Path) ->
     assert (b["county"], b["jurisdiction"]) == ("clackamas", "or/multnomah/portland")
     assert json.loads(b["facts"])["quadfit"]["policy_exclusion"] == "z_overlay_constrained_site"
     assert json.loads(b["facts"])["alley_width_ft"] == 20.0
+    # FEMA's answer and Portland's 1996 map (PCC 24.50.040 E) stay two answers;
+    # a lot whose s5o row has no 1996 column says nothing about it
+    assert json.loads(b["facts"])["flood"] == {"sfha": True, "floodway": False, "pdx_1996": True}
+    assert facts["flood"] == {"sfha": False, "floodway": False, "pdx_1996": None}
 
     rows = _read(out / RESULTS_FILE)
     assert [tuple(r) for r in rows][0] == RESULT_COLUMNS

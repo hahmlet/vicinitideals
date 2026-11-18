@@ -504,6 +504,21 @@ datasets:
     fields: [OVRLY, ZONE, PLDIST]
     serves: [or/multnomah/portland]
 
+  # PCC 24.50.040 E adopts, beside the FIRMs, "The 'Composite February 1996
+  # Flood Inundation Area Mapping' published by the City. The identified areas
+  # are subject to the regulations of this Chapter." (FOLLOWUPS 202, read
+  # 2026-11-18 from the chapter as amended by Ord 192083). Hazard layer 30 is
+  # the City's "Title 24 Composite 1996 Flood Hazard Area"; layer 0 ("1996
+  # Flood Inundation Area") is the regional Willamette-basin delineation, not
+  # the composite (quadfit overlays.yaml pdx_flood_1996 says why).
+  overlay_pdx_flood_1996:
+    kind: arcgis
+    label: Portland Title 24 Composite 1996 Flood Hazard Area
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/Hazard/MapServer/30
+    fields: [OBJECTID]
+    serves: [or/multnomah/portland]
+
   # --- mapped corridors (flats/geom/corridor.py) ----------------------------
 
   corridors_pdx:
@@ -1580,6 +1595,12 @@ hazard_notes:
       number: FloodManagement MapServer layer 1
       date: as held (the acquire snapshot's fetch date)
       page: https://geo.westlinnoregon.gov/server/rest/services/Operational/FloodManagement/MapServer/1
+    pdx_flood_1996:
+      publisher: City of Portland
+      title: Composite February 1996 Flood Inundation Area (PCC 24.50.040 E)
+      number: Portland Maps Public/Hazard MapServer layer 30
+      date: as held (the acquire snapshot's fetch date)
+      page: https://www.portlandmaps.com/arcgis/rest/services/Public/Hazard/MapServer/30
 
   #: One entry per measured layer. An area layer's rows sum to the lot: its
   #: classes, plus the part outside the map's coverage and the part it leaves
@@ -1723,3 +1744,12 @@ hazard_notes:
       code: Flood management area
       level: high
       serves: [or/clackamas/west-linn]
+    flood_pdx_1996:
+      hazard: flood
+      kind: polygon
+      title: Portland 1996 flood area (PCC 24.50.040 E)
+      publication: pdx_flood_1996
+      held: overlay_pdx_flood_1996
+      code: 1996 flood area
+      level: high
+      serves: [or/multnomah/portland]

@@ -45,6 +45,33 @@ def test_overlay_columns_any_touch_and_area():
     assert sqft[1] == 0.0 and sqft[2] == 0.0
 
 
+def test_portland_1996_flood_area_flags_portland_lots_only():
+    """PCC 24.50.040 E (FOLLOWUPS 202): the City's 1996 flood map is measured
+    on Portland ground and nowhere else, as its own flag beside FEMA's."""
+    from shapely.geometry import box
+
+    from common import load_overlays
+    from s0_acquire import PHASE2_LAYERS
+    from s5o_overlays import overlay_columns
+
+    [spec] = [o for o in load_overlays().overlays if o.key == "pdx_flood_1996"]
+    assert spec.action == "flag" and spec.jurisdictions == ["portland"] and spec.buffer_ft == 0
+    assert "24.50.040 E" in spec.citation
+    assert PHASE2_LAYERS["overlay_pdx_flood_1996"]["url"].endswith("/Public/Hazard/MapServer/30")
+
+    area = [box(50, 0, 200, 100)]
+    lots = _lots([
+        {"jurisdiction": "portland", "lot_geom": box(0, 0, 100, 100)},        # half inside
+        {"jurisdiction": "portland", "lot_geom": box(400, 0, 500, 100)},      # outside
+        {"jurisdiction": "gresham", "lot_geom": box(0, 0, 100, 100)},         # inside, not Portland
+        {"jurisdiction": "multnomah_unincorporated", "home_jurisdiction": "portland",
+         "lot_geom": box(0, 0, 100, 100)},                                    # a Portland pocket
+    ])
+    flags, sqft = overlay_columns(lots, spec, area)
+    assert list(flags) == [True, False, False, True]
+    assert sqft[0] == pytest.approx(50 * 100, rel=1e-6) and sqft[1] == sqft[2] == 0.0
+
+
 def test_fill_holes_recovers_the_resource_a_buffer_ring_leaves_out():
     """A lot sitting inside a wetland must not read as clear ground.
 

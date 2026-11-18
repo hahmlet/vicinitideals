@@ -4656,6 +4656,8 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
         ("Nearest sewer main", ft(sewer.get("main_dist_ft"))),
         ("In a flood hazard area", yes(flood.get("sfha"))),
         ("In a floodway", yes(flood.get("floodway"))),
+        # Portland's own flood map beside FEMA's, PCC 24.50.040 E (FOLLOWUPS 202).
+        ("In Portland's 1996 flood area", yes(flood.get("pdx_1996"))),
         # Distance to transit, measured once per TriMet release. Shown, not
         # screened (Steph 2026-09-30): the pod parks four either way.
         ("Near transit: no parking can be required", _reform_said(transit.get("parking_reform")) if transit else ""),

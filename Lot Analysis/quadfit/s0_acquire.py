@@ -200,6 +200,13 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_pdx_ezone_v": {
         "url": f"{_PDX}/BPS_Zoning_Code_Layers/MapServer/116",
         "fields": ["OVRLY", "ZONE", "PLDIST"]},
+    # PCC 24.50.040 E: the City's "Composite February 1996 Flood Inundation
+    # Area Mapping" is a regulated flood area beside the FIRMs (FOLLOWUPS 202,
+    # 2026-11-18). Layer 30 is that composite; layer 0 is the regional
+    # Willamette-basin delineation and is not fetched.
+    "overlay_pdx_flood_1996": {
+        "url": f"{_PDX}/Hazard/MapServer/30",
+        "fields": ["OBJECTID"]},
     # Gresham natural resource / hazard overlays
     "overlay_gresham_wetlands": {
         "url": f"{_GRE}/Environmental/MapServer/15",

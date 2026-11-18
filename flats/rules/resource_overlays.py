@@ -294,6 +294,16 @@ PERMITS: tuple[Permit, ...] = (
         "fringe building stays by right with elevation and fill standards (Gresham GDC 5.0120, "
         "Troutdale TDC Ch 14, MCC 39.5030, PCC 24.50; West Linn 27.070)",
     ),
+    # Portland's own flood map beside FEMA's (FOLLOWUPS 202, 2026-11-18): the
+    # same conditions, so the same closer look, under its own key so a lot
+    # says which map put it there.
+    Permit(
+        "pdx_flood_1996",
+        "Portland's 1996 flood area (the City's Composite February 1996 Flood Inundation Area)",
+        "PCC 24.50.040 E adopts the map; 24.50.050 J sets the flood protection elevation 2 ft "
+        "above the 1996 flood (1 ft by the Columbia); 24.50.060 F.2.a lowest floor at or above it, "
+        "G.2.c 1:1 compensating excavation for fill",
+    ),
 )
 
 BY_KEY: Mapping[str, Permit] = {p.key: p for p in PERMITS}

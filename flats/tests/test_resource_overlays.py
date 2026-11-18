@@ -265,6 +265,46 @@ def test_each_area_is_its_own_question() -> None:
     assert keys == {"fema_sfha", "clackamas_hca"}
 
 
+def test_portland_s_1996_flood_area_is_the_same_closer_look_as_fema_s_fringe() -> None:
+    """PCC 24.50.040 E adopts the City's Composite February 1996 Flood
+    Inundation Area beside the FIRMs, under the same chapter's conditions
+    (FOLLOWUPS 202): a lot on it is YELLOW, as in the FEMA fringe (ruling
+    2026-10-06-fema-fringe-stays-yellow), and says which map put it there."""
+    area = BY_KEY["pdx_flood_1996"]
+    assert "24.50.040 E" in area.cite and "1996" in area.words
+    assert area.column in S5O_COLUMNS
+
+    inside = lot_from_row(row(ovl_pdx_flood_1996=True)).facts
+    assert inside.resource_permits == ("pdx_flood_1996",)
+    got = run(lot=replace(LOT, resource_permits=inside.resource_permits))
+    assert got.triage is Triage.yellow and got.colour is flag_plan.Colour.yellow
+    assert got.reasons == (CLOSER_LOOK_RESOURCE,)
+    [held] = [f for f in got.flags if f.code == "RESOURCE-PERMIT"]
+    assert held.key.split(flag_plan.SEP)[-1] == "pdx_flood_1996"
+    fema_only = run(lot=replace(LOT, resource_permits=("fema_sfha",)))
+    assert (fema_only.triage, fema_only.colour) == (got.triage, got.colour)
+
+    # outside the area, and a row s5o wrote before the layer existed: nothing said
+    assert lot_from_row(row(ovl_pdx_flood_1996=False)).facts.resource_permits == ()
+    assert lot_from_row(row()).facts.resource_permits == ()
+
+
+def test_fema_and_the_1996_area_stay_two_answers() -> None:
+    both = lot_from_row(row(ovl_fema_sfha=True, ovl_pdx_flood_1996=True)).facts
+    assert set(both.resource_permits) == {"fema_sfha", "pdx_flood_1996"}
+    got = run(lot=replace(LOT, resource_permits=both.resource_permits))
+    keys = {f.key.split(flag_plan.SEP)[-1] for f in got.flags if f.code == "RESOURCE-PERMIT"}
+    assert keys == {"fema_sfha", "pdx_flood_1996"}
+    assert got.triage is Triage.yellow
+
+
+def test_the_1996_area_is_measured_on_portland_only(quadfit_specs) -> None:
+    spec = quadfit_specs["pdx_flood_1996"]
+    assert spec["action"] == "flag" and spec["jurisdictions"] == ["portland"]
+    # the FEMA fringe the flag mirrors reaches everywhere; this map is the City's alone
+    assert quadfit_specs["fema_sfha"]["jurisdictions"] == "all"
+
+
 def test_the_flag_holds_the_lot_at_yellow() -> None:
     kind = flag_plan.registry()["RESOURCE-PERMIT"]
     assert kind.severity >= flag_plan.colour_rules().yellow_at_severity
