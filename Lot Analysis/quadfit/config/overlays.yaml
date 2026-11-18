@@ -195,6 +195,28 @@ overlays:
     confidence: verified
     coverage:
       portland: {grade: A, note: "BPS v layer (MapServer/116)"}
+  # FOLLOWUPS 202 / title3-greens (read 2026-11-18, 33.475 as printed 11/1/26):
+  # the River Environmental overlay "e" along the Willamette. Not a z trigger
+  # (33.418.030.A names c, p and Pleasant Valley only), so no use rule reaches
+  # it; read the way v_core reads 33.465 -- the whole overlay is the area the
+  # disturbance cap counts, with no transition area. The one by-right path for
+  # a house, 33.475.440.O, caps disturbance inside "e" at Table 475-4 less all
+  # of the site outside it (2,500 sq ft in R5, 5,000 in RF-R10, "50% of the
+  # base zone building coverage" elsewhere); anything more, or no applicable
+  # standard, "must be approved through River Review" (33.475.420.A/B,
+  # 33.865), discretionary. Carved whole, like v_core and c_core: over-carves
+  # that allowance where the site lies mostly inside "e". No touch flag: the
+  # standards apply to development "in the River Environmental overlay zone"
+  # (flats CLEARED says so).
+  - key: pdx_river_e
+    name: "Portland River Environmental overlay (e), all of it"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [portland]
+    citation: "PCC 33.475.440.O.1 and Table 475-4: 'The maximum disturbance area allowed within the River Environmental overlay zone on the site is determined by subtracting all portions of the site outside the River Environmental overlay zone boundary from the number listed in Table 475-4'; 33.475.420.A: 'Adjustments to the standards are prohibited ... When there are no applicable standards, the proposal must be approved through River Review'; 33.475.420.B and 33.865 (River Review, discretionary)"
+    confidence: verified
+    coverage:
+      portland: {grade: A, note: "BPS River Environmental layer (BPS_Zoning_Code_Layers/MapServer/110, 201 polygons 2026-11-18). Over-carves the Table 475-4 allowance where the site lies mostly inside the overlay"}
 
   # ---------------- Gresham (city-mapped carves, buffers pre-baked) --------
   - key: gresham_hcra

@@ -200,6 +200,11 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_pdx_ezone_v": {
         "url": f"{_PDX}/BPS_Zoning_Code_Layers/MapServer/116",
         "fields": ["OVRLY", "ZONE", "PLDIST"]},
+    # PCC 33.475.400-.450: the River Environmental overlay "e" (FOLLOWUPS
+    # 202, 2026-11-18); carved whole like v (overlays.yaml pdx_river_e).
+    "overlay_pdx_river_e": {
+        "url": f"{_PDX}/BPS_Zoning_Code_Layers/MapServer/110",
+        "fields": ["OVRLY", "ZONE", "PLDIST"]},
     # PCC 24.50.040 E: the City's "Composite February 1996 Flood Inundation
     # Area Mapping" is a regulated flood area beside the FIRMs (FOLLOWUPS 202,
     # 2026-11-18). Layer 30 is that composite; layer 0 is the regional

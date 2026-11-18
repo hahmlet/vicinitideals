@@ -504,6 +504,18 @@ datasets:
     fields: [OVRLY, ZONE, PLDIST]
     serves: [or/multnomah/portland]
 
+  # PCC 33.475.400-.450, the River Environmental overlay "e" along the
+  # Willamette (FOLLOWUPS 202, read 2026-11-18): quadfit carves all of it
+  # (overlays.yaml pdx_river_e says why). Layer 110 is "River Overlay - River
+  # Environmental (e)".
+  overlay_pdx_river_e:
+    kind: arcgis
+    label: Portland River Environmental overlay zone
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/110
+    fields: [OVRLY, ZONE, PLDIST]
+    serves: [or/multnomah/portland]
+
   # PCC 24.50.040 E adopts, beside the FIRMs, "The 'Composite February 1996
   # Flood Inundation Area Mapping' published by the City. The identified areas
   # are subject to the regulations of this Chapter." (FOLLOWUPS 202, read

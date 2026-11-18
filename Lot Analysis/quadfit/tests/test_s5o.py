@@ -72,6 +72,35 @@ def test_portland_1996_flood_area_flags_portland_lots_only():
     assert sqft[0] == pytest.approx(50 * 100, rel=1e-6) and sqft[1] == sqft[2] == 0.0
 
 
+def test_portland_river_environmental_overlay_is_carved_on_portland_lots_only():
+    """PCC 33.475.440.O (FOLLOWUPS 202, 2026-11-18): the River Environmental
+    overlay "e" is carved whole on Portland ground and nowhere else."""
+    from shapely.geometry import box
+
+    from common import load_overlays
+    from s0_acquire import PHASE2_LAYERS
+    from s5o_overlays import carve_regions
+
+    [spec] = [o for o in load_overlays().overlays if o.key == "pdx_river_e"]
+    assert (spec.action, spec.layer, spec.within, spec.buffer_ft) == ("carve", "pdx_river_e", None, 0)
+    assert spec.jurisdictions == ["portland"] and "33.475.440.O" in spec.citation
+    assert PHASE2_LAYERS["overlay_pdx_river_e"]["url"].endswith("/BPS_Zoning_Code_Layers/MapServer/110")
+
+    e = [box(50, 0, 200, 100)]
+    lot = box(0, 0, 100, 100)
+    lots = _lots([
+        {"jurisdiction": "portland", "lot_geom": lot},                         # half inside
+        {"jurisdiction": "portland", "lot_geom": box(400, 0, 500, 100)},       # clear of it
+        {"jurisdiction": "gresham", "lot_geom": lot},                          # inside, not Portland
+        {"jurisdiction": "multnomah_unincorporated", "home_jurisdiction": "portland",
+         "lot_geom": lot},                                                     # a Portland pocket
+    ])
+    region = carve_regions(lots, [spec], {"pdx_river_e": e})
+    assert region[0].equals(box(50, 0, 100, 100))
+    assert region[1] is None and region[2] is None
+    assert region[3].equals(box(50, 0, 100, 100))
+
+
 def test_fill_holes_recovers_the_resource_a_buffer_ring_leaves_out():
     """A lot sitting inside a wetland must not read as clear ground.
 

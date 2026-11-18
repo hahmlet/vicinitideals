@@ -36,7 +36,11 @@ environmental-zone map touches them are a map disagreement, and a person
 reads the lot rather than the screen picking a side. Since 2026-10-06 quadfit
 also carves what 33.430 and 33.465 leave no building on (``pdx_ezone_*_core``:
 the p resource area plus 5 ft, the c resource area, all of v), so the pod is
-placed off it first. Wood Village's WQR and HCA (WVDC 430.170) carve under the
+placed off it first. Portland's River Environmental overlay ("e", 33.475)
+is carved whole the same way since 2026-11-18 (``pdx_river_e``): its one
+by-right path for a house caps disturbance inside it at Table 475-4 less the
+site outside it, and anything more goes to River Review. It is no z trigger,
+so it carries no flag (CLEARED). Wood Village's WQR and HCA (WVDC 430.170) carve under the
 Metro keys and are flagged under ``wood_village_*`` for the plan 430.190 asks.
 
 The carves quadfit held before 2026-10-05 had no flag of their own, so a lot
@@ -339,6 +343,17 @@ CLEARED: Mapping[str, str] = {
         "the floodplain chapters regulate development within the flood area (GDC 5.0110: "
         "'any proposal for development within the Floodplain Overlay District'); the fringe "
         "around a floodway is flagged as fema_sfha"
+    ),
+    # Portland's River Environmental overlay (FOLLOWUPS 202, 2026-11-18). Not
+    # a z trigger (33.418.030.A names c, p and Pleasant Valley only), so no use
+    # rule and no map-disagreement flag reach it; the one standard a house
+    # meets by right (440.O) caps disturbance inside "e" only.
+    "pdx_river_e": (
+        "PCC 33.475.440: 'the standards in this Section apply to development, exterior "
+        "alterations, and land divisions in the River Environmental overlay zone'; 440.O.1: "
+        "'The maximum disturbance area allowed within the River Environmental overlay zone on "
+        "the site'; 33.475.050.A: supplemental site plans 'when a permit for development or "
+        "exterior alteration within the River Overlay zones is reviewed'"
     ),
 }
 

@@ -878,6 +878,61 @@ def test_the_carve_overlays_come_off_the_envelope_flats_cuts(corpus, policies) -
     assert s.envelope.sqft == pytest.approx(50 * 65)
 
 
+def test_a_court_drawn_in_a_carve_moves_off_it_or_the_lot_is_not_green(corpus, policies) -> None:
+    """Portland's River Environmental overlay (FOLLOWUPS 202, 2026-11-18).
+
+    1S1E14CA  -02700 drew 679 sq ft of its parking court inside "e", which
+    the screen did not hold. s5o now carves "e" (``pdx_river_e``) into
+    ``carve_wkb``; the building, the court and the lane all stay off it, and
+    a plan that cannot is a miss, never GREEN.
+    """
+    w, d = 60, 160
+    lot = shapely.box(X0, Y0, X0 + w, Y0 + d)
+    edges = [
+        [X0, Y0, X0 + w, Y0, "F"],
+        [X0 + w, Y0, X0 + w, Y0 + d, "S"],
+        [X0 + w, Y0 + d, X0, Y0 + d, "R"],
+        [X0, Y0 + d, X0, Y0, "S"],
+    ]
+
+    def screened(area=None):
+        r = row(
+            zone="CM2",
+            neighbour_zones_json=walled(("portland", "CX")),
+            lot_wkb=shapely.to_wkb(lot),
+            edges_json=json.dumps(edges),
+            area_sqft=float(w * d),
+            frontage_ft=float(w),
+            lot_width_ft=float(w),
+            lot_depth_ft=float(d),
+            wkb=shapely.to_wkb(shapely.box(X0 + 5, Y0 + 5, X0 + w - 5, Y0 + d - 5)),
+            carve_wkb=None if area is None else shapely.to_wkb(area),
+        )
+        (s,) = screen_lot(
+            lot_from_row(r, corpus.layers), [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+        )
+        fit = next(c for c in s.screening.checks if c.check == "fit_ft")
+        return s, fit.slack
+
+    base, base_fit = screened()
+    assert base.drawing is not None and base.drawing["fits"] and base_fit >= 0
+    court = shapely.Polygon(base.drawing["court"])
+    assert court.area > 0
+    # A sliver of "e" in a corner the plan does not use changes nothing.
+    clear, clear_fit = screened(shapely.box(X0 + w - 4, Y0 + d - 4, X0 + w, Y0 + d))
+    assert clear.signed.triage is base.signed.triage and clear_fit == base_fit
+    assert clear.drawing is not None and clear.drawing["fits"]
+    # "e" over the court's ground, or over everything behind the building's
+    # band: whatever is drawn stays off it, and the plan misses.
+    for area in (court, shapely.box(X0, Y0 + 60, X0 + w, Y0 + d)):
+        s, fit = screened(area)
+        assert fit < 0 and s.signed.triage is not Triage.green
+        for part in ("building", "lane", "court"):
+            shape = (s.drawing or {}).get(part)
+            if shape:
+                assert shapely.Polygon(shape).intersection(area).area < 1.0, part
+
+
 def test_ground_beyond_the_named_street_reach_comes_off_the_envelope(corpus, policies) -> None:
     # Estacada NCR: the dwelling, not the lot, must stand within 200 ft of the
     # named streets, so the far part of the lot is taken off its placement area.

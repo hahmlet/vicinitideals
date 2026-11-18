@@ -18,6 +18,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from flats.ingest.sources import load_pipeline
 from flats.ingest.quadfit import (
     GREENWAY_ANSWERS,
     GREENWAY_COLUMN,
@@ -189,6 +190,23 @@ def test_every_carve_is_either_flagged_on_the_site_or_cleared(quadfit_specs) -> 
     assert not set(CLEARED) & set(BY_KEY)
     # a cleared carve with a flag on its own layer would be read twice, two ways
     assert not {_layer(quadfit_specs[k]) for k in CLEARED} & flagged_layers
+
+
+def test_the_river_environmental_overlay_is_carved_and_asks_nothing_else(quadfit_specs) -> None:
+    """PCC 33.475 (FOLLOWUPS 202, 2026-11-18): "e" takes the ground and no flag.
+
+    Its only by-right path for a house caps disturbance inside it (440.O); a
+    pod clear of it owes nothing under the chapter, and it is no z trigger
+    (33.418.030.A names c, p and Pleasant Valley only).
+    """
+    spec = quadfit_specs["pdx_river_e"]
+    assert spec["action"] == "carve" and spec["jurisdictions"] == ["portland"]
+    assert spec.get("buffer_ft", 0) == 0 and "within" not in spec
+    assert "pdx_river_e" in CLEARED and "pdx_river_e" not in BY_KEY
+    assert "in the River Environmental overlay zone" in CLEARED["pdx_river_e"]
+    assert permits_on({"ovl_pdx_river_e": True}) == ()
+    held = load_pipeline().datasets["overlay_pdx_river_e"]
+    assert held.url.endswith("/BPS_Zoning_Code_Layers/MapServer/110")
 
 
 @pytest.mark.parametrize("carve", sorted(SITE_TWINS))
