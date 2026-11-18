@@ -193,6 +193,7 @@ def flatter_patched(s: Any, lot: Any, terrain: Any, fitter: Any, *, rules: Any, 
     if mode == "pin" and key == _ST["pin_key"]:
         c = _ST["pin"]
         _ST["pinned"] = True
+        _ST["pins"] = _ST.get("pins", 0) + 1
         return _pinned(s1, c["at"], c["drawn"], lot, terrain, rules=rules, policy=policy, relief=relief,
                        step_deg=step_deg, roads=roads)
     return s1
@@ -247,6 +248,7 @@ def work_patched(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
                     _ST.update({"mode": "pin", "pin_key": key, "pin": c, "pinned": False})
                     again = _screen(lot, [win.design])
                     pinned = bool(_ST.get("pinned"))
+                    c["pins"] = _ST.get("pins", 0)
                     _ST.clear()
                     fin = next((s for s in again if s.design.key == win.design.key), None)
                     if not _accept(fin, c, win, rec, pinned):
@@ -270,7 +272,7 @@ def _accept(fin: Any, c: dict[str, Any], win: Any, rec: dict[str, Any], pinned: 
         rec["rejects"].append("design gone")
         return False
     if _ring_key(fin.drawing) != _ring_key(c["drawn"]):
-        rec["rejects"].append("moved after pinning")
+        rec["rejects"].append(f"moved after pinning ({c.get('pins')} passes pinned)")
         return False
     if not fl._no_worse(win, fin):
         rec["rejects"].append("worse: " + ",".join(sorted(
