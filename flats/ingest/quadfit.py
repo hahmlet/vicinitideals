@@ -196,6 +196,7 @@ from flats.geom.durham_apron import (
 from flats.geom import driveway_lot_line, driveway_spacing
 from flats.geom import sewer
 from flats.ingest.flatter import (
+    DRIVE_TOL_FT,
     _angles as _flatter_angles,
     _drive_clear,
     _lane_in_from_street,
@@ -6428,7 +6429,7 @@ def _front_max_turned(drawing: Mapping[str, Any], chain: Sequence[Edge]) -> dict
 
 
 def _front_max_flush(
-    s: Screened, fitter: Fitter, *, snap: bool = False
+    s: Screened, fitter: Fitter, *, snap: bool = False, pull: bool = False
 ) -> dict[str, Any] | None:
     """``s``'s drawing slid whole toward the street whose maximum the raster
     left it just past, or None where nothing is so left (FOLLOWUPS 147).
@@ -6442,7 +6443,18 @@ def _front_max_flush(
 
     ``snap`` first turns the drawing square to that street
     (:func:`_front_max_turned`), so the slide brings the whole wall, not one
-    corner, to the envelope's front edge."""
+    corner, to the envelope's front edge.
+
+    ``pull`` lifts the raster's two-foot bound: the drawing is pulled the whole
+    way to the maximum, on the same terms, where the plan has no lane
+    (FOLLOWUPS 194 item 1). Such a plan's court is reached across the strip
+    between it and its nearest street lot line, which the drawing does not
+    place (:func:`flats.ingest.flatter._lane_in_from_street`), so the pull
+    stops where that strip would grow longer than drawn: the court keeps its
+    way in from the same street at the same length, only further along it.
+    Portland 1S2E15BB15500 (CM1) stood its building 14.04 ft from a street
+    against PCC 33.130.215.C.1's 10 ft, on an envelope with room to stand it
+    at 10."""
     import shapely
     from shapely import affinity
     from shapely.geometry import LineString, MultiLineString, Polygon
@@ -6468,7 +6480,10 @@ def _front_max_flush(
         ((row[1] - float(cap), c) for row, c in zip(measured, chains, strict=True)),
         key=lambda t: t[0],
     )
-    if not 0.0 < over <= FRONT_MAX_SLIDE_FT:
+    if pull:
+        if over <= 0.0 or drawing.get("lane"):
+            return None
+    elif not 0.0 < over <= FRONT_MAX_SLIDE_FT:
         return None
     if snap:
         turned = _front_max_turned(drawing, chain)
@@ -6519,11 +6534,34 @@ def _front_max_flush(
         )
     best = 0.0
     need = over / toward
-    steps = int(min(need, FRONT_MAX_SLIDE_FT) / FRONT_MAX_SLIDE_STEP_FT) + 1
+    # The pulled court's way in: the street lot line it stands nearest as
+    # drawn, and how far off it; the pull may not lengthen it by more than a
+    # drive's own tolerance (a wall a degree or two off its street drifts).
+    access: tuple[Any, float] | None = None
+    if pull and court:
+        street = _street_lines(s.lot)
+        if not street:
+            return None
+        body_court = Polygon(court)
+        access = min(
+            (
+                (line, body_court.distance(line))
+                for line in (LineString([(x1, y1), (x2, y2)]) for x1, y1, x2, y2 in street)
+            ),
+            key=lambda t: t[1],
+        )
+    steps = int((need if pull else min(need, FRONT_MAX_SLIDE_FT)) / FRONT_MAX_SLIDE_STEP_FT) + 1
     for i in range(1, steps + 1):
         t = min(i * FRONT_MAX_SLIDE_STEP_FT, need)
         dx, dy = way[0] * t, way[1] * t
         if not envelope.covers(affinity.translate(Polygon(room), dx, dy)):
+            break
+        if access is not None and (
+            affinity.translate(Polygon(court), dx, dy).distance(access[0])
+            > access[1] + DRIVE_TOL_FT
+        ):
+            # Further along, the court leaves its street: the way in the
+            # drawing did not place grows, so the pull ends here.
             break
         if court and not ground.covers(affinity.translate(Polygon(court), dx, dy)):
             # Not a place to stop; a turned court may land on its ground
@@ -6565,7 +6603,8 @@ def front_max_checked(
     (:func:`flats.ingest.flatter._lane_in_from_street`); any other plan
     stands where it was drawn, but for the raster's own slack
     (:func:`_front_max_flush`), taken back first on any plan the maximum
-    fails. ``fitter`` None measures and searches
+    fails, and, a plan with no lane, pulled whole toward that street as far
+    as its court keeps its way in (``pull``, FOLLOWUPS 194 item 1). ``fitter`` None measures and searches
     nothing further. Where nothing is drawn the plan is held out of GREEN
     (``front_max_drawn``), never passed."""
     if s.facts is None or s.rules.get("setback_front_max_ft") is None:
@@ -6591,8 +6630,10 @@ def front_max_checked(
     # GREEN, where no window below clears it (rel3 read finding 1).
     fallback = out
     if any(c.check == FRONT_MAX for r in (out.screening, out.signed) for c in r.binds):
-        for snap in (False, True):
-            slid = _front_max_flush(s, fitter, snap=snap)
+        # The raster's own slack first, then, for a plan with no lane, the
+        # whole drawing pulled to the maximum (FOLLOWUPS 194 item 1).
+        for snap, pull in ((False, False), (True, False), (False, True), (True, True)):
+            slid = _front_max_flush(s, fitter, snap=snap, pull=pull)
             if slid is None or (slid.get("lane") and not _drive_clear(slid, s, _street_lines(s.lot))):
                 continue
             if any(
