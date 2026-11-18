@@ -1,0 +1,6 @@
+# 202. Portland lots were never checked against FEMA flood maps (false GREEN class)
+
+**Status:** found 2026-11-18 by the FD2 measuring job, proven by ../vicinitideals-worktrees/fema-portland.findings.md; fix BUILDING on flats/rel10-fema (rides rel10 as a scoped re-bound spliced on the full bound; hand-off rel10-fema.handoff.md).
+
+Cause: the FEMA download filters on three county study IDs (flats/config/pipeline.yaml:1100, Lot Analysis/quadfit/s0_acquire.py:559); Portland's maps are filed under the city's own ID 410183, so Portland was measured against nothing. 5,524 Portland lots touch the 100-year zone (3,409 red, 2,040 not screened, 62 yellow -- 31 touch a floodway, 13 GREEN). The 13 greens are YELLOW by ruling 2026-10-06-fema-fringe-stays-yellow (none RED): the 11 footprint lots in fd2_lots.csv (ground class FLOOD) + 1S2E14BC  -01700 + 1S2E16DD  -10500. Lists on 137 /root/fema_pdx/.
+Open after the fix: (a) 75 Portland greens touch Metro Title 3 polygons (64 outside today's FEMA zone); Title 3 is not applied in Portland; Portland Title 24.50 and 33.475 are NOT stored -- download and read them, then ask Steph only if the text leaves a choice; (b) the flood flag cites "PCC 24.50", text we do not hold.
