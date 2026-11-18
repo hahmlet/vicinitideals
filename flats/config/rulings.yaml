@@ -3584,3 +3584,18 @@
     1N1E22DD  -70000 if its roll evidence matches). Built on flats/rel10
     (FOLLOWUPS 201).
   source: Steph 2026-11-18 (chat, question sheet item 30), ../vicinitideals-worktrees/fg4-class-hunt.md
+- id: 2026-11-18-river-e-clear-stays-green
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: multnomah, city: portland}
+  question: >-
+    A lot touches Portland's River Environmental overlay zone ("e", PCC
+    33.475.400-.440) but the building, parking court and drive all sit clear
+    of it. Stay GREEN, or a closer-look flag as the c, p and v overlays carry?
+  ruling: '"Leave it green."'
+  effect: >-
+    The "e" zone is carved out of the buildable ground; a lot whose drawn
+    building, court and lane sit clear of it stays GREEN with no flag. One
+    run-128 GREEN affected (1S1E14DB  -17000). Built on flats/rel10d
+    (FOLLOWUPS 202).
+  source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/title3-greens.findings.md
