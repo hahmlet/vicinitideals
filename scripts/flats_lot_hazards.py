@@ -116,8 +116,10 @@ def inspect(gdb: Path) -> dict[str, Any]:
     out: dict[str, Any] = {"gdb": str(gdb), "vector": {}, "raster": []}
     for name, geom_type in pyogrio.list_layers(gdb):
         info = pyogrio.read_info(gdb, layer=name)
+        fields = info.get("fields")
         out["vector"][str(name)] = {"geometry": geom_type, "features": int(info.get("features") or 0),
-                                    "fields": list(info.get("fields") or []), "crs": info.get("crs")}
+                                    "fields": [] if fields is None else [str(f) for f in fields],
+                                    "crs": info.get("crs")}
     try:
         import rasterio
 
@@ -199,7 +201,8 @@ def read_vector(spec: LayerSpec, gdb: Path, layer: str, *, part: Any = None) -> 
     import shapely
 
     info = pyogrio.read_info(gdb, layer=layer)
-    fields = list(info.get("fields") or [])
+    raw_fields = info.get("fields")
+    fields = [] if raw_fields is None else [str(f) for f in raw_fields]
     fmap = _field_map(fields)
     needed = [f for f in (spec.class_field, spec.label_field) if f and part is None]
     missing = [f for f in needed if f.lower() not in fmap]
@@ -296,7 +299,10 @@ def check_raster(spec: LayerSpec, gdb: Path) -> dict[str, Any]:
     import numpy as np
     import rasterio
 
-    path = f"OpenFileGDB:{gdb}:{spec.layer}"
+    # A GeoTIFF copy beside the geodatabase (rasters/<layer>.tif) wins: some
+    # rasterio builds ship GDAL without the OpenFileGDB raster driver.
+    tif = gdb.parent / "rasters" / f"{spec.layer}.tif"
+    path = str(tif) if tif.exists() else f"OpenFileGDB:{gdb}:{spec.layer}"
     with rasterio.open(path) as ds:
         step = max(1, max(ds.width, ds.height) // 2000)
         sample = ds.read(1, out_shape=(max(1, ds.height // step), max(1, ds.width // step)))
