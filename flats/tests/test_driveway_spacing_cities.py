@@ -9,6 +9,7 @@ half right-of-way is 30 ft in every case below.
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import pytest
 
@@ -390,3 +391,80 @@ def test_a_lot_nothing_read_is_held_and_a_clear_one_is_not(corpus, policies, jur
     clear = _screen(corpus, policies, lot_row(120.0, 200.0, jurisdiction=jurisdiction, zone=zone, driveway_spacing=ds.CLEAR))
     assert DRIVEWAY_SPACING_UNREAD not in clear.signed.reasons
     assert DRIVEWAY_SPACING_BLOCKED not in clear.signed.reasons
+
+
+# --- Gresham's map omits the Regional Center (FOLLOWUPS 194 item 4) ------
+
+
+def _gresham_omitted(osm: str, metro_type: int, *, unlisted: int | None = 0):
+    """A Gresham lot 400 ft from any corner, on a street the city's layer
+    does not draw (NE Kelly Ave, NW 5th St ... are not in its 4,419 lines)."""
+    from shapely.geometry import LineString
+
+    from flats.geom.durham_apron import StreetNetwork
+    from flats.geom.street_class import build
+
+    edges = [
+        [X0, Y0, X0 + 100, Y0, "F"],
+        [X0 + 100, Y0, X0 + 100, Y0 + 200, "S"],
+        [X0 + 100, Y0 + 200, X0, Y0 + 200, "R"],
+        [X0, Y0 + 200, X0, Y0, "S"],
+    ]
+    front = LineString(((X0 - 400, Y0 - 20), (X0 + 500, Y0 - 20)))
+    cmap = build(
+        [GRESHAM], [], [], [], [front], ["NE KELLY AVE"], [metro_type],
+        unlisted=unlisted, osm=[front], osm_classes=[osm], key="street_class_gresham",
+    )
+    network = StreetNetwork.build([front], ["NE KELLY AVE"])
+    return json.dumps(edges), [0.0], network, cmap
+
+
+def test_gresham_reads_a_street_its_map_omits_quiet_where_metro_and_osm_agree() -> None:
+    g = _rules(GRESHAM)
+    assert g.quiet_unlisted is not None
+    assert g.quiet_unlisted.ruling == "2026-10-09-quiet-street-both-agree"
+    assert g.class_of_rank(g.quiet_unlisted.rank, ds.spec_of(g.map)) == "local"
+    edges, bearings, network, cmap = _gresham_omitted("residential", 1500)
+    answer, why = ds.read_lot(edges, bearings, network, cmap, g)
+    assert answer == ds.CLEAR, why
+    # Before: the map as the city draws it ranks nothing it omits.
+    edges, bearings, network, cmap = _gresham_omitted("residential", 1500, unlisted=None)
+    answer, why = ds.read_lot(edges, bearings, network, cmap, g)
+    assert answer == ds.UNREAD and "street class not read" in why
+
+
+@pytest.mark.parametrize("osm,metro", [("tertiary", 1500), ("residential", 1400)])
+def test_gresham_omitted_street_stays_unread_where_metro_and_osm_disagree(osm, metro) -> None:
+    g = _rules(GRESHAM)
+    edges, bearings, network, cmap = _gresham_omitted(osm, metro)
+    answer, why = ds.read_lot(edges, bearings, network, cmap, g)
+    assert answer == ds.UNREAD and "street class not read" in why
+
+
+@pytest.mark.parametrize("zone", ["DRL-1", "DRL-2", "DCC", "DTM", "DMU", "DEM", "DCL"])
+def test_gresham_downtown_keeps_the_map_as_drawn(zone) -> None:
+    """GDC 4.1142(B)(7): on the Downtown Local street type a curb cut needs
+    the City's permission; the quiet reading does not answer that."""
+    g = _rules(GRESHAM)
+    edges, bearings, network, cmap = _gresham_omitted("residential", 1500)
+    held = ds.map_for(g, cmap, zone)
+    assert held is not None and held.unlisted is None
+    answer, why = ds.read_lot(edges, bearings, network, held, g)
+    assert answer == ds.UNREAD and "street class not read" in why
+    assert ds.map_for(g, cmap, "LDR-5") is cmap
+
+
+def test_gresham_load_maps_ranks_the_omitted_street_on_the_spacing_reading_only(monkeypatch) -> None:
+    from flats.geom import street_class
+
+    seen = {}
+
+    def fake(sources, pipeline=None, specs=None):
+        seen.update(specs or {})
+        return ()
+
+    monkeypatch.setattr(street_class, "load_class_maps", fake)
+    ds.load_maps(Path("."))
+    assert seen["street_class_gresham"].unlisted == 0
+    # The city's own map, read for the primary street, is unchanged.
+    assert street_class.CLASS_MAPS["street_class_gresham"].unlisted is None

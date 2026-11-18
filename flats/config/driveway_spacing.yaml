@@ -363,6 +363,24 @@ jurisdictions:
       Minor Arterial: minor_arterial
       Standard Arterial: standard_arterial
       Major Arterial: major_arterial
+    # The city's layer omits whole streets around the Regional Center (NE
+    # Kelly Ave, NW 5th St, NW 3rd St, SE Main St and others: no line of
+    # them in its 4,419), so a lot on one read "street class not read"
+    # (FOLLOWUPS 194 item 4). Chapter 5 of the TSP says Downtown and Civic
+    # Neighborhood "have adopted street designs" instead. Such a street is
+    # read Local only where Metro types it a minor residential street AND
+    # OpenStreetMap calls it residential (ruling 2026-10-09-quiet-street-both-agree,
+    # "yes, when both agree"); any disagreement (N Main Ave is a Metro
+    # secondary arterial) leaves it unread. Not in the Downtown plan district:
+    # there the street types of Map 4.1140 govern, and on the Downtown Local
+    # type "no curb cuts are permitted without permission of the City" --
+    # a gate this reading does not answer, so those lots keep the map as drawn.
+    unlisted_quiet:
+      rank: 0
+      ruling: 2026-10-09-quiet-street-both-agree
+      held_zones: [DRL-1, DRL-2, DCC, DTM, DMU, DEM, DCL]
+      held_cite: GDC 4.1142(B)(7), Downtown Local street type, no curb cuts without permission of the City, allowed only in instances that permit no other options
+      held_quote: or/multnomah/gresham/4.1100.downtown.txt#L955-L957
     frontage: {}
     unread:
       minor_arterial:

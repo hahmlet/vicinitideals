@@ -2854,7 +2854,7 @@ def with_driveway_spacing(
             bearings = tuple(float(b) for b in json.loads(row.get("front_bearings_json") or "[]"))
         except (TypeError, ValueError):
             bearings = ()
-        cmap = maps.get(spacing.map or "")
+        cmap = driveway_spacing.map_for(spacing, maps.get(spacing.map or ""), row.get("zone"))
         answer, why = driveway_spacing.read_lot(
             row.get("edges_json") or "[]",
             bearings,
@@ -2864,7 +2864,7 @@ def with_driveway_spacing(
             driveway_spacing.half_widths_of(row),
             industrial.get(_layer_id(row)),
         )
-        if cmap is None and spacing.map:
+        if maps.get(spacing.map or "") is None and spacing.map:
             why = f"no {spacing.map} map in the snapshot; " + why
         row["driveway_spacing"] = answer
         row["driveway_spacing_why"] = why
