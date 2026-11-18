@@ -3267,7 +3267,7 @@ async def _lot_soil(session: DBSession, lot_id: int) -> dict[str, Any] | None:
             await session.execute(select(FlatsSoilComponent).where(FlatsSoilComponent.mukey.in_(mukeys)))
         ).scalars():
             components.setdefault(comp.mukey, []).append(plain(comp))
-    source = next((u.get("source") for u in units.values() if u.get("source")), None)
+    source = "; ".join(sorted({u["source"] for u in units.values() if u.get("source")})) or None
     return describe_soil(
         [{"mukey": r.mukey, "area_sqft": float(r.area_sqft), "share": float(r.share)} for r in rows],
         units,
