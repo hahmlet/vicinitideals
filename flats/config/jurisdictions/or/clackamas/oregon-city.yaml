@@ -3450,9 +3450,12 @@ clear_vision:
       ''existing structures'' and subjects ''All construction initiated after June 8, 1978, which encroaches
       on the clear vision area'' (L42). The size stays unsettled: the engineer sets it and the speed is
       not mapped. ''Street'' includes ''alley'' (L33), so a street-and-alley corner has one too. Unsettled:
-      the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings
-      at its largest plausible size; a corner lot it reaches is YELLOW, never GREEN and never RED on it.'
+      the area is drawn at its largest plausible size (rulings.yaml 2026-11-09-sight-triangle-corner-check),
+      never RED on it. The engineer sets it (engineer_set): a corner lot held by it alone, building or
+      parking court, is GREEN with flag SIGHT-CORNER-ENGINEER (Steph 2026-11-14, rulings.yaml
+      2026-11-14-oregon-city-engineer-sight-area-green: "Green").'
     # Parked vehicles (FOLLOWUPS 161): 10.32.060 'A parked motor vehicle or other movable obstruction, located within the clear vision area'.
     vehicles: true
     vehicles_quote: data/flats/books/sight-manuals/oregon-city/ocmc-10.32-traffic-sight-obstructions.txt#L53
+    engineer_set: 2026-11-14-oregon-city-engineer-sight-area-green
     ruling: 2026-11-09-sight-triangle-corner-check

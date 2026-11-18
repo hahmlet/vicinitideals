@@ -280,6 +280,9 @@ def test_the_layers_that_read_their_lot_lines(corpus: dict) -> None:
         # (FOLLOWUPS 146, kc-buffer).
         ("or/washington/king-city", "abuts_lower_density_zone"),
         ("or/washington/king-city", "abuts_residential_zone"),
+        # 2026-11-14: C.3's commercial neighbour split from C.2's
+        # single-family one (FOLLOWUPS 192, rulings-1114).
+        ("or/washington/king-city", "abuts_commercial_zone"),
     }
 
 

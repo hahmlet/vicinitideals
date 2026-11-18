@@ -51,6 +51,9 @@
 # intersection rule's `unread_cross`: the cross classes beside which the
 # code adds such a rule; within 150 ft of one (the module's
 # UNREAD_CROSS_REACH_FT, not a code figure) a driveway is never shown clear.
+# `corner_unread` (Fairview, ruling 2026-11-14-fairview-hold-every-corner):
+# a lot with two street directions is never shown clear, whatever the
+# classes (its `ruling` names the register entry).
 
 jurisdictions:
   or/washington/tigard:
@@ -539,9 +542,11 @@ jurisdictions:
     # TSP, which this corpus does not hold: collector and arterial
     # frontages are unread, and a local frontage beside a collector or
     # arterial (where stops and signals stand) is held unread within reach.
-    # A controlled local-local intersection is not mapped (hand-off
-    # question). (G)(3)'s access at the property line farthest from an
-    # intersection is the city's call the flag names.
+    # A controlled local-local intersection is not mapped either, so every
+    # corner lot is held unread (`corner_unread`, Steph 2026-11-14, rulings
+    # 2026-11-14-fairview-hold-every-corner: "follow your rec"), whatever
+    # its streets' classes. (G)(3)'s access at the property line farthest
+    # from an intersection is the city's call the flag names.
     classes:
       Local: local
       Neighborhood Collector: collector
@@ -567,6 +572,10 @@ jurisdictions:
         unread_cross: [collector, arterial]
         unread_cite: FMC 19.162.020(G)(2), access spacing at controlled intersections (four-way stop sign or traffic signal) determined by the TSP (not held; which intersections are controlled is not mapped)
         unread_quote: or/multnomah/fairview/19.162/19.162.020.txt#L109
+    corner_unread:
+      cite: FMC 19.162.020(G)(2), access spacing at controlled intersections (four-way stop sign or traffic signal) determined by the TSP (not held; stop signs are not mapped, so every corner lot is held)
+      quote: or/multnomah/fairview/19.162/19.162.020.txt#L109
+      ruling: 2026-11-14-fairview-hold-every-corner
 
   or/washington/sherwood:
     map: street_class_sherwood

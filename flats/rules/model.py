@@ -552,12 +552,26 @@ class SightRule(BaseModel):
     #: rank leaves the corner's figures as options.
     class_map: str | None = None
     class_rank_min: int | None = None
+    #: Corners: the code leaves the area's size to the city engineer, case by
+    #: case (Oregon City 10.32.020, Hillsboro DCS 230.5.1), and a ruling
+    #: makes a lot held by it alone GREEN with a flag: the ruling's id
+    #: (rulings.yaml 2026-11-14-oregon-city-/hillsboro-engineer-sight-area-
+    #: green). Only on an ``unsettled`` rule; the area is still drawn at its
+    #: largest plausible size, and a measured rule elsewhere still binds
+    #: (:data:`flats.score.screen.SIGHT_CORNER_ENGINEER`).
+    engineer_set: str | None = None
     quote: str | None = None
     says: str | None = None
     source: str | None = None
     cite: str = ""
     ruling: str | None = None
     note: str = ""
+
+    @model_validator(mode="after")
+    def _engineer_set_is_unsettled(self) -> "SightRule":
+        if self.engineer_set and self.status != "unsettled":
+            raise ValueError("engineer_set is only for an unsettled rule (its size is the engineer's)")
+        return self
 
 
 class ClearVision(BaseModel):

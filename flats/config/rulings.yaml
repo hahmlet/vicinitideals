@@ -3427,6 +3427,7 @@
     check, not only those next to a busier street. Fairview has no GREEN lots
     today, so nothing moves now. To encode on a rel10 lane (FOLLOWUPS 192).
   source: Steph 2026-11-14 (chat, question sheet item 3), ../vicinitideals-worktrees/drive-spacing.handoff.md
+  encoded_in: [flats/config/driveway_spacing.yaml, flats/geom/driveway_spacing.py]
 - id: 2026-11-14-oregon-city-engineer-sight-area-green
   kind: ruling
   date: 2026-11-14
@@ -3441,6 +3442,7 @@
     rules (2026-10-15 ORS 197A.400). Any measured sight rule still binds. Moot
     today. To encode on a rel10 lane (FOLLOWUPS 192).
   source: Steph 2026-11-14 (chat, question sheet item 4), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/clackamas/oregon-city.yaml, flats/geom/sight_triangle.py, flats/score/screen.py, flats/ingest/quadfit.py]
 - id: 2026-11-14-hillsboro-engineer-sight-area-green
   kind: ruling
   date: 2026-11-14
@@ -3455,6 +3457,7 @@
     rules (2026-10-15 ORS 197A.400). Any measured sight rule still binds. Moot
     today. To encode on a rel10 lane (FOLLOWUPS 192).
   source: Steph 2026-11-14 (chat, question sheet item 4), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/geom/sight_triangle.py, flats/score/screen.py, flats/ingest/quadfit.py]
 - id: 2026-11-14-parked-cars-obstruct-sight
   kind: ruling
   date: 2026-11-14
@@ -3521,6 +3524,7 @@
     ruling's "whether or not an alley" no longer hides it. No lot depends on it
     today. Low priority (FOLLOWUPS 192).
   source: Steph 2026-11-14 (chat, question sheet item 8), ../vicinitideals-worktrees/gresham-4-1152.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/multnomah/gresham.yaml]
 - id: 2026-11-14-no-city-contact
   kind: ruling
   date: 2026-11-14

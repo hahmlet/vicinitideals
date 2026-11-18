@@ -455,6 +455,7 @@ _WHERE: dict[str, str] = {
     "abuts_alley": "on lots with alley access",
     "abuts_residential_zone": "next to a residential zone",
     "abuts_lower_density_zone": "next to a lower-density residential zone",
+    "abuts_commercial_zone": "next to a commercial zone",
     "abuts_nonresidential_zone": "where every non-street line borders a non-residential zone",
     "abuts_side_yard": "where the side line meets the neighbour's side yard",
     "abuts_park": "next to a park",

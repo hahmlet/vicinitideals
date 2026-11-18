@@ -225,6 +225,42 @@ def test_fairview_local_frontage() -> None:
     assert ds.chain_answer(40.0, _at("collector"), "local", fv) == ds.BLOCKED
 
 
+def test_fairview_holds_every_corner_lot(monkeypatch) -> None:
+    # Ruling 2026-11-14-fairview-hold-every-corner: a stop-sign corner is not
+    # mapped, so a corner lot is never clear, even on local streets with no
+    # intersection in reach; a mid-block lot so placed still clears.
+    fv = _rules(FAIRVIEW)
+    assert fv.corner_hold is not None
+    assert fv.corner_hold.ruling == "2026-11-14-fairview-hold-every-corner"
+    corner = json.dumps(
+        [
+            [X0, Y0, X0 + 300, Y0, "F"],
+            [X0 + 300, Y0, X0 + 300, Y0 + 300, "S"],
+            [X0 + 300, Y0 + 300, X0, Y0 + 300, "R"],
+            [X0, Y0 + 300, X0, Y0, "F"],
+        ]
+    )
+    midblock = json.dumps(
+        [
+            [X0, Y0, X0 + 300, Y0, "F"],
+            [X0 + 300, Y0, X0 + 300, Y0 + 300, "S"],
+            [X0 + 300, Y0 + 300, X0, Y0 + 300, "R"],
+            [X0, Y0 + 300, X0, Y0, "S"],
+        ]
+    )
+    monkeypatch.setattr(ds, "chain_class", lambda chain, cmap, rules: "local")
+    monkeypatch.setattr(ds, "chain_junctions", lambda *a, **k: [])
+    network = object()
+    assert ds.read_lot(midblock, [0.0], network, None, fv)[0] == ds.CLEAR
+    answer, why = ds.read_lot(corner, [0.0, 90.0], network, None, fv)
+    assert answer == ds.UNREAD and "corner lot" in why
+    # A bend that may be two streets is held the same way.
+    assert ds.read_lot(corner, [0.0, 25.0], network, None, fv)[0] == ds.UNREAD
+    # Only Fairview holds every corner: the same corner clears in Oregon City.
+    assert ds.read_lot(corner, [0.0, 90.0], network, None, _rules(OREGON_CITY))[0] == ds.CLEAR
+    assert all(_rules(c).corner_hold is None for c in CITIES if c != FAIRVIEW)
+
+
 # --- Sherwood 16.106.040.M.2 ---------------------------------------------
 
 
