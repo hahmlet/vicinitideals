@@ -46,6 +46,7 @@ the full one.)
 
 ## 1. Claude -- priority
 
+199. [Claude] [Steph] [scan: NO -- note only] **Ground levels at the building corners + per-lot check of each foundation method** -- offered 11-18; waits on Steph go and the foundation agent's method table. [file](followups/199-ground-levels-under-building.md)
 198. [Claude] [scan: NO -- note only] **Mapped landslide, liquefaction and flood areas per lot, as notes** -- foundation agent ask 11-18; flood already held, landslide + liquefaction from the state geology maps (detailed landslide map covers only part of the area); Steph yes 11-18; BUILDING flats/hazard-notes. [file](followups/198-ground-hazard-notes.md)
 197. [Claude] [scan: NO -- note only] **Frost depth per jurisdiction, as a note** -- Steph ask 11-18; state baseline plus what each building department actually enforces scout back: 10 found, 11 silent, 5 unresolved (4 blocked sites need Steph download); only Gresham differs (18 in vs 12); register + note to build. [file](followups/197-frost-depth.md)
 196. [Claude] [scan: NO -- note only] **Soil type per lot from the USDA soil survey, as a note** -- Steph yes 11-17; greens first, then all lots; BUILDING flats/soil-notes. [file](followups/196-soil-notes.md)
