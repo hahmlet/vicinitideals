@@ -111,7 +111,31 @@ def test_a_place_not_in_the_register_is_not_resolved_and_claims_no_figure() -> N
     assert note["outcome"] == "not_read"
     assert note["inches"] is None and note["level"] is None and note["above_state"] is False
     assert note["words"].startswith("Not resolved:")
+    assert note["reference"]["level"] == "county" and note["reference"]["inches"] == 12
+    assert "For reference only, the county figure (Washington County Building Services) is 12 in." in note["words"]
+
+
+def test_a_not_read_place_in_a_silent_county_shows_the_state_figure_for_reference() -> None:
+    note = frost.describe("juris_city:MAYWOOD PARK", "multnomah")
+    assert note["outcome"] == "not_read" and note["inches"] is None
+    assert note["reference"]["level"] == "state"
     assert "For reference only, the state figure for this county is 12 in." in note["words"]
+
+
+def test_a_city_whose_chapter_was_not_read_is_not_called_silent() -> None:
+    # 2026-11-18 coordinator: silent only where the chapter itself was read.
+    for jid, county, county_name in (
+        ("or/clackamas/oregon-city", "clackamas", "Clackamas County Building Codes Division"),
+        ("or/washington/sherwood", "washington", "Washington County Building Services"),
+    ):
+        note = frost.describe(jid, county)
+        assert note["outcome"] == "not_read" and note["inches"] is None and note["level"] is None
+        assert note["read"] and note["caveats"]
+        assert f"the county figure ({county_name}) is 12 in." in note["words"]
+    for jid in ("or/washington/king-city", "or/washington/durham", "or/washington/cornelius"):
+        note = frost.describe(jid, "washington")
+        assert note["outcome"] == "silent" and note["level"] == "county" and note["inches"] == 12
+        assert len(note["read"]) >= 2
 
 
 def _write(tmp_path: Path, doc: dict) -> Path:

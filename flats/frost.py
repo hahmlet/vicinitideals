@@ -242,6 +242,7 @@ def describe(jurisdiction: str | None, county: str | None, *, path: Path = PATH)
         else:
             note["level"] = "state"
     elif entry:
+        note["read"] = [_read(r) for r in entry.get("read") or []]
         note["caveats"].append(_squash(entry["reason"]))
     else:
         note["caveats"].append("This place is not in the frost register: its building department was never read.")
@@ -284,11 +285,25 @@ def describe(jurisdiction: str | None, county: str | None, *, path: Path = PATH)
         note["bands_words"] = state["bands_words"]
         note["source_name"] = "State of Oregon"
 
+    note["reference"] = None if note["inches"] is not None else _reference(doc, county_key, state)
     if note["inches"] is not None and state:
         note["above_state"] = note["inches"] > state["inches"]
     note["words"] = _words(note)
     note["elevation_words"] = _elevation_words(note)
     return note
+
+
+def _reference(doc: dict[str, Any], county_key: str, state: dict[str, Any] | None) -> dict[str, Any] | None:
+    """For a place not read: the figure shown for reference only, never claimed
+    for the place. The county building department's own figure where it prints
+    one, else the state's."""
+    c = (doc.get("counties") or {}).get(county_key)
+    if c and c["outcome"] == "found":
+        b = c["bands"][0]
+        return {"level": "county", "name": c["name"], "inches": b["inches"], "figure": b["figure"], "cite": c["cite"]}
+    if state:
+        return {"level": "state", "name": "State of Oregon", "inches": state["inches"], "figure": state["figure"], "cite": state["cite"]}
+    return None
 
 
 def _read(raw: dict[str, Any]) -> dict[str, Any]:
@@ -298,7 +313,13 @@ def _read(raw: dict[str, Any]) -> dict[str, Any]:
 def _words(note: dict[str, Any]) -> str:
     state = note["state"]
     if note["inches"] is None:
-        ref = f" For reference only, the state figure for this county is {state['inches']} in." if state else ""
+        ref = note.get("reference")
+        if ref and ref["level"] == "county":
+            ref = f" For reference only, the county figure ({ref['name']}) is {ref['inches']} in."
+        elif ref:
+            ref = f" For reference only, the state figure for this county is {ref['inches']} in."
+        else:
+            ref = ""
         return f"Not resolved: {note['place']}'s frost depth has not been read.{ref}"
     depth = f"{note['inches']} in below grade"
     if note["level"] == "city":

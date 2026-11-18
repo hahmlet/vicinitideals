@@ -247,11 +247,16 @@ places:
   or/clackamas/oregon-city:
     name: Oregon City
     permits_by: City of Oregon City Building Division
-    outcome: silent
+    outcome: not_read
     read:
-      - document: building, residential permit, application and checklist pages
+      - document: building, residential permit, application and checklist pages; the current Oregon specialty codes page (no frost wording)
         cite: data/flats/books/frost/oregon-city
-    caveat: The department's pages were read; the municipal code chapter was not searched.
+    reason: >-
+      Oregon City's building chapter (OCMC Title 15) was not read: the code
+      host refuses automated readers, and its web-archive copy of 2024-04-06
+      is an empty page shell with no code text
+      (data/flats/books/frost/oregon-city/ocmc-15/municode-tit15-wayback-20240406.html).
+      The department's own pages, which were read, state no figure.
 
   or/clackamas/gladstone:
     name: Gladstone
@@ -392,12 +397,18 @@ places:
   or/washington/sherwood:
     name: Sherwood
     permits_by: City of Sherwood Building Division
-    outcome: silent
+    outcome: not_read
     read:
       - document: building, code-administration, submittal and deck pages
         url: https://www.sherwoodoregon.gov/building/
         cite: data/flats/books/frost/sherwood
-    caveat: The department's pages were read; the municipal code chapter was not searched.
+      - document: Ordinance 2021-006 Exhibit A, which rewrites only SMC 15.04.150 (the ORSC "as adopted by OAR 918-480-0005 through 918-480-0010(2021)"); no frost, footing or foundation text
+        url: http://web.archive.org/web/20240421004537/https://www.sherwoodoregon.gov/sites/default/files/fileattachments/ordinance/48800/ordinance_2021-006_building_code_updates_2021.pdf
+        cite: data/flats/books/frost/sherwood/smc-15.04/ord-2021-006-wayback-20240421.pdf#p4
+    reason: >-
+      Sherwood's building chapter (SMC 15.04) was not read whole: only the one
+      section the 2021 ordinance rewrote was seen. The code host refuses
+      automated readers and the web archive holds no copy of the chapter.
 
   or/washington/king-city:
     name: King City
@@ -407,6 +418,12 @@ places:
       - document: building code services page and the contractor's site search
         url: https://www.ci.king-city.or.us/building_code_services/index.php
         cite: data/flats/books/frost/king-city/building-code-services-page.html#html
+      - document: Ordinance O-2020-02, which restates Title 15 (Buildings and Construction) whole; it adopts the dwelling code "as adopted by OAR Chapter 918, Division 480" and has no frost, footing or foundation text
+        url: https://cms6.revize.com/revize/kingcityornew/document_center/Government/Agendas%20&%20Minutes/2020/Packets/20201216%20City%20Council%20Packet.pdf
+        cite: data/flats/books/frost/king-city/kcmc-15/council-packet-2020-12-16.pdf#p4-12
+    caveat: >-
+      Title 15 read as restated in the December 2020 council packet; any later
+      amendment was not seen.
 
   or/washington/durham:
     name: Durham
@@ -415,7 +432,15 @@ places:
     read:
       - document: Durham building page
         cite: data/flats/books/frost/durham/durham-building-page.html#html
-    caveat: Tualatin, which inspects for Durham, prints 12 inches below 400 ft.
+      - document: Ordinance 275-26, the Building Code (passed 2026-05-26); "footing" appears only in the retaining-wall exemption and the easement rule, no frost depth
+        url: https://durham-oregon.us/wp-content/uploads/2026/05/Ord-275-26-Building-Ordinance.pdf
+        cite: data/flats/books/frost/durham/ord/ord-275-26.pdf
+      - document: Resolution 697-26, building code standards; no frost depth
+        url: https://durham-oregon.us/wp-content/uploads/2026/05/Res-697-26-Building-Code-Standards.pdf
+        cite: data/flats/books/frost/durham/ord/res-697-26.pdf
+    caveat: >-
+      Tualatin, which inspects for Durham, prints 12 inches below 400 ft. The
+      ordinance copy read carries a blank signature line.
 
   or/washington/tigard:
     name: Tigard
@@ -435,3 +460,7 @@ places:
       - document: Cornelius building permits page; Forest Grove residential plan requirements ("using current code design values")
         url: https://www.forestgrove-or.gov/DocumentCenter/View/2117/Residential-Plan-Requirements
         cite: data/flats/books/frost/cornelius/forest-grove-residential-plan-requirements.pdf
+      - document: CMC 15.05, the Cornelius building code, whole (15.05.030 adopts the current state specialty codes); no frost, footing or foundation text
+        url: http://web.archive.org/web/20240420161925/https://www.codepublishing.com/OR/Cornelius/html/Cornelius15/Cornelius1505.html
+        cite: data/flats/books/frost/cornelius/cmc-15.05/cmc-15.05-wayback-20240420.html#html
+    caveat: Chapter 15.05 read from the web-archive copy of 2024-04-20; the live code site refuses automated readers.

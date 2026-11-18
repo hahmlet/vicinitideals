@@ -48,7 +48,7 @@ def test_a_lot_shows_its_frost_note_beside_an_untouched_colour(logged_in_page: P
     expect(block).to_have_attribute("data-frost-outcome", note["outcome"])
     expect(block.locator("[data-frost-words]")).to_contain_text(note["words"][:40])
     if note["inches"] is None:
-        # Not read: no figure is claimed for the place, the state's is for reference.
+        # Not read: no figure is claimed for the place; the county's (else the state's) is for reference.
         assert note["words"].startswith("Not resolved:")
     else:
         expect(block.locator("[data-frost-words]")).to_contain_text(f"{note['inches']} in")
