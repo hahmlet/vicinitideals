@@ -11,3 +11,5 @@ Foundation agent ask 2026-11-18 (via Steph): "mapped landslide, earthquake-lique
 Build after the scout: acquire the layers into the county copy, measure each lot's share in each class, show as notes beside the soil note and in the lot report. Note only -- no colour, no flag -- unless Steph later rules otherwise. Same lane pattern as 196 (greens first).
 
 Steph 2026-11-18: "Yes" -- build the landslide, liquefaction and flood notes as soon as the scout reports; no need to show the findings first.
+
+Scout back 2026-11-18 (../vicinitideals-worktrees/hazard-scout.md). Chosen: landslide = DOGAMI SLIDO 4.5 detailed susceptibility where it exists (Portland, Gresham, Oregon City, Estacada, Sandy tested yes; Beaverton, Hillsboro, Forest Grove, Sherwood, Molalla no) with the coarse statewide O-16-02 as labelled fallback, plus the SLIDO mapped-landslide inventory; liquefaction = DOGAMI O-19-09 (all three counties), from DOGAMI's own file, not the Multnomah copy (labels disagree); flood = held FEMA layer (has zone + base flood elevation; lacks datum/depth). BUILDING on flats/hazard-notes; hand-off hazard-notes.handoff.md; load greens first.
