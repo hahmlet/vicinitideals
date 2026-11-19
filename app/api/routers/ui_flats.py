@@ -114,6 +114,7 @@ from flats.ingest.occupancy import DISAGREEMENT_WORDS as OCCUPANCY_DISAGREEMENT_
 from flats.ingest.occupancy import LABEL_SHORT as OCCUPANCY_SHORT
 from flats.ingest.occupancy import LABEL_WORDS as OCCUPANCY_WORDS
 from flats.ingest.occupancy import LABELS as OCCUPANCY_LABELS
+from flats.frost import describe as describe_frost
 from flats.ingest.soil import describe as describe_soil
 from flats.encode.words import orders as word_orders
 from flats.encode.words import tally as word_tally
@@ -4930,6 +4931,8 @@ async def flats_lot(
             "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",
             # Mapped ground hazards (FOLLOWUPS 198): notes, never a colour.
             "hazards": await flats_hazards.lot_hazards(session, lot),
+            # Frost depth for the lot's place (FOLLOWUPS 197): a note, never a colour.
+            "frost": describe_frost(lot.jurisdiction, lot.county),
             "outline": _outline(geojson),
             "lat": lat,
             "lon": lon,

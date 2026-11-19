@@ -352,6 +352,7 @@
       </div>
       {% if source %}<div class="muted" style="font-size:11px;margin-top:6px">Facts read from {{ source }}{% if quadfit_jurisdiction %} ({{ quadfit_jurisdiction }}){% endif %}.</div>{% endif %}
       {% include "partials/flats_lot_hazards.html" %}
+      {% include "partials/flats_lot_frost.html" %}
       {% for net in net_land %}
       <div class="net-land" id="net-land-{{ loop.index }}" style="margin-top:12px;font-size:12px">
         <strong>Net land</strong> <span class="muted">· {{ net.fields|join(", ") }} counted on the lot less what the city's code takes off</span>

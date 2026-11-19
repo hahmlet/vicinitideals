@@ -25,6 +25,7 @@ from app.api.routers import ui_flats as lots
 from app.models.flats import FlatsLot, FlatsRun
 from app.services import flats_hazards
 from flats import rulings
+from flats.frost import describe as describe_frost
 from flats.encode.attribution import claimed_sections, section_at
 
 router = APIRouter(prefix="/api/flats", tags=["flats"])
@@ -191,6 +192,8 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
         "law_changes": lots._law_changes(lot.jurisdiction, lot.zone, run_on=lots._run_law_on(run)),
         # Mapped landslide, liquefaction and flood (FOLLOWUPS 198): notes, never a colour.
         "hazards": await flats_hazards.lot_hazards(session, lot),
+        # Frost depth for the lot's place (FOLLOWUPS 197): a note, never a colour.
+        "frost": describe_frost(lot.jurisdiction, lot.county),
         "pending_changes": [
             e.as_dict() for e in entries if e.kind == "adopted_change" and e.effective and e.effective > today
         ],
