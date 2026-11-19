@@ -4701,7 +4701,7 @@ def driveway_lot_line_placed(
     return s
 
 
-def driveway_lot_line_checked(s: Screened) -> Screened:
+def driveway_lot_line_checked(s: Screened, policy: SlackPolicy | None = None) -> Screened:
     """``s`` measured against a code's floor on the gap between the drive
     lane and the lot lines that are not streets (FOLLOWUPS 201 add-on G,
     ``flats/config/driveway_lot_line.yaml``).
@@ -4719,7 +4719,13 @@ def driveway_lot_line_checked(s: Screened) -> Screened:
     that misses the smaller too fails the standard, RED with
     DRIVEWAY_LOT_LINE -- but only where the slide was measured; where it was
     not (no line opposite, no side setback stated) it is YELLOW with the
-    flag. Never moves a lot toward GREEN."""
+    flag. A miss of the smaller figure inside the fit's tolerance (``policy``'s
+    ``fit_ft``, half a foot: the plan is drawn on the fit's raster, which is
+    conservative to about a cell, and every acquisition is surveyed --
+    flats/config/slack.yaml, rulings.yaml 2026-09-25-tight-fit-green) is
+    YELLOW with the flag, not RED: a check inside tolerance moves from RED to
+    REVIEW, never to a pass (bvt-drive-side: rel10's Beaverton reds on 100 ft
+    lots that the plan needs exactly). Never moves a lot toward GREEN."""
     plan = s.drawing
     if not plan or not plan.get("fits") or s.signed.triage is Triage.red and s.screening.triage is Triage.red:
         return s
@@ -4735,8 +4741,17 @@ def driveway_lot_line_checked(s: Screened) -> Screened:
         f"drive lane drawn {gap.drawn_ft:.1f} ft from a lot line"
         + (f", at most {reach:.1f} ft with the plan slid away from it" if reach is not None else "")
         + f"; the code asks {least:g} or {most:g} ft by {place.unmeasured} ({place.quote})"
+        + (
+            f"; short of {least:g} ft by {least - best:.1f} ft, inside the fit's half-foot tolerance:"
+            " a survey decides"
+            if policy is not None
+            and reach is not None
+            and best + DRIVEWAY_GAP_TOL_FT < least <= best + policy.tolerance_for("fit_ft", s.lot.layer_id)
+            else ""
+        )
     )
-    if reach is not None and best + DRIVEWAY_GAP_TOL_FT < least:
+    tight = 0.0 if policy is None else policy.tolerance_for("fit_ft", s.lot.layer_id)
+    if reach is not None and best + DRIVEWAY_GAP_TOL_FT < least and best + tight < least:
         bind = flag_plan.Bind(DRIVEWAY_LOT_LINE, round(best, 1), least, round(best - least, 1), source=said)
 
         def red(x: Screening) -> Screening:
@@ -6118,7 +6133,7 @@ def _screen_lot_once(
         won = plan_on_lot_checked(won, lot)
         won = plan_on_carve_checked(won, lot)
         won = drive_touch_checked(won)
-        won = driveway_lot_line_checked(won)
+        won = driveway_lot_line_checked(won, policy)
         won = road_standin_checked(won, lot)
         # The run's law day (fixed once in _init_worker), so a run that crosses
         # midnight on a dated provision's day screens every lot alike.

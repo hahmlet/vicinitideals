@@ -247,3 +247,20 @@ def test_a_sideways_plan_lost_on_its_drive_is_shown_red_on_the_drive(corpus) -> 
     assert s.signed.colour.value == "red"
     assert s.fit.fits
     assert DRIVEWAY_LOT_LINE in s.signed.reasons
+
+
+def test_a_miss_of_three_feet_inside_the_fit_s_half_foot_is_yellow(corpus, policies) -> None:  # noqa: F811
+    # 2.6 ft at most against 3 (a 100 ft lot the plan needs exactly 100 ft of,
+    # drawn on the fit's raster): inside slack.yaml's fit_ft tolerance, REVIEW
+    # not RED; never a pass (the 6 ft figure still holds it out of GREEN).
+    policy = policies[0]
+    assert policy.tolerance_for("fit_ft", "or/washington/beaverton") == pytest.approx(0.5)
+    s = _beaverton(corpus, policies, 6.6, 90)  # 1 ft drawn, 1.6 ft room: 2.6
+    got = driveway_lot_line_checked(s, policy)
+    assert got.signed.triage is Triage.yellow and got.screening.triage is Triage.yellow
+    assert flags(got) == [DRIVEWAY_SIDEWALK]
+    assert DRIVEWAY_LOT_LINE not in got.signed.reasons
+    # Without the policy (the check alone), and past the half foot, still RED.
+    assert driveway_lot_line_checked(s).signed.triage is Triage.red
+    s = _beaverton(corpus, policies, 6.4, 90)  # 2.4 ft: short by 0.6
+    assert driveway_lot_line_checked(s, policy).signed.triage is Triage.red
