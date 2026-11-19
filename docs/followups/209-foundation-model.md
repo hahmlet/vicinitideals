@@ -47,6 +47,12 @@ Lot file the research ran on: `../vicinitideals-worktrees/fd2-pass1-data/fd2_lot
   never averaged.
 - Not part of rel11.
 
+## Steph 2026-11-19, second message: go, and keep it cheap to re-analyse
+
+"We will want to tweak costs and such later, so get what data you can about foundation style, challenges, and easy parts so we can run cheap analysis."
+
+So: two layers. MEASURE stores every physical fact per lot once (no prices; per-lot row plus per-door and per-wall-line tables, richer than FD6 section 2). PRICE is a pure step over the stored record plus the settings file, and gives cost lines, style, a list of challenges and a list of easy parts. A price or threshold change re-prices every lot without touching the ground or the scan.
+
 ## Open
 
 - Framed low wall on top of a shorter concrete wall as a variant (FD6 section 11): engineer's call.
