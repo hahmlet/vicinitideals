@@ -3755,3 +3755,20 @@
     Frost depth for this city is the county/state figure, marked as such
     (4 lots; lot-page note only, no colour). flats/config/frost_depth.yaml.
   source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-gladstone-far-side-t-yellow
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: gladstone}
+  question: >-
+    Gladstone bars a curb cut within 35 ft of "an intersecting street
+    right-of-way line" (Public Works Design Standards 2017, 5.0070(D)(2)).
+    A lot faces a street that ends in a T on the far side of its own street
+    (1170 Harvard Ave, 22E20BC00303). Count that as an intersection and keep
+    the lot YELLOW, or treat it as not a corner?
+  ruling: '"yellow"'
+  effect: >-
+    A far-side T is counted as an intersection for the 35 ft rule; a lot that
+    cannot place its driveway clear of it is YELLOW, never RED. One green
+    known. Built on flats/gladstone-pwds (FOLLOWUPS 204); not live until
+    released.
+  source: Steph 2026-11-18 (chat)
