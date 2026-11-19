@@ -10,12 +10,19 @@ The reading is a pure function of one lot's roll fields, in the order of
 ``flats/config/roll_red.yaml``: the first tier a lot meets answers it. The
 tiers, the code book behind each (OAR 150-308-0310) and why Multnomah and
 Clackamas have no public-code tier are in that file.
+
+Multnomah's roll does not say who owns an exempt lot, so its public land is
+read off a checked-in list of the lots whose owner of record is a public
+body (the ``public_owner`` tier, FOLLOWUPS 205): the same answer Washington
+County's vacant public codes give, by another road.
 """
 
 from __future__ import annotations
 
+import csv
+import functools
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -39,6 +46,9 @@ EXEMPT_MEANING = {
 _NO_ADDRESS = re.compile(r"NO SITUS|LEVY CODE", re.IGNORECASE)
 _TRACT_SUFFIX = re.compile(r"^[89]\d{4}$")
 _TRACT_WORDS = re.compile(r"TR|-T|NONTL")
+#: The owner groups of the ``public_owner`` tier, and how a reading names
+#: each. ``housing_authority`` counts only while the tier's switch is on.
+OWNER_GROUPS = {"government": "a public body", "housing_authority": "a housing authority"}
 
 
 @dataclass(frozen=True)
@@ -56,6 +66,14 @@ class Tier:
     #: ``condo_common``: the lot number (last five characters) the county
     #: gives a condominium's common element.
     lot_pattern: re.Pattern[str] | None = None
+    #: ``public_owner``: the owner groups that count as public.
+    groups: frozenset[str] = frozenset()
+    #: ``public_owner``: parcel number -> owner group, off the checked-in list.
+    owners: Mapping[str, str] = field(default_factory=dict, compare=False)
+    #: ``public_owner``: per group, the names that are that group's; and the
+    #: words (LLC, church, bank) no public body's name carries.
+    owner_patterns: Mapping[str, tuple[re.Pattern[str], ...]] = field(default_factory=dict, compare=False)
+    not_owner: re.Pattern[str] | None = None
 
 
 @dataclass(frozen=True)
@@ -68,6 +86,36 @@ class RollRules:
 
     def tier(self, key: str) -> Tier:
         return next(t for t in self.tiers if t.key == key)
+
+
+@functools.lru_cache(maxsize=8)
+def _owner_list(path: Path) -> dict[str, str]:
+    """``parcel number -> group`` off a public-owner list (``tlid,group,owner``).
+    Parcel numbers hold spaces: a row is read whole, never split on them."""
+    with path.open(encoding="utf-8", newline="") as fh:
+        return {row["tlid"].rstrip(): row["group"] for row in csv.DictReader(fh)}
+
+
+def owner_group(owner: Any, tier: Tier) -> str | None:
+    """The group an owner of record's name falls in (``government``,
+    ``housing_authority``) by the tier's patterns, or None: a private name,
+    or one carrying a word no public body's does."""
+    name = re.sub(r"\s+", " ", str(owner or "")).strip().upper()
+    if not name or (tier.not_owner is not None and tier.not_owner.search(name)):
+        return None
+    for group, patterns in tier.owner_patterns.items():
+        if any(p.search(name) for p in patterns):
+            return group
+    return None
+
+
+def _groups(body: Mapping[str, Any]) -> frozenset[str]:
+    if "owners" not in body:
+        return frozenset()
+    on = set(body["owners"])
+    if not body.get("housing_authority_is_public"):
+        on.discard("housing_authority")
+    return frozenset(on)
 
 
 def load_rules(path: Path = CONFIG) -> RollRules:
@@ -84,6 +132,10 @@ def load_rules(path: Path = CONFIG) -> RollRules:
             built_within_ft=float(keep["within_ft"]) if keep else 0.0,
             condo_reasons=frozenset(body.get("condo_reasons") or ()),
             lot_pattern=re.compile(body["lot_pattern"]) if body.get("lot_pattern") else None,
+            groups=_groups(body),
+            owners=_owner_list(path.parent / body["list"]) if body.get("list") else {},
+            owner_patterns={g: tuple(re.compile(p) for p in ps) for g, ps in (body.get("owners") or {}).items()},
+            not_owner=re.compile(body["not_owners"]) if body.get("not_owners") else None,
         )
         for key, body in (doc.get("tiers") or {}).items()
     )
@@ -107,6 +159,25 @@ def zero_value(row: Mapping[str, Any]) -> bool:
     is screened.
     """
     return all(_number(row.get(f)) == 0 for f in VALUE_FIELDS)
+
+
+def taxed(row: Mapping[str, Any]) -> bool:
+    """The roll shows an assessed value above 0: the lot pays tax. A value
+    the roll does not carry is not shown."""
+    n = _number(row.get("ASSESSVAL"))
+    return n is not None and n > 0
+
+
+def improved(row: Mapping[str, Any]) -> bool:
+    """The roll shows a building: a building value or a building area
+    above 0 (either: Multnomah holds one without the other)."""
+    return any(n is not None and n > 0 for n in (_number(row.get("BLDGVAL")), _number(row.get("BLDGSQFT"))))
+
+
+def vacant_class(code: str) -> bool:
+    """The assessor's own class says vacant land: a class ending ``00``
+    (OAR 150-308-0310: 100 residential vacant, 700 multi-family vacant)."""
+    return len(code) == 3 and code.isdigit() and code[1:] == "00"
 
 
 def tract_number(tlid: str) -> bool:
@@ -193,6 +264,12 @@ def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str
             if county in tier.counties and tier.pattern and tier.pattern.match(code):
                 meaning = EXEMPT_MEANING.get(code[1], "public")
                 return hit(tier.key, f"{county} roll code {code} ({meaning})")
+        elif tier.key == "public_owner":
+            group = tier.owners.get(tlid) if county in tier.counties else None
+            if group in tier.groups and not taxed(row) and (vacant_class(code) or not improved(row)):
+                who = OWNER_GROUPS.get(str(group), "a public body")
+                bare = f"vacant class {code}" if vacant_class(code) else "no building on the roll"
+                return hit(tier.key, f"{county} owner of record ({who}), with no assessed value and {bare}")
         elif tier.key == "tract":
             if zero and tract_number(tlid):
                 return hit(tier.key, f"{county} roll, parcel number {tlid}, value $0")

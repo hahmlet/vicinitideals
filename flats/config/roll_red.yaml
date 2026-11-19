@@ -19,7 +19,8 @@
 # the whole lot table); Multnomah and Clackamas rolls hold none, so the
 # public-code tier names its counties. Multnomah marks exempt land only by an
 # assessed value of 0 beside a real market value, which cannot tell a city
-# park from a church, so nothing here reads it.
+# park from a church, so the roll alone reads nothing there: its public land
+# is read by owner of record (the public_owner tier, FOLLOWUPS 205).
 #
 # A "zero value" lot has land, building, total and assessed value all
 # exactly 0 (a lot whose value is not on the roll is not zero). Land and
@@ -39,6 +40,82 @@ tiers:
     # and stay screened (Steph RULED 2026-10-09).
     pattern: '^9[2-79]0$'
     counties: [washington]
+    words: public land
+  public_owner:
+    # FOLLOWUPS 205 (2026-11-18): Multnomah's public land, which the roll's
+    # codes cannot name. Steph RULED 2026-10-06 public and institutional land
+    # RED; Washington County's roll applies it by code (public_land above).
+    # This tier gives Multnomah the same answer by another road: the lot's
+    # owner of record is a public body -- on the checked-in `list`, drawn
+    # from the region's public taxlot layer by the `owners` patterns below --
+    # AND the roll shows the lot not taxed (no assessed value above 0) AND
+    # bare: the assessor's class is a vacant one (ending 00: 100, 700, 800)
+    # or the roll shows no building (no building value or building area
+    # above 0). That is Washington's
+    # vacant exempt code (940 city, 950 county ...): its improved x1 codes
+    # "carry values, buildings and addresses and stay screened" (ruled
+    # 2026-10-09), so a public lot with a building stays screened here too,
+    # and so does one the roll shows taxed (leased out, or sold since the
+    # list was drawn). A value the roll does not carry counts as neither
+    # taxed nor built: the lot is red. Churches, charities, private schools
+    # and colleges are on no pattern: they STAY CHECKED (FOLLOWUPS 47).
+    #
+    # The list: scripts/flats_public_owners.py redraws it (run it at each
+    # county refresh). Source: PortlandMaps "Regional Taxlots",
+    # https://www.portlandmaps.com/arcgis/rest/services/Public/Taxlots/MapServer/0
+    # (Metro RLIS taxlots with the assessor's owner of record), COUNTY = M,
+    # retrieved 2026-11-18. It holds public bodies' names only.
+    enabled: true
+    counties: [multnomah]
+    list: public_owners_multnomah.csv
+    # THE SWITCH (one line): does housing-authority land (Home Forward, the
+    # Housing Authority of Portland) count as public? `true` is the cautious
+    # answer, taken until Steph rules (FOLLOWUPS 205 question); `false`
+    # leaves those lots screened like any private lot.
+    housing_authority_is_public: true
+    # Owner-of-record names, upper case, as the assessor abbreviates them
+    # (35 characters). Anchored: "CHEVRON USA INC" and "SUSAN ..." are not
+    # the United States.
+    owners:
+      government:
+        - '^(THE )?(PORTLAND|GRESHAM|TROUTDALE|FAIRVIEW|WOOD VILLAGE|MAYWOOD PARK|LAKE OSWEGO|MILWAUKIE|BEAVERTON) CITY OF\b'
+        - '^CITY OF (PORTLAND|GRESHAM|TROUTDALE|FAIRVIEW|WOOD VILLAGE|MAYWOOD PARK|LAKE OSWEGO|MILWAUKIE|BEAVERTON)\b'
+        - '^PORTLAND WATER BUREAU'
+        - '^(MULTNOMAH|CLACKAMAS|WASHINGTON|COLUMBIA) COUNTY\b'
+        - '^OREGON STATE OF\b'
+        - '^STATE OF OREGON\b'
+        - '^OREGON STATE DEPT\b'
+        - '^DEPT OF TRANSPORTATION'
+        - '^OREGON STATE UNIVERSITY'
+        - '^OREGON HEALTH & SCIENCE UNIVERSITY'
+        - '^UNIVERSITY OF OREGON'
+        - '^PORTLAND STATE UNIVERSITY'
+        - '^UNITED STATES OF AMERICA'
+        - '^UNITED STATES POSTAL SERVICE'
+        - '^U S (DEPT|POSTAL|GOVERNMENT|FOREST)'
+        - '^FEDERAL GOVERNMENT'
+        - '^BONNEVILLE POWER'
+        - '^METRO( ET AL| PROPERTY MANAGEMENT)?$'
+        - '^METRO ?[-(&]'
+        - '^(THE )?PORT OF PORTLAND'
+        - '^TRI[- ]COUNTY METRO'
+        - '\bSCHOOL DIST'
+        - '^PORTLAND PUBLIC SCHOOLS'
+        - '\bCOMMUNITY COLLEGE'
+        - '\b(WATER|DRAINAGE|SANITARY|FIRE|FIRE PROTECTION|LIBRARY) DIST'
+        - "PEOPLE'S UTILITY D"
+        - 'SOIL & WATER CONSERV'
+        - '^TUALATIN VALLEY FIRE & RESCUE'
+        - '^URBAN FLOOD SAFETY AND WATER QUALIT'
+        - '^PDC\b'
+        - '^PROSPER PORTLAND'
+        - '^PORTLAND DEVELOPMENT COMMISSION'
+      housing_authority:
+        - '^(THE )?HOUSING AUTHORITY OF'
+        - '^HOME FORWARD'
+    # Words no public body's name carries ("CITY OF PORTLAND PROPERTY LLC",
+    # "CLACKAMAS COUNTY BANK", "METRO 425 CONDOMINIUM OWNERS' ASSOC").
+    not_owners: '\b(LLC|L L C|LP|LLP|INC|CORP|CONDO\w*|ASSN|ASSOC\w*|BANK|CHURCH|CLUB|ACADEMY)\b'
     words: public land
   tract:
     enabled: true
