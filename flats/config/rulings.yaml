@@ -3599,3 +3599,37 @@
     run-128 GREEN affected (1S1E14DB  -17000). Built on flats/rel10d
     (FOLLOWUPS 202).
   source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/title3-greens.findings.md
+- id: 2026-11-18-clackamas-flood-ban-red
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    Clackamas County bans a fourplex in its Floodplain Management District
+    (ZDO 845.01(3)). When the building cannot stand clear of the county flood
+    area, is the lot RED, or YELLOW as the 2026-10-06 flood-fringe ruling said?
+  ruling: '"red"'
+  effect: >-
+    In unincorporated Clackamas the flood area is carved out of the buildable
+    ground; a lot where the building, paving and grading cannot be fitted
+    clear of it is RED, and one where they fit clear stays YELLOW. Narrows
+    2026-10-06-fema-fringe-stays-yellow for this county and replaces
+    2026-09-30-clackamas-floodplain-district-assumed-absent when the build
+    ships. About 64 yellow lots, no greens. Built on flats/clackamas-fixes
+    (FOLLOWUPS 204); not live until that branch is released.
+  source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/clackamas-fixes.handoff.md
+- id: 2026-11-18-clackamas-landslide-under-building-red
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    On state-mapped landslide ground in unincorporated Clackamas (ZDO
+    1003.02), is a lot RED when the building would sit on it, or YELLOW
+    because the county can approve it with a geologist's study?
+  ruling: '"red"'
+  effect: >-
+    Mapped slide ground is unbuildable; a lot where the building cannot be
+    fitted clear of it is RED. A lot holding slide ground where the building
+    fits clear stays YELLOW. One green and about 67 yellows. Built on
+    flats/clackamas-fixes (FOLLOWUPS 204); not live until that branch is
+    released.
+  source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/clackamas-fixes.handoff.md
