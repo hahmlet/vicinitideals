@@ -977,6 +977,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_MIN_FAR]
+  DENSITY-USE:
+    description: "The code allows the four homes here only at a minimum density, written into the use permission itself (Estacada EMC 16.26.020 (D)(4): a fourplex 'provided that ... the residential density of the development is not less than sixteen (16) dwelling units per acre'), and one pod on this lot is below it; more homes on the lot could reach it. Not the big-lot DENSITY-MIN flag: the use depends on it (FOLLOWUPS 203). The bounds are the density one pod gives and the density asked"
+    kind: parametric
+    risk: possible
+    severity: 3
+    absorbs: units
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "A plan with enough homes to reach the density, or Steph's ruling that the use is refused (RED) below it"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_USE_DENSITY]
+  GROUND-FLOOR-USE:
+    description: "The code requires part of the ground floor near the street in commercial use on this street (Gresham GDC 4.1121(A): 75 percent of the ground-floor floor area within 40 feet of the right-of-way, on the named stretches of E Powell, N Main and NE 3rd) and the pod is four homes; whether any of the building stands within that distance of the street is not measured (FOLLOWUPS 203). The bounds are the commercial share the pod gives and the share asked"
+    kind: parametric
+    risk: likely
+    severity: 3
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Place the building more than 40 feet from the named street, if the other downtown standards allow it, or give up the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_GROUND_FLOOR_USE]
   SLOPE-GRADE:
     description: "The ground under the building and its parking falls between 5% and 15% (or past 15% on the coarse elevation map only): a stepped foundation or retaining walls to price (Steph 2026-10-04)"
     kind: parametric
@@ -2557,6 +2587,23 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "Check the lot's street lines against the traced Figure 12.65.930-A (FOLLOWUPS 147): a lot on an Active Use Street and an ordinary street, on both Active Use types, or on a line only partly beside one is held; read the coverage on the Active Use frontage alone, and confirm the street in the approved PUD"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-GRESHAM-FIRST-FLOOR-USES-STREET:
+    description: "Whether a street line of the Gresham Downtown lot abuts a stretch where GDC 4.1121(A) requires 75 percent of a building's ground floor within 40 feet of the right-of-way in Commercial or Civic uses (the north side of E Powell between NW Miller and NE Roberts, N Main between E Powell and NE 4th, NE 3rd between N Main and NE Hood, the north side of NE 3rd between NE Hood and NE Kelly)"
+    kind: categorical
+    risk: possible
+    # The answer True carries GROUND-FLOOR-USE at the yellow line, so an
+    # unanswered lot is held at it too.
+    severity: 3
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Check the lot's street lines against the stretches 4.1121(A) names (typed onto RLIS centrelines, flats.geom.first_floor_uses, FOLLOWUPS 203): a street line no traced centreline explains near a named stretch is held; read which side of E Powell or NE 3rd east of Hood the lot is on"
     priority: later
     status: pending
     approved_by: null

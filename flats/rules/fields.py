@@ -162,6 +162,8 @@ _LABELS: dict[str, str] = {
     "parking_covered_required": "covered parking required",
     "solar_shade_limit": "height capped by shade on the lot to the north",
     "alley_improved_required": "alley access only from an improved alley",
+    "min_density_conditions_use": "use allowed only at the minimum density",
+    "ground_floor_commercial_min_pct": "ground floor near the street in commercial use",
     "front_lot_line_corner": "which street is the front on a corner lot",
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
@@ -889,6 +891,35 @@ _F: tuple[FieldDef, ...] = (
         "on is held at YELLOW (FAR-MIN) -- a bigger building could meet it -- "
         "and never failed on it. A net denominator the code names travels as "
         "`measured_on`, as a density's does.",
+        False,
+    ),
+    FieldDef(
+        "min_density_conditions_use",
+        "bool",
+        "True where the code writes the minimum density into the use "
+        "permission itself, not into the standards: Estacada EMC 16.26.020 "
+        "(D)(4) allows a fourplex in the Downtown zone \"provided that ... the "
+        "residential density of the development is not less than sixteen (16) "
+        "dwelling units per acre\". A lot one pod leaves under the density is "
+        "then not a big lot flagged for more homes (DENSITY-MIN, below the "
+        "yellow line) but a use that depends on more homes: held YELLOW with "
+        "DENSITY-USE, never GREEN (FOLLOWUPS 203). Steph may rule it RED: "
+        "`flats.score.screen.USE_DENSITY_MISS_IS_WALL`. Optional: absent "
+        "means the density is an ordinary standard.",
+        None,
+    ),
+    FieldDef(
+        "ground_floor_commercial_min_pct",
+        "percent",
+        "The least share of the building's ground floor, near the street, "
+        "the code requires in commercial (or customer-heavy civic) use: "
+        "Gresham GDC 4.1121(A), \"a minimum of 75 percent of a building's "
+        "ground-floor floor area within 40 feet of the right-of-way\" on named "
+        "stretches of E Powell, N Main and NE 3rd. The pod is four homes and "
+        "has none, but whether any of it stands within the code's distance of "
+        "that street is not measured, so a lot it reaches is held YELLOW with "
+        "GROUND-FLOOR-USE, never GREEN and not RED on this alone "
+        "(FOLLOWUPS 203). Optional: absent means no such rule was read.",
         False,
     ),
     FieldDef("max_coverage_pct", "percent", "Maximum building coverage, flat percentage.", True, "max_lot_coverage"),
@@ -2361,6 +2392,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "max_far",
         # A floor on the amount of building: Canby's Downtown Overlay alone.
         "min_far",
+        # Estacada D alone writes its density into the use (FOLLOWUPS 203).
+        "min_density_conditions_use",
+        # Gresham 4.1121's named streets alone (FOLLOWUPS 203).
+        "ground_floor_commercial_min_pct",
         "max_coverage_pct",
         "max_impervious_pct",
         "coverage_curve",

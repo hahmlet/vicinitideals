@@ -201,3 +201,40 @@ def test_a_lot_too_big_for_sixteen_an_acre_is_not_green(rules, policies) -> None
     density = {c.check: c for c in got.signed.checks}["min_density_du_per_acre"]
     assert (density.threshold, density.verdict.value) == (16, "fail")
     assert got.signed.triage.value != "green"
+
+
+def test_a_lot_too_big_for_sixteen_an_acre_is_yellow_on_the_use_condition(
+    rules, policies
+) -> None:
+    """FOLLOWUPS 203: the sixteen an acre is a condition of the fourplex use
+    (16.26.020 (D)(4)(2)), not the big-lot flag below the yellow line. The lot
+    shows YELLOW with DENSITY-USE and never GREEN, and no bind makes it RED
+    (more pods could reach the density)."""
+    got = _screen(rules, policies, *_inside(110, 200), 110, 200)
+    codes = {f.code for f in got.signed.flags}
+    assert "DENSITY-USE" in codes and "DENSITY-MIN" not in codes
+    assert got.signed.colour is Colour.yellow
+    assert "min_density_du_per_acre" not in {b.check for b in got.signed.binds}
+
+
+def test_the_use_condition_turns_red_with_one_switch(rules, policies, monkeypatch) -> None:
+    """Steph may rule the use refused below the density: one constant."""
+    from flats.score import screen as screen_module
+
+    monkeypatch.setattr(screen_module, "USE_DENSITY_MISS_IS_WALL", True)
+    got = _screen(rules, policies, *_inside(110, 200), 110, 200)
+    assert got.signed.colour is Colour.red
+    assert "min_density_du_per_acre" in {b.check for b in got.signed.binds}
+    assert "DENSITY-USE" not in {f.code for f in got.signed.flags}
+
+
+def test_the_use_condition_is_encoded_in_d_only(corpus) -> None:
+    from flats.rules.resolver import RuleSet as _RuleSet
+
+    ruled = _RuleSet(load_rules())
+    d = ruled.resolve("or/clackamas/estacada", "D", ("inside_mapped_use_area",))
+    assert d.get("min_density_conditions_use") is True
+    assert "16.26.020.txt#L11,L16" in d.values["min_density_conditions_use"].prov.quote
+    for zone in ("C-2", "CMU", "NCR"):
+        other = ruled.resolve("or/clackamas/estacada", zone)
+        assert other.get("min_density_conditions_use") is None, zone

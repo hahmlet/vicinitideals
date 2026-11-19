@@ -2937,6 +2937,8 @@ _REASON_WORDS = {
     "CONDO_AIR_PARCEL": "condominium air parcel, not land",
     "CLOSER_LOOK_MIN_DENSITY": "closer look: the lot is big enough that the city wants more homes on it than four",
     "CLOSER_LOOK_MIN_FAR": "closer look: the city asks for more floor area on a lot this size than the four homes give — a bigger building could meet it",
+    "CLOSER_LOOK_USE_DENSITY": "closer look: the city allows the four homes here only if the lot carries a minimum number of homes per acre, and one building on a lot this size is below it — more homes could meet it",
+    "CLOSER_LOOK_GROUND_FLOOR_USE": "closer look: on this street the city wants most of a building's ground floor near the street to be shops or offices, and these are four homes — it may work only if the building can sit far enough back",
     "DRIVEWAY_NEAR_INTERSECTION_100FT": "Durham asks the driveway to stand at least 100 ft from a street intersection, and on this lot it cannot, so a new driveway needs the city's agreement; worth a call about access",
     "CLOSER_LOOK_SLOPE": "closer look: the ground under the building and its parking slopes between 5% and 15% — a stepped foundation or retaining walls to price",
     "CLOSER_LOOK_STEEP_COARSE": "closer look: the coarse elevation map shows ground too steep to build on where the building and its parking would go — the lot was screened as though it were buildable until the detailed lidar map or a survey checks it",

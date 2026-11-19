@@ -44,10 +44,10 @@ lists:
       quote: "Proposed alterations affecting a non-building landmark, such as a monument, mile-post, or other object, shall be submitted to the Historic Resources Subcommittee and the Hearings Officer"
     # Rows the county's address cannot fix, and the state's record of the same landmark
     # (same name, same or next-door address) can. The lot comes from that record's row.
-    # Only ever yellow. Ely: the city prints 122 N Main, the state 112.
+    # Only ever yellow. Ely (class2-02) and Giese (class1-22) were borrowed here
+    # until 2026-11-18; gresham.csv now names their lots by hand (taxlot), so they
+    # take the list's RED (FOLLOWUPS 87; Giese rests on the state's point alone).
     state_points:
-      class1-22: shpo-52816
-      class2-02: shpo-52408
       class2-06: shpo-53222
       class2-07: shpo-52203
       class2-08: shpo-51574

@@ -604,12 +604,30 @@ def test_a_row_of_a_county_the_table_does_not_hold_is_left_as_it_is() -> None:
 
 def test_a_landmark_the_address_cannot_fix_borrows_the_states_record_and_stays_yellow() -> None:
     rows = {x.listing_id: x for x in hl.load_lists() if x.list_name == "gresham"}
-    giese = rows["class1-22"]
-    assert giese.tlids and giese.method == "point-only"
-    assert giese.standing == hl.DOUBTFUL and "shpo-52816" in giese.note
+    # The Satellite Restaurant Sign (class2-08): no county address agrees, the
+    # state's record shpo-51574 places it. (Giese, class1-22, was the example
+    # until 2026-11-18, when its lot was confirmed by hand: see below.)
+    sign = rows["class2-08"]
+    assert sign.tlids and sign.method == "point-only"
+    assert sign.standing == hl.DOUBTFUL and "shpo-51574" in sign.note
     state = {r["listing_id_or_row"] for path in hl.state_files() for r in hl.read_rows(path)}
     for policy in hl.load_policy().values():
         assert set((policy.get("state_points") or {}).values()) <= state
+
+
+def test_giese_house_and_the_ely_building_are_protected_on_their_hand_confirmed_lots() -> None:
+    """FOLLOWUPS 87 (2026-11-18): both are on Gresham's protected list (5.0300
+    L231, L245) and were yellow only because the state's point placed them. Their
+    lots are now written into gresham.csv as ``taxlot`` matches, which a re-match
+    keeps, so the list's RED reaches them. Giese rests on the state's point alone."""
+    rows = {x.listing_id: x for x in hl.load_lists() if x.list_name == "gresham"}
+    assert rows["class1-22"].tlids == ("1S3E17CA  -05500",)
+    assert rows["class2-02"].tlids == ("1S3E10BC  -02300",)
+    for key in ("class1-22", "class2-02"):
+        assert rows[key].method == "taxlot" and rows[key].standing == hl.PROTECTED
+    assert "map point alone" in rows["class1-22"].note
+    assert {x.listing_id for x in hl.listings_on("1S3E17CA  -05500")} >= {"class1-22"}
+    assert {x.listing_id for x in hl.listings_on("1S3E10BC  -02300")} >= {"class2-02"}
 
 
 def test_the_known_washington_county_lot_is_never_red_on_a_surveyed_entry() -> None:

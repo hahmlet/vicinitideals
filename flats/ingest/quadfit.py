@@ -165,6 +165,7 @@ from flats.geom.sidewalk import (
 )
 from flats.geom.active_frontage import FACTS as ACTIVE_FRONTAGE_FACTS, observed_active_frontage
 from flats.geom.active_use import FACTS as ACTIVE_USE_FACTS, observed_active_use
+from flats.geom.first_floor_uses import CONDITION as FIRST_FLOOR_FACT, observed_first_floor_uses
 from flats.geom.street_types import CONDITION as STREET_TYPE_FACT, observed_street_types
 from flats.geom import street_names
 from flats.geom.street_class import (
@@ -435,6 +436,9 @@ OBSERVABLE: tuple[str, ...] = (
     # Gresham DMU/DEM/DCL lots only, from the traced Map 4.1140
     # (flats.geom.street_types).
     STREET_TYPE_FACT,
+    # Gresham Downtown lots only, from the RLIS centrelines typed by the
+    # stretches GDC 4.1121(A) names (flats.geom.first_floor_uses).
+    FIRST_FLOOR_FACT,
     # Hillsboro lots only, from the traced Figure 12.65.930-A
     # (flats.geom.active_use).
     *ACTIVE_USE_FACTS,
@@ -653,6 +657,7 @@ def observed_facts(
                 )
             )
         out.update(observed_street_types(edges, _layer_id(row), row.get("zone")))
+        out.update(observed_first_floor_uses(edges, _layer_id(row), row.get("zone")))
     out.update(observed_active_use(edges, _layer_id(row), row.get("lot_wkb")))
     out.update(
         observed_active_frontage(edges, _layer_id(row), row.get("lot_wkb"), row.get("TLID"))
