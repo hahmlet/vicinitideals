@@ -372,6 +372,12 @@ LEVER_FLAGS: dict[str, tuple[str, str]] = {
 #: GREEN with CLEAR-OBJECTIVE where ORS 197A.400 reaches the lot, else a
 #: closer look with REVIEW-CONDITIONS (Steph 2026-10-14, 2026-10-15).
 AREA_REVIEWS: dict[str, str] = {
+    "beaverton_significant_grove": (
+        "BDC 60.60.15.2.C: in a Significant Grove a project preserves 25 "
+        "percent of the surveyed trees' DBH (15 percent in a Multiple Use "
+        "zone) or goes to a Tree Plan Three public hearing; removing grove "
+        "trees is a Tree Plan application judged on criteria (BDC 40.90.15)"
+    ),
     "bethany_asc_1a": (
         "Bethany Community Plan, Area of Special Concern 1A design element 2: "
         "every development application through the Type III procedure"

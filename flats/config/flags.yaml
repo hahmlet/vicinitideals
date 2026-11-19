@@ -2545,6 +2545,22 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-BEAVERTON-SIGNIFICANT-GROVE:
+    description: "Whether the lot lies in a Significant Grove on Beaverton's Inventory of Significant Trees and Groves, where a project keeps 25 percent of the surveyed trees' DBH (15 percent in a Multiple Use zone) or goes to a Tree Plan Three hearing (BDC 60.60.15.2.C, FOLLOWUPS 204): GREEN with CLEAR-OBJECTIVE inside the urban growth boundary (Steph 2026-10-15)"
+    kind: categorical
+    risk: unlikely
+    # No standard turns on the fact; inside the UGB it carries CLEAR-OBJECTIVE.
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The city's own grove polygons (pubNaturalResources MapServer 2-4) are held as Beaverton's drawn_areas; a lot divided since 2026-11-10 is placed by its own shape"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-BETHANY-ASC-1:
     description: "Whether the lot lies in Bethany Community Plan Area of Special Concern 1 (Central Bethany), whose development follows the 1994 Central Bethany Planned Development's conditions of approval. The answer only carries BETHANY-ASC1-PD-CONDITIONS, below the yellow line (Steph 2026-10-30), so no standard leans on it"
     kind: categorical

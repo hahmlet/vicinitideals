@@ -251,6 +251,12 @@ OPEN = {
     #   The layer is switched off.
     "or/clackamas/lake-oswego 50.04.001.1 -> 50.04.003.10",
     "or/clackamas/lake-oswego 50.04.001.2 -> 50.04.003.10",
+    # - 40.35, Beaverton (2026-11-18, overlay-fixes-b, FOLLOWUPS 204 item 3):
+    #   70.20.10's pointer sends landmark changes and demolition to 40.35 Historic
+    #   Review, stored that day and read for the historic list
+    #   (flats/config/historic/protection.yaml `beaverton`, 40.35.10.1 and the
+    #   Type 3 demolition). A list reading, not a zone standard, so no zone cites it.
+    "or/washington/beaverton 70.20.10 -> 40.35",
     # - 60.50.25.14, Beaverton: Vehicle Camping, a use the pod is not.
     "or/washington/beaverton 20.05.20 -> 60.50.25.14",
     "or/washington/beaverton 20.10.20 -> 60.50.25.14",

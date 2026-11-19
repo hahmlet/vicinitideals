@@ -264,6 +264,29 @@ code:
   nth: 2
   end: "40.47. Legal Lot Determination"
   extraction: plain
+# Read 2026-11-18 for the historic list and the Significant Groves (FOLLOWUPS 204
+# items 3 and 4): what a landmark listing does, and what building in a grove takes.
+- id: "bdc.40.35.historic-review"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 40.35 - Historic Review"
+  start: "40.35. Historic Review"
+  nth: 2
+  end: "40.40. Home Occupation"
+  extraction: plain
+- id: "bdc.40.90.tree-plan"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 40.90 - Tree Plan"
+  start: "40.90. Tree Plan"
+  nth: 2
+  end: "40.91. Tree Applications"
+  extraction: plain
+- id: "bdc.60.60.trees-and-vegetation"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 60.60 - Trees and Vegetation"
+  start: "60.60. Trees and Vegetation"
+  nth: 2
+  end: "60.61. Trees and Vegetation - Cooper Mountain"
+  extraction: plain
 - id: "bdc.60.05.design-review-standards"
   url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
   title: "BDC 60.05 - Design Review Design Principles, Standards and Guidelines"
@@ -4857,6 +4880,43 @@ zone_rulings:
       (10.35.txt L1,L3), so the code zones a
       street as the land beside it and prints no ROW district. No lot
       stands on a street; nothing to screen.
+
+# Areas the city's own layers trace (flats/geom/drawn.py). FOLLOWUPS 204 item 4.
+drawn_areas:
+  beaverton_significant_grove:
+    condition: beaverton_significant_grove
+    zones: [MR, RMA, RMB, RMC, NS, CS, CC, GC, RC-E, TC-MU, TC-HDR, SC-MU, SC-HDR, SC-S, RC-BC, RC-OT, RC-MU, RC-DT]
+    file: or/washington/beaverton/significant-groves.geojson
+    source: >-
+      The City of Beaverton's own Inventory of Significant Trees and Groves
+      polygons, gisweb.beavertonoregon.gov Public_SharedServices/
+      pubNaturalResources MapServer layers 2, 3 and 4 ("2009 TI - Significant
+      Grove (a)", "(b)", "(c)"), queried in EPSG:2913 on 2026-11-18 and saved
+      unchanged but for 0.01 ft precision: 212 polygons, about 778 acres,
+      each with its grove code.
+    quote: "or/washington/beaverton/bdc.60.60.trees-and-vegetation.txt#L54-L62"
+    cite: BDC 60.60.15.2.C; 40.90.15.2.A.2-3 and C.4; 40.90.15.3.A.1-2; Chapter 90, Significant Grove
+    note: >-
+      A Significant Grove is a grove "mapped on the City's Inventory of
+      Significant Trees and Groves" outside the Cooper Mountain Community
+      Plan area (bdc.90.definitions.txt#L2359-L2361), so the Cooper Mountain
+      zones (CM-*), whose trees 40.91 and 60.61 govern, are not listed. In a
+      grove a project keeps 25 percent of the surveyed trees' DBH (15 percent
+      in a Multiple Use zone) or goes to a Tree Plan Three public hearing
+      (60.60.15.2.C.1, L54-L62); removing up to 75 (85) percent is Tree Plan
+      Two before the Director (bdc.40.90.tree-plan.txt#L116-L131), approved
+      where removal "is necessary to accommodate physical development where
+      no reasonable alternative exists" (L143-L144), and more is Tree Plan
+      Three, Type 3 (L181-L192). Those are judgement criteria and the
+      preserved share is of trees no public record counts, so inside the
+      urban growth boundary the lot is GREEN with CLEAR-OBJECTIVE
+      (rulings.yaml 2026-10-15-clear-objective-green-flag; ORS 197A.400's
+      exceptions do not name tree codes); where ORS 197A.400 does not reach
+      the lot it is a closer look with REVIEW-CONDITIONS. No tree limit moves
+      a colour (2026-11-01-trees-ignored-entered-per-lot): the flag records
+      the grove. Against FLATS' own lots (2026-11-10 table): 162 Beaverton
+      lots at least 90 percent inside, 485 the line cuts (asked as inside,
+      FOLLOWUPS 188), 664 touched at most 10 percent.
 
 # Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
 clear_vision:

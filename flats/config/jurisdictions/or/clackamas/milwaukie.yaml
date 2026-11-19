@@ -1501,8 +1501,15 @@ zones:
         # actions ... or development permitted in the underlying zone, are
         # conditional uses", and 19.401.5.D requires a greenway conditional
         # use for all development. Goal 15 is what the zone implements, so
-        # the state path does not lift it (ORS 197A.420(5)(b)). The hearing
-        # is the way in, logged on the bind and never taken (FOLLOWUPS 42).
+        # the middle-housing state path does not lift it (ORS 197A.420(5)(b)).
+        # The hearing is the way in. Its criteria (19.401.6) are judgement, so
+        # inside the UGB the 2026-10-15 ruling (ORS 197A.400, clear and
+        # objective; rulings.yaml) opens the conditional_use variant GREEN
+        # with the CLEAR-OBJECTIVE flag; Goal 15 is not one of 197A.400(2)'s
+        # exceptions. The one measured standard, 19.401.8.A's 25 ft buffer
+        # from the ordinary high water line, is not carried per lot: the one
+        # green (11E35DA03800) sits 104 ft from the FEMA 100-year line
+        # (overlay-fixes-b, 2026-11-18). FOLLOWUPS 42.
         - value: false
           when: [willamette_greenway_zone]
           cite: MMC 19.401.3 and 19.401.5.D
@@ -1734,8 +1741,15 @@ zones:
         # actions ... or development permitted in the underlying zone, are
         # conditional uses", and 19.401.5.D requires a greenway conditional
         # use for all development. Goal 15 is what the zone implements, so
-        # the state path does not lift it (ORS 197A.420(5)(b)). The hearing
-        # is the way in, logged on the bind and never taken (FOLLOWUPS 42).
+        # the middle-housing state path does not lift it (ORS 197A.420(5)(b)).
+        # The hearing is the way in. Its criteria (19.401.6) are judgement, so
+        # inside the UGB the 2026-10-15 ruling (ORS 197A.400, clear and
+        # objective; rulings.yaml) opens the conditional_use variant GREEN
+        # with the CLEAR-OBJECTIVE flag; Goal 15 is not one of 197A.400(2)'s
+        # exceptions. The one measured standard, 19.401.8.A's 25 ft buffer
+        # from the ordinary high water line, is not carried per lot: the one
+        # green (11E35DA03800) sits 104 ft from the FEMA 100-year line
+        # (overlay-fixes-b, 2026-11-18). FOLLOWUPS 42.
         - value: false
           when: [willamette_greenway_zone]
           cite: MMC 19.401.3 and 19.401.5.D
