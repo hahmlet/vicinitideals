@@ -695,7 +695,7 @@ jurisdictions:
   # the county map its county entry reads, for this check only, as Cornelius
   # does by Steph's ruling of 2026-11-10. Steph RULED 2026-11-18 that the
   # county street maps may stand in for these three, as built: `map_ruling`
-  # names it (rulings.yaml 2026-11-18-county-street-maps-stand-in). A street
+  # names it (rulings.yaml 2026-11-18-county-street-maps-stand-in-<city>). A street
   # the map does not draw reads local under 2026-10-09-quiet-street-both-agree
   # (Metro types it a minor residential street AND OpenStreetMap calls it
   # residential, "yes, when both agree"). Neither county map is
@@ -730,7 +730,7 @@ jurisdictions:
     # name, within 60 ft of an M-1, M-2 or C-M district on the city's zoning
     # map (C-M, Commercial-Manufacturing, counted: its streets may be).
     map: street_class_clackamas
-    map_ruling: 2026-11-18-county-street-maps-stand-in
+    map_ruling: 2026-11-18-county-street-maps-stand-in-canby
     classes:
       LOCAL: local
       COLLECTOR: collector
@@ -804,7 +804,7 @@ jurisdictions:
     #     reach; the drawn lane's own gap to a side line, with the approach
     #     wings of Standard Drawings 503A/503B (not held), is in the hand-off.
     map: street_class_clackamas
-    map_ruling: 2026-11-18-county-street-maps-stand-in
+    map_ruling: 2026-11-18-county-street-maps-stand-in-gladstone
     classes:
       LOCAL: local
       COLLECTOR: collector
@@ -858,7 +858,7 @@ jurisdictions:
     # a local street's approaches to them. The stored standards are a
     # second-hand copy (hillsboro.yaml `code:` dcs.230.6.driveways).
     map: street_class_washington
-    map_ruling: 2026-11-18-county-street-maps-stand-in
+    map_ruling: 2026-11-18-county-street-maps-stand-in-hillsboro
     classes:
       '5': neighborhood_route
       '4': collector

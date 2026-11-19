@@ -1345,7 +1345,19 @@ UNEXPRESSIBLE: dict[str, int] = {
     "building_frontage_band_ft": 14,  # +13, fg4-fixes 2026-11-10 (1005.02(E))
     # 1 -> 2 on 2026-11-08 (FOLLOWUPS 147, 8adfedd5): Hillsboro MU-VTC's minimum
     # FAR, 0.5 inside the traced Center Cores and 0.4 outside (Table 12.24.360-1).
-    "min_far": 2,
+    # 2 -> 9 on 2026-11-19 (rel11 assembly): flats/commercial-fixes (FOLLOWUPS 203) --
+    # Beaverton RC-E, TC-MU, TC-HDR, SC-MU, SC-HDR, SC-S (BDC Table 20.20.15 row B.1)
+    # and Hillsboro SCR-V (Table 12.24.460-1).
+    "min_far": 9,
+    #: New on 2026-11-19 (rel11 assembly): flats/commercial-fixes (FOLLOWUPS 203) --
+    #: Estacada D, EMC 16.26.020(D)(4): the fourplex use is conditioned on 16 du/acre.
+    #: FLATS holds it as a closer look (DENSITY-USE); this pipeline has no column.
+    "min_density_conditions_use": 1,
+    #: New on 2026-11-19 (rel11 assembly): flats/overlay-fixes-a (FOLLOWUPS 204) --
+    #: Portland's scenic corridor setback (PCC 33.480.040.B.2.a, Table 480-1), taken
+    #: per street lot line on a mapped scenic drive. FLATS cuts its own envelope;
+    #: this pipeline's s5 has one front setback and no per-line column.
+    "setback_scenic_corridor_ft": 1,
     #: fg4-fixes 2026-11-10: Beaverton RMA, RMB, RMC and CM-RM let a plex's court
     #: stand in front behind the 10 ft yard within S11's half (60.05.60.2).
     #: Quadfit draws no court against the building.

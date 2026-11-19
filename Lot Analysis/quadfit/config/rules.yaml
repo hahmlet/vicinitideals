@@ -4343,7 +4343,7 @@ jurisdictions:
         setback_front_ft: 0
         setback_side_ft: 5
         setback_rear_ft: 10
-        min_frontage_ft: 25
+        min_frontage_ft: 18
         min_lot_width_ft: 18
         min_lot_depth_ft: 50
         min_density_du_per_acre: 24
@@ -4356,7 +4356,6 @@ jurisdictions:
         setback_front_ft: 0
         setback_side_ft: 10
         setback_rear_ft: 10
-        min_frontage_ft: 25
         min_lot_depth_ft: 50
         min_density_du_per_acre: 43
         source: "Hillsboro CDC Table 12.24.620-1, Housing Types Permitted in the UC-MU Zone (Quadplex P)"
@@ -4368,7 +4367,6 @@ jurisdictions:
         setback_front_ft: 0
         setback_side_ft: 0
         setback_rear_ft: 0
-        min_frontage_ft: 25
         min_density_du_per_acre: 43
         source: "Hillsboro CDC Table 12.24.720-1, Quadplex P/L, no ground-floor dwellings on a Retail Focus Frontage"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"

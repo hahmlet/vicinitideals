@@ -1193,6 +1193,7 @@
     treated as outside the Floodplain Management District.
   effect: The prohibition is not encoded; fetching the district map stays queued as the check.
   source: Steph 2026-09-30, docs/HUMAN_TODO.md item 17
+  superseded_by: 2026-11-18-clackamas-flood-ban-red
 
 - id: 2026-10-09-clackamas-design-review-zones-red
   kind: ruling
