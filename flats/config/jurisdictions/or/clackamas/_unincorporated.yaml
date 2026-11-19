@@ -194,6 +194,14 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   and a lot the district touches whose pod stands clear stays the closer look the fringe flag
   already made it. No zone''s quadplex_allowed is capped, so no lot goes UNKNOWN on it.
 
+  Two cross-reference rulings closed the same day, because the chapters they stood in for are
+  held now. ZDO 1012.05 names Section 1003 ("2 Mass movement hazards regulated by Section 1003")
+  and Section 703 ("3 The floodway of the Floodplain Management District regulated by Section
+  703") only as areas subtracted from the site before minimum density is computed. Subtracting
+  land can only lower a minimum-density floor, and maximum density is exempt for middle housing,
+  so neither mention takes anything from the pod. What the two chapters do take is held on the
+  ground: 1003.02 through quadfit''s clackamas_landslide overlays, 703 through clackamas_fmd.
+
   Worth naming apart from the refusal, because it is a hole in a ledger rather than an unread
   line: A FLAT PROHIBITION STATES NO MEASUREMENT, SO NO MEASUREMENT-BASED LEDGER CAN EVER
   SURFACE IT. All four reading queues are built from sentences that state a number. 845.02 and
@@ -833,20 +841,9 @@ crossrefs:
     note: >-
       Home occupation for canine skills training (406.04). A use-table row naming its own special-
       use section; the pod is four attached dwelling units, not this use.
-  "1003":
-    outcome: narrows_only
-    note: >-
-      Hazards to Safety, named in ZDO 1012.05 only as one of the areas subtracted from the site
-      before minimum density is computed ("2 Mass movement hazards regulated by Section 1003").
-      Subtracting land can only lower a minimum-density floor, and maximum density is exempt for
-      middle housing; this mention takes nothing from the pod.
-  "703":
-    outcome: narrows_only
-    note: >-
-      Floodplain Management District, named in ZDO 1012.05 only as an area subtracted before
-      minimum density is computed ("3 The floodway of the Floodplain Management District regulated
-      by Section 703"). Can only lower a floor; the floodplain itself reaches a lot through its
-      mapped overlay, not this list.
+  # "1003" and "703" stood here until 2026-11-18 (FOLLOWUPS 204), when both
+  # chapters were fetched and read; their notes moved into the layer's notes,
+  # under HELD 2026-11-18, beside what the two chapters now hold.
   "705":
     outcome: narrows_only
     note: >-
