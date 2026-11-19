@@ -220,13 +220,17 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   Section 1011 for middle housing in the R and VR districts at all (zdo.1001.txt#L99-L107).
   Steph ruled both 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red): "if its free
   of mapped open space, it''s available to be green. If it''s touching open space, it''s a red.
-  We aren''t fighting on developing open space." So, in every zone: a lot that touches the traced
-  open space itself is RED outright, whatever would fit beside it (the lot is first shrunk 0.5
-  ft, as for every overlay, so a shared lot line alone is not a touch); a lot off the traced
-  area but within the 14 ft its drawn line is wide stays YELLOW, because the tracing cannot say
-  whether it touches; a lot clear of both carries nothing from this rule. The bridge reads it
-  off the lot''s own shape (flats.ingest.quadfit.open_space_on and traced_permits_on); quadfit
-  holds no column for it and no ground is carved for it.
+  We aren''t fighting on developing open space." So, in every zone: a lot the traced open space
+  plainly reaches is RED outright, whatever would fit beside it, and a lot clear of it carries
+  nothing from this rule. Whether a lot touches is a question of fact that the tracing answers
+  only to the 14 ft its drawn line is wide (coordinator 2026-11-18, for Steph to overrule), so
+  "plainly" is an overlap deeper than 14 ft, into the lot or into the open space; and a lot
+  within 14 ft of the traced line on either side -- a strip of overlap along a lot line no
+  deeper than that, or a gap no wider -- is YELLOW: the map only just reaches the lot line, or
+  only just misses it, and a person must look. The lot is first shrunk 0.5 ft, as for every
+  overlay. The bridge reads it off the lot''s own shape (flats.ingest.quadfit.open_space_on and
+  traced_permits_on, flats.geom.drawn.reaches_past_edge); quadfit holds no column for it and
+  no ground is carved for it.
 
   Two cross-reference rulings closed the same day, because the chapters they stood in for are
   held now. ZDO 1012.05 names Section 1003 ("2 Mass movement hazards regulated by Section 1003")

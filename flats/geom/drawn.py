@@ -108,3 +108,53 @@ def touches_area(lot_geom: Any, area: Any) -> bool:
     if inner.is_empty:
         inner = lot
     return bool(area.intersects(inner))
+
+
+@lru_cache(maxsize=None)
+def edge_ft(file: str) -> float:
+    """The widest ``EDGE_FT`` any feature of the traced area in ``file``
+    states: how far off the tracing's line can be, on the ground."""
+    data = json.loads((AREAS_ROOT / file).read_text(encoding="utf-8"))
+    return max((float((f.get("properties") or {}).get("EDGE_FT") or 0.0) for f in data["features"]), default=0.0)
+
+
+@lru_cache(maxsize=None)
+def load_core_area(file: str) -> Any:
+    """The traced area in ``file`` less a rim :func:`edge_ft` wide: the
+    ground that is inside it wherever in its drawn line the true edge runs.
+    One prepared geometry; the features are unioned first, so two that
+    share an edge lose no rim along it."""
+    import shapely
+
+    core = load_area(file).buffer(-edge_ft(file))
+    shapely.prepare(core)
+    return core
+
+
+def reaches_past_edge(lot_geom: Any, file: str) -> bool:
+    """Whether the traced area in ``file`` is on this lot by more than its
+    own drawn line could explain (:func:`edge_ft`, 14 ft for a 1 pt line
+    on a 1:12,000 sheet). True when either holds:
+
+    * the area reaches further into the lot than that width -- the lot,
+      inset by it, still meets the traced area;
+    * the lot reaches further into the area than that width -- the lot
+      (less the :data:`TOUCH_SHRINK_FT` rim) meets :func:`load_core_area`.
+
+    False for an overlap that is everywhere within that width of both the
+    lot's line and the area's: a strip along a shared line, which a tracing
+    cannot tell from its own error. Two tests because each alone misses a
+    case: a lot too narrow to survive the inset lying wholly inside the
+    area, and a corridor of the area too thin to survive the erosion
+    crossing the middle of a lot. False for a lot with no shape."""
+    if lot_geom is None or lot_geom.is_empty:
+        return False
+    lot = lot_geom if lot_geom.is_valid else lot_geom.buffer(0)
+    edge = edge_ft(file)
+    if edge <= 0:
+        return touches_area(lot, load_area(file))
+    core = load_core_area(file)
+    if not core.is_empty and touches_area(lot, core):
+        return True
+    inner = lot.buffer(-edge)
+    return bool(not inner.is_empty and load_area(file).intersects(inner))

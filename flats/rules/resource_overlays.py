@@ -377,10 +377,11 @@ class Traced:
     #: made and how far off its edge can be (``EDGE_FT`` per feature).
     file: str
     #: The standing ruling (its id in ``flats/config/rulings.yaml``) under
-    #: which a lot that touches the traced area itself is RED outright,
-    #: whatever would fit beside it; '' where touching is only a closer look.
-    #: A lot inside the tracing's ``EDGE_FT`` band and off the traced area is
-    #: the closer look either way: the tracing cannot say whether it touches.
+    #: which a lot that touches the traced area is RED outright, whatever
+    #: would fit beside it; '' where touching is only a closer look. A lot
+    #: within the tracing's ``EDGE_FT`` of the traced line, on either side of
+    #: it, is the closer look either way: the tracing cannot say whether it
+    #: touches.
     red_ruling: str = ""
 
 
@@ -405,22 +406,31 @@ class Traced:
 #: a red. We aren't fighting on developing open space." So in every zone, the
 #: standard residential zones included:
 #:
-#: * a lot that touches the traced open space itself is RED outright,
-#:   whatever would fit beside it (``red_ruling``;
-#:   :data:`flats.score.screen.MAPPED_OPEN_SPACE`). "Touches" is the test
-#:   every overlay flag uses: the lot less a 0.5 ft rim
-#:   (:data:`flats.geom.drawn.TOUCH_SHRINK_FT`), so a shared lot line alone
-#:   is not a touch;
-#: * a lot off the traced area but within the 14 ft its drawn line is wide
-#:   stays the closer look (YELLOW): the tracing cannot say whether it
-#:   touches, and neither GREEN nor RED is shown by it;
-#: * a lot clear of both carries nothing from this rule.
+#: * a lot the traced open space plainly reaches is RED outright, whatever
+#:   would fit beside it (``red_ruling``;
+#:   :data:`flats.score.screen.MAPPED_OPEN_SPACE`);
+#: * a lot clear of it carries nothing from this rule.
+#:
+#: Whether a lot touches is a question of fact, and the tracing answers it
+#: only to the 14 ft its drawn line is wide (coordinator 2026-11-18, for
+#: Steph to overrule). So "plainly" is an overlap deeper than 14 ft, into
+#: the lot or into the open space (:func:`flats.geom.drawn.reaches_past_edge`);
+#: and a lot within 14 ft of the traced line on either side -- a strip of
+#: overlap along a lot line no deeper than that, or a gap no wider -- is the
+#: closer look (YELLOW): the map only just reaches the lot line, or only
+#: just misses it, and a person must look. The county's own Public and
+#: Community Use polygons are held to the same 14 ft on the inside (three
+#: neighbouring lots overlap one by the same 2.1 ft strip, so that layer and
+#: the tax lots do not agree to the foot); they carry no band outside.
+#: Before any of it the lot loses a 0.5 ft rim
+#: (:data:`flats.geom.drawn.TOUCH_SHRINK_FT`), as for every overlay flag.
 TRACED: tuple[Traced, ...] = (
     Traced(
         "clackamas_open_space",
-        "the lot is within about 14 ft of open space on Clackamas County's Comprehensive Plan "
-        "Map 4-06 -- the width of the line the map draws it with, so the tracing cannot say "
-        "whether the lot touches it; a lot that does touch it is red (Steph 2026-11-18)",
+        "the open space on Clackamas County's Comprehensive Plan Map 4-06 only just reaches "
+        "this lot's line, or stops just short of it -- by less than the 14 ft width of the line "
+        "the map draws it with, so the map cannot say whether the lot touches it and a person "
+        "must look; a lot it plainly reaches into is red (Steph 2026-11-18)",
         "ZDO 1103.01 (Open Space Review for development that affects an open space resource "
         "shown on Map IV-6 as Resource Protection, Major Hazards, or Public and Community Use "
         "Open Space); 1103.02 (Type II; impact evaluated, alternatives identified); 1011.02(A)-(C) "

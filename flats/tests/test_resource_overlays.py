@@ -674,10 +674,11 @@ def test_clackamas_s_open_space_is_traced_off_map_4_06_and_says_how() -> None:
 def test_a_clackamas_lot_on_the_traced_open_space_is_red_and_one_in_its_line_a_closer_look() -> None:
     """Steph 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red):
     "if its free of mapped open space, it's available to be green. If it's
-    touching open space, it's a red." On the traced area itself: RED
-    outright. Off it but within the 14 ft the drawn line is wide: the
-    tracing cannot say, a closer look. Clear of both, or another
-    jurisdiction's lot: nothing."""
+    touching open space, it's a red." Plainly on the traced area: RED
+    outright. Within the 14 ft its drawn line is wide, on either side of
+    that line -- a strip of overlap no deeper, or a gap no wider: the
+    tracing cannot say whether the lot touches, a closer look (coordinator
+    2026-11-18). Clear of it, or another jurisdiction's lot: nothing."""
     import shapely
     from shapely.geometry import box
 
@@ -714,13 +715,25 @@ def test_a_clackamas_lot_on_the_traced_open_space_is_red_and_one_in_its_line_a_c
     assert TOUCH_SHRINK_FT == 0.5
     assert read(lot(x, y - 25)) == ((), key)  # the lot line runs through the tracing's last point
     assert read(lot(x - 0.4, y - 25)) == ((), key)  # 0.4 ft over it: inside the rim
-    assert read(lot(x - 2, y - 25)) == (key, ())  # 2 ft over it: on the open space
+    # Over the traced line by less than the line is wide: the map only just
+    # reaches the lot, which a tracing cannot tell from its own error.
+    assert read(lot(x - 2, y - 25)) == ((), key)
+    assert read(lot(x - 13, y - 25)) == ((), key)
+    # Deeper than that into the lot: plainly on the open space.
+    assert read(lot(x - 15, y - 25)) == (key, ())
+    assert read(lot(x - 30, y - 25)) == (key, ())
+    # A lot too narrow to hold 14 ft of anything, lying wholly inside the open
+    # space: it is the lot that reaches into the area, and that is RED too.
+    core = max(everything.buffer(-14).geoms, key=lambda g: g.area).representative_point()
+    narrow = box(core.x - 10, core.y - 10, core.x + 10, core.y + 10)
+    assert narrow.buffer(-14).is_empty and everything.contains(narrow.buffer(-TOUCH_SHRINK_FT))
+    assert read(row(lot_wkb=shapely.to_wkb(narrow), jurisdiction=COUNTY)) == (key, ())
     assert read(lot(spot.x - 50, spot.y - 25, jurisdiction="happy_valley")) == ((), ())
     # a city lot the county's rules screen (a pocket) is reached through its home
     assert read(lot(spot.x - 50, spot.y - 25, jurisdiction="happy_valley", home_jurisdiction=COUNTY)) == (key, ())
     assert read(row(jurisdiction=COUNTY)) == ((), ())  # no shape, nothing measured
-    # The county's own Public and Community Use polygons carry no line width:
-    # a lot on one is on open space, a lot 8 ft off one is clear of it.
+    # The county's own Public and Community Use polygons are held to the same
+    # 14 ft on the inside: a lot plainly on one is on open space.
     public = max((g for p, g in feats if p["OS_CLASS"] == "public_community_use"), key=lambda g: g.area)
     at = public.representative_point()
     assert read(lot(at.x - 50, at.y - 25)) == (key, ())
@@ -732,7 +745,11 @@ def test_a_clackamas_lot_on_the_traced_open_space_is_red_and_one_in_its_line_a_c
     assert got.triage is Triage.yellow and got.colour is flag_plan.Colour.yellow
     assert got.reasons == (CLOSER_LOOK_RESOURCE,) and got.binds == ()
     words = AREAS["clackamas_open_space"].words
-    assert "within about 14 ft" in words and "cannot say whether the lot touches" in words
+    assert "only just reaches this lot's line, or stops just short of it" in words
+    assert "14 ft" in words and "cannot say whether the lot touches" in words and "a person must look" in words
+    # A strip of it along the lot line no deeper than the line is wide: the same closer look.
+    facts = lot_from_row(lot(x - 13, y - 25)).facts
+    assert (facts.open_space, facts.resource_permits) == ((), key)
     # Clear of it: nothing from this rule, the lot is what it was.
     assert (lot_from_row(clear).facts.open_space, lot_from_row(clear).facts.resource_permits) == ((), ())
     assert run().triage is Triage.green
@@ -759,6 +776,64 @@ def test_a_clackamas_lot_on_the_traced_open_space_is_red_and_one_in_its_line_a_c
     assert (both.open_space, both.resource_permits) == (key, ("clackamas_landslide",))
     both = lot_from_row({**beside, "ovl_clackamas_landslide": True}).facts
     assert (both.open_space, both.resource_permits) == ((), ("clackamas_landslide", "clackamas_open_space"))
+
+
+def test_open_space_is_on_a_lot_only_past_the_width_of_its_own_drawn_line(tmp_path, monkeypatch) -> None:
+    """Whether a lot touches a traced area is a question of fact, and the
+    tracing answers it only to the width of the line it was traced from
+    (``EDGE_FT``). ``reaches_past_edge`` is two tests, because each alone
+    misses a case: the area reaching further than that into the lot (a thin
+    corridor across the middle of a lot does not survive being eroded), and
+    the lot reaching further than that into the area (a narrow lot does not
+    survive being inset)."""
+    import json
+
+    from shapely.geometry import Polygon, box, mapping
+
+    from flats.geom import drawn
+
+    def traced(name: str, edge: float, *shapes) -> str:
+        feats = [{"type": "Feature", "properties": {"EDGE_FT": edge}, "geometry": mapping(g)} for g in shapes]
+        (tmp_path / name).write_text(json.dumps({"type": "FeatureCollection", "features": feats}), encoding="utf-8")
+        return name
+
+    monkeypatch.setattr(drawn, "AREAS_ROOT", tmp_path)
+    block = traced("thin-strip-block.geojson", 14, box(0, 0, 500, 500))
+    assert drawn.edge_ft(block) == 14
+    assert drawn.load_core_area(block).symmetric_difference(box(14, 14, 486, 486)).area < 1e-6
+
+    def lot(x0: float, width: float = 100.0, depth: float = 100.0):
+        return box(x0, 200, x0 + width, 200 + depth)
+
+    assert not drawn.reaches_past_edge(lot(520), block)  # clear of it
+    assert not drawn.reaches_past_edge(lot(500), block)  # shares the line
+    assert not drawn.reaches_past_edge(lot(494), block)  # 6 ft of it along the lot line
+    assert not drawn.reaches_past_edge(lot(486.2), block)  # 13.8 ft
+    assert drawn.reaches_past_edge(lot(485.8), block)  # 14.2 ft: past the line's width
+    assert drawn.reaches_past_edge(lot(300), block)  # wholly inside
+    # a 20 ft wide lot wholly inside: nothing is left of it inset 14 ft, and it is on the area all the same
+    assert lot(300, width=20).buffer(-14).is_empty
+    assert drawn.reaches_past_edge(lot(300, width=20), block)
+    # the same narrow lot with only its last 10 ft over the line: within the line's width of both lines
+    assert not drawn.reaches_past_edge(lot(490, width=20), block)
+    assert drawn.touches_area(lot(490, width=20), drawn.load_area(block))
+    assert not drawn.reaches_past_edge(None, block)
+    assert not drawn.reaches_past_edge(Polygon(), block)
+
+    # A corridor 10 ft wide across the middle of a lot: eroded 14 ft it is
+    # gone, yet it lies 45 ft inside the lot. On the lot.
+    corridor = traced("thin-strip-corridor.geojson", 14, box(-200, 245, 800, 255))
+    assert drawn.load_core_area(corridor).is_empty
+    assert drawn.reaches_past_edge(lot(300), corridor)
+    # the same corridor along the lot's edge, 9 ft deep: cannot be told from the line
+    assert not drawn.reaches_past_edge(box(300, 246, 400, 346), corridor)
+
+    # A file that states no line width holds every touch as a touch.
+    exact = traced("thin-strip-exact.geojson", 0, box(0, 0, 500, 500))
+    assert drawn.edge_ft(exact) == 0
+    assert drawn.reaches_past_edge(lot(494), exact)
+    assert not drawn.reaches_past_edge(lot(499.8), exact)  # inside the 0.5 ft rim
+    assert not drawn.reaches_past_edge(lot(520), exact)
 
 
 def test_steph_s_rulings_of_2026_11_18_stand_behind_the_clackamas_carves(quadfit_specs) -> None:

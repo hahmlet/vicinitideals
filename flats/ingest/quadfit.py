@@ -133,7 +133,7 @@ from flats.geom.corner import (
 )
 from flats.geom import dedication
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
-from flats.geom.drawn import load_area, load_edged_area, observed_drawn, touches_area
+from flats.geom.drawn import load_area, load_edged_area, observed_drawn, reaches_past_edge, touches_area
 from flats.geom.edges import (
     BEARING_CLUSTER_TOL_DEG,
     Edge,
@@ -963,12 +963,17 @@ def _traced_on(row: Mapping[str, Any]) -> tuple[tuple[str, ...], tuple[str, ...]
     own or its home jurisdiction as s5o's overlays are; a row with no shape
     says nothing.
 
-    Both readings shrink the lot by :data:`flats.geom.drawn.TOUCH_SHRINK_FT`
-    (0.5 ft) first, so a shared lot line alone is not a touch. Red is a lot
-    on the traced area itself, where a ruling makes that RED
-    (``Traced.red_ruling``). The closer look is every other lot on the area
-    grown by its drawn line's width (``EDGE_FT``): the tracing cannot say
-    whether such a lot touches."""
+    Whether a lot touches the area is a question of fact, and a tracing
+    answers it only to the width of the line it was traced from (14 ft for
+    Map 4-06). Red is a lot the area is on by more than that
+    (:func:`flats.geom.drawn.reaches_past_edge`), where a ruling makes
+    touching RED (``Traced.red_ruling``). The closer look is every other lot
+    within that width of the traced line, on either side of it: a strip of
+    overlap along a shared lot line no deeper than the line is wide, or a
+    lot that stops short of the traced area by less than that
+    (``EDGE_FT``). The tracing cannot say whether such a lot touches. Both
+    readings shrink the lot by :data:`flats.geom.drawn.TOUCH_SHRINK_FT`
+    (0.5 ft) first, so a shared lot line alone is nothing."""
     reach = {row.get("jurisdiction"), row.get("home_jurisdiction")}
     areas = [t for t in TRACED if t.jurisdiction in reach]
     lot_wkb = row.get("lot_wkb")
@@ -980,7 +985,7 @@ def _traced_on(row: Mapping[str, Any]) -> tuple[tuple[str, ...], tuple[str, ...]
     closer: list[str] = []
     red: list[str] = []
     for t in areas:
-        if t.red_ruling and touches_area(lot_geom, load_area(t.file)):
+        if t.red_ruling and reaches_past_edge(lot_geom, t.file):
             red.append(t.key)
         elif touches_area(lot_geom, load_edged_area(t.file)):
             closer.append(t.key)
@@ -989,8 +994,8 @@ def _traced_on(row: Mapping[str, Any]) -> tuple[tuple[str, ...], tuple[str, ...]
 
 def traced_permits_on(row: Mapping[str, Any]) -> tuple[str, ...]:
     """The keys of every traced permit area this lot holds as a closer look:
-    on the area, or within its drawn line's width of it, and not RED by a
-    ruling (:func:`open_space_on`)."""
+    within its drawn line's width of the traced edge, inside or outside it,
+    or on an area no ruling makes RED (:func:`open_space_on`)."""
     return _traced_on(row)[0]
 
 
@@ -998,8 +1003,10 @@ def open_space_on(row: Mapping[str, Any]) -> tuple[str, ...]:
     """The keys of the mapped open space this lot touches, where a standing
     ruling makes touching it RED outright
     (:attr:`flats.score.screen.LotFacts.open_space`; Steph 2026-11-18,
-    rulings.yaml 2026-11-18-clackamas-open-space-red). The traced area
-    itself, not its edge band, against the lot less a 0.5 ft rim."""
+    rulings.yaml 2026-11-18-clackamas-open-space-red): the area is on the
+    lot by more than the width of its own drawn line
+    (:func:`flats.geom.drawn.reaches_past_edge`). A thinner overlap is a
+    closer look (:func:`traced_permits_on`)."""
     return _traced_on(row)[1]
 
 

@@ -980,8 +980,9 @@ class LotFacts:
     resource_permits: tuple[str, ...] = ()
     #: The mapped open space the lot touches, by traced area key
     #: (:data:`flats.rules.resource_overlays.TRACED`, an area with a
-    #: ``red_ruling``): RED outright (:data:`MAPPED_OPEN_SPACE`). A lot only
-    #: within the tracing's edge band is in ``resource_permits`` instead.
+    #: ``red_ruling``): RED outright (:data:`MAPPED_OPEN_SPACE`). A lot the
+    #: tracing only just reaches, or only just misses -- by less than its
+    #: drawn line is wide -- is in ``resource_permits`` instead.
     #: Empty for every caller but the bridge.
     open_space: tuple[str, ...] = ()
     #: The side of the largest square of open ground this plan leaves on the

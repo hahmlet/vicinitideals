@@ -1003,10 +1003,11 @@ def test_a_clackamas_lot_on_mapped_open_space_is_red_whatever_fits_beside_it(cor
     touching open space, it's a red. We aren't fighting on developing open
     space." No quadfit column carries the open space traced off
     Comprehensive Plan Map 4-06; the bridge reads it off the lot's own
-    shape, so the real tracing stands under these lots. A lot on the traced
-    area is RED though the building fits clear of it; a lot only within the
-    14 ft its drawn line is wide stays YELLOW; a lot clear of both is what
-    it was."""
+    shape, so the real tracing stands under these lots. A lot plainly on the
+    traced area is RED though the building fits clear of it; a lot within
+    the 14 ft its drawn line is wide, either side of that line, stays YELLOW
+    (coordinator 2026-11-18: the map only just reaches the lot line, a
+    person must look); a lot clear of it is what it was."""
     from shapely.geometry import shape as geometry
 
     from flats.geom.drawn import load_area
@@ -1059,11 +1060,19 @@ def test_a_clackamas_lot_on_mapped_open_space_is_red_whatever_fits_beside_it(cor
     assert lot.facts.open_space == () and lot.facts.resource_permits == key and lot.carve is None
     assert fit == clear_fit and beside.drawing is not None and beside.drawing["fits"]
     assert beside.signed.colour is flag_plan.Colour.yellow and beside.signed.triage is not Triage.green
-    # On it: the lot's west 6 ft lie over the tracing's easternmost point, a
-    # sliver in a side yard the building never needs. RED all the same.
-    lot, on, on_fit = screened(x - 6, y - d / 2)
+    # Just over the line: the lot's west 6 ft lie over the tracing's
+    # easternmost point. Less than the line is wide, so the map cannot say the
+    # lot touches -- YELLOW the same way, never GREEN and not RED.
+    lot, strip, fit = screened(x - 6, y - d / 2)
     over = shapely.box(x - 6, y - d / 2, x - 6 + w, y + d / 2).intersection(mapped).area
     assert 0 < over < 0.05 * w * d
+    assert lot.facts.open_space == () and lot.facts.resource_permits == key and lot.carve is None
+    assert fit == clear_fit and strip.signed.colour is flag_plan.Colour.yellow
+    assert strip.signed.triage is not Triage.green
+    assert not any(b.check == OPEN_SPACE_CHECK for b in strip.signed.binds)
+    # On it: the lot's west 30 ft lie over the tracing, in a side yard the
+    # building never needs. RED all the same.
+    lot, on, on_fit = screened(x - 30, y - d / 2)
     assert lot.facts.open_space == key and lot.facts.resource_permits == () and lot.carve is None
     assert on_fit == clear_fit  # the building fits as well as on the clear lot
     for answer in (on.screening, on.signed):
