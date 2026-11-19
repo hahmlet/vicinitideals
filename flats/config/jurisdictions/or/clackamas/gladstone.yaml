@@ -626,6 +626,16 @@ code:
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1726.html
     title: "Chapter 17.26 - OS Open Space District"
     allow_thin: true
+  # The "city standards" GMC 17.50.040(14) installs curb cuts and driveways to:
+  # the Public Works Design Standards 2017, Section Five (Street Requirements),
+  # the PDF Steph downloaded 2026-11-18 from the city's media library (its
+  # download origin is the url below; the city's site refuses an automated
+  # reader, so the stored text was extracted from her copy). Read whole for
+  # flats/config/driveway_spacing.yaml (FOLLOWUPS 205): 5.0070 Driveways and
+  # Approaches, printed pp.9-10.
+  - id: "pwds.5.streets"
+    url: https://www.ci.gladstone.or.us/media/17116
+    title: "Gladstone Public Works Design Standards 2017, Section Five - Street Requirements"
 defaults:
   entrance_faces_street:
     value: not_required

@@ -1,6 +1,6 @@
 """Driveway spacing in the three cities FOLLOWUPS 205 found unchecked: Canby
-(CMC Table 16.46.30 and 16.10.070(B)(9)), Gladstone (GMC 17.50.040(14), city
-standards not held) and Hillsboro (Design and Construction Standards 230.6
+(CMC Table 16.46.30 and 16.10.070(B)(9)), Gladstone (GMC 17.50.040(14), its
+city standards PWDS 5.0070 held since 2026-11-18) and Hillsboro (Design and Construction Standards 230.6
 and Figure 230.6, by CDC 12.50.715 C.2).
 
 None has a street-class map of its own in the corpus: each reads the county
@@ -80,8 +80,11 @@ def test_the_printed_figures() -> None:
     assert set(rule.cross) == {"local", "collector", "arterial"}
 
     gladstone = _rules(GLADSTONE)
-    assert not gladstone.frontage and not gladstone.intersections
-    assert set(gladstone.unread) == {"collector", "arterial"}
+    assert {c: r.figure_ft for c, r in gladstone.frontage.items()} == {"arterial": 150, "collector": 75}
+    assert not gladstone.unread
+    (rule,) = gladstone.intersections
+    assert (rule.figure_ft, rule.basis, set(rule.on)) == (35, "right_of_way_line", {"local"})
+    assert set(rule.cross) == {"local", "collector", "arterial"}
 
     hillsboro = _rules(HILLSBORO)
     assert {c: r.figure_ft for c, r in hillsboro.frontage.items()} == {"arterial": 600, "collector": 300}
@@ -106,6 +109,26 @@ def test_the_hillsboro_standards_are_stored_and_print_the_figure() -> None:
     assert "Collector 300 ft" in lines[45]
     assert "100 feet" in " ".join(lines[27:31]) and "Collector or Arterial" in " ".join(lines[27:31])
     assert "25 feet" in " ".join(lines[31:34]) and "Local Road" in " ".join(lines[31:34])
+
+
+def test_the_gladstone_standards_are_stored_and_print_the_figures() -> None:
+    """PWDS 2017 Section Five, 5.0070 (printed pp.9-10), stored 2026-11-18
+    from the copy Steph downloaded from the city's media library."""
+    from flats.provenance.store import ProvenanceStore
+
+    store = ProvenanceStore()
+    doc = store.load("or/clackamas/gladstone/pwds.5.streets.txt")
+    assert doc.url == "https://www.ci.gladstone.or.us/media/17116"
+    lines = store.text_path("or/clackamas/gladstone/pwds.5.streets.txt").read_text(encoding="utf-8").splitlines()
+    assert lines[438].startswith("5.0070") and "Driveways and Approaches" in lines[438]
+    assert "Minimum curb cut width shall be 16 ft." in lines[461]
+    assert "closer to an intersecting street" in lines[462] and "right-of-way line" in lines[463]
+    assert "neighborhood route" in lines[470] and "35 ft." in lines[470]
+    assert "local street" in lines[471] and "35 ft." in lines[471]
+    assert "adjacent curb cuts on the same side" in lines[472]
+    assert "arterial street, 150 ft." in lines[474] and "collector street, 75 ft." in lines[475]
+    assert "5 ft. from the property line" in lines[479]
+    assert "Transportation System Plan" in lines[225]
 
 
 # --- Canby CMC Table 16.46.30 --------------------------------------------
@@ -168,13 +191,21 @@ def test_a_canby_local_street_by_an_industrial_district_is_unread(monkeypatch) -
 # --- Gladstone GMC 17.50.040(14) -----------------------------------------
 
 
-def test_gladstone_busy_frontage_is_unread_and_a_local_one_clear() -> None:
+def test_gladstone_bars_busy_frontages_and_holds_a_local_one_35_ft_off_the_corner() -> None:
+    """PWDS 5.0070(D)(3): 150 ft (arterial) and 75 ft (collector) between
+    adjacent curb cuts -- no map holds driveways, so barred. (D)(2)(e)-(f): 35 ft
+    from an intersecting street's right-of-way line on a local street."""
     gladstone = _rules(GLADSTONE)
-    assert ds.chain_answer(2000.0, [], "collector", gladstone) == ds.UNREAD
-    assert ds.chain_answer(2000.0, [], "arterial", gladstone) == ds.UNREAD
-    # The stored code prints no figure for a local street.
+    assert ds.chain_answer(2000.0, [], "collector", gladstone) == ds.BLOCKED
+    assert ds.chain_answer(2000.0, [], "arterial", gladstone) == ds.BLOCKED
+    # No intersection in reach: clear.
     assert ds.chain_answer(60.0, [], "local", gladstone) == ds.CLEAR
-    assert ds.chain_answer(30.0, _at("arterial"), "local", gladstone) == ds.CLEAR
+    # Pass: 35 ft + 30 ft half right-of-way, then a 20 ft apron and a 5 ft inset.
+    assert ds.chain_answer(95.0, _at("local"), "local", gladstone) == ds.CLEAR
+    # A frontage whose every point is within 35 ft of the cross centreline: short.
+    assert ds.chain_answer(30.0, _at("arterial"), "local", gladstone) == ds.BLOCKED
+    # Between the two bounds: not shown clear, not failed.
+    assert ds.chain_answer(60.0, _at("local"), "local", gladstone) == ds.UNREAD
 
 
 def test_gladstone_lot_on_an_unread_street_is_held(monkeypatch) -> None:
@@ -191,7 +222,9 @@ def test_gladstone_lot_on_an_unread_street_is_held(monkeypatch) -> None:
         ]
     )
     gladstone = _rules(GLADSTONE)
-    for cls, want in (("local", ds.CLEAR), ("arterial", ds.UNREAD), (None, ds.UNREAD)):
+    # A local frontage is now held off the corner, which needs the street
+    # centrelines: with none, unread.
+    for cls, want in (("local", ds.UNREAD), ("arterial", ds.BLOCKED), ("collector", ds.BLOCKED), (None, ds.UNREAD)):
         monkeypatch.setattr(ds, "chain_class", lambda chain, cmap, rules, cls=cls: cls)
         assert ds.read_lot(edges, [0.0], None, None, gladstone)[0] == want, cls
 

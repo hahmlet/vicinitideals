@@ -749,23 +749,42 @@ jurisdictions:
         quote_also: or/clackamas/canby/cmc.16.10.070.txt#L215,L267-L271,L279
 
   or/clackamas/gladstone:
-    # Clackamas County's road inventory (county roads only); CONNECTOR is
-    # left unnamed (unread).
+    # Clackamas County's road inventory (county roads only), standing in for
+    # the TSP the standards class streets by (PWDS 5.0017, pwds.5.streets
+    # L225-L227; the 1995 TSP is a scan with no text layer) under ruling
+    # 2026-11-18-county-street-maps-stand-in-gladstone; CONNECTOR is left
+    # unnamed (unread).
     #
-    # Gladstone's code prints no driveway spacing. GMC 17.50.040(14), as
-    # Ordinance 1545 leaves it: "Curb cuts and driveway installations shall
-    # be installed, according to city standards" (ord1545.txt#L2203-L2204),
-    # and each residential zone holds middle housing to "development
-    # requirements specific to the lot or parcel or its frontage, in
-    # compliance with GMC Chapter 17.50" (L225-L231). The city standards
-    # (the Public Works Design Standards) are not held: the city's site
-    # refuses an automated reader. So a collector or arterial frontage is
-    # unread, as Fairview's is; a street the map does not read local is
-    # unread already. A LOCAL frontage is left clear: the stored code states
-    # no rule for it (whole-corpus search for "driveway", 2026-11-18), and
-    # what the unread standards ask there is not known -- a judgement, in
-    # the hand-off as an open question. Holding it too is one line: add
-    # `local` under `unread`.
+    # GMC 17.50.040(14), as Ordinance 1545 leaves it: "Curb cuts and driveway
+    # installations shall be installed, according to city standards"
+    # (ord1545.txt#L2203-L2204); each residential zone holds middle housing
+    # to "development requirements specific to the lot or parcel or its
+    # frontage, in compliance with GMC Chapter 17.50" (L225-L231). The city
+    # standards are the Public Works Design Standards 2017, Section Five
+    # 5.0070 Driveways and Approaches (printed pp.9-10), held since
+    # 2026-11-18 from the copy Steph downloaded (pwds.5.streets):
+    #   * (D)(3) between any two adjacent curb cuts on the same side of a
+    #     public street: arterial 150 ft, collector 75 ft (L473-L476). No map
+    #     holds driveways, so a collector or arterial frontage is barred
+    #     (YELLOW with the flag, ruling 2026-11-09-busy-road-driveway-
+    #     spacing-yellow) -- the colour the unread entry gave it before the
+    #     standards were held. (B)'s one driveway per frontage and corner
+    #     lots "limited to access from a single street, usually the lower
+    #     classification street" (L446-L448) and (D)(6)'s queue length on a
+    #     collector and above (L481-L483) reach the same frontages.
+    #   * (D)(2): no curb cut "closer to an intersecting street right-of-way
+    #     line" than 35 ft on a neighborhood route or local street meeting
+    #     any other street (e, f; L463-L464, L471-L472). The county map has
+    #     no neighborhood route; one reads local or collector, and either
+    #     answer is the 35 ft or stricter. The 100 and 150 ft of (a)-(c) are
+    #     for a curb cut on an arterial or collector, barred already.
+    #   * NOT HELD: (D)(3)(c)'s 30 ft between two curb cuts on the same lot
+    #     (the pod has one); (D)(1)'s 16 ft minimum curb cut and (D)(5)'s 5 ft
+    #     from the property line (L462, L480): the pass bound's 20 ft apron
+    #     inset 5 ft from each end of the frontage (PASS_APRON_FT,
+    #     PASS_INSET_FT) already holds both wherever an intersection is in
+    #     reach; the drawn lane's own gap to a side line, with the approach
+    #     wings of Standard Drawings 503A/503B (not held), is in the hand-off.
     map: street_class_clackamas
     map_ruling: 2026-10-09-quiet-street-both-agree
     classes:
@@ -774,16 +793,24 @@ jurisdictions:
       MINOR ARTERIAL: arterial
       MAJOR ARTERIAL: arterial
     unlisted: local
-    frontage: {}
-    unread:
+    frontage:
       collector:
-        cite: Gladstone GMC 17.50.040(14) (Ord. 1545), curb cuts and driveway installations installed according to city standards (the city's Public Works Design Standards, not held)
-        quote: or/clackamas/gladstone/amended/ord1545.txt#L2203-L2204
-        quote_also: or/clackamas/gladstone/amended/ord1545.txt#L225-L231
+        figure_ft: 75
+        cite: Gladstone Public Works Design Standards 2017 5.0070(D)(3)(b), minimum distance between any two adjacent curb cuts on the same side of a collector street 75 ft (printed p.10), the city standards GMC 17.50.040(14) installs driveways to
+        quote: or/clackamas/gladstone/pwds.5.streets.txt#L473-L474,L476
+        quote_also: or/clackamas/gladstone/amended/ord1545.txt#L2203-L2204
       arterial:
-        cite: Gladstone GMC 17.50.040(14) (Ord. 1545), as for collectors (city standards not held)
-        quote: or/clackamas/gladstone/amended/ord1545.txt#L2203-L2204
-    from_intersections: []
+        figure_ft: 150
+        cite: Gladstone Public Works Design Standards 2017 5.0070(D)(3)(a), minimum distance between any two adjacent curb cuts on the same side of an arterial street 150 ft (printed p.10), the city standards GMC 17.50.040(14) installs driveways to
+        quote: or/clackamas/gladstone/pwds.5.streets.txt#L473-L475
+        quote_also: or/clackamas/gladstone/amended/ord1545.txt#L2203-L2204
+    from_intersections:
+      - driveway_on: [local]
+        cross: [local, collector, arterial]
+        figure_ft: 35
+        basis: right_of_way_line
+        cite: Gladstone Public Works Design Standards 2017 5.0070(D)(2)(e)-(f), no curb cut closer to an intersecting street right-of-way line than 35 ft on a neighborhood route or a local street when intersecting any other street (printed pp.9-10)
+        quote: or/clackamas/gladstone/pwds.5.streets.txt#L463-L464,L471-L472
 
   or/washington/hillsboro:
     # Washington County's map, read as the county and Cornelius read it:
