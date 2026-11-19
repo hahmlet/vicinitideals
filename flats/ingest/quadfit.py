@@ -132,7 +132,7 @@ from flats.geom.corner import (
 )
 from flats.geom import dedication
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
-from flats.geom.drawn import load_area, observed_drawn
+from flats.geom.drawn import edge_piece, load_area, observed_drawn
 from flats.geom.edges import (
     BEARING_CLUSTER_TOL_DEG,
     Edge,
@@ -259,6 +259,7 @@ from flats.score.screen import (
     CLOSER_LOOK_PLAN_ON_CARVE,
     DRIVEWAY_LOT_LINE,
     CLOSER_LOOK_SPLIT_ZONE,
+    CLOSER_LOOK_DISTRICT_EDGE,
     FRONT_MAX,
     FRONT_MAX_DRAWN_TOL_FT,
     COURT_SHAPED,
@@ -898,6 +899,65 @@ def drawn_cut(
     return tuple(sorted(n for n, v in got.items() if v is None and n not in observed))
 
 
+@dataclass(frozen=True, slots=True)
+class DrawnEdge:
+    """Ground of an answered lot on the other side of a traced district's
+    line (FOLLOWUPS 188): the lot was answered ``inside`` (or not) on the
+    share of it the area holds, and ``geom`` (the lot's coordinates) is the
+    part where the other answer holds."""
+
+    condition: str
+    inside: bool
+    sqft: float
+    geom: Any
+
+
+def drawn_edges(
+    row: Mapping[str, Any], layers: Mapping[str, Layer] | None, observed: Mapping[str, bool]
+) -> tuple[DrawnEdge, ...]:
+    """Every traced district of the lot's zone that answered the lot (inside
+    or outside, :func:`flats.geom.drawn.observed_drawn`) while a piece of it
+    over the split-zone noise line lies on the other side
+    (:func:`flats.geom.drawn.edge_piece`), for :func:`drawn_edge_checked`.
+    A lot the line cuts is not here: it is unanswered, and the levers hold
+    it (:func:`drawn_cut`). Nor is an answer a map code or another area
+    overrode (``observed`` differs), nor a lot with no shape."""
+    if layers is None:
+        return ()
+    home = _home_layer(row, layers)
+    lot_wkb = row.get("lot_wkb")
+    if home is None or not home.drawn_areas or row.get("zone") is None or not lot_wkb:
+        return ()
+    zone = screened_zone(row, layers)
+    areas = [a for a in home.drawn_areas.values() if zone in a.zones]
+    if not areas:
+        return ()
+    import shapely
+
+    lot_geom = shapely.from_wkb(lot_wkb)
+    own = None
+    out: list[DrawnEdge] = []
+    for area in areas:
+        # The same ground :func:`_drawn_answers` asks the area about.
+        if area.condition == "inside_mapped_use_area":
+            own = _own_ground(row, lot_geom) if own is None else own
+            ground = own
+        else:
+            ground = lot_geom
+        traced = load_area(area.file)
+        shapely.prepare(traced)
+        # Wholly on one side: nothing across the line (the cheap test first).
+        if traced.disjoint(ground) or traced.contains(ground):
+            continue
+        got = observed_drawn(ground, traced)
+        if got is None or observed.get(area.condition) is not got:
+            continue
+        piece = edge_piece(ground, traced, got)
+        if piece is not None:
+            out.append(DrawnEdge(area.condition, got, float(piece.area), piece))
+    return tuple(out)
+
+
 def _drawn_answers(
     row: Mapping[str, Any],
     layers: Mapping[str, Layer],
@@ -1159,6 +1219,10 @@ class QuadfitLot:
     #: in more than one (:mod:`flats.geom.split_zone`,
     #: :func:`with_split_zones`); empty on a lot in one.
     split: split_zones.Split = split_zones.Split()
+    #: The traced districts that answered this lot while a real piece of it
+    #: lies across their line (:func:`drawn_edges`, FOLLOWUPS 188); empty on
+    #: a lot wholly on one side of every line.
+    drawn_edges: tuple[DrawnEdge, ...] = ()
     #: What Portland's Centers Main Street overlay, pattern areas and
     #: historic resources say about the lot (:mod:`flats.geom.pdx_overlays`,
     #: FOLLOWUPS 78); None where nothing read it.
@@ -2163,6 +2227,7 @@ def lot_from_row(
         second_better=how == "better" and second is not None,
         sidewalk_easement_ft=_finite(row.get("sidewalk_easement_ft")),
         split=split_zones.decode(row.get(split_zones.ROW_KEY)),
+        drawn_edges=drawn_edges(row, layers, observed),
         pdx_overlays=pdx.decode(row.get(pdx.ROW_KEY)),
         sewer=sewer.reading_of(row),
         clear_vision=_clear_vision(row, layers),
@@ -4412,6 +4477,70 @@ def split_zone_checked(s: Screened, lot: QuadfitLot) -> Screened:
     return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
 
 
+def drawn_edge_checked(s: Screened, lot: QuadfitLot) -> Screened:
+    """``s`` held out of GREEN where its plan stands across a traced
+    district's line the lot was answered on (FOLLOWUPS 188; ruling
+    2026-10-14-split-zones, read the same way as :func:`split_zone_checked`).
+
+    A traced district answers a lot by the share of it inside
+    (:func:`flats.geom.drawn.observed_drawn`): 90 % or more is inside, 10 %
+    or less outside, and the district's rules were applied (or not) to the
+    whole lot. A lot the line cuts between is unanswered and the levers try
+    both sides (:func:`_bounded`). What neither reads is a building, lane or
+    court standing on the answered lot's other piece -- over the split-zone
+    noise line (:data:`flats.geom.drawn.EDGE_MIN_SQFT`) and by more than
+    :data:`flats.geom.split_zone.REACH_MIN_SQFT` of plan: there the other
+    answer's rules govern ground the plan uses and nothing tested them. That
+    lot is YELLOW with DISTRICT-EDGE naming the district, as a plan across a
+    zone line is YELLOW with ZONE-SPLIT. A plan that was not drawn reaches
+    every such piece: unmeasured is the worst case. Only a lot that would
+    have been GREEN is moved.
+    """
+    edges = lot.drawn_edges
+    if not edges:
+        return s
+    plan = s.drawing
+    if plan is None:
+        reached = list(edges)
+    else:
+        import shapely
+
+        shapes = [g if g.is_valid else g.buffer(0) for g in _plan_shapes(plan)]
+        shapes = [g for g in shapes if not g.is_empty]
+        stood = shapely.union_all(shapes) if shapes else None
+        reached = [
+            e
+            for e in edges
+            if stood is not None and stood.intersection(e.geom).area > split_zones.REACH_MIN_SQFT
+        ]
+    if not reached:
+        return s
+    across = ", ".join(
+        f"{e.condition} ({'outside' if e.inside else 'inside'} the line, {e.sqft:,.0f} sq ft of the lot)"
+        for e in reached
+    )
+    flag = flag_plan.Flag(
+        DISTRICT_EDGE,
+        flag_plan.LOT,
+        CLOSER_LOOK_DISTRICT_EDGE,
+        source=f"the plan stands across a traced district's line: {across}",
+    )
+
+    def ask(x: Screening) -> Screening:
+        reasons = (
+            x.reasons
+            if CLOSER_LOOK_DISTRICT_EDGE in x.reasons
+            else (*x.reasons, CLOSER_LOOK_DISTRICT_EDGE)
+        )
+        triage = Triage.yellow if x.triage is Triage.green else x.triage
+        flags = x.flags
+        if not any(f.code == flag.code for f in flags):
+            flags = (*flags, flag)
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
 def plan_on_lot_checked(s: Screened, lot: QuadfitLot) -> Screened:
     """``s`` held out of GREEN where its drawn lane or court stands past the
     lot line by more than :data:`PLAN_OFF_LOT_FT` (FOLLOWUPS 201).
@@ -4822,6 +4951,7 @@ def _same_numbers(a: ZoneResolution, b: ZoneResolution) -> bool:
 #: and still ends the search).
 FIRE_ROUTE_UNFOUND = "MEASURE-FIRE-ROUTE"
 ZONE_SPLIT = "ZONE-SPLIT"
+DISTRICT_EDGE = "DISTRICT-EDGE"
 PLAN_OFF_LOT = "MEASURE-PLAN-OFF-LOT"
 
 #: How far past the lot line a drawn lane or court may stand before the plan
@@ -4982,6 +5112,7 @@ def _bounded(
             (f.code, f.key) not in known
             and f.code != FIRE_ROUTE_UNFOUND
             and f.code != ZONE_SPLIT
+            and f.code != DISTRICT_EDGE
             and flag_plan.severity_of(f, reg) >= line
             for f in alt.signed.flags
         ):
@@ -6016,6 +6147,7 @@ def _screen_lot_once(
         won = sight_corner_court_checked(won, lot, policy=policy, relief=relief)
         won = entrance_drawn_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
+        won = drawn_edge_checked(won, lot)
         won = plan_on_lot_checked(won, lot)
         won = plan_on_carve_checked(won, lot)
         won = drive_touch_checked(won)

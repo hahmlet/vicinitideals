@@ -236,6 +236,11 @@ CLOSER_LOOK_ENTRANCE_SIDE = "CLOSER_LOOK_ENTRANCE_SIDE"
 #: would say yellow." The standards were read from the one district the lot
 #: screens under.
 CLOSER_LOOK_SPLIT_ZONE = "CLOSER_LOOK_SPLIT_ZONE"
+#: The lot was answered inside (or outside) a traced district on the share of
+#: it the district holds, and its plan stands on the piece across the line
+#: (:func:`flats.ingest.quadfit.drawn_edge_checked`, FOLLOWUPS 188): read as
+#: :data:`CLOSER_LOOK_SPLIT_ZONE` is, ruling 2026-10-14-split-zones.
+CLOSER_LOOK_DISTRICT_EDGE = "CLOSER_LOOK_DISTRICT_EDGE"
 #: The drawn lane or parking court stands past the lot line by more than the
 #: drawing's tolerance (:func:`flats.ingest.quadfit.plan_on_lot_checked`,
 #: FOLLOWUPS 201: Portland 1N1E23CB -21200, a through lot whose side-yard
@@ -5291,6 +5296,7 @@ __all__ = [
     "CLOSER_LOOK_MIN_FAR",
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_SPLIT_ZONE",
+    "CLOSER_LOOK_DISTRICT_EDGE",
     "CLOSER_LOOK_PLAN_OFF_LOT",
     "CLOSER_LOOK_PLAN_ON_CARVE",
     "CLOSER_LOOK_DRIVE_TOUCH",
