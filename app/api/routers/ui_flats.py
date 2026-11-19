@@ -2867,6 +2867,7 @@ _RULE_COLOUR_WORDS = {
 _CHECK_WORDS = {
     "fit_ft": "the building and its parking do not fit",
     "use": "the zone does not allow four attached homes",
+    "mapped_open_space": "the lot touches mapped open space",
     "min_lot_area_sqft": "lot smaller than the minimum",
     "min_frontage_ft": "street frontage shorter than the minimum",
     "min_lot_width_ft": "lot narrower than the minimum",
@@ -2965,6 +2966,7 @@ _REASON_WORDS = {
     "STANDARD_NOT_ENCODED": "a standard the zone states is not encoded",
     "USE_NOT_ENCODED": "whether the zone allows a fourplex is not encoded",
     "USE_PROHIBITED": "the zone forbids the use outright",
+    "MAPPED_OPEN_SPACE": "the lot touches open space mapped on Clackamas County's Comprehensive Plan Map 4-06 — red, whatever would fit beside it: we are not fighting to develop open space (Steph, 2026-11-18)",
     "INSTITUTIONAL_USE": "institutional land — a school, park, hospital, public site, utility, airport, marina, transit hub, railway, public pool or plaza, or mall — red and left out of the scan (churches and charities are still screened)",
     "COUNTY_ROLL_RED": "the county's tax roll rules it out — public land, a tract or common parcel, open space, or a parcel the county values at $0 — red and left out of the scan (churches and charities are still screened)",
     "POD_CANNOT_FIT": "red by arithmetic: the lot is smaller than the building's footprint, or too narrow for a building 20 ft or wider — no zoning changes that",

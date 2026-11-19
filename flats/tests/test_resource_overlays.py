@@ -642,7 +642,7 @@ def test_clackamas_s_open_space_is_traced_off_map_4_06_and_says_how() -> None:
     [area] = [t for t in TRACED if t.key == "clackamas_open_space"]
     assert area.jurisdiction == COUNTY and area.file == OPEN_SPACE
     assert "1103.01" in area.cite and "1011.02" in area.cite
-    assert area.unbuildable is True
+    assert area.red_ruling == "2026-11-18-clackamas-open-space-red"
     assert AREAS[area.key] is area and area.key not in BY_KEY
     assert set(AREAS) == set(BY_KEY) | {t.key for t in TRACED}
     doc, feats = _open_space()
@@ -671,13 +671,20 @@ def test_clackamas_s_open_space_is_traced_off_map_4_06_and_says_how() -> None:
     assert "preserved to the maximum extent possible" in store.quote(f"{plan}#L73")
 
 
-def test_a_clackamas_lot_touching_the_traced_open_space_is_a_closer_look() -> None:
-    """Inside it, or within the 14 ft the drawn line is wide: Open Space
-    Review, never GREEN. Clear of it, or another jurisdiction's lot: nothing."""
+def test_a_clackamas_lot_on_the_traced_open_space_is_red_and_one_in_its_line_a_closer_look() -> None:
+    """Steph 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red):
+    "if its free of mapped open space, it's available to be green. If it's
+    touching open space, it's a red." On the traced area itself: RED
+    outright. Off it but within the 14 ft the drawn line is wide: the
+    tracing cannot say, a closer look. Clear of both, or another
+    jurisdiction's lot: nothing."""
     import shapely
     from shapely.geometry import box
 
-    from flats.ingest.quadfit import traced_permits_on
+    from flats.geom.drawn import TOUCH_SHRINK_FT
+    from flats.ingest.quadfit import open_space_on, traced_permits_on
+    from flats.score.screen import MAPPED_OPEN_SPACE, OPEN_SPACE_CHECK, UNFLAGGED_REASONS
+    from flats.tests.test_screen import RuleVerdict, rules
 
     _, feats = _open_space()
     traced = [g for p, g in feats if p["EDGE_FT"] == 14]
@@ -686,68 +693,82 @@ def test_a_clackamas_lot_touching_the_traced_open_space_is_a_closer_look() -> No
     x = east.bounds[2]
     y = next(c[1] for part in getattr(east, "geoms", [east]) for c in part.exterior.coords if c[0] == x)
     spot = east.representative_point()
+    key = ("clackamas_open_space",)
 
     def lot(x0: float, y0: float, **over: object) -> dict[str, object]:
         over.setdefault("jurisdiction", COUNTY)
         return row(lot_wkb=shapely.to_wkb(box(x0, y0, x0 + 100, y0 + 50)), **over)
 
+    def read(r: dict[str, object]) -> tuple[tuple[str, ...], tuple[str, ...]]:
+        return open_space_on(r), traced_permits_on(r)
+
     inside = lot(spot.x - 50, spot.y - 25)
     beside = lot(x + 8, y - 25)  # 8 ft off the traced edge: inside the line's width
     clear = lot(x + 20, y - 25)  # 20 ft off: outside it
     assert everything.distance(shapely.from_wkb(beside["lot_wkb"])) == pytest.approx(8, abs=0.2)
-    assert traced_permits_on(inside) == ("clackamas_open_space",)
-    assert traced_permits_on(beside) == ("clackamas_open_space",)
-    assert traced_permits_on(clear) == ()
-    assert traced_permits_on(lot(spot.x - 50, spot.y - 25, jurisdiction="happy_valley")) == ()
+    assert read(inside) == (key, ())
+    assert read(beside) == ((), key)
+    assert read(clear) == ((), ())
+    # The touch is the one every overlay flag uses: the lot less a 0.5 ft rim,
+    # so a lot line that only meets the traced edge is not on the open space.
+    assert TOUCH_SHRINK_FT == 0.5
+    assert read(lot(x, y - 25)) == ((), key)  # the lot line runs through the tracing's last point
+    assert read(lot(x - 0.4, y - 25)) == ((), key)  # 0.4 ft over it: inside the rim
+    assert read(lot(x - 2, y - 25)) == (key, ())  # 2 ft over it: on the open space
+    assert read(lot(spot.x - 50, spot.y - 25, jurisdiction="happy_valley")) == ((), ())
     # a city lot the county's rules screen (a pocket) is reached through its home
-    pocket = lot(spot.x - 50, spot.y - 25, jurisdiction="happy_valley", home_jurisdiction=COUNTY)
-    assert traced_permits_on(pocket) == ("clackamas_open_space",)
-    assert traced_permits_on(row(jurisdiction=COUNTY)) == ()  # no shape, nothing measured
+    assert read(lot(spot.x - 50, spot.y - 25, jurisdiction="happy_valley", home_jurisdiction=COUNTY)) == (key, ())
+    assert read(row(jurisdiction=COUNTY)) == ((), ())  # no shape, nothing measured
+    # The county's own Public and Community Use polygons carry no line width:
+    # a lot on one is on open space, a lot 8 ft off one is clear of it.
+    public = max((g for p, g in feats if p["OS_CLASS"] == "public_community_use"), key=lambda g: g.area)
+    at = public.representative_point()
+    assert read(lot(at.x - 50, at.y - 25)) == (key, ())
 
+    # In the line's width: the closer look, never GREEN, never RED.
     facts = lot_from_row(beside).facts
-    assert facts.resource_permits == ("clackamas_open_space",)
+    assert (facts.open_space, facts.resource_permits) == ((), key)
     got = run(lot=replace(LOT, resource_permits=facts.resource_permits))
     assert got.triage is Triage.yellow and got.colour is flag_plan.Colour.yellow
-    assert got.reasons == (CLOSER_LOOK_RESOURCE,)
-    assert lot_from_row(clear).facts.resource_permits == ()
-    # both together: a landslide column and the traced area
+    assert got.reasons == (CLOSER_LOOK_RESOURCE,) and got.binds == ()
+    words = AREAS["clackamas_open_space"].words
+    assert "within about 14 ft" in words and "cannot say whether the lot touches" in words
+    # Clear of it: nothing from this rule, the lot is what it was.
+    assert (lot_from_row(clear).facts.open_space, lot_from_row(clear).facts.resource_permits) == ((), ())
+    assert run().triage is Triage.green
+
+    # On it: RED outright, on a lot that is otherwise GREEN -- nothing is
+    # asked about what would fit beside the open space.
+    held = lot_from_row(inside)
+    assert (held.facts.open_space, held.facts.resource_permits) == (key, ())
+    assert held.carve is None  # no ground is taken off: the lot is out, not cut down
+    red = run(lot=replace(LOT, open_space=held.facts.open_space))
+    assert red.triage is Triage.red and red.colour is flag_plan.Colour.red
+    assert red.reasons == (MAPPED_OPEN_SPACE,) and MAPPED_OPEN_SPACE in UNFLAGGED_REASONS
+    [bind] = red.binds
+    assert bind.check == OPEN_SPACE_CHECK and bind.relief is None and bind.shortfall is None
+    assert "2026-11-18-clackamas-open-space-red" in bind.source
+    assert all(c.verdict.name != "fails" for c in red.checks)  # every standard is met; the ruling alone is the RED
+    # The ruling is Steph's and not the zone's: an unverified zone cannot hold
+    # the lot in "cannot tell".
+    unread = run(rules(RuleVerdict.unverified), lot=replace(LOT, open_space=key))
+    assert unread.triage is Triage.red and unread.colour is flag_plan.Colour.red
+    assert [b.check for b in unread.binds] == [OPEN_SPACE_CHECK]
+    # both together: a landslide column rides beside either reading
     both = lot_from_row({**inside, "ovl_clackamas_landslide": True}).facts
-    assert both.resource_permits == ("clackamas_landslide", "clackamas_open_space")
-
-    # Steph 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red): the
-    # traced ground, the 14 ft of its line included, comes off the lot the way
-    # one of s5o's carves does -- nothing built or parked on it.
-    from flats.geom.drawn import load_edged_area
-    from flats.ingest.quadfit import traced_off
-
-    [area] = [t for t in TRACED if t.key == "clackamas_open_space"]
-    assert area.unbuildable is True
-    edged = load_edged_area(OPEN_SPACE)
-    strip = shapely.from_wkb(beside["lot_wkb"]).intersection(edged)
-    assert 0 < strip.area < 100 * 50
-    assert strip.bounds[2] == pytest.approx(x + 14, abs=0.3)  # 8 ft off, 14 ft wide: 6 ft of the lot
-    held = lot_from_row(beside)
-    assert held.traced is not None and held.traced.equals(strip)
-    assert held.carve is not None and held.carve.equals(strip)  # s5o carved nothing on this row
-    assert lot_from_row(inside).traced.area > strip.area
-    nothing = lot_from_row(clear)
-    assert nothing.traced is None and nothing.carve is None
-    assert traced_off(lot(spot.x - 50, spot.y - 25, jurisdiction="happy_valley")) is None
-    assert traced_off(pocket) is not None
-    assert traced_off(row(jurisdiction=COUNTY)) is None
-    # beside one of s5o's carves, the lot loses both
-    far = box(x + 98, y + 15, x + 108, y + 25)
-    two = lot_from_row({**beside, "carve_wkb": shapely.to_wkb(far)})
-    assert two.traced.equals(strip) and two.carve.equals(far.union(strip))
+    assert (both.open_space, both.resource_permits) == (key, ("clackamas_landslide",))
+    both = lot_from_row({**beside, "ovl_clackamas_landslide": True}).facts
+    assert (both.open_space, both.resource_permits) == ((), ("clackamas_landslide", "clackamas_open_space"))
 
 
 def test_steph_s_rulings_of_2026_11_18_stand_behind_the_clackamas_carves(quadfit_specs) -> None:
     """Asked whether the county's flood ban, its landslide permit and its
-    open space review made a lot RED or a closer look, Steph ruled all three
-    RED where the building cannot stand clear, and YELLOW where the lot only
-    holds the ground. The carves are what make the RED and the flags what
-    keep the YELLOW; each names its ruling where it is declared, so none is
-    read as a worker's judgement."""
+    open space review made a lot RED or a closer look, Steph ruled the flood
+    ban and the slide ground RED where the building cannot stand clear and
+    YELLOW where the lot only holds the ground, and open space RED on any
+    lot that touches it. The carves make the first two REDs and the flags
+    keep their YELLOW; the open space is a lot fact. Each names its ruling
+    where it is declared, so none is read as a worker's judgement."""
     text = OVERLAYS.read_text(encoding="utf-8")
     slide, flood = "2026-11-18-clackamas-landslide-under-building-red", "2026-11-18-clackamas-flood-ban-red"
     space = "2026-11-18-clackamas-open-space-red"
@@ -764,9 +785,12 @@ def test_steph_s_rulings_of_2026_11_18_stand_behind_the_clackamas_carves(quadfit
 
     said = Path(declared.__file__).read_text(encoding="utf-8")
     assert slide in said and space in said
-    # the open space is no quadfit overlay: the bridge takes its ground off
+    # the open space is no quadfit overlay: the bridge reads it off the lot's shape
     assert not any("open_space" in key for key in quadfit_specs if key.startswith("clackamas"))
-    assert [t.key for t in TRACED if t.unbuildable] == ["clackamas_open_space"]
+    assert {t.key: t.red_ruling for t in TRACED} == {"clackamas_open_space": space}
+    import flats.score.screen as screened
+
+    assert space in Path(screened.__file__).read_text(encoding="utf-8")
     notes = (
         Path(__file__).resolve().parents[1] / "config" / "jurisdictions" / "or" / "clackamas" / "_unincorporated.yaml"
     ).read_text(encoding="utf-8")

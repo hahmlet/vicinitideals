@@ -956,50 +956,51 @@ def _drawn_answers(
     return out
 
 
-TRACED_BY_KEY: Mapping[str, Any] = {t.key: t for t in TRACED}
+def _traced_on(row: Mapping[str, Any]) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    """The traced areas this lot meets (:data:`flats.rules.resource_overlays.TRACED`),
+    as ``(closer look, red)`` keys: areas no layer carries, read against the
+    lot's own shape. Only a lot of the area's jurisdiction is asked, under its
+    own or its home jurisdiction as s5o's overlays are; a row with no shape
+    says nothing.
 
-
-def traced_permits_on(row: Mapping[str, Any]) -> tuple[str, ...]:
-    """The keys of every traced permit area this lot touches
-    (:data:`flats.rules.resource_overlays.TRACED`): areas no layer carries,
-    read against the lot's own shape. Only a lot of the area's jurisdiction is
-    asked, under its own or its home jurisdiction as s5o's overlays are; a
-    row with no shape says nothing."""
+    Both readings shrink the lot by :data:`flats.geom.drawn.TOUCH_SHRINK_FT`
+    (0.5 ft) first, so a shared lot line alone is not a touch. Red is a lot
+    on the traced area itself, where a ruling makes that RED
+    (``Traced.red_ruling``). The closer look is every other lot on the area
+    grown by its drawn line's width (``EDGE_FT``): the tracing cannot say
+    whether such a lot touches."""
     reach = {row.get("jurisdiction"), row.get("home_jurisdiction")}
     areas = [t for t in TRACED if t.jurisdiction in reach]
     lot_wkb = row.get("lot_wkb")
     if not areas or not isinstance(lot_wkb, (bytes, bytearray, memoryview)):
-        return ()
+        return (), ()
     import shapely
 
     lot_geom = shapely.from_wkb(bytes(lot_wkb))
-    return tuple(t.key for t in areas if touches_area(lot_geom, load_edged_area(t.file)))
+    closer: list[str] = []
+    red: list[str] = []
+    for t in areas:
+        if t.red_ruling and touches_area(lot_geom, load_area(t.file)):
+            red.append(t.key)
+        elif touches_area(lot_geom, load_edged_area(t.file)):
+            closer.append(t.key)
+    return tuple(closer), tuple(red)
 
 
-def traced_off(row: Mapping[str, Any]) -> Any:
-    """The ground a traced permit area takes off this lot, or None: the part
-    of the lot inside every ``unbuildable`` traced area it touches
-    (:func:`traced_permits_on`), each grown by its own ``EDGE_FT``. Nothing
-    is built or parked there, as on s5o's carves (``carve_wkb``) -- but s5o
-    never saw a traced area, so it comes off quadfit's envelope here too."""
-    keys = [k for k in traced_permits_on(row) if TRACED_BY_KEY[k].unbuildable]
-    if not keys:
-        return None
-    import shapely
-
-    lot_geom = shapely.from_wkb(bytes(row["lot_wkb"]))
-    lot_geom = lot_geom if lot_geom.is_valid else lot_geom.buffer(0)
-    taken = shapely.union_all([lot_geom.intersection(load_edged_area(TRACED_BY_KEY[k].file)) for k in keys])
-    return None if taken.is_empty else taken
+def traced_permits_on(row: Mapping[str, Any]) -> tuple[str, ...]:
+    """The keys of every traced permit area this lot holds as a closer look:
+    on the area, or within its drawn line's width of it, and not RED by a
+    ruling (:func:`open_space_on`)."""
+    return _traced_on(row)[0]
 
 
-def _with(carve: Any, more: Any) -> Any:
-    """``carve`` and ``more`` as one ground; either may be None."""
-    if more is None or more.is_empty:
-        return carve
-    if carve is None or carve.is_empty:
-        return more
-    return carve.union(more)
+def open_space_on(row: Mapping[str, Any]) -> tuple[str, ...]:
+    """The keys of the mapped open space this lot touches, where a standing
+    ruling makes touching it RED outright
+    (:attr:`flats.score.screen.LotFacts.open_space`; Steph 2026-11-18,
+    rulings.yaml 2026-11-18-clackamas-open-space-red). The traced area
+    itself, not its edge band, against the lot less a 0.5 ft rim."""
+    return _traced_on(row)[1]
 
 
 def _own_ground(row: Mapping[str, Any], lot_geom: Any) -> Any:
@@ -1177,15 +1178,9 @@ class QuadfitLot:
     #: s4's edges, classed the way :mod:`flats.geom.envelope` cuts them;
     #: None where s4 traced none.
     edges: LotEdges | None = None
-    #: The ground s5o's carve overlays take off the lot (``carve_wkb``), and
-    #: with it the ground a traced permit area takes (``traced``); None where
-    #: none touches it.
+    #: The ground s5o's carve overlays take off the lot (``carve_wkb``);
+    #: None where none touches it.
     carve: Any = None
-    #: The part of ``carve`` s5o never saw: the lot's ground inside an
-    #: unbuildable traced permit area (:func:`traced_off`). Kept apart only
-    #: so it can come off quadfit's own envelope, which s5o carved without
-    #: it. None where no such area touches the lot.
-    traced: Any = None
     #: The lot ground beyond 200 ft of the named streets, where the code
     #: asks for the dwelling within that reach (``reach_off_wkb``,
     #: :mod:`flats.geom.named_street`); taken off like the carve. None
@@ -1810,11 +1805,7 @@ def envelope_for(
     if on_lot is not None and strip > 0:
         # No line named: keep the strip off every line (conservative).
         on_lot = on_lot.buffer(-strip)
-    fallback = (
-        None
-        if lot.envelope is None
-        else _less_carve(_less_carve(_less_carve(lot.envelope, lot.steep), lot.reach_off), lot.traced)
-    )
+    fallback = None if lot.envelope is None else _less_carve(_less_carve(lot.envelope, lot.steep), lot.reach_off)
     quadfit = Envelope(
         fallback, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot, yards_read=False
     )
@@ -2212,6 +2203,8 @@ def lot_from_row(
         # A permit to build on mapped stream, wetland, habitat or flood
         # ground: a closer look (FOLLOWUPS 42(b)/(c)).
         resource_permits=permits_on(row) + traced_permits_on(row),
+        # Mapped open space the lot touches: RED outright (Steph 2026-11-18).
+        open_space=open_space_on(row),
         corner_read_as_bend=bend,
         curve_on_the_line=curve_on_the_line(row, layers) if bend else None,
         inside_ugb=inside_ugb_of(row),
@@ -2226,7 +2219,6 @@ def lot_from_row(
     wkb = row.get("wkb")
     envelope = shapely.from_wkb(wkb) if wkb else None
     carve_wkb = row.get("carve_wkb")
-    traced = traced_off(row)
     return QuadfitLot(
         tlid=str(row["TLID"]),
         jurisdiction=juris,
@@ -2239,8 +2231,7 @@ def lot_from_row(
         lot_geom=lot_geom,
         edges=edges,
         neighbour_lines=_neighbour_lines(row, layers),
-        carve=_with(shapely.from_wkb(carve_wkb) if carve_wkb else None, traced),
-        traced=traced,
+        carve=shapely.from_wkb(carve_wkb) if carve_wkb else None,
         reach_off=shapely.from_wkb(row["reach_off_wkb"]) if row.get("reach_off_wkb") else None,
         rear_runs=(
             rear_cover_runs(

@@ -376,10 +376,12 @@ class Traced:
     #: The tracing, under ``flats/config/areas``; the file states how it was
     #: made and how far off its edge can be (``EDGE_FT`` per feature).
     file: str
-    #: Whether the traced ground is also taken off the lot, as one of s5o's
-    #: carves is: nothing built or parked on it, and a plan that cannot stand
-    #: clear of it misses. False where touching it is only a closer look.
-    unbuildable: bool = False
+    #: The standing ruling (its id in ``flats/config/rulings.yaml``) under
+    #: which a lot that touches the traced area itself is RED outright,
+    #: whatever would fit beside it; '' where touching is only a closer look.
+    #: A lot inside the tracing's ``EDGE_FT`` band and off the traced area is
+    #: the closer look either way: the tracing cannot say whether it touches.
+    red_ruling: str = ""
 
 
 #: Clackamas County's open space (FOLLOWUPS 204, ZDO 1011 and 1103 read whole
@@ -398,16 +400,27 @@ class Traced:
 #: Table 1001-1 does not apply Section 1011 to a quadplex or townhouse in the
 #: R and VR districts at all (zdo.1001, the two middle-housing rows), where
 #: 1103.01 still states its own reach. Steph ruled both 2026-11-18
-#: (rulings.yaml 2026-11-18-clackamas-open-space-red): the traced open space,
-#: with the 14 ft its drawn line is wide, is unbuildable ground in every
-#: zone, the standard residential zones included. A lot where the building
-#: cannot be fitted clear of it is RED; a lot touching it where the building
-#: fits clear stays the closer look.
+#: (rulings.yaml 2026-11-18-clackamas-open-space-red): "if its free of mapped
+#: open space, it's available to be green. If it's touching open space, it's
+#: a red. We aren't fighting on developing open space." So in every zone, the
+#: standard residential zones included:
+#:
+#: * a lot that touches the traced open space itself is RED outright,
+#:   whatever would fit beside it (``red_ruling``;
+#:   :data:`flats.score.screen.MAPPED_OPEN_SPACE`). "Touches" is the test
+#:   every overlay flag uses: the lot less a 0.5 ft rim
+#:   (:data:`flats.geom.drawn.TOUCH_SHRINK_FT`), so a shared lot line alone
+#:   is not a touch;
+#: * a lot off the traced area but within the 14 ft its drawn line is wide
+#:   stays the closer look (YELLOW): the tracing cannot say whether it
+#:   touches, and neither GREEN nor RED is shown by it;
+#: * a lot clear of both carries nothing from this rule.
 TRACED: tuple[Traced, ...] = (
     Traced(
         "clackamas_open_space",
-        "open space on Clackamas County's Comprehensive Plan Map 4-06 (traced from the map; "
-        "its edge is good to about 14 ft)",
+        "the lot is within about 14 ft of open space on Clackamas County's Comprehensive Plan "
+        "Map 4-06 -- the width of the line the map draws it with, so the tracing cannot say "
+        "whether the lot touches it; a lot that does touch it is red (Steph 2026-11-18)",
         "ZDO 1103.01 (Open Space Review for development that affects an open space resource "
         "shown on Map IV-6 as Resource Protection, Major Hazards, or Public and Community Use "
         "Open Space); 1103.02 (Type II; impact evaluated, alternatives identified); 1011.02(A)-(C) "
@@ -415,7 +428,7 @@ TRACED: tuple[Traced, ...] = (
         "open space preserved outright, second-priority to the maximum extent possible)",
         jurisdiction="clackamas_unincorporated",
         file="or/clackamas/_unincorporated/zdo-map-4-06-open-space.geojson",
-        unbuildable=True,
+        red_ruling="2026-11-18-clackamas-open-space-red",
     ),
 )
 

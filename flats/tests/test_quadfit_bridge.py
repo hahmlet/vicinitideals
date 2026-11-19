@@ -997,23 +997,28 @@ def test_clackamas_slide_ground_under_the_building_is_red_and_beside_it_yellow(c
     assert flooded_fit < 0 and flooded.signed.colour is flag_plan.Colour.red
 
 
-def test_clackamas_open_space_under_the_building_is_red_and_beside_it_yellow(corpus, policies) -> None:
+def test_a_clackamas_lot_on_mapped_open_space_is_red_whatever_fits_beside_it(corpus, policies) -> None:
     """Steph 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red):
-    the open space traced off Comprehensive Plan Map 4-06, with the 14 ft its
-    drawn line is wide, is unbuildable ground in every zone. No quadfit
-    column carries it; the bridge reads it off the lot's own shape and takes
-    it off the lot (:func:`flats.ingest.quadfit.traced_off`), so the real
-    tracing stands under these lots."""
+    "if its free of mapped open space, it's available to be green. If it's
+    touching open space, it's a red. We aren't fighting on developing open
+    space." No quadfit column carries the open space traced off
+    Comprehensive Plan Map 4-06; the bridge reads it off the lot's own
+    shape, so the real tracing stands under these lots. A lot on the traced
+    area is RED though the building fits clear of it; a lot only within the
+    14 ft its drawn line is wide stays YELLOW; a lot clear of both is what
+    it was."""
     from shapely.geometry import shape as geometry
 
-    from flats.geom.drawn import load_edged_area
+    from flats.geom.drawn import load_area
     from flats.rules.loader import AREAS_ROOT
     from flats.score import flags as flag_plan
+    from flats.score.screen import MAPPED_OPEN_SPACE, OPEN_SPACE_CHECK
 
     file = "or/clackamas/_unincorporated/zdo-map-4-06-open-space.geojson"
-    edged = load_edged_area(file)
+    mapped = load_area(file)
     feats = json.loads((AREAS_ROOT / file).read_text(encoding="utf-8"))["features"]
     traced = [geometry(f["geometry"]).buffer(0) for f in feats if f["properties"]["EDGE_FT"] == 14]
+    key = ("clackamas_open_space",)
     w, d = 80, 160
 
     def screened(x0: float, y0: float, **over):
@@ -1040,41 +1045,40 @@ def test_clackamas_open_space_under_the_building_is_red_and_beside_it_yellow(cor
         fit = next(c for c in s.screening.checks if c.check == "fit_ft")
         return lot, s, fit.slack
 
-    # Beside it: 8 ft east of the tracing's easternmost point, so the 14 ft
-    # line reaches 6 ft into the lot's west side. The building fits clear.
     east = max(traced, key=lambda g: g.bounds[2])
     x = east.bounds[2]
     y = next(c[1] for part in getattr(east, "geoms", [east]) for c in part.exterior.coords if c[0] == x)
-    lot, beside, fit = screened(x + 8, y - d / 2)
-    assert lot.facts.resource_permits == ("clackamas_open_space",)
-    assert lot.traced is not None and 0 < lot.traced.area < 0.05 * w * d
-    assert fit >= 0 and beside.drawing is not None and beside.drawing["fits"]
-    assert beside.signed.colour is flag_plan.Colour.yellow and beside.signed.triage is not Triage.green
-    # The ruling asks about the building, and the envelope it is placed in.
-    # The lane and the court are not asked here: the fitter lets both ride
-    # one side yard (side_yard_lane_overlap_ft, side_yard_court_overlap_ft),
-    # that overlap is checked against no carve, and this strip lies in that
-    # yard. The lot is YELLOW on the flag either way, never GREEN.
-    assert beside.envelope.geom.intersection(lot.traced).area < 1.0
-    assert shapely.Polygon(beside.drawing["building"]).intersection(lot.traced).area < 1.0
-    # The same lot 12 ft further east is clear of the line: no flag, no loss.
+    # Clear: 20 ft east of the tracing's easternmost point. Nothing from this rule.
     lot, clear, clear_fit = screened(x + 20, y - d / 2)
-    assert lot.facts.resource_permits == () and lot.traced is None and lot.carve is None
+    assert lot.facts.open_space == () and lot.facts.resource_permits == () and lot.carve is None
     assert clear_fit >= 0 and clear.signed.colour is not flag_plan.Colour.red
-    # Wholly inside it: nowhere to fit the building clear.
-    for big in sorted(traced, key=lambda g: -g.area):
-        spot = big.representative_point()
-        if edged.contains(shapely.box(spot.x - w / 2, spot.y - d / 2, spot.x + w / 2, spot.y + d / 2)):
-            break
-    else:
-        raise AssertionError("no traced open space holds an 80 x 160 ft lot")
-    lot, under, under_fit = screened(spot.x - w / 2, spot.y - d / 2)
-    assert lot.traced is not None and lot.traced.area == pytest.approx(w * d, abs=1.0)
-    assert under_fit < 0 and not (under.drawing or {}).get("fits")
-    assert under.signed.colour is flag_plan.Colour.red
+    assert not any(b.check == OPEN_SPACE_CHECK for b in clear.signed.binds)
+    # In the line's width: 8 ft east of it. The tracing cannot say whether
+    # the lot touches -- YELLOW, with the plan exactly where the clear lot's is.
+    lot, beside, fit = screened(x + 8, y - d / 2)
+    assert lot.facts.open_space == () and lot.facts.resource_permits == key and lot.carve is None
+    assert fit == clear_fit and beside.drawing is not None and beside.drawing["fits"]
+    assert beside.signed.colour is flag_plan.Colour.yellow and beside.signed.triage is not Triage.green
+    # On it: the lot's west 6 ft lie over the tracing's easternmost point, a
+    # sliver in a side yard the building never needs. RED all the same.
+    lot, on, on_fit = screened(x - 6, y - d / 2)
+    over = shapely.box(x - 6, y - d / 2, x - 6 + w, y + d / 2).intersection(mapped).area
+    assert 0 < over < 0.05 * w * d
+    assert lot.facts.open_space == key and lot.facts.resource_permits == () and lot.carve is None
+    assert on_fit == clear_fit  # the building fits as well as on the clear lot
+    for answer in (on.screening, on.signed):
+        assert answer.triage is Triage.red and answer.colour is flag_plan.Colour.red
+        assert answer.reasons == (MAPPED_OPEN_SPACE,)
+        assert [b.check for b in answer.binds] == [OPEN_SPACE_CHECK]
+        assert "2026-11-18-clackamas-open-space-red" in answer.binds[0].source
+    # Wholly inside it: RED the same way.
+    spot = max(traced, key=lambda g: g.area).representative_point()
+    lot, under, _ = screened(spot.x - w / 2, spot.y - d / 2)
+    assert lot.facts.open_space == key and under.signed.colour is flag_plan.Colour.red
+    assert MAPPED_OPEN_SPACE in under.signed.reasons
     # Another jurisdiction's lot on the same ground is not asked.
     lot, _, _ = screened(spot.x - w / 2, spot.y - d / 2, jurisdiction="portland", zone="R5")
-    assert lot.traced is None and lot.facts.resource_permits == ()
+    assert lot.facts.open_space == () and lot.facts.resource_permits == ()
 
 
 def test_ground_beyond_the_named_street_reach_comes_off_the_envelope(corpus, policies) -> None:
