@@ -3633,3 +3633,86 @@
     flats/clackamas-fixes (FOLLOWUPS 204); not live until that branch is
     released.
   source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/clackamas-fixes.handoff.md
+- id: 2026-11-18-clackamas-open-space-red
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    The county open space map (Comprehensive Plan Map 4-06, ZDO 1011) is not
+    applied by the county table to fourplexes in standard residential zones.
+    Keep the cautious YELLOW, or release those zones?
+  ruling: '"red"'
+  effect: >-
+    Read by the coordinator alongside the same-day flood and landslide
+    rulings: mapped open space (traced, with its 14 ft line-width buffer) is
+    unbuildable ground in every zone; a lot where the building cannot be
+    fitted clear of it is RED, and a lot touching it where the building fits
+    clear stays YELLOW. Five greens. Built on flats/clackamas-fixes
+    (FOLLOWUPS 204); not live until that branch is released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-housing-authority-land-yellow
+  kind: ruling
+  date: 2026-11-18
+  scope: {}
+  question: >-
+    Does land owned by a housing authority (Home Forward) count as public
+    land, RED under 2026-10-06 institutional land?
+  ruling: '"housing-authority land is yellow"'
+  effect: >-
+    Housing-authority land is YELLOW with a plain reason, not RED. Other
+    government-owned land stays RED. Nine Multnomah greens. Built on
+    flats/gap-fixes (FOLLOWUPS 205); not live until that branch is released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-county-street-maps-stand-in-canby
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: canby}
+  question: >-
+    May the county street-class maps stand in for the city own map when
+    holding driveway spacing on busy streets, as ruled for Cornelius?
+  ruling: '"yes"'
+  effect: >-
+    County street maps are used for driveway spacing in this city. Greens
+    on busy streets go YELLOW. Built on flats/gap-fixes (FOLLOWUPS 205);
+    not live until that branch is released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-county-street-maps-stand-in-gladstone
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: gladstone}
+  question: >-
+    May the county street-class maps stand in for the city own map when
+    holding driveway spacing on busy streets, as ruled for Cornelius?
+  ruling: '"yes"'
+  effect: >-
+    County street maps are used for driveway spacing in this city. Greens
+    on busy streets go YELLOW. Built on flats/gap-fixes (FOLLOWUPS 205);
+    not live until that branch is released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-county-street-maps-stand-in-hillsboro
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: washington, city: hillsboro}
+  question: >-
+    May the county street-class maps stand in for the city own map when
+    holding driveway spacing on busy streets, as ruled for Cornelius?
+  ruling: '"yes"'
+  effect: >-
+    County street maps are used for driveway spacing in this city. Greens
+    on busy streets go YELLOW. Built on flats/gap-fixes (FOLLOWUPS 205);
+    not live until that branch is released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-milwaukie-side-yards-5-and-10
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: milwaukie}
+  question: >-
+    Milwaukie larger lots need side yards of 5 ft and 10 ft. Require 10 ft on
+    both sides, or leave unheld until the pair can be held exactly?
+  ruling: '"5 on one, 10 on the other"'
+  effect: >-
+    The pair is held exactly as the code prints it: one side yard 5 ft, the
+    other 10 ft; the placement may put the 10 ft on either side. Being built
+    on flats/gap-fixes (FOLLOWUPS 205); not live until that branch is
+    released.
+  source: Steph 2026-11-18 (chat)
