@@ -15,6 +15,10 @@ one a full setback past its ends; at an inward bend in a line that took a
 sliver up to a setback deep beyond the bend (Tigard 2S103BA00137, a 4.5 deg
 front bend, pushed the building to 21.08 ft against a 20 ft front maximum).
 
+Each strip is measured from the lot line the edge stands for, not from the
+edge: an edge is a chord of the simplified ring, and where the lot's own line
+bows inside it the strip is widened by that much (:func:`_sag`).
+
 *Uniform inward buffer.* For irregular and flag-shaped lots, shrink the whole
 lot by the largest setback. Strictly smaller than the truth, often by a lot, and
 that is the point: on a shape where naming the front is guesswork, an envelope
@@ -96,6 +100,7 @@ import dataclasses
 import math
 from dataclasses import dataclass
 
+import numpy as np
 import shapely
 from shapely.geometry import LineString, MultiPolygon, Point, Polygon
 from shapely.geometry.base import BaseGeometry
@@ -104,6 +109,17 @@ from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier
 
 #: Envelope fragments below this hold nothing worth rasterizing.
 MIN_PART_SQFT = 200.0
+
+#: The most a lot line may stray from the edge that stands for it. The edges
+#: the bridge reads are quadfit s4's, the lot's ring simplified at
+#: ``geometry.simplify_tolerance_ft`` (Lot Analysis/quadfit/config/rules.yaml,
+#: 1.5 ft; ``flats/tests/test_envelope_sag.py`` holds this figure to it). Used
+#: only where an edge cannot be found on the lot's own ring (:func:`_sag`).
+SMOOTH_FT = 1.5
+
+#: How near an edge's end a vertex of the lot's own ring must lie to be that
+#: end, in feet. Simplifying keeps vertices, it does not move them.
+SNAP_FT = 0.05
 
 #: Chords per half-disc at a strip's end (:func:`_strip`). Even, so a chord's
 #: midpoint (not a corner) sits straight off the line's end and the strip
@@ -345,6 +361,117 @@ def _pieces(edge: Edge, setbacks: Setbacks) -> list[tuple[Segment, float]]:
     return out
 
 
+Ring = tuple[np.ndarray, bool, LineString]
+
+
+def _rings(lot: BaseGeometry) -> list[Ring]:
+    """Each ring of ``lot``: its vertices (the closing one dropped), whether
+    the lot's ground lies to the left of the way the ring runs, and the ring."""
+    out: list[Ring] = []
+    for part in shapely.get_parts(lot):
+        if part.geom_type != "Polygon" or part.is_empty:
+            continue
+        for k, ring in enumerate((part.exterior, *part.interiors)):
+            xy = np.asarray(ring.coords, dtype=float)[:-1, :2]
+            if len(xy) >= 3:
+                out.append((xy, ring.is_ccw if k == 0 else not ring.is_ccw, ring))
+    return out
+
+
+def _bow(pts: np.ndarray, x1: float, y1: float, x2: float, y2: float, lot_on_left: bool) -> float:
+    """The farthest of ``pts`` from the chord, counting those on the lot's
+    side of it and those past its ends."""
+    if not len(pts):
+        return 0.0
+    length = math.hypot(x2 - x1, y2 - y1)
+    ux, uy = (x2 - x1) / length, (y2 - y1) / length
+    rx, ry = pts[:, 0] - x1, pts[:, 1] - y1
+    along = rx * ux + ry * uy
+    left = ux * ry - uy * rx
+    at = np.clip(along, 0.0, length)
+    off = np.hypot(rx - at * ux, ry - at * uy)
+    inside = (left > 0) if lot_on_left else (left < 0)
+    counted = np.where(inside | (along < 0) | (along > length), off, 0.0)
+    return float(counted.max())
+
+
+def _sag(rings: list[Ring], x1: float, y1: float, x2: float, y2: float) -> float:
+    """How far, in feet, the lot's own line runs INSIDE the edge that stands
+    for it (FOLLOWUPS 205).
+
+    An edge is a chord of the simplified ring (or a stretch of one: s4 splits
+    a line where the neighbour changes): the lot line between its two ends
+    may bow up to the simplifying tolerance either way. Where it bows into
+    the lot, a yard measured from the chord is that much short of the yard
+    measured from the lot line (Portland 1S3E06BD -09500, a curved front:
+    13.7 ft of a 15 ft front yard). The strip is widened by this figure, so
+    no kept point is nearer the true line than the setback. A bow outward
+    needs nothing: the chord is then the nearer of the two.
+
+    The line is the shorter run of the ring between the edge's two ends, and
+    the figure is the farthest of its vertices on the lot's side of the
+    chord -- exact, since both are straight between vertices. Zero on an
+    edge that is a lot line as drawn. The ends are the ring's own vertices
+    where the edge ends on them; otherwise the nearest points of the ring,
+    no farther off than a chord can lie. An edge that is not on the ring at
+    all is not read: it takes :data:`SMOOTH_FT`, the most the line can stray.
+    """
+    if math.hypot(x2 - x1, y2 - y1) <= 0:
+        return 0.0
+    for xy, lot_on_left, _ring in rings:
+        d1 = np.hypot(xy[:, 0] - x1, xy[:, 1] - y1)
+        i = int(d1.argmin())
+        if d1[i] > SNAP_FT:
+            continue
+        d2 = np.hypot(xy[:, 0] - x2, xy[:, 1] - y2)
+        j = int(d2.argmin())
+        if d2[j] > SNAP_FT or i == j:
+            continue
+        n = len(xy)
+        ahead = [(i + k) % n for k in range(1, (j - i) % n)]  # i to j, the ring's way
+        back = [(j + k) % n for k in range(1, (i - j) % n)]  # j to i, the ring's way
+        if not ahead or not back:
+            return 0.0  # the edge is one of the ring's own segments
+
+        def run(idx: list[int], a: int, b: int, xy: np.ndarray = xy) -> float:
+            return float(np.hypot(*np.diff(xy[[a, *idx, b]], axis=0).T).sum())
+
+        # The lot is on the chord's left where the chord runs the ring's way
+        # and the lot is on the ring's left.
+        if run(ahead, i, j) <= run(back, j, i):
+            return _bow(xy[ahead], x1, y1, x2, y2, lot_on_left)
+        return _bow(xy[back], x1, y1, x2, y2, not lot_on_left)
+    return _sag_between_vertices(rings, x1, y1, x2, y2)
+
+
+def _sag_between_vertices(rings: list[Ring], x1: float, y1: float, x2: float, y2: float) -> float:
+    """:func:`_sag` for an edge that ends between the ring's vertices."""
+    from shapely.ops import substring
+
+    reach = SMOOTH_FT + SNAP_FT
+    p1, p2 = Point(x1, y1), Point(x2, y2)
+    for _xy, lot_on_left, ring in rings:
+        if ring.distance(p1) > reach or ring.distance(p2) > reach:
+            continue
+        s1, s2, total = ring.project(p1), ring.project(p2), ring.length
+        lo, hi = min(s1, s2), max(s1, s2)
+        if hi - lo <= 0:
+            continue
+        if hi - lo <= total - (hi - lo):
+            pts = np.asarray(substring(ring, lo, hi).coords, dtype=float)[:, :2]
+            with_ring = s1 < s2
+        else:
+            pts = np.vstack(
+                [
+                    np.asarray(substring(ring, hi, total).coords, dtype=float)[:, :2],
+                    np.asarray(substring(ring, 0.0, lo).coords, dtype=float)[:, :2],
+                ]
+            )
+            with_ring = s1 > s2
+        return _bow(pts, x1, y1, x2, y2, lot_on_left == with_ring)
+    return SMOOTH_FT
+
+
 def _strip(x1: float, y1: float, x2: float, y2: float, d: float) -> Polygon:
     """Every point within ``d`` of the segment, and no more than a sag beyond.
 
@@ -465,16 +592,22 @@ def buildable(
         return _clean(_less(env, less), min_part_sqft)
 
     strips = []
+    rings = _rings(lot)
     for i, edge in enumerate(edges.edges):
         pieces = (
             [((edge.x1, edge.y1, edge.x2, edge.y2), setbacks.for_far_rear_edge(edge))]
             if i in far_rear
             else _pieces(edge, setbacks)
         )
+        sag: float | None = None
         for (x1, y1, x2, y2), d in pieces:
             if d <= 0:
                 continue
-            strips.append(_strip(x1, y1, x2, y2, d))
+            if sag is None:
+                # The whole edge's, on every stretch of it: the yard is
+                # measured from the lot line, not from the chord (:func:`_sag`).
+                sag = _sag(rings, edge.x1, edge.y1, edge.x2, edge.y2)
+            strips.append(_strip(x1, y1, x2, y2, d + sag))
     env = lot.difference(shapely.union_all(strips)) if strips else lot
     env = _by_bearing(lot, env, edges, setbacks)
     return _clean(_less(env, less), min_part_sqft)
