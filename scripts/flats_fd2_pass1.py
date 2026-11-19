@@ -395,7 +395,11 @@ def state_figures(out: Path, *, call_usgs: bool = True) -> dict[str, Any]:
     for r in recs:
         r["usgs_grid_lat"], r["usgs_grid_lon"] = cell(r.get("lat")), cell(r.get("lon"))
     cells = sorted({(r["usgs_grid_lat"], r["usgs_grid_lon"]) for r in recs if r["usgs_grid_lat"] is not None})
-    got = _usgs_cells(cells, out / "usgs_asce716_cells.json") if call_usgs else {}
+    cache = out / "usgs_asce716_cells.json"
+    if call_usgs:
+        got = _usgs_cells(cells, cache)
+    else:  # no calls: the cached answers only
+        got = json.loads(cache.read_text(encoding="utf-8")) if cache.exists() else {}
     for r in recs:
         a = got.get(f"{r['usgs_grid_lat']:.2f},{r['usgs_grid_lon']:.2f}") if r["usgs_grid_lat"] is not None else None
         a = a if a and not a.get("error") else {}
