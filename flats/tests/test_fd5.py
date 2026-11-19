@@ -157,3 +157,41 @@ def test_frost_row_marks_the_whole_code_search_places_only():
     unread = s.frost_row(row, {"outcome": "not_read", "reference": {"inches": 12}})
     assert unread["frost_register_in"] == "" and unread["frost_register_level"] == "not resolved"
     assert not unread["frost_register_note"].startswith(s.SILENT_WORDS)
+
+
+def test_static_reasons_keeps_depth_one_rules_above_zero_highest_first():
+    m = _script()
+    d = m.DWELLINGS
+    rows = [
+        {"cokey": "1", "mrulename": d, "ruledepth": "0", "rulename": d, "interphr": "1", "interphrc": "Very limited"},
+        {"cokey": "1", "mrulename": d, "ruledepth": "1", "rulename": "Shrink-swell", "interphr": "0.5"},
+        {"cokey": "1", "mrulename": d, "ruledepth": "1", "rulename": "Flooding", "interphr": "1"},
+        {"cokey": "1", "mrulename": d, "ruledepth": "1", "rulename": "Depth to bedrock", "interphr": "0"},
+        {"cokey": "1", "mrulename": "ENG - Septic", "ruledepth": "1", "rulename": "Ponding", "interphr": "1"},
+        {"cokey": "2", "mrulename": d, "ruledepth": "1", "rulename": "Slope", "interphr": "1"},
+    ]
+    words, overall = m.static_reasons(rows, {"1"})
+    assert words == {"1": "Flooding (1.00); Shrink-swell (0.50)"}
+    assert overall == {"1": ("Very limited", "1")}
+
+
+@pytest.mark.parametrize("sep", [",", "|"])
+def test_fill_reasons_static_fills_by_cokey_and_compares_the_rating(tmp_path, sep):
+    m = _script()
+    lots = tmp_path / "lots.csv"
+    lots.write_text("tlid,cokey,dwellings_rating,dwellings_reasons\nA B,1,Very limited,\nC,2,Not limited,\nD,,,\n",
+                    encoding="utf-8")
+    d = m.DWELLINGS
+    cells = [
+        ["1", "340", d, "0", "340", d, "0", "1", "Very limited", "0", "0", "0", "9"],
+        ["1", "340", d, "1", "77", "Flooding", "1", "1", "", "0", "0", "0", "10"],
+        ["2", "340", d, "0", "340", d, "0", "", "Somewhat limited", "0", "0", "0", "11"],
+    ]
+    rows = tmp_path / "rows.txt"
+    rows.write_text("\n".join(sep.join(f'"{c}"' for c in line) for line in cells) + "\n", encoding="utf-8")
+    out = tmp_path / "out.csv"
+    got = m.fill_reasons_static(lots, rows, out)
+    assert got["lots_filled"] == 1 and got["rating_vs_lot_file"] == {"same": 1, "differ": 1}
+    text = out.read_text(encoding="utf-8").splitlines()
+    assert text[0] == "tlid,cokey,dwellings_rating,dwellings_reasons"
+    assert text[1] == "A B,1,Very limited,Flooding (1.00)" and text[3] == "D,,,"

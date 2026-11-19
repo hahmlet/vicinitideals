@@ -366,6 +366,83 @@ def refresh_frost(lot_csv: Path, out_csv: Path) -> dict[str, Any]:
     return {"rows": len(recs), "changed": dict(changed)}
 
 
+# --- dwellings reasons from the static SSURGO tabular file ----------------------
+
+#: The column order of SSURGO's ``cointerp.csv`` (the CONUS tabular package),
+#: for rows read without their header line.
+COINTERP_COLS = ("cokey", "mrulekey", "mrulename", "seqnum", "rulekey", "rulename", "ruledepth",
+                 "interphr", "interphrc", "nullpropdatabool", "defpropdatabool", "incpropdatabool",
+                 "cointerpkey")
+DWELLINGS = "ENG - Dwellings W/O Basements"
+
+
+def static_reasons(rows: Any, cokeys: set[str]) -> tuple[dict[str, str], dict[str, tuple[str, str]]]:
+    """From ``cointerp`` rows (dicts keyed by :data:`COINTERP_COLS`) return,
+    for the wanted components, the reasons text -- the ruledepth-1 rules of
+    "dwellings without basements" with a value above 0, highest first, as
+    pass 1 wrote them ("name (0.xx)") -- and the overall (ruledepth 0) rating
+    and value, for checking against the lot file's ``dwellings_rating``."""
+    found: dict[str, list[tuple[float, str]]] = defaultdict(list)
+    overall: dict[str, tuple[str, str]] = {}
+    for row in rows:
+        k = str(row.get("cokey") or "").strip()
+        if k not in cokeys or row.get("mrulename") != DWELLINGS:
+            continue
+        depth = str(row.get("ruledepth") or "").strip()
+        if depth == "0":
+            overall[k] = (str(row.get("interphrc") or "").strip(), str(row.get("interphr") or "").strip())
+        elif depth == "1":
+            try:
+                v = float(row.get("interphr") or "")
+            except ValueError:
+                continue
+            name = str(row.get("rulename") or "").strip()
+            if v > 0 and name:
+                found[k].append((v, name))
+    words = {k: "; ".join(f"{n} ({v:.2f})" for v, n in sorted(vn, key=lambda x: (-x[0], x[1])))
+             for k, vn in found.items()}
+    return words, overall
+
+
+def fill_reasons_static(lot_csv: Path, rows_csv: Path, out_csv: Path) -> dict[str, Any]:
+    """Fill ``dwellings_reasons`` by each lot's ``cokey`` from ``rows_csv``
+    (``cointerp.csv`` lines, header or not); every other column is kept.
+    Returns the counts and every component's file rating beside the lot file's."""
+    with open(lot_csv, newline="", encoding="utf-8") as fh:
+        rd = csv.DictReader(fh)
+        keys = list(rd.fieldnames or [])
+        recs = list(rd)
+    cokeys = {r["cokey"].strip() for r in recs if (r.get("cokey") or "").strip()}
+    with open(rows_csv, newline="", encoding="utf-8-sig") as fh:
+        # The CONUS package is comma-separated; a Web Soil Survey area zip's
+        # tabular/cointerp.txt is pipe-separated. Both keep this column order.
+        delim = "|" if "|" in fh.readline() else ","
+        fh.seek(0)
+        rows = (dict(zip(COINTERP_COLS, line, strict=False)) for line in csv.reader(fh, delimiter=delim))
+        words, overall = static_reasons(rows, cokeys)
+    filled = 0
+    agree: Counter = Counter()
+    pairs: dict[str, tuple[str, str]] = {}
+    for r in recs:
+        k = (r.get("cokey") or "").strip()
+        if not k:
+            continue
+        r["dwellings_reasons"] = words.get(k, "")
+        filled += bool(words.get(k))
+        file_rating = overall.get(k, ("", ""))[0]
+        pairs[k] = (file_rating, r.get("dwellings_rating") or "")
+        agree["same" if file_rating == (r.get("dwellings_rating") or "") else "differ"] += 1
+    tmp = out_csv.with_suffix(".tmp")
+    with open(tmp, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=keys)
+        w.writeheader()
+        w.writerows(recs)
+    tmp.replace(out_csv)
+    return {"rows": len(recs), "components": len(cokeys), "components_with_reasons": len(words),
+            "components_rated": len(overall), "lots_filled": filled, "rating_vs_lot_file": dict(agree),
+            "pairs": pairs}
+
+
 # --- summary --------------------------------------------------------------------
 
 COUNTIES = ("clackamas", "multnomah", "washington")
@@ -496,6 +573,10 @@ def main(argv: list[str] | None = None) -> int:
     rf = sub.add_parser("refresh-frost")
     rf.add_argument("--csv", required=True)
     rf.add_argument("--out", required=True)
+    fr = sub.add_parser("fill-reasons-static")
+    fr.add_argument("--csv", required=True)
+    fr.add_argument("--rows", required=True, help="cointerp.csv lines (the dwellings rule's rows)")
+    fr.add_argument("--out", required=True)
     s = sub.add_parser("summary")
     s.add_argument("--csv", required=True)
     s.add_argument("--out", required=True)
@@ -508,6 +589,10 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(join(Path(a.csv), Path(a.cols), Path(a.out))))
     elif a.cmd == "refresh-frost":
         print(json.dumps(refresh_frost(Path(a.csv), Path(a.out))))
+    elif a.cmd == "fill-reasons-static":
+        got = fill_reasons_static(Path(a.csv), Path(a.rows), Path(a.out))
+        got.pop("pairs")
+        print(json.dumps(got))
     else:
         Path(a.out).write_text(summary(Path(a.csv)), encoding="utf-8")
     return 0
