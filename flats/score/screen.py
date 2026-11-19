@@ -253,6 +253,10 @@ CLOSER_LOOK_DRIVE_TOUCH = "CLOSER_LOOK_DRIVE_TOUCH"
 #: (:func:`flats.ingest.quadfit.driveway_lot_line_checked`: Beaverton S12, 3
 #: or 6 ft by the EDM's sidewalk type). Never GREEN on the smaller figure.
 CLOSER_LOOK_DRIVEWAY_SIDEWALK = "CLOSER_LOOK_DRIVEWAY_SIDEWALK"
+#: The drive lane misses even the smaller floor where the code offers a way
+#: out the screen cannot weigh (Gladstone PWDS 5.0070(D)(5), "unless a shared
+#: driveway is installed"): a closer look, never a fail.
+CLOSER_LOOK_DRIVEWAY_LOT_LINE = "CLOSER_LOOK_DRIVEWAY_LOT_LINE"
 #: The drive lane misses even the smaller floor, with the plan slid as far
 #: from the line as the building and court allow: the standard fails.
 DRIVEWAY_LOT_LINE = "DRIVEWAY_LOT_LINE"
@@ -5286,6 +5290,7 @@ __all__ = [
     "CLOSER_LOOK_PLAN_OFF_LOT",
     "CLOSER_LOOK_DRIVE_TOUCH",
     "CLOSER_LOOK_DRIVEWAY_SIDEWALK",
+    "CLOSER_LOOK_DRIVEWAY_LOT_LINE",
     "DRIVEWAY_LOT_LINE",
     "CLOSER_LOOK_SECOND_APPROACH",
     "CLOSER_LOOK_ROOF_CORNICE",

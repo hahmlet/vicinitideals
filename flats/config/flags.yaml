@@ -1038,7 +1038,7 @@ types:
     approved_on: null
     raised_from: [CLOSER_LOOK_DRIVE_TOUCH]
   ACCESS-DRIVEWAY-SIDEWALK-TYPE:
-    description: "The drive lane clears the smaller of the code's two gaps to a lot line but not the larger, and the sidewalk type that picks one is not held (Beaverton BDC Table 60.05.60.2 S12: 3 or 6 ft by the EDM's sidewalk type; FOLLOWUPS 201 add-on G, 1S112CC06300)"
+    description: "The drive lane clears the smaller of the code's two gaps to a lot line but not the larger, and the sidewalk type that picks one is not held (Beaverton BDC Table 60.05.60.2 S12: 3 or 6 ft by the EDM's sidewalk type; FOLLOWUPS 201 add-on G, 1S112CC06300. Gladstone PWDS 5.0070(D)(5) and Standard Drawings 503A/503B: the curb cut 5 ft off the line, its wings 3 ft with the sidewalk away from the curb or 6 ft with it adjacent, so 8 or 11 ft to the lane; FOLLOWUPS 205)"
     kind: categorical
     risk: possible
     severity: 4
@@ -1046,12 +1046,27 @@ types:
     resolution: measurement
     scope: per_lot
     key: [lot]
-    path: "Find the street's sidewalk type in the Beaverton Engineering Design Manual; at the 3 ft type the plan stands"
+    path: "Find the street's sidewalk type (Beaverton: the Engineering Design Manual; Gladstone: whether the sidewalk is set back from the curb); at the smaller figure the plan stands"
     priority: next
     status: pending
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_DRIVEWAY_SIDEWALK]
+  ACCESS-DRIVEWAY-LOT-LINE:
+    description: "The drive lane misses even the smaller of the code's gaps to a side lot line, with the plan slid as far as its building and court allow, where the code offers a way out the screen cannot weigh (Gladstone PWDS 5.0070(D)(5): 'Curb cuts shall be a minimum of 5 ft. from the property line, unless a shared driveway is installed', the cut measured wing to wing, 5.0070(A); FOLLOWUPS 205)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Agree a shared driveway with the neighbour, or ask the Public Works Director for a deviation (PWDS 1.0060(D)); otherwise re-plan the drive away from the line"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_DRIVEWAY_LOT_LINE]
   # --- Portland's overlays (flats/geom/pdx_overlays.py, FOLLOWUPS 109) ------
   PDX-MAIN-STREET-TRANSIT:
     description: "The townhouse form on a lot in Portland's Centers Main Street overlay (\"m\"): PCC 33.415.300.B bars \"Houses, attached houses, and duplexes\" within 100 ft of a transit street, and four homes each on its own lot are attached houses unless the lots come from a middle housing land division (33.910). No map of the city's transit streets is held, so every street is taken as one. The apartment form (a fourplex) is not barred."

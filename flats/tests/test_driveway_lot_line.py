@@ -27,8 +27,13 @@ shapely = pytest.importorskip("shapely")
 
 from flats.geom import driveway_lot_line as dll  # noqa: E402
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg  # noqa: E402
-from flats.ingest.quadfit import DRIVEWAY_SIDEWALK, driveway_lot_line_checked  # noqa: E402
-from flats.score.screen import CLOSER_LOOK_DRIVEWAY_SIDEWALK, DRIVEWAY_LOT_LINE, Triage  # noqa: E402
+from flats.ingest.quadfit import DRIVEWAY_LOT_LINE_FLAG, DRIVEWAY_SIDEWALK, driveway_lot_line_checked  # noqa: E402
+from flats.score.screen import (  # noqa: E402
+    CLOSER_LOOK_DRIVEWAY_LOT_LINE,
+    CLOSER_LOOK_DRIVEWAY_SIDEWALK,
+    DRIVEWAY_LOT_LINE,
+    Triage,
+)
 from flats.tests.test_plan_on_lot import _green  # noqa: E402
 from flats.tests.test_quadfit_bridge import (  # noqa: E402
     corpus,  # noqa: F401  (fixture)
@@ -88,12 +93,22 @@ def test_the_gap_and_the_slide_are_measured() -> None:
     assert gap is not None and gap.reach_ft is None
 
 
-def _beaverton(corpus, policies, building_x0: float, lane_x0: float, *, west: bool = True, zone="RMC"):  # noqa: F811
+def _beaverton(
+    corpus,  # noqa: F811
+    policies,  # noqa: F811
+    building_x0: float,
+    lane_x0: float,
+    *,
+    west: bool = True,
+    zone="RMC",
+    layer="or/washington/beaverton",
+    edges: LotEdges | None = None,
+):
     _, s = _green(corpus, policies)
     some = next(iter(s.rules.values.values()))
     side = dataclasses.replace(some, name="setback_side_ft", value=5.0)
     rules = dataclasses.replace(s.rules, values={**s.rules.values, "setback_side_ft": side})
-    lot = dataclasses.replace(s.lot, layer_id="or/washington/beaverton", zone=zone, edges=_lot(west=west))
+    lot = dataclasses.replace(s.lot, layer_id=layer, zone=zone, edges=edges or _lot(west=west))
     building, lane, court = _plan(building_x0, lane_x0)
 
     def ring(g):
@@ -138,4 +153,71 @@ def test_with_no_slide_measured_it_is_yellow_not_red(corpus, policies) -> None: 
 
 def test_other_zones_are_not_asked(corpus, policies) -> None:  # noqa: F811
     s = _beaverton(corpus, policies, 5, 90, zone="R5")
+    assert driveway_lot_line_checked(s) is s
+
+
+# --- Gladstone (FOLLOWUPS 205): PWDS 5.0070(D)(5) plus Drawings 503A/503B ---
+
+
+def test_gladstone_s_figures_are_the_cut_s_5_ft_plus_its_printed_wings() -> None:
+    place = dll.place_for("or/clackamas/gladstone", "R-7.2")
+    assert place is not None and dll.place_for("or/clackamas/gladstone", "C-2") is place  # every zone
+    assert place.figures_ft == (8.0, 11.0)  # 5 + 3' (503A), 5 + 6' (503B)
+    assert place.lines == frozenset({"side"}) and place.miss == "yellow"
+    path, line = place.quote.split("#L")
+    said = (STORE / path).read_text(encoding="utf-8").splitlines()[int(line) - 1]
+    assert "Curb cuts shall be a minimum of 5 ft. from the property line, unless a shared driveway is installed" in said
+    body = __import__("yaml").safe_load(dll.CONFIG.read_text(encoding="utf-8"))["places"]["or/clackamas/gladstone"]
+    assert [(w["value"], w["drawing"], w["page"]) for w in body["wings_ft"]] == [(3, "503A", 54), (6, "503B", 55)]
+    text = (STORE / path).read_text(encoding="utf-8").splitlines()
+    assert "top of approach wing" in " ".join(text[441:444])  # 5.0070(A), L442-L444
+    assert "503A, 503B, 504A and 504B" in text[452]  # 5.0070(C), L453
+    # Beaverton is untouched by the new options.
+    beav = dll.place_for("or/washington/beaverton", "RMC")
+    assert beav is not None and beav.lines == dll.LINES and beav.miss == "red"
+
+
+def _gladstone(corpus, policies, building_x0, lane_x0, **kw):  # noqa: F811
+    return _beaverton(corpus, policies, building_x0, lane_x0, zone="R-7.2", layer="or/clackamas/gladstone", **kw)
+
+
+def test_gladstone_clear_at_eleven_feet_is_untouched(corpus, policies) -> None:  # noqa: F811
+    s = _gladstone(corpus, policies, 10, 85)  # 6 ft drawn, 5 ft room: 11
+    assert driveway_lot_line_checked(s) is s
+
+
+def test_gladstone_clear_only_at_eight_feet_is_yellow_on_the_sidewalk_type(corpus, policies) -> None:  # noqa: F811
+    s = _gladstone(corpus, policies, 8, 85)  # 6 ft drawn, 3 ft room: 9
+    got = driveway_lot_line_checked(s)
+    assert flags(got) == [DRIVEWAY_SIDEWALK]
+    assert got.signed.triage is Triage.yellow and got.screening.triage is Triage.yellow
+    assert CLOSER_LOOK_DRIVEWAY_SIDEWALK in got.signed.reasons
+
+
+def test_gladstone_short_of_eight_feet_is_yellow_never_red(corpus, policies) -> None:  # noqa: F811
+    s = _gladstone(corpus, policies, 5, 90)  # 1 ft drawn, no room: the slide is measured
+    got = driveway_lot_line_checked(s)
+    assert got.signed.triage is Triage.yellow and got.screening.triage is Triage.yellow
+    assert CLOSER_LOOK_DRIVEWAY_LOT_LINE in got.signed.reasons
+    assert [f.code for f in got.signed.flags if f.code == DRIVEWAY_LOT_LINE_FLAG] == [DRIVEWAY_LOT_LINE_FLAG]
+    assert DRIVEWAY_LOT_LINE not in got.signed.reasons
+    assert not [b for b in got.signed.binds if b.check == DRIVEWAY_LOT_LINE]
+
+
+def test_gladstone_measures_side_lines_only(corpus, policies) -> None:  # noqa: F811
+    # The rear line a foot off the lane is no curb cut's neighbour: with the
+    # side lines far, the plan stands.
+    edges = LotEdges(
+        Tier.clean,
+        (
+            _edge(0, 0, 100, 0, EdgeClass.front),
+            _edge(100, 0, 100, 61, EdgeClass.side),
+            _edge(100, 61, 0, 61, EdgeClass.rear),
+            _edge(0, 61, 0, 0, EdgeClass.side),
+        ),
+        (90.0,),
+        100.0,
+        1.0,
+    )
+    s = _gladstone(corpus, policies, 5, 40, edges=edges)  # lane 40-49: 40+ ft off each side
     assert driveway_lot_line_checked(s) is s
