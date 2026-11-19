@@ -335,7 +335,11 @@ PERMITS: tuple[Permit, ...] = (
     # 2026-11-18), held as Oregon City's geologic hazards are: the mapped
     # landslide ground is carved, and a lot holding any of it whose pod stands
     # clear still owes a permit the county may attach conditions to (Steph
-    # 2026-10-14). Two of DOGAMI's layers, so two areas.
+    # 2026-10-14). Steph ruled both halves 2026-11-18 (rulings.yaml
+    # 2026-11-18-clackamas-landslide-under-building-red): RED when the
+    # building cannot be fitted clear of the mapped ground, YELLOW when the
+    # lot holds some and the building fits clear. Two of DOGAMI's layers, so
+    # two areas.
     Permit(
         "clackamas_landslide",
         "a landslide deposit on the state's landslide map (Clackamas County mass movement hazard area)",
@@ -372,6 +376,10 @@ class Traced:
     #: The tracing, under ``flats/config/areas``; the file states how it was
     #: made and how far off its edge can be (``EDGE_FT`` per feature).
     file: str
+    #: Whether the traced ground is also taken off the lot, as one of s5o's
+    #: carves is: nothing built or parked on it, and a plan that cannot stand
+    #: clear of it misses. False where touching it is only a closer look.
+    unbuildable: bool = False
 
 
 #: Clackamas County's open space (FOLLOWUPS 204, ZDO 1011 and 1103 read whole
@@ -382,13 +390,19 @@ class Traced:
 #: weighs "the probable impact of the proposed development" and identifies
 #: "alternative development proposals" (1103.02). The county publishes no
 #: layer of it, so Map 4-06 is traced (the file says how, and that its edge
-#: is good to 14 ft). A lot touching it is a closer look and never RED on
-#: this: 1011.02(B) preserves "outright" only the high-priority open space,
-#: which turns on the resource present (wetland, land movement, slope over
-#: 35 percent) and not on the map's class, and Table 1001-1 does not apply
-#: Section 1011 to a quadplex or townhouse in the R and VR districts at all
-#: (zdo.1001, the two middle-housing rows), where 1103.01 still states its
-#: own reach. The cautious reading of both is the review, for every district.
+#: is good to 14 ft).
+#:
+#: The text leaves two things open. 1011.02(B) preserves "outright" only the
+#: high-priority open space, which turns on the resource present (wetland,
+#: land movement, slope over 35 percent) and not on the map's class; and
+#: Table 1001-1 does not apply Section 1011 to a quadplex or townhouse in the
+#: R and VR districts at all (zdo.1001, the two middle-housing rows), where
+#: 1103.01 still states its own reach. Steph ruled both 2026-11-18
+#: (rulings.yaml 2026-11-18-clackamas-open-space-red): the traced open space,
+#: with the 14 ft its drawn line is wide, is unbuildable ground in every
+#: zone, the standard residential zones included. A lot where the building
+#: cannot be fitted clear of it is RED; a lot touching it where the building
+#: fits clear stays the closer look.
 TRACED: tuple[Traced, ...] = (
     Traced(
         "clackamas_open_space",
@@ -401,6 +415,7 @@ TRACED: tuple[Traced, ...] = (
         "open space preserved outright, second-priority to the maximum extent possible)",
         jurisdiction="clackamas_unincorporated",
         file="or/clackamas/_unincorporated/zdo-map-4-06-open-space.geojson",
+        unbuildable=True,
     ),
 )
 

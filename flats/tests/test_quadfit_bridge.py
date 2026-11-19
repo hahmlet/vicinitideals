@@ -933,6 +933,150 @@ def test_a_court_drawn_in_a_carve_moves_off_it_or_the_lot_is_not_green(corpus, p
                 assert shapely.Polygon(shape).intersection(area).area < 1.0, part
 
 
+def test_clackamas_slide_ground_under_the_building_is_red_and_beside_it_yellow(corpus, policies) -> None:
+    """Steph 2026-11-18 (rulings.yaml
+    2026-11-18-clackamas-landslide-under-building-red; ZDO 1003.02(A)): a
+    county lot is RED when the building would sit on mapped slide ground and
+    cannot be fitted clear of it; a lot that holds slide ground with the
+    building fitted clear stays YELLOW. 22E07CC04200 is the first case (the
+    whole lot on a deposit), 22E08CA03200 the second (a fan across one end).
+    The flood ban of 845.01(3) rides the same carve
+    (2026-11-18-clackamas-flood-ban-red)."""
+    from flats.score import flags as flag_plan
+
+    w, d = 80, 160
+    lot = shapely.box(X0, Y0, X0 + w, Y0 + d)
+    edges = [
+        [X0, Y0, X0 + w, Y0, "F"],
+        [X0 + w, Y0, X0 + w, Y0 + d, "S"],
+        [X0 + w, Y0 + d, X0, Y0 + d, "R"],
+        [X0, Y0 + d, X0, Y0, "S"],
+    ]
+
+    def screened(area=None, **over):
+        r = row(
+            jurisdiction="clackamas_unincorporated",
+            zone="R7",
+            lot_wkb=shapely.to_wkb(lot),
+            edges_json=json.dumps(edges),
+            area_sqft=float(w * d),
+            frontage_ft=float(w),
+            lot_width_ft=float(w),
+            lot_depth_ft=float(d),
+            wkb=shapely.to_wkb(shapely.box(X0 + 5, Y0 + 5, X0 + w - 5, Y0 + d - 5)),
+            carve_wkb=None if area is None else shapely.to_wkb(area),
+            **over,
+        )
+        (s,) = screen_lot(
+            lot_from_row(r, corpus.layers), [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+        )
+        fit = next(c for c in s.screening.checks if c.check == "fit_ft")
+        return s, fit.slack
+
+    base, base_fit = screened()
+    assert base.drawing is not None and base.drawing["fits"] and base_fit >= 0
+    assert base.signed.colour is not flag_plan.Colour.red
+    # Slide ground in a corner the plan does not use: the lot holds some, the
+    # building fits clear -- never GREEN, never RED.
+    corner = shapely.box(X0 + w - 4, Y0 + d - 4, X0 + w, Y0 + d)
+    beside, beside_fit = screened(corner, ovl_clackamas_landslide=True, ovl_clackamas_landslide_core=True)
+    assert beside_fit == base_fit and beside.drawing is not None and beside.drawing["fits"]
+    assert beside.signed.colour is flag_plan.Colour.yellow
+    assert beside.signed.triage is not Triage.green
+    for part in ("building", "lane", "court"):
+        shape = beside.drawing.get(part)
+        if shape:
+            assert shapely.Polygon(shape).intersection(corner).area < 1.0, part
+    # Slide ground under everything: nowhere to fit the building clear of it.
+    for column in ("ovl_clackamas_landslide", "ovl_clackamas_landslide_scarp"):
+        under, under_fit = screened(lot, **{column: True, f"{column}_core": True})
+        assert under_fit < 0 and not (under.drawing or {}).get("fits")
+        assert under.signed.colour is flag_plan.Colour.red
+    # The flood ban: the fringe over the whole lot, flagged by fema_sfha.
+    flooded, flooded_fit = screened(lot, ovl_fema_sfha=True, ovl_clackamas_fmd=True)
+    assert flooded_fit < 0 and flooded.signed.colour is flag_plan.Colour.red
+
+
+def test_clackamas_open_space_under_the_building_is_red_and_beside_it_yellow(corpus, policies) -> None:
+    """Steph 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red):
+    the open space traced off Comprehensive Plan Map 4-06, with the 14 ft its
+    drawn line is wide, is unbuildable ground in every zone. No quadfit
+    column carries it; the bridge reads it off the lot's own shape and takes
+    it off the lot (:func:`flats.ingest.quadfit.traced_off`), so the real
+    tracing stands under these lots."""
+    from shapely.geometry import shape as geometry
+
+    from flats.geom.drawn import load_edged_area
+    from flats.rules.loader import AREAS_ROOT
+    from flats.score import flags as flag_plan
+
+    file = "or/clackamas/_unincorporated/zdo-map-4-06-open-space.geojson"
+    edged = load_edged_area(file)
+    feats = json.loads((AREAS_ROOT / file).read_text(encoding="utf-8"))["features"]
+    traced = [geometry(f["geometry"]).buffer(0) for f in feats if f["properties"]["EDGE_FT"] == 14]
+    w, d = 80, 160
+
+    def screened(x0: float, y0: float, **over):
+        edges = [
+            [x0, y0, x0 + w, y0, "F"],
+            [x0 + w, y0, x0 + w, y0 + d, "S"],
+            [x0 + w, y0 + d, x0, y0 + d, "R"],
+            [x0, y0 + d, x0, y0, "S"],
+        ]
+        over.setdefault("jurisdiction", "clackamas_unincorporated")
+        over.setdefault("zone", "R7")
+        r = row(
+            lot_wkb=shapely.to_wkb(shapely.box(x0, y0, x0 + w, y0 + d)),
+            edges_json=json.dumps(edges),
+            area_sqft=float(w * d),
+            frontage_ft=float(w),
+            lot_width_ft=float(w),
+            lot_depth_ft=float(d),
+            wkb=shapely.to_wkb(shapely.box(x0 + 5, y0 + 5, x0 + w - 5, y0 + d - 5)),
+            **over,
+        )
+        lot = lot_from_row(r, corpus.layers)
+        (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+        fit = next(c for c in s.screening.checks if c.check == "fit_ft")
+        return lot, s, fit.slack
+
+    # Beside it: 8 ft east of the tracing's easternmost point, so the 14 ft
+    # line reaches 6 ft into the lot's west side. The building fits clear.
+    east = max(traced, key=lambda g: g.bounds[2])
+    x = east.bounds[2]
+    y = next(c[1] for part in getattr(east, "geoms", [east]) for c in part.exterior.coords if c[0] == x)
+    lot, beside, fit = screened(x + 8, y - d / 2)
+    assert lot.facts.resource_permits == ("clackamas_open_space",)
+    assert lot.traced is not None and 0 < lot.traced.area < 0.05 * w * d
+    assert fit >= 0 and beside.drawing is not None and beside.drawing["fits"]
+    assert beside.signed.colour is flag_plan.Colour.yellow and beside.signed.triage is not Triage.green
+    # The ruling asks about the building, and the envelope it is placed in.
+    # The lane and the court are not asked here: the fitter lets both ride
+    # one side yard (side_yard_lane_overlap_ft, side_yard_court_overlap_ft),
+    # that overlap is checked against no carve, and this strip lies in that
+    # yard. The lot is YELLOW on the flag either way, never GREEN.
+    assert beside.envelope.geom.intersection(lot.traced).area < 1.0
+    assert shapely.Polygon(beside.drawing["building"]).intersection(lot.traced).area < 1.0
+    # The same lot 12 ft further east is clear of the line: no flag, no loss.
+    lot, clear, clear_fit = screened(x + 20, y - d / 2)
+    assert lot.facts.resource_permits == () and lot.traced is None and lot.carve is None
+    assert clear_fit >= 0 and clear.signed.colour is not flag_plan.Colour.red
+    # Wholly inside it: nowhere to fit the building clear.
+    for big in sorted(traced, key=lambda g: -g.area):
+        spot = big.representative_point()
+        if edged.contains(shapely.box(spot.x - w / 2, spot.y - d / 2, spot.x + w / 2, spot.y + d / 2)):
+            break
+    else:
+        raise AssertionError("no traced open space holds an 80 x 160 ft lot")
+    lot, under, under_fit = screened(spot.x - w / 2, spot.y - d / 2)
+    assert lot.traced is not None and lot.traced.area == pytest.approx(w * d, abs=1.0)
+    assert under_fit < 0 and not (under.drawing or {}).get("fits")
+    assert under.signed.colour is flag_plan.Colour.red
+    # Another jurisdiction's lot on the same ground is not asked.
+    lot, _, _ = screened(spot.x - w / 2, spot.y - d / 2, jurisdiction="portland", zone="R5")
+    assert lot.traced is None and lot.facts.resource_permits == ()
+
+
 def test_ground_beyond_the_named_street_reach_comes_off_the_envelope(corpus, policies) -> None:
     # Estacada NCR: the dwelling, not the lot, must stand within 200 ft of the
     # named streets, so the far part of the lot is taken off its placement area.

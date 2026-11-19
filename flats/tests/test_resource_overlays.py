@@ -642,6 +642,7 @@ def test_clackamas_s_open_space_is_traced_off_map_4_06_and_says_how() -> None:
     [area] = [t for t in TRACED if t.key == "clackamas_open_space"]
     assert area.jurisdiction == COUNTY and area.file == OPEN_SPACE
     assert "1103.01" in area.cite and "1011.02" in area.cite
+    assert area.unbuildable is True
     assert AREAS[area.key] is area and area.key not in BY_KEY
     assert set(AREAS) == set(BY_KEY) | {t.key for t in TRACED}
     doc, feats = _open_space()
@@ -712,3 +713,61 @@ def test_a_clackamas_lot_touching_the_traced_open_space_is_a_closer_look() -> No
     # both together: a landslide column and the traced area
     both = lot_from_row({**inside, "ovl_clackamas_landslide": True}).facts
     assert both.resource_permits == ("clackamas_landslide", "clackamas_open_space")
+
+    # Steph 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red): the
+    # traced ground, the 14 ft of its line included, comes off the lot the way
+    # one of s5o's carves does -- nothing built or parked on it.
+    from flats.geom.drawn import load_edged_area
+    from flats.ingest.quadfit import traced_off
+
+    [area] = [t for t in TRACED if t.key == "clackamas_open_space"]
+    assert area.unbuildable is True
+    edged = load_edged_area(OPEN_SPACE)
+    strip = shapely.from_wkb(beside["lot_wkb"]).intersection(edged)
+    assert 0 < strip.area < 100 * 50
+    assert strip.bounds[2] == pytest.approx(x + 14, abs=0.3)  # 8 ft off, 14 ft wide: 6 ft of the lot
+    held = lot_from_row(beside)
+    assert held.traced is not None and held.traced.equals(strip)
+    assert held.carve is not None and held.carve.equals(strip)  # s5o carved nothing on this row
+    assert lot_from_row(inside).traced.area > strip.area
+    nothing = lot_from_row(clear)
+    assert nothing.traced is None and nothing.carve is None
+    assert traced_off(lot(spot.x - 50, spot.y - 25, jurisdiction="happy_valley")) is None
+    assert traced_off(pocket) is not None
+    assert traced_off(row(jurisdiction=COUNTY)) is None
+    # beside one of s5o's carves, the lot loses both
+    far = box(x + 98, y + 15, x + 108, y + 25)
+    two = lot_from_row({**beside, "carve_wkb": shapely.to_wkb(far)})
+    assert two.traced.equals(strip) and two.carve.equals(far.union(strip))
+
+
+def test_steph_s_rulings_of_2026_11_18_stand_behind_the_clackamas_carves(quadfit_specs) -> None:
+    """Asked whether the county's flood ban, its landslide permit and its
+    open space review made a lot RED or a closer look, Steph ruled all three
+    RED where the building cannot stand clear, and YELLOW where the lot only
+    holds the ground. The carves are what make the RED and the flags what
+    keep the YELLOW; each names its ruling where it is declared, so none is
+    read as a worker's judgement."""
+    text = OVERLAYS.read_text(encoding="utf-8")
+    slide, flood = "2026-11-18-clackamas-landslide-under-building-red", "2026-11-18-clackamas-flood-ban-red"
+    space = "2026-11-18-clackamas-open-space-red"
+    assert slide in text and flood in text
+    for key in ("clackamas_landslide", "clackamas_landslide_scarp"):
+        assert quadfit_specs[key]["action"] == "flag"  # holds some, building clear: YELLOW
+        assert quadfit_specs[f"{key}_core"]["action"] == "carve"  # under the building: RED
+        assert quadfit_specs[f"{key}_core"]["jurisdictions"] == [COUNTY]
+    assert quadfit_specs["clackamas_fmd"]["action"] == "carve"
+    assert quadfit_specs["clackamas_fmd"]["jurisdictions"] == [COUNTY]
+    # the flood ruling is the county's use ban; the fringe is a flag everywhere
+    assert quadfit_specs["fema_sfha"]["action"] == "flag"
+    import flats.rules.resource_overlays as declared
+
+    said = Path(declared.__file__).read_text(encoding="utf-8")
+    assert slide in said and space in said
+    # the open space is no quadfit overlay: the bridge takes its ground off
+    assert not any("open_space" in key for key in quadfit_specs if key.startswith("clackamas"))
+    assert [t.key for t in TRACED if t.unbuildable] == ["clackamas_open_space"]
+    notes = (
+        Path(__file__).resolve().parents[1] / "config" / "jurisdictions" / "or" / "clackamas" / "_unincorporated.yaml"
+    ).read_text(encoding="utf-8")
+    assert slide in notes and flood in notes and space in notes

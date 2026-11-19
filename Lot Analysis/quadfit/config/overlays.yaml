@@ -669,11 +669,17 @@ overlays:
   # geologic study that "shall establish that the site is stable for the
   # proposed use and development" (1003.02(B)(3)), which nothing here can
   # read off a map, so a pod, court or drive on the mapped ground is out.
+  # Steph ruled it 2026-11-18, asked whether the permit path made this a
+  # closer look instead: RED when the building would sit on the mapped ground
+  # and cannot be fitted clear of it (rulings.yaml
+  # 2026-11-18-clackamas-landslide-under-building-red).
   #
   # The flag. A lot whose pod stands clear still holds an area the section
   # names, and its permit is one where "Appropriate conditions of approval
   # ... may be attached by the County" (1003.02(B)(2)): a closer look (Steph
-  # 2026-10-14), as happy_valley_slope and oregon_city_geohazard are.
+  # 2026-10-14), as happy_valley_slope and oregon_city_geohazard are, and the
+  # same ruling of 2026-11-18 keeps it one: slide ground on the lot with the
+  # building fitted clear stays YELLOW.
   #
   # The map. 1003.02(B)(5): "The principal source of information for
   # determining mass movement hazards is the State Department of Geology and
@@ -739,6 +745,13 @@ overlays:
   # pod stands clear keeps fema_sfha's flag (a closer look): the sentence
   # prohibits development IN the district, and a lot is not development.
   # No flag of its own, since fema_sfha reads the same layer.
+  #
+  # Steph ruled it 2026-11-18: RED when the building cannot stand clear of
+  # the county's flood area (rulings.yaml 2026-11-18-clackamas-flood-ban-red).
+  # That is this county's use ban and nothing wider: everywhere else the
+  # fringe stays the closer look of 2026-10-06-fema-fringe-stays-yellow, and
+  # the assumption of 2026-09-30-clackamas-floodplain-district-assumed-absent
+  # (every county lot outside the district) is retired by it.
   - key: clackamas_fmd
     source: fema_sfha
     name: "Clackamas County Floodplain Management District -- no quadplex or townhouse development in it (ZDO 845.01(3))"

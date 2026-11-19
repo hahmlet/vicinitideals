@@ -193,6 +193,36 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   floodway was already carved everywhere): a pod that cannot stand clear of the district is RED,
   and a lot the district touches whose pod stands clear stays the closer look the fringe flag
   already made it. No zone''s quadplex_allowed is capped, so no lot goes UNKNOWN on it.
+  Steph ruled it the same day (rulings.yaml 2026-11-18-clackamas-flood-ban-red): RED when the
+  building cannot stand clear of the county flood area. The earlier assumption that every county
+  lot lies outside the district (2026-09-30-clackamas-floodplain-district-assumed-absent) is
+  retired by that ruling.
+
+  MASS MOVEMENT HAZARD AREAS, ZDO 1003.02, held the same day (zdo.1003 stored and read whole).
+  "No development or grading shall be allowed in areas of land movement, slump or earth flow, or
+  mud or debris flow, unless approved in a Type II application" (zdo.1003.txt#L13), and "The
+  principal source of information for determining mass movement hazards is the State Department
+  of Geology and Mineral Industries (DOGAMI) Bulletin 99 and accompanying maps" (zdo.1003.txt#L47).
+  quadfit reads the state''s landslide deposits and scarp flanks (overlays.yaml
+  clackamas_landslide, clackamas_landslide_scarp and their _core carves). Steph ruled both halves
+  2026-11-18 (rulings.yaml 2026-11-18-clackamas-landslide-under-building-red): a lot is RED when
+  the building would sit on the mapped ground and cannot be fitted clear of it, and a lot holding
+  slide ground whose building fits clear stays YELLOW, its permit being one where conditions "may
+  be attached by the County" (zdo.1003.txt#L19).
+
+  OPEN SPACE, ZDO 1011 and 1103, held the same day (both stored and read whole). Section 1103
+  "applies to development that affects an open space resource described in Section 1011, Open
+  Space and Parks, and shown generally on Comprehensive Plan Map IV-6" (zdo.1103.txt#L3), and
+  "High-priority open space shall be preserved outright" (zdo.1011.txt#L67). The county publishes
+  no layer of that map, so it is traced (flats/config/areas, zdo-map-4-06-open-space.geojson,
+  which says how it was placed and that its drawn line is 14 ft wide on the ground). The text
+  leaves open which mapped ground is the high-priority kind, and Table 1001-1 does not tick
+  Section 1011 for middle housing in the R and VR districts at all (zdo.1001.txt#L99-L107).
+  Steph ruled both 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red): the traced
+  open space, line width included, is unbuildable ground in every zone. A lot where the building
+  cannot be fitted clear of it is RED; a lot touching it where the building fits clear stays
+  YELLOW. The bridge reads it off the lot''s own shape (flats.ingest.quadfit.traced_off); quadfit
+  holds no column for it.
 
   Two cross-reference rulings closed the same day, because the chapters they stood in for are
   held now. ZDO 1012.05 names Section 1003 ("2 Mass movement hazards regulated by Section 1003")
