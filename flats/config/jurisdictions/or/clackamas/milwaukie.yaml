@@ -1578,13 +1578,26 @@ zones:
       # nothing: 5 and 10.
       #
       # A corner lot: the sentence names its street side yard (20, held as
-      # setback_street_side_ft) and does not say whether the OTHER side yard
-      # is the 5 or the 10. The 10 is held there -- the cautious reading; a
-      # corner lot has one interior side line and it takes the larger yard.
+      # setback_street_side_ft) and does not say in so many words whether
+      # the OTHER side yard is the 5 or the 10. Steph RULED 2026-11-18
+      # (rulings.yaml 2026-11-18-milwaukie-corner-interior-side-5): the
+      # street side yard is the 20 and the other, interior, side yard is the
+      # 5. The street side yard is one of the sentence's two side yards (the
+      # "except" carves it out of them), a 20 ft yard is "at least 10 ft",
+      # and that leaves "at least 5 ft" for the other -- as every smaller
+      # column of the table has it (side 5 beside street side 15). So on a
+      # corner lot the larger of the two unequal side yards is not owed on
+      # the interior side line: the second variant, the same sentence's 5.
+      # A lot not known to be a corner lot keeps the 10.
       value: 5
       quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L109"
       variants:
         - value: 10
+          band: {measure: lot_sqft, more_than: 7000}
+          cite: MMC 19.301.5.A
+          quote: "or/clackamas/milwaukie/19.301/19.301.5.txt#L7"
+        - value: 5
+          when: [corner_lot]
           band: {measure: lot_sqft, more_than: 7000}
           cite: MMC 19.301.5.A
           quote: "or/clackamas/milwaukie/19.301/19.301.5.txt#L7"
@@ -1759,9 +1772,9 @@ zones:
       sum of the two printed figures and is printed nowhere, so setback_side_total_ft cannot quote
       it; the pair is held as its two printed figures instead: setback_side_ft 5 on every side lot
       line and setback_side_larger_ft 10 on one of them over 7,000 sq ft, the envelope cut with the
-      10 on each side in turn and the better answer kept. On a corner lot the one interior side
-      line takes the 10 (cautious: the sentence does not say which figure the street side yard
-      replaces).'
+      10 on each side in turn and the better answer kept. On a corner lot the street side yard is
+      the 20 and the one interior side yard is the 5 (Steph, rulings.yaml
+      2026-11-18-milwaukie-corner-interior-side-5).'
   R-HD:
     section: ["19.302"]
     cite_default:

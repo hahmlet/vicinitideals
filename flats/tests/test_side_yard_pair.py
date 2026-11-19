@@ -12,6 +12,10 @@ line. The envelope is cut with it on each of the lot's two side lines in turn
 and the better answer kept. Where a lot's side lines do not fall in two it
 lies on every side line. The side yard height plane of the same table is
 added once on top of each yard, never twice.
+
+A corner lot (Steph, the same day, rulings.yaml
+``2026-11-18-milwaukie-corner-interior-side-5``): the street side yard is the
+20 and the other, interior, side yard is the 5 -- no 10 is owed there.
 """
 
 from __future__ import annotations
@@ -82,6 +86,27 @@ def test_the_larger_yard_is_owed_only_over_7000_sq_ft(corpus, sqft: float, large
     assert cut is not None and cut.side_ft == 5
     # At or under 7,000 the larger of the two is the 5 itself: nothing more to cut.
     assert cut.side_larger_ft == (10 if larger == 10 else None)
+
+
+@pytest.mark.parametrize("sqft", [7_001, 9_000, 20_000])
+def test_on_a_corner_lot_the_interior_side_yard_is_the_five(corpus, sqft: float) -> None:
+    # Ruled 2026-11-18 (2026-11-18-milwaukie-corner-interior-side-5): the
+    # street side yard is the sentence's 20 and the other side yard its 5.
+    got = corpus.resolve(MILWAUKIE, "R-MD", frozenset({"corner_lot"}), lot={"lot_sqft": sqft})
+    assert got.get("setback_side_ft") == 5
+    assert got.get("setback_side_larger_ft") == 5
+    assert not got.ambiguous
+    assert got.get("setback_street_side_ft") == 20
+    larger = got.values["setback_side_larger_ft"]
+    path, _, line = larger.prov.quote.partition("#L")
+    text = ProvenanceStore().load(path).text.splitlines()[int(line) - 1]
+    assert "except on a corner lot the street side yard shall be 20 ft" in text
+    # Nothing more to cut than the 5 every side line already takes.
+    assert larger_side_yard_ft(got) is None
+    cut = setbacks_for(got)
+    assert cut is not None and cut.side_ft == 5 and cut.side_larger_ft is None
+    # The same lot not known to be a corner lot keeps the pair.
+    assert _resolved(corpus, sqft).get("setback_side_larger_ft") == 10
 
 
 def test_no_other_zone_in_the_corpus_states_a_larger_side_yard(corpus) -> None:
@@ -173,8 +198,11 @@ def test_with_no_choice_made_every_side_line_takes_the_ten() -> None:
 
 
 def test_a_lot_whose_side_lines_do_not_fall_in_two_takes_the_ten_on_each() -> None:
-    # A corner lot: one interior side line, and it takes the larger yard
-    # whatever was chosen (the street side line keeps its own 20).
+    # The envelope alone, handed a larger yard and a lot with one interior
+    # side line: that line takes it whatever was chosen (the street side
+    # line keeps its own 20). Milwaukie's rules hand a corner lot no larger
+    # yard (ruled 2026-11-18); this is the cut for a lot that is shaped like
+    # a corner and not known to be one.
     corner = dataclasses.replace(PAIR, street_side_ft=20, larger_side=0)
     assert _bounds(corner, (F, SS, R, S), Tier.corner) == (10, 20, 80, 110)
     corner = dataclasses.replace(corner, larger_side=1)
@@ -225,6 +253,26 @@ def test_the_bridge_tries_both_sides_only_where_there_is_a_pair_and_two_lines(co
     assert larger_side_choices(corner, _resolved(corpus, 13_000)) == (None,)
     # Another zone's rules state no larger yard.
     assert larger_side_choices(big, corpus.resolve("or/multnomah/portland", "R5", frozenset(), lot={"lot_sqft": 13_000})) == (None,)
+
+
+def test_the_bridge_screens_a_corner_lot_with_five_on_its_interior_side(corpus, policies) -> None:
+    # Ruled 2026-11-18 (2026-11-18-milwaukie-corner-interior-side-5). Two
+    # street lines make the corner; the screen resolves the corner lot's
+    # rules, and they hand the envelope no larger yard.
+    policy, relief_policy = policies
+    corner = lot_from_row(_row(100, 130, "FFRS", front_bearings_json="[0.0, 90.0]"), corpus.layers)
+    got = screen_lot(corner, [pod()], rules=corpus, policy=policy, relief=relief_policy, step_deg=30.0)
+    assert got
+    for s in got:
+        assert s.rules.get("setback_side_larger_ft") == 5
+        assert s.envelope.setbacks.side_ft == 5
+        assert s.envelope.setbacks.side_larger_ft is None
+        assert s.envelope.setbacks.street_side_ft == 20
+    # The interior lot beside it still owes the 10 on one side.
+    interior = lot_from_row(_row(100, 130), corpus.layers)
+    for s in screen_lot(interior, [pod()], rules=corpus, policy=policy, relief=relief_policy, step_deg=30.0):
+        assert s.rules.get("setback_side_larger_ft") == 10
+        assert s.envelope.setbacks.side_larger_ft == 10
 
 
 def test_the_bridges_envelope_holds_five_and_ten(corpus) -> None:
