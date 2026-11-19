@@ -76,7 +76,7 @@ from __future__ import annotations
 import functools
 import json
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -173,6 +173,22 @@ class Applies:
 
 
 @dataclass(frozen=True)
+class QuietUnlisted:
+    """A street the map leaves out, read quiet where Metro and OpenStreetMap
+    both say so (``unlisted_quiet``, ruling 2026-10-09-quiet-street-both-agree),
+    on a map that draws its local streets too and so ranks nothing it omits
+    (Gresham's, which omits the Regional Center: FOLLOWUPS 194 item 4).
+    ``held_zones`` keep the map as drawn: a code there whose own street types
+    govern the curb cut (Gresham's Downtown, GDC 4.1142(B)(7))."""
+
+    rank: int
+    ruling: str
+    held_zones: frozenset[str]
+    held_cite: str
+    held_quote: str
+
+
+@dataclass(frozen=True)
 class CornerHold:
     """A code whose corner rule nothing measures, held on every corner lot
     by a ruling (``corner_unread``): see the module docstring."""
@@ -219,6 +235,9 @@ class SpacingRules:
     unread: Mapping[str, FrontageRule] = field(default_factory=dict)
     #: Every corner lot held unread (Fairview); None elsewhere.
     corner_hold: CornerHold | None = None
+    #: The map's rank a street it leaves out takes where Metro and
+    #: OpenStreetMap agree it is quiet (Gresham); None elsewhere.
+    quiet_unlisted: QuietUnlisted | None = None
 
     def quotes(self) -> list[tuple[str, float | None, str]]:
         """Every ``(quote, printed figure or None, cite)`` the entry holds."""
@@ -246,6 +265,8 @@ class SpacingRules:
             out.append((self.industrial.street_quote, None, self.industrial.cite))
         if self.corner_hold is not None:
             out.append((self.corner_hold.quote, None, self.corner_hold.cite))
+        if self.quiet_unlisted is not None:
+            out.append((self.quiet_unlisted.held_quote, None, self.quiet_unlisted.held_cite))
         return out
 
     def class_of_rank(self, rank: int | None, spec: ClassSpec | None) -> str | None:
@@ -328,6 +349,15 @@ def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
     if raw.get("corner_unread"):
         c = raw["corner_unread"]
         corner_hold = CornerHold(str(c["cite"]), str(c["quote"]), str(c["ruling"]))
+    quiet = None
+    if raw.get("unlisted_quiet"):
+        q = raw["unlisted_quiet"]
+        quiet = QuietUnlisted(
+            int(q["rank"]), str(q["ruling"]), frozenset(str(z) for z in q.get("held_zones") or ()),
+            str(q.get("held_cite") or ""), str(q.get("held_quote") or ""),
+        )
+        if quiet.held_zones and not quiet.held_quote:
+            raise ValueError(f"{layer}: unlisted_quiet held_zones without held_quote")
     return SpacingRules(
         layer=layer,
         map=raw.get("map"),
@@ -340,6 +370,7 @@ def _parse(layer: str, raw: Mapping[str, Any]) -> SpacingRules:
         industrial=industrial,
         unread=unread,
         corner_hold=corner_hold,
+        quiet_unlisted=quiet,
     )
 
 
@@ -401,10 +432,26 @@ def load_maps(sources: Path, rules: Mapping[str, SpacingRules] | None = None) ->
     snapshot is left out, and its lots read unread."""
     from flats.geom.street_class import load_class_maps
 
+    rules = load_rules() if rules is None else rules
     specs = {k: s for k in wanted_maps(rules) if (s := spec_of(k)) is not None}
+    # A map that draws its local streets too ranks nothing it omits; an entry
+    # naming `unlisted_quiet` reads an omitted street quiet where Metro and
+    # OpenStreetMap agree (street_class._rank_at), on this reading only.
+    for r in rules.values():
+        if r.quiet_unlisted is not None and r.map in specs and specs[r.map].unlisted is None:
+            specs[r.map] = replace(specs[r.map], unlisted=r.quiet_unlisted.rank)
     if not specs:
         return {}
     return {m.key: m for m in load_class_maps(sources, specs=specs)}
+
+
+def map_for(rules: SpacingRules, cmap: ClassMap | None, zone: str | None) -> ClassMap | None:
+    """``cmap`` as one lot of ``zone`` reads it: a zone ``unlisted_quiet``
+    holds reads the map as drawn, every street it omits unread."""
+    q = rules.quiet_unlisted
+    if cmap is None or q is None or str(zone or "") not in q.held_zones:
+        return cmap
+    return replace(cmap, unlisted=None)
 
 
 def wanted_maps(rules: Mapping[str, SpacingRules] | None = None) -> tuple[str, ...]:

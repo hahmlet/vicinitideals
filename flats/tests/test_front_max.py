@@ -815,3 +815,75 @@ def test_a_turn_too_far_to_snap_is_a_question_never_a_fail_nor_a_pass(corpus, po
         assert check(r, FRONT_MAX) is None
         assert "MEASURE-FRONT-MAX-STREET" in codes(r)
         assert r.colour is not Colour.green
+
+
+# --- a plan with no lane pulled the whole way to the maximum (FOLLOWUPS 194 item 1)
+
+
+def _pulled(back_ft: float, *, lane: bool = False, court: bool = False, access=()):
+    """Portland 1S2E15BB15500's shape: a pod's room stood ``back_ft`` behind the
+    20 ft maximum here, on an envelope reaching the street line at y=0, its
+    court (``court``) beside the building and reached off a second line
+    (``access``)."""
+    s, fitter = _sliding(0.0)
+    s.lot.access = tuple(access)
+    y = 20.0 + back_ft
+    building = [[10, y], [60, y], [60, y + 36], [10, y + 36], [10, y]]
+    drawing = {"fits": True, "building": building, "room": building, "lane": None}
+    if court:
+        drawing["court"] = [[60, y], [95, y], [95, y + 36], [60, y + 36], [60, y]]
+        drawing["room"] = [[10, y], [95, y], [95, y + 36], [10, y + 36], [10, y]]
+    if lane:
+        drawing["lane"] = [[60, 0], [70, 0], [70, y], [60, y], [60, 0]]
+    s.drawing = drawing
+    s.envelope = SimpleNamespace(geom=box(5, 0, 98, 150), source="quadfit")
+    return s, fitter
+
+
+def test_the_raster_slide_leaves_a_building_drawn_far_back_where_it_stands() -> None:
+    s, fitter = _pulled(14.0)
+    assert quadfit._front_max_flush(s, fitter) is None
+
+
+def test_a_plan_with_no_lane_is_pulled_the_whole_way_to_the_maximum() -> None:
+    s, fitter = _pulled(14.0)
+    pulled = quadfit._front_max_flush(s, fitter, pull=True)
+    assert pulled["building"][0][1] == pytest.approx(20.0, abs=0.1)
+    assert pulled["room"][0][1] == pulled["building"][0][1]
+
+
+def test_a_plan_with_a_lane_is_left_to_the_window_search() -> None:
+    s, fitter = _pulled(14.0, lane=True)
+    assert quadfit._front_max_flush(s, fitter, pull=True) is None
+
+
+def test_the_pull_keeps_the_court_on_the_street_it_is_reached_from() -> None:
+    """A court reached off a side line at x=100 that runs only from y=70 on:
+    pulled further its way in would grow, so the pull ends where it leaves."""
+    s, fitter = _pulled(30.0, court=True, access=[(100.0, 70.0, 100.0, 200.0)])
+    pulled = quadfit._front_max_flush(s, fitter, pull=True)
+    court = shapely.Polygon(pulled["court"])
+    assert court.distance(shapely.LineString([(100, 70), (100, 200)])) <= 5.0 + 0.5 + 1e-6
+    assert pulled["building"][0][1] > 30.0  # stopped short of the maximum
+
+
+def test_a_court_on_a_street_running_its_whole_way_is_pulled_to_the_maximum() -> None:
+    s, fitter = _pulled(30.0, court=True, access=[(100.0, 0.0, 100.0, 200.0)])
+    pulled = quadfit._front_max_flush(s, fitter, pull=True)
+    assert pulled["building"][0][1] == pytest.approx(20.0, abs=0.1)
+
+
+def test_the_bridge_tries_the_pull_when_the_maximum_fails(corpus, policies, monkeypatch) -> None:
+    """The rel8 Portland CM1/CM2 lots stood 11-63 ft back and only the raster's
+    two-foot slide was tried on a plan with no lane."""
+    _past_by(5.0, monkeypatch, only_first=False)
+    real = quadfit._front_max_flush
+    asked: list[bool] = []
+
+    def spy(s, fitter, **kw):
+        asked.append(kw.get("pull", False))
+        return real(s, fitter, **kw)
+
+    monkeypatch.setattr(quadfit, "_front_max_flush", spy)
+    screened(corpus, policies)
+    assert True in asked

@@ -1370,3 +1370,23 @@ def test_king_city_off_the_stretch_takes_all_other_streets(rules) -> None:
     assert _named_strip(rules, KING_CITY, "KTTC", ["131ST AVE"], {label: None}) == 33
     # A line that may be on a second street keeps that one's distance.
     assert _named_strip(rules, KING_CITY, "KTTC", ["131ST AVE", "FISCHER RD"], {label: False}) == 33
+
+
+def test_a_jog_in_the_lot_line_square_to_the_street_reads_the_street_across_it() -> None:
+    """Washington County 1S212AD01301 (R-15): the front line steps 10 ft in,
+    square to Johnson St, whose centre line runs a few degrees off the lot
+    line. The jog's nearest centreline point stands a hair past its inward
+    side, off the lot: the road is not drawn into the lot, and the jog read
+    as though it were cut an 80 ft strip round a 10 ft line (FOLLOWUPS 158)."""
+    lot = shapely.Polygon(
+        [(X0, Y0), (X0 + 100, Y0), (X0 + 100, Y0 + 10), (X0 + 120, Y0 + 10), (X0 + 120, Y0 + 200), (X0, Y0 + 200)]
+    )
+    johnson = LineString([(X0 - 500, Y0 - 24 + 28.0), (X0 + 500, Y0 - 24 - 28.0)])
+    cmap = _cmap([johnson], ["SW JOHNSON ST"], (1450,))
+    jog = [X0 + 100, Y0, X0 + 100, Y0 + 10, "F"]
+    width, _, _ = dedication.read_line(jog, cmap, lot=lot)
+    assert width is not None and width > 0
+    # A line the centre runs across inside the lot still reads negative.
+    over = LineString([(X0 - 500, Y0 + 6), (X0 + 500, Y0 + 6)])
+    (got,) = dedication.measure([FRONT], WASHCO, [_cmap([over], ["SW EDY RD"], (1500,))], lot=LOT_BOX)
+    assert got[4] == pytest.approx(-6.0)

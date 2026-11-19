@@ -470,16 +470,29 @@ def _inward(edge: Sequence[Any], lot: Any) -> tuple[float, float] | None:
     return None
 
 
+#: Feet off the tax lot's shape a centreline's nearest point may stand and
+#: still be read as on the lot (a lot drawn to the centre line itself).
+ON_LOT_TOL_FT = 0.5
+
+
 def _signed(line: Any, p: Any, inward: tuple[float, float] | None, lot: Any = None) -> float:
     """The distance from lot-line point ``p`` to centreline ``line``, NEGATIVE
     where the centreline lies on the lot's side of the line (the tax lot is
-    drawn over the road, FOLLOWUPS 67 (b)). Unsigned without the lot."""
+    drawn over the road, FOLLOWUPS 67 (b)). Unsigned without the lot.
+
+    With the lot's shape, the centreline's nearest point must also stand on
+    the lot: a short jog in the lot line square to the street (Washington
+    County 1S212AD01301's 10 ft step) has the street off to its side, and
+    the nearest point a hair past its inward side read the whole road as
+    drawn into the lot -- an 80 ft strip round a 10 ft line (FOLLOWUPS 158).
+    Off the lot, the street is across the line, read as before."""
     d = float(line.distance(p))
     if d <= 0.0 or (inward is None and lot is None):
         return d
     c = line.interpolate(line.project(p))
+    on_lot = lot is None or bool(lot.buffer(ON_LOT_TOL_FT).covers(c))
     if inward is not None:
-        inside = (c.x - p.x) * inward[0] + (c.y - p.y) * inward[1] > 0
+        inside = (c.x - p.x) * inward[0] + (c.y - p.y) * inward[1] > 0 and on_lot
     else:
         inside = bool(lot.contains(c))
     return -d if inside else d
