@@ -3650,7 +3650,9 @@
     whether or not the building could fit clear of it; a lot free of it
     carries nothing from this rule. A lot that only falls inside the 14 ft
     printed line width of the traced map, without touching the traced area,
-    stays YELLOW (coordinator: the trace cannot say). Five greens touch or
+    stays YELLOW (coordinator: the trace cannot say); so does a lot the map
+    only just catches, with an overlap nowhere deeper than that 14 ft line
+    width (24 lots), pending Steph. Five greens touch or
     near it. Built on flats/clackamas-fixes (FOLLOWUPS 204); not live until
     that branch is released.
   source: Steph 2026-11-18 (chat, two messages), ../vicinitideals-worktrees/clackamas-fixes.handoff.md
@@ -3792,3 +3794,20 @@
     turns YELLOW under the carve-overlap check (FOLLOWUPS 206). As built; no
     lot moves.
   source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/carve-overlap.handoff.md
+- id: 2026-11-18-milwaukie-corner-interior-side-5
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: milwaukie}
+  question: >-
+    MMC 19.301.5.A: on R-MD lots over 7,000 sq ft "one side yard shall be at
+    least 5 ft and one side yard shall be at least 10 ft, except on a corner
+    lot the street side yard shall be 20 ft." On a corner lot, is the other
+    side yard 5 ft or 10 ft?
+  ruling: '"I''m good with your recommendation on Milwaukie" (5 ft)'
+  effect: >-
+    On a corner lot the 20 ft street side yard is the larger of the two; the
+    interior side yard is 5 ft, matching every smaller lot-size band in Table
+    19.301.4. Seven green corner lots depend on it and are read one by one at
+    the move read. Built on flats/gap-fixes (FOLLOWUPS 205); not live until
+    released.
+  source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/gap-fixes.handoff.md
