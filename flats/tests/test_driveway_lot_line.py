@@ -204,6 +204,20 @@ def test_gladstone_short_of_eight_feet_is_yellow_never_red(corpus, policies) -> 
     assert not [b for b in got.signed.binds if b.check == DRIVEWAY_LOT_LINE]
 
 
+def test_gladstone_s_miss_never_reads_the_fit_s_tolerance(corpus, policies) -> None:  # noqa: F811
+    # rel11: the half-foot tolerance (bvt-drive-side) only ever spares a RED.
+    # Gladstone's miss is YELLOW on its own flag whatever the shortfall, so a
+    # plan 0.4 ft short of 8 answers the same with the policy as without it.
+    policy = policies[0]
+    s = _gladstone(corpus, policies, 11.6, 90)  # 1 ft drawn, 6.6 ft room: 7.6
+    got = driveway_lot_line_checked(s, policy)
+    assert got.signed.triage is Triage.yellow and got.screening.triage is Triage.yellow
+    held = [f for f in got.signed.flags if f.code == DRIVEWAY_LOT_LINE_FLAG]
+    assert len(held) == 1 and "tolerance" not in held[0].source
+    assert flags(got) == [] and DRIVEWAY_LOT_LINE not in got.signed.reasons
+    assert got.signed == driveway_lot_line_checked(s).signed
+
+
 def test_gladstone_measures_side_lines_only(corpus, policies) -> None:  # noqa: F811
     # The rear line a foot off the lane is no curb cut's neighbour: with the
     # side lines far, the plan stands.
@@ -221,3 +235,128 @@ def test_gladstone_measures_side_lines_only(corpus, policies) -> None:  # noqa: 
     )
     s = _gladstone(corpus, policies, 5, 40, edges=edges)  # lane 40-49: 40+ ft off each side
     assert driveway_lot_line_checked(s) is s
+
+
+# --- bvt-drive-side: other placements, the slide's stop, the reason shown ------
+#
+# rel10 move read (rel10-full-moves.findings.md, findings 1 and 2): 31 Beaverton
+# greens and 52 yellows went RED on the one drawn plan, slid; no other placement
+# was tried. The plan is now stood elsewhere where another spot keeps the gap
+# (``driveway_lot_line_placed``), measured on that drawing, never on a slide.
+
+
+def test_the_slide_stops_at_the_first_stretch_of_the_far_side() -> None:
+    # 99 ft wide for 60 ft, then 115 ft: the building at the front meets the
+    # 99 ft stretch first. Slid toward the farthest line it was credited room
+    # it does not have (a GREEN the plan could not stand on).
+    edges = LotEdges(
+        Tier.clean,
+        (
+            _edge(0, 0, 99, 0, EdgeClass.front),
+            _edge(99, 0, 99, 60, EdgeClass.side),
+            _edge(99, 60, 115, 60, EdgeClass.side),
+            _edge(115, 60, 115, 260, EdgeClass.side),
+            _edge(115, 260, 0, 260, EdgeClass.rear),
+            _edge(0, 260, 0, 0, EdgeClass.side),
+        ),
+        (90.0,),
+        99.0,
+        1.0,
+    )
+    building = shapely.box(12, 10, 92, 35)
+    lane = shapely.box(0, 10, 12, 35)
+    court = shapely.box(0, 35, 92, 88)
+    gap = dll.measure(edges, lane, building, court, building_clear_ft=5, court_clear_ft=5)
+    assert gap is not None
+    assert gap.drawn_ft == pytest.approx(0.0)
+    assert gap.reach_ft == pytest.approx(2.0)  # 99 - 92 - 5, not 115 - 92 - 5
+
+
+def _screened(corpus, pts, labels, zone: str = "RMC"):  # noqa: F811
+    import json
+
+    from flats.designs.model import load_catalog
+    from flats.ingest.quadfit import lot_from_row, screen_lot
+    from flats.score import relief, slack
+    from flats.tests.test_fire import X0, Y0, bridge_row
+
+    pts = [(X0 + x, Y0 + y) for x, y in pts]
+    poly = shapely.Polygon(pts)
+    whole = shapely.to_wkb(poly)
+    xs, ys = [p[0] for p in pts], [p[1] for p in pts]
+    row = bridge_row(
+        TLID="1S199AA99999", jurisdiction="beaverton", zone=zone, area_sqft=poly.area,
+        lot_depth_ft=max(ys) - min(ys), frontage_ft=max(xs) - min(xs),
+        lot_width_ft=max(xs) - min(xs),
+        edges_json=json.dumps([[*pts[i], *pts[(i + 1) % len(pts)], labels[i]] for i in range(len(pts))]),
+        wkb=whole, lot_wkb=whole,
+        # Mid-block on a local street; these tests are not about spacing.
+        driveway_spacing="clear",
+    )
+    lot = lot_from_row(row, corpus.layers)
+    (s,) = screen_lot(
+        lot, load_catalog().active(), rules=corpus, policy=slack.load_policy(),
+        relief=relief.load_policy(), step_deg=30.0,
+    )
+    return s
+
+
+def _drawn_gap(s) -> float:
+    from flats.ingest.quadfit import _driveway_measured
+
+    got = _driveway_measured(s, s.drawing)
+    assert got is not None
+    return got[1].drawn_ft
+
+
+def test_a_plan_with_another_spot_that_keeps_six_feet_stands_there(corpus) -> None:  # noqa: F811
+    # The front 60 ft is 99 ft wide: there the 80 ft pod, its 12 ft lane and a
+    # 5 ft side yard leave 2 ft for the drive (RED on the drawn plan, slid).
+    # Behind, 115 ft: the fit's other placements are tried, and the plan
+    # stands where its DRAWN lane is 6 ft off the line, every other check kept.
+    s = _screened(
+        corpus,
+        [(0, 0), (99, 0), (99, 60), (115, 60), (115, 260), (0, 260)],
+        ["F", "S", "S", "S", "R", "S"],
+    )
+    assert s.fit.fits
+    assert s.signed.colour.value != "red" and s.screening.colour.value != "red"
+    assert DRIVEWAY_LOT_LINE not in s.signed.reasons
+    assert flags(s) == []
+    assert _drawn_gap(s) + 0.1 >= 6.0
+
+
+def test_a_lot_too_narrow_for_the_drive_either_way_stays_red(corpus) -> None:  # noqa: F811
+    # 99 ft square to the street the whole way: 5 + 80 + 12 leaves 2 ft for the
+    # drive on whichever flank it runs; no placement keeps 3.
+    s = _screened(corpus, [(0, 0), (99, 0), (99, 220), (0, 220)], ["F", "S", "R", "S"])
+    assert s.signed.colour.value == "red"
+    assert DRIVEWAY_LOT_LINE in s.signed.reasons
+    assert [b.check for b in s.signed.binds if b.check == DRIVEWAY_LOT_LINE] == [DRIVEWAY_LOT_LINE]
+
+
+def test_a_sideways_plan_lost_on_its_drive_is_shown_red_on_the_drive(corpus) -> None:  # noqa: F811
+    # 43 ft wide (1S115CD10900 / 10901, 1S128AB11200): the pod misses facing
+    # the street; turned sideways it fits, but its drive keeps about 1 ft. RED
+    # either way -- the reason shown is the drive, not the street-facing fit.
+    s = _screened(corpus, [(0, 0), (43, 0), (43, 220), (0, 220)], ["F", "S", "R", "S"], zone="RMA")
+    assert s.signed.colour.value == "red"
+    assert s.fit.fits
+    assert DRIVEWAY_LOT_LINE in s.signed.reasons
+
+
+def test_a_miss_of_three_feet_inside_the_fit_s_half_foot_is_yellow(corpus, policies) -> None:  # noqa: F811
+    # 2.6 ft at most against 3 (a 100 ft lot the plan needs exactly 100 ft of,
+    # drawn on the fit's raster): inside slack.yaml's fit_ft tolerance, REVIEW
+    # not RED; never a pass (the 6 ft figure still holds it out of GREEN).
+    policy = policies[0]
+    assert policy.tolerance_for("fit_ft", "or/washington/beaverton") == pytest.approx(0.5)
+    s = _beaverton(corpus, policies, 6.6, 90)  # 1 ft drawn, 1.6 ft room: 2.6
+    got = driveway_lot_line_checked(s, policy)
+    assert got.signed.triage is Triage.yellow and got.screening.triage is Triage.yellow
+    assert flags(got) == [DRIVEWAY_SIDEWALK]
+    assert DRIVEWAY_LOT_LINE not in got.signed.reasons
+    # Without the policy (the check alone), and past the half foot, still RED.
+    assert driveway_lot_line_checked(s).signed.triage is Triage.red
+    s = _beaverton(corpus, policies, 6.4, 90)  # 2.4 ft: short by 0.6
+    assert driveway_lot_line_checked(s, policy).signed.triage is Triage.red
