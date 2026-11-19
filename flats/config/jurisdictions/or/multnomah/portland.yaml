@@ -1890,6 +1890,19 @@ code:
     title: "Chapter 33.540 Laurelhurst/Eastmoreland Plan District"
     extraction: plain
     allow_thin: true
+  # The Scenic Resource overlay (map letter "s"), FOLLOWUPS 204 item 1, read
+  # whole 2026-11-18. 33.480.040.B.2.a and Table 480-1 set a scenic corridor
+  # setback "along street lot lines that abut the Scenic Corridor" -- 20 ft in
+  # "All other base zones" -- held per street line as
+  # setback_scenic_corridor_ft (defaults); the rest of the chapter (structure
+  # length, setback landscaping, trees, view-corridor heights set by the
+  # plans) is not measured, so every lot the overlay touches is a closer look
+  # (quadfit overlays.yaml pdx_scenic).
+  - id: "33.480"
+    url: https://www.portland.gov/sites/default/files/code/480-scenic_0.pdf
+    title: "Chapter 33.480 Scenic Resource Zone"
+    extraction: plain
+    allow_thin: true
   # Plan districts part 2 batch A (FOLLOWUPS 109, 2026-11-03). Read for the
   # pod and encoded where a rule reaches it: Glendoveer (33.530), East
   # Corridor (33.521), Hollywood (33.536), Kenton (33.538), Lombard (33.545),
@@ -2305,6 +2318,30 @@ defaults:
     url: https://www.portland.gov/sites/default/files/code/266-parking_2.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/portland/33.266/33.266.120.txt#L25-L26"
+  # The Scenic Resource overlay's scenic corridor setback (FOLLOWUPS 204 item
+  # 1, chapter read whole 2026-11-18). 33.480.040.B.2.a: "A scenic corridor
+  # setback per Table 480-1 applies along street lot lines that abut the
+  # Scenic Corridor identified in the Scenic Resources Protection Plan", and
+  # Table 480-1 prints five rows; this is its last, "All other base zones
+  # 20'". A rule about ONE street lot line, so it is held per line: the
+  # envelope gives a street line read on a scenic drive (the city's Scenic
+  # Corridors layer, flats/geom/corridor.py SCENIC_MAPS) the larger of this
+  # and its class's number, and no other line. Note [1], "Larger minimum
+  # setbacks in overlay zone and plan district supersede this setback", is
+  # that same larger-of. RM2 states its own row (3 ft) below. The IR/CI row
+  # ("1' per 2' of building height, not less than 10'", 13 to 15 ft for the
+  # pod) and the EG and I rows are not encoded: CI1, CI2 and IR take this 20,
+  # the larger number, and no dwelling is open in the EG and I zones.
+  # "Development within an environmental overlay zone is exempt from this
+  # setback standard" is not taken: the c and p zones are carved or a z
+  # trigger already. The rest of the chapter is unmeasured and every lot the
+  # overlay touches is a closer look (overlays.yaml pdx_scenic).
+  setback_scenic_corridor_ft:
+    value: 20
+    cite: PCC 33.480.040.B.2.a and Table 480-1 (Scenic Corridor Setback), All other base zones
+    url: https://www.portland.gov/sites/default/files/code/480-scenic_0.pdf
+    retrieved: '2026-11-18'
+    quote: "or/multnomah/portland/33.480.txt#L107-L109,L112-L114,L119"
   # 33.266.120.C.3: "Vehicle area access. If the lot abuts an alley, all
   # parking and vehicle access to the site must be from the alley." Held as
   # a refusal from 2026-08-27 to 2026-09-13 because no parcel record knew
@@ -4002,6 +4039,15 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/portland/33.120/33.120.206.txt#L50-L51"
+    # Table 480-1's own row for this zone: "RM2 3'". Smaller than the 10 ft
+    # front setback above, so on a scenic drive the front line keeps 10; held
+    # so the "All other base zones" 20 in defaults does not reach RM2.
+    setback_scenic_corridor_ft:
+      value: 3
+      cite: PCC 33.480.040.B.2.a and Table 480-1 (Scenic Corridor Setback), RM2
+      url: https://www.portland.gov/sites/default/files/code/480-scenic_0.pdf
+      retrieved: '2026-11-18'
+      quote: "or/multnomah/portland/33.480.txt#L107-L109,L112-L114,L116"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/portland/33.120/33.120.206.txt#L52-L53"

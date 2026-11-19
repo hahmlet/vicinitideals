@@ -156,6 +156,13 @@ DRIVEWAY_NEAR_INTERSECTION_100FT = "DRIVEWAY_NEAR_INTERSECTION_100FT"
 
 #: The zone forbids the use outright and lists no conditional-use path.
 USE_PROHIBITED = "USE_PROHIBITED"
+#: The lot touches mapped open space a standing ruling keeps this project off
+#: (:attr:`LotFacts.open_space`): RED outright, whatever would fit beside it.
+#: Steph 2026-11-18: "If it's touching open space, it's a red. We aren't
+#: fighting on developing open space."
+MAPPED_OPEN_SPACE = "MAPPED_OPEN_SPACE"
+#: The bind such a lot carries: no number, like the use gate's.
+OPEN_SPACE_CHECK = "mapped_open_space"
 #: The lot misses nothing but a minimum density: it is big enough that the
 #: city wants more homes on it than four. Never RED (Steph, 2026-10-02:
 #: "lots that fail for the only reason of min density need to go not red.
@@ -1031,6 +1038,13 @@ class LotFacts:
     #: Empty where nothing read the overlays, which is every caller but the
     #: bridge.
     resource_permits: tuple[str, ...] = ()
+    #: The mapped open space the lot touches, by traced area key
+    #: (:data:`flats.rules.resource_overlays.TRACED`, an area with a
+    #: ``red_ruling``): RED outright (:data:`MAPPED_OPEN_SPACE`). A lot the
+    #: tracing only just reaches, or only just misses -- by less than its
+    #: drawn line is wide -- is in ``resource_permits`` instead.
+    #: Empty for every caller but the bridge.
+    open_space: tuple[str, ...] = ()
     #: The side of the largest square of open ground this plan leaves on the
     #: real lot -- off the building and its pavement, outside the front
     #: setback, off every overlay carve -- in one contiguous piece holding the
@@ -4085,6 +4099,13 @@ def screen(
         side_yard_silent=stated_fit_fails,
     )
 
+    if lot.open_space:
+        # Steph 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red):
+        # a lot touching mapped open space is RED outright, whatever the
+        # zone allows and whatever would fit clear of it. The bind is
+        # :func:`_account`'s, raised whether or not the zone is trusted.
+        return Screening(triage=Triage.red, reasons=(MAPPED_OPEN_SPACE,), **common)
+
     if use_blocked and use_path is not None and not use_path.available:
         if use_pending:
             # The zone's own path turns on a site fact nobody measured: RED
@@ -4936,8 +4957,10 @@ _MEASURED_FLAG: dict[str, str] = {
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on
-#: the bind it qualifies; USE_PROHIBITED has its bind.
-UNFLAGGED_REASONS: frozenset[str] = frozenset({RELIEF_UNCONFIRMED, USE_PROHIBITED})
+#: the bind it qualifies; USE_PROHIBITED and MAPPED_OPEN_SPACE have theirs.
+UNFLAGGED_REASONS: frozenset[str] = frozenset(
+    {RELIEF_UNCONFIRMED, USE_PROHIBITED, MAPPED_OPEN_SPACE}
+)
 
 
 def _flagged(
@@ -5305,7 +5328,20 @@ def _account(
                     relief_confirmed=use_path.confirmed,
                 )
             )
+    # Mapped open space the lot touches binds whatever the zone's standards
+    # are worth: the ruling is Steph's, not the zone's, and no path round it
+    # is taken.
+    for key in lot.open_space:
+        binds.append(Bind(OPEN_SPACE_CHECK, None, None, None, source=_open_space_source(key)))
     return _flagged(rules, design, raised), tuple(binds)
+
+
+def _open_space_source(key: str) -> str:
+    """Where the RED on mapped open space comes from: the ruling's id."""
+    from flats.rules.resource_overlays import AREAS
+
+    ruling = getattr(AREAS.get(key), "red_ruling", "")
+    return f"Steph's ruling {ruling} (flats/config/rulings.yaml)" if ruling else ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -5403,6 +5439,8 @@ __all__ = [
     "STRIP_FIELD",
     "USE_NOT_ENCODED",
     "USE_PROHIBITED",
+    "MAPPED_OPEN_SPACE",
+    "OPEN_SPACE_CHECK",
     "BindingHistogram",
     "LotFacts",
     "ReliefPolicy",

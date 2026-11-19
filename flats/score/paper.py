@@ -1945,6 +1945,13 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # front, the conservative direction. The envelope applies it
                 # to the street edge read off every stretch alone.
                 "setback_street_off_corridor_ft (street lines off a mapped corridor; the paper fit has no edges)",
+                # Portland's scenic corridor setback (33.480.040.B.2.a), a
+                # minimum on the street line that abuts a scenic drive. The
+                # paper fit has no line to read on the corridor; the envelope
+                # applies it, and every lot the Scenic Resource overlay
+                # touches is a closer look whatever the paper fit says
+                # (resource_overlays pdx_scenic).
+                "setback_scenic_corridor_ft (street lines on a scenic corridor; the paper fit has no edges)",
                 # The plain street row on a line facing no residential zone
                 # across the street -- zero in Portland's CM2/CM3/CE/CX, where
                 # the zone's street number is the 5 ft across-the-street one.

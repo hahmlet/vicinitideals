@@ -1055,16 +1055,23 @@ _C: tuple[ConditionDef, ...] = (
     ConditionDef(
         "willamette_greenway_zone",
         "site_fact",
-        "Some part of the lot is in Milwaukie's Willamette Greenway Zone, the "
-        "WG on the city's Zoning Map (MMC 19.401). There \"all land use "
+        "Some part of the lot is in a city's Willamette Greenway. Milwaukie's "
+        "Willamette Greenway Zone, the WG on the city's Zoning Map (MMC "
+        "19.401): there \"all land use "
         "actions and any change or intensification of use, or development "
         "permitted in the underlying zone, are conditional uses\" (19.401.3), "
         "and none of the thirteen exemptions in 19.401.5.B is a new dwelling. "
+        "Oregon City's Willamette River Greenway Overlay District, the WRG "
+        "(OCMC 17.48): \"A Willamette River Greenway permit shall be required "
+        "for all developments\" (17.48.050), none of whose exceptions is a new "
+        "dwelling, decided on the considerations of 17.48.080. "
         "Statewide Goal 15 is what the zone implements, so the state's middle "
         "housing law leaves it standing (ORS 197A.420(5)(b)).",
         evidence=(
-            "Milwaukie Zoning Map WG boundary, any part of the lot inside it "
-            "(quadfit s5o ovl_milwaukie_greenway)"
+            "Milwaukie Zoning Map WG boundary (quadfit s5o "
+            "ovl_milwaukie_greenway) or Oregon City's Willamette River "
+            "Greenway layer (ovl_oregon_city_greenway), any part of the lot "
+            "inside it"
         ),
         assume=None,
     ),

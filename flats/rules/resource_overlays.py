@@ -308,9 +308,142 @@ PERMITS: tuple[Permit, ...] = (
         "above the 1996 flood (1 ft by the Columbia); 24.50.060 F.2.a lowest floor at or above it, "
         "G.2.c 1:1 compensating excavation for fill",
     ),
+    # Portland's Scenic Resource overlay "s" (FOLLOWUPS 204 item 1,
+    # 2026-11-18). The scenic corridor setback is drawn per street line
+    # (setback_scenic_corridor_ft); the chapter's other standards are not
+    # measured, so the lot is a closer look whether or not the pod clears it.
+    Permit(
+        "pdx_scenic",
+        "Portland's Scenic Resource overlay zone (s)",
+        "PCC 33.480.035 (any development within the zone); 33.480.040.B.2 (the scenic corridor "
+        "setback, structure length, landscaped setback and the trees in it); 33.480.040.A.2.a "
+        "(view corridor height limits); 33.480.050 (tree review)",
+    ),
+    # Oregon City's Geologic Hazards Overlay (FOLLOWUPS 204 item 2,
+    # 2026-11-18): the review reaches the whole property, so a pod standing
+    # clear of the carved landslide and slope ground still owes it. A
+    # measurable review that may add conditions (Steph 2026-10-14), held as
+    # happy_valley_slope is.
+    Permit(
+        "oregon_city_geohazard",
+        "Oregon City's Geologic Hazards Overlay Zone",
+        "OCMC 17.44.025 (a property that contains a mapped area needs the chapter's approval); "
+        "17.44.050 (geotechnical report); 17.44.060.I.2 (graded and covered ground capped at half "
+        "the lot or 4,000 sq ft); 17.44.060.L (the review authority may impose conditions)",
+    ),
+    # Clackamas County's mass movement hazard areas (FOLLOWUPS 204,
+    # 2026-11-18), held as Oregon City's geologic hazards are: the mapped
+    # landslide ground is carved, and a lot holding any of it whose pod stands
+    # clear still owes a permit the county may attach conditions to (Steph
+    # 2026-10-14). Steph ruled both halves 2026-11-18 (rulings.yaml
+    # 2026-11-18-clackamas-landslide-under-building-red): RED when the
+    # building cannot be fitted clear of the mapped ground, YELLOW when the
+    # lot holds some and the building fits clear. Two of DOGAMI's layers, so
+    # two areas.
+    Permit(
+        "clackamas_landslide",
+        "a landslide deposit on the state's landslide map (Clackamas County mass movement hazard area)",
+        "ZDO 1003.02(A) (a mass movement hazard area development permit for development in areas "
+        "of land movement, slump or earth flow, or mud or debris flow); 1003.02(B)(2)-(3) (an "
+        "engineering geologic study that establishes the site is stable; the county may attach "
+        "conditions); 1003.02(B)(5) (DOGAMI's maps the principal source)",
+    ),
+    Permit(
+        "clackamas_landslide_scarp",
+        "a landslide scarp on the state's landslide map (Clackamas County mass movement hazard area)",
+        "ZDO 1003.02(A) (a mass movement hazard area development permit for development in areas "
+        "of land movement, slump or earth flow, or mud or debris flow); 1003.02(B)(2)-(3) (an "
+        "engineering geologic study that establishes the site is stable; the county may attach "
+        "conditions); 1003.02(B)(5) (DOGAMI's maps the principal source)",
+    ),
 )
 
 BY_KEY: Mapping[str, Permit] = {p.key: p for p in PERMITS}
+
+
+@dataclass(frozen=True, slots=True)
+class Traced:
+    """A permit area nobody publishes as data, traced here off the adopted
+    map and read against the lot's own shape by the bridge
+    (:func:`flats.geom.drawn.touches_area`) -- quadfit measures nothing for
+    it, so it has no ``ovl_`` column and is not one of :data:`PERMITS`."""
+
+    key: str
+    words: str
+    cite: str
+    #: quadfit's jurisdiction key whose lots it reaches.
+    jurisdiction: str
+    #: The tracing, under ``flats/config/areas``; the file states how it was
+    #: made and how far off its edge can be (``EDGE_FT`` per feature).
+    file: str
+    #: The standing ruling (its id in ``flats/config/rulings.yaml``) under
+    #: which a lot that touches the traced area is RED outright, whatever
+    #: would fit beside it; '' where touching is only a closer look. A lot
+    #: within the tracing's ``EDGE_FT`` of the traced line, on either side of
+    #: it, is the closer look either way: the tracing cannot say whether it
+    #: touches.
+    red_ruling: str = ""
+
+
+#: Clackamas County's open space (FOLLOWUPS 204, ZDO 1011 and 1103 read whole
+#: 2026-11-18). 1103.01: Open Space Review "applies to development that
+#: affects an open space resource described in Section 1011 ... and shown
+#: generally on Comprehensive Plan Map IV-6 ... as Resource Protection, Major
+#: Hazards, or Public and Community Use Open Space" -- a Type II review that
+#: weighs "the probable impact of the proposed development" and identifies
+#: "alternative development proposals" (1103.02). The county publishes no
+#: layer of it, so Map 4-06 is traced (the file says how, and that its edge
+#: is good to 14 ft).
+#:
+#: The text leaves two things open. 1011.02(B) preserves "outright" only the
+#: high-priority open space, which turns on the resource present (wetland,
+#: land movement, slope over 35 percent) and not on the map's class; and
+#: Table 1001-1 does not apply Section 1011 to a quadplex or townhouse in the
+#: R and VR districts at all (zdo.1001, the two middle-housing rows), where
+#: 1103.01 still states its own reach. Steph ruled both 2026-11-18
+#: (rulings.yaml 2026-11-18-clackamas-open-space-red): "if its free of mapped
+#: open space, it's available to be green. If it's touching open space, it's
+#: a red. We aren't fighting on developing open space." So in every zone, the
+#: standard residential zones included:
+#:
+#: * a lot the traced open space plainly reaches is RED outright, whatever
+#:   would fit beside it (``red_ruling``;
+#:   :data:`flats.score.screen.MAPPED_OPEN_SPACE`);
+#: * a lot clear of it carries nothing from this rule.
+#:
+#: Whether a lot touches is a question of fact, and the tracing answers it
+#: only to the 14 ft its drawn line is wide (coordinator 2026-11-18, for
+#: Steph to overrule). So "plainly" is an overlap deeper than 14 ft, into
+#: the lot or into the open space (:func:`flats.geom.drawn.reaches_past_edge`);
+#: and a lot within 14 ft of the traced line on either side -- a strip of
+#: overlap along a lot line no deeper than that, or a gap no wider -- is the
+#: closer look (YELLOW): the map only just reaches the lot line, or only
+#: just misses it, and a person must look. The county's own Public and
+#: Community Use polygons are held to the same 14 ft on the inside (three
+#: neighbouring lots overlap one by the same 2.1 ft strip, so that layer and
+#: the tax lots do not agree to the foot); they carry no band outside.
+#: Before any of it the lot loses a 0.5 ft rim
+#: (:data:`flats.geom.drawn.TOUCH_SHRINK_FT`), as for every overlay flag.
+TRACED: tuple[Traced, ...] = (
+    Traced(
+        "clackamas_open_space",
+        "the open space on Clackamas County's Comprehensive Plan Map 4-06 only just reaches "
+        "this lot's line, or stops just short of it -- by less than the 14 ft width of the line "
+        "the map draws it with, so the map cannot say whether the lot touches it and a person "
+        "must look; a lot it plainly reaches into is red (Steph 2026-11-18)",
+        "ZDO 1103.01 (Open Space Review for development that affects an open space resource "
+        "shown on Map IV-6 as Resource Protection, Major Hazards, or Public and Community Use "
+        "Open Space); 1103.02 (Type II; impact evaluated, alternatives identified); 1011.02(A)-(C) "
+        "(development shall avoid disturbance of identified open space resources; high-priority "
+        "open space preserved outright, second-priority to the maximum extent possible)",
+        jurisdiction="clackamas_unincorporated",
+        file="or/clackamas/_unincorporated/zdo-map-4-06-open-space.geojson",
+        red_ruling="2026-11-18-clackamas-open-space-red",
+    ),
+)
+
+#: Every area a RESOURCE-PERMIT flag can name, measured or traced.
+AREAS: Mapping[str, Permit | Traced] = {**BY_KEY, **{t.key: t for t in TRACED}}
 
 #: quadfit flag overlays measured for something else and read as nothing here,
 #: each with the sentence that releases it. West Linn's piped streams stay on
@@ -379,4 +512,6 @@ def permits_on(row: Mapping[str, Any]) -> tuple[str, ...]:
     return tuple(out)
 
 
-__all__ = ["BY_KEY", "CLEARED", "COLUMNS", "EXEMPT", "PERMITS", "Permit", "permits_on"]
+__all__ = [
+    "AREAS", "BY_KEY", "CLEARED", "COLUMNS", "EXEMPT", "PERMITS", "Permit", "TRACED", "Traced", "permits_on",
+]

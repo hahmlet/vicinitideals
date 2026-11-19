@@ -183,6 +183,63 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   change for the whole unincorporated county and deserves its own change with its own count of
   lots in front of it.
 
+  HELD 2026-11-18 (FOLLOWUPS 204), on the ground and not on quadplex_allowed. The district''s
+  chapter is stored now (zdo.703): 703.04 applies the FMD "to the special flood hazard areas
+  (SFHAs) identified by the Federal Insurance Administration" in the 2019 study and its rate
+  maps, and 703.05(J) defines development as "buildings or other structures, mining, dredging,
+  filling, grading, paving, excavation". So the district is FEMA''s mapped flood area, which is
+  measured, and what 845.01(3) prohibits in it is the building, its court and its drive.
+  quadfit carves the flood fringe off every unincorporated lot (overlays.yaml clackamas_fmd; the
+  floodway was already carved everywhere): a pod that cannot stand clear of the district is RED,
+  and a lot the district touches whose pod stands clear stays the closer look the fringe flag
+  already made it. No zone''s quadplex_allowed is capped, so no lot goes UNKNOWN on it.
+  Steph ruled it the same day (rulings.yaml 2026-11-18-clackamas-flood-ban-red): RED when the
+  building cannot stand clear of the county flood area. The earlier assumption that every county
+  lot lies outside the district (2026-09-30-clackamas-floodplain-district-assumed-absent) is
+  retired by that ruling.
+
+  MASS MOVEMENT HAZARD AREAS, ZDO 1003.02, held the same day (zdo.1003 stored and read whole).
+  "No development or grading shall be allowed in areas of land movement, slump or earth flow, or
+  mud or debris flow, unless approved in a Type II application" (zdo.1003.txt#L13), and "The
+  principal source of information for determining mass movement hazards is the State Department
+  of Geology and Mineral Industries (DOGAMI) Bulletin 99 and accompanying maps" (zdo.1003.txt#L47).
+  quadfit reads the state''s landslide deposits and scarp flanks (overlays.yaml
+  clackamas_landslide, clackamas_landslide_scarp and their _core carves). Steph ruled both halves
+  2026-11-18 (rulings.yaml 2026-11-18-clackamas-landslide-under-building-red): a lot is RED when
+  the building would sit on the mapped ground and cannot be fitted clear of it, and a lot holding
+  slide ground whose building fits clear stays YELLOW, its permit being one where conditions "may
+  be attached by the County" (zdo.1003.txt#L19).
+
+  OPEN SPACE, ZDO 1011 and 1103, held the same day (both stored and read whole). Section 1103
+  "applies to development that affects an open space resource described in Section 1011, Open
+  Space and Parks, and shown generally on Comprehensive Plan Map IV-6" (zdo.1103.txt#L3), and
+  "High-priority open space shall be preserved outright" (zdo.1011.txt#L67). The county publishes
+  no layer of that map, so it is traced (flats/config/areas, zdo-map-4-06-open-space.geojson,
+  which says how it was placed and that its drawn line is 14 ft wide on the ground). The text
+  leaves open which mapped ground is the high-priority kind, and Table 1001-1 does not tick
+  Section 1011 for middle housing in the R and VR districts at all (zdo.1001.txt#L99-L107).
+  Steph ruled both 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red): "if its free
+  of mapped open space, it''s available to be green. If it''s touching open space, it''s a red.
+  We aren''t fighting on developing open space." So, in every zone: a lot the traced open space
+  plainly reaches is RED outright, whatever would fit beside it, and a lot clear of it carries
+  nothing from this rule. Whether a lot touches is a question of fact that the tracing answers
+  only to the 14 ft its drawn line is wide (coordinator 2026-11-18, for Steph to overrule), so
+  "plainly" is an overlap deeper than 14 ft, into the lot or into the open space; and a lot
+  within 14 ft of the traced line on either side -- a strip of overlap along a lot line no
+  deeper than that, or a gap no wider -- is YELLOW: the map only just reaches the lot line, or
+  only just misses it, and a person must look. The lot is first shrunk 0.5 ft, as for every
+  overlay. The bridge reads it off the lot''s own shape (flats.ingest.quadfit.open_space_on and
+  traced_permits_on, flats.geom.drawn.reaches_past_edge); quadfit holds no column for it and
+  no ground is carved for it.
+
+  Two cross-reference rulings closed the same day, because the chapters they stood in for are
+  held now. ZDO 1012.05 names Section 1003 ("2 Mass movement hazards regulated by Section 1003")
+  and Section 703 ("3 The floodway of the Floodplain Management District regulated by Section
+  703") only as areas subtracted from the site before minimum density is computed. Subtracting
+  land can only lower a minimum-density floor, and maximum density is exempt for middle housing,
+  so neither mention takes anything from the pod. What the two chapters do take is held on the
+  ground: 1003.02 through quadfit''s clackamas_landslide overlays, 703 through clackamas_fmd.
+
   Worth naming apart from the refusal, because it is a hole in a ledger rather than an unread
   line: A FLAT PROHIBITION STATES NO MEASUREMENT, SO NO MEASUREMENT-BASED LEDGER CAN EVER
   SURFACE IT. All four reading queues are built from sentences that state a number. 845.02 and
@@ -822,20 +879,9 @@ crossrefs:
     note: >-
       Home occupation for canine skills training (406.04). A use-table row naming its own special-
       use section; the pod is four attached dwelling units, not this use.
-  "1003":
-    outcome: narrows_only
-    note: >-
-      Hazards to Safety, named in ZDO 1012.05 only as one of the areas subtracted from the site
-      before minimum density is computed ("2 Mass movement hazards regulated by Section 1003").
-      Subtracting land can only lower a minimum-density floor, and maximum density is exempt for
-      middle housing; this mention takes nothing from the pod.
-  "703":
-    outcome: narrows_only
-    note: >-
-      Floodplain Management District, named in ZDO 1012.05 only as an area subtracted before
-      minimum density is computed ("3 The floodway of the Floodplain Management District regulated
-      by Section 703"). Can only lower a floor; the floodplain itself reaches a lot through its
-      mapped overlay, not this list.
+  # "1003" and "703" stood here until 2026-11-18 (FOLLOWUPS 204), when both
+  # chapters were fetched and read; their notes moved into the layer's notes,
+  # under HELD 2026-11-18, beside what the two chapters now hold.
   "705":
     outcome: narrows_only
     note: >-
@@ -1163,6 +1209,40 @@ code:
   url: https://www.clackamas.us/planning/zdo702
   title: Clackamas County ZDO Section 702 - Open Space Management District (OSM)
   start: "702.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+# Four sections that reach a lot through a MAP and not through its zone
+# (FOLLOWUPS 204, read whole 2026-11-18). None states a dimension of the pod;
+# each is held on the ground by quadfit (overlays.yaml clackamas_fmd,
+# clackamas_mass_movement, clackamas_open_space) and stored here so those
+# entries quote text that is held.
+#   703  the Floodplain Management District: 703.04 says what the district IS
+#        (FEMA's special flood hazard areas), which 845.01(3) needs.
+#   1003 Hazards to Safety: 1003.02 bars development in areas of land movement
+#        short of a Type II permit and names DOGAMI's maps as the source.
+#   1011 Open Space and Parks, and 1103 Open Space Review: the areas Map IV-6
+#        shows as open space, and the review development affecting them owes.
+- id: zdo.703
+  url: https://www.clackamas.us/planning/zdo703
+  title: Clackamas County ZDO Section 703 - Floodplain Management District (FMD)
+  start: "703.01"
+  end: "[Amended by Ord. ZDO-230"
+- id: zdo.1003
+  url: https://www.clackamas.us/planning/zdo1003
+  title: Clackamas County ZDO Section 1003 - Hazards to Safety
+  start: "1003.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+- id: zdo.1011
+  url: https://www.clackamas.us/planning/zdo1011
+  title: Clackamas County ZDO Section 1011 - Open Space and Parks
+  start: "1011.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+- id: zdo.1103
+  url: https://www.clackamas.us/planning/zdo1103
+  title: Clackamas County ZDO Section 1103 - Open Space Review
+  start: "1103.01"
   end: "Return to the Zoning and Development Ordinance main page"
   allow_thin: true
 # Design review. 1102.01(A) puts development in HDR, MR-1, MR-2, PMD, VA and

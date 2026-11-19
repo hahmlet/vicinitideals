@@ -531,7 +531,36 @@ datasets:
     fields: [OBJECTID]
     serves: [or/multnomah/portland]
 
+  # PCC 33.480, the Scenic Resource overlay "s" (FOLLOWUPS 204 item 1, read
+  # 2026-11-18): quadfit flags every lot it touches (overlays.yaml pdx_scenic
+  # says why). Layer 137 is "Scenic Resource Zone (s)".
+  overlay_pdx_scenic:
+    kind: arcgis
+    label: Portland Scenic Resource overlay zone
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/137
+    fields: [OVRLY, ZONE, PLDIST]
+    serves: [or/multnomah/portland]
+
   # --- mapped corridors (flats/geom/corridor.py) ----------------------------
+
+  scenic_corridors_pdx:
+    kind: arcgis
+    label: Portland Scenic Corridors (Scenic Resources Protection Plan)
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/89
+    geometry: polyline
+    fields: [Number, Type, Subtype, Location, Inventory_code]
+    serves: [or/multnomah/portland]
+    notes: >-
+      48 lines: 21 scenic drives, 20 scenic waterways, 6 trails, 1 aerial
+      tram. Only the drives are read (corridor.py LINE_KEEP): PCC
+      33.480.040.B.2.a puts the scenic corridor setback "along street lot
+      lines that abut the Scenic Corridor". Read per street line, for lots
+      the s overlay touches, and answers no lot-level fact; carries
+      setback_scenic_corridor_ft to the line. No street-name field, so a
+      line is on a drive when the drawn line runs beside it or coincides
+      with the street it abuts.
 
   corridors_pdx:
     kind: arcgis
@@ -1279,6 +1308,54 @@ datasets:
     url: https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/2
     fields: [NROD, Acres]
     serves: [or/clackamas/oregon-city]
+
+  # OCMC 17.44 (FOLLOWUPS 204 item 2, read 2026-11-18): the whole Geologic
+  # Hazards Overlay, each polygon marked for slope, landslide and the buffer
+  # of each. quadfit flags every lot it touches and carves the landslide,
+  # landslide-buffer and slope polygons (overlays.yaml oregon_city_geohazard).
+  overlay_oregon_city_geohazard:
+    kind: arcgis
+    label: Oregon City Geologic Hazards overlay zone
+    provides: overlay
+    url: https://maps.orcity.org/arcgis/rest/services/HazardsAndFloodInfo_PUBLIC/MapServer/11
+    fields: [IN_SLOPE, IN_SLOPE_BUFFER, IN_LANDSLIDE, IN_LANDSLIDE_BUFFER]
+    serves: [or/clackamas/oregon-city]
+
+  # OCMC 17.48 (FOLLOWUPS 204 item 3, read 2026-11-18): the Willamette River
+  # Greenway, answering willamette_greenway_zone for Oregon City lots as
+  # Milwaukie's layer does for Milwaukie's.
+  overlay_oregon_city_greenway:
+    kind: arcgis
+    label: Oregon City Willamette River Greenway overlay district
+    provides: overlay
+    url: https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/10
+    fields: [OBJECTID]
+    serves: [or/clackamas/oregon-city]
+
+  # ZDO 1003.02 (FOLLOWUPS 204, Section 1003 read 2026-11-18): mass movement
+  # hazard areas, whose "principal source of information" the section names
+  # as DOGAMI. The state's landslide inventory, SLIDO 4.6: the deposits and
+  # the scarp flanks above them. quadfit flags every unincorporated lot
+  # either touches and carves the mapped ground itself (overlays.yaml
+  # clackamas_landslide, clackamas_landslide_scarp and their _core twins).
+  # The hazard_notes section reads the same inventory from the 4.5
+  # geodatabase for the lot page's notes; nothing there screens.
+  overlay_clackamas_landslide:
+    kind: arcgis
+    label: DOGAMI landslide inventory (SLIDO) deposits
+    provides: overlay
+    url: https://gis.dogami.oregon.gov/arcgis/rest/services/Public/SLIDO_Inventory/MapServer/11
+    fields: [UNIQUE_ID, TYPE_MOVE, MOVE_CLASS, DEEP_SHAL, CONFIDENCE, AGE, REF_ID_COD]
+    bbox_4326: [-123.25, 45.15, -122.20, 45.75]
+    serves: [or/clackamas/_unincorporated]
+  overlay_clackamas_landslide_scarp:
+    kind: arcgis
+    label: DOGAMI landslide inventory (SLIDO) scarp flanks
+    provides: overlay
+    url: https://gis.dogami.oregon.gov/arcgis/rest/services/Public/SLIDO_Inventory/MapServer/3
+    fields: [UNIQUE_ID, REF_ID_COD]
+    bbox_4326: [-123.25, 45.15, -122.20, 45.75]
+    serves: [or/clackamas/_unincorporated]
 
   overlay_tualatin_nrpo:
     kind: arcgis

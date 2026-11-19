@@ -136,6 +136,14 @@ class Setbacks:
     #: distinguish it and the line takes its class's number. Read for a front
     #: or street-side edge flagged ``off_corridor`` only.
     street_off_corridor_ft: float | None = None
+    #: The scenic corridor setback (``setback_scenic_corridor_ft``; Portland
+    #: 33.480.040.B.2.a, Table 480-1) on a street line read ON a scenic
+    #: corridor. A minimum beside the zone's own, so the line takes the
+    #: larger of the two (Table 480-1 note [1]: "Larger minimum setbacks ...
+    #: supersede this setback"). None means the code states none. Read for an
+    #: edge flagged ``on_scenic`` only, whatever its class: only a street
+    #: line is ever flagged, and a through lot's far street line is one.
+    scenic_corridor_ft: float | None = None
     #: The rear setback on a rear line the alley runs end to end -- the rear
     #: setback's ``alley_at_rear`` variant (Portland's and Multnomah's
     #: exemption, as zero; Gresham's, Troutdale's and Fairview's numbers)
@@ -204,6 +212,13 @@ class Setbacks:
 
     def _plain(self, edge: Edge) -> float:
         """:meth:`for_edge` before any right-of-way is given up."""
+        base = self._by_line(edge)
+        if edge.on_scenic and self.scenic_corridor_ft is not None:
+            return max(base, self.scenic_corridor_ft)
+        return base
+
+    def _by_line(self, edge: Edge) -> float:
+        """:meth:`_plain` before the scenic corridor's minimum."""
         if edge.alley and edge.cls is EdgeClass.side and self.alley_side_ft is not None:
             return self.alley_side_ft
         if edge.alley and edge.cls is EdgeClass.rear and self.alley_rear_ft is not None:

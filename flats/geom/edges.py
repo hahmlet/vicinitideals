@@ -129,6 +129,14 @@ class Edge:
     #: and the answer wherever nothing read the line -- leaves the line on
     #: its class's number.
     off_corridor: bool = False
+    #: A street line read ON a scenic corridor
+    #: (:func:`flats.geom.corridor.on_line_maps`, Portland's Scenic Corridors
+    #: layer; PCC 33.480.040.B.2.a). It carries the scenic corridor setback
+    #: (``setback_scenic_corridor_ft``) to this one line, as the larger of it
+    #: and whatever the line already takes. True tightens, so the reading is
+    #: the liberal one; False -- the default, and the answer wherever the map
+    #: was not read -- adds nothing.
+    on_scenic: bool = False
     #: A street line read surely clear of every zone the code's
     #: across-the-street setback names -- every ray across the street found
     #: a lot of this city in a zone on the ``false_for`` side
