@@ -140,3 +140,20 @@ def test_nothing_that_screens_reads_fd5():
         for p in (flats / pkg).rglob("*.py") if importing.search(p.read_text(encoding="utf-8", errors="replace"))
     ]
     assert offenders == []
+
+
+def test_frost_row_marks_the_whole_code_search_places_only():
+    s = _script()
+    note = {"outcome": "silent", "inches": 12, "below_ft": 2500, "level": "county", "kind": "practice",
+            "cite": "county page", "caveats": ["Recorded silent on Steph's search."]}
+    row = {"county": "clackamas", "layer_id": "or/clackamas/oregon-city", "ground_mean_ft": "300",
+           "frost_hub_in": "18.0"}
+    got = s.frost_row(row, note)
+    assert got["frost_register_in"] == "12" and got["frost_register_outcome"] == "silent"
+    assert got["frost_register_note"].startswith(s.SILENT_WORDS + " (ruling 2026-11-18-frost-silent-oregon-city)")
+    assert got["frost_above_stated_band"] == "False"
+    other = s.frost_row({**row, "layer_id": "or/washington/hillsboro", "county": "washington"}, note)
+    assert not other["frost_register_note"].startswith(s.SILENT_WORDS)
+    unread = s.frost_row(row, {"outcome": "not_read", "reference": {"inches": 12}})
+    assert unread["frost_register_in"] == "" and unread["frost_register_level"] == "not resolved"
+    assert not unread["frost_register_note"].startswith(s.SILENT_WORDS)

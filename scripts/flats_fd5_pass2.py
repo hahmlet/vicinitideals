@@ -305,6 +305,67 @@ def join(lot_csv: Path, cols_csv: Path, out_csv: Path) -> dict[str, Any]:
     return {"rows": len(out), "columns": len(keys), "without_fd5": missing}
 
 
+# --- refresh-frost --------------------------------------------------------------
+
+#: Places the register now reads silent on Steph's whole-code word search, with
+#: the ruling that says so (flats/config/rulings.yaml): their figure is the
+#: county/state one, and the note says how it was reached.
+SILENT_BY_SEARCH = {
+    "or/clackamas/oregon-city": "2026-11-18-frost-silent-oregon-city",
+    "or/washington/sherwood": "2026-11-18-frost-silent-sherwood",
+}
+SILENT_WORDS = "city code silent on a whole-code word search; county/state figure"
+FROST_COLS = ("frost_register_in", "frost_register_level", "frost_register_note", "frost_hub_in",
+              "frost_state_in", "frost_state_basis", "frost_register_outcome", "frost_register_kind",
+              "frost_register_below_ft", "frost_register_reference_in", "frost_register_cite",
+              "frost_disagree", "frost_above_stated_band")
+
+
+def _cellstr(v: Any) -> str:
+    return "" if v is None else str(v)
+
+
+def frost_row(r: dict[str, Any], note: dict[str, Any] | None) -> dict[str, str]:
+    """The frost columns of one lot from the register's ``note`` for its
+    place (:func:`flats.frost.describe`), as the lot file holds them."""
+    from flats.ingest import fd2
+
+    got = fd2.frost(note, r.get("county"), fd2._num(r.get("ground_mean_ft")), fd2._num(r.get("frost_hub_in")))
+    ruling = SILENT_BY_SEARCH.get(str(r.get("layer_id") or ""))
+    if ruling and (note or {}).get("outcome") == "silent":
+        lead = f"{SILENT_WORDS} (ruling {ruling})"
+        got["frost_register_note"] = " | ".join(x for x in (lead, got.get("frost_register_note")) if x)
+    return {k: _cellstr(got.get(k)) for k in FROST_COLS}
+
+
+def refresh_frost(lot_csv: Path, out_csv: Path) -> dict[str, Any]:
+    """Re-read every lot's frost columns from the live register (flats/frost.py);
+    every other column is kept as it is. Returns the changed lots by place."""
+    from flats import frost as register
+
+    with open(lot_csv, newline="", encoding="utf-8") as fh:
+        rd = csv.DictReader(fh)
+        keys = list(rd.fieldnames or [])
+        recs = list(rd)
+    notes: dict[tuple[str, str], Any] = {}
+    changed: Counter = Counter()
+    for r in recs:
+        key = (r.get("layer_id") or "", (r.get("county") or "").lower())
+        if key not in notes:
+            notes[key] = register.describe(key[0] or None, key[1] or None)
+        new = frost_row(r, notes[key])
+        if any(new[k] != (r.get(k) or "") for k in FROST_COLS):
+            changed[r.get("layer_id")] += 1
+        r.update(new)
+    tmp = out_csv.with_suffix(".tmp")
+    with open(tmp, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=keys)
+        w.writeheader()
+        w.writerows(recs)
+    tmp.replace(out_csv)
+    return {"rows": len(recs), "changed": dict(changed)}
+
+
 # --- summary --------------------------------------------------------------------
 
 COUNTIES = ("clackamas", "multnomah", "washington")
@@ -432,6 +493,9 @@ def main(argv: list[str] | None = None) -> int:
     j.add_argument("--csv", required=True)
     j.add_argument("--cols", required=True)
     j.add_argument("--out", required=True)
+    rf = sub.add_parser("refresh-frost")
+    rf.add_argument("--csv", required=True)
+    rf.add_argument("--out", required=True)
     s = sub.add_parser("summary")
     s.add_argument("--csv", required=True)
     s.add_argument("--out", required=True)
@@ -442,6 +506,8 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(measure(a), default=str)[:2000])
     elif a.cmd == "join":
         print(json.dumps(join(Path(a.csv), Path(a.cols), Path(a.out))))
+    elif a.cmd == "refresh-frost":
+        print(json.dumps(refresh_frost(Path(a.csv), Path(a.out))))
     else:
         Path(a.out).write_text(summary(Path(a.csv)), encoding="utf-8")
     return 0

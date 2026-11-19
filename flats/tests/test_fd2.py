@@ -211,7 +211,12 @@ def test_frost_register_and_state_figure():
     assert got["frost_register_in"] == 12 and got["frost_disagree"] is False
     got = fd2.frost(register.describe("or/washington/_unincorporated", "washington"), "washington", 420.0, 12.0)
     assert got["frost_above_stated_band"] is True and got["frost_register_below_ft"] == 400
+    # Oregon City: silent on Steph's whole-code search (ruling
+    # 2026-11-18-frost-silent-oregon-city), so the county figure applies.
     got = fd2.frost(register.describe("or/clackamas/oregon-city", "clackamas"), "clackamas", 100.0, 18.0)
+    assert got["frost_register_outcome"] == "silent" and got["frost_register_in"] == 12
+    # A place the register has no row for is unread: no figure, the county's kept apart.
+    got = fd2.frost(register.describe("or/clackamas/no-such-place", "clackamas"), "clackamas", 100.0, 18.0)
     assert got["frost_register_in"] is None and got["frost_disagree"] is None
     assert got["frost_register_outcome"] == "not_read" and got["frost_register_reference_in"] == 12
     assert fd2.frost(None, "clackamas", 150.0, 18.0)["frost_state_in"] == 12
