@@ -122,16 +122,20 @@ def test_a_not_read_place_in_a_silent_county_shows_the_state_figure_for_referenc
     assert "For reference only, the state figure for this county is 12 in." in note["words"]
 
 
-def test_a_city_whose_chapter_was_not_read_is_not_called_silent() -> None:
+def test_a_city_silent_on_a_search_of_its_whole_code_says_so() -> None:
     # 2026-11-18 coordinator: silent only where the chapter itself was read.
+    # Later the same day Oregon City and Sherwood joined Hillsboro and Tigard:
+    # silent on Steph's search of the whole municipal code (Municode exports),
+    # the building chapter still not read whole, which the caveat says.
     for jid, county, county_name in (
         ("or/clackamas/oregon-city", "clackamas", "Clackamas County Building Codes Division"),
         ("or/washington/sherwood", "washington", "Washington County Building Services"),
     ):
         note = frost.describe(jid, county)
-        assert note["outcome"] == "not_read" and note["inches"] is None and note["level"] is None
-        assert note["read"] and note["caveats"]
-        assert f"the county figure ({county_name}) is 12 in." in note["words"]
+        assert (note["outcome"], note["level"], note["inches"]) == ("silent", "county", 12)
+        assert note["source_name"] == county_name
+        assert any("Steph's search" in r["document"] for r in note["read"])
+        assert any("not read whole" in c for c in note["caveats"])
     for jid in ("or/washington/king-city", "or/washington/durham", "or/washington/cornelius"):
         note = frost.describe(jid, "washington")
         assert note["outcome"] == "silent" and note["level"] == "county" and note["inches"] == 12

@@ -247,16 +247,24 @@ places:
   or/clackamas/oregon-city:
     name: Oregon City
     permits_by: City of Oregon City Building Division
-    outcome: not_read
+    outcome: silent
     read:
       - document: building, residential permit, application and checklist pages; the current Oregon specialty codes page (no frost wording)
         cite: data/flats/books/frost/oregon-city
-    reason: >-
-      Oregon City's building chapter (OCMC Title 15) was not read: the code
-      host refuses automated readers, and its web-archive copy of 2024-04-06
-      is an empty page shell with no code text
-      (data/flats/books/frost/oregon-city/ocmc-15/municode-tit15-wayback-20240406.html).
-      The department's own pages, which were read, state no figure.
+      - document: >-
+          Steph's search of the Oregon City municipal code on Municode, exported
+          2026-11-18 (Supp. No. 51, created 2026-11-06). The hits are every
+          passage with the word "foundation", across the whole code to the
+          ordinance disposition table: flood, geologic-hazard and design
+          sections of Title 17 only, and no Title 15 (building) section at all.
+          The word "frost" appears nowhere in the export, and no footing or
+          foundation depth is stated. A keyword search, not a read of OCMC
+          Title 15 whole; whether "frost" itself was searched is not recorded.
+        cite: data/flats/books/frost/oregon-city/ocmc-search/municode-search-foundation-2026-11-18.txt
+    caveat: >-
+      Recorded silent on Steph's search of the whole code, as Hillsboro and
+      Tigard are; the building chapter was not read whole (the code host
+      refuses automated readers and its web-archive copy is an empty shell).
 
   or/clackamas/gladstone:
     name: Gladstone
@@ -397,7 +405,7 @@ places:
   or/washington/sherwood:
     name: Sherwood
     permits_by: City of Sherwood Building Division
-    outcome: not_read
+    outcome: silent
     read:
       - document: building, code-administration, submittal and deck pages
         url: https://www.sherwoodoregon.gov/building/
@@ -405,10 +413,20 @@ places:
       - document: Ordinance 2021-006 Exhibit A, which rewrites only SMC 15.04.150 (the ORSC "as adopted by OAR 918-480-0005 through 918-480-0010(2021)"); no frost, footing or foundation text
         url: http://web.archive.org/web/20240421004537/https://www.sherwoodoregon.gov/sites/default/files/fileattachments/ordinance/48800/ordinance_2021-006_building_code_updates_2021.pdf
         cite: data/flats/books/frost/sherwood/smc-15.04/ord-2021-006-wayback-20240421.pdf#p4
-    reason: >-
-      Sherwood's building chapter (SMC 15.04) was not read whole: only the one
-      section the 2021 ordinance rewrote was seen. The code host refuses
-      automated readers and the web archive holds no copy of the chapter.
+      - document: >-
+          Steph's search of the Sherwood code of ordinances on Municode,
+          exported 2026-11-18 (Supp. No. 25, Update 1, created 2026-10-15). The
+          hits are every passage with the word "foundation": in Title 15 only
+          SMC 15.21.055 (dangerous-building definitions), the rest Title 16
+          floodplain, manufactured-home and design sections. No SMC 15.04
+          section, no "frost" anywhere in the export, and no footing or
+          foundation depth stated. A keyword search, not a read of SMC 15.04
+          whole; whether "frost" itself was searched is not recorded.
+        cite: data/flats/books/frost/sherwood/smc-search/municode-search-foundation-2026-11-18.txt
+    caveat: >-
+      Recorded silent on Steph's search of the whole code, as Hillsboro and
+      Tigard are; SMC 15.04 was not read whole (the code host refuses
+      automated readers and the web archive holds no copy of the chapter).
 
   or/washington/king-city:
     name: King City
