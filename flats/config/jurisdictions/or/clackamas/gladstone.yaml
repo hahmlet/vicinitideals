@@ -396,15 +396,18 @@ definitions:
 # impact analysis where "the location of an existing or proposed access driveway does not meet
 # minimum spacing or sight distance requirements" (p.369), and (4)(a) measures it out to "the
 # access spacing distances" on an arterial or collector frontage -- distances set outside the code,
-# in the TSP and the Gladstone Public Works Design Standards (17.50.050(1), p.369), neither held;
+# in the TSP and the Gladstone Public Works Design Standards (17.50.050(1), p.369) -- the
+# Standards' Section Five held since 2026-11-18 (pwds.5.streets, flats/gladstone-pwds: 5.0070
+# prints 150/75 ft between curb cuts on arterials/collectors and 35 ft off a corner on a local);
 # 17.50.050(3)(a) brings Clackamas County and ODOT in where "an approach road to a county road or
 # Highway 99E serves the property"; and 17.50.050(7) "The city may deny, approve, or approve a
 # development proposal with conditions" (p.371). So a busy-street driveway that misses an unread
 # spacing figure goes to a study and a discretionary decision: the busy-road ruling's YELLOW
 # (2026-11-09-busy-road-driveway-spacing-yellow), which flats/gap-fixes encodes in
-# driveway_spacing.yaml as collector and arterial frontages unread. A local street is no different
-# in the code's words -- it prints nothing for any class -- so whether local frontages are held
-# too stays the open question gap-fixes put to Steph.
+# driveway_spacing.yaml as collector and arterial frontages unread. With the Standards held,
+# flats/gladstone-pwds (on gap-fixes) turns those into barred frontages at the printed figures and
+# holds a local frontage 35 ft off an intersecting street's right-of-way line (5.0070(D)(2)(e)-(f)),
+# which answers the local-street question gap-fixes left open.
 
 # READ AND NOT ENCODED (FOLLOWUPS 105, Chapter 17.76 fetched 2026-11-08 with Steph's OK; these were
 # crossref rulings until it came into the store): every district's dimensional standards apply
