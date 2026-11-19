@@ -488,9 +488,10 @@ readings:
       this registry is weakest in. "Minimum Building Height: 20 feet, measured to top of parapet
       or roof." "Minimum Ground Floor Height: The ground floor of the building shall measure a
       minimum of 15 feet from floor to ceiling." "Minimum Building Depth: Buildings shall be a
-      minimum of 40 feet deep." A two-storey pod at 26 feet clears the first and would fail the
-      second outright -- a fifteen-foot ground floor inside a twenty-six-foot building leaves
-      eleven feet for the storey above it and the roof -- so this is not a formality. The
+      minimum of 40 feet deep." The pod fails all three -- it stands 19 ft 1 in to the top of its
+      roof (20 ft overall as designed; flats/config/pods/pod80x25.yaml), its ground floor is an
+      eight-foot wall and it is 25 feet deep -- so this is not a formality. (This sentence was
+      written for a 26 ft pod that cleared the first; corrected 2026-11-18, FOLLOWUPS 205.) The
       minimum-building-height gap is already on the standing list of things the model cannot hold
       across seven jurisdictions; a minimum ground-floor height and a minimum building depth are
       two more of the same family and are recorded here as such. THE SETBACKS ARE BUILD-TO BANDS,
@@ -4891,7 +4892,11 @@ zones:
       the sector or a story is added to an existing building (1005.09(A)). In
       those sectors the side and rear 5 feet and the 20-foot minimum height
       above are not in force; they are held anyway, the stricter reading. The
-      pod is 26 feet high and clears the 20-foot floor either way.
+      pod stands 19 ft 1 in as a code measures it (flats/config/pods/pod80x25.yaml)
+      and does NOT clear the 20-foot floor, so holding it reds a Sector 1 or 2
+      lot the sentence would let through: the cautious side, and Map 1005-1 is
+      not traced. (Until 2026-11-18 this read "the pod is 26 feet high and
+      clears the 20-foot floor either way"; FOLLOWUPS 205.)
 
 
       Minimum density (Table 510-2): "20 dwelling units per net acre for

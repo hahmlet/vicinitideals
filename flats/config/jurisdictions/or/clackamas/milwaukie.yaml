@@ -1716,10 +1716,15 @@ zones:
       15. An earlier note here said a single setback_side_ft could not express that and that encoding 5
       was the cautious reading. Both halves were wrong: setback_side_total_ft is the field for a
       cumulative yard, and 5 either side reserves 10 ft of width where the code demands 15, which passes
-      a pod five feet too wide rather than refusing a legal one. It is left unencoded now for a
-      different reason: the side yard height plane on this same table puts every side yard of a 26 ft
-      building at 11 ft, so the pair is 22 and the cumulative 15 cannot bind. If the plane is ever
-      relieved for this building, the 15 has to be encoded before the 5 can be trusted again.'
+      a pod five feet too wide rather than refusing a legal one. It was then left unencoded for a
+      different reason: the side yard height plane on this same table put every side yard of a 26 ft
+      building at 11 ft, so the pair was 22 and the cumulative 15 could not bind. THAT REASON IS
+      GONE: the pod is 20 ft since 2026-11-12 (pod80x25@3), the plane asks nothing past the 5, and
+      two fives are ten where the code asks fifteen. STILL NOT HELD (2026-11-18, FOLLOWUPS 205): 15
+      is the sum of the two printed figures and is printed nowhere, so setback_side_total_ft cannot
+      quote it, and no field holds a larger yard on one side only. Measured the same day: all 197
+      R-MD greens are drawn with a 10 ft side, so no lot is wrongly green today. Until a form holds
+      the pair, the choice is 10 ft on both sides (printed, five feet stricter than the code).'
   R-HD:
     section: ["19.302"]
     cite_default:
