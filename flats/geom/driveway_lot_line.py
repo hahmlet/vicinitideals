@@ -9,7 +9,8 @@ figure for GREEN. The figures live in ``flats/config/driveway_lot_line.yaml``.
 
 :func:`measure` reads one drawing: the lane's gap to the nearest such line,
 and how far the plan could slide away from that line before the building
-(its side setback) or the court (its own clearance) meets the line opposite.
+(its side setback) or the court (its own clearance) meets the first line
+opposite (any stretch of the far side, so a jog stops the slide).
 A plan drawn hugging a line with room to spare is not held for where the
 drawing happened to put it.
 """
@@ -83,6 +84,7 @@ def measure(
 ) -> Gap | None:
     """The lane's :class:`Gap`, or None where the lot has no line that is not
     a street or an alley (nothing to keep the drive off)."""
+    from shapely import get_coordinates
     from shapely.geometry import LineString
 
     lines = [
@@ -95,17 +97,35 @@ def measure(
     gaps = [lane.distance(line) for _, line in lines]
     i = min(range(len(lines)), key=gaps.__getitem__)
     near_edge, near = lines[i]
+    # Offsets square off the near line, positive toward the plan: a line is
+    # opposite where it stands past the far side of the building (and the
+    # court), so a piece of the near side itself (collinear, not touching)
+    # is never one. The slide stops at the FIRST such line: on a lot with a
+    # jog, a farther stretch of the far side is not room the building has
+    # (bvt-drive-side; the farthest line alone over-credited a stepped lot).
+    ux, uy = near_edge.x2 - near_edge.x1, near_edge.y2 - near_edge.y1
+    norm = (ux * ux + uy * uy) ** 0.5 or 1.0
+    nx, ny = -uy / norm, ux / norm
+    centre = building.centroid
+    if (centre.x - near_edge.x1) * nx + (centre.y - near_edge.y1) * ny < 0:
+        nx, ny = -nx, -ny
+
+    def offset(x: float, y: float) -> float:
+        return (x - near_edge.x1) * nx + (y - near_edge.y1) * ny
+
+    plan = [building] + ([court] if court is not None and not court.is_empty else [])
+    beyond = max(offset(float(x), float(y)) for g in plan for x, y in get_coordinates(g))
     opposite = [
         line
         for j, (e, line) in enumerate(lines)
         if j != i
         and bearing_delta(e.bearing_deg, near_edge.bearing_deg) <= PARALLEL_DEG
         and line.distance(near) > 0
+        and max(offset(*line.coords[0]), offset(*line.coords[-1])) > beyond
     ]
     if not opposite:
         return Gap(gaps[i], None)
-    far = max(opposite, key=lane.distance)
-    room = building.distance(far) - building_clear_ft
+    room = min(building.distance(line) for line in opposite) - building_clear_ft
     if court is not None and not court.is_empty:
-        room = min(room, court.distance(far) - court_clear_ft)
+        room = min(room, min(court.distance(line) for line in opposite) - court_clear_ft)
     return Gap(gaps[i], gaps[i] + max(0.0, room))

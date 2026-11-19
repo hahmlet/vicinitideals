@@ -4596,35 +4596,23 @@ DRIVEWAY_SIDEWALK = "ACCESS-DRIVEWAY-SIDEWALK-TYPE"
 DRIVEWAY_GAP_TOL_FT = 0.1
 
 
-def driveway_lot_line_checked(s: Screened) -> Screened:
-    """``s`` measured against a code's floor on the gap between the drive
-    lane and the lot lines that are not streets (FOLLOWUPS 201 add-on G,
-    ``flats/config/driveway_lot_line.yaml``).
-
-    Beaverton BDC Table 60.05.60.2 S12: "driveways may be located as close as
-    3 or 6 feet from property lines depending on sidewalk type classified by
-    the EDM" (``beaverton/60.05/60.05.60.txt#L397-L399``). The fit draws the
-    lane into the side yard with no such gap (1S112CC06300, RMC: about 1 ft
-    off the east line, GREEN on run 128). The sidewalk type is not held, so
-    the larger figure is the one GREEN needs (an unmeasured condition takes
-    the conservative value): a plan that clears it, drawn or slid away from
-    the line as far as its building's side setback and its court allow
-    (:func:`flats.geom.driveway_lot_line.measure`), is untouched; one that
-    clears only the smaller is YELLOW with ACCESS-DRIVEWAY-SIDEWALK-TYPE; one
-    that misses the smaller too fails the standard, RED with
-    DRIVEWAY_LOT_LINE -- but only where the slide was measured; where it was
-    not (no line opposite, no side setback stated) it is YELLOW with the
-    flag. Never moves a lot toward GREEN."""
-    plan = s.drawing
-    if not plan or not plan.get("fits") or s.signed.triage is Triage.red and s.screening.triage is Triage.red:
-        return s
+def _driveway_measured(
+    s: Screened, plan: Mapping[str, Any] | None
+) -> tuple[Any, Any, float | None] | None:
+    """``(place, gap, reach)`` for the drive lane ``plan`` draws on ``s``'s
+    lot (:func:`flats.geom.driveway_lot_line.measure`), ``reach`` the slide's
+    and None where no side setback is stated to slide to; None where no
+    floor reaches the lot, nothing fitting is drawn, or the lot has no line
+    to keep the drive off."""
+    if not plan or not plan.get("fits"):
+        return None
     place = driveway_lot_line.place_for(s.lot.layer_id, s.lot.zone)
     if place is None:
-        return s
+        return None
     edges = s.lot.edges
     lane_ring, building_ring = plan.get("lane"), plan.get("building")
     if edges is None or not lane_ring or len(lane_ring) < 4 or not building_ring or len(building_ring) < 4:
-        return s
+        return None
     from shapely.geometry import Polygon
 
     def shape(ring: Any) -> Any:
@@ -4649,9 +4637,97 @@ def driveway_lot_line_checked(s: Screened) -> Screened:
         court_clear_ft=court_clear,
     )
     if gap is None:
+        return None
+    return place, gap, gap.reach_ft if side_ft is not None else None
+
+
+def driveway_lot_line_placed(
+    s: Screened,
+    lot: QuadfitLot,
+    fitter: Fitter | None,
+    terrain: Any,
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float,
+    roads: Any,
+) -> Screened:
+    """``s``, or the same plan stood where its drive lane keeps a code's gap
+    from the lot lines that are not streets (bvt-drive-side, after the rel10
+    move read: 31 Beaverton greens and 52 yellows went RED on the one drawn
+    plan, slid, with no other placement tried).
+
+    Where the drawn plan, as drawn or slid (:func:`driveway_lot_line_checked`),
+    keeps less than the larger figure, every placement the fit lists is tried
+    (:func:`flats.ingest.wall_openings.stood_elsewhere`: each angle the
+    flatter-spot search lists, the lane on either flank of the building,
+    nearest the street first), and the first whose DRAWN lane clears the
+    larger figure -- else, where the drawn plan misses the smaller too, the
+    first that clears the smaller -- and that keeps every other check, through
+    the whole chain again and no worse than ``s`` in anything, replaces it.
+    A slide is never credited to a moved plan: the drawing it stands on is
+    the one measured. Never colours anything itself: the check at the end of
+    the chain (:func:`driveway_lot_line_checked`) reads whatever plan stands
+    then. Called before the glass check, so the walls it measures stand where
+    the drive left them."""
+    if fitter is None or s.facts is None:
         return s
+    if s.screening.colour is flag_plan.Colour.red and s.signed.colour is flag_plan.Colour.red:
+        return s
+    got = _driveway_measured(s, s.drawing)
+    if got is None:
+        return s
+    place, gap, reach = got
     least, most = place.figures_ft[0], place.figures_ft[-1]
-    reach = gap.reach_ft if side_ft is not None else None
+    best = max(gap.drawn_ft, reach if reach is not None else gap.drawn_ft)
+    if best + DRIVEWAY_GAP_TOL_FT >= most:
+        return s
+    from flats.ingest.wall_openings import stood_elsewhere
+
+    floors = (most, least) if best + DRIVEWAY_GAP_TOL_FT < least else (most,)
+    for floor in floors:
+
+        def keep(at: Screened, drawn: dict[str, Any], floor: float = floor) -> bool:
+            there = _driveway_measured(at, drawn)
+            return there is not None and there[1].drawn_ft + DRIVEWAY_GAP_TOL_FT >= floor
+
+        moved = stood_elsewhere(
+            s, lot, fitter, terrain, keep, rules=rules, policy=policy, relief=relief,
+            step_deg=step_deg, roads=roads,
+        )
+        if moved is not None:
+            return moved
+    return s
+
+
+def driveway_lot_line_checked(s: Screened) -> Screened:
+    """``s`` measured against a code's floor on the gap between the drive
+    lane and the lot lines that are not streets (FOLLOWUPS 201 add-on G,
+    ``flats/config/driveway_lot_line.yaml``).
+
+    Beaverton BDC Table 60.05.60.2 S12: "driveways may be located as close as
+    3 or 6 feet from property lines depending on sidewalk type classified by
+    the EDM" (``beaverton/60.05/60.05.60.txt#L397-L399``). The fit draws the
+    lane into the side yard with no such gap (1S112CC06300, RMC: about 1 ft
+    off the east line, GREEN on run 128). The sidewalk type is not held, so
+    the larger figure is the one GREEN needs (an unmeasured condition takes
+    the conservative value): a plan that clears it, drawn or slid away from
+    the line as far as its building's side setback and its court allow
+    (:func:`flats.geom.driveway_lot_line.measure`), is untouched; one that
+    clears only the smaller is YELLOW with ACCESS-DRIVEWAY-SIDEWALK-TYPE; one
+    that misses the smaller too fails the standard, RED with
+    DRIVEWAY_LOT_LINE -- but only where the slide was measured; where it was
+    not (no line opposite, no side setback stated) it is YELLOW with the
+    flag. Never moves a lot toward GREEN."""
+    plan = s.drawing
+    if not plan or not plan.get("fits") or s.signed.triage is Triage.red and s.screening.triage is Triage.red:
+        return s
+    got = _driveway_measured(s, plan)
+    if got is None:
+        return s
+    place, gap, reach = got
+    least, most = place.figures_ft[0], place.figures_ft[-1]
     best = max(gap.drawn_ft, reach if reach is not None else gap.drawn_ft)
     if best + DRIVEWAY_GAP_TOL_FT >= most:
         return s
@@ -5384,7 +5460,9 @@ def side_door_checked(
     holds it out of GREEN (:func:`side_doors`, flag ENTRANCE-SIDE-DOOR,
     whose bounds are the street-facing miss). That answer replaces the RED
     only where it is not RED itself: a lot that misses both ways keeps its
-    street-facing answer, slack and binding unchanged. A lot that fits
+    street-facing answer, slack and binding unchanged -- except where the
+    sideways plan fits and only its drive's gap to a lot line fails
+    (:func:`_drive_line_red`): still RED, shown on the drive. A lot that fits
     facing the street, or that is RED on anything but the fit, is never
     searched again. Nothing gains GREEN here.
     """
@@ -5407,9 +5485,23 @@ def side_door_checked(
                 side_doors(lot, missed), [design], rules=rules, policy=policy,
                 relief=relief, step_deg=step_deg, roads=roads, terrain=terrain,
             )
-        if side.signed.colour is flag_plan.Colour.yellow:
+        if side.signed.colour is flag_plan.Colour.yellow or _drive_line_red(side):
             out[i] = side
     return out
+
+
+def _drive_line_red(side: Screened) -> bool:
+    """Whether the side-door reading ``side`` fits and is RED on the drive
+    lane's gap to a lot line (:func:`driveway_lot_line_checked`): RED either
+    way, but the reason the lot is lost is the drive, not the street-facing
+    fit (rel10 move read: 1S115CD10900, 1S115CD10901 and 1S128AB11200 showed
+    ``fit_ft`` where the side-door plan that fitted lost its drive), so that
+    reading is the one shown."""
+    return (
+        side.signed.colour is flag_plan.Colour.red
+        and side.fit.fits
+        and DRIVEWAY_LOT_LINE in side.signed.reasons
+    )
 
 
 #: The lot measure :func:`depth_checked` reads the lot at, where nothing
@@ -5970,6 +6062,13 @@ def _screen_lot_once(
         )
         won = flatter_checked(
             won, lot, terrain, fitter, rules=rules, policy=policy, relief=relief,
+            step_deg=step_deg, roads=roads,
+        )
+        # The drive lane kept off the lot lines that are not streets
+        # (Beaverton S12): stood elsewhere if the drawn spot is too near and
+        # another spot is not; measured at the end of the chain.
+        won = driveway_lot_line_placed(
+            won, lot, fitter, terrain, rules=rules, policy=policy, relief=relief,
             step_deg=step_deg, roads=roads,
         )
         # Glass on every non-street wall (Gresham 7.0420(I)(2)) and no window
