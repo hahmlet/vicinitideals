@@ -675,12 +675,12 @@ jurisdictions:
   # None of the three publishes a street-class map this corpus holds
   # (Hillsboro publishes one, not acquired; see the hand-off). Each borrows
   # the county map its county entry reads, for this check only, as Cornelius
-  # does by Steph's ruling of 2026-11-10 -- no ruling names these three: the
-  # borrow is the coordinator's brief of 2026-11-18 ("use the same
-  # street-class sources and fallbacks the screen already uses elsewhere"),
-  # and `map_ruling` names the ruling a street the map does not draw reads
-  # local under (Metro types it a minor residential street AND OpenStreetMap
-  # calls it residential, "yes, when both agree"). Neither county map is
+  # does by Steph's ruling of 2026-11-10. Steph RULED 2026-11-18 that the
+  # county street maps may stand in for these three, as built: `map_ruling`
+  # names it (rulings.yaml 2026-11-18-county-street-maps-stand-in). A street
+  # the map does not draw reads local under 2026-10-09-quiet-street-both-agree
+  # (Metro types it a minor residential street AND OpenStreetMap calls it
+  # residential, "yes, when both agree"). Neither county map is
   # registered to serve these cities, so no other reader takes it up there.
   # A busy city street the county map does not draw is neither: unread.
 
@@ -712,7 +712,7 @@ jurisdictions:
     # name, within 60 ft of an M-1, M-2 or C-M district on the city's zoning
     # map (C-M, Commercial-Manufacturing, counted: its streets may be).
     map: street_class_clackamas
-    map_ruling: 2026-10-09-quiet-street-both-agree
+    map_ruling: 2026-11-18-county-street-maps-stand-in
     classes:
       LOCAL: local
       COLLECTOR: collector
@@ -767,7 +767,7 @@ jurisdictions:
     # the hand-off as an open question. Holding it too is one line: add
     # `local` under `unread`.
     map: street_class_clackamas
-    map_ruling: 2026-10-09-quiet-street-both-agree
+    map_ruling: 2026-11-18-county-street-maps-stand-in
     classes:
       LOCAL: local
       COLLECTOR: collector
@@ -813,7 +813,7 @@ jurisdictions:
     # a local street's approaches to them. The stored standards are a
     # second-hand copy (hillsboro.yaml `code:` dcs.230.6.driveways).
     map: street_class_washington
-    map_ruling: 2026-10-09-quiet-street-both-agree
+    map_ruling: 2026-11-18-county-street-maps-stand-in
     classes:
       '5': neighborhood_route
       '4': collector

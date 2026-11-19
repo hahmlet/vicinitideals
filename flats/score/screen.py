@@ -453,6 +453,12 @@ DRIVEWAY_SPACING_BLOCKED = "DRIVEWAY_SPACING_BLOCKED"
 #: show a place on the frontage that clears it: a street class no map reads,
 #: intersections not found, or a placement between the two bounds.
 DRIVEWAY_SPACING_UNREAD = "DRIVEWAY_SPACING_UNREAD"
+#: A housing authority owns the lot bare and untaxed, by the county's owner
+#: of record (flats/config/roll_red.yaml, :func:`flats.geom.roll.owner_hold`).
+#: YELLOW with a flag: not RED as other public land is, and never GREEN on
+#: its own (Steph 2026-11-18, rulings.yaml
+#: 2026-11-18-housing-authority-land-yellow).
+HOUSING_AUTHORITY_LAND = "HOUSING_AUTHORITY_LAND"
 #: A corner lot whose parking works off one street but not off the other,
 #: where a street line carries no class: nothing says the street that works
 #: is the quieter one the code sends the driveway to. A closer look, not a
@@ -1047,6 +1053,9 @@ class LotFacts:
     driveway_spacing: str | None = None
     #: The reading's short account per frontage.
     driveway_spacing_why: str = ""
+    #: The roll's account of a lot a housing authority owns bare and untaxed
+    #: (:data:`HOUSING_AUTHORITY_LAND`); empty on every other lot.
+    owner_hold: str = ""
     #: The building's share of each street's frontage on the drawn plan,
     #: percent, in the same order (:func:`flats.fit.frontage.building_runs`):
     #: the building seen from the street within the maximum front setback.
@@ -4069,6 +4078,8 @@ def screen(
         reasons.append(STREET_UNCONFIRMED)
     if (spacing := _driveway_spacing_reason(rules, lot)) is not None:
         reasons.append(spacing)
+    if lot.owner_hold:
+        reasons.append(HOUSING_AUTHORITY_LAND)
     if lot.strip_waived:
         reasons.append(PARKING_STRIP_UNCONFIRMED)
     if lot.rear_court_short:
@@ -4979,6 +4990,8 @@ def _account(
         flag("ACCESS-DRIVEWAY-SPACING", spacing, source=lot.driveway_spacing_why)
     elif spacing == DRIVEWAY_SPACING_UNREAD:
         flag("ACCESS-DRIVEWAY-SPACING-UNREAD", spacing, source=lot.driveway_spacing_why)
+    if lot.owner_hold:
+        flag("OWNER-HOUSING-AUTHORITY", HOUSING_AUTHORITY_LAND, source=lot.owner_hold)
     if lot.strip_waived:
         flag("PARKING-STRIP-UNCONFIRMED", PARKING_STRIP_UNCONFIRMED, field=STRIP_FIELD)
     if lot.rear_court_short:
@@ -5311,6 +5324,7 @@ __all__ = [
     "STREET_UNCONFIRMED",
     "DRIVEWAY_SPACING_BLOCKED",
     "DRIVEWAY_SPACING_UNREAD",
+    "HOUSING_AUTHORITY_LAND",
     "STRIP_FIELD",
     "USE_NOT_ENCODED",
     "USE_PROHIBITED",

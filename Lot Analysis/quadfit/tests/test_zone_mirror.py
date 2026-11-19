@@ -1136,6 +1136,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     # 25 -> 26 on 2026-11-10 (rel7 assembly): flats/drift-wash (FOLLOWUPS 166): Cornelius GMU re-read from Ord. 2026-06.
     "max_height_stories": 26,
     "setback_side_total_ft": 3,
+    #: New on 2026-11-18 (FOLLOWUPS 205, flats/gap-fixes): Milwaukie R-MD,
+    #: MMC 19.301.5.A -- over 7,000 sq ft one side yard is 5 ft and the other
+    #: 10 ft. FLATS cuts its own envelope with the larger on one side; this
+    #: pipeline's s5 has one side yard and no column for a second.
+    "setback_side_larger_ft": 1,
     #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
     # 18 -> 16 on 2026-11-12 (pod80x25@3, FOLLOWUPS 185): Oregon City MUC-2/MUD hold
     # the "or two stories" limb instead of 25 ft.

@@ -228,6 +228,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [DRIVEWAY_SPACING_UNREAD]
+  OWNER-HOUSING-AUTHORITY:
+    description: "A housing authority owns this lot, with no building and no tax on the county's roll: not ruled out as other public land is, and not an ordinary private lot (Steph 2026-11-18: yellow, not red)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "A person decides whether the housing authority's lot is one to pursue (rulings.yaml 2026-11-18-housing-authority-land-yellow)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [HOUSING_AUTHORITY_LAND]
   ACCESS-STREET-RANK-UNKNOWN:
     description: "A corner lot's parking works off one street but not the other, and a street line has no class: nothing says the street that works is the quieter one the code sends the driveway to (Steph 2026-10-09: \"yellow, then measure\")"
     kind: categorical

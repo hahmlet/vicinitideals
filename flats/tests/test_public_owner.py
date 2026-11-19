@@ -6,6 +6,11 @@ County's roll applies it by code (``public_land``: the vacant exempt codes
 such codes, so 36 government-owned and 27 housing-authority lots were GREEN
 on run 128. The ``public_owner`` tier gives Multnomah the same answer off a
 checked-in list of the lots whose owner of record is a public body.
+
+Housing-authority land is YELLOW, not red (Steph 2026-11-18, rulings.yaml
+``2026-11-18-housing-authority-land-yellow``): the roll does not rule it out,
+the lot stays in the scan, and the screen holds it with a plain reason
+(``flats/tests/test_housing_authority_hold.py``).
 """
 
 from __future__ import annotations
@@ -177,26 +182,57 @@ def test_a_parcel_number_is_matched_whole_spaces_and_all() -> None:
 # --- the housing-authority switch ---------------------------------------------
 
 
-def test_housing_authority_land_is_public_while_the_switch_is_on() -> None:
+def test_housing_authority_land_is_held_not_red() -> None:
     rules = roll.load_rules()
-    assert "housing_authority" in rules.tier("public_owner").groups
-    got = roll.read(lot(tlid=HOUSING_LOT), rules)
-    assert got is not None and "a housing authority" in got["source"]
+    public = rules.tier("public_owner")
+    assert public.groups == {"government"} and public.held == {"housing_authority"}
+    # Not ruled out by the roll, so it stays in the scan ...
+    assert roll.read(lot(tlid=HOUSING_LOT), rules) is None
+    # ... and the hold names the owner in the roll's words.
+    why = roll.owner_hold(lot(tlid=HOUSING_LOT), rules)
+    assert why == "multnomah owner of record (a housing authority), with no assessed value and no building on the roll"
 
 
-def test_the_switch_is_one_line(tmp_path: Path) -> None:
+def test_the_hold_takes_the_same_test_as_the_governments() -> None:
+    rules = roll.load_rules()
+    # A government's lot is RED, never merely held.
+    assert roll.owner_hold(lot(), rules) is None
+    # Taxed, or built: screened like any lot, as a government's is.
+    assert roll.owner_hold(lot(tlid=HOUSING_LOT, ASSESSVAL=120_000.0), rules) is None
+    assert roll.owner_hold(lot(tlid=HOUSING_LOT, BLDGVAL=350_000.0, BLDGSQFT=2_400.0), rules) is None
+    # A vacant class is bare whatever small value stands on it.
+    assert roll.owner_hold(lot(tlid=HOUSING_LOT, PROP_CODE="700", BLDGVAL=10_000.0), rules) is not None
+    # Another county's lot of the same number is not on Multnomah's list.
+    assert roll.owner_hold(lot(tlid=HOUSING_LOT, county="washington"), rules) is None
+    # A value the row does not carry is neither taxed nor built: held.
+    assert roll.owner_hold({"county": "multnomah", "tlid": HOUSING_LOT}, rules) is not None
+
+
+@pytest.mark.parametrize(
+    "answer,red,held", [("yellow", False, True), ("red", True, False), ("screened", False, False)]
+)
+def test_the_switch_is_one_line(tmp_path: Path, answer: str, red: bool, held: bool) -> None:
     text = roll.CONFIG.read_text(encoding="utf-8")
-    on = "housing_authority_is_public: true"
+    on = "housing_authority: yellow"
     assert text.count(on) == 1
-    (tmp_path / "roll_red.yaml").write_text(text.replace(on, "housing_authority_is_public: false"), encoding="utf-8")
+    (tmp_path / "roll_red.yaml").write_text(text.replace(on, f"housing_authority: {answer}"), encoding="utf-8")
     (tmp_path / LIST.name).write_text(
         f"tlid,group,owner\n{CITY_LOT},government,PORTLAND CITY OF\n{HOUSING_LOT},housing_authority,HOME FORWARD\n",
         encoding="utf-8",
     )
-    off = roll.load_rules(tmp_path / "roll_red.yaml")
-    assert off.tier("public_owner").groups == {"government"}
-    assert tier(off, tlid=HOUSING_LOT) is None
-    assert tier(off, tlid=CITY_LOT) == "public_owner"
+    rules = roll.load_rules(tmp_path / "roll_red.yaml")
+    assert (tier(rules, tlid=HOUSING_LOT) == "public_owner") is red
+    assert (roll.owner_hold(lot(tlid=HOUSING_LOT), rules) is not None) is held
+    assert tier(rules, tlid=CITY_LOT) == "public_owner"
+    assert roll.owner_hold(lot(), rules) is None
+
+
+def test_a_switch_word_the_tier_does_not_know_is_refused(tmp_path: Path) -> None:
+    text = roll.CONFIG.read_text(encoding="utf-8")
+    (tmp_path / "roll_red.yaml").write_text(text.replace("housing_authority: yellow", "housing_authority: green"), encoding="utf-8")
+    (tmp_path / LIST.name).write_text("tlid,group,owner\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="housing_authority"):
+        roll.load_rules(tmp_path / "roll_red.yaml")
 
 
 # --- the lots FOLLOWUPS 205 found green ---------------------------------------
@@ -234,9 +270,16 @@ BUILT = [
 ]
 
 
-@pytest.mark.parametrize("tlid,code,bldg,sqft", GOVERNMENT_BARE + HOUSING_BARE)
+@pytest.mark.parametrize("tlid,code,bldg,sqft", GOVERNMENT_BARE)
 def test_the_bare_public_lots_that_were_green_are_red(tlid: str, code: str, bldg: float, sqft: float) -> None:
     assert tier(tlid=tlid, PROP_CODE=code, BLDGVAL=bldg, BLDGSQFT=sqft) == "public_owner"
+
+
+@pytest.mark.parametrize("tlid,code,bldg,sqft", HOUSING_BARE)
+def test_the_bare_housing_authority_lots_that_were_green_are_held(tlid: str, code: str, bldg: float, sqft: float) -> None:
+    assert tier(tlid=tlid, PROP_CODE=code, BLDGVAL=bldg, BLDGSQFT=sqft) is None
+    held = roll.owner_hold(lot(tlid=tlid, PROP_CODE=code, BLDGVAL=bldg, BLDGSQFT=sqft), roll.load_rules())
+    assert held is not None and "a housing authority" in held
 
 
 @pytest.mark.parametrize("tlid,code,bldg,sqft", BUILT)

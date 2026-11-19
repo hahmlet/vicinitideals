@@ -184,6 +184,15 @@ class Setbacks:
     #: (:func:`flats.geom.bearing.true_north_deg`). None sweeps grid north
     #: alone.
     true_north_deg: float | None = None
+    #: The larger of two unequal side yards, where the code names both
+    #: (Milwaukie 19.301.5.A: "one side yard shall be at least 5 ft and one
+    #: side yard shall be at least 10 ft"); ``side_ft`` is the smaller. None
+    #: where the code states one side yard.
+    side_larger_ft: float | None = None
+    #: Which of the lot's two side lot lines takes ``side_larger_ft``: 0 or
+    #: 1, into :func:`side_lines`. None lays it on EVERY side line -- the
+    #: cautious cut, and the only one where the side lines do not fall in two.
+    larger_side: int | None = None
 
     @property
     def by_bearing(self) -> bool:
@@ -251,6 +260,7 @@ class Setbacks:
             self.rear_ft,
             self.street_side_ft or 0.0,
             self.alley_rear_ft or 0.0,
+            self.side_larger_ft or 0.0,
         )
 
     def on_a_corner(self) -> Setbacks:
@@ -526,6 +536,45 @@ def _farthest_rear_edges(edges: LotEdges) -> frozenset[int]:
     return frozenset(i for i, distance in distances.items() if math.isclose(distance, farthest))
 
 
+#: Two side edges whose ends come this close are one side lot line.
+SIDE_MEET_FT = 0.5
+
+
+def side_lines(edges: LotEdges) -> tuple[frozenset[int], ...]:
+    """The lot's side lot lines: its side-class edges, grouped where they
+    meet end to end. Each group is the indexes into ``edges.edges`` of one
+    line's edges; the groups are ordered by their first edge. A plain
+    interior lot has two, one either side of the building."""
+
+    def ends(i: int) -> tuple[tuple[float, float], tuple[float, float]]:
+        e = edges.edges[i]
+        return (e.x1, e.y1), (e.x2, e.y2)
+
+    def meet(i: int, j: int) -> bool:
+        return any(math.hypot(ax - bx, ay - by) <= SIDE_MEET_FT for ax, ay in ends(i) for bx, by in ends(j))
+
+    lines: list[set[int]] = []
+    for i, edge in enumerate(edges.edges):
+        if edge.cls is not EdgeClass.side:
+            continue
+        joined = [line for line in lines if any(meet(i, j) for j in line)]
+        lines = [line for line in lines if all(line is not other for other in joined)]
+        lines.append({i}.union(*joined))
+    return tuple(frozenset(line) for line in sorted(lines, key=min))
+
+
+def _larger_side_edges(edges: LotEdges, setbacks: Setbacks) -> frozenset[int]:
+    """The edges that take the larger of two unequal side yards
+    (:attr:`Setbacks.side_larger_ft`): the chosen side lot line's where the
+    lot's side lines fall in two and one was chosen, else every side edge."""
+    if setbacks.side_larger_ft is None or setbacks.side_larger_ft <= setbacks.side_ft:
+        return frozenset()
+    lines = side_lines(edges)
+    if setbacks.larger_side is not None and len(lines) == 2:
+        return lines[setbacks.larger_side]
+    return frozenset(i for i, e in enumerate(edges.edges) if e.cls is EdgeClass.side)
+
+
 def buildable(
     lot: BaseGeometry,
     edges: LotEdges,
@@ -568,6 +617,7 @@ def buildable(
                 setbacks.rear_ft,
                 setbacks.street_side_ft or 0.0,
                 setbacks.alley_rear_ft or 0.0,
+                setbacks.side_larger_ft or 0.0,
             )
             shrink = ordinary_largest + max(
                 (e.dedication_ft for e in edges.edges), default=0.0
@@ -593,12 +643,18 @@ def buildable(
 
     strips = []
     rings = _rings(lot)
+    larger = _larger_side_edges(edges, setbacks)
     for i, edge in enumerate(edges.edges):
         pieces = (
             [((edge.x1, edge.y1, edge.x2, edge.y2), setbacks.for_far_rear_edge(edge))]
             if i in far_rear
             else _pieces(edge, setbacks)
         )
+        if i in larger and setbacks.side_larger_ft is not None:
+            # The larger of two unequal side yards, on every stretch of this
+            # side lot line: an alley's number does not relax it.
+            floor = setbacks.side_larger_ft + edge.dedication_ft
+            pieces = [(seg, max(d, floor)) for seg, d in pieces]
         sag: float | None = None
         for (x1, y1, x2, y2), d in pieces:
             if d <= 0:

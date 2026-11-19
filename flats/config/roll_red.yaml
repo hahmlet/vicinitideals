@@ -68,11 +68,14 @@ tiers:
     enabled: true
     counties: [multnomah]
     list: public_owners_multnomah.csv
-    # THE SWITCH (one line): does housing-authority land (Home Forward, the
-    # Housing Authority of Portland) count as public? `true` is the cautious
-    # answer, taken until Steph rules (FOLLOWUPS 205 question); `false`
-    # leaves those lots screened like any private lot.
-    housing_authority_is_public: true
+    # THE SWITCH (one line): what housing-authority land (Home Forward, the
+    # Housing Authority of Portland) answers. Steph RULED 2026-11-18
+    # (rulings.yaml 2026-11-18-housing-authority-land-yellow): YELLOW, not
+    # red. `yellow`: the lot stays in the scan and the screen holds it YELLOW
+    # with a plain reason (HOUSING_AUTHORITY_LAND), on the same test as the
+    # governments' -- bare and untaxed. `red`: public land, as the
+    # governments below. `screened`: like any private lot.
+    housing_authority: yellow
     # Owner-of-record names, upper case, as the assessor abbreviates them
     # (35 characters). Anchored: "CHEVRON USA INC" and "SUSAN ..." are not
     # the United States.
