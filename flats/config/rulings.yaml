@@ -3599,3 +3599,176 @@
     run-128 GREEN affected (1S1E14DB  -17000). Built on flats/rel10d
     (FOLLOWUPS 202).
   source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/title3-greens.findings.md
+- id: 2026-11-18-clackamas-flood-ban-red
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    Clackamas County bans a fourplex in its Floodplain Management District
+    (ZDO 845.01(3)). When the building cannot stand clear of the county flood
+    area, is the lot RED, or YELLOW as the 2026-10-06 flood-fringe ruling said?
+  ruling: '"red"'
+  effect: >-
+    In unincorporated Clackamas the flood area is carved out of the buildable
+    ground; a lot where the building, paving and grading cannot be fitted
+    clear of it is RED, and one where they fit clear stays YELLOW. Narrows
+    2026-10-06-fema-fringe-stays-yellow for this county and replaces
+    2026-09-30-clackamas-floodplain-district-assumed-absent when the build
+    ships. About 64 yellow lots, no greens. Built on flats/clackamas-fixes
+    (FOLLOWUPS 204); not live until that branch is released.
+  source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/clackamas-fixes.handoff.md
+- id: 2026-11-18-clackamas-landslide-under-building-red
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    On state-mapped landslide ground in unincorporated Clackamas (ZDO
+    1003.02), is a lot RED when the building would sit on it, or YELLOW
+    because the county can approve it with a geologist's study?
+  ruling: '"red"'
+  effect: >-
+    Mapped slide ground is unbuildable; a lot where the building cannot be
+    fitted clear of it is RED. A lot holding slide ground where the building
+    fits clear stays YELLOW. One green and about 67 yellows. Built on
+    flats/clackamas-fixes (FOLLOWUPS 204); not live until that branch is
+    released.
+  source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/clackamas-fixes.handoff.md
+- id: 2026-11-18-clackamas-open-space-red
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: _unincorporated}
+  question: >-
+    The county open space map (Comprehensive Plan Map 4-06, ZDO 1011) is not
+    applied by the county table to fourplexes in standard residential zones.
+    Keep the cautious YELLOW, or release those zones?
+  ruling: '"red"'
+  effect: >-
+    Read by the coordinator alongside the same-day flood and landslide
+    rulings: mapped open space (traced, with its 14 ft line-width buffer) is
+    unbuildable ground in every zone; a lot where the building cannot be
+    fitted clear of it is RED, and a lot touching it where the building fits
+    clear stays YELLOW. Five greens. Built on flats/clackamas-fixes
+    (FOLLOWUPS 204); not live until that branch is released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-housing-authority-land-yellow
+  kind: ruling
+  date: 2026-11-18
+  scope: {}
+  question: >-
+    Does land owned by a housing authority (Home Forward) count as public
+    land, RED under 2026-10-06 institutional land?
+  ruling: '"housing-authority land is yellow"'
+  effect: >-
+    Housing-authority land is YELLOW with a plain reason, not RED. Other
+    government-owned land stays RED. Nine Multnomah greens. Built on
+    flats/gap-fixes (FOLLOWUPS 205); not live until that branch is released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-county-street-maps-stand-in-canby
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: canby}
+  question: >-
+    May the county street-class maps stand in for the city own map when
+    holding driveway spacing on busy streets, as ruled for Cornelius?
+  ruling: '"yes"'
+  effect: >-
+    County street maps are used for driveway spacing in this city. Greens
+    on busy streets go YELLOW. Built on flats/gap-fixes (FOLLOWUPS 205);
+    not live until that branch is released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-county-street-maps-stand-in-gladstone
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: gladstone}
+  question: >-
+    May the county street-class maps stand in for the city own map when
+    holding driveway spacing on busy streets, as ruled for Cornelius?
+  ruling: '"yes"'
+  effect: >-
+    County street maps are used for driveway spacing in this city. Greens
+    on busy streets go YELLOW. Built on flats/gap-fixes (FOLLOWUPS 205);
+    not live until that branch is released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-county-street-maps-stand-in-hillsboro
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: washington, city: hillsboro}
+  question: >-
+    May the county street-class maps stand in for the city own map when
+    holding driveway spacing on busy streets, as ruled for Cornelius?
+  ruling: '"yes"'
+  effect: >-
+    County street maps are used for driveway spacing in this city. Greens
+    on busy streets go YELLOW. Built on flats/gap-fixes (FOLLOWUPS 205);
+    not live until that branch is released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-milwaukie-side-yards-5-and-10
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: milwaukie}
+  question: >-
+    Milwaukie larger lots need side yards of 5 ft and 10 ft. Require 10 ft on
+    both sides, or leave unheld until the pair can be held exactly?
+  ruling: '"5 on one, 10 on the other"'
+  effect: >-
+    The pair is held exactly as the code prints it: one side yard 5 ft, the
+    other 10 ft; the placement may put the 10 ft on either side. Being built
+    on flats/gap-fixes (FOLLOWUPS 205); not live until that branch is
+    released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-gladstone-landslide-yellow-note
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: gladstone}
+  question: >-
+    Gladstone has no hazard map and GMC 17.58.020(2) only requires a soils or
+    geology study before the building permit on unstable ground. Do lots on
+    state-mapped landslide ground stay plain GREEN, or carry a flag?
+  ruling: '"yellow with note"'
+  effect: >-
+    A Gladstone lot holding state-mapped landslide ground is YELLOW with a
+    note citing the study requirement; never RED on this ground alone. Four
+    greens (22E17CA00600, 22E17CA00701, 22E17CA01400, 22E17CA01501). Being
+    built on flats/gladstone-fixes (FOLLOWUPS 204); not live until released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-frost-silent-oregon-city
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: oregon-city}
+  question: >-
+    A word search of the city code finds no frost or footing depth. Is that
+    enough to call the city silent?
+  ruling: '"I found no results for Frost in those cities, so call it silent and use county/state numbers"'
+  effect: >-
+    Frost depth for this city is the county/state figure, marked as such
+    (234 lots; lot-page note only, no colour). flats/config/frost_depth.yaml.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-frost-silent-sherwood
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: washington, city: sherwood}
+  question: >-
+    A word search of the city code finds no frost or footing depth. Is that
+    enough to call the city silent?
+  ruling: '"I found no results for Frost in those cities, so call it silent and use county/state numbers"'
+  effect: >-
+    Frost depth for this city is the county/state figure, marked as such
+    (4 lots; lot-page note only, no colour). flats/config/frost_depth.yaml.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-gladstone-far-side-t-yellow
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: gladstone}
+  question: >-
+    Gladstone bars a curb cut within 35 ft of "an intersecting street
+    right-of-way line" (Public Works Design Standards 2017, 5.0070(D)(2)).
+    A lot faces a street that ends in a T on the far side of its own street
+    (1170 Harvard Ave, 22E20BC00303). Count that as an intersection and keep
+    the lot YELLOW, or treat it as not a corner?
+  ruling: '"yellow"'
+  effect: >-
+    A far-side T is counted as an intersection for the 35 ft rule; a lot that
+    cannot place its driveway clear of it is YELLOW, never RED. One green
+    known. Built on flats/gladstone-pwds (FOLLOWUPS 204); not live until
+    released.
+  source: Steph 2026-11-18 (chat)
