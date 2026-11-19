@@ -495,6 +495,32 @@ def test_clackamas_landslides_flag_the_lot_and_carve_the_mapped_ground():
     assert region[2] is None and region[3] is None and region[4] is None
 
 
+def test_gladstone_landslide_ground_is_flagged_and_never_carved():
+    """GMC 17.58.020(2): a study before the building permit on unstable soils,
+    ruled YELLOW with a note (2026-11-18-gladstone-landslide-yellow-note). The
+    county's SLIDO layers flag a Gladstone lot that holds any of them and carve
+    nothing; the county's own keys still pass Gladstone by."""
+    from shapely.geometry import box
+
+    from s5o_overlays import carve_regions, overlay_columns
+
+    slide = [box(0, 0, 60, 100)]
+    lots = _lots([
+        {"jurisdiction": "gladstone", "lot_geom": box(40, 0, 140, 100)},                 # holds some of it
+        {"jurisdiction": "gladstone", "lot_geom": box(61, 0, 161, 100)},                 # a foot clear
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(0, 0, 50, 100)},    # the county's own
+    ])
+    for key, county in (("gladstone_landslide", "clackamas_landslide"),
+                        ("gladstone_landslide_scarp", "clackamas_landslide_scarp")):
+        site = _one(key)
+        assert (site.action, site.layer, site.jurisdictions) == ("flag", county, ["gladstone"])
+        assert "17.58.020(2)" in site.citation
+        flags, _ = overlay_columns(lots, site, slide)
+        assert list(flags) == [True, False, False]
+    region = carve_regions(lots, [_one("clackamas_landslide_core")], {"clackamas_landslide_core": slide})
+    assert region[0] is None and region[1] is None
+
+
 def test_clackamas_floodplain_district_carves_the_flood_fringe_there_only():
     """ZDO 845.01(3): no quadplex or townhouse development in the Floodplain
     Management District, which 703.04 applies to FEMA's flood area. The

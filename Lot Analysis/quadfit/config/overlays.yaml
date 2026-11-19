@@ -724,6 +724,37 @@ overlays:
     coverage:
       clackamas_unincorporated: {grade: B, note: "the same SLIDO scarp flanks, read as part of the area of land movement. Over-carves where a study would show the ground stable"}
 
+  # Gladstone (FOLLOWUPS 204/205; Chapter 17.58 read whole 2026-11-18 from the
+  # ecode360 export Steph saved that day, PDF p.392). The city's code maps no
+  # landslide ground and bars no building on it; what it asks is a study at
+  # building permit. 17.58.020(2): the building official "shall require soils
+  # reports and/or engineering studies before issuing a building permit for
+  # fill, excavation, construction or related activities involving soils with
+  # restrictive features such as instability, wetness, flooding or other
+  # limitations." Steph ruled 2026-11-18 (2026-11-18-gladstone-landslide-
+  # yellow-note): a Gladstone lot holding state-mapped landslide ground is
+  # YELLOW with that note. So the same SLIDO deposits and scarp flanks are
+  # FLAGGED here, and nothing is carved: no section of the code takes the
+  # ground, so no *_core twin follows.
+  - key: gladstone_landslide
+    source: clackamas_landslide
+    name: "Gladstone landslide ground (GMC 17.58.020(2)) -- the lot that holds any of a state-mapped landslide deposit"
+    action: flag
+    jurisdictions: [gladstone]
+    citation: "GMC 17.58.020(2): 'The building official shall enforce Chapter 70 of the U.B.C. and shall require soils reports and/or engineering studies before issuing a building permit for fill, excavation, construction or related activities involving soils with restrictive features such as instability, wetness, flooding or other limitations'; 17.58.010 applies the chapter to 'all development permits issued by the city'; ruling 2026-11-18-gladstone-landslide-yellow-note (state-mapped landslide ground: yellow with a note)"
+    confidence: verified
+    coverage:
+      gladstone: {grade: B, note: "DOGAMI SLIDO 4.6 landslide deposits (SLIDO_Inventory layer 11), the state's inventory: the code names no map of unstable ground, and the ruling takes the state's as the trigger. Touch-only. Misses unstable soils no DOGAMI study has mapped; flags only, so it never takes ground"}
+  - key: gladstone_landslide_scarp
+    source: clackamas_landslide_scarp
+    name: "Gladstone landslide ground (GMC 17.58.020(2)) -- the lot that holds any of a state-mapped landslide scarp flank"
+    action: flag
+    jurisdictions: [gladstone]
+    citation: "GMC 17.58.020(2): the building official 'shall require soils reports and/or engineering studies before issuing a building permit for ... construction ... involving soils with restrictive features such as instability'; ruling 2026-11-18-gladstone-landslide-yellow-note"
+    confidence: verified
+    coverage:
+      gladstone: {grade: B, note: "DOGAMI SLIDO 4.6 scarp flanks (SLIDO_Inventory layer 3), read as part of the landslide ground. Touch-only; none touched a Gladstone green in run 128"}
+
   # ZDO 845.01(3), the Floodplain Management District (FOLLOWUPS 204; Section
   # 703 read 2026-11-18): "Development of triplexes, quadplexes, townhouses,
   # and cottage clusters ... is prohibited in the Floodplain Management

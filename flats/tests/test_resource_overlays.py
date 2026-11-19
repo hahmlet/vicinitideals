@@ -552,7 +552,32 @@ def test_clackamas_s_mapped_landslides_carve_the_ground_and_flag_the_lot(quadfit
     assert permits_on({f"ovl_{key}_core": True}) == ()
     held = load_pipeline().datasets[f"overlay_{key}"]
     assert held.url.endswith(layer) and held.bbox_4326 is not None
-    assert list(held.serves) == ["or/clackamas/_unincorporated"]
+    assert list(held.serves) == ["or/clackamas/_unincorporated", "or/clackamas/gladstone"]
+
+
+@pytest.mark.parametrize("key", ["gladstone_landslide", "gladstone_landslide_scarp"])
+def test_gladstone_s_landslide_ground_is_flagged_never_carved(quadfit_specs, key) -> None:
+    """GMC 17.58.020(2): a soils report or engineering study before the
+    building permit on unstable soils -- a study, not a bar. Steph ruled
+    2026-11-18 (2026-11-18-gladstone-landslide-yellow-note): a Gladstone lot
+    holding state-mapped landslide ground is YELLOW with that note. The same
+    SLIDO layers as unincorporated Clackamas, flagged only: no *_core twin."""
+    site = quadfit_specs[key]
+    county = key.replace("gladstone", "clackamas")
+    assert site["action"] == "flag" and site["source"] == county
+    assert site["jurisdictions"] == ["gladstone"]
+    assert "17.58.020(2)" in site["citation"] and "2026-11-18-gladstone-landslide-yellow-note" in site["citation"]
+    assert f"{key}_core" not in quadfit_specs
+    assert not any(s.get("source") == county and s["action"] != "flag" and "gladstone" in s["jurisdictions"]
+                   for s in quadfit_specs.values())
+    area = BY_KEY[key]
+    assert "17.58.020(2)" in area.cite and "building permit" in area.words and area.column in S5O_COLUMNS
+    inside = lot_from_row(row(jurisdiction="gladstone", **{area.column: True})).facts
+    assert inside.resource_permits == (key,)
+    got = run(lot=replace(LOT, resource_permits=inside.resource_permits))
+    assert got.triage is Triage.yellow and got.colour is flag_plan.Colour.yellow
+    assert got.reasons == (CLOSER_LOOK_RESOURCE,)
+    assert "or/clackamas/gladstone" in load_pipeline().datasets[f"overlay_{county}"].serves
 
 
 def test_a_clackamas_lot_holding_a_mapped_landslide_is_a_closer_look() -> None:

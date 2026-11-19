@@ -378,10 +378,14 @@ definitions:
 # geologic hazards such as areas of mass movement", but 17.80.021(1)(a) (pp.447-448) exempts
 # "Single-household dwellings, middle housing, and their allowed accessory uses" from design review.
 # 15.04.100 (p.109): Clackamas County administers all building regulations in the city under
-# contract, with the county's own standards. So the four greens on the state-mapped historic
-# landslide (22E17CA00600, 22E17CA00701, 22E17CA01400, 22E17CA01501) stay GREEN: the zoning code
-# holds them to nothing a lot can fail, and the lot page's landslide note already tells the
-# foundation reader the ground is mapped. Same treatment as Washington County's study-at-permit.
+# contract, with the county's own standards. So the zoning code holds landslide ground to nothing
+# a lot can fail, and nothing is carved. Steph ruled 2026-11-18
+# (2026-11-18-gladstone-landslide-yellow-note) that a lot holding state-mapped landslide ground is
+# YELLOW with 17.58.020(2)'s note all the same: quadfit's overlays.yaml gladstone_landslide and
+# gladstone_landslide_scarp flag the DOGAMI SLIDO deposits and scarp flanks for Gladstone lots
+# (flats/rules/resource_overlays.py), a flag only. The four run-128 greens on the deposit
+# (22E17CA00600, 22E17CA00701, 22E17CA01400, 22E17CA01501) go YELLOW; no other Gladstone green
+# touches a deposit or scarp (22E17CC07400 stands 18 ft clear).
 #
 # 17.50 VEHICULAR AND PEDESTRIAN CIRCULATION (pp.362-371) prints no driveway spacing, no distance
 # from an intersection and no bar on access to an arterial, for any street class (whole-document

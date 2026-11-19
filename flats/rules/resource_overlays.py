@@ -352,6 +352,25 @@ PERMITS: tuple[Permit, ...] = (
         "engineering geologic study that establishes the site is stable; the county may attach "
         "conditions); 1003.02(B)(5) (DOGAMI's maps the principal source)",
     ),
+    # Gladstone holds the same state map to a study at building permit, not a
+    # land-use bar: a flag only, never carved (ruling
+    # 2026-11-18-gladstone-landslide-yellow-note).
+    Permit(
+        "gladstone_landslide",
+        "a landslide deposit on the state's landslide map (Gladstone requires a soils report or "
+        "engineering study before the building permit)",
+        "GMC 17.58.020(2) (the building official 'shall require soils reports and/or engineering "
+        "studies before issuing a building permit for ... construction ... involving soils with "
+        "restrictive features such as instability'); ruling 2026-11-18-gladstone-landslide-yellow-note",
+    ),
+    Permit(
+        "gladstone_landslide_scarp",
+        "a landslide scarp on the state's landslide map (Gladstone requires a soils report or "
+        "engineering study before the building permit)",
+        "GMC 17.58.020(2) (the building official 'shall require soils reports and/or engineering "
+        "studies before issuing a building permit for ... construction ... involving soils with "
+        "restrictive features such as instability'); ruling 2026-11-18-gladstone-landslide-yellow-note",
+    ),
 )
 
 BY_KEY: Mapping[str, Permit] = {p.key: p for p in PERMITS}
