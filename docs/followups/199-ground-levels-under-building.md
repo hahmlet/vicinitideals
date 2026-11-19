@@ -44,3 +44,7 @@ Soil notes (was item 196) LIVE 2026-11-18, main b5834c0d: every lot, all map uni
 ## Pass 2 (FD5) status 2026-11-18
 
 Branch flats/fd2-pass1 675f028f (pushed, not merged). Answered: existing-building overlap, mapped fill (DOGAMI O-12-02), majority liquefaction class, door positions, removal assumption. Refreshed `../vicinitideals-worktrees/fd2-pass1-data/fd2_lots.csv` (old kept as fd2_lots.pass1.csv), summary `fd5-pass2-summary.md`, steps `fd5-pass2.handoff.md`. Owed: stage B flat_* columns (fold in when /root/fd2_pass1/stageB.log ends "all done"), soil rating reasons (retry federal soil service), Oregon City + Sherwood frost. Basement: no free bulk source; Washington County paid extract ($187) or a Multnomah paid report -- Steph decision. Re-run after rel10.
+
+## Full report issued 2026-11-19
+
+Stage B folded in (3,793 lots searched; 613 have a flatter passing position, median gain 0.88 ft; 5,724 not searched: 4,092 too tight to move, 1,316 on 10 m ground data). Soil rating reasons filled from the live Soil Data Access service (3,756 lots carry reasons; rating matches on all 9,517). Frost OC/Sherwood filled. Basements "not held" by Steph decision 11-18 (DD cost item). Files: `../vicinitideals-worktrees/fd5-pass2-summary.md`, `fd2-pass1-data/fd2_lots.csv`. Remaining: re-run after rel10 ships (colours shift); decide then whether flats/fd2-pass1 scripts merge to main.
