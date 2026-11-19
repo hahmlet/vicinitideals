@@ -143,7 +143,7 @@ from flats.geom.edges import (
     bearing_deg,
     bearing_delta,
 )
-from flats.geom.envelope import Setbacks, buildable
+from flats.geom.envelope import Setbacks, buildable, side_lines
 from flats.geom.frontage_curve import BAND_DEG, angle_of, is_unbroken, makes_corner
 from flats.geom.neighbour import (
     NEIGHBOUR_FACTS,
@@ -188,7 +188,8 @@ from flats.geom.named_street import (
     observed_named_street,
 )
 from flats.geom.one_street import one_street_column
-from flats.geom.roll import NO_DWELLING_FACT, no_existing_dwelling
+from flats.geom.roll import NO_DWELLING_FACT, no_existing_dwelling, owner_hold
+from flats.geom.roll import load_rules as load_roll_rules
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
 from flats.geom.durham_apron import (
     DURHAM_APRON_MIN_CLEARANCE_FT,
@@ -196,6 +197,7 @@ from flats.geom.durham_apron import (
     maximum_clearance_ft,
 )
 from flats.geom import driveway_lot_line, driveway_spacing
+from flats.geom.flag_lot import observed_flag_lot
 from flats.geom import sewer
 from flats.ingest.flatter import (
     DRIVE_TOL_FT,
@@ -240,6 +242,7 @@ from flats.score.paper import (
     front_lot_line_through_rule,
     front_min_depth_ft,
     kept_rear_yard_ft,
+    larger_side_yard_ft,
     narrow_lane_rules,
     lot_line_buffer_doubt_ft,
     lot_line_buffer_ft,
@@ -404,6 +407,10 @@ S4_COLUMNS: tuple[str, ...] = (
     "LANDUSE",
     "PROP_CODE",
     "BLDGVAL",
+    # And for the housing-authority hold (:func:`with_owner_hold`): bare and
+    # untaxed is read off these two beside PROP_CODE and BLDGVAL.
+    "BLDGSQFT",
+    "ASSESSVAL",
 )
 S5O_COLUMNS: tuple[str, ...] = (
     "TLID",
@@ -477,6 +484,8 @@ OBSERVABLE: tuple[str, ...] = (
     "in_sewer_district",
     # Wilsonville's lots only, off the assessor roll.
     NO_DWELLING_FACT,
+    # Portland's flag-lot zones only, and only ever False (flats.geom.flag_lot).
+    "pdx_flag_lot",
 )
 
 
@@ -634,6 +643,11 @@ def observed_facts(
       :func:`flats.geom.roll.no_existing_dwelling`: True on vacant land with
       no building value, False where a home's value stands on residential
       land, unasked otherwise.
+    * ``pdx_flag_lot`` -- Portland's RF to R2.5 and RM1 to RM4 lots only
+      (``flats/config/flag_lot.yaml``): False where the lot's own ring is
+      plainly an ordinary lot's (:func:`flats.geom.flag_lot.observed_flag_lot`),
+      never True; any other lot there is unanswered and held out of GREEN
+      on the fact (PCC 33.110.255, 33.120.284). Only with edges.
     * a fact the lot's own map code settles -- an alias ruling's
       ``observes`` (Fairview's ``FLX`` is the VC flex area, so
       ``inside_mapped_use_area``). True only, and only with ``layers``.
@@ -675,6 +689,7 @@ def observed_facts(
             )
         out.update(observed_street_types(edges, _layer_id(row), row.get("zone")))
         out.update(observed_first_floor_uses(edges, _layer_id(row), row.get("zone")))
+        out.update(observed_flag_lot(edges, _layer_id(row), row.get("zone")))
     out.update(observed_active_use(edges, _layer_id(row), row.get("lot_wkb")))
     out.update(
         observed_active_frontage(edges, _layer_id(row), row.get("lot_wkb"), row.get("TLID"))
@@ -1533,6 +1548,11 @@ def setbacks_for(
     total = number("setback_side_total_ft")
     if total is not None:
         side = max(side, total / 2)
+    # The larger of two unequal side yards (Milwaukie 19.301.5.A, Steph
+    # 2026-11-18): on one side lot line, which one the caller chooses
+    # (:func:`larger_side_choices`); the height plane added once.
+    larger = larger_side_yard_ft(rules)
+    side_larger = None if larger is None or larger <= side else larger
     alley_side = number("setback_alley_side_ft")
     street_side = number("setback_street_side_ft")
     # The street line off a mapped corridor (Portland Map 130-1): the zone's
@@ -1582,7 +1602,27 @@ def setbacks_for(
         north_ft=north,
         east_west_ft=east_west,
         north_street_credit_ft=number("setback_north_street_credit_ft") or 0.0,
+        side_larger_ft=side_larger,
     )
+
+
+def larger_side_choices(lot: QuadfitLot, rules: ZoneResolution) -> tuple[int | None, ...]:
+    """Which side lot line may take the larger of two unequal side yards
+    (``setback_side_larger_ft``; Milwaukie 19.301.5.A, "one side yard shall
+    be at least 5 ft and one side yard shall be at least 10 ft").
+
+    ``(0, 1)`` where the rules state one and the lot's side lines fall in
+    two: the code leaves the choice to the builder, so an envelope is cut
+    each way and the better answer kept (Steph 2026-11-18, rulings.yaml
+    2026-11-18-milwaukie-side-yards-5-and-10). ``(None,)`` everywhere else:
+    no larger yard, or a lot whose side lines do not fall in two, where the
+    envelope lays the larger yard on every side line."""
+    if lot.edges is None or lot.edges.tier not in (Tier.clean, Tier.corner):
+        return (None,)
+    setbacks = setbacks_for(rules)
+    if setbacks is None or setbacks.side_larger_ft is None:
+        return (None,)
+    return (0, 1) if len(side_lines(lot.edges)) == 2 else (None,)
 
 
 def _stand_in(rules: ZoneResolution, name: str, held: float) -> float:
@@ -1836,8 +1876,13 @@ def envelope_for(
     *,
     setback_rules: ZoneResolution | None = None,
     depth_rear_ft: float | None = None,
+    larger_side: int | None = None,
 ) -> Envelope:
     """The envelope this lot offers under these rules (FOLLOWUPS 12).
+
+    ``larger_side`` is which side lot line takes the larger of two unequal
+    side yards, where the rules state one (:func:`larger_side_choices`);
+    None lays it on every side line.
 
     Cut from the taxlot with :func:`flats.geom.envelope.buildable` at the
     setbacks the corpus RESOLVED for this lot and design -- the variant a
@@ -1903,6 +1948,8 @@ def envelope_for(
     # A utility easement the code forbids building on, assumed along every
     # street line where Steph's ruling reaches the lot (FOLLOWUPS 43).
     setbacks = easement.floored(setbacks, lot.facts.easement_street_ft)
+    if larger_side is not None and setbacks.side_larger_ft is not None:
+        setbacks = dataclasses.replace(setbacks, larger_side=larger_side)
     strips = lot.edges.tier in (Tier.clean, Tier.corner)
     # The exemption is about the rear line on the alley; a rear line that is
     # not on it has a setback this resolution does not carry, and the caller
@@ -2269,6 +2316,9 @@ def lot_from_row(
         # (FOLLOWUPS 169): clear / blocked / unread, None where no rule.
         driveway_spacing=row.get("driveway_spacing") or None,
         driveway_spacing_why=str(row.get("driveway_spacing_why") or ""),
+        # A housing authority's bare, untaxed lot: held YELLOW (Steph
+        # 2026-11-18, rulings.yaml 2026-11-18-housing-authority-land-yellow).
+        owner_hold=str(row.get("owner_hold") or ""),
         private_drive_lines_ft=drive_lines_ft(row) or private_drive_lines_ft(edges),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
@@ -2982,6 +3032,32 @@ def _durham_apron_clearance_column(
             )
         )
     return out
+
+
+#: What :func:`flats.geom.roll.owner_hold` reads off a row, beside its
+#: county and parcel number.
+OWNER_HOLD_COLUMNS = ("PROP_CODE", "BLDGVAL", "BLDGSQFT", "ASSESSVAL")
+
+
+def with_owner_hold(rows: list[dict[str, Any]]) -> int:
+    """Mark, in place, every row a housing authority owns bare and untaxed
+    (``owner_hold``: the roll's account, off the checked-in owner list of
+    flats/config/roll_red.yaml), and say how many. The lot stays in the scan
+    and the screen holds it YELLOW (Steph 2026-11-18, rulings.yaml
+    2026-11-18-housing-authority-land-yellow). The county is the row's
+    layer's; a roll value the row lacks is neither taxed nor built, so the
+    hold stands."""
+    rules = load_roll_rules()
+    held = 0
+    for row in rows:
+        layer = (_layer_id(row) or "").split("/")
+        record = {c: row.get(c) for c in OWNER_HOLD_COLUMNS}
+        record.update(county=layer[1] if len(layer) > 1 else "", tlid=row.get("TLID"))
+        why = owner_hold(record, rules)
+        if why:
+            row["owner_hold"] = why
+            held += 1
+    return held
 
 
 def with_driveway_spacing(
@@ -6109,33 +6185,40 @@ def _screen_lot_once(
                     lot.facts, design, observed={**geometry_observed, "alley_at_rear": True}
                 )
                 alleyed = rules.resolve(layer_id, lot.zone, on.conditions, lot=on.measures)
-            envs = [
-                envelope_for(
+            envs = []
+            # Two unequal side yards (Milwaukie 19.301.5.A): the code leaves
+            # to the builder which side takes the larger, so the envelope is
+            # cut each way and the better answer kept. One pass everywhere
+            # else.
+            for larger_side in larger_side_choices(here, got if setback_rules is None else setback_rules):
+                whole_line = envelope_for(
                     here,
                     got,
                     plain,
                     setback_rules=setback_rules,
                     depth_rear_ft=depth_rear_ft,
+                    larger_side=larger_side,
                 )
-            ]
-            if alleyed is not None and part_rear_alley(here):
-                # Both cuts are tried and the better answer kept: the stretch
-                # cut is charged the court against the alley's (smaller) rear
-                # everywhere, since the fit does not say where along the line
-                # the court stands, which can cost more behind the uncovered
-                # stretch than it gains behind the covered one; the whole-line
-                # ordinary cut is the answer before 2026-09-29. Each is sound
-                # alone, so the better of the two is.
-                cut = envelope_for(
-                    here,
-                    got,
-                    plain,
-                    alleyed,
-                    setback_rules=setback_rules,
-                    depth_rear_ft=depth_rear_ft,
-                )
-                if cut.setbacks != envs[0].setbacks:
-                    envs.append(cut)
+                envs.append(whole_line)
+                if alleyed is not None and part_rear_alley(here):
+                    # Both cuts are tried and the better answer kept: the stretch
+                    # cut is charged the court against the alley's (smaller) rear
+                    # everywhere, since the fit does not say where along the line
+                    # the court stands, which can cost more behind the uncovered
+                    # stretch than it gains behind the covered one; the whole-line
+                    # ordinary cut is the answer before 2026-09-29. Each is sound
+                    # alone, so the better of the two is.
+                    cut = envelope_for(
+                        here,
+                        got,
+                        plain,
+                        alleyed,
+                        setback_rules=setback_rules,
+                        depth_rear_ft=depth_rear_ft,
+                        larger_side=larger_side,
+                    )
+                    if cut.setbacks != whole_line.setbacks:
+                        envs.append(cut)
             # The corner clear-vision areas come off the building's ground
             # (FOLLOWUPS 161): the area surely kept always, and, where the
             # larger area it may be bites too, both cuts are tried -- the
@@ -9343,6 +9426,9 @@ def run(
     spaced = with_driveway_spacing(rows, sources, roads)
     if spaced:
         log(f"bridge: driveway spacing read on {spaced:,} lots")
+    owned = with_owner_hold(rows)
+    if owned:
+        log(f"bridge: {owned:,} housing-authority lots held yellow")
     named = with_street_names(rows, sources)
     if named:
         log(f"bridge: street names read on {named:,} lots")

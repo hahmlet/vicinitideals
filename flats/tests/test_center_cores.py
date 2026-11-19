@@ -145,7 +145,9 @@ PLAIN = {
 
 
 def _screen(corpus: RuleSet, observed: dict):
-    lot = facts(street_lines_ft=(80.0,), lot_sqft=9000, inside_ugb=True)
+    # The driveway is read clear of Hillsboro's spacing standards (FOLLOWUPS
+    # 205); unread, that alone holds the lot YELLOW.
+    lot = facts(street_lines_ft=(80.0,), lot_sqft=9000, inside_ugb=True, driveway_spacing="clear")
     cfg = configure(lot, DESIGN, observed={**PLAIN, **observed})
     got = corpus.resolve(HILLSBORO, "MU-VTC", cfg.conditions)
     # The colour once the corpus is signed, as the bridge reports it

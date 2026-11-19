@@ -1561,6 +1561,53 @@ zones:
         slope_degrees: 45
         cite: MMC Table 19.301.4 row C.3, Side yard height plane limit
         quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L144,L146-L147,L151-L152"
+    setback_side_larger_ft:
+      # MMC 19.301.5.A: "On lots greater than 7,000 sq ft in the R-MD Zone,
+      # one side yard shall be at least 5 ft and one side yard shall be at
+      # least 10 ft, except on a corner lot the street side yard shall be
+      # 20 ft." Steph RULED 2026-11-18 (rulings.yaml
+      # 2026-11-18-milwaukie-side-yards-5-and-10): "5 on one, 10 on the
+      # other" -- the pair held exactly, not 10 on both and not left unheld.
+      #
+      # The 5 is setback_side_ft above, on every side lot line. This is the
+      # 10, as printed, owed on ONE side lot line: the envelope is cut with
+      # it on each of the lot's two side lines in turn and the better answer
+      # kept, since the code leaves the choice to the builder
+      # (flats.ingest.quadfit.larger_side_choices). Where a lot's side lines
+      # do not fall in two it lies on every side line.
+      #
+      # At 7,000 sq ft or less the sentence asks nothing, and the larger of
+      # the two side yards is row C.1's 5 like the other.
+      #
+      # The side yard height plane starts at the REQUIRED yard on each side
+      # (19.200), so what it adds to the 5 it adds to the 10, once
+      # (flats.score.paper.larger_side_yard_ft). At the pod's 20 ft it adds
+      # nothing: 5 and 10.
+      #
+      # A corner lot: the sentence names its street side yard (20, held as
+      # setback_street_side_ft) and does not say in so many words whether
+      # the OTHER side yard is the 5 or the 10. Steph RULED 2026-11-18
+      # (rulings.yaml 2026-11-18-milwaukie-corner-interior-side-5): the
+      # street side yard is the 20 and the other, interior, side yard is the
+      # 5. The street side yard is one of the sentence's two side yards (the
+      # "except" carves it out of them), a 20 ft yard is "at least 10 ft",
+      # and that leaves "at least 5 ft" for the other -- as every smaller
+      # column of the table has it (side 5 beside street side 15). So on a
+      # corner lot the larger of the two unequal side yards is not owed on
+      # the interior side line: the second variant, the same sentence's 5.
+      # A lot not known to be a corner lot keeps the 10.
+      value: 5
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L109"
+      variants:
+        - value: 10
+          band: {measure: lot_sqft, more_than: 7000}
+          cite: MMC 19.301.5.A
+          quote: "or/clackamas/milwaukie/19.301/19.301.5.txt#L7"
+        - value: 5
+          when: [corner_lot]
+          band: {measure: lot_sqft, more_than: 7000}
+          cite: MMC 19.301.5.A
+          quote: "or/clackamas/milwaukie/19.301/19.301.5.txt#L7"
     setback_rear_ft:
       value: 20
       quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L130"
@@ -1723,10 +1770,18 @@ zones:
       15. An earlier note here said a single setback_side_ft could not express that and that encoding 5
       was the cautious reading. Both halves were wrong: setback_side_total_ft is the field for a
       cumulative yard, and 5 either side reserves 10 ft of width where the code demands 15, which passes
-      a pod five feet too wide rather than refusing a legal one. It is left unencoded now for a
-      different reason: the side yard height plane on this same table puts every side yard of a 26 ft
-      building at 11 ft, so the pair is 22 and the cumulative 15 cannot bind. If the plane is ever
-      relieved for this building, the 15 has to be encoded before the 5 can be trusted again.'
+      a pod five feet too wide rather than refusing a legal one. It was then left unencoded for a
+      different reason: the side yard height plane on this same table put every side yard of a 26 ft
+      building at 11 ft, so the pair was 22 and the cumulative 15 could not bind. THAT REASON IS
+      GONE: the pod is 20 ft since 2026-11-12 (pod80x25@3), the plane asks nothing past the 5, and
+      two fives are ten where the code asks fifteen. HELD since 2026-11-18 (FOLLOWUPS 205; Steph,
+      rulings.yaml 2026-11-18-milwaukie-side-yards-5-and-10: 5 on one, 10 on the other). 15 is the
+      sum of the two printed figures and is printed nowhere, so setback_side_total_ft cannot quote
+      it; the pair is held as its two printed figures instead: setback_side_ft 5 on every side lot
+      line and setback_side_larger_ft 10 on one of them over 7,000 sq ft, the envelope cut with the
+      10 on each side in turn and the better answer kept. On a corner lot the street side yard is
+      the 20 and the one interior side yard is the 5 (Steph, rulings.yaml
+      2026-11-18-milwaukie-corner-interior-side-5).'
   R-HD:
     section: ["19.302"]
     cite_default:

@@ -218,6 +218,24 @@ code:
   start: "SUBCHAPTER 12.80"
   end: "CODE COMPARATIVE AND DISPOSITION TABLE*"
   extraction: plain
+# The Public Works Design and Construction Standards' driveway rules (230.6
+# and Figure 230.6, September 2025 edition), which CDC 12.50.715 C.2 sends a
+# quadplex's driveway approach to and 12.50.510 B.1 applies to every public
+# improvement; read for flats/config/driveway_spacing.yaml (FOLLOWUPS 205).
+# The city's own address for the file
+# (https://www.hillsboro-oregon.gov/home/showpublisheddocument/18188/638932854908670000)
+# refuses an automated reader, so the stored text is the Internet Archive's
+# copy of that file, taken 2026-01-13: second-hand (the store calls it a
+# lead, not evidence), and a later edition is not seen until someone reads
+# the city's page. It is read only to take GREEN away, never to grant it.
+- id: "dcs.230.6.driveways"
+  url: http://web.archive.org/web/20260113215751id_/https://www.hillsboro-oregon.gov/home/showpublisheddocument/18188/638932854908670000
+  title: "Hillsboro Design and Construction Standards (September 2025), Section 200 Roadways: 230.6 Driveways and Figure 230.6"
+  start: "230.6. Driveways"
+  end: "230.7. Cul-de-sacs"
+  extraction: plain
+  # One subsection and its figure.
+  allow_thin: true
 definitions:
   # Read 2026-09-29 from CDC 12.01.500, which is on disk whole
   # (cdc.12.01.general.txt runs from the Subchapter 12.01 heading to the
@@ -440,6 +458,84 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/4450
     retrieved: '2026-09-29'
     quote: "or/washington/hillsboro/12.01/12.01.500.txt#L349-L351,L354-L357"
+  # STREET WIDENING (FOLLOWUPS 205). 12.50.130 J.2: "additional setbacks
+  # beyond the minimum standards in the base zones shall be required on the
+  # streets identified in Table 12.50.130-1 ... the front setback shall be
+  # increased by the distance specified, measured from the center of the
+  # street right-of-way. This distance represents the eventual right-of-way
+  # width as specified in the TSP" (12.50.130.txt#L117-L120). So the zone's
+  # yard is measured from a line the listed distance off the centre line
+  # (flats/geom/dedication.py): the strip is the distance less the measured
+  # half-width. Every one of the table's 38 rows is held, the feet as
+  # printed, the street first and its printed stretch in brackets after it.
+  #
+  # How a stretch is read. A row holds along the WHOLE street unless the
+  # bridge reads the lot line off its stretch, and it reads only the two
+  # forms it reads elsewhere: "(A to B)" between two streets it finds
+  # crossing, and "(east of A)". Two printed forms are written into those:
+  # "from A <direction> to city boundary / terminus" as "<direction> of A"
+  # (Bentley, Cedar, 26th; E Main "from the east line of 10th Ave easterly
+  # to the City boundary"), and "from the east line of 5th Ave easterly to
+  # 10th Ave" as "5th Ave to 10th Ave", and SE 10th "from SE Maple St north
+  # to SE Walnut St" as "SE Maple St to SE Walnut St". A stretch printed with an offset
+  # ("90 feet south of", "west 225 feet"), from the light-rail line, or to
+  # an end with no direction ("to city boundary", "to end of road") keeps
+  # its printed words, reads as no stretch, and so holds the whole street:
+  # Brookwood Avenue is 49 feet everywhere, though it prints 37 south of the
+  # light rail. Directions are dropped from a street's name, so a row on SE
+  # 10th also holds NE 10th unless the line is read off the stretch.
+  # "NW Hyde St from NW 273rd Ave to NW 269th Ave (NE 28th Ave)" drops its
+  # own bracket (the second name of 269th). A street line whose street
+  # cannot be named takes the deepest row, 61 feet.
+  #
+  # The strip comes off the lot area: "lot area excludes any portion of a
+  # lot, parcel or tract located within public right-of-way"
+  # (12.01.500.txt#L336), and J.2 calls the distance the eventual
+  # right-of-way.
+  row_to_centerline_named_ft:
+    value:
+      - ["SE 11th Ave (SE Walnut St to 90 feet south of SE Alder St)", 27]
+      - ["SE 11th Pl (SE Maple St to SE Walnut St)", 27]
+      - ["SE 12th Ave (SE Maple St to E Main St and from SE Elm St to SE Alder St)", 27]
+      - ["SE 15th Ave (400 feet north of SE Oak St to SE Walnut St, and from 50 feet south of SE Alder St north 510 feet)", 27]
+      - ["SE 16th Ave (SE Oak St to SE Walnut St and from 50 feet south of SE Alder St north 510 feet)", 27]
+      - ["SE 26th Ave (south of E Main St)", 27]
+      - ["SE 40th Ave (SE Bentley St to SE Ash St)", 27]
+      - ["SE Alder St (SE 11th Ave to SE 21st Ave)", 27]
+      - ["SE Ash St (350 feet west of SE 40th Ave eastward to city boundary)", 27]
+      - ["SE Bentley St (east of SE 32nd Ave)", 30]
+      - ["SE Cedar St (east of SE 32nd Ave)", 30]
+      - ["SE Currin Dr (SE River Rd to city boundary)", 27]
+      - ["SE Currin Ln (SE River Rd to city boundary)", 27]
+      - ["SE Elm St (SE 12th Ave west 225 feet)", 27]
+      - ["SE Maple Ct (SE 18th Ave west 465 feet)", 27]
+      - ["SE Walnut St (50 feet east of S.E. 15th Ave eastward to end of street)", 27]
+      - ["NW Brookwood Ave (LRT alignment north to US 26)", 49]
+      - ["Brookwood Ave (NW and SW, LRT alignment south to UGB)", 37]
+      - ["NE 8th Ave (N Arrington Rd to 120 feet south of NE Queens Ln)", 27]
+      - ["NE 9th Ave (130 feet north of NE Arrington Rd to 120 feet south of NE Queens Ln)", 27]
+      - ["NE 25th Ave (E Main St to end of road)", 27]
+      - ["NE 28th Ave (E Main St to NE Cornell Rd)", 37]
+      - ["NE Arrington Rd (NE Jackson School Rd to NE Cornell Rd)", 27]
+      - ["NE Birchwood Ln (NE Grant St north 160 feet)", 27]
+      - ["NE Birchwood Ter (NE Grant St to NE Donelson Rd)", 27]
+      - ["NE Cornell Rd (E Main St to city boundary)", 49]
+      - ["NE Lincoln St (NE Cornell Rd to NE 12th Ave)", 27]
+      - ["NE Queens Ln (NE 8th Ave to NE Delsey Rd)", 27]
+      - ["NW Brogden St", 30]
+      - ["NW Forest St (NW Connell Ave to city boundary)", 27]
+      - ["NW Hyde St (NW 273rd Ave to NW 269th Ave)", 27]
+      - ["E Main St (east of 10th Ave)", 35]
+      - ["N Dennis Ave (NW Garibaldi St to NW Forest St)", 27]
+      - ["NE 11th Dr (E Main St to NE 12th Ave)", 27]
+      - ["NW Padgett Rd (NW 10th Ave and NW Donelson St)", 27]
+      - ["E Main St (5th Ave to 10th Ave)", 35]
+      - ["SE 10th Ave (SE Maple St to SE Walnut St)", 49]
+      - ["SE 10th Ave (SE Walnut St to SE Oak St)", 61]
+    cite: Hillsboro CDC 12.50.130 J.2 and Table 12.50.130-1, Special Street-Facing Setback Requirements, distance from the center of the street right-of-way by named street
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/12.50/12.50.130.txt#L117-L120,L124-L141,L145-L164"
 
 # THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-29. Each applies
 # in every zone below unless the zone says otherwise.
@@ -472,16 +568,12 @@ defaults:
 # by an amount no table states; `utility_easement` is registered and no
 # number hangs on it.
 #
-# NOT ENCODED: 12.50.130 J, increased setbacks beside substandard
-# right-of-way (12.50.130.txt#L114-L121). J.1: beside
-# an alley under 20 feet wide, the setback is at least 10 feet from the
-# alley's centerline. J.2: on the streets named in Table 12.50.130-1
-# (L529-L576, about fifty street segments, 27 to 61 feet), "the front
-# setback shall be increased by the distance specified, measured from the
-# center of the street right-of-way" -- the future right-of-way the TSP
-# plans. Both need a lot's street by name or the alley's width, which
-# nothing measures, and both only push the building back. The same kind of
-# rule as right-of-way dedication in the county layer; a doubt.
+# 12.50.130 J, increased setbacks beside substandard right-of-way
+# (12.50.130.txt#L114-L121). J.2, the streets named in Table 12.50.130-1,
+# is held in the defaults as row_to_centerline_named_ft (FOLLOWUPS 205).
+# NOT ENCODED: J.1, beside an alley under 20 feet wide the setback is at
+# least 10 feet from the alley's centerline. It needs the alley's width,
+# which nothing measures, and it only pushes the building back; a doubt.
 #
 # THE STORY IS TEN FEET (Steph 2026-09-29: "Yes, that math holds").
 # 12.50.140 B.6 measures height in the single-dwelling and multi-dwelling

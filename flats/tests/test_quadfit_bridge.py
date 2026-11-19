@@ -140,6 +140,8 @@ def test_a_plain_interior_lot_on_a_main() -> None:
         "constrained_sites_overlay": False,
         "in_floodplain": False,
         "public_sewer": True,
+        # FOLLOWUPS 205: a rectangle on a street is plainly not a flag lot.
+        "pdx_flag_lot": False,
     }
     # Every answer is one of the facts the module says it can observe.
     assert set(got) <= set(OBSERVABLE)

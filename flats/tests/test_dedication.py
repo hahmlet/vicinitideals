@@ -46,6 +46,7 @@ KING_CITY = "or/washington/king-city"
 OREGON_CITY = "or/clackamas/oregon-city"
 MILWAUKIE = "or/clackamas/milwaukie"
 TIGARD = "or/washington/tigard"
+HILLSBORO = "or/washington/hillsboro"
 # A lot in unincorporated Washington County near Bull Mountain.
 X0, Y0 = 7_620_000.0, 650_000.0
 FRONT = [X0, Y0, X0 + 50, Y0, "F"]
@@ -574,6 +575,99 @@ def test_milwaukie_lists_all_twenty_nine_rows(rules) -> None:
     assert sorted({ft for _, ft in table}) == [25, 30, 40]
 
 
+# --- Hillsboro (12.50.130 J.2, Table 12.50.130-1; FOLLOWUPS 205) ----------
+#
+# "the front setback shall be increased by the distance specified, measured
+# from the center of the street right-of-way" on the streets the table
+# names. Until this was held, a lot on SE Bentley Street was measured from
+# today's lot line and read GREEN with a building in the widening strip.
+
+BENTLEY_ROW = "SE Bentley St (east of SE 32nd Ave)"
+
+
+@pytest.mark.parametrize(
+    ("street", "distance"),
+    [
+        (["BENTLEY ST"], 30),
+        (["CEDAR ST"], 30),
+        (["BROGDEN ST"], 30),
+        (["MAIN ST"], 35),
+        (["28TH AVE"], 37),
+        (["CORNELL RD"], 49),
+        # Printed at 49 north of the light rail and 37 south of it; the light
+        # rail is no street the bridge can find, so the deeper holds throughout.
+        (["BROOKWOOD AVE"], 49),
+        # Listed at 49 and at 61 for two stretches: the stretch is not read.
+        (["10TH AVE"], 61),
+        (["40TH AVE"], 27),
+        # A street the table leaves out takes none.
+        (["SUNRISE LN"], 0),
+        (["BROOKWOOD PKWY"], 0),
+        # A line that may be on either of two streets takes the deeper.
+        (["40TH AVE", "BENTLEY ST"], 30),
+    ],
+)
+def test_hillsboro_reads_its_listed_streets(rules, street, distance) -> None:
+    assert strip(rules, HILLSBORO, "R-10", 0.0, names=street) == distance
+
+
+def test_hillsboro_unread_street_takes_the_deepest(rules) -> None:
+    assert strip(rules, HILLSBORO, "R-10", 0.0, names=None) == 61
+    assert strip(rules, HILLSBORO, "R-10", None, names=["BENTLEY ST"]) == 30
+
+
+def test_hillsboro_lists_all_thirty_eight_rows(rules) -> None:
+    table = rules.resolve(HILLSBORO, "R-10").get(dedication.NAMED_FIELD)
+    assert len(table) == 38
+    assert sorted({ft for _, ft in table}) == [27, 30, 35, 37, 49, 61]
+    # Every row's street reads as a street name: nothing of its stretch is
+    # left in the name (a nested bracket would leave some).
+    for label, _ in table:
+        assert dedication.street_key(label).rsplit(" ", 1)[-1] in {"AVE", "ST", "RD", "DR", "LN", "PL", "CT", "TER"}, label
+
+
+def test_every_hillsboro_zone_holds_the_widening_table(rules, layers) -> None:
+    for zone in layers[HILLSBORO].zones:
+        rule = dedication.rule_of(rules.resolve(HILLSBORO, zone))
+        assert rule is not None and len(rule.named) == 38, zone
+
+
+def test_a_bentley_street_lot_is_measured_from_the_future_right_of_way(rules) -> None:
+    """The three false greens of FOLLOWUPS 205 (3311, 3327 and 3969 SE Bentley
+    St): a 48 ft right-of-way, so the line 30 ft off the centre is 6 ft inside
+    the lot, and the front yard starts there."""
+    assert strip(rules, HILLSBORO, "R-10", 24.0, names=["BENTLEY ST"]) == 6
+    assert strip(rules, HILLSBORO, "R-10", 24.0, names=["SUNRISE LN"]) == 0
+    got = rules.resolve(HILLSBORO, "R-10")
+    on = envelope_for(lot_from_row(row(24.0, None, names=["BENTLEY ST"], classes={})), got)
+    off = envelope_for(lot_from_row(row(24.0, None, names=["SUNRISE LN"], classes={})), got)
+    assert on.source == off.source == "flats"
+    assert on.sqft < off.sqft
+    # A street already 60 ft wide gives up nothing.
+    assert strip(rules, HILLSBORO, "R-10", 30.0, names=["BENTLEY ST"]) == 0
+
+
+def test_bentley_street_west_of_32nd_is_off_the_row(rules) -> None:
+    """"SE Bentley St from SE 32nd Ave east to city boundary": a line the
+    bridge reads west of 32nd is free of the row; one it reads east of it, or
+    cannot read, is held."""
+    rule = dedication.rule_of(rules.resolve(HILLSBORO, "R-10"))
+    assert dedication.stretch_of(BENTLEY_ROW) == dedication.Stretch("BENTLEY ST", "east", ("32ND AVE",))
+    assert rule.required(["BENTLEY ST"], {}, {BENTLEY_ROW: False}) == 0
+    assert rule.required(["BENTLEY ST"], {}, {BENTLEY_ROW: True}) == 30
+    assert rule.required(["BENTLEY ST"], {}, {BENTLEY_ROW: None}) == 30
+    assert rule.required(["BENTLEY ST"], {}, {}) == 30
+
+
+def test_a_hillsboro_stretch_printed_with_an_offset_holds_the_whole_street(rules) -> None:
+    """"SE Elm St from SE 12th Ave west 225 feet" names no second street: the
+    row reads as no stretch, and no reading takes a line off it."""
+    rule = dedication.rule_of(rules.resolve(HILLSBORO, "R-10"))
+    label = "SE Elm St (SE 12th Ave west 225 feet)"
+    assert label in rule.labels and dedication.stretch_of(label) is None
+    assert rule.required(["ELM ST"], {}, {label: False}) == 27
+
+
 # --- Tigard (18.210.030.A.1, Table 18.910.1) ------------------------------
 #
 # Setbacks are measured from "the ultimate right-of-way width as shown in the
@@ -1098,7 +1192,7 @@ def test_every_layer_a_dedication_reaches_is_measured(layers) -> None:
         )
 
     stating = {lid for lid, layer in layers.items() if states(layer)}
-    assert stating == {WASHCO, SHERWOOD, KING_CITY, OREGON_CITY, MILWAUKIE, TIGARD}
+    assert stating == {WASHCO, SHERWOOD, KING_CITY, OREGON_CITY, MILWAUKIE, TIGARD, HILLSBORO}
     reached = set(stating)
     for lid, layer in layers.items():
         for ruling in layer.zone_rulings.values():
@@ -1162,7 +1256,7 @@ def test_milwaukie_lets_a_dedication_take_a_lot_below_its_minimum(rules) -> None
 
 @pytest.mark.parametrize(
     ("layer", "zone"),
-    [(OREGON_CITY, "R-10"), (SHERWOOD, "MDRL"), (TIGARD, "RES-A"), (KING_CITY, "R-9")],
+    [(OREGON_CITY, "R-10"), (SHERWOOD, "MDRL"), (TIGARD, "RES-A"), (KING_CITY, "R-9"), (HILLSBORO, "R-10")],
 )
 def test_elsewhere_the_strip_comes_off_the_minimum_lot_area(rules, layer, zone) -> None:
     got = rules.resolve(layer, zone)
@@ -1294,8 +1388,10 @@ def test_every_bracketed_row_reads_as_a_stretch(rules) -> None:
     from flats.ingest.quadfit import stretch_labels
 
     got = stretch_labels()
-    # 18 of Milwaukie's 29 rows, King City's three "between" rows.
-    assert len(got) == 21
+    # 18 of Milwaukie's 29 rows, King City's three "between" rows, and the
+    # 33 of Hillsboro's 38 whose bracket reads as "A to B" or "east of A" (an
+    # end the bridge cannot find, "city boundary", leaves the row holding).
+    assert len(got) == 54
     for zone, layer in (("R-MD", MILWAUKIE), ("KTTC", KING_CITY)):
         for label, _ in rules.resolve(layer, zone).get(dedication.NAMED_FIELD):
             if "(" in str(label):

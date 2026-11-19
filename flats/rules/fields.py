@@ -188,6 +188,7 @@ _LABELS: dict[str, str] = {
     "setback_rear_ft": "rear setback",
     "setback_side_ft": "interior side setback",
     "setback_side_total_ft": "combined side setbacks",
+    "setback_side_larger_ft": "larger of two unequal side setbacks",
     "setback_side_max_ft": "max. side setback",
     "setback_street_side_ft": "corner side yard (street side) setback",
     "setback_alley_side_ft": "alley-side setback",
@@ -251,6 +252,21 @@ _F: tuple[FieldDef, ...] = (
         "a number the document does not print, and because the pair and the "
         "per-side floor bind differently -- the pair takes width off the lot, "
         "the floor says where the building may sit on what is left.",
+        False,
+        "side_setback",
+    ),
+    FieldDef(
+        "setback_side_larger_ft",
+        "length_ft",
+        "The LARGER of two unequal side setbacks, where the code names both: "
+        "Milwaukie 19.301.5.A, \"one side yard shall be at least 5 ft and one "
+        "side yard shall be at least 10 ft\" (Steph 2026-11-18, rulings.yaml "
+        "2026-11-18-milwaukie-side-yards-5-and-10). setback_side_ft holds the "
+        "smaller, on every side lot line; this one is owed on ONE side lot "
+        "line, and the envelope lays it on whichever of the lot's two lets "
+        "the building fit -- on every side line where they do not fall in "
+        "two. Held as printed, not as a sum: the pair's total is printed "
+        "nowhere.",
         False,
         "side_setback",
     ),
@@ -2363,6 +2379,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",
+        # One zone names two unequal side yards (Milwaukie R-MD, 19.301.5.A).
+        "setback_side_larger_ft",
         # One city states a maximum side setback (Hillsboro SCR-MD, SCR-HD, SCR-DNC).
         "setback_side_max_ft",
         "setback_front_max_ft",

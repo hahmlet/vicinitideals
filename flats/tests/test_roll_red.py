@@ -39,7 +39,11 @@ def tier(**kw: Any) -> str | None:
 
 def test_the_four_tiers_steph_ruled_are_on() -> None:
     on = {t.key: t.enabled for t in roll.load_rules().tiers}
-    assert on == {"public_land": True, "tract": True, "condo_common": True, "open_space": True, "no_address": True}
+    # public_owner: Multnomah's public land by owner of record (FOLLOWUPS
+    # 205, flats/tests/test_public_owner.py).
+    assert on == {
+        "public_land": True, "public_owner": True, "tract": True, "condo_common": True, "open_space": True, "no_address": True,
+    }
 
 
 # --- condominium shared ground (rulings.yaml 2026-11-18-condo-common-ground-red, FOLLOWUPS 201) ---

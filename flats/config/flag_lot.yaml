@@ -1,0 +1,71 @@
+# Which lots are plainly NOT flag lots (FOLLOWUPS 205; flats/geom/flag_lot.py).
+#
+# A code that writes its own standards for flag lots turns on a fact about the
+# lot's shape (`pdx_flag_lot`, flats/rules/conditions.py). Nothing measured
+# it and no zone held the standards, so a flag lot was certified on the
+# ordinary yards. This file says, per city, how a lot is read as plainly
+# ordinary. Only that answer is ever given (False): a lot the test does not
+# clear is left unanswered, and the screen holds it out of GREEN on the fact
+# by name (FACT_UNOBSERVED, flag FACT-PDX-FLAG-LOT). True is never
+# answered -- telling a real flag lot from a pinched or wedge-shaped one is a
+# judgement no measure here makes.
+#
+# A lot is plainly ordinary where either holds:
+#
+#   1. A part of the lot at least the zone's minimum lot width across comes
+#      within `reach_ft` of a street line. The code's own definition makes the
+#      pole the part that "at any point is less than the minimum lot width for
+#      the zone" and "provides the only street frontage"; a lot that wide at
+#      the street has no pole. `tolerance_ft` is taken off the width for the
+#      digitised line.
+#   2. The lot's outline leaves under `notch_sqft` of ground between itself
+#      and its own convex hull. A flag "is located behind another lot", and a
+#      lot in front needs ground: an outline that is all but convex has no
+#      room for one, however narrow its frontage (a wedge on a cul-de-sac).
+#
+# `reach_ft`, `notch_sqft` and `tolerance_ft` are this project's measures, not
+# the code's figures (hand-off, gap-fixes): 10 ft is the shallowest front
+# building setback the zones below hold and a quarter of the shallowest lot
+# depth Table 610-2 lets a lot have (40 ft); 250 sq ft is a tenth of the
+# smallest lot the same table allows a detached house (R2.5, 1,500 sq ft
+# attached; 3,000 sq ft in R5).
+jurisdictions:
+  or/multnomah/portland:
+    definition:
+      cite: PCC 33.910.030, Lot-Related Definitions, Flag Lot
+      quote: "or/multnomah/portland/33.910/33.910.030.txt#L503-L507"
+    reach_ft: 10
+    notch_sqft: 250
+    tolerance_ft: 0.5
+    min_lot_width_ft:
+      # Table 610-2, Minimum Lot Width, "All other lots" (the larger of the
+      # two rows; the attached-house row is 15 ft and a narrower pole test
+      # would clear more lots).
+      - zones: {RF: 60, R20: 60, R10: 50, R7: 40, R5: 36, R2.5: 25}
+        cite: PCC 33.610.200, Table 610-2, Minimum Lot Width, all other lots
+        quote: "or/multnomah/portland/33.610/33.610.200.txt#L23,L70-L90"
+      # Table 120-3, the lot width a lot in RM1 to RM4 must have to be built on.
+      - zones: {RM1: 33, RM2: 33, RM3: 33, RM4: 33}
+        cite: PCC 33.120.205, Table 120-3, RM1 through RM4 zones, 33 feet wide
+        quote: "or/multnomah/portland/33.120/33.120.205.txt#L22-L25"
+      # 33.150.200: housing in CI1 is "subject to the development standards
+      # that apply in the RM1 zone", so RM1's flag-lot hold reaches a CI1 lot
+      # and RM1's width reads its shape.
+      - zones: {CI1: 33}
+        cite: PCC 33.150.200, residential uses in the CI1 zone take the RM1 development standards; Table 120-3
+        quote: "or/multnomah/portland/33.120/33.120.205.txt#L22-L25"
+        via: "or/multnomah/portland/33.150.txt#L402-L404"
+  # The Portland-administered pockets of unincorporated Multnomah County: the
+  # same Title 33, on the five single-dwelling zones the county layer holds
+  # for them.
+  or/multnomah/_unincorporated:
+    definition:
+      cite: PCC 33.910.030, Lot-Related Definitions, Flag Lot
+      quote: "or/multnomah/portland/33.910/33.910.030.txt#L503-L507"
+    reach_ft: 10
+    notch_sqft: 250
+    tolerance_ft: 0.5
+    min_lot_width_ft:
+      - zones: {RF: 60, R20: 60, R10: 50, R7: 40, R5: 36}
+        cite: PCC 33.610.200, Table 610-2, Minimum Lot Width, all other lots
+        quote: "or/multnomah/portland/33.610/33.610.200.txt#L23,L70-L90"

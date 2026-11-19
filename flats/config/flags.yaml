@@ -228,6 +228,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [DRIVEWAY_SPACING_UNREAD]
+  OWNER-HOUSING-AUTHORITY:
+    description: "A housing authority owns this lot, with no building and no tax on the county's roll: not ruled out as other public land is, and not an ordinary private lot (Steph 2026-11-18: yellow, not red)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "A person decides whether the housing authority's lot is one to pursue (rulings.yaml 2026-11-18-housing-authority-land-yellow)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [HOUSING_AUTHORITY_LAND]
   ACCESS-STREET-RANK-UNKNOWN:
     description: "A corner lot's parking works off one street but not the other, and a street line has no class: nothing says the street that works is the quieter one the code sends the driveway to (Steph 2026-10-09: \"yellow, then measure\")"
     kind: categorical
@@ -2851,6 +2866,21 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "The slope classes of a South subdistrict lot, and how much of the lot is in the Flood Risk Area, before a land division into unit lots"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-FLAG-LOT:
+    description: "Whether the lot is a flag lot under Portland's code (PCC 33.910.030), which gives a flag lot the same setback along every lot line, a landscaped buffer round the flag and coverage on the flag alone (PCC 33.110.255, 33.120.284); the lot's shape does not show it to be an ordinary lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, fact]
+    path: "Our own measure of the lot's shape: the flag and the pole drawn apart, and the flag-lot standards held as numbers"
     priority: later
     status: pending
     approved_by: null

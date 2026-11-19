@@ -2974,6 +2974,7 @@ _REASON_WORDS = {
     "MAPPED_OPEN_SPACE": "open space mapped on Clackamas County's Comprehensive Plan Map 4-06 reaches into the lot, by more than the width of the map's own line — red, whatever would fit beside it: we are not fighting to develop open space (Steph, 2026-11-18)",
     "INSTITUTIONAL_USE": "institutional land — a school, park, hospital, public site, utility, airport, marina, transit hub, railway, public pool or plaza, or mall — red and left out of the scan (churches and charities are still screened)",
     "COUNTY_ROLL_RED": "the county's tax roll rules it out — public land, a tract or common parcel, open space, or a parcel the county values at $0 — red and left out of the scan (churches and charities are still screened)",
+    "HOUSING_AUTHORITY_LAND": "a housing authority owns the lot, with no building and no tax on the county's roll — held yellow for a person to decide, not ruled out as other public land is",
     "POD_CANNOT_FIT": "red by arithmetic: the lot is smaller than the building's footprint, or too narrow for a building 20 ft or wider — no zoning changes that",
     "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
     "STREET_RANK_UNKNOWN": "closer look: the lot's parking works off only one of its two streets, and a street has no class on file, so it is not known the street that works is the quieter one the code sends the driveway to",

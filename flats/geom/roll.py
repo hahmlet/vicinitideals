@@ -10,12 +10,19 @@ The reading is a pure function of one lot's roll fields, in the order of
 ``flats/config/roll_red.yaml``: the first tier a lot meets answers it. The
 tiers, the code book behind each (OAR 150-308-0310) and why Multnomah and
 Clackamas have no public-code tier are in that file.
+
+Multnomah's roll does not say who owns an exempt lot, so its public land is
+read off a checked-in list of the lots whose owner of record is a public
+body (the ``public_owner`` tier, FOLLOWUPS 205): the same answer Washington
+County's vacant public codes give, by another road.
 """
 
 from __future__ import annotations
 
+import csv
+import functools
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -39,6 +46,13 @@ EXEMPT_MEANING = {
 _NO_ADDRESS = re.compile(r"NO SITUS|LEVY CODE", re.IGNORECASE)
 _TRACT_SUFFIX = re.compile(r"^[89]\d{4}$")
 _TRACT_WORDS = re.compile(r"TR|-T|NONTL")
+#: The owner groups of the ``public_owner`` tier, and how a reading names
+#: each. ``housing_authority`` answers as the tier's switch says.
+OWNER_GROUPS = {"government": "a public body", "housing_authority": "a housing authority"}
+#: What the tier's ``housing_authority`` switch may say: RED as public land,
+#: held YELLOW in the scan (Steph 2026-11-18, rulings.yaml
+#: 2026-11-18-housing-authority-land-yellow), or screened as a private lot.
+HOUSING_ANSWERS = ("red", "yellow", "screened")
 
 
 @dataclass(frozen=True)
@@ -56,6 +70,17 @@ class Tier:
     #: ``condo_common``: the lot number (last five characters) the county
     #: gives a condominium's common element.
     lot_pattern: re.Pattern[str] | None = None
+    #: ``public_owner``: the owner groups that count as public (RED).
+    groups: frozenset[str] = frozenset()
+    #: ``public_owner``: the owner groups whose bare, untaxed land stays in
+    #: the scan and is held YELLOW (:func:`owner_hold`).
+    held: frozenset[str] = frozenset()
+    #: ``public_owner``: parcel number -> owner group, off the checked-in list.
+    owners: Mapping[str, str] = field(default_factory=dict, compare=False)
+    #: ``public_owner``: per group, the names that are that group's; and the
+    #: words (LLC, church, bank) no public body's name carries.
+    owner_patterns: Mapping[str, tuple[re.Pattern[str], ...]] = field(default_factory=dict, compare=False)
+    not_owner: re.Pattern[str] | None = None
 
 
 @dataclass(frozen=True)
@@ -68,6 +93,49 @@ class RollRules:
 
     def tier(self, key: str) -> Tier:
         return next(t for t in self.tiers if t.key == key)
+
+
+@functools.lru_cache(maxsize=8)
+def _owner_list(path: Path) -> dict[str, str]:
+    """``parcel number -> group`` off a public-owner list (``tlid,group,owner``).
+    Parcel numbers hold spaces: a row is read whole, never split on them."""
+    with path.open(encoding="utf-8", newline="") as fh:
+        return {row["tlid"].rstrip(): row["group"] for row in csv.DictReader(fh)}
+
+
+def owner_group(owner: Any, tier: Tier) -> str | None:
+    """The group an owner of record's name falls in (``government``,
+    ``housing_authority``) by the tier's patterns, or None: a private name,
+    or one carrying a word no public body's does."""
+    name = re.sub(r"\s+", " ", str(owner or "")).strip().upper()
+    if not name or (tier.not_owner is not None and tier.not_owner.search(name)):
+        return None
+    for group, patterns in tier.owner_patterns.items():
+        if any(p.search(name) for p in patterns):
+            return group
+    return None
+
+
+def _housing(body: Mapping[str, Any]) -> str:
+    answer = str(body.get("housing_authority") or "screened")
+    if answer not in HOUSING_ANSWERS:
+        raise ValueError(f"housing_authority: {answer!r} is not one of {HOUSING_ANSWERS}")
+    return answer
+
+
+def _groups(body: Mapping[str, Any]) -> frozenset[str]:
+    if "owners" not in body:
+        return frozenset()
+    on = set(body["owners"])
+    if _housing(body) != "red":
+        on.discard("housing_authority")
+    return frozenset(on)
+
+
+def _held(body: Mapping[str, Any]) -> frozenset[str]:
+    if "housing_authority" not in (body.get("owners") or {}) or _housing(body) != "yellow":
+        return frozenset()
+    return frozenset({"housing_authority"})
 
 
 def load_rules(path: Path = CONFIG) -> RollRules:
@@ -84,6 +152,11 @@ def load_rules(path: Path = CONFIG) -> RollRules:
             built_within_ft=float(keep["within_ft"]) if keep else 0.0,
             condo_reasons=frozenset(body.get("condo_reasons") or ()),
             lot_pattern=re.compile(body["lot_pattern"]) if body.get("lot_pattern") else None,
+            groups=_groups(body),
+            held=_held(body),
+            owners=_owner_list(path.parent / body["list"]) if body.get("list") else {},
+            owner_patterns={g: tuple(re.compile(p) for p in ps) for g, ps in (body.get("owners") or {}).items()},
+            not_owner=re.compile(body["not_owners"]) if body.get("not_owners") else None,
         )
         for key, body in (doc.get("tiers") or {}).items()
     )
@@ -107,6 +180,25 @@ def zero_value(row: Mapping[str, Any]) -> bool:
     is screened.
     """
     return all(_number(row.get(f)) == 0 for f in VALUE_FIELDS)
+
+
+def taxed(row: Mapping[str, Any]) -> bool:
+    """The roll shows an assessed value above 0: the lot pays tax. A value
+    the roll does not carry is not shown."""
+    n = _number(row.get("ASSESSVAL"))
+    return n is not None and n > 0
+
+
+def improved(row: Mapping[str, Any]) -> bool:
+    """The roll shows a building: a building value or a building area
+    above 0 (either: Multnomah holds one without the other)."""
+    return any(n is not None and n > 0 for n in (_number(row.get("BLDGVAL")), _number(row.get("BLDGSQFT"))))
+
+
+def vacant_class(code: str) -> bool:
+    """The assessor's own class says vacant land: a class ending ``00``
+    (OAR 150-308-0310: 100 residential vacant, 700 multi-family vacant)."""
+    return len(code) == 3 and code.isdigit() and code[1:] == "00"
 
 
 def tract_number(tlid: str) -> bool:
@@ -169,6 +261,33 @@ def built_lots(rows: Iterable[Mapping[str, Any]], rules: RollRules) -> dict[tupl
     return found
 
 
+def _public_owner(row: Mapping[str, Any], tier: Tier, groups: frozenset[str]) -> str | None:
+    """The roll's account of a lot one of ``groups`` owns bare and untaxed
+    (no assessed value; a vacant class, or no building on the roll), or None."""
+    county = str(row.get("county") or "")
+    code = _code(row)
+    tlid = str(row.get("tlid") or row.get("TLID") or "").rstrip()
+    group = tier.owners.get(tlid) if county in tier.counties else None
+    if group not in groups or taxed(row) or not (vacant_class(code) or not improved(row)):
+        return None
+    who = OWNER_GROUPS.get(str(group), "a public body")
+    bare = f"vacant class {code}" if vacant_class(code) else "no building on the roll"
+    return f"{county} owner of record ({who}), with no assessed value and {bare}"
+
+
+def owner_hold(row: Mapping[str, Any], rules: RollRules) -> str | None:
+    """The roll's account of a lot a HELD owner group (a housing authority)
+    owns bare and untaxed, or None. Such a lot is not RED and not left out of
+    the scan: the screen holds it YELLOW (Steph 2026-11-18, rulings.yaml
+    2026-11-18-housing-authority-land-yellow). ``row`` carries county, tlid,
+    PROP_CODE, BLDGVAL, BLDGSQFT and ASSESSVAL; a value it lacks is neither
+    taxed nor built, so the hold stands."""
+    for tier in rules.tiers:
+        if tier.enabled and tier.key == "public_owner" and tier.held:
+            return _public_owner(row, tier, tier.held)
+    return None
+
+
 def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str], list[tuple[str, Any]]] | None = None) -> dict[str, Any] | None:
     """The reading for one lot -- ``category``, ``share`` (always 1: the roll
     names the whole parcel), ``source``, ``name`` -- or ``None``.
@@ -193,6 +312,9 @@ def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str
             if county in tier.counties and tier.pattern and tier.pattern.match(code):
                 meaning = EXEMPT_MEANING.get(code[1], "public")
                 return hit(tier.key, f"{county} roll code {code} ({meaning})")
+        elif tier.key == "public_owner":
+            if (why := _public_owner(row, tier, tier.groups)) is not None:
+                return hit(tier.key, why)
         elif tier.key == "tract":
             if zero and tract_number(tlid):
                 return hit(tier.key, f"{county} roll, parcel number {tlid}, value $0")
