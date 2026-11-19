@@ -353,6 +353,55 @@ definitions:
     quote: "or/clackamas/gladstone/17.06/17.06.270.txt#L3"
     cite: "Gladstone Municipal Code 17.06.270, Lot, corner"
 
+# READ AND NOT ENCODED (FOLLOWUPS 204/205, 2026-11-18): Chapters 17.58 and 17.50, read whole from
+# the full municipal code Steph saved that day (ecode360 export "Downloaded from
+# https://ecode360.com/GL4459 on 2026-11-18", through Ord. 1544; gitignored book
+# data/flats/books/steph-drop-2026-11-18/gladstone/gladstone-code-incl-title17.pdf, PDF pages
+# given below). Neither chapter is in the provenance store and neither adds a number to the screen.
+#
+# 17.58 GRADING AND FILL (p.392), the chapter the landslide-greens read could not open. All of it:
+# 17.58.010 applies it to "all development permits issued by the city" except remodels of existing
+# one- and two-household homes. 17.58.020(1): grading and fill "shall conform to Chapter 70 of the
+# Uniform Building Code"; the soil for fill and lots "made usable by fill shall be suitable for the
+# purpose intended"; "When deemed necessary, the building official may require geological studies to
+# determine the suitability of the site." 17.58.020(2): the building official "shall require soils
+# reports and/or engineering studies before issuing a building permit for fill, excavation,
+# construction or related activities involving soils with restrictive features such as
+# instability, wetness, flooding or other limitations." That is a study at BUILDING PERMIT, set by
+# the building official, with no map, no overlay, no land-use approval and no denial test in the
+# zoning code. Nothing else in the whole code reaches landslide ground (whole-document search for
+# landslide, geolog, instability, mass movement, slope hazard, steep slope, soils report): 15.06.030
+# (p.111) asks for soil-engineering and engineering-geology reports on earthwork over 5,000 cubic
+# yards, over an acre, or where the City Administrator "has cause to believe that significant
+# erosion or geologic factors may be involved", and 15.06.030(4) folds their recommendations into
+# the plans -- again a study, not a bar; 17.80.061 asks a design-review site plan to show "potential
+# geologic hazards such as areas of mass movement", but 17.80.021(1)(a) (pp.447-448) exempts
+# "Single-household dwellings, middle housing, and their allowed accessory uses" from design review.
+# 15.04.100 (p.109): Clackamas County administers all building regulations in the city under
+# contract, with the county's own standards. So the four greens on the state-mapped historic
+# landslide (22E17CA00600, 22E17CA00701, 22E17CA01400, 22E17CA01501) stay GREEN: the zoning code
+# holds them to nothing a lot can fail, and the lot page's landslide note already tells the
+# foundation reader the ground is mapped. Same treatment as Washington County's study-at-permit.
+#
+# 17.50 VEHICULAR AND PEDESTRIAN CIRCULATION (pp.362-371) prints no driveway spacing, no distance
+# from an intersection and no bar on access to an arterial, for any street class (whole-document
+# search for spacing, driveway, access management: the only driveway rules are 17.21.070(5), the
+# downtown overlay's one-driveway and Portland Avenue corner rule, p.234, and 17.54's sight
+# distance, pp.387-388). What it does say: 17.50.040(14) "Curb cuts and driveway installations
+# shall be installed, according to city standards" (p.368); 17.50.050(2)(a)(D) requires a traffic
+# impact analysis where "the location of an existing or proposed access driveway does not meet
+# minimum spacing or sight distance requirements" (p.369), and (4)(a) measures it out to "the
+# access spacing distances" on an arterial or collector frontage -- distances set outside the code,
+# in the TSP and the Gladstone Public Works Design Standards (17.50.050(1), p.369), neither held;
+# 17.50.050(3)(a) brings Clackamas County and ODOT in where "an approach road to a county road or
+# Highway 99E serves the property"; and 17.50.050(7) "The city may deny, approve, or approve a
+# development proposal with conditions" (p.371). So a busy-street driveway that misses an unread
+# spacing figure goes to a study and a discretionary decision: the busy-road ruling's YELLOW
+# (2026-11-09-busy-road-driveway-spacing-yellow), which flats/gap-fixes encodes in
+# driveway_spacing.yaml as collector and arterial frontages unread. A local street is no different
+# in the code's words -- it prints nothing for any class -- so whether local frontages are held
+# too stays the open question gap-fixes put to Steph.
+
 # READ AND NOT ENCODED (FOLLOWUPS 105, Chapter 17.76 fetched 2026-11-08 with Steph's OK; these were
 # crossref rulings until it came into the store): every district's dimensional standards apply
 # "Except as provided in ... Chapter 17.76 (Exceptions)" (17.14/17.14.050.txt#L3). Read in full,
