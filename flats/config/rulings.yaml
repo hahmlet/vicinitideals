@@ -3772,3 +3772,19 @@
     known. Built on flats/gladstone-pwds (FOLLOWUPS 204); not live until
     released.
   source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-multnomah-title3-clear-stays-green
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: multnomah, city: _unincorporated}
+  question: >-
+    The Metro Title 3 stream area in unincorporated Multnomah County is
+    carved out of the buildable ground but raises no flag. Should a lot whose
+    drawn plan stays clear of it get a closer-look flag, or stay GREEN as
+    ruled for the Portland river "e" overlay?
+  ruling: '"green"'
+  effect: >-
+    A lot whose drawn building, court and lane sit clear of the Title 3
+    carve stays GREEN with no flag. A GREEN with any of them on the carve
+    turns YELLOW under the carve-overlap check (FOLLOWUPS 206). As built; no
+    lot moves.
+  source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/carve-overlap.handoff.md
