@@ -3716,3 +3716,42 @@
     on flats/gap-fixes (FOLLOWUPS 205); not live until that branch is
     released.
   source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-gladstone-landslide-yellow-note
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: gladstone}
+  question: >-
+    Gladstone has no hazard map and GMC 17.58.020(2) only requires a soils or
+    geology study before the building permit on unstable ground. Do lots on
+    state-mapped landslide ground stay plain GREEN, or carry a flag?
+  ruling: '"yellow with note"'
+  effect: >-
+    A Gladstone lot holding state-mapped landslide ground is YELLOW with a
+    note citing the study requirement; never RED on this ground alone. Four
+    greens (22E17CA00600, 22E17CA00701, 22E17CA01400, 22E17CA01501). Being
+    built on flats/gladstone-fixes (FOLLOWUPS 204); not live until released.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-frost-silent-oregon-city
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: clackamas, city: oregon-city}
+  question: >-
+    A word search of the city code finds no frost or footing depth. Is that
+    enough to call the city silent?
+  ruling: '"I found no results for Frost in those cities, so call it silent and use county/state numbers"'
+  effect: >-
+    Frost depth for this city is the county/state figure, marked as such
+    (234 lots; lot-page note only, no colour). flats/config/frost_depth.yaml.
+  source: Steph 2026-11-18 (chat)
+- id: 2026-11-18-frost-silent-sherwood
+  kind: ruling
+  date: 2026-11-18
+  scope: {county: washington, city: sherwood}
+  question: >-
+    A word search of the city code finds no frost or footing depth. Is that
+    enough to call the city silent?
+  ruling: '"I found no results for Frost in those cities, so call it silent and use county/state numbers"'
+  effect: >-
+    Frost depth for this city is the county/state figure, marked as such
+    (4 lots; lot-page note only, no colour). flats/config/frost_depth.yaml.
+  source: Steph 2026-11-18 (chat)
