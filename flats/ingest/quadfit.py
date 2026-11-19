@@ -256,6 +256,7 @@ from flats.score.screen import (
     CLOSER_LOOK_DRIVE_TOUCH,
     CLOSER_LOOK_DRIVEWAY_SIDEWALK,
     CLOSER_LOOK_PLAN_OFF_LOT,
+    CLOSER_LOOK_PLAN_ON_CARVE,
     DRIVEWAY_LOT_LINE,
     CLOSER_LOOK_SPLIT_ZONE,
     FRONT_MAX,
@@ -4466,6 +4467,73 @@ def plan_on_lot_checked(s: Screened, lot: QuadfitLot) -> Screened:
     return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
 
 
+def plan_on_carve_checked(s: Screened, lot: QuadfitLot) -> Screened:
+    """``s`` held out of GREEN where its drawn building, lane or court stands
+    on ground an overlay carve takes off the lot (``carve_wkb``), or where a
+    carve touches the lot and nothing fitting was drawn (carve-overlap,
+    2026-11-18).
+
+    The fit stands the building inside the envelope less the carve, and the
+    court's run behind it on the lot less the carve; the lane and court it
+    draws into a side setback (:func:`flats.score.paper.side_yard_lane_overlap_ft`,
+    :func:`flats.score.paper.side_yard_court_overlap_ft`) lie outside both and
+    were measured against no carve, in any city. Every carve is ground
+    "nothing is built or parked on" (:func:`_less_carve`), and the River
+    Environmental ruling keeps a lot GREEN only where "the drawn building,
+    court and lane sit clear of it" (rulings.yaml
+    ``2026-11-18-river-e-clear-stays-green``). So this measures the drawing
+    against the carve, last: a GREEN plan with any part more than
+    :data:`PLAN_ON_CARVE_FT` onto it is YELLOW with MEASURE-PLAN-ON-CARVE,
+    never moved toward GREEN. Only a GREEN is asked (on either reading): a
+    YELLOW or RED lot is already held, and leaving it untouched keeps every
+    move this check makes a GREEN that lost it. A lot no carve touches is not
+    asked. Unlike :func:`plan_on_lot_checked`, a missing or non-fitting
+    drawing on a carved GREEN is not passed: nothing showed where the plan
+    stands, so nothing showed it clear (unmeasured = the conservative
+    answer)."""
+    carve = lot.carve
+    if carve is None or carve.is_empty:
+        return s
+    if Triage.green not in (s.screening.triage, s.signed.triage):
+        return s
+    from shapely.geometry import Polygon
+
+    plan = s.drawing
+    on: list[str] = []
+    if not plan or not plan.get("fits"):
+        on.append("no fitting plan drawn")
+    else:
+        inner = carve.buffer(-PLAN_ON_CARVE_FT)
+        for name in ("building", "lane", "court"):
+            ring = plan.get(name)
+            if not ring or len(ring) < 4 or inner.is_empty:
+                continue
+            shape = Polygon(ring)
+            if not shape.is_valid:
+                shape = shape.buffer(0)
+            under = shape.intersection(inner).area
+            if under > PLAN_ON_CARVE_MIN_SQFT:
+                on.append(f"{name} {under:,.0f} sq ft")
+    if not on:
+        return s
+    flag = flag_plan.Flag(
+        PLAN_ON_CARVE,
+        flag_plan.LOT,
+        CLOSER_LOOK_PLAN_ON_CARVE,
+        source=f"drawn on carved ground more than {PLAN_ON_CARVE_FT:g} ft in: {', '.join(on)}",
+    )
+
+    def ask(x: Screening) -> Screening:
+        reasons = x.reasons if CLOSER_LOOK_PLAN_ON_CARVE in x.reasons else (*x.reasons, CLOSER_LOOK_PLAN_ON_CARVE)
+        triage = Triage.yellow if x.triage is Triage.green else x.triage
+        flags = x.flags
+        if not any(f.code == flag.code for f in flags):
+            flags = (*flags, flag)
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
 DRIVE_TOUCH = "ACCESS-DRIVE-TOUCH"
 
 
@@ -4764,6 +4832,13 @@ PLAN_OFF_LOT = "MEASURE-PLAN-OFF-LOT"
 PLAN_OFF_LOT_FT = 1.0
 #: Ground past that line smaller than this is rounding, square feet.
 PLAN_OFF_LOT_MIN_SQFT = 1.0
+PLAN_ON_CARVE = "MEASURE-PLAN-ON-CARVE"
+#: How far into carved ground a drawn part may stand before it is on it,
+#: feet: one raster cell (0.5 ft), which also covers the drawing's 0.1 ft
+#: rounding of its rings along a carve edge the room abuts.
+PLAN_ON_CARVE_FT = 0.5
+#: Carved ground under the plan smaller than this is rounding, square feet.
+PLAN_ON_CARVE_MIN_SQFT = 1.0
 
 
 def _bounded(
@@ -5942,6 +6017,7 @@ def _screen_lot_once(
         won = entrance_drawn_checked(won, policy=policy, relief=relief)
         won = split_zone_checked(won, lot)
         won = plan_on_lot_checked(won, lot)
+        won = plan_on_carve_checked(won, lot)
         won = drive_touch_checked(won)
         won = driveway_lot_line_checked(won)
         won = road_standin_checked(won, lot)

@@ -1022,6 +1022,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_PLAN_OFF_LOT]
+  MEASURE-PLAN-ON-CARVE:
+    description: "The drawn building, driveway lane or parking court stands more than half a foot onto ground an overlay carve takes off the lot, or nothing fitting was drawn on a lot a carve touches: the lane and court the fit draws into a side setback were measured against no carve (carve-overlap, 2026-11-18; Portland River Environmental ruling 2026-11-18-river-e-clear-stays-green asks the building, court and lane clear of it)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Draw the plan with the building, lane and court off the carved ground (another placement may hold them), or have the mapped area delineated on the site"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_PLAN_ON_CARVE]
   ACCESS-DRIVE-TOUCH:
     description: "No street meets the lot along as much line as the narrowest driveway the code allows here, so the drive to the parking court would cross another lot (FOLLOWUPS 201, Portland 1N2E25DA -10200: 8 ft of street line against 33.266.120.D.2's 9 ft driveway)"
     kind: categorical

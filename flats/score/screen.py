@@ -242,6 +242,14 @@ CLOSER_LOOK_SPLIT_ZONE = "CLOSER_LOOK_SPLIT_ZONE"
 #: overlap put the lane and court 4 ft past the far street line). The plan
 #: the fit passed is not one the lot holds: never GREEN on that drawing.
 CLOSER_LOOK_PLAN_OFF_LOT = "CLOSER_LOOK_PLAN_OFF_LOT"
+#: The drawn building, lane or parking court stands on ground an overlay
+#: carve takes off the lot (``carve_wkb``), or nothing fitting was drawn on a
+#: lot a carve touches (:func:`flats.ingest.quadfit.plan_on_carve_checked`).
+#: The fit keeps the building inside the envelope less the carve, but the
+#: lane and court it draws into a side setback (``side_yard_lane_overlap_ft``,
+#: ``side_yard_court_overlap_ft``) were measured against no carve. Never
+#: GREEN on that drawing.
+CLOSER_LOOK_PLAN_ON_CARVE = "CLOSER_LOOK_PLAN_ON_CARVE"
 #: No street meets the lot along as much line as the narrowest driveway the
 #: code allows here (:func:`flats.ingest.quadfit.drive_touch_checked`,
 #: FOLLOWUPS 201: Portland 1N2E25DA -10200 touches NE San Rafael St along
@@ -5284,6 +5292,7 @@ __all__ = [
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_SPLIT_ZONE",
     "CLOSER_LOOK_PLAN_OFF_LOT",
+    "CLOSER_LOOK_PLAN_ON_CARVE",
     "CLOSER_LOOK_DRIVE_TOUCH",
     "CLOSER_LOOK_DRIVEWAY_SIDEWALK",
     "DRIVEWAY_LOT_LINE",
