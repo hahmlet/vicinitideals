@@ -164,7 +164,7 @@ CLASS_FIELDS: dict[str, str] = {
     "principal_arterial": "row_to_centerline_principal_arterial_ft",
 }
 
-#: The distances listed by street name (King City, Milwaukie).
+#: The distances listed by street name (King City, Milwaukie, Hillsboro).
 NAMED_FIELD = "row_to_centerline_named_ft"
 
 #: The distance for a street the named list leaves out, where the code states
