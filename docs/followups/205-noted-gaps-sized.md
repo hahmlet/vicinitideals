@@ -9,3 +9,7 @@
 5. Portland flag-lot setbacks 33.110.255.B / 33.120.284 not held: 13-14 greens, 4 tight (1S3E07AB  -11601, 1S1E07DC  -02802, 1N2E21CA  -03600, 1S2E04CB  -03900). Config notes reasoning from a 26 ft pod (Clackamas unincorporated, Gresham) unchecked.
 6. No false green: West Linn greenway, Cornelius 100 ft entrance, Portland maximum floor area (3,655 greens tested, smallest allowance 4,814 sq ft vs 4,000).
 Not sized: RM1/RM2 20 ft maximum front setback on transit streets.
+
+## Built 2026-11-18
+
+flats/gap-fixes 774ab332 (six commits on rel10d; later commits add the rulings). Hand-off `../vicinitideals-worktrees/gap-fixes.handoff.md`. Expected: Canby 7, Gladstone ~39, Hillsboro ~174-240 to yellow; Multnomah 9 government red + 9 housing-authority YELLOW (ruling 2026-11-18-housing-authority-land-yellow); Hillsboro widening 3 firm/13 possible; Portland flag lots 2; edge smoothing 2 firm + up to 6. Rulings: county street maps stand in (three ids), Milwaukie 5 and 10 held exactly (being built). Full suite not re-run after fixes; gaps.json stale; quadfit min_frontage_ft drift already on rel10d. Six Portland short-frontage lots stay green on shape judgement (listed in hand-off). Gladstone local driveway figures: see 204 (gladstone-fixes reads Public Works Design Standards 2017 s.5.0070).
