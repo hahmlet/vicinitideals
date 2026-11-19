@@ -331,9 +331,81 @@ PERMITS: tuple[Permit, ...] = (
         "17.44.050 (geotechnical report); 17.44.060.I.2 (graded and covered ground capped at half "
         "the lot or 4,000 sq ft); 17.44.060.L (the review authority may impose conditions)",
     ),
+    # Clackamas County's mass movement hazard areas (FOLLOWUPS 204,
+    # 2026-11-18), held as Oregon City's geologic hazards are: the mapped
+    # landslide ground is carved, and a lot holding any of it whose pod stands
+    # clear still owes a permit the county may attach conditions to (Steph
+    # 2026-10-14). Two of DOGAMI's layers, so two areas.
+    Permit(
+        "clackamas_landslide",
+        "a landslide deposit on the state's landslide map (Clackamas County mass movement hazard area)",
+        "ZDO 1003.02(A) (a mass movement hazard area development permit for development in areas "
+        "of land movement, slump or earth flow, or mud or debris flow); 1003.02(B)(2)-(3) (an "
+        "engineering geologic study that establishes the site is stable; the county may attach "
+        "conditions); 1003.02(B)(5) (DOGAMI's maps the principal source)",
+    ),
+    Permit(
+        "clackamas_landslide_scarp",
+        "a landslide scarp on the state's landslide map (Clackamas County mass movement hazard area)",
+        "ZDO 1003.02(A) (a mass movement hazard area development permit for development in areas "
+        "of land movement, slump or earth flow, or mud or debris flow); 1003.02(B)(2)-(3) (an "
+        "engineering geologic study that establishes the site is stable; the county may attach "
+        "conditions); 1003.02(B)(5) (DOGAMI's maps the principal source)",
+    ),
 )
 
 BY_KEY: Mapping[str, Permit] = {p.key: p for p in PERMITS}
+
+
+@dataclass(frozen=True, slots=True)
+class Traced:
+    """A permit area nobody publishes as data, traced here off the adopted
+    map and read against the lot's own shape by the bridge
+    (:func:`flats.geom.drawn.touches_area`) -- quadfit measures nothing for
+    it, so it has no ``ovl_`` column and is not one of :data:`PERMITS`."""
+
+    key: str
+    words: str
+    cite: str
+    #: quadfit's jurisdiction key whose lots it reaches.
+    jurisdiction: str
+    #: The tracing, under ``flats/config/areas``; the file states how it was
+    #: made and how far off its edge can be (``EDGE_FT`` per feature).
+    file: str
+
+
+#: Clackamas County's open space (FOLLOWUPS 204, ZDO 1011 and 1103 read whole
+#: 2026-11-18). 1103.01: Open Space Review "applies to development that
+#: affects an open space resource described in Section 1011 ... and shown
+#: generally on Comprehensive Plan Map IV-6 ... as Resource Protection, Major
+#: Hazards, or Public and Community Use Open Space" -- a Type II review that
+#: weighs "the probable impact of the proposed development" and identifies
+#: "alternative development proposals" (1103.02). The county publishes no
+#: layer of it, so Map 4-06 is traced (the file says how, and that its edge
+#: is good to 14 ft). A lot touching it is a closer look and never RED on
+#: this: 1011.02(B) preserves "outright" only the high-priority open space,
+#: which turns on the resource present (wetland, land movement, slope over
+#: 35 percent) and not on the map's class, and Table 1001-1 does not apply
+#: Section 1011 to a quadplex or townhouse in the R and VR districts at all
+#: (zdo.1001, the two middle-housing rows), where 1103.01 still states its
+#: own reach. The cautious reading of both is the review, for every district.
+TRACED: tuple[Traced, ...] = (
+    Traced(
+        "clackamas_open_space",
+        "open space on Clackamas County's Comprehensive Plan Map 4-06 (traced from the map; "
+        "its edge is good to about 14 ft)",
+        "ZDO 1103.01 (Open Space Review for development that affects an open space resource "
+        "shown on Map IV-6 as Resource Protection, Major Hazards, or Public and Community Use "
+        "Open Space); 1103.02 (Type II; impact evaluated, alternatives identified); 1011.02(A)-(C) "
+        "(development shall avoid disturbance of identified open space resources; high-priority "
+        "open space preserved outright, second-priority to the maximum extent possible)",
+        jurisdiction="clackamas_unincorporated",
+        file="or/clackamas/_unincorporated/zdo-map-4-06-open-space.geojson",
+    ),
+)
+
+#: Every area a RESOURCE-PERMIT flag can name, measured or traced.
+AREAS: Mapping[str, Permit | Traced] = {**BY_KEY, **{t.key: t for t in TRACED}}
 
 #: quadfit flag overlays measured for something else and read as nothing here,
 #: each with the sentence that releases it. West Linn's piped streams stay on
@@ -402,4 +474,6 @@ def permits_on(row: Mapping[str, Any]) -> tuple[str, ...]:
     return tuple(out)
 
 
-__all__ = ["BY_KEY", "CLEARED", "COLUMNS", "EXEMPT", "PERMITS", "Permit", "permits_on"]
+__all__ = [
+    "AREAS", "BY_KEY", "CLEARED", "COLUMNS", "EXEMPT", "PERMITS", "Permit", "TRACED", "Traced", "permits_on",
+]

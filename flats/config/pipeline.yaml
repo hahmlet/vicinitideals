@@ -1332,6 +1332,31 @@ datasets:
     fields: [OBJECTID]
     serves: [or/clackamas/oregon-city]
 
+  # ZDO 1003.02 (FOLLOWUPS 204, Section 1003 read 2026-11-18): mass movement
+  # hazard areas, whose "principal source of information" the section names
+  # as DOGAMI. The state's landslide inventory, SLIDO 4.6: the deposits and
+  # the scarp flanks above them. quadfit flags every unincorporated lot
+  # either touches and carves the mapped ground itself (overlays.yaml
+  # clackamas_landslide, clackamas_landslide_scarp and their _core twins).
+  # The hazard_notes section reads the same inventory from the 4.5
+  # geodatabase for the lot page's notes; nothing there screens.
+  overlay_clackamas_landslide:
+    kind: arcgis
+    label: DOGAMI landslide inventory (SLIDO) deposits
+    provides: overlay
+    url: https://gis.dogami.oregon.gov/arcgis/rest/services/Public/SLIDO_Inventory/MapServer/11
+    fields: [UNIQUE_ID, TYPE_MOVE, MOVE_CLASS, DEEP_SHAL, CONFIDENCE, AGE, REF_ID_COD]
+    bbox_4326: [-123.25, 45.15, -122.20, 45.75]
+    serves: [or/clackamas/_unincorporated]
+  overlay_clackamas_landslide_scarp:
+    kind: arcgis
+    label: DOGAMI landslide inventory (SLIDO) scarp flanks
+    provides: overlay
+    url: https://gis.dogami.oregon.gov/arcgis/rest/services/Public/SLIDO_Inventory/MapServer/3
+    fields: [UNIQUE_ID, REF_ID_COD]
+    bbox_4326: [-123.25, 45.15, -122.20, 45.75]
+    serves: [or/clackamas/_unincorporated]
+
   overlay_tualatin_nrpo:
     kind: arcgis
     label: Tualatin natural resource protection overlay district

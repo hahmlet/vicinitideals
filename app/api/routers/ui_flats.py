@@ -139,7 +139,7 @@ from flats.rules.model import (
     Value,
 )
 from flats.rules.resolver import RuleSet
-from flats.rules.resource_overlays import BY_KEY as RESOURCE_PERMITS
+from flats.rules.resource_overlays import AREAS as RESOURCE_PERMITS
 from flats.score import flags as flag_plan
 from flats.score.paper import paper_fit
 

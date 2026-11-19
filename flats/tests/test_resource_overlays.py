@@ -31,7 +31,7 @@ from flats.provenance.store import ProvenanceStore
 from flats.rules.conditions import CONDITIONS
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
-from flats.rules.resource_overlays import BY_KEY, CLEARED, COLUMNS, EXEMPT, PERMITS, permits_on
+from flats.rules.resource_overlays import AREAS, BY_KEY, CLEARED, COLUMNS, EXEMPT, PERMITS, TRACED, permits_on
 from flats.score import flags as flag_plan
 from flats.score.screen import CLOSER_LOOK_RESOURCE, Triage
 from flats.tests.test_quadfit_bridge import row
@@ -117,6 +117,8 @@ def test_each_no_build_carve_keeps_its_permit_flag(quadfit_overlays) -> None:
         "metro_title3": "wood_village_wqr",
         "metro_title13": "wood_village_hca",
         "hillsboro_snro_core": "hillsboro_snro",
+        "clackamas_landslide_core": "clackamas_landslide",
+        "clackamas_landslide_scarp_core": "clackamas_landslide_scarp",
     }
     for carve, flag in twins.items():
         assert quadfit_overlays[carve] == "carve", carve
@@ -518,3 +520,195 @@ def test_portland_s_scenic_overlay_is_flagged_not_carved(quadfit_specs) -> None:
     assert "pdx_scenic" in BY_KEY and "pdx_scenic" not in CLEARED
     held = load_pipeline().datasets["overlay_pdx_scenic"]
     assert held.url.endswith("/BPS_Zoning_Code_Layers/MapServer/137")
+
+
+# --- Unincorporated Clackamas: landslides, the floodplain district and the
+# --- open space of Map 4-06 (FOLLOWUPS 204) --------------------------------
+
+COUNTY = "clackamas_unincorporated"
+ZDO = "or/clackamas/_unincorporated"
+OPEN_SPACE = "or/clackamas/_unincorporated/zdo-map-4-06-open-space.geojson"
+
+
+@pytest.mark.parametrize(
+    ("key", "layer"),
+    [
+        ("clackamas_landslide", "/SLIDO_Inventory/MapServer/11"),
+        ("clackamas_landslide_scarp", "/SLIDO_Inventory/MapServer/3"),
+    ],
+)
+def test_clackamas_s_mapped_landslides_carve_the_ground_and_flag_the_lot(quadfit_specs, key, layer) -> None:
+    """ZDO 1003.02(A): no development in an area of land movement short of a
+    Type II permit -- carved, as Oregon City's landslides are. A lot holding
+    any of it whose pod stands clear still owes that permit -- flagged."""
+    site, core = quadfit_specs[key], quadfit_specs[f"{key}_core"]
+    assert site["action"] == "flag" and core["action"] == "carve"
+    assert site["jurisdictions"] == core["jurisdictions"] == [COUNTY]
+    assert core["source"] == key and core.get("buffer_ft", 0) == 0
+    assert "keep_where" not in site and "keep_where" not in core
+    assert "1003.02(A)" in site["citation"] and "1003.02(B)(5)" in site["citation"]
+    assert "No development or grading shall be allowed" in core["citation"]
+    assert key in BY_KEY and f"{key}_core" not in BY_KEY and f"{key}_core" not in CLEARED
+    assert permits_on({f"ovl_{key}_core": True}) == ()
+    held = load_pipeline().datasets[f"overlay_{key}"]
+    assert held.url.endswith(layer) and held.bbox_4326 is not None
+    assert list(held.serves) == ["or/clackamas/_unincorporated"]
+
+
+def test_a_clackamas_lot_holding_a_mapped_landslide_is_a_closer_look() -> None:
+    """22E08CA03200's case: a debris-flow fan across one end, the pod clear of
+    it. The permit's conditions "may be attached by the County": YELLOW, the
+    colour Oregon City's geologic hazards and Happy Valley's slopes give."""
+    for key in ("clackamas_landslide", "clackamas_landslide_scarp"):
+        area = BY_KEY[key]
+        assert "1003.02(A)" in area.cite and area.column in S5O_COLUMNS
+        inside = lot_from_row(row(jurisdiction=COUNTY, **{area.column: True})).facts
+        assert inside.resource_permits == (key,)
+        got = run(lot=replace(LOT, resource_permits=inside.resource_permits))
+        assert got.triage is Triage.yellow and got.colour is flag_plan.Colour.yellow
+        assert got.reasons == (CLOSER_LOOK_RESOURCE,)
+        other = run(lot=replace(LOT, resource_permits=("oregon_city_geohazard",)))
+        assert (other.triage, other.colour) == (got.triage, got.colour)
+        assert lot_from_row(row(jurisdiction=COUNTY, **{area.column: False})).facts.resource_permits == ()
+    assert lot_from_row(row(jurisdiction=COUNTY)).facts.resource_permits == ()
+
+
+def test_the_mass_movement_rule_quotes_its_sentences() -> None:
+    store = ProvenanceStore()
+    doc = f"{ZDO}/zdo.1003.txt"
+    bar = " ".join(store.quote(f"{doc}#L13").split())
+    assert (
+        "No development or grading shall be allowed in areas of land movement, slump or earth flow, "
+        "or mud or debris flow, unless approved in a Type II application"
+    ) in bar
+    assert "a mass movement hazard area development permit is required" in bar
+    assert (
+        "Appropriate conditions of approval of development approved under this subsection may be "
+        "attached by the County"
+    ) in store.quote(f"{doc}#L19")
+    assert "shall establish that the site is stable for the proposed use and development" in store.quote(f"{doc}#L21")
+    source = " ".join(store.quote(f"{doc}#L47").split())
+    assert (
+        "The principal source of information for determining mass movement hazards is the State "
+        "Department of Geology and Mineral Industries (DOGAMI) Bulletin 99 and accompanying maps"
+    ) in source
+    assert "to update the mass movement hazards data base" in source
+
+
+def test_clackamas_s_floodplain_district_is_carved_and_the_fringe_flag_stays(quadfit_specs) -> None:
+    """ZDO 845.01(3) prohibits the quadplex and the townhouse in the
+    Floodplain Management District; 703.04 applies that district to FEMA's
+    special flood hazard areas, and 703.05(J) makes paving and grading
+    development. So the fringe is carved in the unincorporated county and
+    nowhere else, and a lot it touches is still fema_sfha's closer look."""
+    fmd, fringe = quadfit_specs["clackamas_fmd"], quadfit_specs["fema_sfha"]
+    assert fmd["action"] == "carve" and fmd["source"] == "fema_sfha"
+    assert fmd["jurisdictions"] == [COUNTY] and fmd.get("buffer_ft", 0) == 0
+    assert fringe["action"] == "flag" and fringe["jurisdictions"] == "all"
+    assert "fema_sfha" in BY_KEY and "clackamas_fmd" not in BY_KEY and "clackamas_fmd" not in CLEARED
+    assert permits_on({"ovl_clackamas_fmd": True}) == ()
+    others = [k for k, o in quadfit_specs.items() if o.get("source") == "fema_sfha" and o["action"] == "carve"]
+    assert others == ["clackamas_fmd"]
+    text = fmd["citation"]
+    assert "845.01(3)" in text and "703.04" in text and "703.05(J)" in text
+    store = ProvenanceStore()
+    ban = " ".join(store.quote(f"{ZDO}/zdo.845.txt#L17").split())
+    assert "quadplexes, townhouses, and cottage clusters" in ban
+    assert "is prohibited in the Floodplain Management District" in ban
+    reach = " ".join(store.quote(f"{ZDO}/zdo.703.txt#L47").split())
+    assert (
+        "Section 703 applies to the FMD, which is applied to the special flood hazard areas (SFHAs) "
+        "identified by the Federal Insurance Administration"
+    ) in reach
+    development = " ".join(store.quote(f"{ZDO}/zdo.703.txt#L81").split())
+    assert "buildings or other structures, mining, dredging, filling, grading, paving, excavation" in development
+
+
+def _open_space():
+    import json
+
+    from shapely.geometry import shape
+
+    from flats.rules.loader import AREAS_ROOT
+
+    doc = json.loads((AREAS_ROOT / OPEN_SPACE).read_text(encoding="utf-8"))
+    return doc, [(f["properties"], shape(f["geometry"])) for f in doc["features"]]
+
+
+def test_clackamas_s_open_space_is_traced_off_map_4_06_and_says_how() -> None:
+    """ZDO 1103.01 names three kinds of open space on Map IV-6; the county
+    publishes no layer of it, so the file is the tracing and states how it
+    was placed and how far off its edge can be."""
+    [area] = [t for t in TRACED if t.key == "clackamas_open_space"]
+    assert area.jurisdiction == COUNTY and area.file == OPEN_SPACE
+    assert "1103.01" in area.cite and "1011.02" in area.cite
+    assert AREAS[area.key] is area and area.key not in BY_KEY
+    assert set(AREAS) == set(BY_KEY) | {t.key for t in TRACED}
+    doc, feats = _open_space()
+    assert doc["drawn"] is True and "EPSG::2913" in doc["crs"]["properties"]["name"]
+    assert {"map", "quote", "says", "traced", "placed", "edge", "not_held"} <= set(doc["source"])
+    kinds: dict[str, list] = {}
+    for props, geom in feats:
+        assert geom.is_valid and not geom.is_empty
+        kinds.setdefault(props["OS_CLASS"], []).append(props)
+    assert {k: len(v) for k, v in kinds.items()} == {
+        "major_hazard": 25,
+        "resource_protection": 54,
+        "public_community_use": 38,
+    }
+    # a traced line is 14 ft wide on the ground; the county's own polygons are not
+    assert {p["EDGE_FT"] for k in ("major_hazard", "resource_protection") for p in kinds[k]} == {14}
+    assert {p["EDGE_FT"] for p in kinds["public_community_use"]} == {0}
+    store = ProvenanceStore()
+    said = " ".join(store.quote(doc["source"]["quote"]).split())
+    assert doc["source"]["says"] in said
+    assert "applies to development that affects an open space resource described in Section 1011" in said
+    plan = f"{ZDO}/zdo.1011.txt"
+    assert "areas generally indicated as Open Space on Comprehensive Plan Map IV-6" in store.quote(f"{plan}#L3")
+    assert "shall avoid disturbance of identified open space resources" in store.quote(f"{plan}#L65")
+    assert "High-priority open space shall be preserved outright" in store.quote(f"{plan}#L67")
+    assert "preserved to the maximum extent possible" in store.quote(f"{plan}#L73")
+
+
+def test_a_clackamas_lot_touching_the_traced_open_space_is_a_closer_look() -> None:
+    """Inside it, or within the 14 ft the drawn line is wide: Open Space
+    Review, never GREEN. Clear of it, or another jurisdiction's lot: nothing."""
+    import shapely
+    from shapely.geometry import box
+
+    from flats.ingest.quadfit import traced_permits_on
+
+    _, feats = _open_space()
+    traced = [g for p, g in feats if p["EDGE_FT"] == 14]
+    everything = shapely.union_all([g for _, g in feats])
+    east = max(traced, key=lambda g: g.bounds[2])
+    x = east.bounds[2]
+    y = next(c[1] for part in getattr(east, "geoms", [east]) for c in part.exterior.coords if c[0] == x)
+    spot = east.representative_point()
+
+    def lot(x0: float, y0: float, **over: object) -> dict[str, object]:
+        over.setdefault("jurisdiction", COUNTY)
+        return row(lot_wkb=shapely.to_wkb(box(x0, y0, x0 + 100, y0 + 50)), **over)
+
+    inside = lot(spot.x - 50, spot.y - 25)
+    beside = lot(x + 8, y - 25)  # 8 ft off the traced edge: inside the line's width
+    clear = lot(x + 20, y - 25)  # 20 ft off: outside it
+    assert everything.distance(shapely.from_wkb(beside["lot_wkb"])) == pytest.approx(8, abs=0.2)
+    assert traced_permits_on(inside) == ("clackamas_open_space",)
+    assert traced_permits_on(beside) == ("clackamas_open_space",)
+    assert traced_permits_on(clear) == ()
+    assert traced_permits_on(lot(spot.x - 50, spot.y - 25, jurisdiction="happy_valley")) == ()
+    # a city lot the county's rules screen (a pocket) is reached through its home
+    pocket = lot(spot.x - 50, spot.y - 25, jurisdiction="happy_valley", home_jurisdiction=COUNTY)
+    assert traced_permits_on(pocket) == ("clackamas_open_space",)
+    assert traced_permits_on(row(jurisdiction=COUNTY)) == ()  # no shape, nothing measured
+
+    facts = lot_from_row(beside).facts
+    assert facts.resource_permits == ("clackamas_open_space",)
+    got = run(lot=replace(LOT, resource_permits=facts.resource_permits))
+    assert got.triage is Triage.yellow and got.colour is flag_plan.Colour.yellow
+    assert got.reasons == (CLOSER_LOOK_RESOURCE,)
+    assert lot_from_row(clear).facts.resource_permits == ()
+    # both together: a landslide column and the traced area
+    both = lot_from_row({**inside, "ovl_clackamas_landslide": True}).facts
+    assert both.resource_permits == ("clackamas_landslide", "clackamas_open_space")

@@ -485,6 +485,22 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_oregon_city_greenway": {
         "url": "https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/10",
         "fields": ["OBJECTID"]},
+    # ---------------- Unincorporated Clackamas: mass movement (ZDO 1003.02) -
+    # FOLLOWUPS 204, 2026-11-18. The section names DOGAMI's mapping as "the
+    # principal source of information for determining mass movement hazards";
+    # the state's landslide inventory (SLIDO 4.6) is that mapping as it
+    # stands. Two polygon layers, each flagged and carved (overlays.yaml
+    # clackamas_landslide, clackamas_landslide_scarp and their _core twins):
+    # the deposits, and the scarp flanks above them. A statewide service,
+    # asked for the run area.
+    "overlay_clackamas_landslide": {
+        "url": "https://gis.dogami.oregon.gov/arcgis/rest/services/Public/SLIDO_Inventory/MapServer/11",
+        "fields": ["UNIQUE_ID", "TYPE_MOVE", "MOVE_CLASS", "DEEP_SHAL", "CONFIDENCE", "AGE", "REF_ID_COD"],
+        "bbox": DSL_BBOX_4326},
+    "overlay_clackamas_landslide_scarp": {
+        "url": "https://gis.dogami.oregon.gov/arcgis/rest/services/Public/SLIDO_Inventory/MapServer/3",
+        "fields": ["UNIQUE_ID", "REF_ID_COD"],
+        "bbox": DSL_BBOX_4326},
     # ---------------- Tualatin (the last unscreened jurisdiction) ----------
     # The service was recorded as "confirmed, layers not enumerated" on
     # 2026-09-01 and stayed that way because Tualatin had no green to lose.

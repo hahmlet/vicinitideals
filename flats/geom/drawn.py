@@ -66,3 +66,45 @@ def observed_drawn(lot_geom: Any, area: Any) -> bool | None:
     if share <= OUTSIDE_SHARE:
         return False
     return None
+
+
+#: A lot is shrunk this far before it is asked whether it touches a traced
+#: permit area, so a shared lot line is not a touch (quadfit's s5o does the
+#: same for every overlay flag).
+TOUCH_SHRINK_FT = 0.5
+
+
+@lru_cache(maxsize=None)
+def load_edged_area(file: str) -> Any:
+    """The traced area in ``file`` with each feature grown by its own
+    ``EDGE_FT`` property, as one prepared shapely geometry in EPSG:2913.
+
+    A boundary traced off a printed map is only as sharp as the line the
+    map draws it with; ``EDGE_FT`` is that width on the ground, stated per
+    feature in the file, and a lot within it is read as touching. A feature
+    taken from a published layer states 0.
+    """
+    import shapely
+    from shapely.geometry import shape
+
+    data = json.loads((AREAS_ROOT / file).read_text(encoding="utf-8"))
+    parts = []
+    for f in data["features"]:
+        geom = shape(f["geometry"]).buffer(0)
+        edge = float((f.get("properties") or {}).get("EDGE_FT") or 0.0)
+        parts.append(geom.buffer(edge) if edge > 0 else geom)
+    area = shapely.union_all(parts)
+    shapely.prepare(area)
+    return area
+
+
+def touches_area(lot_geom: Any, area: Any) -> bool:
+    """Whether any of the lot, less a :data:`TOUCH_SHRINK_FT` rim, lies in
+    ``area``. False for a lot with no shape: nothing was measured."""
+    if lot_geom is None or lot_geom.is_empty:
+        return False
+    lot = lot_geom if lot_geom.is_valid else lot_geom.buffer(0)
+    inner = lot.buffer(-TOUCH_SHRINK_FT)
+    if inner.is_empty:
+        inner = lot
+    return bool(area.intersects(inner))

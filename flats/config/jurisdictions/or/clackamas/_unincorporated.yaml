@@ -183,6 +183,17 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   change for the whole unincorporated county and deserves its own change with its own count of
   lots in front of it.
 
+  HELD 2026-11-18 (FOLLOWUPS 204), on the ground and not on quadplex_allowed. The district''s
+  chapter is stored now (zdo.703): 703.04 applies the FMD "to the special flood hazard areas
+  (SFHAs) identified by the Federal Insurance Administration" in the 2019 study and its rate
+  maps, and 703.05(J) defines development as "buildings or other structures, mining, dredging,
+  filling, grading, paving, excavation". So the district is FEMA''s mapped flood area, which is
+  measured, and what 845.01(3) prohibits in it is the building, its court and its drive.
+  quadfit carves the flood fringe off every unincorporated lot (overlays.yaml clackamas_fmd; the
+  floodway was already carved everywhere): a pod that cannot stand clear of the district is RED,
+  and a lot the district touches whose pod stands clear stays the closer look the fringe flag
+  already made it. No zone''s quadplex_allowed is capped, so no lot goes UNKNOWN on it.
+
   Worth naming apart from the refusal, because it is a hole in a ledger rather than an unread
   line: A FLAT PROHIBITION STATES NO MEASUREMENT, SO NO MEASUREMENT-BASED LEDGER CAN EVER
   SURFACE IT. All four reading queues are built from sentences that state a number. 845.02 and
@@ -1163,6 +1174,40 @@ code:
   url: https://www.clackamas.us/planning/zdo702
   title: Clackamas County ZDO Section 702 - Open Space Management District (OSM)
   start: "702.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+# Four sections that reach a lot through a MAP and not through its zone
+# (FOLLOWUPS 204, read whole 2026-11-18). None states a dimension of the pod;
+# each is held on the ground by quadfit (overlays.yaml clackamas_fmd,
+# clackamas_mass_movement, clackamas_open_space) and stored here so those
+# entries quote text that is held.
+#   703  the Floodplain Management District: 703.04 says what the district IS
+#        (FEMA's special flood hazard areas), which 845.01(3) needs.
+#   1003 Hazards to Safety: 1003.02 bars development in areas of land movement
+#        short of a Type II permit and names DOGAMI's maps as the source.
+#   1011 Open Space and Parks, and 1103 Open Space Review: the areas Map IV-6
+#        shows as open space, and the review development affecting them owes.
+- id: zdo.703
+  url: https://www.clackamas.us/planning/zdo703
+  title: Clackamas County ZDO Section 703 - Floodplain Management District (FMD)
+  start: "703.01"
+  end: "[Amended by Ord. ZDO-230"
+- id: zdo.1003
+  url: https://www.clackamas.us/planning/zdo1003
+  title: Clackamas County ZDO Section 1003 - Hazards to Safety
+  start: "1003.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+- id: zdo.1011
+  url: https://www.clackamas.us/planning/zdo1011
+  title: Clackamas County ZDO Section 1011 - Open Space and Parks
+  start: "1011.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
+- id: zdo.1103
+  url: https://www.clackamas.us/planning/zdo1103
+  title: Clackamas County ZDO Section 1103 - Open Space Review
+  start: "1103.01"
   end: "Return to the Zoning and Development Ordinance main page"
   allow_thin: true
 # Design review. 1102.01(A) puts development in HDR, MR-1, MR-2, PMD, VA and

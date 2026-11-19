@@ -133,7 +133,7 @@ from flats.geom.corner import (
 )
 from flats.geom import dedication
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
-from flats.geom.drawn import load_area, observed_drawn
+from flats.geom.drawn import load_area, load_edged_area, observed_drawn, touches_area
 from flats.geom.edges import (
     BEARING_CLUSTER_TOL_DEG,
     Edge,
@@ -216,7 +216,7 @@ from flats.rules.definitions import Abuts, Definition, Side, decide
 from flats.rules.model import TRANSIT_MEASURES, Layer
 from flats.rules.net_area import MEASURED as NET_MEASURED, SLOPES as NET_SLOPES, measured_deductions
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
-from flats.rules.resource_overlays import COLUMNS as PERMIT_COLUMNS, permits_on
+from flats.rules.resource_overlays import COLUMNS as PERMIT_COLUMNS, TRACED, permits_on
 from flats.score.configure import Configuration, configure
 from flats.score import flags as flag_plan
 from flats.score import margins as margin_record
@@ -954,6 +954,23 @@ def _drawn_answers(
         else:
             out.setdefault(area.condition, None)
     return out
+
+
+def traced_permits_on(row: Mapping[str, Any]) -> tuple[str, ...]:
+    """The keys of every traced permit area this lot touches
+    (:data:`flats.rules.resource_overlays.TRACED`): areas no layer carries,
+    read against the lot's own shape. Only a lot of the area's jurisdiction is
+    asked, under its own or its home jurisdiction as s5o's overlays are; a
+    row with no shape says nothing."""
+    reach = {row.get("jurisdiction"), row.get("home_jurisdiction")}
+    areas = [t for t in TRACED if t.jurisdiction in reach]
+    lot_wkb = row.get("lot_wkb")
+    if not areas or not isinstance(lot_wkb, (bytes, bytearray, memoryview)):
+        return ()
+    import shapely
+
+    lot_geom = shapely.from_wkb(bytes(lot_wkb))
+    return tuple(t.key for t in areas if touches_area(lot_geom, load_edged_area(t.file)))
 
 
 def _own_ground(row: Mapping[str, Any], lot_geom: Any) -> Any:
@@ -2155,7 +2172,7 @@ def lot_from_row(
         net_deductions=measured_deductions(row) or None,
         # A permit to build on mapped stream, wetland, habitat or flood
         # ground: a closer look (FOLLOWUPS 42(b)/(c)).
-        resource_permits=permits_on(row),
+        resource_permits=permits_on(row) + traced_permits_on(row),
         corner_read_as_bend=bend,
         curve_on_the_line=curve_on_the_line(row, layers) if bend else None,
         inside_ugb=inside_ugb_of(row),

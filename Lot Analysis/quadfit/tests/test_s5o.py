@@ -456,3 +456,70 @@ def test_oregon_city_greenway_kills_oregon_city_lots_only():
     ])
     flags, _ = overlay_columns(lots, spec, wrg)
     assert list(flags) == [True, True, False, False]
+
+
+def test_clackamas_landslides_flag_the_lot_and_carve_the_mapped_ground():
+    """ZDO 1003.02: no development in an area of land movement short of a
+    Type II permit -- the state's mapped deposits and scarp flanks are carved,
+    and the unincorporated lot holding any of either is flagged."""
+    from shapely.geometry import box
+
+    from s0_acquire import DSL_BBOX_4326, PHASE2_LAYERS
+    from s5o_overlays import carve_regions, overlay_columns
+
+    for key, layer in (("clackamas_landslide", "/SLIDO_Inventory/MapServer/11"),
+                       ("clackamas_landslide_scarp", "/SLIDO_Inventory/MapServer/3")):
+        site, core = _one(key), _one(f"{key}_core")
+        assert (site.action, site.layer) == ("flag", key)
+        assert (core.action, core.layer, core.buffer_ft) == ("carve", key, 0)
+        assert site.jurisdictions == core.jurisdictions == ["clackamas_unincorporated"]
+        assert not site.keep_where and not core.keep_where
+        assert "1003.02(A)" in site.citation and "No development or grading shall be allowed" in core.citation
+        held = PHASE2_LAYERS[f"overlay_{key}"]
+        assert held["url"].endswith(layer) and held["bbox"] == DSL_BBOX_4326
+
+    site, core = _one("clackamas_landslide"), _one("clackamas_landslide_core")
+    slide = [box(0, 0, 60, 100)]
+    lots = _lots([
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(0, 0, 50, 100)},     # whole lot on it
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(40, 0, 140, 100)},   # a fan across one end
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(61, 0, 161, 100)},   # a foot clear of it
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(400, 0, 500, 100)},  # clear
+        {"jurisdiction": "gladstone", "lot_geom": box(0, 0, 50, 100)},                    # on it, a city's lot
+    ])
+    flags, _ = overlay_columns(lots, site, slide)
+    assert list(flags) == [True, True, False, False, False]
+    region = carve_regions(lots, [core], {"clackamas_landslide_core": slide})
+    assert region[0].equals(box(0, 0, 50, 100))       # nothing left to stand on
+    assert region[1].equals(box(40, 0, 60, 100))      # the pod must stand clear of this
+    assert region[2] is None and region[3] is None and region[4] is None
+
+
+def test_clackamas_floodplain_district_carves_the_flood_fringe_there_only():
+    """ZDO 845.01(3): no quadplex or townhouse development in the Floodplain
+    Management District, which 703.04 applies to FEMA's flood area. The
+    fringe every other jurisdiction builds in with a raised floor is carved
+    in the unincorporated county, and stays fema_sfha's flag on the lot."""
+    from shapely.geometry import box
+
+    from s5o_overlays import carve_regions, overlay_columns
+
+    fmd, fringe = _one("clackamas_fmd"), _one("fema_sfha")
+    assert (fmd.action, fmd.layer, fmd.buffer_ft) == ("carve", "fema_sfha", 0)
+    assert fmd.jurisdictions == ["clackamas_unincorporated"]
+    assert "845.01(3)" in fmd.citation and "703.04" in fmd.citation and "703.05(J)" in fmd.citation
+    assert (fringe.action, fringe.layer, fringe.jurisdictions) == ("flag", "fema_sfha", "all")
+
+    sfha = [box(0, 0, 30, 100)]
+    lots = _lots([
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(0, 0, 30, 100)},    # wholly in the district
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(10, 0, 110, 100)},  # the district on one end
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(200, 0, 300, 100)}, # clear
+        {"jurisdiction": "gresham", "lot_geom": box(10, 0, 110, 100)},                   # fringe, by right there
+    ])
+    region = carve_regions(lots, [fmd], {"clackamas_fmd": sfha})
+    assert region[0].equals(box(0, 0, 30, 100))
+    assert region[1].equals(box(10, 0, 30, 100))
+    assert region[2] is None and region[3] is None
+    flags, _ = overlay_columns(lots, fringe, sfha)
+    assert list(flags) == [True, True, False, True]

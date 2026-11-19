@@ -1,0 +1,593 @@
+703.01 FINDINGS OF FACT
+
+A Floodplain Management District (FMD) is needed for the following reasons:
+
+A. Flood Losses Resulting from Periodic Inundation: The special flood hazard areas of the County are subject to periodic inundation that results in loss of life and property, health and safety hazards, disruption of commerce and governmental services, extraordinary public expenditures for flood protection and relief, and impairment of the County's tax base, all of which adversely affect the public health, safety, and general welfare.
+
+B. General Causes of These Flood Losses: Flood losses are caused by:
+
+1. The cumulative effect of obstructions in special flood hazard areas that increase flood heights and velocities and, when inadequately anchored, damage land uses in other areas; and
+
+2. The occupancy of special flood hazard areas by uses vulnerable to floods or hazardous to others that are inadequately floodproofed, inadequately elevated, or otherwise unprotected from flood damages.
+
+703.02 PURPOSE
+
+Section 703 is adopted to:
+
+A. Promote the public health, safety, and general welfare;
+
+B. Protect human life and health;
+
+C. Minimize public and private flood losses due to flooding in flood hazard areas;
+
+D. Minimize expenditure of public money for costly flood control projects;
+
+E. Minimize prolonged business interruptions;
+
+F. Help maintain a stable tax base by providing for the sound use and development of special flood hazard areas so as to minimize future flood blight areas;
+
+G. Restrict or prohibit uses that are dangerous to health, safety, or property in times of flooding or that cause increases in erosion, flood heights, or velocities;
+
+H. Minimize damage to public facilities and utilities—such as water and gas mains; electric, telephone, and sewer lines; streets; and bridges—located in special flood hazard areas;
+
+I. Require that uses vulnerable to floods, including public facilities that serve such uses, be provided with flood protection at the time of initial construction;
+
+J. Notify those who occupy special flood hazard areas that they assume responsibility for their actions;
+
+K.. Protect individuals, as much as possible, from buying lands that are not suitable for intended purposes because of flood hazard, by ensuring to the degree possible that potential buyers are notified that property is in a special flood hazard area; and
+
+L. Minimize the need for rescue and relief efforts associated with flooding undertaken at the expense of the general public.
+
+703.03 WARNING AND DISCLAIMER OF LIABILITY
+
+The degree of flood protection required by the FMD is considered reasonable for regulatory purposes and is based on engineering and scientific study. Larger floods may occur on rare occasions. Flood heights may be increased by manmade or natural causes, such as ice jams and bridge openings restricted by debris. Section 703 does not imply that areas outside the FMD or land uses permitted within the FMD will be free from flooding or flood damages. Section 703 shall not create liability on the part of the County, any officer or employee thereof, or the Federal Insurance Administration, for any flood damages that result from reliance on the FMD or any administrative decision lawfully made hereunder.
+
+703.04 APPLICABILITY
+
+Section 703 applies to the FMD, which is applied to the special flood hazard areas (SFHAs) identified by the Federal Insurance Administration in a scientific and engineering report entitled, "The Flood Insurance Study for Clackamas County, Oregon & Incorporated Areas," (FIS) dated January 18, 2019, with accompanying Flood Insurance Rate Maps (FIRMs).
+
+A. The FIS and FIRMs are hereby adopted by reference and declared to be a part of Section 703 and are on file at the County Department of Transportation and Development.
+
+B. The Planning Director shall make interpretations where needed, as to the exact location of the boundaries of the SFHA (for example, where there appears to be a conflict between a mapped boundary and actual field conditions, topography, and/or elevations). In areas where base flood elevation data have been provided, the Planning Director may require the applicant to submit an elevation certificate. To most precisely determine the base flood elevation of the subject area, the elevations provided by the FIS flood profiles in combination with the cross section lines on the FIRM shall supersede the base flood elevation lines and values identified on the FIRM.
+
+703.05 DEFINITIONS
+
+The following definitions apply to Section 703:
+
+A. Area of Shallow Flooding: A designated AO, AH, AR/AO, AR/AH, or VO zone on a community's Flood Insurance Rate Map with a one percent or greater annual chance of flooding to an average depth of one to three feet where a clearly defined channel does not exist, where the path of flooding is unpredictable, and where velocity flow may be evident. Such flooding is characterized by ponding or sheet flow.
+
+B. Base Flood: The flood having a one percent chance of being equaled or exceeded in any given year.
+
+C. Base Flood Elevation: The computed elevation to which floodwater is anticipated to rise during the base flood. Base flood elevations are shown on Flood Insurance Rate Maps and on the flood profiles included in the Flood Insurance Study.
+
+D. Basement: Any area of the building having its floor subgrade (below ground level) on all sides.
+
+E. Below-Grade Crawl Space: An enclosed area below the base flood elevation — which is in nearly all cases considered by the National Flood Insurance Program to also be a basement — that generally serves as the foundation for a structure and exhibits the following characteristics:
+
+1. All sides of the crawl space are below the adjacent exterior grades outside the crawl space;
+
+2. The interior grade inside the crawl space is not more than two feet below the lowest adjacent exterior grade; and
+
+3. The height, measured from the interior grade of the crawl space to the top of the crawl space foundation, does not exceed four feet at any point.
+
+F. Community Rating System: A program of the National Flood Insurance Program (NFIP) that recognizes jurisdictions for implementing floodplain management practices and standards that exceed NFIP minimum requirements. Membership in the program results in increased public safety and property protection, along with reductions in flood insurance premiums.
+
+G. Conditional Letter of Map Revision (CLOMR): The Federal Emergency Management Agency's (FEMA's) comment on a proposed project that would, upon construction, affect the hydrologic or hydraulic characteristics of a flooding source and thus result in the modification of the existing regulatory floodway, the effective base flood elevations, or the special flood hazard area.
+
+H. Critical Facility: A facility for which even a slight chance of flooding might be too great. Critical facilities include schools, hospitals, nursing homes, orphanages, penal institutions, fire stations, police stations, communications centers, water and sewage pumping stations, other public or quasi-public buildings, emergency response installations, and installations that produce, use, or store hazardous materials or hazardous waste.
+
+I. Cross Section: A source of data that is developed during the hydraulic analyses of a stream in the course of producing the Flood Insurance Rate Maps (FIRMs) and the Flood Insurance Study (FIS). Cross sections provide an elevation view of the floodplain taken perpendicular to the flow at specific points and are typically determined using field survey information and topographic maps. Some of the locations of cross sections are shown on the FIRMs and are, in turn, cross-referenced in the FIS, where they provide precise information about a variety of data that relates to flood conditions.
+
+J. Development: Any manmade change to improved or unimproved real estate, including but not limited to buildings or other structures, mining, dredging, filling, grading, paving, excavation or drilling operations or storage of equipment or materials.
+
+K. Elevation Certificate: A form produced by the Federal Emergency Management Agency (FEMA) that is completed by a professional engineer, licensed architect, or licensed surveyor, usually through field survey work, that reports elevation information about grades, structures, and other facilities. An elevation certificate is used to determine the relationship of grades, structures, and other facilities to the base flood elevation. It is also used to certify building elevations to ensure compliance with community floodplain regulations; determine proper insurance rates; and support a Letter of Map Amendment or Letter of Map Revision Based on Fill. Communities that participate in the Community Rating System are required to use an elevation certificate for all official reporting and recordkeeping of elevations.
+
+L. Encroachments: Activities or construction within the floodway, including fill, new construction, substantial improvements, and other development.
+
+M. Federal Emergency Management Agency (FEMA): A federal agency, whose primary mission is to reduce the loss of life and property and protect the nation from all hazards, including natural disasters, acts of terrorism, and other manmade disasters, by leading and supporting the nation in a risk-based, comprehensive emergency management system of preparedness, protection, response, recovery, and mitigation. Among other things, FEMA manages and oversees the National Flood Insurance Program.
+
+N. Flood:
+
+1. A general and temporary condition of partial or complete inundation of normally dry land area from:
+
+a. The overflow of inland or tidal waters.
+
+b. The unusual and rapid accumulation of runoff of surface waters from any source.
+
+c. Mudslides (i.e., mudflows) which are proximately caused by flooding as defined in Subsection 703.05(N)(1)(b) and are akin to a river of liquid and flowing mud on the surfaces of normally dry land areas, as when earth is carried by a current of water and deposited along the path of the current.
+
+2. The collapse or subsidence of land along the shore of a lake or other body of water as a result of erosion or undermining caused by waves or currents of water exceeding anticipated cyclical levels or suddenly caused by an unusually high water level in a natural body of water, accompanied by a severe storm, or by an unanticipated force of nature, such as flash flood or an abnormal tidal surge, or by some similarly unusual and unforeseeable event which results in flooding as defined in Subsection 703.05(N)(1)(a).
+
+O. Flood Insurance Rate Map: An official map of a community, on which the Federal Insurance Administrator has delineated both the special flood hazard areas and the risk premium zones applicable to the community.
+
+P. Flood Insurance Study: An examination, evaluation, and determination of flood hazards and, if appropriate, corresponding water surface elevations, or an examination, evaluation, and determination of mudslide (i.e., mudflow) and/or flood-related erosion hazards.
+
+Q. Flood Profile: A graph, found in the Flood Insurance Study, of computed flood elevations at floodplain cross sections that is typically available for a stream that has base flood elevations shown on the Flood Insurance Rate Map (FIRM). Elevations provided by the flood profiles, used in combination with the cross section lines on the FIRM, are the most accurate means of determining the base flood elevation at a particular site.
+
+R. Floodplain: Land area susceptible to being inundated by water from any source.
+
+S. Floodproofing: Any combination of structural and non-structural additions, changes, or adjustments to properties and structures which reduce or eliminate flood damage to real estate or improved real property, water and sanitary facilities, structures and their contents.
+
+T. Floodway: The channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than one foot. Often referred to as the "regulatory floodway."
+
+U. Letter of Map Amendment (LOMA): An official amendment, by letter, to an effective National Flood Insurance Program map. A LOMA establishes a property's location in relation to the special flood hazard area.
+
+V. Letter of Map Revision (LOMR): The Federal Emergency Management Agency's modification to an effective Flood Insurance Rate Map (FIRM). LOMRs are generally based on the implementation of physical measures that affect the hydrologic or hydraulic characteristics of a flooding source and thus result in the modification of the existing regulatory floodway, the effective base flood elevations, or the special flood hazard area. The LOMR officially revises the FIRM, and sometimes the Flood Insurance Study (FIS) report, and, when appropriate, includes a description of the modifications. The LOMR is generally accompanied by an annotated copy of the affected portions of the FIRM or FIS report.
+
+W. Letter of Map Revision Based on Fill (LOMR-F): The Federal Emergency Management Agency's modification of the special flood hazard area shown on the Flood Insurance Rate Map based on the placement of fill outside the existing regulatory floodway.
+
+X. Lowest Floor: The lowest floor of the lowest enclosed area (including basement). An unfinished or flood resistant enclosure, usable solely for parking of vehicles, building access or storage in an area other than a basement area is not considered a building's lowest floor; provided, that such enclosure is not built so as to render the structure in violation of the applicable non-elevation design requirements of Subsection 703.11(A)(1).
+
+Y. Manufactured Home: A structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities. The term manufactured home does not include a recreational vehicle. A manufactured home may also be referred to as a manufactured dwelling.
+
+Z. National Flood Insurance Program (NFIP): A federal program that is administered by the Federal Emergency Management Agency that is designed to reduce the loss of life, damage to property, and rising disaster relief costs, both within and beyond the special flood hazard area. The NFIP makes federally backed flood insurance available to communities that agree to adopt and enforce floodplain management ordinances that meet or exceed NFIP requirements.
+
+AA. New Construction: Structures for which the start of construction commenced on or after the effective date of a floodplain management regulation adopted by the County (Section 703) and includes any subsequent improvements to such structures.
+
+BB. "No-Rise" Certification: A certification that is provided by a professional engineer or licensed architect that demonstrates through accompanying hydrologic and hydraulic analyses, performed in accordance with standard engineering practice and National Flood Insurance Program rules and regulations, that an encroachment within the floodway will not result in any increase in the flood levels during the regulatory flood discharge. The supporting technical data should be based on the standard step-backwater computer model used to develop the 100-year floodway shown on the Flood Insurance Rate Map.
+
+CC. Obstruction: Any dam, wall, wharf, embankment, levee, dike, pile, abutment, projection, excavation, channel, rectification, bridge, conduit, culvert, building, wire, fence, rock, gravel, refuse, fill, structure, or matter in, along, across, or projected into any channel, watercourse, or regulatory flood hazard area that may impede, retard, or change the direction of the flow of water, either in itself or by catching or collecting debris carried by such water, or that is placed where it might be carried downstream by the flow of water resulting in damage to life or property.
+
+DD. Pre-FIRM Structure: A structure that was built before March 1, 1978, the effective date of the first Flood Insurance Rate Map (FIRM) for the County, and hence, prior to the date when detailed flood hazard data and flood elevations were provided to the County.
+
+EE. Recreational Vehicle: A vehicle which is:
+
+1. Built on a single chassis;
+
+2. 400 square feet or less when measured at the largest horizontal projection;
+
+3. Designed to be self-propelled or permanently towable by a light duty truck; and
+
+4. Designed primarily not for use as a permanent dwelling but as temporary living quarters for recreational, camping, travel, or seasonal use.
+
+FF. Regulatory Flood Protection Elevation: The elevation to which uses regulated by the FMD are required to be elevated or floodproofed.
+
+GG. Special Flood Hazard Area: (SFHA): An area having special flood, mudslide (i.e., mudflow), or flood-related erosion hazards, and shown on a FIRM as Zone A, AO, A1-30, AE, AR, AR/A1-30, AR/AR, AR/AO, AR/AH, AR/A, A99, AH, VO, V1-30, VE, V, M, or E.
+
+HH. Start of Construction: Includes substantial improvement, and means the date the building permit was issued, provided the actual start of construction, repair, reconstruction, rehabilitation, addition placement, or other improvement was within 180 days of the permit date. The actual start means either the first placement of permanent construction of a structure on a site, such as the pouring of slab or footings, the installation of piles, the construction of columns, or any work beyond the stage of excavation; or the placement of a manufactured home on a foundation. Permanent construction does not include land preparation, such as clearing, grading and filling; nor does it include the installation of streets and/or walkways; nor does it include excavation for a basement, footings, piers, or foundation or the erection of temporary forms; nor does it include the installation on the property of accessory buildings, such as garages or sheds not occupied as dwelling units or not part of the main structure. For a substantial improvement, the actual start of construction means the first alteration of any wall, ceiling, floor, or other structural part of the building, whether or not that alteration affects the external dimensions of the structure.
+
+II. Structure: For floodplain management purposes, a walled and roofed building, including a gas or liquid storage tank, that is principally above ground, as well as a manufactured home.
+
+JJ. Substantial Damage: Damage of any origin sustained by a structure whereby the cost of restoring the structure to its before damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred. The market value of the structure before the damage occurred shall be the structure's real market value that is provided by the County Department of Assessment and Taxation. The cost of restoring a structure shall be determined by the County Building Codes Division.
+
+KK. Substantial Improvement: Any reconstruction, repair, rehabilitation, addition, or other improvement — or series of reconstructions, repairs, rehabilitations, additions or other improvements — of a structure, the cost of which — or cumulative costs of which at the time of the most recent reconstruction, repair, rehabilitation, addition, or other improvement — equals or exceeds 50 percent of the market value of the structure before the "start of construction" of the improvement. The market value of the structure shall be determined at the time of the most recent reconstruction, repair, rehabilitation, addition, or other improvement, either before the improvement is started, or if the structure has been damaged and is being restored, before the damage occurred. The market value of the structure shall be the structure's real market value that is provided by the County Department of Assessment and Taxation. The cost of reconstruction, repair, rehabilitation, addition, or other improvement of a structure, or series thereof, shall be determined by the County Building Codes Division. This term includes structures which have incurred "substantial damage", regardless of the actual repair work performed. The term does not, however, include either:
+
+1. Any project for improvement of a structure to correct existing violations of state or local health, sanitary, or safety code specifications which have been identified by the local code enforcement official and which are the minimum necessary to assure safe living conditions; or
+
+2. Any alteration of a "historic structure" listed on the National Register of Historic Places or a State or Local Inventory of Historic Places, provided that the alteration will not preclude the structure's continued designation as a "historic structure".
+
+LL. Variance: A grant of relief by the County from the terms of a floodplain management regulation.
+
+MM. Water-Dependent Use: A use that is dependent on close proximity to the water to perform its intended purpose and by reason of the intrinsic nature of its operations. The term "water dependent use" shall be recognized as having a broader meaning than the term "functionally dependent use" as defined in Volume 44 Code of Federal Regulations (CFR) Section 59.1. A "water dependent use" shall not meet the requirements to qualify for a variance under Volume 44 CFR Section 60.6(a)(7) unless the use also qualifies as a "functionally dependent use" as defined in Volume 44 CFR 59.1.
+
+NN. Wet Floodproofing: Permanent or contingent measures that are applied to a structure or its contents that prevent or provide resistance to damage from flooding, while allowing floodwaters to enter the structure or area. Generally, this includes properly anchoring the structure, using flood resistant materials below the base flood elevation and protecting mechanical and utility equipment. Application of wet floodproofing as a flood protection technique under the National Flood Insurance Program is limited to enclosures below elevated residential and non-residential structures and to nonresidential structures that have been issued variances by the County.
+
+703.06 TYPE I USES
+
+The following uses require review as a Type I application pursuant to Section 1307, Procedures, and are exempt from the requirement to obtain a floodplain development permit and from compliance with Subsections 703.10 and 703.11.
+
+A. Reconstruction, repair, rehabilitation, addition, or other improvement of a pre-FIRM structure that is not a substantial improvement and where the structure has not sustained substantial damage. If the structure is located in the floodway, no increase in ground coverage shall result unless a "no-rise" certification is provided.
+
+703.07 DEVELOPMENT IN THE FLOODWAY
+
+Development in the floodway is prohibited, except as provided in Subsection 703.06, or for the following uses. The following uses are allowed only if permitted in the underlying zoning district and require approval of a floodplain development permit:
+
+A. Water-dependent uses. A "no-rise" certification shall be provided.
+
+B. Riprap or other structural stream bank protection measures, subject to either Subsection 703.07(B)(1) or 703.07(B)(2).
+
+1. If riprap or other structural stream bank protection measures are proposed to repair bank damage, bank removal, or bank erosion, the following criteria shall be met. For the purpose Subsection 703.07(B)(2), pre-existing conditions are the conditions of the repair area upon which the FIRM(s), flood boundary and floodway map(s), and FIS(s) were based that were in effect during the period that the bank was damaged, removed, and/or eroded, leading up to the proposed repair.
+
+a. The measures shall not encroach any further into the stream channel than the pre-existing conditions.
+
+b. The measures shall not add any more cubic yards of bank material than was in place in the pre-existing conditions.
+
+c. The measures shall not exceed the height of the bank nor protrude above the topography that was in place in the pre-existing conditions.
+
+d. The pre-existing conditions shall be demonstrated through some combination of historical and aerial photography, survey and cross-section information, maps or plans, hydrologic and hydraulic modeling, or any other pertinent information.
+
+e. The applicant shall provide evidence from a professional engineer, with expertise in hydrology, hydraulics, fluvial geomorphology, or hydrogeology, that the proposal complies with Subsections 703.07(B)(2)(a) through (d) and that the proposed stream bank protection measures will cause no adverse impacts to upstream or downstream properties, when compared to impacts of the pre-existing conditions.
+
+2. If riprap or other structural stream bank protection measures are proposed for reasons other than to repair bank damage, bank removal, or bank erosion, or if the repair exceeds the standards of Subsection 703.07(B)(1), the applicant shall provide a "no-rise" certification and evidence from a professional engineer, with expertise in hydrology, hydraulics, fluvial geomorphology, or hydrogeology, that the proposed stream bank protection measures will cause no adverse impacts to upstream or downstream properties.
+
+C. Hydroelectric facilities. A "no-rise" certification shall be provided;
+
+D. Stream crossings. A "no-rise" certification shall be provided;
+
+E. Replacement, substantial improvement, or repair of substantial damage of a structure that was constructed prior to the establishment of, or revisions to, the floodway, subject to the following:
+
+1. The development shall comply with Subsection 1206.07.
+
+2. Foundations shall be designed by a professional engineer or licensed architect, to the satisfaction of the County Building Codes Division, to withstand the mean velocity of floodwaters in the floodway, as they are listed in the Floodway Data tables of the Flood Insurance Study, and to withstand the scouring forces associated with those floodwater velocities.
+
+3. If an increase in ground coverage is proposed, a "no-rise" certification shall be provided.
+
+703.08 DUTIES OF THE PLANNING DIRECTOR
+
+The Planning Director is hereby appointed to administer and implement Section 703 by granting or denying development permit applications in accordance with its provisions. The Planning Director may delegate authority to implement these provisions. Duties of the Planning Director under Section 703include:
+
+A. The Planning Director shall review floodplain development permits to determine if the proposed development adversely affects the flood carrying capacity of the special flood hazard area. For purposes of this subsection, "adversely affects" means that the cumulative effect of the proposed development and all other existing and anticipated development, will not increase the water surface elevation of the base flood more than one foot at any point.
+
+B. Within the special flood hazard area, when more detailed base flood elevation or floodway data is available outside of the adopted Flood Insurance Study (FIS) from a federal, state or other authoritative source — such as preliminary or draft information from a new study that will revise the FIS —the Planning Director may obtain, review, and reasonably utilize such data as long as it is more restrictive than the currently effective data. When the data pertains to a preliminary or draft FIS in Zone A, the Planning Director is required to reasonably utilize the data, and is allowed discretion in using this data only to the extent that the technical or scientific validity of the data in the draft or preliminary FIS is questioned by a qualified professional.
+
+C. When base flood elevation data has not been provided (A zones), the Planning Director shall obtain, review, and reasonably utilize any base flood elevation and floodway data available from a Federal, State, or other source, in order to administer the standards in Subsections 703.08, 703.10, and 703.11.
+
+D. The Planning Director shall, where base flood elevation data is provided through the FIS, Flood Insurance Rate Map, or utilized pursuant to Subsections 703.08(B) or (C), obtain and record the actual elevation (in relation to mean sea level) of the lowest floor (including basements and below-grade crawlspaces) of all new or substantially improved structures, and whether or not the structure contains a basement.
+
+E. For all new or substantially improved structures, the Planning Director shall review an elevation certificate or a Federal Emergency Management Agency National Flood Insurance Program Floodproofing Certificate (for Non-Residential Structures) provided by the applicant and shall verify and record the actual elevation (in relation to mean sea level) and maintain the elevation and floodproofing certificates required.
+
+1. In either case, the currently effective form shall be used, and it shall be completed in accordance with the accompanying instructions.
+
+2. The determination regarding which certificate is required shall be made based on the nature of the development consistent with National Flood Insurance Program regulations.
+
+F. The Planning Director shall maintain for public inspection all records pertaining to the provisions of Section 703.
+
+G. The Planning Director shall review all floodplain development permits to determine if the proposed development activity qualifies as a substantial improvement.
+
+H. The Planning Director shall provide to building officials the regulatory flood protection elevation applicable to any building requiring a building permit.
+
+I. The Planning Director shall notify adjacent communities, the State of Oregon Department of Land Conservation and Development, and other appropriate state and federal agencies prior to any alteration or relocation of a watercourse and submit evidence of such notification to the Federal Insurance Administration.
+
+J. The Planning Director shall notify the Federal Emergency Management Agency (FEMA) within six months of project completion when an applicant had obtained a Conditional Letter of Map Revision (CLOMR) from FEMA, or when development altered a watercourse, modified floodplain boundaries, or modified base flood elevations. This notification shall be provided as a Letter of Map Revision (LOMR).
+
+1. The project applicant shall be responsible for preparing technical data to support the LOMR application and for payment of all processing and application fees charged by FEMA.
+
+703.09 FLOODPLAIN DEVELOPMENT PERMITS
+
+Except as provided under Subsection 703.06, a floodplain development permit (FDP) shall be obtained for development laterally within the FMD before construction or development begins. The permit shall be for all structures, including manufactured dwellings, and for all development, including fill and other activities. Work that is necessary to protect existing structures, utility facilities, roadways, driveways, and stream banks in response to emergencies may be undertaken prior to obtaining an FDP, provided that an application is made within 90 days of water receding. The measures used for protection may not be able to be permitted. An FDP requires review as a Type II application pursuant to Section 1307, Procedures.
+
+A. Submittal Requirements: In addition to the submittal requirements identified in Subsection 1307.07(C), an application for an FDP shall include:
+
+1. A site plan drawn to scale, showing elevations of the site; pertinent structure, fill, or storage elevations; size, location, and spatial arrangement of all proposed and existing structures on the site; and location and elevations of streets, water supply, sanitary facilities, and soil types; and other applicable information;
+
+2. Specifications for building construction and materials, loads and forces, and effect on soil bearing pressures, erosion control, floodproofing, filling, dredging, grading, channel improvement, storage of materials, water supply, and sanitary facilities;
+
+3. A description of the extent to which any watercourse will be altered or relocated as a result of proposed development; and
+
+4. Either an elevation certificate or a Federal Emergency Management Agency National Flood Insurance Program Floodproofing Certificate (for Non-Residential Structures).
+
+a. In either case, the currently effective form shall be used, and it shall be completed in accordance with the accompanying instructions, and based on construction drawings and proposed site locations of development.
+
+b. The determination regarding which certificate is required shall be made based on the nature of the proposed development consistent with National Flood Insurance Program regulations.
+
+B. Factors of Consideration: In reviewing an application for an FDP, the following factors shall be considered:
+
+1. The danger to life and property due to increased flood heights or velocities caused by encroachments;
+
+2. The danger that materials may be swept on to other lands or downstream to the injury of others;
+
+3. The proposed water supply and sanitation systems and the ability of those systems to prevent disease, contamination, and unsanitary conditions;
+
+4. The susceptibility of the proposed facility and its contents to flood damage and the effect of such damage on the individual owner;
+
+5. The importance to the community of the service provided by the proposed facility;
+
+6. The requirements of the facility for a waterfront location;
+
+7. The availability of alternative locations not subject to flooding for the proposed use;
+
+8. The compatibility of the proposed use with existing development and development anticipated in the foreseeable future;
+
+9. The relationship of the proposed use to the Comprehensive Plan and floodplain management program for the area;
+
+10. The safety of access to property in times of flood for ordinary and emergency vehicles;
+
+11. Whether the proposed development activity represents a substantial improvement to an existing structure;
+
+12. Whether the proposed structure qualifies as a critical facility;
+
+13. The expected heights, velocity, duration, rate of rise, and sediment transport of the floodwaters expected at the site; and
+
+14. Other factors that are relevant to the purpose of Section 703.
+
+C. Approval Criteria: An FDP shall be subject to the following standards and criteria:
+
+1. All necessary permits have been obtained from those federal, state, or local governmental agencies from which prior approval is required.
+
+2. If the proposed development is in the floodway, the standards of Subsection 703.07 have been met.
+
+3. If the proposed development includes alteration of a watercourse, maintenance will be provided within the altered or relocated portion of said watercourse so that the flood carrying capacity is not diminished.
+
+4. The proposed development will comply with the applicable provisions of Subsections 703.10 and 703.11.
+
+D. Conditions of Approval: The County may attach conditions of approval to an FDP if such conditions are deemed necessary to further the purpose of Section 703. Such conditions may include, but are not limited to:
+
+1. Limitations on periods of use and operation;
+
+2. Imposition of operation controls, sureties, and deed restrictions; and
+
+3. Floodproofing and other protective measures, such as:
+
+a. Installation of watertight doors, bulkheads, and shutters;
+
+b. Reinforcement of walls to resist water pressure;
+
+c. Use of paints, membranes, or mortars to reduce seepage of water through walls;
+
+d. Addition of mass or weight to structures to resist flotation;
+
+e. Installation of pumps to lower water levels in structures;
+
+f. Construction of water supply and waste treatment systems to prevent the entrance of floodwaters;
+
+g. Pumping facilities for subsurface external foundation wall and basement floor pressures;
+
+h. Construction to resist rupture or collapse caused by water pressure or floating debris;
+
+i. Cutoff valves on sewer lines or the elimination of gravity flow basement drains; and
+
+j. Requirements for construction of channel modifications, dikes, levees, and other protective measures.
+
+E. Finalization of an FDP: If a preliminary elevation certificate or floodproofing certificate was required for a structure, a second elevation certificate is required prior to approval of the foundation inspection. In addition, a building permit for that structure shall not receive a final approval or certificate of occupancy until the County approves a final elevation certificate or floodproofing certificate that is based on the as-built/finished construction.
+
+F. Approval Period: Approval of an FDP is valid for six years from the date of the final written decision. If the County's final written decision is appealed, the approval period shall commence on the date of the final appellate decision. During this six-year period, the approval shall be implemented, or the approval will become void.
+
+1. "Implemented" means all major development permits shall be obtained and maintained, or if no major development permits are required to complete the development contemplated by the approved FDP, "implemented" means all other necessary County development permits (e.g. grading permit, building permit for an accessory structure) shall be obtained and maintained.
+
+a. A "major development permit" is:
+
+i. A building or manufactured dwelling placement permit for a new primary structure that was part of the FDP approval; or
+
+ii. A permit issued by the County Engineering Division for parking lot or road improvements that were part of the FDP approval.
+
+703.10 GENERAL FMD STANDARDS
+
+Development in the FMD shall comply with the following standards:
+
+A. Anchoring:
+
+All new construction and substantial improvements shall be anchored to prevent flotation, collapse, or lateral movement of the structure resulting from hydrodynamic and hydrostatic loads, including the effects of buoyancy.
+
+B. Construction Materials and Methods, and Utilities:
+
+1. The following standards shall apply to below-grade crawl spaces. For more detailed information, refer to FEMA Technical Bulletin 11-01, Crawlspace Construction for Buildings Located in Special Flood Hazard Areas. For flood insurance purposes, there is an additional charge that is added to the basic flood insurance policy premium for structures that are built on below-grade crawl spaces.
+
+a. The building shall be designed and adequately anchored to resist flotation, collapse, and lateral movement of the structure resulting from hydrodynamic and hydrostatic loads, including the effects of buoyancy. Hydrostatic loads and the effects of buoyancy can usually be addressed through the openings required by Subsection 703.10(B)(1)(b). Because of hydrodynamic loads, crawl-space construction is prohibited in areas with flood velocities greater than five feet per second unless the design is reviewed by a qualified design professional, such as a professional engineer or licensed architect. Other types of foundations are recommended for these areas.
+
+b. The crawl space shall have openings that equalize hydrostatic pressures by allowing the automatic entry and exit of floodwaters. The bottom of each flood vent opening shall be no more than one foot above the lowest adjacent exterior grade.
+
+c. Portions of the building below the base flood elevation (BFE) shall be constructed with materials resistant to flood damage. This includes not only the foundation walls of the crawl space used to elevate the building, but also any joists, insulation, or other materials that extend below the BFE. The recommended construction practice is to elevate the bottom of joists and all insulation above BFE.
+
+d. Any building utility systems within the crawl space shall be elevated above the BFE or designed so that floodwaters cannot enter or accumulate within the system components during flood conditions. Ductwork, in particular, shall either be placed above the BFE or sealed from floodwaters.
+
+e. The interior grade of a crawl space below the BFE shall not be more than two feet below the lowest adjacent exterior grade.
+
+f. The height of the below-grade crawl space, measured from the interior grade of the crawl space to the top of the crawl space foundation wall shall not exceed four feet at any point. The height limitation is the maximum allowable unsupported wall height according to the engineering analyses and building code requirements for flood hazard areas.
+
+g. There shall be an adequate drainage system that removes floodwaters from the interior area of the crawl space. The enclosed area shall be drained within a reasonable time after a flood event. The type of drainage system will vary because of the site gradient and other drainage characteristics, such as soil types. Possible options include natural drainage through porous, well-drained soils and drainage systems such as perforated pipes, drainage tiles, or gravel or crushed stone drainage by gravity or mechanical means.
+
+h. The velocity of floodwaters at the site should not exceed five feet per second for any crawl space. For velocities in excess of five feet per second, other foundation types should be used.
+
+2. All new construction and substantial improvements shall be constructed with materials and utility equipment resistant to flood damage, and using methods and practices that minimize flood damage. For more detailed information, refer to November 1999 FEMA Publication 348, Protecting Building Utilities from Flood Damage; and FEMA Technical Bulletin 2-93, Flood-Resistant Materials Requirements.
+
+3. New and replacement water supply systems shall be designed to minimize or eliminate infiltration of floodwaters into the system.
+
+4. New and replacement sanitary sewage systems shall be designed to minimize or eliminate infiltration of floodwaters into the system and discharge from the system into floodwaters.
+
+5. All equipment, machinery, appliances, and electrical boxes that pertain to electrical, ventilation, plumbing, and heating and air-conditioning systems and services, as well as outside fuel storage tanks, outside air-conditioning units, and other interior or exterior service facilities, systems, equipment, machinery, appliances, and other utilities shall be elevated or floodproofed so as to prevent water from entering or accumulating within the components during conditions of flooding.
+
+a. Floodproofed facilities, systems, equipment, machinery, and appliances — except for waterproofed wires and cables, as well as waterproofed and sealed plumbing pipes and other plumbing services — shall be certified as such by a preliminary and final floodproofing certificate.
+
+b. Except for manufactured dwelling electrical crossover connections, regulated pursuant to Subsection 703.11(A)(1), non-floodproofed facilities, systems, equipment, machinery, and appliances shall be elevated at least two feet above the BFE, except that duct systems may be elevated at least one foot above the BFE.
+
+6. Onsite wastewater disposal systems shall be located to avoid impairment to them or contamination from them during flooding consistent with Oregon Department of Environmental Quality regulations.
+
+7. A professional engineer or licensed architect shall certify that the design and methods of construction are in accordance with accepted standards of practice for meeting provisions of this subsection based on their development and/or review of the structural design, specifications, and plans. Such certifications shall be provided to the County.
+
+C. Substantial Improvement and Substantial Damage: A structure for which a substantial improvement or repair of substantial damage is proposed shall be elevated, retrofitted, upgraded, etc., such that the structure and all of its interior and exterior service facilities, systems, equipment, machinery and appliances shall be brought into compliance with the applicable standards of this section.
+
+D. Manufactured Dwellings:
+
+1. Manufactured dwellings to be placed or substantially improved shall be placed on a permanent foundation and elevated pursuant to Subsection 703.11.
+
+2. Manufactured dwellings shall be anchored to prevent flotation, collapse, or lateral movement, and shall be installed using methods and practices that minimize flood damage. Anchoring methods may include, but are not limited to, use of over-the-top or frame ties to ground anchors.
+
+3. Manufactured dwellings shall be placed utilizing the applicable designs and guidelines, as approved by the Building Codes Division, of the September 1985 FEMA Publication, Manufactured Home Installation in Flood Hazard Areas, and State of Oregon Manufactured Dwelling Installation Specialty Code, whichever is the most restrictive.
+
+E. Recreational Vehicles: Recreational vehicles shall comply with the requirements of Subsection 703.10(D) for manufactured dwellings or shall be:
+
+1. Located on the site for fewer than 180 consecutive days;
+
+2. Fully licensed and ready for highway use;
+
+3. Supported on wheels or a jacking system;
+
+4. Attached to services on the site only by quick-disconnect type utilities and security devices; and
+
+5. Void of any permanently attached additions.
+
+F. Fill:
+
+1. Any fill or other materials — except those proposed within the interior of, and inside the walls of, a crawl space, foundation, basement or enclosure floor — shall be shown to have a beneficial purpose and the amount thereof not greater than is necessary to achieve that purpose, as demonstrated by a plan submitted by the applicant, showing the uses to which the filled land will be put and the final dimensions of the proposed fill or other materials.
+
+2. Fill or other materials shall be protected against erosion by riprap, vegetative cover, or bulkheading.
+
+3. Structures may be allowed to be constructed on fill and thereby elevated above the BFE, subject to the following standards:
+
+a. The fill shall be placed such that the lowest adjacent finished grade of the fill to the foundation of the structure is at least two feet above the BFE.
+
+b. The lowest portion of the lowest structural support system of the building (i.e., the bottom of slab, bottom of footings, or bottom of any other lowest on-grade or sub-grade supporting member) shall be located at least one foot above the BFE.
+
+c. Placement of the fill shall require approval of a grading permit.
+
+d. The structure shall be constructed pursuant to the applicable standards of FEMA Technical Bulletin 10-01, Ensuring That Structures Built on Fill in or near Special Flood Hazard Areas Are Reasonably Safe from Flooding.
+
+All fill placed at or below the BFE shall be balanced with at least an equal amount of material removal either on-site, or from a nearby area at or below the BFE and in the same drainage basin. In addition, the following standards shall apply:
+
+a. Excavation below the level of the seasonal groundwater table shall not be used in balancing fill volumes against excavation volumes;
+
+b. The mean annual groundwater level shall be determined by soil morphology, or other available data on groundwater conditions;
+
+c. Balancing of a fill shall occur at the same time as the fill is placed on the development site;
+
+d. The site plan required in Subsection 703.09(A)(1) shall identify the area where material is removed from the floodplain to balance fill volumes, including pertinent elevations and volume of fill removed;
+
+e. A professional engineer or licensed architect shall certify that the amount of material removed balances the amount of fill material;
+
+f. A suitable recorded easement or similar legally binding mechanism, in a form acceptable to County Counsel shall be provided to the Planning Director, indicating that future development of the delineated area where material is removed to balance fill volumes is prohibited, and the delineated area cannot be used in the future as balancing for a fill; and
+
+g. When the balancing occurs off-site, the application shall also include:
+
+i. Authorization from the owner of the property where the balancing will occur; and
+
+ii. A legal description of the parcel where the balancing will occur.
+
+5. The following uses or activities are not subject to the provisions of Subsection 703.10(F)(4):
+
+a. Removal and/or fill necessary to plant new trees or vegetation;
+
+b. Removal and/or fill required for the construction of storm-water runoff detention facilities and/or structures; and
+
+c. Removal and/or fill required for the construction of other facilities such as levees designed specifically to reduce or mitigate flood impacts.
+
+G. Stream Crossings, Including Bridges and Culverts, and Transportation Projects:
+
+1. Stream crossings and transportation projects shall be designed as balanced removal and fill projects, or designed to not raise the BFE.
+
+2. Stream crossings and transportation projects that encroach into the floodway shall obtain a "no-rise" certification, or, if the "no-rise" condition cannot be achieved, shall obtain a Conditional Letter of Map Revision, prior to permitting the work, followed by a Letter of Map Revision after the work has been completed.
+
+3. Stream crossings and transportation projects shall be designed to minimize the area of fill in the special flood hazard area (SFHA) and to minimize erosive water velocities.
+
+4. Stream crossings shall be as close to perpendicular to the stream as practicable.
+
+5. Stream crossings shall be designed to allow fish passage.
+
+6. Stream crossings and transportation projects are subject to review and approval pursuant to applicable federal and state statutes and administrative rules.
+
+H. Subdivisions:
+
+1. Subdivisions shall be consistent with the need to minimize flood damage.
+
+2. Subdivisions shall have public utilities and facilities, such as sewer, gas, electrical, and water systems, located and constructed to minimize flood damage.
+
+3. Subdivisions shall have adequate drainage provided to reduce exposure to flood damage.
+
+I. Toxic or Hazardous Materials:
+
+1. The storage or use of toxic or hazardous materials in conjunction with nonresidential uses is prohibited, except as permitted in Subsection 703.10(I)(2).
+
+2. Storage or use of toxic or hazardous materials may be permitted if the applicant demonstrates the following:
+
+a. The proposed development requires toxic or hazardous materials for operation.
+
+b. An area outside the SFHA is not available to be used for storage or use of toxic or hazardous materials.
+
+c. The containers, structures, facilities and machinery that contain, use or process the toxic or hazardous materials shall be elevated:
+
+i. A minimum of two feet above the BFE in AE zones, as indicated on the FIRM or determined pursuant to Subsection 703.08(B);
+
+ii. A level to be determined pursuant to Subsection 703.11(C)(1) in unnumbered A zones, as indicated on the FIRM or determined pursuant to Subsection 703.08(B); or
+
+iii. The depth number specified on the Flood Insurance Rate Map — or a minimum of two feet above the highest adjacent grade if no depth number is specified — in shallow flooding areas.
+
+iv. The structures that support the containers, structures, facilities, and machinery that contain, use or process the toxic or hazardous materials shall comply with Subsections 703.10(A) and 703.10(B)(2) and (7).
+
+J. Critical Facilities: Construction of new critical facilities shall be, to the extent possible, located outside the limits of the Special Flood Hazard Area (SFHA). Construction of new critical facilities shall be permissible within the SFHA if no feasible alternative site is available. Critical facilities constructed within the SFHA shall have the lowest floor elevated three feet above base flood elevation or to the height of the 500-year flood, whichever is higher. Access to and from the critical facility shall also be protected to the height utilized above. Floodproofing and sealing measures shall be taken to ensure that toxic substances will not be displaced by or released into floodwaters. Access routes elevated to or above the level of the base flood elevation shall be provided to all critical facilities to the extent possible.
+
+703.11 SPECIFIC STANDARDS
+
+A. AE Zones with Designated Floodways: In AE zones with designated floodways, as indicated on the Flood Insurance Rate Map (FIRM) or determined pursuant to Subsection 703.08(B), development shall comply with the following criteria:
+
+1. Residential Construction: New construction and substantial improvement of a dwelling shall have the lowest floor, including basement, elevated at least two feet above the base flood elevation (BFE), except that new or substantially improved manufactured dwellings shall have the bottom of the longitudinal frame beam and electrical crossover connections elevated at least one foot above the BFE. Fully enclosed areas below the lowest floor that are subject to flooding are prohibited, or shall be designed to automatically equalize hydrostatic flood forces on exterior walls by allowing for the entry and exit of floodwaters. Designs for meeting this requirement shall either be certified by a professional engineer or licensed architect or shall meet or exceed the following minimum criteria. For more detailed information, refer to FEMA Technical Bulletin 1-93, Openings in Foundation Walls.
+
+a. A minimum of two openings having a total net area of not less than one square inch for every square foot of enclosed area subject to flooding shall be provided, unless the applicant provides documentation from a professional engineer or licensed architect that a flood vent manufacturer's product can provide less than one square inch of opening for every square foot of enclosed area and still meet National Flood Insurance Program standards.
+
+b. The bottom of all openings shall be no higher than one foot above grade.
+
+c. Openings may be equipped with screens, louvers, or other coverings or devices provided that they permit the automatic entry and exit of floodwaters.
+
+2. Nonresidential Construction: New construction and substantial improvement of a nonresidential structure shall either comply with Subsection 703.11(A)(1), or, together with attendant utility and sanitary facilities, shall comply with the following criteria. For more detailed information, refer to FEMA Technical Bulletin 3-93, Non-Residential Floodproofing — Requirements & Certification.
+
+a. The structure shall be floodproofed, so that below the point one foot above the BFE, the structure is watertight, with walls substantially impermeable to the passage of water. Applicants floodproofing nonresidential structures shall be notified in writing that flood insurance premiums will be based on rates that are one foot below the floodproofed level (e.g. a building floodproofed to one foot above the BFE will be rated as being floodproofed to the BFE).
+
+b. The structure shall have structural components capable of resisting hydrostatic and hydrodynamic loads and effects of buoyancy.
+
+c. A professional engineer or licensed architect shall certify that the design and methods of construction are in accordance with accepted standards of practice for meeting provisions of this subsection based on their development and/or review of the structural design, specifications, and plans. Such certifications shall be provided to the County.
+
+B. AE Zones without Designated Floodways: In AE zones without designated floodways, as indicated on the FIRM or determined pursuant to Subsection 703.08(B), development shall comply with Subsection 703.11(A) and the following criteria:
+
+1. The cumulative effect of the proposed development and all other existing and anticipated development, shall not increase the water surface elevation of the base flood more than one foot at any point.
+
+2. Whenever possible, structures shall be constructed with the longitudinal axis parallel to the direction of flood flow.
+
+3. So far as practical, structures shall be placed approximately on the same flood flow lines as those of adjoining structures.
+
+C. Unnumbered A Zones: In unnumbered A zones, as indicated on the FIRM or determined pursuant to Subsection 703.08(B), development shall comply with the following criteria:
+
+1. Proposed construction shall be reasonably safe from flooding. The test of reasonableness is a local judgment and includes use of historical data, high water marks, photographs of past flooding, post-flood improvements to the waterway, etc., where available. Failure to elevate the lowest floor to at least two feet above the highest grade may result in higher insurance rates.
+
+2. Proposed residential construction shall comply with Subsections 703.11(A)(1). Proposed nonresidential construction, together with attendant utility and sanitary facilities, shall comply with Subsections 703.11(A)(2). However, the level to which the structure must be elevated or floodproofed shall be determined pursuant to Subsection 703.11(C)(1).
+
+3. Proposed construction shall comply with Subsections 703.11(B)(2) and (3).
+
+4. The applicant shall provide base flood elevations for the area of development. Where base flood elevation data have not been provided or are not available from another authorized source, the data shall be generated for subdivisions or other proposed development that contain at least 50 lots or five acres, whichever is less.
+
+D. Areas of Shallow Flooding: In areas of shallow flooding, development shall comply with the following criteria:
+
+1. New construction and substantial improvement of a dwelling shall comply with Subsections 703.11(A)(1) and shall have the lowest floor, including basement, elevated above the highest adjacent grade of the building site to a minimum of two feet above the depth number specified on the FIRM. If no depth number is specified, the lowest floor shall be elevated at least two feet above the highest adjacent grade of the building site.
+
+2. New construction and substantial improvement of a nonresidential structure shall either comply with Subsection 703.11(D)(1), or, together with attendant utility and sanitary facilities, shall comply with Subsection 703.11(A)(2), except that the structure shall be floodproofed to the elevation identified in Subsection 703.11(D)(1).
+
+3. Adequate drainage paths shall be provided around structures on slopes to guide floodwaters around and away from proposed structures.
+
+703.12 EXCEPTION
+
+A. Approval Criteria: Certain non-residential structures — such as detached garages and storage sheds solely used for parking and limited storage that are no greater than 400 square feet in area and do not exceed one story, pole barns used for storage of farm machinery and equipment, small garden sheds, and structures used in conjunction with agricultural activities — may be granted an exception from the elevation and floodproofing standards of Subsection 703.11, subject to the following criteria. (For more detailed information, refer to FEMA Technical Bulletin 7-93, Wet Floodproofing Requirements.) Additionally, the following structures may qualify for the exception: residential accessory structures up to 200 square feet, which may not require a building permit pursuant to Oregon Residential Specialty Code R105.2; residential accessory structures greater than 200 and up to 400 square feet if the lot size and setbacks qualify pursuant to Oregon Residential Specialty Code R105.2; and commercial accessory structures that are up to 120 square feet, which may not require a building permit pursuant to Oregon Structural Specialty Code 105.2.
+
+1. The exception is reviewed pursuant to Subsection 703.13, and compliance with the approval criteria of Subsection 703.13(A) is demonstrated.
+
+2. The structure will be wet floodproofed.
+
+3. The structure will not be temperature controlled.
+
+4. The structure will not cause significant flood risk.
+
+5. The structure will not be used for human habitation, and will be utilized for storage or parking.
+
+6. The structure will be located, designed, and constructed to have low flood damage potential.
+
+7. The structure will be constructed and placed on the building site so as to offer the minimum resistance to the flow of flood waters.
+
+8. The structure will not be used to store toxic material, oil or gasoline, or any priority persistent pollutant identified by the Oregon Department of Environmental Quality, unless confined in a tank installed in compliance with Section 703 or stored at least one foot above the base flood elevation.
+
+9. The structure will be anchored to prevent flotation, collapse, or lateral movement of the structure resulting from hydrodynamic and hydrostatic loads, including the effects of buoyancy, during conditions of the base flood.
+
+10. The structure will be constructed with electrical and other service facilities located and installed so as to prevent water from entering or accumulating within the components during conditions of the base flood.
+
+11. The structure will be constructed to equalize hydrostatic flood forces on exterior walls by allowing for the automatic entry and exit of floodwater. Designs for complying with this requirement must be certified by a licensed professional engineer or architect or comply with Subsections 703.11(A)(1)(a) through (c).
+
+12. The structure will be constructed with flood-resistant materials that meet the requirements of the County Building Codes Division, up to:
+
+a. A minimum of one foot above the BFE in AE zones, as indicated on the FIRM or determined pursuant to Subsection 703.08(B);
+
+b. A level to be determined pursuant to Subsection 703.11(C)(1) in unnumbered A zones, as indicated on the FIRM or determined pursuant to Subsection 703.08(B); or
+
+c. The depth number specified on the Flood Insurance Rate Map — or a minimum of two feet above the highest adjacent grade if no depth number is specified — in areas of shallow flooding.
+
+13. If the structure will be located in the floodway, the structure will comply with Subsection 703.07.
+
+B. Insurance Consequences: If an exception is granted for a structure that is accessory to a dwelling and the structure will exceed a value greater than 10 percent of the value of the dwelling, the applicant shall be given written notice that substantial increases in insurance rates may result.
+
+703.13 VARIANCES
+
+A. Approval Criteria: In conjunction with review of a floodplain development permit, a variance from the requirements of Section 703 may be approved, subject to the following standards and criteria:
+
+1. The request is consistent with Subsection 703.09(B).
+
+2. There is good and sufficient cause for the variance.
+
+3. Compliance with the requirements for which the variance is requested would cause an exceptional hardship to the applicant.
+
+4. Approval of the variance would not result in increased flood levels during base flood discharge, additional threats to public safety, extraordinary public expense, or a nuisance condition, cause fraud on or victimization of the public, or conflict with existing local laws or ordinances.
+
+5. The variance requested is the minimum necessary, considering the flood hazard, to provide relief.
+
+6. If the proposal is to repair or rehabilitate a historic structure that is listed on the National Register of Historic Places or a State or Local Inventory of Historic Places, the proposed repair or rehabilitation will not preclude the structure's continued designation as a historic structure, and the variance is the minimum necessary to preserve the historic character and design of the structure.
+
+B. Consequences: If a variance is granted that allows the lowest floor of a structure to be built below the regulatory flood protection elevation, the applicant shall be given written notice that:
+
+1. The cost of flood insurance will be commensurate with the increased risk resulting from the reduced lowest floor elevation; and
+
+2. Such construction below the base flood level increases risks to life and property and the County is not liable for any damages that result from the variance approval.
+
+C. The written notice required by Subsection 703.13(B) shall be maintained with a record of all variance actions.
