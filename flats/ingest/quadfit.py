@@ -194,6 +194,7 @@ from flats.geom.durham_apron import (
     maximum_clearance_ft,
 )
 from flats.geom import driveway_lot_line, driveway_spacing
+from flats.geom.flag_lot import observed_flag_lot
 from flats.geom import sewer
 from flats.ingest.flatter import (
     _angles as _flatter_angles,
@@ -454,6 +455,8 @@ OBSERVABLE: tuple[str, ...] = (
     "in_sewer_district",
     # Wilsonville's lots only, off the assessor roll.
     NO_DWELLING_FACT,
+    # Portland's flag-lot zones only, and only ever False (flats.geom.flag_lot).
+    "pdx_flag_lot",
 )
 
 
@@ -610,6 +613,11 @@ def observed_facts(
       :func:`flats.geom.roll.no_existing_dwelling`: True on vacant land with
       no building value, False where a home's value stands on residential
       land, unasked otherwise.
+    * ``pdx_flag_lot`` -- Portland's RF to R2.5 and RM1 to RM4 lots only
+      (``flats/config/flag_lot.yaml``): False where the lot's own ring is
+      plainly an ordinary lot's (:func:`flats.geom.flag_lot.observed_flag_lot`),
+      never True; any other lot there is unanswered and held out of GREEN
+      on the fact (PCC 33.110.255, 33.120.284). Only with edges.
     * a fact the lot's own map code settles -- an alias ruling's
       ``observes`` (Fairview's ``FLX`` is the VC flex area, so
       ``inside_mapped_use_area``). True only, and only with ``layers``.
@@ -650,6 +658,7 @@ def observed_facts(
                 )
             )
         out.update(observed_street_types(edges, _layer_id(row), row.get("zone")))
+        out.update(observed_flag_lot(edges, _layer_id(row), row.get("zone")))
     out.update(observed_active_use(edges, _layer_id(row), row.get("lot_wkb")))
     out.update(
         observed_active_frontage(edges, _layer_id(row), row.get("lot_wkb"), row.get("TLID"))

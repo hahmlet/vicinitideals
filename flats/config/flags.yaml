@@ -2763,6 +2763,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-FLAG-LOT:
+    description: "Whether the lot is a flag lot under Portland's code (PCC 33.910.030), which gives a flag lot the same setback along every lot line, a landscaped buffer round the flag and coverage on the flag alone (PCC 33.110.255, 33.120.284); the lot's shape does not show it to be an ordinary lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, fact]
+    path: "Our own measure of the lot's shape: the flag and the pole drawn apart, and the flag-lot standards held as numbers"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-PDX-SPECIAL-BUILDING-SETBACK:
     description: "Whether the lot lies in Portland's Laurelhurst or Eastmoreland plan district, whose building setbacks are only on the Special Building Setbacks maps held at the Development Services Center (PCC 33.540.030); the setback that governs is unread"
     kind: categorical

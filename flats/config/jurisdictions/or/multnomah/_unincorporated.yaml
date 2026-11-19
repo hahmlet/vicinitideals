@@ -3491,6 +3491,12 @@ zones:
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L451"
+      # FOLLOWUPS 205: the flag-lot standards ride a hold on the fact, as on
+      # Portland's own zones (portland.yaml).
+      qualified_by:
+        fact: pdx_flag_lot
+        cite: PCC 33.110.255.B (flag lots), as it reaches the Portland-administered pockets -- a large flag lot's required building setback is the same along all lot lines, 15 feet in RF, R20 and R10 and 10 feet in R7, R5 and R2.5, with a landscaped buffer at least 5 feet deep round a flag of 10,000 square feet or less that the required outdoor area may not enter, and building coverage counted on the flag alone; a small flag lot (flag under 3,000 square feet) has 5 foot setbacks, a 20 foot height and a 0.5 to 1 floor area ratio. Whether a lot is a flag lot is read from its shape only as far as 'plainly not' (flats/config/flag_lot.yaml); any other lot is held on the fact
+        quote: "or/multnomah/_unincorporated/33.110.txt#L1213-L1234,L1248-L1257"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L453"
@@ -3831,6 +3837,12 @@ zones:
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L451"
+      # FOLLOWUPS 205: the flag-lot standards ride a hold on the fact, as on
+      # Portland's own zones (portland.yaml).
+      qualified_by:
+        fact: pdx_flag_lot
+        cite: PCC 33.110.255.B (flag lots), as it reaches the Portland-administered pockets -- a large flag lot's required building setback is the same along all lot lines, 15 feet in RF, R20 and R10 and 10 feet in R7, R5 and R2.5, with a landscaped buffer at least 5 feet deep round a flag of 10,000 square feet or less that the required outdoor area may not enter, and building coverage counted on the flag alone; a small flag lot (flag under 3,000 square feet) has 5 foot setbacks, a 20 foot height and a 0.5 to 1 floor area ratio. Whether a lot is a flag lot is read from its shape only as far as 'plainly not' (flats/config/flag_lot.yaml); any other lot is held on the fact
+        quote: "or/multnomah/_unincorporated/33.110.txt#L1213-L1234,L1248-L1257"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L453"
@@ -4135,6 +4147,12 @@ zones:
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L451"
+      # FOLLOWUPS 205: the flag-lot standards ride a hold on the fact, as on
+      # Portland's own zones (portland.yaml).
+      qualified_by:
+        fact: pdx_flag_lot
+        cite: PCC 33.110.255.B (flag lots), as it reaches the Portland-administered pockets -- a large flag lot's required building setback is the same along all lot lines, 15 feet in RF, R20 and R10 and 10 feet in R7, R5 and R2.5, with a landscaped buffer at least 5 feet deep round a flag of 10,000 square feet or less that the required outdoor area may not enter, and building coverage counted on the flag alone; a small flag lot (flag under 3,000 square feet) has 5 foot setbacks, a 20 foot height and a 0.5 to 1 floor area ratio. Whether a lot is a flag lot is read from its shape only as far as 'plainly not' (flats/config/flag_lot.yaml); any other lot is held on the fact
+        quote: "or/multnomah/_unincorporated/33.110.txt#L1213-L1234,L1248-L1257"
   R5:
     entrance_faces_street:
       value: required
@@ -4425,6 +4443,12 @@ zones:
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L451"
+      # FOLLOWUPS 205: the flag-lot standards ride a hold on the fact, as on
+      # Portland's own zones (portland.yaml).
+      qualified_by:
+        fact: pdx_flag_lot
+        cite: PCC 33.110.255.B (flag lots), as it reaches the Portland-administered pockets -- a large flag lot's required building setback is the same along all lot lines, 15 feet in RF, R20 and R10 and 10 feet in R7, R5 and R2.5, with a landscaped buffer at least 5 feet deep round a flag of 10,000 square feet or less that the required outdoor area may not enter, and building coverage counted on the flag alone; a small flag lot (flag under 3,000 square feet) has 5 foot setbacks, a 20 foot height and a 0.5 to 1 floor area ratio. Whether a lot is a flag lot is read from its shape only as far as 'plainly not' (flats/config/flag_lot.yaml); any other lot is held on the fact
+        quote: "or/multnomah/_unincorporated/33.110.txt#L1213-L1234,L1248-L1257"
     setback_rear_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L453"
@@ -4816,6 +4840,12 @@ zones:
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L451"
+      # FOLLOWUPS 205: the flag-lot standards ride a hold on the fact, as on
+      # Portland's own zones (portland.yaml).
+      qualified_by:
+        fact: pdx_flag_lot
+        cite: PCC 33.110.255.B (flag lots), as it reaches the Portland-administered pockets -- a large flag lot's required building setback is the same along all lot lines, 15 feet in RF, R20 and R10 and 10 feet in R7, R5 and R2.5, with a landscaped buffer at least 5 feet deep round a flag of 10,000 square feet or less that the required outdoor area may not enter, and building coverage counted on the flag alone; a small flag lot (flag under 3,000 square feet) has 5 foot setbacks, a 20 foot height and a 0.5 to 1 floor area ratio. Whether a lot is a flag lot is read from its shape only as far as 'plainly not' (flats/config/flag_lot.yaml); any other lot is held on the fact
+        quote: "or/multnomah/_unincorporated/33.110.txt#L1213-L1234,L1248-L1257"
     setback_rear_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L453"

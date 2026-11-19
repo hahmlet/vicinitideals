@@ -1571,6 +1571,24 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "pdx_flag_lot",
+        "site_fact",
+        "The lot is a flag lot as Portland's Title 33 defines one (33.910.030: "
+        "a flag behind another lot, reached by a pole that provides the only "
+        "street frontage and is at some point narrower than the zone's minimum "
+        "lot width). 33.110.255 and 33.120.284 then set the same setback along "
+        "every lot line, a landscaped buffer round the flag, and coverage on "
+        "the flag alone -- standards no value here carries, so the lot is held. "
+        "Not `flag_lot`: that name is assumed False wherever nobody looked, and "
+        "this one decides the colour. Assumed unknown; answered False only, "
+        "where the outline is plainly an ordinary lot's.",
+        evidence=(
+            "the lot's own ring of edges against the zone's minimum lot width "
+            "(flats.geom.flag_lot, flats/config/flag_lot.yaml)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "pdx_special_building_setback",
         "site_fact",
         "The parcel is in Portland's Laurelhurst/Eastmoreland plan district, "
