@@ -32,12 +32,38 @@ CONFIG = Path(__file__).resolve().parents[1] / "config" / "driveway_lot_line.yam
 PARALLEL_DEG = 30.0
 
 
+#: What a place may say a plan short of its smaller figure is: RED (the
+#: standard fails, Beaverton) or YELLOW (the code offers a way out the screen
+#: cannot weigh -- Gladstone's shared driveway, PWDS 5.0070(D)(5)).
+MISSES = frozenset({"red", "yellow"})
+#: The lot lines a place's figures keep the lane off, by edge class.
+LINES = frozenset({"side", "rear"})
+
+
 @dataclass(frozen=True, slots=True)
 class Place:
     zones: frozenset[str]
     figures_ft: tuple[float, ...]
     unmeasured: str
     quote: str
+    #: Edge classes measured to (default side and rear lines).
+    lines: frozenset[str] = LINES
+    #: What a plan short of the smaller figure is (see :data:`MISSES`).
+    miss: str = "red"
+
+
+def _figures(place: str, body: Any) -> tuple[float, ...]:
+    """The figures as printed, or derived from what is printed: a curb cut's
+    ``offset_ft`` off the line plus each approach wing it may have
+    (``wings_ft``), since the cut is measured wing to wing and the screen
+    draws only the lane, the throat between the wings."""
+    if "figures_ft" in body:
+        return tuple(sorted(float(f) for f in body["figures_ft"]))
+    offset = float(body["offset_ft"]["value"])
+    wings = [float(w["value"]) for w in body["wings_ft"]]
+    if not wings:
+        raise ValueError(f"{place}: wings_ft is empty")
+    return tuple(sorted(offset + w for w in wings))
 
 
 @functools.lru_cache(maxsize=1)
@@ -45,12 +71,19 @@ def load(path: Path = CONFIG) -> dict[str, Place]:
     doc = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     out: dict[str, Place] = {}
     for place, body in (doc.get("places") or {}).items():
-        figures = tuple(sorted(float(f) for f in body["figures_ft"]))
+        lines = frozenset(str(x) for x in body.get("lines") or LINES)
+        miss = str(body.get("miss") or "red")
+        if not lines <= LINES or not lines:
+            raise ValueError(f"{place}: lines must be among {sorted(LINES)}")
+        if miss not in MISSES:
+            raise ValueError(f"{place}: miss must be one of {sorted(MISSES)}")
         out[str(place)] = Place(
             zones=frozenset(str(z).upper() for z in body.get("zones") or ()),
-            figures_ft=figures,
+            figures_ft=_figures(str(place), body),
             unmeasured=" ".join(str(body.get("unmeasured") or "").split()),
             quote=str(body["quote"]),
+            lines=lines,
+            miss=miss,
         )
     return out
 
@@ -80,15 +113,18 @@ def measure(
     *,
     building_clear_ft: float,
     court_clear_ft: float,
+    lines_of: frozenset[str] = LINES,
 ) -> Gap | None:
     """The lane's :class:`Gap`, or None where the lot has no line that is not
-    a street or an alley (nothing to keep the drive off)."""
+    a street or an alley (nothing to keep the drive off). ``lines_of`` names
+    the edge classes measured to (``side``, ``rear``)."""
     from shapely.geometry import LineString
 
+    classes = tuple(c for c in (EdgeClass.side, EdgeClass.rear) if c.value in lines_of)
     lines = [
         (e, LineString(((e.x1, e.y1), (e.x2, e.y2))))
         for e in edges.edges
-        if e.cls in (EdgeClass.side, EdgeClass.rear) and not e.alley
+        if e.cls in classes and not e.alley
     ]
     if not lines:
         return None

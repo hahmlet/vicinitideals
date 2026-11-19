@@ -260,6 +260,7 @@ from flats.score.screen import (
     PARKING_FRONT_SHARE,
     BUILDING_SHARE,
     CLOSER_LOOK_DRIVE_TOUCH,
+    CLOSER_LOOK_DRIVEWAY_LOT_LINE,
     CLOSER_LOOK_DRIVEWAY_SIDEWALK,
     CLOSER_LOOK_PLAN_OFF_LOT,
     CLOSER_LOOK_PLAN_ON_CARVE,
@@ -4894,6 +4895,10 @@ def drive_touch_checked(s: Screened) -> Screened:
 
 
 DRIVEWAY_SIDEWALK = "ACCESS-DRIVEWAY-SIDEWALK-TYPE"
+#: The lane misses even the smaller figure where the place's code offers a way
+#: out the screen cannot weigh (Gladstone PWDS 5.0070(D)(5): "unless a shared
+#: driveway is installed"): YELLOW, never RED.
+DRIVEWAY_LOT_LINE_FLAG = "ACCESS-DRIVEWAY-LOT-LINE"
 #: Raster slack on a drawn gap.
 DRIVEWAY_GAP_TOL_FT = 0.1
 
@@ -4916,7 +4921,10 @@ def driveway_lot_line_checked(s: Screened) -> Screened:
     that misses the smaller too fails the standard, RED with
     DRIVEWAY_LOT_LINE -- but only where the slide was measured; where it was
     not (no line opposite, no side setback stated) it is YELLOW with the
-    flag. Never moves a lot toward GREEN."""
+    flag. A place whose code offers a way out of the smaller figure (``miss:
+    yellow``, Gladstone's shared driveway) is YELLOW with
+    ACCESS-DRIVEWAY-LOT-LINE there instead, never RED. Never moves a lot
+    toward GREEN."""
     plan = s.drawing
     if not plan or not plan.get("fits") or s.signed.triage is Triage.red and s.screening.triage is Triage.red:
         return s
@@ -4949,6 +4957,7 @@ def driveway_lot_line_checked(s: Screened) -> Screened:
         court,
         building_clear_ft=side_ft if side_ft is not None else 0.0,
         court_clear_ft=court_clear,
+        lines_of=place.lines,
     )
     if gap is None:
         return s
@@ -4962,6 +4971,20 @@ def driveway_lot_line_checked(s: Screened) -> Screened:
         + (f", at most {reach:.1f} ft with the plan slid away from it" if reach is not None else "")
         + f"; the code asks {least:g} or {most:g} ft by {place.unmeasured} ({place.quote})"
     )
+    if place.miss == "yellow" and best + DRIVEWAY_GAP_TOL_FT < least:
+        short = flag_plan.Flag(DRIVEWAY_LOT_LINE_FLAG, flag_plan.LOT, CLOSER_LOOK_DRIVEWAY_LOT_LINE, source=said)
+
+        def hold(x: Screening) -> Screening:
+            reasons = (
+                x.reasons
+                if CLOSER_LOOK_DRIVEWAY_LOT_LINE in x.reasons
+                else (*x.reasons, CLOSER_LOOK_DRIVEWAY_LOT_LINE)
+            )
+            triage = Triage.yellow if x.triage is Triage.green else x.triage
+            flags = x.flags if any(f.code == short.code for f in x.flags) else (*x.flags, short)
+            return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+        return dataclasses.replace(s, screening=hold(s.screening), signed=hold(s.signed))
     if reach is not None and best + DRIVEWAY_GAP_TOL_FT < least:
         bind = flag_plan.Bind(DRIVEWAY_LOT_LINE, round(best, 1), least, round(best - least, 1), source=said)
 
