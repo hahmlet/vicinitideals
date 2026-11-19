@@ -218,6 +218,24 @@ code:
   start: "SUBCHAPTER 12.80"
   end: "CODE COMPARATIVE AND DISPOSITION TABLE*"
   extraction: plain
+# The Public Works Design and Construction Standards' driveway rules (230.6
+# and Figure 230.6, September 2025 edition), which CDC 12.50.715 C.2 sends a
+# quadplex's driveway approach to and 12.50.510 B.1 applies to every public
+# improvement; read for flats/config/driveway_spacing.yaml (FOLLOWUPS 205).
+# The city's own address for the file
+# (https://www.hillsboro-oregon.gov/home/showpublisheddocument/18188/638932854908670000)
+# refuses an automated reader, so the stored text is the Internet Archive's
+# copy of that file, taken 2026-01-13: second-hand (the store calls it a
+# lead, not evidence), and a later edition is not seen until someone reads
+# the city's page. It is read only to take GREEN away, never to grant it.
+- id: "dcs.230.6.driveways"
+  url: http://web.archive.org/web/20260113215751id_/https://www.hillsboro-oregon.gov/home/showpublisheddocument/18188/638932854908670000
+  title: "Hillsboro Design and Construction Standards (September 2025), Section 200 Roadways: 230.6 Driveways and Figure 230.6"
+  start: "230.6. Driveways"
+  end: "230.7. Cul-de-sacs"
+  extraction: plain
+  # One subsection and its figure.
+  allow_thin: true
 definitions:
   # Read 2026-09-29 from CDC 12.01.500, which is on disk whole
   # (cdc.12.01.general.txt runs from the Subchapter 12.01 heading to the
