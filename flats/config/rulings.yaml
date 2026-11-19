@@ -3641,15 +3641,19 @@
     The county open space map (Comprehensive Plan Map 4-06, ZDO 1011) is not
     applied by the county table to fourplexes in standard residential zones.
     Keep the cautious YELLOW, or release those zones?
-  ruling: '"red"'
+  ruling: >-
+    "red"; then, the same day: "if its free of mapped open space, it's
+    available to be green. If it's touching open space, it's a red. We
+    aren't fighting on developing open space."
   effect: >-
-    Read by the coordinator alongside the same-day flood and landslide
-    rulings: mapped open space (traced, with its 14 ft line-width buffer) is
-    unbuildable ground in every zone; a lot where the building cannot be
-    fitted clear of it is RED, and a lot touching it where the building fits
-    clear stays YELLOW. Five greens. Built on flats/clackamas-fixes
-    (FOLLOWUPS 204); not live until that branch is released.
-  source: Steph 2026-11-18 (chat)
+    In every zone, a lot touching the mapped open space is RED outright,
+    whether or not the building could fit clear of it; a lot free of it
+    carries nothing from this rule. A lot that only falls inside the 14 ft
+    printed line width of the traced map, without touching the traced area,
+    stays YELLOW (coordinator: the trace cannot say). Five greens touch or
+    near it. Built on flats/clackamas-fixes (FOLLOWUPS 204); not live until
+    that branch is released.
+  source: Steph 2026-11-18 (chat, two messages), ../vicinitideals-worktrees/clackamas-fixes.handoff.md
 - id: 2026-11-18-housing-authority-land-yellow
   kind: ruling
   date: 2026-11-18
