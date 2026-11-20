@@ -262,7 +262,7 @@ def hazard_facts(rows: Iterable[Mapping[str, Any]], have: set[str], *, scarp_wit
     """FD2 pass 1 ``_hazards``, the facts the ground class reads: ``slide_top``,
     ``slide_mapped``, ``liq_top2`` and ``flood_100`` (with the FEMA zone).
 
-    ``rows`` are :func:`flats.ingest.hazards.measure_shape` rows for the
+    ``rows`` are the hazard-note extract's ``measure_shape`` rows for the
     footprint; ``have`` the layer keys loaded; ``scarp_within_100ft`` whether a
     mapped scarp line meets the footprint grown by 100 ft (None when the scarp
     layer is not loaded)."""
