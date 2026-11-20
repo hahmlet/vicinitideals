@@ -72,12 +72,18 @@ Coordinator's calls on that reading (cautious; Steph may overrule):
 
 - Q53 state highway: ordinary frontage on a state highway counts as before. A highway reached
   only by a wide-road line: YELLOW with a flag (as built).
-- Q54 wide main road: the code does not care how wide the road is, and Steph's 2026-10-05 ruling
-  already says where the hose starts (10 ft out from the near curb, capped at the middle). So a
-  wide ordinary street with a MEASURED curb could count for GREEN under that ruling. Not built for
-  rel11 (stays YELLOW); a small follow-on after the release.
+- Q54 wide main road: **RULED by Steph 2026-11-19: "wide main road, I'm good with green".** An
+  engine standing on a wide ordinary street counts and the lot may be GREEN. The hose starts where
+  the 2026-10-05 ruling puts it (10 ft out from the near curb, capped at the middle; unmeasured =
+  the middle). Being built on `flats/open-way-fix` with the ruling added to the register; rides
+  rel11. Not covered: freeway, ramp, rail, and a state highway across a wide right-of-way.
+  Now unblocked for after rel11: choosing the front after measuring fire; the placement retry on
+  lots over 3 acres.
 - Q55 freeway-only lot: stays YELLOW (an access easement or private road the map does not show is
-  possible).
+  possible). Sized 2026-11-19: 58 lots where every street line faces only a freeway or ramp, none
+  green today (53 red, 5 yellow; `/root/open_way/freeway_only_lots.csv` on 137). Two kinds: homes
+  on a private street backing onto a freeway (225 NW Evensong Pl, Washington County) and leftover
+  strips by a ramp with no address (11240 W/ SW Barbur Blvd, Portland).
 
 Scout 2026-11-19: no local fire agency says more than the state code on which roads an engine
 may stand on (whole-document search of the Clackamas Fire, Tualatin Valley, Gresham, Portland and
