@@ -243,6 +243,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [HOUSING_AUTHORITY_LAND]
+  ACCESS-LIMITED-WAY:
+    description: "One of this lot's street lines faces a freeway, a freeway or highway ramp, or a street on the far side of a railroad: no driveway, frontage or fire engine comes off it, and outside Portland no code read here says whether the line is still a street lot line for the yards"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "A person looks at the named side: the lot was screened with the line as a street line and without it and the worse answer kept (coordinator's stricter default 2026-11-19, pending Steph; Portland's own freeways are settled by PCC 33.910.030)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [STREET_LINE_LIMITED_WAY]
   ACCESS-STREET-RANK-UNKNOWN:
     description: "A corner lot's parking works off one street but not the other, and a street line has no class: nothing says the street that works is the quieter one the code sends the driveway to (Steph 2026-10-09: \"yellow, then measure\")"
     kind: categorical

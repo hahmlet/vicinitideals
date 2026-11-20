@@ -530,6 +530,15 @@ DRIVEWAY_SPACING_UNREAD = "DRIVEWAY_SPACING_UNREAD"
 #: its own (Steph 2026-11-18, rulings.yaml
 #: 2026-11-18-housing-authority-land-yellow).
 HOUSING_AUTHORITY_LAND = "HOUSING_AUTHORITY_LAND"
+#: A line the geometry called a street line faces a freeway, a freeway or
+#: highway ramp, or a street on the far side of a railroad
+#: (:func:`flats.ingest.quadfit.limited_reading`). No driveway, no frontage
+#: and no fire engine comes off such a way, and where the code does not say
+#: whether the line is a street lot line the lot is screened both ways, the
+#: worse answer kept, and held YELLOW for a person to look at that side --
+#: never GREEN on its own (coordinator's stricter default, 2026-11-19,
+#: pending Steph).
+STREET_LINE_LIMITED_WAY = "STREET_LINE_LIMITED_WAY"
 #: A corner lot whose parking works off one street but not off the other,
 #: where a street line carries no class: nothing says the street that works
 #: is the quieter one the code sends the driveway to. A closer look, not a
@@ -1134,6 +1143,9 @@ class LotFacts:
     #: The roll's account of a lot a housing authority owns bare and untaxed
     #: (:data:`HOUSING_AUTHORITY_LAND`); empty on every other lot.
     owner_hold: str = ""
+    #: Which of the lot's street lines faces a freeway, a ramp or a railroad,
+    #: in words (:data:`STREET_LINE_LIMITED_WAY`); empty on every other lot.
+    limited_way: str = ""
     #: The building's share of each street's frontage on the drawn plan,
     #: percent, in the same order (:func:`flats.fit.frontage.building_runs`):
     #: the building seen from the street within the maximum front setback.
@@ -4165,6 +4177,8 @@ def screen(
         reasons.append(spacing)
     if lot.owner_hold:
         reasons.append(HOUSING_AUTHORITY_LAND)
+    if lot.limited_way:
+        reasons.append(STREET_LINE_LIMITED_WAY)
     if lot.strip_waived:
         reasons.append(PARKING_STRIP_UNCONFIRMED)
     if lot.rear_court_short:
@@ -5085,6 +5099,8 @@ def _account(
         flag("ACCESS-DRIVEWAY-SPACING-UNREAD", spacing, source=lot.driveway_spacing_why)
     if lot.owner_hold:
         flag("OWNER-HOUSING-AUTHORITY", HOUSING_AUTHORITY_LAND, source=lot.owner_hold)
+    if lot.limited_way:
+        flag("ACCESS-LIMITED-WAY", STREET_LINE_LIMITED_WAY, source=lot.limited_way)
     if lot.strip_waived:
         flag("PARKING-STRIP-UNCONFIRMED", PARKING_STRIP_UNCONFIRMED, field=STRIP_FIELD)
     if lot.rear_court_short:
@@ -5455,6 +5471,7 @@ __all__ = [
     "DRIVEWAY_SPACING_BLOCKED",
     "DRIVEWAY_SPACING_UNREAD",
     "HOUSING_AUTHORITY_LAND",
+    "STREET_LINE_LIMITED_WAY",
     "STRIP_FIELD",
     "USE_NOT_ENCODED",
     "USE_PROHIBITED",

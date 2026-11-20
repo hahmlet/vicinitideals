@@ -450,6 +450,34 @@ class PrivateDriveRuling(BaseModel):
     note: str | None = None
 
 
+class FreewayRuling(BaseModel):
+    """Whether a freeway or a freeway ramp is a street here, for the lot
+    lines, the corner and the yards, in this code's own words.
+
+    s4 marks a street line whose only way is an interstate, the Sunset or
+    one of their ramps (``street_kind_json`` ``freeway``). ``street: false``
+    -- the code says so (Portland 33.910.030: street "does not include ...
+    the interstate freeways and the Sunset Highway including their ramps"):
+    the line is an ordinary lot line and the lot is read without it, with
+    no way in given back -- nobody builds a driveway onto a freeway. A
+    layer that declares nothing is SILENT: the lot is screened both ways,
+    the worse answer kept, and held for a closer look
+    (:func:`flats.ingest.quadfit.limited_reading`).
+
+    ``quote`` points at the line (``path#Lnn``) and ``says`` is words that
+    line holds verbatim, checked against the store; ``note`` is the
+    argument. Declared per layer and never inherited.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    street: bool
+    quote: str
+    says: str
+    cite: str | None = None
+    note: str | None = None
+
+
 #: How a clear-vision area's legs are measured (FOLLOWUPS 161). ``lot_line``
 #: -- along the lot lines (or the right-of-way lines, which are the lot
 #: lines), from where they meet or, on a rounded corner, where they meet
@@ -779,6 +807,8 @@ LAYER_META = frozenset(
         # Whether a private drive the lot abuts is a street here, for the
         # lot lines, the corner and the yards (`PrivateDriveRuling`).
         "private_drives",
+        # Whether a freeway or its ramp is a street here (`FreewayRuling`).
+        "freeways",
         # The clear-vision areas at corners and driveways the code keeps
         # buildings out of (`ClearVision`, FOLLOWUPS 161).
         "clear_vision",
@@ -3040,6 +3070,9 @@ class Layer(BaseModel):
     #: Whether a private drive the lot abuts is a street here (see
     #: :class:`PrivateDriveRuling`); None where the code is silent.
     private_drives: PrivateDriveRuling | None = None
+    #: Whether a freeway or its ramp is a street here (see
+    #: :class:`FreewayRuling`); None where the code is silent.
+    freeways: FreewayRuling | None = None
     #: The corner and driveway clear-vision areas (see :class:`ClearVision`);
     #: None where the layer declares none.
     clear_vision: ClearVision | None = None

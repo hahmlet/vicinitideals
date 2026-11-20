@@ -8193,6 +8193,23 @@ private_drives:
     (33.266), not a right-of-way: s4 reads that as a drive on other land and it
     is screened both ways.
 
+# Whether a freeway or its ramp is a street here (release 10 move read,
+# 2026-11-19): s4 marks a street line whose only way is an interstate, the
+# Sunset Highway or one of their ramps.
+freeways:
+  street: false
+  quote: "or/multnomah/portland/33.910/33.910.030.txt#L1011"
+  says: "street does not include alleys, rail rights-of-way that do not also allow for motor vehicle access, or the interstate freeways and the Sunset Highway including their ramps"
+  cite: "PCC 33.910.030 (Street Types: Street)"
+  note: >-
+    Title 33 takes the interstate freeways, the Sunset Highway and their ramps
+    out of "street" for every purpose of the Title. A lot line facing only one
+    of them is not a street lot line: it makes no corner lot, takes no street
+    setback, gives no frontage and no driveway. The lot is read without the
+    line. US 30, Hwy 217 and the ramp of any other road are not named by the
+    sentence; a line on one of those is screened both ways and held for a
+    closer look, like every such line outside Portland.
+
 # Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
 clear_vision:
   corner:

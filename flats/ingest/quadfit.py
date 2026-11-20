@@ -273,6 +273,7 @@ from flats.score.screen import (
     PARKING_SETBACK_DOUBT,
     SIGHT_CORNER_ENGINEER,
     STEEP_GROUND,
+    STREET_LINE_LIMITED_WAY,
     STREET_RANK_UNKNOWN,
     STREET_UNCONFIRMED,
     STRIP_FIELD,
@@ -1297,6 +1298,11 @@ class QuadfitLot:
     #: The applicant chooses between the two readings (``private_drives.
     #: access_choice``), so :func:`screen_lot` keeps the better.
     second_better: bool = False
+    #: Set where this lot IS the reading without a freeway line the code
+    #: says is no street (:func:`limited_reading`, ``replace``): which line,
+    #: in words. :func:`screen_lot` holds such a lot where its envelope is
+    #: s5o's, cut with the line as a street line. Empty on every other lot.
+    limited_replaced: str = ""
     #: Lines the car may come in from that are not front lot lines: a
     #: private road the code does not count as a street for the yards
     #: (Steph, 2026-09-30), as ``(x1, y1, x2, y2)``; and their directions,
@@ -2140,6 +2146,99 @@ def drive_reading(
     return None, None
 
 
+#: s4's ``street_kind_json`` values for a street edge whose way gives a lot
+#: no frontage, driveway or fire standing (``s4_edges.LIMITED_KINDS``):
+#: ``freeway`` -- an interstate, the Sunset or one of their ramps;
+#: ``limited`` -- any other freeway-class road and the ramp of any road;
+#: ``rail`` -- a street the line reaches only across a railroad.
+LIMITED_STREET_KINDS: frozenset[str] = frozenset({"freeway", "limited", "rail"})
+#: The key of s4's reading without those lines in ``sans_drive_json``.
+LIMITED_KEY = "limited"
+
+_COMPASS = (
+    "north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west",
+)
+_LIMITED_WORDS = {
+    "freeway": "a freeway or its ramp",
+    "limited": "a ramp or limited-access road",
+    "rail": "a street on the far side of a railroad",
+}
+
+
+def limited_way_side(row: Mapping[str, Any]) -> str:
+    """Which street lines of the row s4 marked with `LIMITED_STREET_KINDS`,
+    in words a person can find on the map: the side of the lot, the line's
+    length and what it faces. Never empty where a line is so marked."""
+    raw = json.loads(row.get("edges_json") or "[]")
+    kinds = _street_kinds(row) or []
+    marked = [k for k in kinds if k in LIMITED_STREET_KINDS]
+    if not marked:
+        return ""
+    parts: list[str] = []
+    if len(kinds) == len(raw) and raw:
+        # The way the line faces: its normal on the side off the lot, which
+        # is the right-hand one on a counter-clockwise ring.
+        ox, oy = float(raw[0][0]), float(raw[0][1])
+        turn = sum(
+            (float(e[0]) - ox) * (float(e[3]) - oy) - (float(e[2]) - ox) * (float(e[1]) - oy)
+            for e in raw
+        )
+        out = 1.0 if turn > 0 else -1.0
+        for e, k in zip(raw, kinds):
+            if k not in LIMITED_STREET_KINDS:
+                continue
+            x1, y1, x2, y2 = (float(v) for v in e[:4])
+            bearing = math.degrees(math.atan2(out * (y2 - y1), -out * (x2 - x1))) % 360
+            side = _COMPASS[int((bearing + 22.5) // 45) % 8]
+            parts.append(
+                f"the {side} line ({math.hypot(x2 - x1, y2 - y1):.0f} ft) faces {_LIMITED_WORDS[k]}"
+            )
+    if not parts:
+        parts = [f"a street line faces {_LIMITED_WORDS[k]}" for k in sorted(set(marked))]
+    return "; ".join(parts)
+
+
+def limited_reading(
+    row: Mapping[str, Any], layers: Mapping[str, Layer] | None
+) -> tuple[str | None, str]:
+    """How a lot with a street line on a freeway, a ramp or beyond a
+    railroad (`LIMITED_STREET_KINDS`) is read, and which line
+    (:func:`limited_way_side`). ``(None, "")`` on every other lot.
+
+    * ``replace`` -- every such line is a freeway line and the lot's code
+      says a freeway is no street (``freeways.street: false``, Portland
+      33.910.030): the lot is the reading without those lines, no way in
+      given back.
+    * ``worse`` -- every other case: the code is silent, or the line is a
+      ramp of another road or behind a railroad, which no stored code
+      speaks of. The lot is screened as s4 read it (the larger street
+      setback) AND without the lines (no frontage, driveway or fire
+      standing off them), the worse answer kept, and held YELLOW
+      (:data:`~flats.score.screen.STREET_LINE_LIMITED_WAY`): never GREEN.
+    * ``mixed`` -- the lot also has a street line only a private drive
+      makes: s4 wrote no reading without both, so the lot is held as s4
+      read it and its street is unconfirmed.
+
+    A ``replace`` or ``worse`` lot with no street left without the lines
+    (or no reading written) is held as s4 read it: nobody can say it
+    fronts a street, and nothing here makes it RED on that alone.
+    """
+    kinds = _street_kinds(row)
+    if not kinds:
+        return None, ""
+    marked = {k for k in kinds if k in LIMITED_STREET_KINDS}
+    if not marked:
+        return None, ""
+    side = limited_way_side(row)
+    if any(k in DRIVE_STREET_KINDS for k in kinds):
+        return "mixed", side
+    home = _home_layer(row, layers) if layers is not None else None
+    ruling = home.freeways if home is not None else None
+    if ruling is not None and not ruling.street and marked == {"freeway"}:
+        return "replace", side
+    return "worse", side
+
+
 def _sans_row(row: Mapping[str, Any], key: str) -> dict[str, Any] | None:
     """The stage-file row as s4 would have written it without the street
     lines ``key`` names (``sans_drive_json``), or None where s4 wrote no
@@ -2233,6 +2332,20 @@ def lot_from_row(
     key, how = drive_reading(row, layers)
     second: QuadfitLot | None = None
     unconfirmed = False
+    limited, limited_side = limited_reading(row, layers)
+    if limited is not None:
+        # A street line on a freeway, a ramp or beyond a railroad: the drive
+        # readings are not asked on such a lot (s4 wrote none without both).
+        key = how = None
+        unconfirmed = limited == "mixed"
+        sans = None if limited == "mixed" else _sans_row(row, LIMITED_KEY)
+        if sans is not None and sans["tier"] != "D":
+            without = lot_from_row(sans, layers, corridors)
+            if limited == "replace":
+                return dataclasses.replace(without, limited_replaced=limited_side)
+            second = dataclasses.replace(
+                without, facts=dataclasses.replace(without.facts, limited_way=limited_side)
+            )
     if key is not None:
         alt = _sans_row(row, key)
         if how == "replace" and alt is not None:
@@ -2320,6 +2433,9 @@ def lot_from_row(
         # A housing authority's bare, untaxed lot: held YELLOW (Steph
         # 2026-11-18, rulings.yaml 2026-11-18-housing-authority-land-yellow).
         owner_hold=str(row.get("owner_hold") or ""),
+        # A street line on a freeway, a ramp or beyond a railroad, held for
+        # a closer look wherever this reading is screened at all.
+        limited_way=limited_side if limited is not None else "",
         private_drive_lines_ft=drive_lines_ft(row) or private_drive_lines_ft(edges),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
@@ -5124,6 +5240,35 @@ def _street_unconfirmed(s: Screening) -> Screening:
     return dataclasses.replace(s, triage=triage, reasons=reasons, flags=flags)
 
 
+def _limited_replaced(lot: QuadfitLot, got: list[Screened]) -> list[Screened]:
+    """``got`` for a lot read without its freeway line
+    (:attr:`QuadfitLot.limited_replaced`): a design fitted on s5o's envelope
+    was not screened on that reading at all -- s5o cut the envelope with
+    the freeway line as a street line -- and is held
+    (:data:`~flats.score.screen.STREET_LINE_LIMITED_WAY`). Every other lot
+    and design comes back as it is."""
+    if not lot.limited_replaced:
+        return got
+
+    def ask(x: Screening) -> Screening:
+        if STREET_LINE_LIMITED_WAY in x.reasons:
+            return x
+        triage = x.triage if _WORSE[x.triage] >= _WORSE[Triage.unknown] else Triage.unknown
+        held = flag_plan.Flag(
+            "ACCESS-LIMITED-WAY", flag_plan.LOT, STREET_LINE_LIMITED_WAY, source=lot.limited_replaced
+        )
+        return dataclasses.replace(
+            x, triage=triage, reasons=(*x.reasons, STREET_LINE_LIMITED_WAY), flags=(*x.flags, held)
+        )
+
+    return [
+        dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+        if s.envelope is not None and s.envelope.source == "quadfit"
+        else s
+        for s in got
+    ]
+
+
 def _rank_unknown(s: Screened) -> Screened:
     """``s`` as a question (:data:`~flats.score.screen.STREET_RANK_UNKNOWN`):
     a corner lot whose parking works off the street the measured plan chose
@@ -5988,7 +6133,7 @@ def _screen_plat(
         terrain=terrain,
     )
     if lot.second is None:
-        return got
+        return _limited_replaced(lot, got)
     alt = _screen_lot_once(
         lot.second, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
@@ -9799,6 +9944,8 @@ __all__ = [
     "OBSERVABLE",
     "DOUBTFUL_STREET_KINDS",
     "DRIVE_STREET_KINDS",
+    "LIMITED_KEY",
+    "LIMITED_STREET_KINDS",
     "S4_COLUMNS",
     "S5O_COLUMNS",
     "S5O_LOTS",
@@ -9814,6 +9961,8 @@ __all__ = [
     "mixed_scope",
     "scope_mask",
     "lot_edges",
+    "limited_reading",
+    "limited_way_side",
     "lot_from_row",
     "observed_facts",
     "per_lot",
