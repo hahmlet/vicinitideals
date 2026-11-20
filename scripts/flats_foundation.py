@@ -1066,9 +1066,18 @@ def _measure_run(args: argparse.Namespace) -> None:
                 shutil.rmtree(tmp)
             tmp.mkdir()
             record.write_jsonl(tmp / "records.jsonl.gz", docs)
+            tables: dict[str, list[dict[str, Any]]] = defaultdict(list)
+            for doc in docs:
+                for name, recs in record.table_rows(doc).items():
+                    tables[name].extend(recs)
+            for name in record.TABLES:
+                if tables[name]:
+                    pq.write_table(pa.Table.from_pylist(tables[name]), tmp / f"{name}.parquet", compression="zstd")
             pq.write_table(pa.Table.from_pylist(stats), tmp / "status.parquet", compression="zstd")
             os.replace(tmp, pdir / f"part-{k:04d}")
+            del docs, tables
             log(f"part {k + 1}/{len(parts)} {dict(n)}")
+        del src
     merge_run(out, len(parts), log)
     logf.close()
 
@@ -1086,25 +1095,25 @@ def merge_run(out: Path, n_parts: int, log: Any) -> dict[str, Any]:
     missing = [p.name for p in parts if not p.exists()]
     if missing:
         raise SystemExit(f"parts not measured: {missing[:5]}")
+    import shutil
+
+    # Gzip members joined end to end are one gzip file (``read_jsonl`` reads them through).
     n = 0
-    tables: dict[str, list[dict[str, Any]]] = defaultdict(list)
     tmp = out / "records.jsonl.gz.tmp"
-    with gzip.open(tmp, "wt", encoding="utf-8", newline="\n") as fh:
+    with tmp.open("wb") as fh:
         for p in parts:
-            for doc in record.read_jsonl(p / "records.jsonl.gz"):
-                fh.write(json.dumps(doc, separators=(",", ":"), allow_nan=False))
-                fh.write("\n")
-                n += 1
-                for name, recs in record.table_rows(doc).items():
-                    tables[name].extend(recs)
+            with (p / "records.jsonl.gz").open("rb") as part:
+                shutil.copyfileobj(part, fh)
+            n += sum(1 for _ in record.read_jsonl(p / "records.jsonl.gz"))
     os.replace(tmp, out / "records.jsonl.gz")
     for name in record.TABLES:
         d = out / name
         d.mkdir(exist_ok=True)
         for old in d.glob("part-*.parquet"):
             old.unlink()
-        _write(out, name, 0, tables[name])
-    del tables
+        for k, p in enumerate(parts):
+            if (p / f"{name}.parquet").exists():
+                shutil.copyfile(p / f"{name}.parquet", d / f"part-{k:04d}.parquet")
     status = pa.concat_tables([pq.read_table(p / "status.parquet") for p in parts], promote_options="default")
     pq.write_table(status, out / "status.parquet", compression="zstd")
     st = status.to_pylist()
