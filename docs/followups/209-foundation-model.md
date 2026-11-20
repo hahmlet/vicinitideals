@@ -95,6 +95,9 @@ buildings, 3 table `flats` lot foundation + API `foundation` block + lot-page pa
 Data and the grid-vs-six-readings report: `../vicinitideals-worktrees/foundation-model-data/`. Hand-off with the
 nine spec-vs-answer-key differences: `../vicinitideals-worktrees/foundation-model.handoff.md`.
 
+2026-11-20: slice 4 SHIPPED. main 2342792a, deploy smoke passed, 44,211 records loaded (every drawn green and
+yellow lot of run 128), measured on the framing footprint 79 ft 8-3/4 in x 24 ft 8-15/16 in; production E2E passed.
+
 ## Left to do
 
 1. **Re-measure after every release** that moves a drawn building (about 2 minutes on 137: measure, bundle,
