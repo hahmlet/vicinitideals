@@ -819,6 +819,13 @@ FIRE_DEAD_END = "fire_dead_end"
 #: 2026-11-10-narrow-street-fire-yellow). Joins ``_checks``'s
 #: ``unmeasured``: held YELLOW, never GREEN.
 FIRE_NARROW_STREET = "fire_narrow_street"
+#: The hose misses on every reading above only because no truck is stood on
+#: a road whose centre line runs more than 50 ft from the lot's street line
+#: (:data:`flats.fit.fire.MAX_GAP_FT`), and reaches from the middle of that
+#: road (:attr:`LotFacts.fire_route_wide_ft`). Whether an engine stands
+#: there is nobody's ruling yet (2026-11-19, a coordinator default). Joins
+#: ``_checks``'s ``unmeasured``: held YELLOW, never GREEN.
+FIRE_WIDE_ROAD = "fire_wide_road"
 
 #: The grade under a plan the bridge measured for and could not read --
 #: no elevation model covers the pad. Joins ``_checks``'s ``unmeasured``,
@@ -1234,6 +1241,13 @@ class LotFacts:
     #: the lot is held YELLOW with FIRE-NARROW-STREET (Steph 2026-11-10:
     #: "Very narrow, yes."), never cleared on it.
     fire_route_row_ft: float | None = None
+    #: The same route with the truck stood on the road a public street line
+    #: faces across a right-of-way wider than
+    #: :data:`flats.fit.fire.MAX_GAP_FT` (quadfit s4's wide-road street
+    #: line, 2026-11-18), the hose from that road's middle. Set only where
+    #: the route misses on every reading above and this reaches: the lot is
+    #: held YELLOW with FIRE-WIDE-ROAD, never cleared on it.
+    fire_route_wide_ft: float | None = None
     #: The lot's street lines are one street that bends, read as one front
     #: where its code states no corner test (:data:`CORNER_READ_AS_BEND`,
     #: :func:`flats.ingest.quadfit.read_as_bend`). Set by the bridge.
@@ -2551,6 +2565,17 @@ def _checks(
             # fire-review refusal, held YELLOW.
             unchecked.append("fire_access_ft")
             unmeasured.add(FIRE_NARROW_STREET)
+        elif (
+            lot.fire_route_tried
+            and missed
+            and lot.fire_route_wide_ft is not None
+            and lot.fire_route_wide_ft <= float(reach)
+        ):
+            # Reached only from a road past the 50 ft a truck is stood
+            # within: the truck's place on a wide road is unmeasured, and
+            # the miss is not known to be one. YELLOW, never GREEN.
+            unchecked.append("fire_access_ft")
+            unmeasured.add(FIRE_WIDE_ROAD)
         elif lot.fire_route_ft is not None:
             check("fire_access_ft", lot.fire_route_ft, float(reach), is_maximum=True)
         else:
@@ -4966,6 +4991,7 @@ _MEASURED_FLAG: dict[str, str] = {
     FIRE_ROUTE: "MEASURE-FIRE-ROUTE",
     FIRE_DEAD_END: "FIRE-DEAD-END",
     FIRE_NARROW_STREET: "FIRE-NARROW-STREET",
+    FIRE_WIDE_ROAD: "FIRE-WIDE-ROAD",
     SITE_GRADE: "MEASURE-SITE-GRADE",
     COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
     DRIVE_STREET: "MEASURE-DRIVE-STREET",

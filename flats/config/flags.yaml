@@ -580,6 +580,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  FIRE-WIDE-ROAD:
+    description: "Wide road: the fire hose reaches the building only from a road whose centre line is more than 50 ft from the lot line (a wide arterial or highway), where the screen stands no fire engine; measured from the middle of that road it reaches. Held yellow until someone confirms an engine can stand on that road beside the lot (coordinator default 2026-11-19, pending Steph)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Look at the road beside the lot: can a fire engine stop on it and reach the lot (no wall, ditch or grade between)? If so the route stands; measure the hose from the near curb"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   FIRE-HOSE-START:
     description: "Red only because the fire hose is measured from 10 ft out from the curb; measured from the curb itself it reaches -- where no street width is measured, at the curb of the narrowest street a truck may use (Steph 2026-10-05)"
     kind: parametric

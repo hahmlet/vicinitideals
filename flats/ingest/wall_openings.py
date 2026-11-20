@@ -282,6 +282,7 @@ def stood_elsewhere(
             fire_route_curb_ft=None,
             fire_route_freed_ft=None,
             fire_route_row_ft=None,
+            fire_route_wide_ft=None,
             site_grade_pct=None,
             site_grade_source=None,
             site_grade_tried=False,

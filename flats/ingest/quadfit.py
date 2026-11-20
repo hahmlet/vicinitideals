@@ -7959,7 +7959,77 @@ def fire_checked(
         )
         if turned is not s:
             out = screened(turned, again)
-    return freed(out)
+    return _wide_road_held(freed(out), lot, roads, limit, policy=policy, relief=relief)
+
+
+#: How far from a public street line the road it faces may run for the
+#: wide-road reading of the fire route: quadfit s4's reach across a wide
+#: right-of-way (``_open_way``, 150 ft; :data:`flats.geom.corridor.CORRIDOR_REACH_FT`).
+FIRE_WIDE_ROAD_REACH_FT = 150.0
+
+
+def _wide_road_held(
+    out: Screened,
+    lot: QuadfitLot,
+    roads: Any,
+    limit: float,
+    *,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+) -> Screened:
+    """``out`` held YELLOW where its fire route misses only because no truck
+    is stood on a wide road (rel10d move read, 2026-11-19: 74 lots YELLOW to
+    RED).
+
+    quadfit s4 calls a lot line a street's across a right-of-way up to 150
+    ft wide since 2026-11-18, and the plan is laid out fronting it; the fire
+    route stands a truck only within :data:`flats.fit.fire.MAX_GAP_FT` (50
+    ft) of a centre line, so on such a line the hose came on from nowhere
+    and the route was walked from the lot's other street (Beaverton
+    1S126BC01501 on Scholls Ferry Rd, its centre line 54 ft out: 135 ft
+    became 208). Here the route is measured once more over the lot's PUBLIC
+    street lines (:attr:`flats.geom.edges.Edge.public_road` -- never a line
+    on a freeway, a ramp, a railroad or a drive) with the truck stood on
+    the nearest road it can use within :data:`FIRE_WIDE_ROAD_REACH_FT`, the
+    hose from that road's middle where no curb is published -- the longest
+    it can be. Where that reaches, the miss is not known to be one:
+    ``fire_route_wide_ft`` is set and the screen holds the lot YELLOW with
+    FIRE-WIDE-ROAD. Never GREEN: whether an engine stands on that road is
+    nobody's measurement. Where it does not reach, the miss stands."""
+    from shapely.geometry import Polygon
+
+    from flats.fit import fire
+
+    facts = out.facts
+    if facts is None or not facts.fire_route_tried:
+        return out
+
+    def held(across: float | None) -> Screened:
+        if across == facts.fire_route_wide_ft:
+            return out
+        new = dataclasses.replace(facts, fire_route_wide_ft=across)
+        result = screen(out.rules, new, out.design, out.fit, policy=policy, relief=relief, config=out.config)
+        shadow = _if_signed(
+            out.rules, new, out.design, out.fit, result, policy=policy, relief=relief, config=out.config
+        )
+        return dataclasses.replace(out, screening=result, signed=shadow, facts=new)
+
+    if facts.fire_route_ft is not None and facts.fire_route_ft <= limit:
+        return held(None)
+    if any(v is not None and v <= limit for v in (facts.fire_route_freed_ft, facts.fire_route_row_ft)):
+        return held(None)
+    drawing = out.drawing or {}
+    ring = drawing.get("building")
+    lines = () if lot.edges is None else tuple(
+        (e.x1, e.y1, e.x2, e.y2)
+        for e in lot.edges.edges
+        if e.public_road and not e.alley and e.cls in (EdgeClass.front, EdgeClass.street_side)
+    )
+    if not (roads is not None and lines and drawing.get("fits") and ring and len(ring) >= 4 and lot.lot_geom is not None):
+        return held(None)
+    offset = fire.point_offset(*roads, max_gap_ft=FIRE_WIDE_ROAD_REACH_FT)
+    across = fire.route_ft(Polygon(ring), lot.lot_geom, lines, offset)
+    return held(across if across is not None and across <= limit else None)
 
 
 #: Degrees within which a drawn building's wall is read as standing at one

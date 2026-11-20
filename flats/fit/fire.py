@@ -113,20 +113,27 @@ SIMPLIFY_FT = 0.5
 
 
 def street_offsets(
-    points: np.ndarray, centrelines: shapely.STRtree | None, geoms: Sequence[BaseGeometry]
+    points: np.ndarray,
+    centrelines: shapely.STRtree | None,
+    geoms: Sequence[BaseGeometry],
+    max_gap_ft: float = MAX_GAP_FT,
 ) -> np.ndarray:
     """How far past each street lot line point the truck stands: the distance
     to the nearest centreline of a road it can use, less :data:`HALF_ROAD_FT`,
     never below zero; infinite past :data:`MAX_GAP_FT`. Zero for every point
     where no centreline is held -- the lot line itself, which is a SHORTER
     offset than the real one: callers that cannot supply centrelines get a
-    measure that may clear a lot it should not, and only the tests do that."""
+    measure that may clear a lot it should not, and only the tests do that.
+
+    ``max_gap_ft`` is :data:`MAX_GAP_FT` for the reading the screen clears a
+    lot on; the wide-road reading, which only ever holds a lot YELLOW
+    (:func:`flats.ingest.quadfit._wide_road_held`), asks farther."""
     if centrelines is None or not len(geoms) or not len(points):
         return np.zeros(len(points))
     pts = shapely.points(points)
     idx = centrelines.nearest(pts)
     gap = shapely.distance(pts, np.asarray(geoms, dtype=object)[idx])
-    return np.where(gap > MAX_GAP_FT, math.inf, np.maximum(gap - HALF_ROAD_FT, 0.0))
+    return np.where(gap > max_gap_ft, math.inf, np.maximum(gap - HALF_ROAD_FT, 0.0))
 
 
 def load_truck_roads(
@@ -331,6 +338,7 @@ def hose_offsets(
     geoms: Sequence[BaseGeometry],
     edges: StreetEdges | None = None,
     walks: Walks | None = None,
+    max_gap_ft: float = MAX_GAP_FT,
 ) -> tuple[np.ndarray, np.ndarray]:
     """How far past each street lot line point the hose starts, read two
     ways: (strict, curb).
@@ -353,7 +361,7 @@ def hose_offsets(
     from the point to that centreline and along it to where a truck can
     stand (:func:`_walked`); infinite where none can.
     """
-    old = street_offsets(points, centrelines, geoms)
+    old = street_offsets(points, centrelines, geoms, max_gap_ft)
     if centrelines is None or not len(geoms) or not len(points):
         return old, old.copy()
     from flats.geom.curbs import Source
@@ -400,13 +408,14 @@ def point_offset(
     walks: Walks | None = None,
     *,
     reading: str = "strict",
+    max_gap_ft: float = MAX_GAP_FT,
 ) -> Callable[[np.ndarray], np.ndarray]:
     """:func:`hose_offsets` bound to one street index, as :func:`route_ft`
     takes it: the ``reading`` of :data:`READINGS` asked for."""
     if reading not in READINGS:
         raise ValueError(f"reading must be one of {READINGS}, not {reading!r}")
     pick = READINGS.index(reading)
-    return lambda pts: hose_offsets(pts, centrelines, geoms, edges, walks)[pick]
+    return lambda pts: hose_offsets(pts, centrelines, geoms, edges, walks, max_gap_ft)[pick]
 
 
 def reachable(
