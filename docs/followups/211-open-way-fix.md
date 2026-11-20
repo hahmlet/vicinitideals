@@ -51,6 +51,37 @@ Logged as Q52 to Q56 in `../vicinitideals-worktrees/QUESTIONS-FOR-STEPH-scratch.
 - Q55: a lot whose only street side is a freeway: yellow (as built) or red?
 - Q56: a road-widening strip that still cannot be measured: worst case (as built) or yellow?
 
+## What the fire code says (read 2026-11-19; Steph: "read for yourself on access")
+
+Oregon Fire Code 2025, Chapter 5 and Appendix D (held in `data/flats/books/building-codes/ofc-2025/`):
+
+- 503.1.1 is the whole rule: an **approved** fire apparatus access road within 150 ft of every
+  first-storey wall by an **approved** route. It names no kind of road that counts or does not.
+  Freeways, ramps, state highways, wide roads and railroads are not mentioned. The local fire
+  official decides.
+- The regional guide the local agencies share
+  (`flats/provenance/docs/or/ofc.2022.applications-guide.txt`, Clackamas Fire, used by Gresham and
+  TVF&R) is also silent on where an engine may stand, but for hydrants it says: one across
+  railroad tracks does not count unless approved (L333), one across a divided highway or freeway
+  does not count, heavily travelled collectors only as approved (L337). That is the closest
+  printed statement and it points the same way as the cautious answers built here.
+- Sprinklers: 503.1.1 exception 1.1 authorises the official to relax the rule. A discretion, so
+  Steph's 2026-10-01 ruling (RED, no sprinkler relief) stands on the text.
+
+Coordinator's calls on that reading (cautious; Steph may overrule):
+
+- Q53 state highway: ordinary frontage on a state highway counts as before. A highway reached
+  only by a wide-road line: YELLOW with a flag (as built).
+- Q54 wide main road: the code does not care how wide the road is, and Steph's 2026-10-05 ruling
+  already says where the hose starts (10 ft out from the near curb, capped at the middle). So a
+  wide ordinary street with a MEASURED curb could count for GREEN under that ruling. Not built for
+  rel11 (stays YELLOW); a small follow-on after the release.
+- Q55 freeway-only lot: stays YELLOW (an access easement or private road the map does not show is
+  possible).
+
+A scout is checking each local fire agency's published guide for anything more specific
+(files to `data/flats/books/fire-agencies/`).
+
 ## Not done
 
 - No data says which state highways are access-controlled (Hwy 213 at Oregon City is; McLoughlin is

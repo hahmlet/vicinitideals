@@ -17,7 +17,7 @@ committed). These books are private publishers' model codes that Oregon adopted,
 
 | Book | Edition in force | Based on | One merged book exists? | Free to read | Held |
 |---|---|---|---|---|---|
-| Oregon Fire Code (OFC) | 2025 | 2024 International Fire Code | Yes (UpCodes) | Yes | Chapter 7 sample |
+| Oregon Fire Code (OFC) | 2025 | 2024 International Fire Code | Yes (UpCodes) | Yes | Chapters 1, 3-12, Appendices C, D (Chapter 2 wanted) |
 | Oregon Residential Specialty Code (ORSC) | 2026 being finalized | International Residential Code | Not yet for 2026 | 2026: not yet | Nothing |
 | Oregon Electrical Specialty Code (OESC) | 2026 | 2026 NEC (NFPA 70) | **No**: NEC plus a state table | Table: yes | State table 1-E |
 | Oregon Plumbing Specialty Code (OPSC) | 2026 | 2024 Uniform Plumbing Code | Yes (UpCodes) | Yes | Chapter 4 sample, state change summary, state matrix |
@@ -34,6 +34,17 @@ Across all books, the state also publishes:
 - No update known to be in progress or planned (Steph, 2026-11-19).
 - Whole book free to read and print by chapter: https://up.codes/viewer/oregon/ifc-2024
 - Held: `ofc-2025/ch07-upcodes-print.pdf` (Chapter 7, 5 pages, sample).
+- **Arrived 2026-11-19 (Steph):** Chapters 1, 3 to 12 and Appendices C and D, as UpCodes prints.
+  All extract as real text (Chapter 9: 111 pages, 16 tables; Chapter 10: 110 pages, 17 tables).
+  **Picture test passed:** Appendix D's turnaround figure and fire-lane sign are in the file as
+  full-size pictures (2239 x 1559 px); tables D103.4 and C102.1 come out cell by cell.
+  **Still wanted: Chapter 2 (definitions)** -- it defines "fire apparatus access road".
+- **Read 2026-11-19 for access (503, Appendix D):** the code names no kind of road that does or
+  does not count. Everything specific is the local fire official's ("approved" road, "approved"
+  route; turning radius and grade set by the official). 503.1.1 exception 1.1 lets the official
+  relax the 150 ft for a sprinklered building: a discretion, not a right. Appendix D108 points
+  to the state's alternate standard for dwellings where access falls short (OAR 918-480-0125,
+  the building official's choice). Notes: FOLLOWUPS 211.
 - Matters to the scan: Chapter 5 (fire access roads, the 150 ft hose rule) and Appendix D.
 
 ## Oregon Residential Specialty Code (ORSC) 2026
