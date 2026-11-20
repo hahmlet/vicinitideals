@@ -47,6 +47,12 @@ Lot file the research ran on: `../vicinitideals-worktrees/fd2-pass1-data/fd2_lot
   never averaged.
 - Not part of rel11.
 
+## Steph 2026-11-19, second message: go, and keep it cheap to re-analyse
+
+"We will want to tweak costs and such later, so get what data you can about foundation style, challenges, and easy parts so we can run cheap analysis."
+
+So: two layers. MEASURE stores every physical fact per lot once (no prices; per-lot row plus per-door and per-wall-line tables, richer than FD6 section 2). PRICE is a pure step over the stored record plus the settings file, and gives cost lines, style, a list of challenges and a list of easy parts. A price or threshold change re-prices every lot without touching the ground or the scan.
+
 ## Open
 
 - Framed low wall on top of a shorter concrete wall as a variant (FD6 section 11): engineer's call.
@@ -57,3 +63,5 @@ Lot file the research ran on: `../vicinitideals-worktrees/fd2-pass1-data/fd2_lot
 ## Status
 
 2026-11-19: step 1 lane started (builder agent, branch `flats/foundation-model`).
+
+2026-11-19 evening: step 1 DONE on `flats/foundation-model` a02a75eb (not merged). Every FD6 section 8 value matched; lot-file shares match; 144 foundation tests; measure and price layers split, re-price test passes. Nine spec-vs-reference disagreements listed in `../vicinitideals-worktrees/foundation-model.handoff.md` (to pass to the foundation agent). Ties follow the rule as written. Slice 2 started: real ground on 137 for the 9,517 lots (light work only), old buildings (spec 5.8, FD7), own frost depth.
