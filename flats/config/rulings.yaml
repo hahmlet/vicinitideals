@@ -3811,3 +3811,53 @@
     the move read. Built on flats/gap-fixes (FOLLOWUPS 205); not live until
     released.
   source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/gap-fixes.handoff.md
+- id: 2026-11-20-foundation-six-step-cap-red
+  kind: ruling
+  date: 2026-11-20
+  scope: {}
+  question: >-
+    The foundation model prices outside steps at every door. Where the ground
+    needs a tall stair, should the lot stay as it is, or fail?
+  ruling: >-
+    A cap of six steps at a door. A site that needs more would need levelling
+    and a retaining wall, which is not modelled, so that lot is red (Steph to
+    the foundation agent, Factory-Sim FD8 v3 section 1 item 3). Read per
+    method: a foundation method with any door over six precast unit risers is
+    not used on the lot; the lot is RED only when every method open to it
+    fails.
+  effect: >-
+    New screen reason: RED where no foundation method fits the cap, on lots
+    with a drawn building. About 5,991 of 44,211 drawn lots on the old door
+    positions (330 green, 5,661 yellow); re-counted on the real doors before
+    release. FOLLOWUPS 213.
+  source: Steph 2026-11-20 via ../Factory-Sim/docs/research/FD8-reply-to-flats-foundation-run.md (v3, b134fd9), confirmed in chat 2026-11-20
+- id: 2026-11-20-foundation-near-cap-yellow
+  kind: ruling
+  date: 2026-11-20
+  scope: {}
+  question: >-
+    Ground heights are good to an inch or two at a door. When a lot misses the
+    six-step cap by 2 in or less, red or yellow?
+  ruling: '"Yellow (Recommended)"'
+  effect: >-
+    A lot whose best method misses the cap by 2 in or less is YELLOW with a
+    flag naming the door, never GREEN and not RED on this ground. FOLLOWUPS 213.
+  source: Steph 2026-11-20 (chat)
+- id: 2026-11-20-front-doors-face-parking
+  kind: ruling
+  date: 2026-11-20
+  scope: {}
+  question: >-
+    On lots where the building stands end-on to the street, neither long face
+    faces the street. Which face takes the front doors (the front and back
+    doors sit in different places, so it decides the step count)?
+  ruling: >-
+    "I feel like the doors would go towards the side with the parking, or save
+    that, the side with more lot space in front of it."
+  effect: >-
+    Where the city requires the main entrance to face the street, the front
+    doors face the street as placed. Elsewhere the front doors go on the long
+    face toward the drawn parking; with no parking drawn, on the face with more
+    open lot in front of it. Replaces the foundation model's front-face guess.
+    FOLLOWUPS 213.
+  source: Steph 2026-11-20 (chat)
