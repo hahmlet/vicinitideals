@@ -65,3 +65,23 @@ So: two layers. MEASURE stores every physical fact per lot once (no prices; per-
 2026-11-19: step 1 lane started (builder agent, branch `flats/foundation-model`).
 
 2026-11-19 evening: step 1 DONE on `flats/foundation-model` a02a75eb (not merged). Every FD6 section 8 value matched; lot-file shares match; 144 foundation tests; measure and price layers split, re-price test passes. Nine spec-vs-reference disagreements listed in `../vicinitideals-worktrees/foundation-model.handoff.md` (to pass to the foundation agent). Ties follow the rule as written. Slice 2 started: real ground on 137 for the 9,517 lots (light work only), old buildings (spec 5.8, FD7), own frost depth.
+
+2026-11-19 night: SHIPPED. main a29a596c, deploy smoke passed, migration 0153, 9,514 lot records loaded
+(9,441 match the current county copy), production E2E `tests/e2e/test_flats_foundation.py` passed, colours
+unchanged on eight compared lots. Slices: 1 calculation (answer key matched), 2 real ground on 137 + old
+buildings, 3 table `flats` lot foundation + API `foundation` block + lot-page panel + `reprice` command.
+Data and the grid-vs-six-readings report: `../vicinitideals-worktrees/foundation-model-data/`. Hand-off with the
+nine spec-vs-answer-key differences: `../vicinitideals-worktrees/foundation-model.handoff.md`.
+
+## Left to do
+
+1. **Re-measure after every release** that moves a drawn building (about 2 minutes on 137: measure, bundle,
+   copy `records.jsonl.gz` to 114, run `scripts/flats_foundation.py load`). The stored record does not notice a
+   changed drawing by itself. Add it to the release runner's routine.
+2. **Widen from the 9,514 research lots to every lot with a drawn building** (green and yellow). Needs the
+   pass-1 inputs (six readings are not needed; the grid reader is) for lots outside the research file.
+3. Four lots with blank ground cells (1S2E15AB  -00100, 1S2E03CD  -02900, 1S2E10DB  -11900, 1S2E10DC  -16100) and
+   2,128 coarse-ground Portland lots: reported apart; no fix planned.
+4. Screw-pile version (B+P): not priced over old basements; no per-lot answer key exists.
+5. Pass the nine differences and the grid findings (lump allowance about 20% small) back to the foundation agent.
+6. Code rules marked "recalled": re-read when the residential code chapters arrive (FOLLOWUPS 210).
