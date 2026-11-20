@@ -15,8 +15,8 @@ Files: `data/flats/books/building-codes/` (gitignored).
   and table notes all extract cleanly; Oregon amendments are already merged in (12 of 12 state-listed
   chapter 4 changes agree).
 - Untested: figures, wide or multi-page tables.
-- Electrical has no merged book: 2026 NEC + state table 1-E (held). The NEC copy dropped in docs/
-  came from a piracy site; not used.
+- Electrical has no merged book: 2026 NEC + state table 1-E (held). NEC copy held (Steph: from a municipal
+  library; internal use).
 - 2026 residential code not yet published.
 - Interpretations and alternate methods: one state list behind both pages, loaded by the browser;
   not yet collected.
@@ -27,10 +27,9 @@ Files: `data/flats/books/building-codes/` (gitignored).
 2. Which books first. Coordinator's suggestion: fire ch. 5 + App. D and the residential code, since
    the scan and the foundation model rest on them; plumbing and electrical when the factory design
    work needs them.
-3. A lawful NEC source (NFPA's free reader or a bought PDF) and what to do with the dropped copy.
 
-Decided by default unless Steph says otherwise: internal agent reference only, full text not posted
-publicly (see "Publishing" in the status log).
+Decided by Steph 2026-11-19: internal use only, not posted publicly. NEC copy: Steph says it came
+through a municipal library; kept for internal use.
 
 ## Then (Claude)
 

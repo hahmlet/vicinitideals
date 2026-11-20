@@ -52,10 +52,10 @@ Across all books, the state also publishes:
 - State page: https://www.oregon.gov/bcd/codes-stand/Pages/electrical.aspx
 - State table of changes: https://www.oregon.gov/bcd/codes-stand/Documents/26oesc-table1-E.pdf
   (held: `oesc-2026/26oesc-table1-E.pdf`, downloaded 2026-11-19).
-- The NEC itself: a copy was dropped in `docs/` on 2026-11-19 and moved to
-  `nec-2026/nfpa70-2026.pdf`. **Its file name shows it came from a book-piracy site. It is not used
-  for anything and should be replaced or deleted** (Steph's call). NFPA lets anyone read the NEC
-  free on its own site (read-only, free sign-up); a licensed PDF is sold by NFPA.
+- The NEC itself: held as `nec-2026/nfpa70-2026.pdf` (dropped in `docs/` 2026-11-19). Steph
+  2026-11-19: obtained through a municipal library; internal use only. (The file arrived with
+  the names of a book-sharing site in its file name; noted so the source can be re-checked if
+  it ever matters.) NFPA also lets anyone read the NEC free on its own site.
 
 ## Oregon Plumbing Specialty Code (OPSC) 2026
 
@@ -125,7 +125,7 @@ An agent that relies on a number still quotes the section and its source.
 Different from zoning. A zoning code is written by the city. These books are written and sold by
 private publishers (ICC, IAPMO, NFPA) and adopted by Oregon. Courts have mostly sided with posting
 adopted law for free, and UpCodes does exactly that, but the publishers still sue over it and the
-question is not settled. Position until Steph decides otherwise: **internal agent reference only;
+question is not settled. Decided by Steph 2026-11-19: **internal agent reference only;
 the full text is not posted publicly.** Oregon's own sheets (amendment tables, change summaries,
 interpretations, alternate methods) are state documents and carry no such concern. This is not
 legal advice.
