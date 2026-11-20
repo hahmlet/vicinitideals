@@ -53,7 +53,8 @@ def test_a_document_round_trips_and_prices_the_same() -> None:
     assert rows.measured_rows(back) == rows.measured_rows(m)
     assert rows.old_building_rows(back) == rows.old_building_rows(m)
     assert rows.assessed_rows(lot.assess(back, S)) == rows.assessed_rows(lot.assess(m, S))
-    assert doc["measured_on"] == {"drawing": DRAWING, "ground_source": "plane", "cell_m": None, "measured_at": WHEN}
+    assert doc["measured_on"] == {"drawing": DRAWING, "ground_source": "plane", "cell_m": None, "measured_at": WHEN,
+                                  "footprint": record.footprint_words(dict(measure.geometry_of(S)))}
     assert doc["geometry_hash"] == record.settings_hash(S)
     # Nothing priced is stored.
     assert "cost" not in json.dumps(doc)

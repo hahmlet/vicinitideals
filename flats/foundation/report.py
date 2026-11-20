@@ -16,7 +16,8 @@ or its flags; the block says so (``never_a_colour``).
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+import json
+from collections.abc import Mapping, Sequence
 from decimal import ROUND_HALF_EVEN, Decimal
 from typing import Any
 
@@ -24,6 +25,7 @@ from flats.foundation import classify, record, support
 from flats.foundation import cost as costing
 from flats.foundation import lot as lots
 from flats.foundation import model
+from flats.foundation.measure import geometry_of
 from flats.foundation.settings import Settings
 
 PRICED = "priced"
@@ -88,7 +90,8 @@ def _measured_on_words(on: Mapping[str, Any]) -> str:
 
 
 def _base(doc: Mapping[str, Any], version: str) -> dict[str, Any]:
-    on = dict(doc.get("measured_on") or {})
+    # The measured ring stays in the record; the block names it by its hash.
+    on = {k: v for k, v in (doc.get("measured_on") or {}).items() if k != "drawn_ring"}
     return {
         "never_a_colour": True,
         "not_a_check_words": NOT_A_CHECK,
@@ -272,11 +275,48 @@ def _old(res: lots.LotResult) -> dict[str, Any]:
     return out
 
 
-def describe(doc: Mapping[str, Any], s: Settings, *, version: str) -> dict[str, Any]:
+#: The words for a record measured on a drawing the lot no longer has.
+EARLIER_DRAWING = (
+    "Measured on an earlier drawing -- needs re-measuring: the building has been drawn in another place "
+    "on this lot since it was measured, so no figure is shown until it is measured again."
+)
+
+
+def describe(
+    doc: Mapping[str, Any],
+    s: Settings,
+    *,
+    version: str,
+    drawing: Sequence[Sequence[float]] | None = None,
+) -> dict[str, Any]:
     """The ``foundation`` block for one lot from its stored document, priced now
-    under ``s`` (``version`` = :func:`flats.foundation.record.settings_version`)."""
+    under ``s`` (``version`` = :func:`flats.foundation.record.settings_version`).
+    ``drawing`` is the lot's drawn building ring now, when the caller has it: a
+    record measured on another drawing reads "needs re-measuring" and carries
+    no figure (:func:`flats.foundation.record.drawing_changed`)."""
     out = _base(doc, version)
+    changed = record.drawing_changed(doc, drawing)
+    out["drawing_checked"] = changed is not None
+    if changed:
+        out.update(status=NEEDS_REMEASURING, remeasure_because=["drawing"], status_words=EARLIER_DRAWING)
+        return out
     stale = record.staleness(doc, s)
+    if stale and record.FOOTPRINT_KEYS & set(stale):
+        on = doc.get("measured_on") or {}
+        try:
+            was = on.get("footprint") or record.footprint_words(json.loads(doc["lot"]["geometry"]))
+        except (KeyError, TypeError, ValueError):
+            was = "another footprint"
+        out.update(
+            status=NEEDS_REMEASURING,
+            remeasure_because=["footprint", *stale],
+            status_words=(
+                f"Measured on a different building footprint -- needs re-measuring: this lot was measured on {was}, "
+                f"and the model now uses {record.footprint_words(dict(geometry_of(s)))}, so no figure is shown "
+                "until it is measured again."
+            ),
+        )
+        return out
     if stale:
         out.update(
             status=NEEDS_REMEASURING,

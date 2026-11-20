@@ -24,19 +24,29 @@
 
 spec: FD6-foundation-model-spec.md (Factory-Sim, 2026-11-19)
 
+# The screen places the pod as its finished faces, 80 x 25 ft trim to trim. The
+# foundation carries the FRAMING, 79 ft 8-3/4 in x 24 ft 8-15/16 in, centred
+# inside that drawn box (about 1-5/8 in in from each end, 1-17/32 in from front
+# and back: the skin). Measured and priced on the framing (Steph 2026-11-19).
 building:
-  length_ft:
+  finished_length_ft:
     value: 80
-    source: DECISIONS N-finished (80 x 25 ft finished)
-  width_ft:
+    source: DECISIONS N-finished (80 x 25 ft trim face to trim face; the drawn pod)
+  finished_width_ft:
     value: 25
-    source: DECISIONS N-finished (80 x 25 ft finished)
+    source: DECISIONS N-finished (80 x 25 ft trim face to trim face; the drawn pod)
+  length_ft:
+    value: 79.72916666666667
+    source: "DECISIONS N-finished, Factory-Sim FOLLOWUPS 238(i): framing 956.75 in (79 ft 8-3/4 in) = 4 x 238-1/4 in + 3 x 1-1/4 in [calc]"
+  width_ft:
+    value: 24.744791666666668
+    source: "DECISIONS N-finished, Factory-Sim FOLLOWUPS 238(i): framing 296.9375 in (24 ft 8-15/16 in) [calc]"
   party_x_ft:
-    value: [20, 40, 60]
-    source: DECISIONS N-finished (party lines at 20, 40 and 60 ft)
+    value: [19.90625, 39.864583333333336, 59.822916666666664]
+    source: "DECISIONS N-finished, FOLLOWUPS 238(i): party-line centres 238.875, 478.375 and 717.875 in from the framing's end (238-1/4 in homes, 1-1/4 in gaps) [calc]"
   door_x_ft:
-    value: [10, 30, 50, 70]
-    source: "[est] the plan's door positions have not been read (front and back of each home)"
+    value: [9.966145833333334, 29.8984375, 49.83072916666667, 69.76302083333334]
+    source: "[est] the plan's door positions have not been read (front and back of each home); 10, 30, 50, 70 ft on 80 ft, scaled to the 956.75 in framing (FOLLOWUPS 238(i))"
 
 # B: raised floor of twelve factory cassettes on one concrete wall on a strip footing.
 raised:
@@ -307,12 +317,13 @@ old_buildings:
 
 # The flat-lot takeoff (FD3_flat_lot_takeoff.py) behind the section 6 lines
 # that do not follow the ground. FD3 drew the pod at 80 ft 3-3/4 in
-# (DECISIONS N-25x20, before N-finished); the section 6 fixed lines are its
-# output, so the length is kept here to reproduce them. See the handoff.
+# (DECISIONS N-25x20, before N-finished); the fixed lines are now worked on the
+# framing footprint (length here, width = building.width_ft). The FD6 answer
+# key's 80.3125 ft is used only by the tests that prove the arithmetic.
 flat_lot:
-  fd3_length_ft:
-    value: 80.3125
-    source: "FD3 (POD_L_FT = 963.75 / 12, 80 ft 3-3/4 in, DECISIONS N-25x20); used only for the fixed lines of section 6"
+  fixed_length_ft:
+    value: 79.72916666666667
+    source: "DECISIONS N-finished, FOLLOWUPS 238(i): the framing length, 956.75 in (was FD3's POD_L_FT 963.75 in); used only for the fixed lines of section 6"
   homes:
     value: 4
     source: DECISIONS N-finished (four homes a pod)

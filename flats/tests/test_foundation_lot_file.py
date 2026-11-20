@@ -31,6 +31,7 @@ from pathlib import Path
 
 import pytest
 
+from flats.tests.foundation_key import key_settings
 from flats.foundation import lot, settings
 
 LOTS = Path(os.environ.get("FLATS_FD_LOTS", r"C:\Users\Steph\Repos\vicinitideals-worktrees\fd2-pass1-data\fd2_lots.csv"))
@@ -67,7 +68,7 @@ def compared() -> dict[str, object]:
     ref = _reference()
     p = ref.Params()
     # The reference model uses one 18 in footing depth on every lot.
-    s = settings.load().replace(use_frost_register=False)
+    s = key_settings(use_frost_register=False)  # the reference's own dimensions
     s0 = s.replace(tolerance_in=0.0)
     with LOTS.open(newline="", encoding="utf-8") as fh:
         lot_rows = list(csv.DictReader(fh))

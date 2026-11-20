@@ -46,6 +46,8 @@ from flats.foundation.settings import Settings
 #: re-measured from the ground; change any other and re-pricing the stored records
 #: is enough.
 GEOMETRIC: tuple[str, ...] = (
+    "finished_length_ft",
+    "finished_width_ft",
     "length_ft",
     "width_ft",
     "party_x_ft",

@@ -11,7 +11,9 @@ settings (:mod:`flats.foundation.report`).
 * :func:`staleness` -- why a stored record can no longer be priced under the
   current settings (its geometric settings or its record layout changed), or
   None when it can;
-* :func:`settings_version` -- the hash stamped on every priced output.
+* :func:`settings_version` -- the hash stamped on every priced output;
+* :func:`ring_hash` / :func:`drawing_changed` -- the drawn building a record was
+  measured under, against the lot's drawing now (slice 4).
 
 Pure: no database, no web.
 """
@@ -21,8 +23,9 @@ from __future__ import annotations
 import gzip
 import hashlib
 import json
+import math
 from collections import defaultdict
-from collections.abc import Iterable, Iterator, Mapping
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
@@ -38,10 +41,40 @@ MODEL_VERSION = "fd6-slice2"
 
 #: What a record's lot row says it was measured on.
 MEASURED_ON = ("drawing", "ground_source", "cell_m", "measured_at")
+#: ... and the footprint it was measured on, in words (from its geometry; slice 4).
+MEASURED_ON_FOOTPRINT = "footprint"
+#: Added by the slice-4 routine (absent on the slice-3 records): the run whose
+#: drawing was measured, a hash of the drawn building ring, and the ring itself
+#: (EPSG:2913 ft, to 0.01 ft) so the read side can tell a moved drawing.
+MEASURED_ON_DRAWING = ("run", "drawing_hash", "drawn_ring")
+#: A vertex of the drawing now may sit this far (ft) from the measured one and
+#: still be the same drawing (stored rings are rounded on the way to the app).
+SAME_RING_FT = 0.15
+#: The geometric settings that ARE the building footprint: a record measured
+#: under others was measured on a different footprint (``measured_on.footprint``
+#: names the one it was).
+FOOTPRINT_KEYS = frozenset({"finished_length_ft", "finished_width_ft", "length_ft", "width_ft", "party_x_ft",
+                            "door_x_ft"})
 
 
 def _plain(geometry: Mapping[str, Any]) -> dict[str, Any]:
     return {k: list(v) if isinstance(v, tuple) else v for k, v in geometry.items()}
+
+
+def footprint_words(geometry: Mapping[str, Any]) -> str:
+    """The footprint a record was measured on, in words, from its geometric
+    settings: the framing inches inside the finished box, or (a record from
+    before the framing size, slice 3) the finished size alone."""
+    length, width = float(geometry["length_ft"]), float(geometry["width_ft"])
+    box = (geometry.get("finished_length_ft"), geometry.get("finished_width_ft"))
+    if None in box:
+        return f"{length:g} x {width:g} ft (the finished faces)"
+    return (f"framing {_inches(length)} x {_inches(width)} in, centred in the "
+            f"{float(box[0]):g} x {float(box[1]):g} ft finished faces")
+
+
+def _inches(ft: float) -> str:
+    return f"{ft * 12:.4f}".rstrip("0").rstrip(".")
 
 
 def geometry_hash(geometry: Mapping[str, Any]) -> str:
@@ -60,23 +93,68 @@ def settings_version(path: Path = settings_mod.PATH) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()[:12]
 
 
+def plain_ring(ring: Sequence[Sequence[float]]) -> list[list[float]]:
+    """A drawn ring as stored: [x, y] pairs to 0.01 ft."""
+    return [[round(float(p[0]), 2), round(float(p[1]), 2)] for p in ring]
+
+
+def ring_hash(ring: Sequence[Sequence[float]]) -> str:
+    """A short hash of a drawn building ring, to 0.1 ft (stable across the
+    rounding a ring meets on its way into the app)."""
+    text = json.dumps([[round(float(p[0]), 1), round(float(p[1]), 1)] for p in ring], separators=(",", ":"))
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def drawing_changed(doc: Mapping[str, Any], ring: Sequence[Sequence[float]] | None) -> bool | None:
+    """Whether the lot's drawn building now (``ring``) is not the one the record
+    was measured under: None when either side does not hold a ring (a slice-3
+    record, or a report without the drawing), else True / False. Same ring =
+    the same number of vertices, each within :data:`SAME_RING_FT`."""
+    on = doc.get("measured_on") or {}
+    have = on.get("drawn_ring")
+    if not have or not ring:
+        return None
+    if on.get("drawing_hash") and on["drawing_hash"] == ring_hash(ring):
+        return False
+    if len(have) != len(ring):
+        return True
+    return any(math.hypot(float(a[0]) - float(b[0]), float(a[1]) - float(b[1])) > SAME_RING_FT
+               for a, b in zip(have, ring, strict=True))
+
+
 def _child(r: Mapping[str, Any]) -> dict[str, Any]:
     return {k: v for k, v in r.items() if k != "tlid"}
 
 
-def document(m: Measured, *, drawing: str, measured_at: str) -> dict[str, Any]:
-    """The whole measured record of one lot, as JSON-ready plain data."""
+def document(
+    m: Measured,
+    *,
+    drawing: str,
+    measured_at: str,
+    run: str | None = None,
+    ring: Sequence[Sequence[float]] | None = None,
+) -> dict[str, Any]:
+    """The whole measured record of one lot, as JSON-ready plain data. ``run``
+    and ``ring`` (the drawn building measured) stamp the drawing it was
+    measured on, for :func:`drawing_changed`."""
     lot, lines, doors = rows.measured_rows(m)
     bldgs, stretches = rows.old_building_rows(m)
+    on: dict[str, Any] = {
+        "drawing": drawing,
+        "ground_source": m.ground_source,
+        "cell_m": m.cell_m,
+        "measured_at": measured_at,
+        "footprint": footprint_words(dict(m.geometry)),
+    }
+    if run is not None:
+        on["run"] = run
+    if ring:
+        on["drawing_hash"] = ring_hash(ring)
+        on["drawn_ring"] = plain_ring(ring)
     return {
         "record_version": RECORD_VERSION,
         "model_version": MODEL_VERSION,
-        "measured_on": {
-            "drawing": drawing,
-            "ground_source": m.ground_source,
-            "cell_m": m.cell_m,
-            "measured_at": measured_at,
-        },
+        "measured_on": on,
         "geometry_hash": geometry_hash(dict(m.geometry)),
         "lot": lot,
         "lines": [_child(r) for r in lines],
@@ -120,6 +198,8 @@ def staleness(doc: Mapping[str, Any], s: Settings) -> tuple[str, ...] | None:
 TABLES = ("lots", "lines", "doors", "buildings", "stretches")
 #: Columns a bundle's lot row carries beside the measured lot row.
 LOT_EXTRA = ("drawing", "measured_at", "model_version", "record_version")
+#: ... and, on a slice-4 bundle, the drawing it was measured on (``drawn_ring`` as JSON text).
+LOT_EXTRA_DRAWING = ("run", "drawing_hash", "drawn_ring")
 
 
 def table_rows(doc: Mapping[str, Any]) -> dict[str, list[dict[str, Any]]]:
@@ -129,6 +209,9 @@ def table_rows(doc: Mapping[str, Any]) -> dict[str, list[dict[str, Any]]]:
     on = doc.get("measured_on") or {}
     lot.update(drawing=on.get("drawing"), measured_at=on.get("measured_at"),
                model_version=doc.get("model_version"), record_version=doc.get("record_version"))
+    for k in LOT_EXTRA_DRAWING:
+        if on.get(k) is not None:
+            lot[k] = json.dumps(on[k]) if k == "drawn_ring" else on[k]
     out: dict[str, list[dict[str, Any]]] = {"lots": [lot]}
     for name in TABLES[1:]:
         out[name] = [{**key, **r} for r in doc.get(name) or []]
@@ -148,17 +231,23 @@ def documents_from_tables(tables: Mapping[str, Iterable[Mapping[str, Any]]]) -> 
     for r in tables["lots"]:
         lot = dict(r)
         extra = {k: lot.pop(k, None) for k in LOT_EXTRA}
+        drawn = {k: lot.pop(k, None) for k in LOT_EXTRA_DRAWING}
         k = (lot.get("county"), lot["tlid"])
         geometry = json.loads(lot["geometry"])
+        on = {
+            "drawing": extra["drawing"],
+            "ground_source": lot.get("ground_source"),
+            "cell_m": lot.get("cell_m"),
+            "measured_at": extra["measured_at"],
+            "footprint": footprint_words(geometry),
+        }
+        for name, v in drawn.items():
+            if v is not None:
+                on[name] = json.loads(v) if name == "drawn_ring" else v
         yield {
             "record_version": extra["record_version"],
             "model_version": extra["model_version"],
-            "measured_on": {
-                "drawing": extra["drawing"],
-                "ground_source": lot.get("ground_source"),
-                "cell_m": lot.get("cell_m"),
-                "measured_at": extra["measured_at"],
-            },
+            "measured_on": on,
             "geometry_hash": geometry_hash(geometry),
             "lot": lot,
             **{name: kids[name].get(k) or kids[name].get((None, lot["tlid"])) or [] for name in TABLES[1:]},

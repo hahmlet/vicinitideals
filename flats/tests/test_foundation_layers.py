@@ -12,11 +12,13 @@ from decimal import Decimal
 
 import pytest
 
+from flats.tests.foundation_key import key_settings
 from flats.foundation import classify, lot, measure, model, rows, settings, support
 from flats.foundation import ground as grounds
 from flats.foundation.__main__ import TEST_LOTS
 
-S = settings.load()
+#: Arithmetic on the FD6 answer key's dimensions (80 x 25 ft; see foundation_key).
+S = key_settings()
 TEST = {name: (along, across) for name, along, across in TEST_LOTS}
 
 
