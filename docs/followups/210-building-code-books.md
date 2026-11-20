@@ -18,8 +18,9 @@ Files: `data/flats/books/building-codes/` (gitignored).
 - Electrical has no merged book: 2026 NEC + state table 1-E (held). NEC copy held (Steph: from a municipal
   library; internal use).
 - 2026 residential code not yet published.
-- Interpretations and alternate methods: one state list behind both pages, loaded by the browser;
-  not yet collected.
+- Interpretations and alternate methods: COLLECTED 2026-11-19 -- 77 interpretations, 19 alternate
+  methods, 12 appeals, 8 of 9 technical bulletins, with an inventory. Sections were pattern-read
+  from the PDFs and need a reading pass; 5 PDFs are scanned pictures. No fire-code items in the list.
 
 ## Waiting on Steph
 
@@ -33,8 +34,8 @@ through a municipal library; kept for internal use.
 
 ## Then (Claude)
 
-- Scout: collect the state interpretations / alternate methods list with each ruling's PDF, number,
-  date and the section it concerns (flats-source-scout; the list needs a browser or its data feed).
+- Reading pass over the interpretation inventory: confirm the section, edition and date of each
+  (flats-batch-reader), OCR the five scanned ones, drop elevator and boiler unless wanted.
 - Section cutter front end for UpCodes prints (reuse the code-library tools: tables, superscripts,
   notes). No encoding.
 - Tag Oregon wording per section from the matrix and change summary; attach interpretations and

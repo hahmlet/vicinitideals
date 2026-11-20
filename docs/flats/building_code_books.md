@@ -26,8 +26,8 @@ Across all books, the state also publishes:
 
 | Thing | Where | Held |
 |---|---|---|
-| Statewide code interpretations | https://www.oregon.gov/bcd/codes-stand/Pages/code-interps.aspx | Nothing yet |
-| Statewide alternate methods | https://www.oregon.gov/bcd/codes-stand/Pages/alternate-methods.aspx | Nothing yet |
+| Statewide code interpretations | https://www.oregon.gov/bcd/codes-stand/Pages/code-interps.aspx | All 77 |
+| Statewide alternate methods | https://www.oregon.gov/bcd/codes-stand/Pages/alternate-methods.aspx | All 19 |
 
 ## Oregon Fire Code (OFC) 2025
 
@@ -70,14 +70,34 @@ Across all books, the state also publishes:
 
 ## Statewide interpretations and alternate methods
 
-- Both pages are views of one searchable state list (interpretations, alternate methods, appeals).
-  The list is filled in by the browser after the page loads, so a plain download of the page comes
-  back empty (checked 2026-11-19). Collecting the full list with each ruling's PDF is a scouting
-  job, not yet done.
-- They tie to code sections. The plumbing matrix already names four against its sections
-  (Statewide Code Interpretation No. 22-01 at 309.5, 22-04 at 408.6, 14-01 at 501.1, 15-02 at 507.2).
-- Plan: each one becomes a short cited note attached to the section it interprets, with its number,
-  date and link, and the ruling's own PDF kept beside the book.
+Collected 2026-11-19 (scout). Held in `state-interps/`, `state-alternate-methods/`, `state-appeals/`,
+`state-technical-bulletins/`, with `inventory.csv` and `inventory.md` beside them.
+
+| Kind | Rows | PDFs held |
+|---|---|---|
+| Code interpretations | 77 | 77 |
+| Alternate methods | 19 | 19 |
+| Appeal decisions (third view of the same list) | 12 | 12 |
+| Technical bulletins (in the list, on no public page) | 9 | 8 (one link is dead at the state) |
+
+- Both public pages are views of one state list of 117 rows. The page fills in after it loads, so
+  the rows were read from what the page's own script fetched in a browser.
+- The list gives number, title, code program and PDF link. **It has no date, section or status.**
+  Dates and sections in the inventory were pulled from the first pages of each PDF by pattern and
+  are unreviewed: 44 from a labelled "Code reference" block, 39 from a scan of page one, 31 with
+  none found, and 5 PDFs are scanned pictures with no text (99-01, 99-02, 00-03, alternate method
+  09-01 twice).
+- Numbers repeat across code programs (03-01, 08-01, 99-01...), so the PDF file name is the key.
+- Five are rescinded per their own PDF or file name. Old numbers are not stale: the state re-issues
+  each with a "Last updated" date of Oct. 1 (2023, 2025, 2026) and updated edition references.
+- By book: residential 19; plumbing 10 citing the 2026 code; electrical items still cite the 2023
+  edition; **no fire-code program in the list** (the fire code is the State Fire Marshal's, not this
+  division's); about 15 of the 77 are elevator and boiler.
+- The plumbing matrix names four against its sections (22-01 at 309.5, 22-04 at 408.6, 14-01 at
+  501.1, 15-02 at 507.2).
+- Re-check each quarter and once in early October (new rows appeared 2026-01-20, 08-28, 11-05).
+- Plan: each becomes a short cited note on the section it concerns (number, date, link), with the
+  PDF kept beside the book. The pattern-read sections need a reading pass before they are attached.
 
 ## Extraction test, 2026-11-19 (the two UpCodes chapter prints)
 
