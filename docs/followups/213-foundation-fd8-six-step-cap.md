@@ -39,6 +39,8 @@ Opened 2026-11-20. Source: `../Factory-Sim/docs/research/FD8-reply-to-flats-foun
 - Near the cap (misses by 2 in or less): YELLOW.
 - Front doors: toward the parking; with no parking, the face with more open lot. Where the city
   requires a street-facing entrance, toward the street as placed.
+- Step prices: "Step prices are just estimates for a local provider" -- the Hampton list stands in
+  for a local supplier; no delivery line, none asked of the foundation agent.
 - Steph also asked whether end-on lots in places that require a street-facing entrance should be
   red "for now with a note". They are already YELLOW with ENTRANCE-SIDE-DOOR by Steph's 2026-11-10
   ruling; asked whether to switch (not changed).
@@ -59,4 +61,6 @@ Opened 2026-11-20. Source: `../Factory-Sim/docs/research/FD8-reply-to-flats-foun
   cap, so a plan it moves can still be over the cap. Letting it try placements that clear the cap could
   rescue some of the 570.
 - Answer to FD8 for the foundation agent: `../vicinitideals-worktrees/TO-FOUNDATION-AGENT-2026-11-20-v2.md`
-  (asks key issue 3, delivery for the precast units, railing as guard, side-entry units).
+ (asks key issue 3, railing as guard, side-entry units; delivery question dropped on Steph's word).
+- Stair reach: Steph asked whether the 8 ft steps actually hit anything. The screen checks each door
+  (off the lot, onto the court or lane) as a note only; a count on the run 128 drawings is running.
