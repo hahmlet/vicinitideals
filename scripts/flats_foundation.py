@@ -430,12 +430,15 @@ def _compare(args: argparse.Namespace) -> None:
         reasons = []
         if (mg.cell_m or 0) > s.coarse_cell_over_m:
             reasons.append("coarse grid")
-        if abs(lump_err) >= max(dip, 0.0) and abs(lump_err) > 0.25:
-            reasons.append("lump: allowance too big" if lump_err > 0 else "lump: a hump past the allowance")
-        if dip > 0.25 and dip >= abs(lump_err):
-            reasons.append("dip the six readings miss")
+        if lump_err > 0.25:
+            reasons.append(f"lump allowance {lump_err:.1f} ft too big")
+        elif lump_err < -0.25:
+            reasons.append(f"a hump {-lump_err:.1f} ft past the lump allowance")
+        if dip > 0.25:
+            reasons.append(f"a dip {dip:.1f} ft below the six readings")
         if not reasons:
-            reasons.append("shape between the readings")
+            fill6, fillg = m6.fill_volume_ft3 / 27, mg.fill_volume_ft3 / 27
+            reasons.append(f"shape between the readings (fill {fill6:.0f} -> {fillg:.0f} cu yd)")
         w(f"| {row['TLID']} | {row['county']} | {mg.cell_m:g} | {r6['B'].tallest_wall_in:.0f} -> {rg['B'].tallest_wall_in:.0f} | "
           f"{r6['A dry'].fill_max_in:.0f} -> {rg['A dry'].fill_max_in:.0f} | "
           f"{float(rg['A dry'].cost.high - r6['A dry'].cost.high):+,.0f} | {float(rg['B'].cost.high - r6['B'].cost.high):+,.0f} | "
