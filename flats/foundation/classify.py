@@ -32,7 +32,12 @@ COARSE = "coarse_ground_model"
 FRONT_GUESS = "front_face_guess"
 #: A wall line crosses a building standing today (FD6 5.8): value = longest stretch (ft).
 WALL_OVER_OLD = "wall_over_old_building"
-CHALLENGES = (TALL_WALL, WALL_OVER_STANDARD, DEEP_FILL, RETAINED_EDGE, GUARDS, LONG_STAIR, PILES, OWN_LOOK, NOT_SORTED, COARSE, FRONT_GUESS, WALL_OVER_OLD)
+#: FD8 2a: a door over the six-step cap -- the method is not used here (value = in over).
+OVER_CAP = "over_step_cap"
+#: FD8 2b: engineered, not priced by this model.
+ENGINEERED = "engineered_not_priced"
+CHALLENGES = (TALL_WALL, WALL_OVER_STANDARD, DEEP_FILL, RETAINED_EDGE, GUARDS, LONG_STAIR, PILES, OWN_LOOK, NOT_SORTED,
+              COARSE, FRONT_GUESS, WALL_OVER_OLD, OVER_CAP, ENGINEERED)
 
 # easy-part codes
 NEAR_FLAT = "near_flat"
@@ -71,11 +76,15 @@ def _a(method: str) -> str:
 def style(group: str, methods: dict[str, model.MethodResult], applicable: tuple[str, ...]) -> Style:
     standard = tuple(dict.fromkeys(_a(m) for m in applicable))
     lo = hi = None
-    if "B" in applicable and "A dry" in applicable:
+    if "B" in applicable and "A dry" in applicable and methods["B"].usable and methods["A dry"].usable:
         a, b = methods["A dry"].cost, methods["B"].cost
         lo = "B" if b.low < a.low else "A"
         hi = "B" if b.high < a.high else "A"
-    if group == support.ORDINARY:
+    if group == support.ORDINARY and lo is None:
+        usable = [x for x in ("A", "B") if any(methods[n].usable for n in applicable if _a(n) == x)]
+        words = (f"Ordinary footing: only {usable[0]} is open here (the other is over the six-step cap or engineered)."
+                 if usable else "Ordinary footing: neither A nor B is open here (over the six-step cap or engineered).")
+    elif group == support.ORDINARY:
         if lo == hi:
             cheap = f"{'B' if lo == 'B' else 'A (dry season)'} is cheaper at low and high prices"
         else:
@@ -103,6 +112,14 @@ def challenges(
     for name in on:
         r = methods[name]
         tag = _a(name)
+        if r.over_cap:
+            d = r.worst_door()
+            over = d.over_by_in(s.cap_in)
+            out.append(Item(OVER_CAP, tag, over, "in",
+                            f"{model.door_name(d, r.doors)} needs more than {s.cap_risers} steps "
+                            f"({over:.1f} in over the {s.cap_in:g} in cap): {tag} not used here"))
+        if r.stop is not None:
+            out.append(Item(ENGINEERED, tag, None, "", r.stop))
         if tag in ("B", "B+P"):
             if r.tallest_wall_in > s.tall_wall_over_ft * 12 + s.tolerance_in:
                 out.append(Item(TALL_WALL, tag, r.tallest_wall_in / 12, "ft", f"tallest wall {r.tallest_wall_in / 12:.1f} ft"))
@@ -153,7 +170,7 @@ def easy_parts(m: Measured, group: str, methods: dict[str, model.MethodResult], 
         out.append(Item(NEAR_FLAT, "", relief, "ft", f"near flat under the building ({relief:.1f} ft of fall)"))
     if group == support.ORDINARY:
         out.append(Item(ORDINARY, "", support.effective_class_of(m.ground_class, m.alt_ground_class), "class", "ordinary footing ground"))
-    for name in (x for x in applicable if x != "A wet"):
+    for name in (x for x in applicable if x != "A wet" and methods[x].usable):
         r = methods[name]
         tag = _a(name)
         if tag in ("B", "B+P") and r.tallest_wall_in <= s.low_wall_max_ft * 12 + s.tolerance_in:

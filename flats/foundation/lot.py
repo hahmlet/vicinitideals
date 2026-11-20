@@ -29,7 +29,9 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from decimal import Decimal
 
+from flats.foundation import cap as caps
 from flats.foundation import classify, model, support
+from flats.foundation import doors as door_face
 from flats.foundation import infill as infill_mod
 from flats.foundation.ground import Ground, six_readings
 from flats.foundation.measure import Measured, measure
@@ -40,6 +42,11 @@ READINGS = ("z_front_left", "z_front_mid", "z_front_right", "z_back_left", "z_ba
 COARSE = "coarse_ground_model"
 FRONT_GUESS = "front_face_guess"
 WALL_CROSSES_OLD = "wall_crosses_old_building"
+#: FD8 2d: ground steeper than 1 in ``steep_slope_one_in`` near the building
+#: (R403.1.9 slope setback): a placement question, a flag, no cost.
+STEEP = "slope_setback_own_look"
+#: Where the front doors' face was chosen by a rule, not guessed.
+_CHOSEN = (door_face.PARKING, door_face.LANE, door_face.OPEN_LOT)
 
 
 def num(text: str | None) -> float | None:
@@ -81,6 +88,11 @@ class LotResult:
     #: Old buildings under the pod, priced "if it had a basement": NOT in any
     #: method's cost.
     infill: infill_mod.Infill
+    #: The six-step cap on the lot (FD8 2a): RED, near-cap YELLOW and the
+    #: class-unread YELLOW are the screen's (flats.ingest.foundation_cap).
+    cap: caps.Cap | None = None
+    #: Plain-words notes, no colour: which face carries the front doors and why.
+    notes: tuple[str, ...] = ()
 
     def __getitem__(self, method: str) -> model.MethodResult:
         return self.methods[method]
@@ -107,12 +119,14 @@ class LotResult:
 
 
 def _cheaper(methods: dict[str, model.MethodResult], applicable: tuple[str, ...]) -> tuple[Cheaper, ...]:
-    if "B" not in applicable:
+    """A against B where both are open on the lot: a method over the six-step
+    cap or stopped as engineered (FD8 2a, 2b) is not compared."""
+    if "B" not in applicable or not methods["B"].usable:
         return ()
     out = []
     b = methods["B"].cost
     for against in ("A dry", "A wet"):
-        if against not in applicable:
+        if against not in applicable or not methods[against].usable:
             continue
         a = methods[against].cost
         for prices, av, bv in (("low", a.low, b.low), ("high", a.high, b.high)):
@@ -143,9 +157,20 @@ def assess(m: Measured, s: Settings, *, group: str | None = None) -> LotResult:
     if m.cell_m is not None and m.cell_m > s.coarse_cell_over_m:
         flags.append(COARSE)
         words.append(f"coarse ground model: {m.cell_m:g} m cells (over {s.coarse_cell_over_m:g} m), relief understated")
-    if m.front_face_turn_deg is not None and m.front_face_turn_deg > s.front_face_guess_over_deg:
+    if (
+        m.door_face_rule not in _CHOSEN
+        and m.front_face_turn_deg is not None
+        and m.front_face_turn_deg > s.front_face_guess_over_deg
+    ):
         flags.append(FRONT_GUESS)
         words.append(f"the street-side face is turned {m.front_face_turn_deg:.0f} degrees: which face carries the front doors is a guess")
+    if m.steep_slope_max is not None and m.steep_slope_max > 1.0 / s.steep_slope_one_in:
+        flags.append(STEEP)
+        words.append(
+            f"slope setback applies: own look (the ground near the building falls 1 in {1.0 / m.steep_slope_max:.1f} "
+            f"over {s.steep_run_ft:g} ft, steeper than 1 in {s.steep_slope_one_in:g}) [code R403.1.9]"
+        )
+    notes = (door_face.WORDS[m.door_face_rule],) if m.door_face_rule in door_face.WORDS else ()
     embed = model.embed_of(m, s)
     old = infill_mod.assess(m, model.lot_settings(m, s), embed)
     if old.wall_crossed:
@@ -164,6 +189,8 @@ def assess(m: Measured, s: Settings, *, group: str | None = None) -> LotResult:
         challenges=classify.challenges(m, group, methods, applicable, s, old),
         easy=classify.easy_parts(m, group, methods, applicable, s),
         infill=old,
+        cap=caps.cap_of(methods, group, s),
+        notes=notes,
     )
 
 

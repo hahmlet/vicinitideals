@@ -208,7 +208,7 @@ def test_weighted_by_year_built() -> None:
 
 def test_several_buildings_add_up() -> None:
     m = _with_old(_flat_record(), _box(-10, -10, -1, -1), _box(30, 5, 50, 20))
-    r = lot.assess(m, S18)
+    r = lot.assess(m, S18.replace(basement_min_sf=0.0))  # FD7's key counts the 81 sq ft outline
     assert [bc.b_remedy for bc in r.infill.buildings] == [infill.BRIDGE, infill.DEEPEN]
     assert float(r.infill.total("B", "low")) == pytest.approx(103.044729 + 763.910372, abs=1e-5)
     assert r.infill.longest_ft == pytest.approx(21.0)
@@ -316,3 +316,13 @@ def test_world_footprints_become_model_outlines() -> None:
     assert outs[0].bldg_id == "7" and outs[0].year_built is None
     b = oldbuild.measure_one(outs[0], S)
     assert b is not None and b.wall_ft == pytest.approx(4.0)
+
+
+def test_outlines_under_400_sq_ft_are_left_out_of_the_basement_case() -> None:
+    """FD8 2c: a shed or a detached garage has no basement."""
+    small, big = _box(-10, -10, -1, -1), _box(30, 5, 55, 25)  # 81 and 500 sq ft
+    m = _with_old(_flat_record(), small, big)
+    assert S.basement_min_sf == 400 and len(m.old_buildings) == 2
+    r = lot.assess(m, S18)
+    assert len(r.infill.buildings) == 1 and r.infill.buildings[0].exposure.floor_sf > 0
+    assert "400 sq ft" in " ".join(infill.SIMPLIFICATIONS)

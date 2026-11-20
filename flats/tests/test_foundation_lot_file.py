@@ -31,7 +31,7 @@ from pathlib import Path
 
 import pytest
 
-from flats.tests.foundation_key import key_settings
+from flats.tests.foundation_key import as_flats_built
 from flats.foundation import lot, settings
 
 LOTS = Path(os.environ.get("FLATS_FD_LOTS", r"C:\Users\Steph\Repos\vicinitideals-worktrees\fd2-pass1-data\fd2_lots.csv"))
@@ -66,15 +66,17 @@ def _reference():
 @pytest.fixture(scope="module")
 def compared() -> dict[str, object]:
     ref = _reference()
-    p = ref.Params()
-    # The reference model uses one 18 in footing depth on every lot.
-    s = key_settings(use_frost_register=False)  # the reference's own dimensions
+    # FD8 re-issued the reference on the framing size (key issue 2); its
+    # --as-flats-built Params are FLATS's settings before FD8, which
+    # foundation_key.as_flats_built reproduces (one 18 in footing depth on every lot).
+    p = ref.as_flats_built(ref.Params())
+    s = as_flats_built()
     s0 = s.replace(tolerance_in=0.0)
     with LOTS.open(newline="", encoding="utf-8") as fh:
         lot_rows = list(csv.DictReader(fh))
     out: dict[str, object] = {"lots": 0, "missing_mismatch": [], "diff0": [], "diff": []}
     for row in lot_rows:
-        g = ref.lot_ground(row)
+        g = ref.lot_ground(row, p)
         m = lot.measure_row(row, s)
         if (g is None) != (m is None):
             out["missing_mismatch"].append(row["TLID"])  # type: ignore[union-attr]

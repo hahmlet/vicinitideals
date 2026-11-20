@@ -35,9 +35,11 @@ from flats.foundation.measure import Measured, geometry_of
 from flats.foundation.settings import Settings
 
 #: The layout of the stored document; bump it when :func:`document` changes shape.
-RECORD_VERSION = 1
-#: The model that measured the record (FD6 build steps 1-9, slice 2 of FOLLOWUPS 209).
-MODEL_VERSION = "fd6-slice2"
+RECORD_VERSION = 2
+#: The model that measured the record (FD6 build steps 1-9, slice 2 of FOLLOWUPS
+#: 209; FD8 sections 2b and 2d, FOLLOWUPS 213: the real doors on the face the
+#: door-face rule names, their out-lines and guard boxes, the steep ground).
+MODEL_VERSION = "fd8"
 
 #: What a record's lot row says it was measured on.
 MEASURED_ON = ("drawing", "ground_source", "cell_m", "measured_at")
@@ -54,7 +56,7 @@ SAME_RING_FT = 0.15
 #: under others was measured on a different footprint (``measured_on.footprint``
 #: names the one it was).
 FOOTPRINT_KEYS = frozenset({"finished_length_ft", "finished_width_ft", "length_ft", "width_ft", "party_x_ft",
-                            "door_x_ft"})
+                            "door_x_ft", "door_x_front_ft", "door_x_back_ft"})
 
 
 def _plain(geometry: Mapping[str, Any]) -> dict[str, Any]:

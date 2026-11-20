@@ -136,8 +136,33 @@ def flat_lot(s: Settings) -> FlatLot:
 # ---------------------------------------------------------------- steps and rails
 
 
+def unit_door_cost(s: Settings, k: int, sides: int) -> tuple[Decimal, Decimal]:
+    """FD8 2a: one door with a k-riser precast unit, low and high:
+    (unit + installation + sides x railing) x (1 + markup). Delivery is not in it."""
+    p = s.prices
+    unit, rail, install = p[f"precast_unit_{k}"], p[f"precast_rail_{k}"], p["precast_install"]
+    factor = Decimal(1) + Decimal(str(s.precast_markup))
+    low = (unit.low + install.low + sides * rail.low) * factor
+    high = (unit.high + install.high + sides * rail.high) * factor
+    return low, high
+
+
 def _steps(s: Settings, door_res, *, slab: bool) -> list[CostLine]:
     p = s.prices
+    if s.steps_rule == "precast":
+        # FD8 2a: a step pad where no unit is needed (k = 0), else one precast
+        # unit with its railing. A door over the cap takes no price: the method
+        # is not used on the lot (MethodResult.usable).
+        pads = sum(1 for d in door_res if d.units == 0)
+        low = high = Decimal(0)
+        n = 0
+        for d in door_res:
+            if d.units and not d.over_cap:
+                lo, hi = unit_door_cost(s, d.units, d.rail_sides)
+                low, high, n = low + lo, high + hi, n + 1
+        out = [priced("step pads", pads, p["step_pad"])]
+        out.append(CostLine("precast steps and railings", float(n), "per door (FD8 2a; delivery not included)", low, high))
+        return out
     rail = sum(d.rail_ft for d in door_res)
     out = []
     if slab:

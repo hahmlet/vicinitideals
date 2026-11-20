@@ -1,6 +1,7 @@
 {# The foundation model for the drawn pod (FOLLOWUPS 209, flats/foundation), priced
    when the page is drawn from the stored measurement and flats/config/foundation.yaml.
-   A note, never a colour: nothing here is read by the screen. #}
+   The costs are a note, never a colour. The six-step cap line (FD8) is the screen's own
+   check, worked on the same ground; the screen colours it, this panel only says it. #}
 {% set f = foundation %}
 <div class="card" id="lot-foundation" style="padding:12px;margin:12px 0;border-left:4px solid #94a3b8;background:#f8fafc"
      data-foundation-status="{{ f.status if f else 'not_measured' }}">
@@ -15,12 +16,20 @@
     <div style="font-size:12px" data-foundation-remeasure>{{ f.status_words }}</div>
     <div class="muted" style="font-size:11px;margin-top:4px">{{ f.measured_on_words }}</div>
   {% else %}
+    {% if f.cap %}
+    <div style="font-size:13px;margin-bottom:4px" data-foundation-cap="{{ f.cap.state }}">
+      {% if f.cap.state in ("over_cap", "near_cap", "class_unread") %}<strong>{{ f.cap.words }}</strong>{% else %}{{ f.cap.words }}{% endif %}
+      {% if f.cap.state in ("over_cap", "near_cap") %}<span class="muted" style="font-size:11px"> -- {{ f.cap.door }}, {{ "%.1f"|format(f.cap.over_by_in) }} in over the {{ "%g"|format(f.cap.cap_in) }} in cap</span>{% endif %}
+    </div>
+    {% endif %}
+    {% for n in f.notes or [] %}<div class="muted" style="font-size:11px" data-foundation-door-face>{{ n }}</div>{% endfor %}
     <div style="font-size:13px" data-foundation-style>{{ f.style.words }}</div>
     {% if f.cheaper_words %}<div style="font-size:13px;margin-top:2px" data-foundation-cheaper><strong>{{ f.cheaper_words }}</strong></div>{% endif %}
     <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px">
       {% for m in f.methods %}
       <div class="foundation-method" data-foundation-method="{{ m.method }}" style="flex:1 1 260px;font-size:12px">
         <div><strong>{{ m.name|capitalize }}</strong>: <span data-foundation-cost>{{ m.cost_words }}</span></div>
+        {% if m.usable is defined and not m.usable %}<div style="margin-top:2px" data-foundation-not-used><strong>{{ m.not_used_words }}</strong></div>{% endif %}
         {% if m.method == "A wet" %}
         <div class="muted" style="margin-top:2px">The same floor, edge and steps as the dry-season slab, with more rock under it for a wet-season build.</div>
         {% else %}
@@ -52,7 +61,7 @@
       <strong>Mapped buildings under the pod</strong>
       <div style="margin-top:2px">{{ old.words }}</div>
       {% if old.if_basement_words %}<div style="margin-top:2px" data-foundation-if-basement>{{ old.if_basement_words }}</div>{% endif %}
-      {% if old.weighted_words %}<div style="margin-top:2px" data-foundation-weighted>{{ old.weighted_words }}</div>{% endif %}
+      {% if old.scenario_words %}<div style="margin-top:2px" data-foundation-scenarios>{{ old.scenario_words }}</div>{% endif %}
     </div>
     <details style="font-size:11px;margin-top:8px" data-foundation-detail>
       <summary class="muted">Steps at each door and the cost lines</summary>
@@ -60,10 +69,10 @@
       <div style="margin-top:6px"><strong>{{ m.name|capitalize }}</strong></div>
       {% if m.method != "A wet" %}
       <table class="data-table" style="font-size:11px" data-foundation-doors="{{ m.method }}">
-        <thead><tr><th>Door</th><th>Floor above ground</th><th>Steps</th><th>Guard</th><th>Handrail</th></tr></thead>
+        <thead><tr><th>Door</th><th>Floor above ground</th><th>Steps</th><th>Precast units</th><th>Railing sides</th><th>Guard</th><th>Handrail</th></tr></thead>
         <tbody>
           {% for d in m.doors %}
-          <tr><td>{{ d.face }}, {{ "%g"|format(d.x_ft) }} ft from the left</td><td>{{ d.height_words }}</td><td>{{ d.steps }}</td><td>{{ "yes" if d.guard else "no" }}</td><td>{{ "yes" if d.handrail else "no" }}</td></tr>
+          <tr><td>{{ d.face }}, {{ "%g"|format(d.x_ft) }} ft from the left</td><td>{{ d.height_words }}</td><td>{{ d.steps }}</td><td>{{ d.units if d.units is not none else "" }}{% if d.over_cap %} <strong>over the cap</strong>{% endif %}</td><td>{{ d.rail_sides if d.rail_sides is not none else "" }}</td><td>{{ "yes" if d.guard else "no" }}</td><td>{{ "yes" if d.handrail else "no" }}</td></tr>
           {% endfor %}
         </tbody>
       </table>
@@ -81,6 +90,7 @@
     {% if f.flags %}
     <div class="muted" style="font-size:11px;margin-top:6px" data-foundation-flags>Notes: {% for fl in f.flags %}{{ fl.words }}{% if not loop.last %}; {% endif %}{% endfor %}.</div>
     {% endif %}
+    {% if f.precast_words %}<div class="muted" style="font-size:11px;margin-top:6px" data-foundation-precast>{{ f.precast_words }}</div>{% endif %}
     <div class="muted" style="font-size:11px;margin-top:6px" data-foundation-note>{{ f.note }}</div>
     <div class="muted" style="font-size:10px;margin-top:2px" data-foundation-measured-on>{{ f.measured_on_words }} Priced with settings {{ f.settings_version }}.</div>
   {% endif %}

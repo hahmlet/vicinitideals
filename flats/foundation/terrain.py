@@ -50,6 +50,17 @@ class Dem:
 
             self._fwd = Transformer.from_crs(CRS_WORKING, crs, always_xy=True)
 
+    @classmethod
+    def sharing(cls, other: Any) -> Dem:
+        """A reader over another reader's open models (the slope check's
+        ``flats.fit.slope.Terrain``: same tiles, same 10 m model, same
+        EPSG:2913 transform), so the screen opens each file once."""
+        d = cls.__new__(cls)
+        d.tiles = list(getattr(other, "tiles", None) or [])
+        d.coarse = getattr(other, "coarse", None)
+        d._fwd = getattr(other, "_fwd", None)
+        return d
+
     def _read(self, ds: Any, bounds: tuple[float, float, float, float]) -> tuple[Any, Any] | None:
         import numpy as np
         from rasterio.windows import from_bounds

@@ -25,7 +25,7 @@ WHEN = "2026-11-19T12:00:00+00:00"
 INPUTS = {"ground_class": "FIRM", "frost_register_in": 12.0, "year_built": 1925, "relief_input_ft": 3.0}
 
 
-def _measured(along: float = 3.0, across: float = 1.0, *, old: bool = True, tlid: str = "1S2E08BA  -09500") -> measure.Measured:
+def _measured(along: float = 1.0, across: float = 0.0, *, old: bool = True, tlid: str = "1S2E08BA  -09500") -> measure.Measured:
     m = measure.measure(grounds.plane(S, along, across), S, tlid=tlid, county="multnomah", inputs=INPUTS)
     box = oldbuild.Outline(((((30.0, -5.0), (55.0, -5.0), (55.0, 12.0), (30.0, 12.0), (30.0, -5.0))),), "B1", 1925)
     return measure.with_old_buildings(m, True, oldbuild.measure_all([box], S) if old else ())
@@ -114,12 +114,18 @@ def test_the_old_building_figure_is_never_in_a_cost() -> None:
     old = with_old["old_buildings"]
     assert old["in_total"] is False and old["count"] == 1 and old["wall_crossed"]
     assert Decimal(old["if_basement"]["B"]["low"]) > 0 and Decimal(old["if_basement"]["A"]["high"]) > 0
-    assert Decimal(old["weighted"]["B"]["low"]) == (
-        Decimal(old["if_basement"]["B"]["low"]) * Decimal(str(old["basement_share"]))
-    ).quantize(Decimal("0.01"))
+    # FD8 2c: two scenarios and the likelihood; the weighted figure is never shown as a cost
+    assert "weighted" not in old and "weighted_words" not in old
+    sc = old["scenarios"]
+    assert sc["likelihood"] == old["basement_share"] == 0.80
+    methods = {m["method"]: m for m in with_old["methods"]}
+    for m, name in (("B", "B"), ("A", "A dry")):
+        assert sc["no_basement"][m]["low"] == methods[name]["cost_low"]
+        assert Decimal(sc["has_basement"][m]["high"]) == Decimal(methods[name]["cost_high"]) + Decimal(old["if_basement"][m]["high"])
     assert old["if_basement_words"].startswith("If a mapped building here had a basement:")
     assert "Not in the cost ranges above" in old["if_basement_words"]
-    assert old["weighted_words"].startswith("Weighted by how often a house built 1925 had a basement (80%)")
+    assert old["scenario_words"].startswith("Two cases: with no basement, raised floor $")
+    assert old["scenario_words"].endswith("A house built 1925 had a basement about 80% of the time.")
     assert "mapped building" in old["words"] and "house" in old["words"]
     assert without["old_buildings"]["words"] == "No mapped building stands under the pod."
 

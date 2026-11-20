@@ -3242,6 +3242,19 @@ async def test_sewer_reasons_are_said_in_words() -> None:
     assert "sewer" in _CHECK_WORDS[sewer.CHECK]
 
 
+async def test_foundation_cap_reasons_are_said_in_words() -> None:
+    """The six-step cap (FD8, Steph 2026-11-20) reads as sentences, and the
+    red one says the rulings' own words."""
+    from app.api.routers.ui_flats import _CHECK_WORDS, _REASON_WORDS
+    from flats.ingest import foundation_cap
+
+    for code in foundation_cap.REASONS:
+        assert code in _REASON_WORDS, code
+    assert _REASON_WORDS[foundation_cap.FOUNDATION_STEPS_CAP].startswith(
+        "foundation: a door needs more than six steps on every method")
+    assert "six-step cap" in _CHECK_WORDS[foundation_cap.CHECK]
+
+
 async def test_institutional_land_is_said_in_words() -> None:
     """A school, park or rail lot answered RED by assign reads as
     institutional land, and says churches are still screened (FOLLOWUPS 47)."""

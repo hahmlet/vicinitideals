@@ -72,6 +72,9 @@ def measured_rows(m: Measured) -> tuple[dict[str, Any], list[dict[str, Any]], li
         year_built=m.year_built,
         old_buildings_held=m.old_buildings_held,
         old_buildings_n=len(m.old_buildings),
+        steep_slope_max=m.steep_slope_max,
+        door_face=m.door_face,
+        door_face_rule=m.door_face_rule,
         geometry=json.dumps(geometry, sort_keys=True),
     )
     lines = [
@@ -88,7 +91,17 @@ def measured_rows(m: Measured) -> tuple[dict[str, Any], list[dict[str, Any]], li
         }
         for ln in m.lines
     ]
-    doors = [{"tlid": m.tlid, "face": d.face, "x_ft": d.x_ft, "drop_in": d.drop_in} for d in m.doors]
+    doors = [
+        {
+            "tlid": m.tlid,
+            "face": d.face,
+            "x_ft": d.x_ft,
+            "drop_in": d.drop_in,
+            "out_drops_in": list(d.out_drops_in),
+            "box_drop_in": d.box_drop_in,
+        }
+        for d in m.doors
+    ]
     return lot, lines, doors
 
 
@@ -182,7 +195,10 @@ def from_measured_rows(
             )
             for r in lines
         ),
-        doors=tuple(DoorMeasure(r["face"], r["x_ft"], r["drop_in"]) for r in doors),
+        doors=tuple(
+            DoorMeasure(r["face"], r["x_ft"], r["drop_in"], tuple(r.get("out_drops_in") or ()), r.get("box_drop_in"))
+            for r in doors
+        ),
         fill_volume_ft3=lot["fill_volume_ft3"],
         fill_max_in=lot["fill_max_in"],
         fill_area_over_sf=tuple(lot[_band_col(b)] for b in geometry["fill_bands_in"]),
@@ -195,6 +211,9 @@ def from_measured_rows(
         year_built=None if lot.get("year_built") is None else int(lot["year_built"]),
         old_buildings_held=bool(lot.get("old_buildings_held") or False),
         old_buildings=old_buildings_from_rows(bldgs or [], stretches or []),
+        steep_slope_max=lot.get("steep_slope_max"),
+        door_face=lot.get("door_face"),
+        door_face_rule=lot.get("door_face_rule"),
     )
 
 
@@ -229,6 +248,9 @@ def _method_cols(key: str, r: MethodResult) -> dict[str, Any]:
         f"{key}_cost_low": str(r.cost.low),
         f"{key}_cost_high": str(r.cost.high),
         f"{key}_flags": ";".join(r.flags),
+        f"{key}_usable": r.usable,
+        f"{key}_over_cap": r.over_cap,
+        f"{key}_stop": r.stop,
     }
 
 
@@ -245,6 +267,12 @@ def assessed_rows(res: LotResult) -> tuple[dict[str, Any], list[dict[str, Any]],
         "style_words": res.style.words,
         "challenges": ";".join(f"{i.code}:{i.method}" if i.method else i.code for i in res.challenges),
         "easy": ";".join(f"{i.code}:{i.method}" if i.method else i.code for i in res.easy),
+        "door_face": res.measured.door_face,
+        "door_face_rule": res.measured.door_face_rule,
+        "cap_state": res.cap.state if res.cap else None,
+        "cap_best": res.cap.best if res.cap else None,
+        "cap_door": res.cap.door if res.cap else None,
+        "cap_over_by_in": res.cap.over_by_in if res.cap else None,
     }
     old = res.infill
     lot.update(
@@ -262,6 +290,7 @@ def assessed_rows(res: LotResult) -> tuple[dict[str, Any], list[dict[str, Any]],
     for method in ("B", "A"):
         for prices in ("low", "high"):
             lot[f"old_if_basement_{method.lower()}_{prices}"] = str(old.total(method, prices))
+            # kept for the record; never shown as a cost (FD8 2c)
             lot[f"old_weighted_{method.lower()}_{prices}"] = str(old.weighted(method, prices))
     for c in res.cheaper:
         key = f"cheaper_vs_{METHOD_KEYS[c.against]}_{c.prices}"
@@ -305,6 +334,10 @@ def assessed_rows(res: LotResult) -> tuple[dict[str, Any], list[dict[str, Any]],
                     "guard": d.guard,
                     "handrail": d.handrail,
                     "rail_ft": d.rail_ft,
+                    "units": d.units,
+                    "rail_sides": d.rail_sides,
+                    "over_cap": d.over_cap,
+                    "cap_height_in": d.cap_height_in,
                 }
             )
     return lot, lines, doors

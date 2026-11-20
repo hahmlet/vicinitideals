@@ -37,7 +37,15 @@ class Price:
 #: section -> the settings it holds, in file order. A setting's name is unique
 #: across sections, so :class:`Settings` is flat.
 SECTIONS: dict[str, tuple[str, ...]] = {
-    "building": ("finished_length_ft", "finished_width_ft", "length_ft", "width_ft", "party_x_ft", "door_x_ft"),
+    "building": (
+        "finished_length_ft",
+        "finished_width_ft",
+        "length_ft",
+        "width_ft",
+        "party_x_ft",
+        "door_x_front_ft",
+        "door_x_back_ft",
+    ),
     "raised": (
         "clear_in",
         "floor_depth_in",
@@ -58,6 +66,14 @@ SECTIONS: dict[str, tuple[str, ...]] = {
         "footing_max_slope",
         "trench_w_in",
         "haul_share",
+        "stepped_footing",
+        "footing_step_in",
+        "engineered_wall_over_in",
+        "storey_floor_over_in",
+        "storey_share",
+        "storey_floor_any_over_in",
+        "piles_stem_in",
+        "piles_level_bars_min",
     ),
     "shared": ("embed_in", "use_frost_register", "bar_lb_per_ft", "lap", "concrete_waste", "rock_ton_per_yd3"),
     "slab": (
@@ -69,6 +85,7 @@ SECTIONS: dict[str, tuple[str, ...]] = {
         "fill_limit_in",
         "unbalanced_limit_in",
         "uprights_fill_over_in",
+        "fill_flag_with_strip",
     ),
     "doors": (
         "landing_drop_in",
@@ -77,6 +94,14 @@ SECTIONS: dict[str, tuple[str, ...]] = {
         "landing_depth_in",
         "guard_over_in",
         "handrail_risers",
+        "steps_rule",
+        "cap_risers",
+        "near_cap_in",
+        "precast_markup",
+        "stair_ground",
+        "guard_box",
+        "guard_box_out_ft",
+        "guard_box_side_ft",
     ),
     "sampling": (
         "station_ft",
@@ -89,6 +114,8 @@ SECTIONS: dict[str, tuple[str, ...]] = {
         "coarse_cell_over_m",
         "front_face_guess_over_deg",
         "tolerance_in",
+        "steep_run_ft",
+        "steep_slope_one_in",
     ),
     "record": ("fill_bands_in", "wall_bands_ft"),
     "classify": (
@@ -103,6 +130,7 @@ SECTIONS: dict[str, tuple[str, ...]] = {
     "old_buildings": (
         "grow_ft",
         "corner_within_ft",
+        "basement_min_sf",
         "basement_floor_ft",
         "deep_stem_in",
         "bridge_run_ft",
@@ -142,9 +170,20 @@ PRICES: tuple[str, ...] = (
     "bar_lb",
     "form_sf",
     "rock_ton",
-    "riser",
     "step_pad",
-    "rail_ft",
+    "precast_unit_1",
+    "precast_unit_2",
+    "precast_unit_3",
+    "precast_unit_4",
+    "precast_unit_5",
+    "precast_unit_6",
+    "precast_rail_1",
+    "precast_rail_2",
+    "precast_rail_3",
+    "precast_rail_4",
+    "precast_rail_5",
+    "precast_rail_6",
+    "precast_install",
     "pile",
     "pump",
     "haul_yd3",
@@ -157,7 +196,15 @@ PRICES: tuple[str, ...] = (
     "cassettes_12",
 )
 
-_LISTS = {"party_x_ft", "door_x_ft", "fill_bands_in", "wall_bands_ft", "own_look_classes", "piles_classes", "footing_classes"}
+#: Prices only the per-riser step rule reads (``steps_rule: per_riser``, the
+#: rule FLATS ran before FD8; the ``--as-flats-built`` override supplies them).
+#: The shipped file prices steps as precast units and does not hold them.
+PER_RISER_PRICES: tuple[str, ...] = ("riser", "rail_ft")
+
+#: The step rules (``doors.steps_rule``).
+STEPS_RULES = ("precast", "per_riser")
+
+_LISTS = {"party_x_ft", "door_x_front_ft", "door_x_back_ft", "fill_bands_in", "wall_bands_ft", "own_look_classes", "piles_classes", "footing_classes"}
 _INTS = {
     "vert_bars_extra_per_line",
     "level_bars_base",
@@ -170,8 +217,11 @@ _INTS = {
     "bridge_bars",
     "year_band_1",
     "year_band_2",
+    "cap_risers",
+    "piles_level_bars_min",
 }
-_BOOLS = {"use_frost_register"}
+_BOOLS = {"use_frost_register", "stepped_footing", "fill_flag_with_strip", "stair_ground", "guard_box"}
+_STRS = {"steps_rule": STEPS_RULES}
 
 
 @dataclass(frozen=True)
@@ -185,7 +235,12 @@ class Settings:
     length_ft: float
     width_ft: float
     party_x_ft: tuple[float, ...]
-    door_x_ft: tuple[float, ...]
+    #: Front and back door centres from the framing's left end (FD8 2b). The
+    #: front doors are on the face the door-face rule names (FD8, Steph
+    #: 2026-11-20); both lists are symmetric about the centre, so which end
+    #: is "left" does not move a door.
+    door_x_front_ft: tuple[float, ...]
+    door_x_back_ft: tuple[float, ...]
     # raised (B)
     clear_in: float
     floor_depth_in: float
@@ -206,6 +261,14 @@ class Settings:
     footing_max_slope: float
     trench_w_in: float
     haul_share: float
+    stepped_footing: bool
+    footing_step_in: float
+    engineered_wall_over_in: float
+    storey_floor_over_in: float
+    storey_share: float
+    storey_floor_any_over_in: float
+    piles_stem_in: float
+    piles_level_bars_min: int
     # shared
     embed_in: float
     use_frost_register: bool
@@ -222,6 +285,7 @@ class Settings:
     fill_limit_in: float
     unbalanced_limit_in: float
     uprights_fill_over_in: float
+    fill_flag_with_strip: bool
     # doors
     landing_drop_in: float
     riser_in: float
@@ -229,6 +293,14 @@ class Settings:
     landing_depth_in: float
     guard_over_in: float
     handrail_risers: int
+    steps_rule: str
+    cap_risers: int
+    near_cap_in: float
+    precast_markup: float
+    stair_ground: bool
+    guard_box: bool
+    guard_box_out_ft: float
+    guard_box_side_ft: float
     # sampling
     station_ft: float
     high_point_along_ft: float
@@ -240,6 +312,8 @@ class Settings:
     coarse_cell_over_m: float
     front_face_guess_over_deg: float
     tolerance_in: float
+    steep_run_ft: float
+    steep_slope_one_in: float
     # record
     fill_bands_in: tuple[float, ...]
     wall_bands_ft: tuple[float, ...]
@@ -258,6 +332,7 @@ class Settings:
     # old buildings under the pod (FD6 5.8, FD7)
     grow_ft: float
     corner_within_ft: float
+    basement_min_sf: float
     basement_floor_ft: float
     deep_stem_in: float
     bridge_run_ft: float
@@ -304,6 +379,13 @@ class Settings:
     def price(self, key: str) -> Price:
         return self.prices[key]
 
+    @property
+    def cap_in(self) -> float:
+        """The six-step cap: floor (B) or slab top (A) above the ground where the
+        stair lands, at most the step in at the door plus ``cap_risers`` unit
+        risers (8 + 6 x 7.25 = 51.5 in, FD8 2a) [calc]."""
+        return self.landing_drop_in + self.cap_risers * self.riser_in
+
 
 def _number(where: str, raw: Any, *, integer: bool) -> float | int:
     if isinstance(raw, bool) or not isinstance(raw, (int, float)):
@@ -316,6 +398,10 @@ def _number(where: str, raw: Any, *, integer: bool) -> float | int:
 
 
 def _value(name: str, raw: Any) -> Any:
+    if name in _STRS:
+        if raw not in _STRS[name]:
+            raise ValueError(f"{name}: value must be one of {', '.join(_STRS[name])}, got {raw!r}")
+        return str(raw)
     if name in _BOOLS:
         if not isinstance(raw, bool):
             raise ValueError(f"{name}: value must be true or false, got {raw!r}")
@@ -374,13 +460,14 @@ def parse(doc: dict[str, Any]) -> Settings:
     raw_prices = doc.get("prices")
     if not isinstance(raw_prices, dict):
         raise ValueError("prices: missing")
-    extra = set(raw_prices) - set(PRICES)
+    extra = set(raw_prices) - set(PRICES) - set(PER_RISER_PRICES)
     if extra:
         raise ValueError(f"prices: unknown prices {sorted(extra)}")
+    want = PRICES + (PER_RISER_PRICES if values["steps_rule"] == "per_riser" else ())
     prices = {}
-    for key in PRICES:
+    for key in (*want, *(k for k in PER_RISER_PRICES if k in raw_prices and k not in want)):
         if key not in raw_prices:
-            raise ValueError(f"prices.{key}: missing")
+            raise ValueError(f"prices.{key}: missing (steps_rule {values['steps_rule']})")
         prices[key] = _price(key, raw_prices[key])
         sources[f"prices.{key}"] = prices[key].source
     return Settings(**values, prices=prices, sources=sources)

@@ -38,10 +38,10 @@ BRIDGE, DEEPEN, NO_WALL = "bridge", "deepen", "no wall over it"
 NOT_HELD = "not held"
 
 SIMPLIFICATIONS = (
-    "Conditional: priced as if every old building under the pod had a basement; the weighted figure scales it by the basement share for the lot's year built.",
+    "Two scenarios (FD8 2c): no basement (the method totals) and has basement (the totals plus this cost), beside the likelihood of a basement for the lot's year built; the likelihood-weighted figure is kept for the record and never shown as a cost.",
     "Each old building is one FD7 case: one reach for the whole building (the corner overhang when any stretch reaches a pod corner), its longest stretch against it.",
     "B+P is not priced: the screw piles would carry the wall past the backfill.",
-    "Every footprint counts, a shed or a neighbour's wall over the line included, as FD5 pass 2 counted them.",
+    "Outlines under basement_min_sf (400 sq ft) are left out: a shed or a detached garage has no basement (FD8 2c).",
 )
 
 
@@ -181,6 +181,8 @@ def assess(m: Measured, s: Settings, embed_in: float) -> Infill:
     """Every old building under the pod, priced conditionally, and the weighted figure."""
     out = []
     for b in m.old_buildings:
+        if b.area_sf < s.basement_min_sf:
+            continue  # FD8 2c: a shed or a detached garage has no basement
         e = Exposure.of(b)
         remedy, bc = b_cost(e, s, embed_in)
         out.append(BuildingCost(b.bldg_id, e, remedy, bc, a_cost(e, s)))

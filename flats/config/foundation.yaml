@@ -1,8 +1,13 @@
-# Foundation model settings (FOLLOWUPS 209; design: Factory-Sim
-# docs/research/FD6-foundation-model-spec.md, sections 4 and 6).
+# Foundation model settings (FOLLOWUPS 209, 213; design: Factory-Sim
+# docs/research/FD6-foundation-model-spec.md, sections 4 and 6, and
+# FD8-reply-to-flats-foundation-run.md v3, sections 2a-2e).
 #
-# A NOTE for the lot report, never a colour: nothing the screen, a check or a
-# flag reads comes from here (flats/foundation/ never imports flats.score).
+# One thing here decides a colour: the six-step cap (doors.cap_risers and
+# doors.near_cap_in; Steph 2026-11-20, rulings.yaml
+# 2026-11-20-foundation-six-step-cap-red and -near-cap-yellow). The screen
+# reads it in the bridge through flats/ingest/foundation_cap.py;
+# flats/foundation/ itself still never imports flats.score. Everything else
+# here is a NOTE for the lot report.
 #
 # Every value is research, not engineering: a code minimum, a hand calculation
 # or an estimate that a licensed engineer will replace. Each one sits here once,
@@ -44,9 +49,12 @@ building:
   party_x_ft:
     value: [19.90625, 39.864583333333336, 59.822916666666664]
     source: "DECISIONS N-finished, FOLLOWUPS 238(i): party-line centres 238.875, 478.375 and 717.875 in from the framing's end (238-1/4 in homes, 1-1/4 in gaps) [calc]"
-  door_x_ft:
-    value: [9.966145833333334, 29.8984375, 49.83072916666667, 69.76302083333334]
-    source: "[est] the plan's door positions have not been read (front and back of each home); 10, 30, 50, 70 ft on 80 ft, scaled to the 956.75 in framing (FOLLOWUPS 238(i))"
+  door_x_front_ft:
+    value: [6.979166666666667, 32.833333333333336, 46.895833333333336, 72.75]
+    source: "FD8 2b: Factory-Sim product model config/product.yaml, front door centre 83.75 in from each home's stair-side end (the two outer ends and the centre join): 83.75, 394.0, 562.75, 873.0 in from the framing's left end [est, snapped to the stud grid]. On the face the door-face rule names (Steph 2026-11-20, rulings.yaml 2026-11-20-front-doors-face-parking)"
+  door_x_back_ft:
+    value: [2.5, 37.3125, 42.416666666666664, 77.22916666666667]
+    source: "FD8 2b: Factory-Sim product model config/product.yaml, back door centre 30.0 in from each home's stair-side end: 30.0, 447.75, 509.0, 926.75 in from the framing's left end [est, snapped to the stud grid]"
 
 # B: raised floor of twelve factory cassettes on one concrete wall on a strip footing.
 raised:
@@ -61,16 +69,16 @@ raised:
     source: "[code R403.1.1] footing thickness"
   footing_w_long_in:
     value: 18
-    source: "[calc, FD3] at 1,500 psf (long walls)"
+    source: "[calc, FD3] 2.05 kip a foot at 1,500 psf; above the 15 in of Table R403.1 (FD8 2e)"
   footing_w_end_in:
-    value: 12
-    source: "[calc, FD3] at 1,500 psf (end walls)"
+    value: 15
+    source: "[code Table R403.1, 2023 ORSC] light frame, two storeys, 1,500 psf (FD8 2b; was 12 [calc, FD3], which would need an engineer)"
   footing_w_party_in:
-    value: 14
-    source: "[calc, FD3] at 1,500 psf (party lines)"
+    value: 15
+    source: "[code Table R403.1, 2023 ORSC] light frame, two storeys, 1,500 psf (FD8 2b; was 14 [calc, FD3])"
   stem_outside_in:
     value: 8
-    source: "[est] wall thickness, outside lines"
+    source: "[est] one wall for every lot; [code R404.1.4.2] allows 6 in where no wall is over 4 ft 6 in, not taken (FD8 2e)"
   stem_party_in:
     value: 10
     source: "[est] wall thickness, party lines"
@@ -79,40 +87,64 @@ raised:
     source: "[code R404.1.4.2] tallest standard wall 8 ft; taller walls take their bars from the code's reinforced-wall tables (not opened) or an engineer"
   engineered_stem_in:
     value: 10
-    source: "[est] wall thickness above the tallest standard wall"
+    source: "[est] wall thickness above the tallest standard wall; Table R404.1.2(3) would allow 8 in to 10 ft, kept thicker until an engineer says (FD8 2e)"
   vert_bar_spacing_ft:
     value: 4
-    source: "[code R403.1.3.1, R404.1.4.2] upright No. 4 bars every 4 ft"
+    source: "[est] upright No. 4 bars every 4 ft on every wall, more than the code asks: [code R403.1.3.1, 2023 ORSC] asks a hooked No. 4 at 4 ft only where the wall is a second pour on the footing; tall and stepped walls are poured that way (FD8 2e)"
   vert_bars_extra_per_line:
     value: 2
-    source: "[code R403.1.3.1, R404.1.4.2] plus 2 upright bars per wall line"
+    source: "[est] corner and end bars; not a code rule (FD8 2e)"
   vert_bar_extra_in:
     value: 18
-    source: "FD6 section 5.4 (upright bar length = average wall height + 18 in) and the reference model"
+    source: "[est] hook and lap; the code's own dowel is shorter, to the footing bottom and 14 in into the wall (FD8 2e)"
   level_bars_base:
     value: 2
     source: "[code R403.1.3.1] 2 level bars per wall line (one in the footing, one within 12 in of the top)"
   level_bar_third_over_in:
-    value: 48
-    source: "[est] a third level bar where the line's tallest point is over 4 ft; Table R404.1.2(1) not opened"
+    value: 60
+    source: "[code Table R404.1.2(1), 2023 ORSC] mid-height bar where the wall is over 5 ft (FD8 2b; was 48 [est]); applies to A's edge as well"
   level_bar_fourth_over_in:
     value: 96
-    source: "[est] a fourth level bar over 8 ft; Table R404.1.2(1) not opened"
+    source: "[code Table R404.1.2(1), 2023 ORSC] bars at the third points over 8 ft (FD8 key issue 2)"
   footing_max_slope:
     value: 0.1
-    source: "[code R403.1.5] footing bottom level, or sloped no more than 1 in 10; otherwise stepped (reported per line, not modelled: the footing is modelled on a slope, FD6 5.3)"
+    source: "[code R403.1.5, 2023 ORSC] footing bottom level, or sloped no more than 1 in 10; otherwise stepped (reported per line)"
   trench_w_in:
     value: 24
     source: "FD3 (footing trench width for the dig) [est]"
   haul_share:
     value: 0.25
     source: "FD3 [est] most of the dig stays in the crawlspace; a quarter is hauled away"
+  stepped_footing:
+    value: true
+    source: "FD8 2d [code R403.1.5, 2023 ORSC] level top, bottom no steeper than 1 in 10: per wall line, where the line's fall is one step or less every station takes the line's tallest wall; where it is more every station takes half a step more wall. Same rule for A's edge. false = the footing on a slope (FD6 5.3; the FD8 section 3 table)"
+  footing_step_in:
+    value: 8
+    source: "[est] FD8 2d: step height of a stepped footing"
+  engineered_wall_over_in:
+    value: 120
+    source: "FD8 2b [code R404.1.4.2; Tables R404.1.2(3) and (4), 2023 ORSC]: B is engineered, not priced by this model, where its tallest wall is over 10 ft"
+  storey_floor_over_in:
+    value: 72
+    source: "FD8 2b [code chapter 2 'Story above grade plane', 2023 ORSC]: B is engineered where the floor is more than 6 ft above the ground on more than half the outside wall length"
+  storey_share:
+    value: 0.5
+    source: "FD8 2b [code chapter 2 'Story above grade plane', 2023 ORSC]: more than half the outside wall length"
+  storey_floor_any_over_in:
+    value: 144
+    source: "FD8 2b [code chapter 2 'Story above grade plane', 2023 ORSC]: B is engineered where the floor is more than 12 ft above the ground at any point"
+  piles_stem_in:
+    value: 10
+    source: "[est] FD8 2d from FD3 wall_on_piles: B on piles, wall 10 in thick on every line (it spans 7.2 ft between piles as a beam); [code R403.1.2, 2023 ORSC] other footing systems shall be designed"
+  piles_level_bars_min:
+    value: 4
+    source: "[est] FD8 2d from FD3 wall_on_piles: B on piles, at least four level bars a line (two top, two bottom)"
 
 # Shared by A and B.
 shared:
   embed_in:
     value: 18
-    source: "[FLATS pass 2] footing bottom below the ground beside it: frost 12 in, Gresham 18 in; one 18 in depth for every lot (FD6 section 3 default); with use_frost_register, the depth for a lot whose register depth is not held"
+    source: "[FLATS pass 2] footing bottom below the ground beside it: frost 12 in, Gresham 18 in; one 18 in depth for every lot (FD6 section 3 default); with use_frost_register, the depth for a lot whose register depth is not held. The answer keys keep 18 in written out (FD8 2e)"
   use_frost_register:
     value: true
     source: "coordinator 2026-11-19 (slice 2): each lot's own frost depth from the FLATS frost register (lot file frost_register_in, stored in the measured record) sets B's footing depth; false = embed_in on every lot (the FD6 section 8 reference)"
@@ -143,40 +175,67 @@ slab:
     source: "[code Table R403.1], FD3 (edge on a flat lot, 15 in wide)"
   edge_d_in:
     value: 26
-    source: "[code Table R403.1], FD3 (edge on a flat lot, 26 in deep = footing depth 18 in + slab top 8 in; move with embed_in and slab_top_in)"
+    source: "[calc] footing depth 18 in + slab top 8 in (move with embed_in and slab_top_in); [code R403.1.4, 2023 ORSC] sets the depth, 12 in below undisturbed ground and frost; Table R403.1 gives the width only (FD8 2e)"
   edge_extra_t_in:
     value: 8
     source: "FD6 section 5.6 (the low-side edge goes deeper by 8 in x fill depth; the reference model uses the B outside wall thickness)"
   fill_limit_in:
     value: 24
-    source: "[code R506.2.1] deepest fill before an approved design is needed: 24 in of clean sand or gravel (8 in of earth)"
+    source: "[code R506.2.1, 2023 ORSC, read on up.codes 2026-11-19] fill not over 24 in of clean sand or gravel, 8 in of earth, except where approved (FD8 2e); a flag only"
   unbalanced_limit_in:
     value: 48
     source: "[code R404.1.4.2, R404.1.3.2.2] deepest fill an edge may hold back without an engineer: 4 ft"
   uprights_fill_over_in:
     value: 24
     source: "FD6 section 5.6 (uprights every 4 ft on an outside line where the fill is over 24 in)"
+  fill_flag_with_strip:
+    value: true
+    source: "FD8 2d [code R506.2.1, 2023 ORSC, read on up.codes 2026-11-19]: the fill test counts all the rock between the stripped ground and the slab, deepest fill + flat_lot.strip_soil_in + slab top - slab thickness over 24 in [est strip depth]; false = without the strip (FD6)"
 
 # Doors and steps (A and B).
 doors:
   landing_drop_in:
     value: 8
-    source: "[code R311.3.1, Oregon] floor up to 8 in above the landing outside a door"
+    source: "[code R311.3.1 exception and R311.3.2, 2023 ORSC] floor up to 8 in above the landing outside a door; doors swing inward [Steph] (FD8 2a, confirmed)"
   riser_in:
-    value: 7.75
-    source: "[code R311.7.5] riser 7.75 in (Oregon allows 8)"
+    value: 7.25
+    source: "[vendor listing] the precast unit's own riser (Hampton Concrete Products, priunit.html, read 2026-11-20); within the 8 in of [code R311.7.5.1, 2023 ORSC] (FD8 2a; was 7.75). The step from the platform into the home stays under landing_drop_in"
   tread_in:
-    value: 10
-    source: "[est] tread 10 in (Oregon minimum 9)"
+    value: 11
+    source: "[vendor listing] a unit runs 42 in out at one riser and 11 in more per riser, 97 in at six (FD8 2a; was 10 [est])"
   landing_depth_in:
-    value: 36
-    source: "[code R311.3] landing depth"
+    value: 42
+    source: "[vendor listing] the 42 in platform, the shallowest on the list that meets the 36 in landing of [code R311.3, 2023 ORSC] (FD8 2a; was 36)"
   guard_over_in:
     value: 30
-    source: "[code, recalled, R312] guard when the landing is higher than 30 in"
+    source: "[code R312.1.1, 2023 ORSC] guard where the platform is more than 30 in above the lowest ground within 36 in of its open edges (FD8 2d, 2e: read, no longer recalled). Exactly 30 in takes no guard"
   handrail_risers:
     value: 4
-    source: "[code, recalled, R311.7.8] handrail when a stair has 4 or more risers"
+    source: "[code R311.7.8, 2023 ORSC] handrail at four risers or more: one railing side where the unit has four risers (FD8 2a, 2e: read)"
+  steps_rule:
+    value: precast
+    source: "[Steph] FD8 2a: each door is one precast unit with its platform and railing, priced by the unit from the table under prices; per_riser = the rule FLATS ran before FD8 (by the riser and the foot of rail), the --as-flats-built override only"
+  cap_risers:
+    value: 6
+    source: "[Steph] FD8 2a, rulings.yaml 2026-11-20-foundation-six-step-cap-red: a method is not used on a lot where any door needs more than six unit risers, floor or slab top more than 8 + 6 x 7.25 = 51.5 in above the ground where the stair lands [calc]. Six risers, 43.5 in, is the tallest unit on the list [vendor listing]. Exactly 51.5 in is six steps, not over"
+  near_cap_in:
+    value: 2
+    source: "[Steph] rulings.yaml 2026-11-20-foundation-near-cap-yellow: the best method's worst door over the cap by this much or less is YELLOW, never GREEN and not RED; under the cap by this much or less is a note. The ground at a door is known to an inch or two at best (FD8 2a [est])"
+  precast_markup:
+    value: 0.1
+    source: "[Steph] FD8 2a: door cost = (unit + installation + sides x railing) x 1.10. Delivery is not included (FD8 2a; asked of the foundation agent 2026-11-20)"
+  stair_ground:
+    value: true
+    source: "FD8 2d [calc; unit run vendor listing]: H is taken at the foot of the unit, 42 in + 11 in x (k - 1) out from the wall on a line straight out from the door, raising k until the unit reaches; false = H at the wall (the FD8 section 3 table)"
+  guard_box:
+    value: true
+    source: "FD8 2d [code R312.1.1, 2023 ORSC]: the guard is tested to the lowest ground in a box out from the wall and to either side of the door centre; false = the platform's own height, k x 7.25 in (the FD8 section 3 table)"
+  guard_box_out_ft:
+    value: 6
+    source: "FD8 2d [code R312.1.1, 2023 ORSC; est box]: the guard box runs 6 ft out from the wall (the 42 in platform and 36 in beyond it); changing it needs a re-measure"
+  guard_box_side_ft:
+    value: 5
+    source: "FD8 2d [code R312.1.1, 2023 ORSC; est box]: the guard box runs 5 ft either side of the door centre; changing it needs a re-measure"
 
 # How the ground and the walls are sampled.
 sampling:
@@ -210,6 +269,12 @@ sampling:
   tolerance_in:
     value: 0.000001
     source: "[build] numerical tolerance on every threshold test, so floating-point noise never adds a riser or a flag"
+  steep_run_ft:
+    value: 10
+    source: "[est] FD8 2d: the steep-ground flag tests the ground within the 10 ft grid margin over runs of 10 ft; changing it needs a re-measure"
+  steep_slope_one_in:
+    value: 3
+    source: "[code R403.1.9, 2023 ORSC] FD8 2d: ground steeper than 1 in 3 is flagged 'slope setback applies: own look' (a placement question; a flag, no cost)"
 
 # What the measured record keeps beyond FD6 section 2 (Steph 2026-11-19: "get
 # what data you can ... so we can run cheap analysis").
@@ -269,6 +334,9 @@ old_buildings:
   corner_within_ft:
     value: 0.01
     source: "[build] a stretch reaches a pod corner when it ends within this of one"
+  basement_min_sf:
+    value: 400
+    source: "[est] FD8 2c: outlines under 400 sq ft (a shed, a detached garage) have no basement and are left out of the basement scenario"
   basement_floor_ft:
     value: 7
     source: "[est] FD7 section 2: old basement floor 7 ft below the ground"
@@ -329,10 +397,10 @@ flat_lot:
     source: DECISIONS N-finished (four homes a pod)
   party_strip_w_in:
     value: 16
-    source: "FD3, [code R403.1.3.4] party-line thickening 16 in wide"
+    source: "[est] FD3 party-line thickening 16 in wide; Table R403.1 asks 15 (FD8 2e)"
   party_strip_d_in:
     value: 12
-    source: "FD3, [code R403.1.3.4] party-line thickening 12 in deep"
+    source: "[code R403.1.3.4, 2023 ORSC] 12 in below the top of the slab, on every lot (FD8 2e); the cost subtracts the slab"
   strip_soil_in:
     value: 8
     source: "FD3 [est] topsoil stripped under the slab"
@@ -370,37 +438,92 @@ prices:
     low: 160
     high: 220
     unit: per cu yd
-    source: "[guide]"
+    source: "[guide] for 3,000 psi, air not stated; the mix must be 3,000 psi air-entrained [code Table R402.2, 2023 ORSC] (FD8 2e)"
   bar_lb:
     low: 0.76
     high: 1.42
     unit: per lb
-    source: "[vendor listing]"
+    source: "[vendor listing] Grade 60 bar, as [code R404.1.3.3.7.1, 2023 ORSC] asks (FD8 2e)"
   form_sf:
     low: 0.50
     high: 1.50
     unit: per sq ft per use
-    source: "[est] our own panels reused, ties and release. Built on the job with labour it is $5.30-7.30 [agency, Iowa assessor table, old]; not used (FD6 section 10)"
+    source: "[est] materials only, by Steph's cost rule: our own panels reused, ties and release. With labour it is $5.30-7.30 [agency, Iowa assessor table, old]; B carries about twice A's form face (FD8 2e)"
   rock_ton:
     low: 35
     high: 55
     unit: per ton, placed
     source: "[bid data] ODOT"
-  riser:
-    low: 60
-    high: 130
-    unit: per riser (B every riser; A every riser after the first)
-    source: "low: treated wood built on site, materials [est]; high: precast steps, installed [vendor listing]"
   step_pad:
     low: 60
     high: 100
-    unit: per door (A)
-    source: "[est] B-walk pad, bagged mix"
-  rail_ft:
-    low: 15
-    high: 85
-    unit: per ft
-    source: "low: wood, materials [est]; high: iron, installed [vendor listing]"
+    unit: per door where no unit is needed (floor or slab top 8 in or less above the ground)
+    source: "[est] B-walk pad, bagged mix (FD8 2a: the step pad as today where k = 0)"
+  precast_unit_1:
+    low: 448
+    high: 448
+    unit: per door, a precast unit of 1 riser, 4 ft wide, 42 in platform
+    source: "[vendor listing] Hampton Concrete Products (Pittsburgh PA area), priunit.html, undated, read 2026-11-20 (FD8 2a). One list: low and high the same. Delivery is charged separately by the seller and is not in this figure"
+  precast_unit_2:
+    low: 589
+    high: 589
+    unit: per door, a precast unit of 2 risers, 4 ft wide, 42 in platform
+    source: "[vendor listing] Hampton Concrete Products (Pittsburgh PA area), priunit.html, undated, read 2026-11-20 (FD8 2a). One list: low and high the same. Delivery is charged separately by the seller and is not in this figure"
+  precast_unit_3:
+    low: 744
+    high: 744
+    unit: per door, a precast unit of 3 risers, 4 ft wide, 42 in platform
+    source: "[vendor listing] Hampton Concrete Products (Pittsburgh PA area), priunit.html, undated, read 2026-11-20 (FD8 2a). One list: low and high the same. Delivery is charged separately by the seller and is not in this figure"
+  precast_unit_4:
+    low: 881
+    high: 881
+    unit: per door, a precast unit of 4 risers, 4 ft wide, 42 in platform
+    source: "[vendor listing] Hampton Concrete Products (Pittsburgh PA area), priunit.html, undated, read 2026-11-20 (FD8 2a). One list: low and high the same. Delivery is charged separately by the seller and is not in this figure"
+  precast_unit_5:
+    low: 1025
+    high: 1025
+    unit: per door, a precast unit of 5 risers, 4 ft wide, 42 in platform
+    source: "[vendor listing] Hampton Concrete Products (Pittsburgh PA area), priunit.html, undated, read 2026-11-20 (FD8 2a). One list: low and high the same. Delivery is charged separately by the seller and is not in this figure"
+  precast_unit_6:
+    low: 1166
+    high: 1166
+    unit: per door, a precast unit of 6 risers, 4 ft wide, 42 in platform
+    source: "[vendor listing] Hampton Concrete Products (Pittsburgh PA area), priunit.html, undated, read 2026-11-20 (FD8 2a). One list: low and high the same. Delivery is charged separately by the seller and is not in this figure"
+  precast_rail_1:
+    low: 213
+    high: 213
+    unit: per railing side, stock aluminium, for a 1-riser unit with a 42 in platform
+    source: "[vendor listing] Hampton Concrete Products, prounit.html, undated, read 2026-11-20 (FD8 2a). That the stock railing serves as the guard at five and six risers is [est]: its height is not on the page"
+  precast_rail_2:
+    low: 268
+    high: 268
+    unit: per railing side, stock aluminium, for a 2-riser unit with a 42 in platform
+    source: "[vendor listing] Hampton Concrete Products, prounit.html, undated, read 2026-11-20 (FD8 2a). That the stock railing serves as the guard at five and six risers is [est]: its height is not on the page"
+  precast_rail_3:
+    low: 306
+    high: 306
+    unit: per railing side, stock aluminium, for a 3-riser unit with a 42 in platform
+    source: "[vendor listing] Hampton Concrete Products, prounit.html, undated, read 2026-11-20 (FD8 2a). That the stock railing serves as the guard at five and six risers is [est]: its height is not on the page"
+  precast_rail_4:
+    low: 336
+    high: 336
+    unit: per railing side, stock aluminium, for a 4-riser unit with a 42 in platform
+    source: "[vendor listing] Hampton Concrete Products, prounit.html, undated, read 2026-11-20 (FD8 2a). That the stock railing serves as the guard at five and six risers is [est]: its height is not on the page"
+  precast_rail_5:
+    low: 366
+    high: 366
+    unit: per railing side, stock aluminium, for a 5-riser unit with a 42 in platform
+    source: "[vendor listing] Hampton Concrete Products, prounit.html, undated, read 2026-11-20 (FD8 2a). That the stock railing serves as the guard at five and six risers is [est]: its height is not on the page"
+  precast_rail_6:
+    low: 404
+    high: 404
+    unit: per railing side, stock aluminium, for a 6-riser unit with a 42 in platform
+    source: "[vendor listing] Hampton Concrete Products, prounit.html, undated, read 2026-11-20 (FD8 2a). That the stock railing serves as the guard at five and six risers is [est]: its height is not on the page"
+  precast_install:
+    low: 110
+    high: 110
+    unit: per unit, installation
+    source: "[vendor listing] Hampton Concrete Products, priunit.html, read 2026-11-20 (FD8 2a)"
   pile:
     low: 550
     high: 950
@@ -450,4 +573,4 @@ prices:
     low: 10000
     high: 15000
     unit: per pod (twelve floor cassettes, B)
-    source: "[est] trusses, deck, R-30, fixings; the factory model will replace it"
+    source: "[est] trusses, deck, R-30, fixings; the factory model will replace it. Factory-Sim's buying list has the quantities and no prices yet; the floor hatch in each home sits inside it. The largest line in B, moving B against A by $5,000 between its ends (FD8 2e)"

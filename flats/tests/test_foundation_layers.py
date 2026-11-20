@@ -109,7 +109,7 @@ def test_the_measured_rows_round_trip_exactly() -> None:
 
 def test_a_record_refuses_prices_under_other_geometric_settings() -> None:
     m = measure.measure(_plane(1, 0), S)
-    for change in ({"station_ft": 0.5}, {"door_x_ft": (5.0, 25.0, 45.0, 65.0)}, {"fill_bands_in": (6.0,)}):
+    for change in ({"station_ft": 0.5}, {"door_x_front_ft": (5.0, 25.0, 45.0, 65.0)}, {"fill_bands_in": (6.0,)}):
         with pytest.raises(ValueError, match="re-measure"):
             lot.assess(m, S.replace(**change))
     assert set(measure.GEOMETRIC) <= {f.name for f in dataclasses.fields(settings.Settings)}

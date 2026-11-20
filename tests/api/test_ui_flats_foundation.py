@@ -38,7 +38,7 @@ DRAWING = "the rel9 drawn buildings (test)"
 def _doc(tlid: str = A, *, grow_ft: float | None = None, ring: list | None = None) -> dict:
     s = settings.load()
     m = measure.measure(
-        grounds.plane(s, 3.0, 1.0), s, tlid=tlid, county="multnomah",
+        grounds.plane(s, 1.0, 0.0), s, tlid=tlid, county="multnomah",
         inputs={"ground_class": "FIRM", "frost_register_in": 12.0, "year_built": 1925},
     )
     box = oldbuild.Outline(((((30.0, -5.0), (55.0, -5.0), (55.0, 12.0), (30.0, 12.0), (30.0, -5.0))),), "B1", 1925)
@@ -95,7 +95,9 @@ async def test_the_report_carries_the_block_priced_now_and_no_colour_moves(clien
     assert {c["code"] for c in f["challenges"]} >= {"wall_over_old_building"}
     old = f["old_buildings"]
     assert old["in_total"] is False and old["count"] == 1
-    assert isinstance(old["if_basement"]["B"]["low"], str) and isinstance(old["weighted"]["A"]["high"], str)
+    assert isinstance(old["if_basement"]["B"]["low"], str) and isinstance(old["scenarios"]["has_basement"]["B"]["high"], str)
+    assert "weighted" not in old and 0.0 <= old["scenarios"]["likelihood"] <= 1.0
+    assert f["precast_words"].endswith("delivery is not included.") and f["cap"]["state"]
     assert old["if_basement_words"].startswith("If a mapped building here had a basement:")
     assert {fl["code"] for fl in f["flags"]} >= {"wall_crosses_old_building"}
     # Nothing that screens moved.
@@ -166,13 +168,15 @@ async def test_the_lot_page_shows_the_panel_beside_the_colour(client: AsyncClien
     assert page.status_code == 200
     panel = page.text.split('id="lot-foundation"', 1)[1].split("<!-- end lot-foundation -->", 1)[0]
     assert "Foundation (not a screen check)" in panel
-    assert "No effect on the colour" in panel and "never changes the lot&#39;s colour" in panel
+    assert "No effect on the colour" in panel and "never change the lot&#39;s colour" in panel
     assert 'data-foundation-status="priced"' in page.text
     assert 'data-foundation-method="A dry"' in panel and 'data-foundation-method="B"' in panel
     assert "Slab on fill (dry season)" in panel or "slab on fill (dry season)" in panel
     assert "Steps at the 8 doors:" in panel
     assert "If a mapped building here had a basement:" in panel
-    assert "Weighted by how often a house built 1925 had a basement (80%)" in panel
+    assert "Two cases: with no basement" in panel and "had a basement about 80% of the time" in panel
+    assert "Weighted" not in panel
+    assert "delivery is not included" in panel and 'data-foundation-cap="' in panel
     assert "Sizes are code minimums" in panel and "not a budget" in panel
     assert 'data-foundation-doors="B"' in panel and 'data-foundation-cost-lines="A dry"' in panel
     assert 'id="lot-verdict"' in page.text
