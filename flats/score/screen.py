@@ -819,13 +819,20 @@ FIRE_DEAD_END = "fire_dead_end"
 #: 2026-11-10-narrow-street-fire-yellow). Joins ``_checks``'s
 #: ``unmeasured``: held YELLOW, never GREEN.
 FIRE_NARROW_STREET = "fire_narrow_street"
-#: The hose misses on every reading above only because no truck is stood on
-#: a road whose centre line runs more than 50 ft from the lot's street line
-#: (:data:`flats.fit.fire.MAX_GAP_FT`), and reaches from the middle of that
-#: road (:attr:`LotFacts.fire_route_wide_ft`). Whether an engine stands
-#: there is nobody's ruling yet (2026-11-19, a coordinator default). Joins
-#: ``_checks``'s ``unmeasured``: held YELLOW, never GREEN.
-FIRE_WIDE_ROAD = "fire_wide_road"
+#: The hose reaches only with the engine stood on a wide road that has a
+#: second road line close beyond it -- the other carriageway of a divided
+#: highway, or a road with a frontage road beside it -- which the centre
+#: lines cannot tell from a freeway (:attr:`LotFacts.fire_road_unclear`;
+#: rulings.yaml 2026-11-19-fire-engine-on-a-wide-main-road leaves it out).
+#: Joins ``_checks``'s ``unmeasured``: held YELLOW, never GREEN.
+FIRE_ROAD_UNCLEAR = "fire_road_unclear"
+#: The fire check stands on an engine stood on a wide main road, its centre
+#: line more than 50 ft from the lot's street line: an arterial or a state
+#: highway (:attr:`LotFacts.fire_route_wide_ft`,
+#: :attr:`LotFacts.fire_on_state_road`; Steph 2026-11-19: "wide main road,
+#: I'm good with green", and of the state highway "I'd say it's green").
+#: FIRE-WIDE-ROAD marks the reading, below the yellow line.
+FIRE_WIDE_ROAD = "FIRE_WIDE_ROAD"
 
 #: The grade under a plan the bridge measured for and could not read --
 #: no elevation model covers the pad. Joins ``_checks``'s ``unmeasured``,
@@ -1241,21 +1248,33 @@ class LotFacts:
     #: the lot is held YELLOW with FIRE-NARROW-STREET (Steph 2026-11-10:
     #: "Very narrow, yes."), never cleared on it.
     fire_route_row_ft: float | None = None
-    #: The same route with the truck stood on the road a public street line
-    #: faces across a right-of-way wider than
+    #: The same route with the engine stood on the wide main road a public
+    #: street line faces across a right-of-way wider than
     #: :data:`flats.fit.fire.MAX_GAP_FT` (quadfit s4's wide-road street
-    #: line, 2026-11-18), the hose from that road's middle. Set only where
-    #: the route misses on every reading above and this reaches: the lot is
-    #: held YELLOW with FIRE-WIDE-ROAD, never cleared on it.
+    #: line, 2026-11-18: its centre line within 150 ft, nothing private, no
+    #: freeway, ramp or railroad between), the hose started where the
+    #: code's reading starts it -- 10 ft out from the near curb, the road's
+    #: middle where no curb or width is measured. Set only where the route
+    #: misses on every reading above and this reaches: the fire check is
+    #: made on it (:func:`flats.ingest.quadfit._wide_road_read`; Steph
+    #: 2026-11-19: "wide main road, I'm good with green") and
+    #: FIRE-WIDE-ROAD marks it.
     fire_route_wide_ft: float | None = None
-    #: The route reaches (``fire_route_ft`` inside the limit) only with the
-    #: engine stood on a state highway (RLIS TYPE 1200) that the lot meets
-    #: over a wide-road street line -- one whose midpoint is more than
-    #: :data:`flats.fit.fire.MAX_GAP_FT` from every truck road -- and misses
-    #: without those standing places
-    #: (:func:`flats.ingest.quadfit._state_road_held`). Held YELLOW with
-    #: FIRE-WIDE-ROAD: whether an engine may stand there is not confirmed.
+    #: How far the centre line of the wide road the engine stands on runs
+    #: from the lot's street line, in feet (FIRE-WIDE-ROAD's note).
+    fire_wide_gap_ft: float | None = None
+    #: The fire check stands on an engine stood on a state highway (RLIS
+    #: TYPE 1200) the lot meets across a wide right-of-way: on the points of
+    #: a wide-road street line that fall inside 50 ft of it, or past them.
+    #: It counts as any wide main road does (Steph 2026-11-19: "The fire
+    #: chief makes the call, but I'd say it's green"); FIRE-WIDE-ROAD names
+    #: it. Never holds a lot.
     fire_on_state_road: bool = False
+    #: A reading of the route reaches only with the engine stood on a wide
+    #: road that has a second road line close beyond it (a divided highway's
+    #: other carriageway, a frontage road): not told from a freeway, so the
+    #: lot is held YELLOW with FIRE-ROAD-UNCLEAR, never cleared on it.
+    fire_road_unclear: bool = False
     #: The lot's street lines are one street that bends, read as one front
     #: where its code states no corner test (:data:`CORNER_READ_AS_BEND`,
     #: :func:`flats.ingest.quadfit.read_as_bend`). Set by the bridge.
@@ -2573,24 +2592,20 @@ def _checks(
             # fire-review refusal, held YELLOW.
             unchecked.append("fire_access_ft")
             unmeasured.add(FIRE_NARROW_STREET)
-        elif (
-            lot.fire_route_tried
-            and missed
-            and lot.fire_route_wide_ft is not None
-            and lot.fire_route_wide_ft <= float(reach)
-        ):
-            # Reached only from a road past the 50 ft a truck is stood
-            # within: the truck's place on a wide road is unmeasured, and
-            # the miss is not known to be one. YELLOW, never GREEN.
+        elif fire_on_wide_road(lot, float(reach)):
+            # Reached with the engine stood on a wide main road, its centre
+            # line 50 to 150 ft from the lot line: an engine standing there
+            # counts (Steph 2026-11-19: "wide main road, I'm good with
+            # green"; OFC 503.1.1 names no kind of road and no width). The
+            # check is made on that route; FIRE-WIDE-ROAD marks it.
+            check("fire_access_ft", lot.fire_route_wide_ft, float(reach), is_maximum=True)
+        elif lot.fire_route_tried and lot.fire_road_unclear:
+            # Reaches only with the engine stood on a road that cannot be
+            # told from a freeway (a second carriageway or a frontage road
+            # close beyond it): the ruling above leaves it out. YELLOW,
+            # never GREEN.
             unchecked.append("fire_access_ft")
-            unmeasured.add(FIRE_WIDE_ROAD)
-        elif lot.fire_route_tried and not missed and lot.fire_on_state_road:
-            # Reaches only with the engine stood on a state highway the lot
-            # meets across a wide right-of-way: not confirmed that it may
-            # stand there (rel10d item 6, a coordinator default pending
-            # Steph). YELLOW, never GREEN; a miss stays a miss.
-            unchecked.append("fire_access_ft")
-            unmeasured.add(FIRE_WIDE_ROAD)
+            unmeasured.add(FIRE_ROAD_UNCLEAR)
         elif lot.fire_route_ft is not None:
             check("fire_access_ft", lot.fire_route_ft, float(reach), is_maximum=True)
         else:
@@ -5000,13 +5015,29 @@ def held_open(
 #: The flag type for each quantity the screen itself left unmeasured. A
 #: name not here is a site fact a rate is stated per, and takes that fact's
 #: own type (:func:`flats.score.flags.fact_code`).
+def fire_on_wide_road(lot: LotFacts, reach: float) -> bool:
+    """Whether the fire check is made on the route with the engine stood on
+    a wide main road (:attr:`LotFacts.fire_route_wide_ft`): the code's
+    reading misses, that route reaches, and neither the long dead end's nor
+    the narrow street's question is the lot's -- a lot they hold stays
+    held."""
+    wide = lot.fire_route_wide_ft
+    if not lot.fire_route_tried or lot.fire_road_unclear or wide is None or wide > reach:
+        return False
+    if lot.fire_route_ft is not None and lot.fire_route_ft <= reach:
+        return False
+    return not any(
+        v is not None and v <= reach for v in (lot.fire_route_freed_ft, lot.fire_route_row_ft)
+    )
+
+
 _MEASURED_FLAG: dict[str, str] = {
     UNPAVED: "MEASURE-PAVEMENT",
     UNSHAPED: "MEASURE-OUTDOOR-SHAPE",
     FIRE_ROUTE: "MEASURE-FIRE-ROUTE",
     FIRE_DEAD_END: "FIRE-DEAD-END",
     FIRE_NARROW_STREET: "FIRE-NARROW-STREET",
-    FIRE_WIDE_ROAD: "FIRE-WIDE-ROAD",
+    FIRE_ROAD_UNCLEAR: "FIRE-ROAD-UNCLEAR",
     SITE_GRADE: "MEASURE-SITE-GRADE",
     COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
     DRIVE_STREET: "MEASURE-DRIVE-STREET",
@@ -5218,6 +5249,28 @@ def _account(
     # flag to check later"). The bind stands; the flag says one answer
     # from the fire marshal would lift it -- so only where the hose is the
     # one bind (a minimum density missed is a flag, never a bind).
+    # The fire check stands on an engine on a wide main road, or on a state
+    # highway across a wide right-of-way (Steph 2026-11-19: "wide main
+    # road, I'm good with green"; "The fire chief makes the call, but I'd
+    # say it's green"). The note says which and how far out, so the
+    # answers that rest on those rulings can be found.
+    fire_reach = rules.get("fire_access_max_ft")
+    if fire_reach is not None and lot.fire_route_tried and not lot.fire_road_unclear:
+        on_wide = fire_on_wide_road(lot, float(fire_reach))
+        route = lot.fire_route_wide_ft if on_wide else lot.fire_route_ft
+        if route is not None and route <= float(fire_reach) and (on_wide or lot.fire_on_state_road):
+            gap = lot.fire_wide_gap_ft
+            flag(
+                "FIRE-WIDE-ROAD",
+                FIRE_WIDE_ROAD,
+                bounds=(float(route), float(fire_reach)),
+                source=(
+                    "the engine stands on a "
+                    + ("state highway" if lot.fire_on_state_road else "wide road")
+                    + (f", its centre line {gap:.0f} ft from the lot line" if gap is not None else "")
+                    + f"; hose route {route:.0f} ft"
+                ),
+            )
     curb_route = lot.fire_route_curb_ft
     walls = [
         c for c in checks

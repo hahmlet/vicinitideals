@@ -3816,3 +3816,92 @@
     the move read. Built on flats/gap-fixes (FOLLOWUPS 205); not live until
     released.
   source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/gap-fixes.handoff.md
+- id: 2026-11-19-fire-engine-on-a-wide-main-road
+  kind: ruling
+  date: 2026-11-19
+  scope: {}
+  question: >-
+    A lot line faces a wide main road whose centre line runs more than 50 ft
+    from it (quadfit calls such a line a street line across a right-of-way
+    up to 150 ft wide since 2026-11-18). Does a fire engine standing on that
+    road count for the 150 ft hose route (OFC 503.1.1), and may the lot be
+    GREEN on it?
+  ruling: '"wide main road, I''m good with green"'
+  effect: >-
+    An engine stood on the wide main road a public street line faces counts
+    for the hose route, and the lot may be GREEN on it. OFC 503.1.1 names no
+    kind of road and no width ("Access roads shall be within 150 feet of all
+    portions of the exterior wall of the first story of the building",
+    flats/provenance/docs/or/ofc.2022.applications-guide.txt#L132-L135; the
+    2025 text, held outside the corpus, was read by the coordinator the same
+    day and says the same). The hose starts where it always does (rulings
+    2026-10-05-fire-hose-from-curb and 2026-10-05-unmeasured-street-narrow):
+    10 ft out from the near curb, the road's middle where no curb or width is
+    measured. A lot whose fire check rests on this carries FIRE-WIDE-ROAD (a
+    note below the yellow line) saying how far out the road runs. NOT
+    covered: a lot line marked a freeway's, a ramp's or beyond a railroad
+    (no engine stands there); a wide road with a second road line close
+    beyond it -- a divided highway's other half, a frontage road -- which
+    cannot be told from a freeway (held YELLOW, FIRE-ROAD-UNCLEAR); a route
+    that does not reach from the wide road either (RED, ruling
+    2026-10-01-fire-access-150ft-red). A lot the long dead end's or the
+    narrow street's question holds stays held. Not built with it, and
+    unblocked by it: choosing the front after measuring the fire route, and
+    lifting the 3-acre cap on the fire retry. Built on flats/open-way-fix;
+    not live until released.
+  source: >-
+    Steph 2026-11-19 (chat, relayed by the coordinator),
+    ../vicinitideals-worktrees/open-way-fix.handoff.md
+  encoded_in: [flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
+- id: 2026-11-19-fire-engine-on-a-state-highway
+  kind: ruling
+  date: 2026-11-19
+  scope: {}
+  question: >-
+    A lot meets a state highway that is no freeway (RLIS type 1200: Highway
+    213, McLoughlin Blvd) across a wide right-of-way, and the hose reaches
+    only with the engine stood on the highway. Does it count? Asked of
+    32E16BB06000 (14200 Conway Dr, Oregon City), which Steph looked at on the
+    aerial.
+  ruling: >-
+    "the state highway running its length (not the rear, the side) is a 1
+    lane highway with generous margins. The fire chief makes the call, but
+    I'd say it's green"
+  effect: >-
+    An engine standing on a state highway counts the same as on any other
+    wide main road (ruling 2026-11-19-fire-engine-on-a-wide-main-road); the
+    YELLOW hold built for it earlier the same day is removed. A lot whose
+    fire check rests on a state highway across a wide right-of-way carries
+    FIRE-WIDE-ROAD naming the highway (a note below the yellow line). NOT
+    covered, unchanged: a line marked a freeway's, a ramp's (RLIS 1110,
+    112x) or beyond a railroad; and a highway that cannot be told from a
+    freeway -- a second carriageway or a frontage road close beyond it --
+    which stays YELLOW (FIRE-ROAD-UNCLEAR). Built on flats/open-way-fix; not
+    live until released.
+  source: >-
+    Steph 2026-11-19 (chat, relayed by the coordinator),
+    ../vicinitideals-worktrees/open-way-fix.handoff.md
+  encoded_in: [flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
+- id: 2026-11-19-freeway-only-lot-yellow
+  kind: ruling
+  date: 2026-11-19
+  scope: {}
+  question: >-
+    A lot's only street line faces a freeway, a ramp or a railroad, so no
+    street is left once that line is dropped. RED or YELLOW? Asked of the
+    parcel west of 11240 SW Barbur Blvd (1S1E31BD  -02000).
+  ruling: >-
+    "we would probably need a fire access easement with the business ... to
+    use their parking lot as fire access. yellow"
+  effect: >-
+    A lot with no street left once its freeway, ramp or railroad line is
+    dropped is held YELLOW (ACCESS-LIMITED-WAY), never RED on that alone and
+    never GREEN: it may be reached over a neighbour's land by easement. As
+    built (flats/ingest/quadfit.py limited_reading); no code change. A named
+    private road serves as a fire access road as a public one does (Steph the
+    same day): a lot reached by one (RLIS 1700) keeps its fire reading from
+    that road and is not a freeway-only lot.
+  source: >-
+    Steph 2026-11-19 (chat, relayed by the coordinator),
+    ../vicinitideals-worktrees/open-way-fix.handoff.md
+  encoded_in: [flats/ingest/quadfit.py, flats/score/screen.py]

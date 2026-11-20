@@ -7701,7 +7701,7 @@ def fire_checked(
     # 2026-11-10: "Yellow.").
     freed_offset = None
     row_offset = None
-    # Which of the truck roads are state highways (`_state_road_held`).
+    # Which of the truck roads are state highways (`_wide_road_read`).
     state = getattr(roads, "state_roads", None)
     if roads is not None and hasattr(roads, "at"):
         net = roads.at(lot.layer_id)
@@ -7961,87 +7961,41 @@ def fire_checked(
         )
         if turned is not s:
             out = screened(turned, again)
-    out = _wide_road_held(freed(out), lot, roads, limit, policy=policy, relief=relief)
-    return _state_road_held(out, lot, roads, state, streets, limit, policy=policy, relief=relief)
+    return _wide_road_read(freed(out), lot, roads, state, streets, limit, policy=policy, relief=relief)
 
 
 #: How far from a public street line the road it faces may run for the
 #: wide-road reading of the fire route: quadfit s4's reach across a wide
 #: right-of-way (``_open_way``, 150 ft; :data:`flats.geom.corridor.CORRIDOR_REACH_FT`).
 FIRE_WIDE_ROAD_REACH_FT = 150.0
-
-
-def _wide_road_held(
-    out: Screened,
-    lot: QuadfitLot,
-    roads: Any,
-    limit: float,
-    *,
-    policy: SlackPolicy,
-    relief: ReliefPolicy,
-) -> Screened:
-    """``out`` held YELLOW where its fire route misses only because no truck
-    is stood on a wide road (rel10d move read, 2026-11-19: 74 lots YELLOW to
-    RED).
-
-    quadfit s4 calls a lot line a street's across a right-of-way up to 150
-    ft wide since 2026-11-18, and the plan is laid out fronting it; the fire
-    route stands a truck only within :data:`flats.fit.fire.MAX_GAP_FT` (50
-    ft) of a centre line, so on such a line the hose came on from nowhere
-    and the route was walked from the lot's other street (Beaverton
-    1S126BC01501 on Scholls Ferry Rd, its centre line 54 ft out: 135 ft
-    became 208). Here the route is measured once more over the lot's PUBLIC
-    street lines (:attr:`flats.geom.edges.Edge.public_road` -- never a line
-    on a freeway, a ramp, a railroad or a drive) with the truck stood on
-    the nearest road it can use within :data:`FIRE_WIDE_ROAD_REACH_FT`, the
-    hose from that road's middle where no curb is published -- the longest
-    it can be. Where that reaches, the miss is not known to be one:
-    ``fire_route_wide_ft`` is set and the screen holds the lot YELLOW with
-    FIRE-WIDE-ROAD. Never GREEN: whether an engine stands on that road is
-    nobody's measurement. Where it does not reach, the miss stands."""
-    from shapely.geometry import Polygon
-
-    from flats.fit import fire
-
-    facts = out.facts
-    if facts is None or not facts.fire_route_tried:
-        return out
-
-    def held(across: float | None) -> Screened:
-        if across == facts.fire_route_wide_ft:
-            return out
-        new = dataclasses.replace(facts, fire_route_wide_ft=across)
-        result = screen(out.rules, new, out.design, out.fit, policy=policy, relief=relief, config=out.config)
-        shadow = _if_signed(
-            out.rules, new, out.design, out.fit, result, policy=policy, relief=relief, config=out.config
-        )
-        return dataclasses.replace(out, screening=result, signed=shadow, facts=new)
-
-    if facts.fire_route_ft is not None and facts.fire_route_ft <= limit:
-        return held(None)
-    if any(v is not None and v <= limit for v in (facts.fire_route_freed_ft, facts.fire_route_row_ft)):
-        return held(None)
-    drawing = out.drawing or {}
-    ring = drawing.get("building")
-    lines = () if lot.edges is None else tuple(
-        (e.x1, e.y1, e.x2, e.y2)
-        for e in lot.edges.edges
-        if e.public_road and not e.alley and e.cls in (EdgeClass.front, EdgeClass.street_side)
-    )
-    if not (roads is not None and lines and drawing.get("fits") and ring and len(ring) >= 4 and lot.lot_geom is not None):
-        return held(None)
-    offset = fire.point_offset(*roads, max_gap_ft=FIRE_WIDE_ROAD_REACH_FT)
-    across = fire.route_ft(Polygon(ring), lot.lot_geom, lines, offset)
-    return held(across if across is not None and across <= limit else None)
-
-
 #: Feet within which a point is on a lot line, and a state highway's centre
 #: line is the truck road nearest it (the fire roads are that centre line cut
 #: in pieces: the two distances are one).
 STATE_ROAD_SAME_FT = 0.5
+#: The road a wide-road line faces lies square out of it: the way from a
+#: point of the line to the nearest truck road keeps within 45 degrees of
+#: the line's outward normal (this is the cosine). A cross street off the
+#: end of the line is not the road it faces, and no engine is stood on it
+#: past the 50 ft of the code's reading.
+FIRE_FACED_COS = math.cos(math.radians(45.0))
+#: A second truck-road centre line this little beyond the one the engine
+#: would stand on reads as the other carriageway of a divided highway, or a
+#: road with a frontage road beside it: the centre lines cannot tell it from
+#: a freeway, and the lot is kept YELLOW (FIRE-ROAD-UNCLEAR). Across a road
+#: with lots on its far side the next street is a lot's depth and two half
+#: streets away, well past this.
+FIRE_DIVIDED_FT = 100.0
+#: ... and nearer than this beyond it is the same road drawn twice (two
+#: pieces of one centre line meeting under the ray).
+FIRE_SAME_ROAD_FT = 10.0
+#: Where along a wide-road line the rays that look for that second line are
+#: cast, and how many must find it (quadfit s4's ``ALLEY_SAMPLES``, three of
+#: five: one ray down a cross street is not a second carriageway).
+FIRE_RAY_SAMPLES = (0.1, 0.3, 0.5, 0.7, 0.9)
+FIRE_RAY_MIN_HIT = 3
 
 
-def _state_road_held(
+def _wide_road_read(
     out: Screened,
     lot: QuadfitLot,
     roads: Any,
@@ -8052,31 +8006,56 @@ def _state_road_held(
     policy: SlackPolicy,
     relief: ReliefPolicy,
 ) -> Screened:
-    """``out`` held YELLOW where its fire route reaches only with the engine
-    stood on a state highway the lot meets across a wide right-of-way
-    (rel10d move read item 6, 2026-11-19: Oregon City 32E16BB06000 on
-    Highway 213, Gladstone 22E19DD02700 on McLoughlin Blvd).
+    """``out`` with its fire route read from the wide main road the lot is
+    on (Steph 2026-11-19: "wide main road, I'm good with green"; rulings.yaml
+    2026-11-19-fire-engine-on-a-wide-main-road).
 
-    A wide-road line is a PUBLIC street line whose midpoint lies more than
-    :data:`flats.fit.fire.MAX_GAP_FT` from every truck road: quadfit s4
-    called it a street's only by looking across the right-of-way (its
-    midpoint test is the same 50 ft), and the truck is stood on the points
-    of it that happen to fall inside 50 ft. Where the road those points
-    stand it on is a state highway (``state``, RLIS TYPE 1200), the route
-    is measured once more without them. Still inside the limit: nothing
-    changes. Otherwise ``fire_on_state_road`` is set and the screen holds
-    the lot YELLOW with FIRE-WIDE-ROAD -- the engine would have to stand on
-    a state highway, and nobody has confirmed that it may (a coordinator
-    default pending Steph).
+    quadfit s4 calls a lot line a street's across a right-of-way up to 150
+    ft wide since 2026-11-18 -- five rays square out of it, three reaching a
+    public street's centre line before any private lot, freeway, ramp,
+    railroad, river or water -- and the plan is laid out fronting it. The
+    code's reading of the fire route stands an engine only within
+    :data:`flats.fit.fire.MAX_GAP_FT` (50 ft) of a centre line, so on such a
+    line the hose came on from nowhere (Beaverton 1S126BC01501 on Scholls
+    Ferry Rd, its centre line 54 ft out: 135 ft became 208; 74 lots YELLOW
+    to RED in the rel10d move read). OFC 503.1.1 names no kind of road and
+    no width, and Steph ruled an engine on a wide main road counts.
 
-    GREEN to YELLOW only: it takes standing places away and adds none. A
-    line whose midpoint is within 50 ft of a truck road -- a lot that fronts
-    McLoughlin or TV Highway in the ordinary way -- is never a wide-road
-    line, and keeps its truck. ``state`` None (nobody read the road types)
-    measures nothing."""
+    A WIDE-ROAD LINE is a public street line
+    (:attr:`flats.geom.edges.Edge.public_road` -- never a line on a freeway,
+    a ramp, a railroad or a drive) whose midpoint lies more than 50 ft from
+    every truck road. On its points the engine is stood on the nearest truck
+    road within :data:`FIRE_WIDE_ROAD_REACH_FT` that the line faces
+    (:data:`FIRE_FACED_COS`), the hose started as the code's reading starts
+    it (:func:`flats.fit.fire.point_offset`, :mod:`flats.geom.curbs`: 10 ft
+    out from the near curb where a curb or a published width is measured,
+    the road's middle where none is -- Steph 2026-10-05). Nothing else is
+    added: every other street point keeps the code's reading.
+
+    * The code's reading reaches without an engine on a state highway (RLIS
+      TYPE 1200, ``state``) on a wide-road line: nothing is set -- the lot's
+      reading is what it was.
+    * It reaches only with one: it stands, as on any road (Steph 2026-11-19
+      of Highway 213 beside Oregon City 32E16BB06000: "The fire chief makes
+      the call, but I'd say it's green"). ``fire_on_state_road`` is set so
+      FIRE-WIDE-ROAD names the highway.
+    * It misses, the long dead end's and the narrow street's readings do not
+      reach (their questions come first), and the wide-road reading does:
+      ``fire_route_wide_ft`` is set and the screen makes the fire check on
+      it; FIRE-WIDE-ROAD says how far out the road runs.
+    * A wide-road line with a second truck-road centre line close beyond the
+      first (:data:`FIRE_DIVIDED_FT`) is not told from a freeway -- a
+      divided highway's two carriageways, a frontage road. No engine is
+      stood across it, and none on a state highway along it; where the route
+      reaches only with those, ``fire_road_unclear`` is set and the lot is
+      held YELLOW with FIRE-ROAD-UNCLEAR.
+    * It reaches on none of these: the miss stands (RED).
+
+    ``state`` None (the road types unread, or no state highway in the file)
+    names none and drops none."""
     import numpy as np
     import shapely
-    from shapely.geometry import MultiLineString, Polygon
+    from shapely.geometry import LineString, Point, Polygon
 
     from flats.fit import fire
 
@@ -8084,54 +8063,170 @@ def _state_road_held(
     if facts is None or not facts.fire_route_tried:
         return out
 
-    def held(on: bool) -> Screened:
-        if on == facts.fire_on_state_road:
+    def read(
+        across: float | None = None, gap: float | None = None, on: bool = False, unclear: bool = False
+    ) -> Screened:
+        was = (facts.fire_route_wide_ft, facts.fire_wide_gap_ft, facts.fire_on_state_road, facts.fire_road_unclear)
+        if (across, gap, on, unclear) == was:
             return out
-        new = dataclasses.replace(facts, fire_on_state_road=on)
+        new = dataclasses.replace(
+            facts,
+            fire_route_wide_ft=across,
+            fire_wide_gap_ft=gap,
+            fire_on_state_road=on,
+            fire_road_unclear=unclear,
+        )
         result = screen(out.rules, new, out.design, out.fit, policy=policy, relief=relief, config=out.config)
         shadow = _if_signed(
             out.rules, new, out.design, out.fit, result, policy=policy, relief=relief, config=out.config
         )
         return dataclasses.replace(out, screening=result, signed=shadow, facts=new)
 
-    if state is None or roads is None or facts.fire_route_ft is None or facts.fire_route_ft > limit:
-        return held(False)
+    def within(route: float | None) -> bool:
+        return route is not None and route <= limit
+
+    reaches = within(facts.fire_route_ft)
+    if not reaches and (within(facts.fire_route_freed_ft) or within(facts.fire_route_row_ft)):
+        return read()
     drawing = out.drawing or {}
     ring = drawing.get("building")
-    if not (lot.edges is not None and drawing.get("fits") and ring and len(ring) >= 4 and lot.lot_geom is not None):
-        return held(False)
+    if not (
+        roads is not None
+        and lot.edges is not None
+        and drawing.get("fits")
+        and ring
+        and len(ring) >= 4
+        and lot.lot_geom is not None
+    ):
+        return read()
     tree, geoms = roads[0], np.asarray(roads[1], dtype=object)
-    if not len(geoms):
-        return held(False)
-    lines = [
+    if tree is None or not len(geoms):
+        return read()
+    public = [
         (e.x1, e.y1, e.x2, e.y2)
         for e in lot.edges.edges
         if e.public_road and not e.alley and e.cls in (EdgeClass.front, EdgeClass.street_side)
     ]
-    if not lines:
-        return held(False)
-    mids = shapely.points([((x1 + x2) / 2.0, (y1 + y2) / 2.0) for x1, y1, x2, y2 in lines])
+    if not public:
+        return read()
+    mids = shapely.points([((x1 + x2) / 2.0, (y1 + y2) / 2.0) for x1, y1, x2, y2 in public])
     gaps = shapely.distance(mids, geoms[tree.nearest(mids)])
-    wide = [line for line, gap in zip(lines, gaps) if gap > fire.MAX_GAP_FT]
+    wide = [(line, float(gap), mid) for line, gap, mid in zip(public, gaps, mids) if gap > fire.MAX_GAP_FT]
     if not wide:
-        return held(False)
-    on_wide = MultiLineString([((x1, y1), (x2, y2)) for x1, y1, x2, y2 in wide])
-    state_tree, state_geoms = state
-    state_geoms = np.asarray(state_geoms, dtype=object)
-    offset = fire.point_offset(*roads)
+        return read()
+    state_tree, state_geoms = (None, None) if state is None else (state[0], np.asarray(state[1], dtype=object))
 
-    def sans(points: np.ndarray) -> np.ndarray:
-        base = offset(points)
-        if not len(points):
-            return base
-        pts = shapely.points(points)
-        truck = shapely.distance(pts, geoms[tree.nearest(pts)])
-        highway = shapely.distance(pts, state_geoms[state_tree.nearest(pts)])
-        drop = (shapely.distance(pts, on_wide) <= STATE_ROAD_SAME_FT) & (highway <= truck + STATE_ROAD_SAME_FT)
-        return np.where(drop, math.inf, base)
+    def on_highway(pts: np.ndarray, truck: np.ndarray) -> np.ndarray:
+        if state_tree is None or not len(state_geoms):
+            return np.zeros(len(pts), dtype=bool)
+        return shapely.distance(pts, state_geoms[state_tree.nearest(pts)]) <= truck + STATE_ROAD_SAME_FT
 
-    again = fire.route_ft(Polygon(ring), lot.lot_geom, streets, sans)
-    return held(again is None or again > limit)
+    def outward(line: tuple[float, float, float, float]) -> tuple[float, float] | None:
+        """The unit normal of the line on the side off the lot; None where
+        the lot lies on both sides of it or neither."""
+        x1, y1, x2, y2 = line
+        length = math.hypot(x2 - x1, y2 - y1)
+        if not length:
+            return None
+        nx, ny = (y2 - y1) / length, -(x2 - x1) / length
+        mx, my = (x1 + x2) / 2.0, (y1 + y2) / 2.0
+        one = lot.lot_geom.contains(Point(mx + nx, my + ny))
+        other = lot.lot_geom.contains(Point(mx - nx, my - ny))
+        if one == other:
+            return None
+        return (-nx, -ny) if one else (nx, ny)
+
+    def divided(line: tuple[float, float, float, float], normal: tuple[float, float]) -> bool:
+        """Whether a second truck-road centre line runs close beyond the
+        first one square out of the line."""
+        x1, y1, x2, y2 = line
+        far = FIRE_WIDE_ROAD_REACH_FT + FIRE_DIVIDED_FT
+        found = 0
+        for at in FIRE_RAY_SAMPLES:
+            px, py = x1 + at * (x2 - x1), y1 + at * (y2 - y1)
+            start = Point(px, py)
+            ray = LineString([(px, py), (px + far * normal[0], py + far * normal[1])])
+            hits = sorted(
+                x.distance(start) for x in (ray.intersection(geoms[j]) for j in tree.query(ray)) if not x.is_empty
+            )
+            if hits and hits[0] <= FIRE_WIDE_ROAD_REACH_FT:
+                found += any(FIRE_SAME_ROAD_FT < d - hits[0] <= FIRE_DIVIDED_FT for d in hits[1:])
+        return found >= FIRE_RAY_MIN_HIT
+
+    # Each wide-road line: itself, the way it faces, and whether the road it
+    # faces is told from a freeway. A line whose outward side cannot be
+    # told is given no engine past 50 ft.
+    every = [LineString([(x1, y1), (x2, y2)]) for (x1, y1, x2, y2), _, _ in wide]
+    faced = [(geom, outward(line)) for geom, (line, _, _) in zip(every, wide)]
+    marked = [(geom, normal, divided(line, normal)) for (geom, normal), (line, _, _) in zip(faced, wide) if normal]
+    clear = [(geom, normal) for geom, normal, split in marked if not split]
+    murky = [(geom, normal) for geom, normal, _ in marked]
+    split_lines = [geom for geom, _, split in marked if split]
+    strict = fire.point_offset(*roads)
+    beyond = fire.point_offset(*roads, max_gap_ft=FIRE_WIDE_ROAD_REACH_FT)
+
+    def reading(across: list, without: list, note: dict | None = None) -> Any:
+        """The code's reading, with the engine also stood past 50 ft on the
+        road each line of ``across`` faces, and never on a state highway
+        along a line of ``without``."""
+
+        def offset(points: np.ndarray) -> np.ndarray:
+            base = np.asarray(strict(points), dtype=float)
+            if not len(points):
+                return base
+            pts = shapely.points(points)
+            ends = shapely.get_coordinates(shapely.shortest_line(pts, geoms[tree.nearest(pts)])).reshape(-1, 2, 2)
+            way = ends[:, 1] - ends[:, 0]
+            truck = np.hypot(way[:, 0], way[:, 1])
+            highway = on_highway(pts, truck)
+            got = base.copy()
+            if across:
+                far = np.asarray(beyond(points), dtype=float)
+                for geom, (nx, ny) in across:
+                    add = (
+                        (shapely.distance(pts, geom) <= STATE_ROAD_SAME_FT)
+                        & ~np.isfinite(base)
+                        & np.isfinite(far)
+                        & (way[:, 0] * nx + way[:, 1] * ny >= FIRE_FACED_COS * truck)
+                    )
+                    if not add.any():
+                        continue
+                    got = np.where(add, np.minimum(got, far), got)
+                    if note is not None:
+                        i = int(np.flatnonzero(add)[np.argmin(truck[add])])
+                        if note.get("gap") is None or truck[i] < note["gap"]:
+                            note.update(gap=float(truck[i]), state=bool(highway[i]))
+            for geom in without:
+                drop = (shapely.distance(pts, geom) <= STATE_ROAD_SAME_FT) & highway & np.isfinite(base)
+                got = np.where(drop, math.inf, got)
+            return got
+
+        return offset
+
+    building = Polygon(ring)
+
+    def route(offset: Any) -> float | None:
+        return fire.route_ft(building, lot.lot_geom, streets, offset)
+
+    if reaches:
+        # Does the code's reading rest on a state highway along a wide-road
+        # line? Without those standing places it still reaches: nothing to
+        # say.
+        if state_tree is None or within(route(reading([], every))):
+            return read()
+        if split_lines and not within(route(reading(clear, split_lines))):
+            return read(unclear=True)
+        named = [gap for (_, gap, mid) in wide if on_highway(np.asarray([mid]), np.asarray([gap]))[0]]
+        return read(gap=min(named or [gap for _, gap, _ in wide]), on=True)
+    if not marked:
+        return read()
+    note: dict[str, Any] = {}
+    across = route(reading(clear, split_lines, note)) if clear else None
+    if within(across):
+        return read(across=across, gap=note.get("gap"), on=bool(note.get("state")))
+    if split_lines and within(route(reading(murky, []))):
+        return read(unclear=True)
+    return read()
 
 
 #: Degrees within which a drawn building's wall is read as standing at one

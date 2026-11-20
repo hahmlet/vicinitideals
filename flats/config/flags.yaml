@@ -581,7 +581,23 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
   FIRE-WIDE-ROAD:
-    description: "Wide road: the fire hose reaches the building only from a road whose centre line is more than 50 ft from the lot line (a wide arterial or highway), where the screen stands no fire engine; measured from the middle of that road it reaches. Or the hose reaches only with the engine stood on a state highway the lot meets across a wide right-of-way: the engine would have to stand on a state highway, and it is not confirmed that it may. Held yellow until someone confirms an engine can stand on that road beside the lot (coordinator default 2026-11-19, pending Steph)"
+    description: "Wide road: the fire hose reaches the building with the fire engine stood on a wide main road beside the lot -- an arterial or a state highway whose centre line runs more than 50 ft from the lot line (up to 150 ft, with nothing private, no freeway, ramp or railroad between) -- the hose started 10 ft out from that road's near curb, or at its middle where no curb or width is measured. An engine standing there counts (Steph 2026-11-19: \"wide main road, I'm good with green\"; of a state highway: \"The fire chief makes the call, but I'd say it's green\"). Marks the answers that rest on those rulings; the bounds are the hose route and the 150 ft"
+    kind: parametric
+    risk: possible
+    # Marks the reading, never holds a green: below the yellow line.
+    severity: 1
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot, design]
+    path: "Look at the road beside the lot: can a fire engine stop on it and reach the lot (no wall, ditch or grade between)? The fire chief makes the call"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FIRE_WIDE_ROAD]
+  FIRE-ROAD-UNCLEAR:
+    description: "Divided road: the fire hose reaches the building only with the fire engine stood on a wide road or state highway that has a second road line close beyond it -- the other half of a divided highway, or a road with a frontage road beside it -- which the street centre lines cannot tell from a freeway. Steph's wide-main-road ruling (2026-11-19) does not cover it: held yellow until someone looks at the road"
     kind: categorical
     risk: possible
     severity: 5
@@ -589,7 +605,7 @@ types:
     resolution: measurement
     scope: per_lot
     key: [lot, design]
-    path: "Look at the road beside the lot: can a fire engine stop on it and reach the lot (no wall, ditch or grade between)? If so the route stands; measure the hose from the near curb"
+    path: "Look at the road beside the lot on the aerial: is it a divided highway with no way off it, or an ordinary road a fire engine can stop on? If an engine can stop there and reach the lot, the route stands"
     priority: later
     status: pending
     approved_by: null

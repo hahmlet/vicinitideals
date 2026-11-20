@@ -125,9 +125,10 @@ def street_offsets(
     offset than the real one: callers that cannot supply centrelines get a
     measure that may clear a lot it should not, and only the tests do that.
 
-    ``max_gap_ft`` is :data:`MAX_GAP_FT` for the reading the screen clears a
-    lot on; the wide-road reading, which only ever holds a lot YELLOW
-    (:func:`flats.ingest.quadfit._wide_road_held`), asks farther."""
+    ``max_gap_ft`` is :data:`MAX_GAP_FT` for the code's reading; the
+    wide-road reading (:func:`flats.ingest.quadfit._wide_road_read`), which
+    stands the engine on the road a wide-road street line faces, asks
+    farther."""
     if centrelines is None or not len(geoms) or not len(points):
         return np.zeros(len(points))
     pts = shapely.points(points)
@@ -169,10 +170,11 @@ def truck_lines(path: Path, edges: "StreetEdges | None" = None) -> tuple[np.ndar
 
 
 #: RLIS STREETS TYPE 1200: a state highway that is no freeway (McLoughlin
-#: Blvd, Highway 213, Tualatin Valley Hwy). One of :data:`TRUCK_TYPES`: a
-#: lot that fronts one in the ordinary way has a truck stood on it. Where a
-#: lot reaches one only across a wide right-of-way the standing place is
-#: nobody's measurement (:func:`flats.ingest.quadfit._state_road_held`).
+#: Blvd, Highway 213, Tualatin Valley Hwy). One of :data:`TRUCK_TYPES`: an
+#: engine stands on one as on any other road (Steph 2026-11-19, of Highway
+#: 213 beside Oregon City 32E16BB06000: "I'd say it's green"). Read apart
+#: only to name it on the lots whose fire reading rests on one across a
+#: wide right-of-way (:func:`flats.ingest.quadfit._wide_road_read`).
 STATE_ROAD_TYPE = 1200
 
 
