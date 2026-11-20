@@ -33,14 +33,19 @@ Opened 2026-11-20. Source: `../Factory-Sim/docs/research/FD8-reply-to-flats-foun
 - Re-issued FD6 key (issue 2, framing size, real doors) and FD3 takeoff; `--as-flats-built`
   reproduces our test-lot figures to the dollar. Key issue 3 (precast + section 2d) still to come.
 
-## Plan (coordinator, pending Steph on the open points)
+## Steph 2026-11-20 (chat), in rulings.yaml on the branch (8c4ecdd0)
 
-1. Slice A, worktree `flats/foundation-fd8`: everything above inside the foundation panel. No
-   colour change. Ship, re-measure, reload. The panel shows "no method fits: would be red".
-2. Slice B: the colour change, as a screen reason with a bound and a move read. Rides the release
-   after rel11 so rel11 is not delayed.
+- Ship it ALL AT ONCE: costs and the colour change in one release, the one after rel11.
+- Near the cap (misses by 2 in or less): YELLOW.
+- Front doors: toward the parking; with no parking, the face with more open lot. Where the city
+  requires a street-facing entrance, toward the street as placed.
+- Steph also asked whether end-on lots in places that require a street-facing entrance should be
+  red "for now with a note". They are already YELLOW with ENTRANCE-SIDE-DOOR by Steph's 2026-11-10
+  ruling; asked whether to switch (not changed).
 
-## Open (Steph)
+## Status
 
-- Lots that fail the cap only because the front face is a guess: red (FD8) or yellow?
-- Lots within about 2 in of the cap: red as measured, or yellow?
+- Branch `flats/foundation-fd8` (worktree `../vicinitideals-worktrees/foundation-fd8`), worker
+  fd8-builder building; hand-off will be `../vicinitideals-worktrees/foundation-fd8.handoff.md`.
+- Answer to FD8 for the foundation agent: `../vicinitideals-worktrees/TO-FOUNDATION-AGENT-2026-11-20-v2.md`
+  (asks key issue 3, delivery for the precast units, railing as guard, side-entry units).
