@@ -70,8 +70,10 @@ Oregon Fire Code 2025, Chapter 5 and Appendix D (held in `data/flats/books/build
 
 Coordinator's calls on that reading (cautious; Steph may overrule):
 
-- Q53 state highway: ordinary frontage on a state highway counts as before. A highway reached
-  only by a wide-road line: YELLOW with a flag (as built).
+- Q53 state highway: **RULED by Steph 2026-11-19** on 14200 Conway Dr, Oregon City (Hwy 213 along
+  its side): "a 1 lane highway with generous margins. The fire chief makes the call, but I'd say
+  it's green". An engine on a state highway counts like any wide main road; the yellow hold is
+  removed (a low note stays). Freeways, ramps and rail unchanged.
 - Q54 wide main road: **RULED by Steph 2026-11-19: "wide main road, I'm good with green".** An
   engine standing on a wide ordinary street counts and the lot may be GREEN. The hose starts where
   the 2026-10-05 ruling puts it (10 ft out from the near curb, capped at the middle; unmeasured =
@@ -79,8 +81,10 @@ Coordinator's calls on that reading (cautious; Steph may overrule):
   rel11. Not covered: freeway, ramp, rail, and a state highway across a wide right-of-way.
   Now unblocked for after rel11: choosing the front after measuring fire; the placement retry on
   lots over 3 acres.
-- Q55 freeway-only lot: stays YELLOW (an access easement or private road the map does not show is
-  possible). Sized 2026-11-19: 58 lots where every street line faces only a freeway or ramp, none
+- Q55 freeway-only lot: **RULED by Steph 2026-11-19: yellow** (the parcel west of 11240 SW Barbur
+  Blvd "would probably need a fire access easement with the business"). A private street serves
+  as a fire access road as well as a public one (Steph; the code's definition agrees), so a lot
+  on a private street is not a freeway-only lot. Sized 2026-11-19: 58 lots where every street line faces only a freeway or ramp, none
   green today (53 red, 5 yellow; `/root/open_way/freeway_only_lots.csv` on 137). Two kinds: homes
   on a private street backing onto a freeway (225 NW Evensong Pl, Washington County) and leftover
   strips by a ramp with no address (11240 W/ SW Barbur Blvd, Portland).

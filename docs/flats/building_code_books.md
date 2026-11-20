@@ -18,7 +18,7 @@ committed). These books are private publishers' model codes that Oregon adopted,
 | Book | Edition in force | Based on | One merged book exists? | Free to read | Held |
 |---|---|---|---|---|---|
 | Oregon Fire Code (OFC) | 2025 | 2024 International Fire Code | Yes (UpCodes) | Yes | Chapters 1, 3-12, Appendices C, D (Chapter 2 wanted) |
-| Oregon Residential Specialty Code (ORSC) | 2026 being finalized | International Residential Code | Not yet for 2026 | 2026: not yet | Nothing |
+| Oregon Residential Specialty Code (ORSC) | 2026 (Chapter 1 in force 2026-10-01 per the state sheet; full book not yet sold) | International Residential Code | Not yet for 2026 | 2026: not yet | 2023 Chapters 1-4; 2026 Chapter 1 sheet |
 | Oregon Electrical Specialty Code (OESC) | 2026 | 2026 NEC (NFPA 70) | **No**: NEC plus a state table | Table: yes | State table 1-E |
 | Oregon Plumbing Specialty Code (OPSC) | 2026 | 2024 Uniform Plumbing Code | Yes (UpCodes) | Yes | Chapter 4 sample, state change summary, state matrix |
 
@@ -51,8 +51,17 @@ Across all books, the state also publishes:
 
 - Being finalized in its full adopted form. Will be sold as a PDF at shop.iccsafe.org; no date.
 - Updates: https://www.oregon.gov/bcd/codes-stand/Pages/residential-structures.aspx
-- Held: nothing. Until the 2026 book is out, the 2023 ORSC is the edition the foundation research
-  cites (`../Factory-Sim/docs/research/FD1` section 10, `FD7` section 3).
+- **Arrived 2026-11-19 (Steph), in `orsc-2023/`:** 2023 ORSC Chapters 1 (scope and administration),
+  2 (definitions), 3 (building planning, 94 pages) and 4 (foundations, 50 pages) as UpCodes
+  prints, plus `26orsc-ch01.pdf`: the state's own sheet of the **2026 ORSC Chapter 1**, which says
+  it "became effective and mandatory Oct. 1, 2026" and marks the changes from 2023 in colour
+  (the colour is lost when the text is pulled out; the words are all there).
+  All extract as real text: Chapter 3 has 35 pictures and 22 tables, Chapter 4 has 13 pictures
+  and 39 tables, all present in the files. Plain-text copies are in `orsc-2023/text/` (and
+  `ofc-2025/text/` for the fire code).
+- The 2023 ORSC is the edition the foundation research cites
+  (`../Factory-Sim/docs/research/FD1` section 10, `FD7` section 3). A reader is checking every
+  code-sourced number in the foundation model against the printed text (FOLLOWUPS 209).
 - Matters most to FLATS: the foundation model (FOLLOWUPS 209) rests on it (footings, walls, fill,
   stairs, guards, handrails). Several of those rules are still "recalled", not re-read.
 
