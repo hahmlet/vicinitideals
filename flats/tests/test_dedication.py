@@ -1489,3 +1489,101 @@ def test_a_jog_in_the_lot_line_square_to_the_street_reads_the_street_across_it()
     over = LineString([(X0 - 500, Y0 + 6), (X0 + 500, Y0 + 6)])
     (got,) = dedication.measure([FRONT], WASHCO, [_cmap([over], ["SW EDY RD"], (1500,))], lot=LOT_BOX)
     assert got[4] == pytest.approx(-6.0)
+
+
+# --- a line on a road too wide for the 60 ft reach -------------------------
+
+#: Milwaukie 11E36AD07300 (R-MD), release 10's false RED: 25,346 sq ft, three
+#: lines along Highway 224 with its centre line 70-77 ft out, and Sellwood St
+#: on the south. Off the LXC 137 stage files (s3 lot, s1 streets), feet,
+#: EPSG:2913 less ``HWY_ORIGIN``.
+HWY_ORIGIN = (7_656_100.0, 653_500.0)
+HWY_LOT_RING = [
+    (283.3, 308), (283.6, 393), (283.8, 438.2), (309.3, 437.5), (309.4, 487.2), (309.6, 537.2),
+    (309.7, 577.1), (338.7, 532.8), (366.4, 487.6), (392.7, 441.5), (410, 409.1), (426.5, 376.4),
+    (442.4, 343.3), (449.1, 329.8), (455.7, 316.2), (462.2, 302.6),
+]
+HWY_STREETS = [
+    ("HWY 224", 1200, [(203.3, 814.1), (259.6, 754.9), (309.6, 695.8), (356.4, 634.2), (400, 570.1),
+                       (459, 475.6), (500, 398.4), (555.5, 287.3), (635.6, 109.2)]),
+    ("SE WASHINGTON ST", 1500, [(120.8, 755.4), (144.3, 738.2), (166.4, 715.2)]),
+    ("SE 35TH AVE", 1500, [(166.4, 715.2), (164.2, 283)]),
+    ("SE SELLWOOD ST", 1500, [(164.2, 283), (471.8, 277.7)]),
+    ("SE 35TH AVE", 1500, [(164.2, 283), (163.9, 224.6)]),
+]
+#: The lot's street lines as s4 reads them since the wide-road test.
+HWY_LINES = [
+    [309.7, 577.1, 366.4, 487.6, "F"],
+    [366.4, 487.6, 392.7, 441.5, "F"],
+    [392.7, 441.5, 462.2, 302.6, "F"],
+    [462.2, 302.6, 283.3, 307.9, "F"],
+]
+
+
+def _at(points):
+    return [(x + HWY_ORIGIN[0], y + HWY_ORIGIN[1]) for x, y in points]
+
+
+def _hwy_map(streets=HWY_STREETS, **over) -> ClassMap:
+    lines = [LineString(_at(pts)) for _, _, pts in streets]
+    cmap = _cmap(
+        lines, [n for n, _, _ in streets], tuple(t for _, t, _ in streets),
+        key="street_class_milwaukie", layer=MILWAUKIE,
+    )
+    return ClassMap(**{**cmap.__dict__, **over})
+
+
+def _hwy_line(i: int) -> list:
+    x1, y1, x2, y2, cls = HWY_LINES[i]
+    (a, b), (c, d) = _at([(x1, y1), (x2, y2)])
+    return [a, b, c, d, cls]
+
+
+def test_a_line_on_a_highway_70_ft_wide_is_measured_across_the_right_of_way(rules) -> None:
+    """The centre line of Highway 224 is past the 60 ft reach from every
+    point of the line, so it was unmeasured and the lot gave up the whole
+    40 ft. Measured square across the right-of-way it is 70 ft out, and
+    Milwaukie's deepest distance to centre line asks nothing of the lot."""
+    lot = shapely.Polygon(_at(HWY_LOT_RING))
+    cmap = _hwy_map()
+    for i in (0, 1, 2):
+        width, public, names = dedication.read_line(_hwy_line(i), cmap, lot=lot)
+        assert public and names is None
+        assert 69.0 <= width <= 78.0
+        assert dedication.depth_ft(strip(rules, MILWAUKIE, "R-MD", 0.0, names=None), width) == 0.0
+    # The Sellwood St line is read as it always was, name and all.
+    width, public, names = dedication.read_line(_hwy_line(3), cmap, lot=lot)
+    assert public and names == ("SELLWOOD ST",) and 20.0 <= width <= 31.0
+    got = dedication.measure([_hwy_line(i) for i in range(4)], MILWAUKIE, [cmap], lot=lot)
+    assert [m[6] for m in got] == [None, None, None, ["SELLWOOD ST"]]
+    assert all(m[4] is not None and m[5] for m in got)
+
+
+def test_what_the_reading_across_cannot_measure_stays_unmeasured() -> None:
+    lot = shapely.Polygon(_at(HWY_LOT_RING))
+    cmap = _hwy_map()
+    line = _hwy_line(2)
+    # Without the lot's shape nothing says which side is off the lot.
+    assert dedication.read_line(line, cmap) == (None, True, None)
+    # A private drive nearer than the highway: not the street's centre line.
+    drive = ("", 1800, [(480, 300), (420, 420), (380, 500)])
+    assert dedication.read_line(line, _hwy_map([*HWY_STREETS, drive]), lot=lot)[0] is None
+    # A centreline within 50 ft of the midpoint is no wide-road line: the
+    # readings that failed on it stay failed (a stub off its far end).
+    stub = ("SE STUB ST", 1500, [(440, 380), (470, 395)])
+    assert dedication.read_line(line, _hwy_map([*HWY_STREETS, stub]), lot=lot)[0] is None
+    # Nothing within 150 ft: unmeasured, the whole distance.
+    far = [("HWY 224", 1200, [(x + 120, y + 60) for x, y in HWY_STREETS[0][2]]), *HWY_STREETS[1:]]
+    assert dedication.read_line(line, _hwy_map(far), lot=lot) == (None, True, None)
+    assert dedication.depth_ft(40.0, None) == 40.0
+
+
+def test_an_openstreetmap_street_nearer_than_metros_brings_the_reading_in() -> None:
+    lot = shapely.Polygon(_at(HWY_LOT_RING))
+    frontage_road = LineString(_at([(385, 560), (445, 465), (486, 388), (540, 280)]))
+    plain = dedication.read_line(_hwy_line(2), _hwy_map(), lot=lot)[0]
+    for fclass, moves in (("residential", True), ("footway", False), ("service", False)):
+        cmap = _hwy_map(osm=Lines.build([frontage_road]), osm_classes=(fclass,))
+        width = dedication.read_line(_hwy_line(2), cmap, lot=lot)[0]
+        assert (width < plain - 5.0) is moves
+        assert width <= plain

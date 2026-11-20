@@ -560,7 +560,81 @@ def read_line(
     if len(widths) >= MIN_MEASURED:
         return min(widths), public, tuple(sorted(names))
     width, near_public, near_names = _nearest(points, cmap, through_private, inward, lot)
+    if width is None and public and near_public:
+        # A line on a road too wide for either reading above: measured
+        # across the right-of-way, the names left unread.
+        return _across(edge, points, cmap, inward), True, None
     return width, public and near_public, near_names
+
+
+#: How near a lot line's midpoint a centreline must run for quadfit s4's
+#: midpoint test to call the line a street line (``street_threshold_ft``).
+#: A street line with none that near is one s4 read across a wide
+#: right-of-way (``_open_way``, 2026-11-18), and only such a line is
+#: measured by :func:`_across`.
+WIDE_LINE_FT = 50.0
+
+#: OpenStreetMap ``fclass`` values that are a street: a line of one of them
+#: nearer than Metro's centreline brings :func:`_across`'s reading in. Its
+#: service roads, footways and cycle tracks are no street's centre line.
+OSM_STREETS: frozenset[str] = frozenset({
+    "motorway", "motorway_link", "trunk", "trunk_link", "primary", "primary_link",
+    "secondary", "secondary_link", "tertiary", "tertiary_link", "unclassified",
+    "residential", "living_street",
+})
+
+
+def _across(
+    edge: Sequence[float],
+    points: Sequence[Any],
+    cmap: ClassMap,
+    inward: tuple[float, float] | None,
+) -> float | None:
+    """The half-width of a line on a road too wide for
+    :data:`~flats.geom.corridor.FRONT_REACH_FT` (Milwaukie 11E36AD07300 on
+    Highway 224, its centre line 70 ft out): unmeasured until 2026-11-19,
+    so the lot gave up the whole distance and read RED.
+
+    From each sample point a ray runs square off the lot, away from it,
+    :data:`~flats.geom.corridor.CORRIDOR_REACH_FT` long -- the ray s4 found
+    the street with. The reading at the point is its distance to the
+    nearest centreline the ray crosses (or OpenStreetMap street,
+    :data:`OSM_STREETS`): the street across the line, or something nearer
+    than it, so the strip asked for is never short. The line's reading is
+    the smallest over at least :data:`MIN_MEASURED` points.
+
+    None -- unmeasured, the whole distance -- where the lot's shape does
+    not tell which side is off the lot, where a centreline runs within
+    :data:`WIDE_LINE_FT` of the line's midpoint (not a wide-road line: the
+    readings above are the ones that failed, and stay failed), where too
+    few rays cross a centreline, and where the nearest one a ray crosses
+    is a private road or drive.
+    """
+    if inward is None:
+        return None
+    from shapely.geometry import LineString, Point
+
+    x1, y1, x2, y2 = (float(v) for v in edge[:4])
+    if cmap.streets.near(Point((x1 + x2) / 2, (y1 + y2) / 2), WIDE_LINE_FT):
+        return None
+    widths: list[float] = []
+    for p in points:
+        ray = LineString(
+            [(p.x, p.y), (p.x - inward[0] * CORRIDOR_REACH_FT, p.y - inward[1] * CORRIDOR_REACH_FT)]
+        )
+        crossed = [int(i) for i in cmap.streets.tree.query(ray, predicate="intersects")]
+        if not crossed:
+            continue
+        s = min(crossed, key=lambda i: cmap.streets.lines[i].distance(p))
+        if cmap.types[s] in PRIVATE_TYPES:
+            return None
+        d = float(cmap.streets.lines[s].distance(p))
+        if cmap.osm is not None:
+            for i in cmap.osm.tree.query(ray, predicate="intersects"):
+                if cmap.osm_classes[int(i)] in OSM_STREETS:
+                    d = min(d, float(cmap.osm.lines[int(i)].distance(p)))
+        widths.append(d)
+    return min(widths) if len(widths) >= MIN_MEASURED else None
 
 
 def _nearest(
