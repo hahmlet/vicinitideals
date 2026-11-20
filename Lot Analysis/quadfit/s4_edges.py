@@ -200,6 +200,34 @@ ORCA_KIND_FIELD = "UNITTYPE"
 #: (a school's loop, a park's service road). Read off the file 2026-09-29;
 #: Metro's feature service publishes no domain for TYPE. See `street_kinds`.
 DRIVE_TYPES = frozenset({1700, 1800})
+#: RLIS STREETS TYPE 1110: a freeway's own carriageway (read off the file
+#: 2026-11-19: I5 393 segments, I205 327, I84 226, SUNSET 178, I405 112,
+#: HWY 217 107, HWY 30 15, FREMONT 10, MARQUAM 4).
+FREEWAY_TYPE = 1110
+#: The 1110 names Portland's Title 33 means by "the interstate freeways and
+#: the Sunset Highway" (33.910.030 Street): the interstates, the Sunset, and
+#: the two bridges that carry I-405 and I-5. HWY 217 and the US 30 stub are
+#: freeways the sentence does not name, so they class ``limited``.
+INTERSTATE_NAMES = frozenset({"I5", "I84", "I205", "I405", "SUNSET", "FREMONT", "MARQUAM"})
+#: TYPE 1120-1123: a freeway's ramps (FTYPE ``RAMP`` on 1,259 of 1,264).
+FREEWAY_RAMP_TYPES = frozenset({1120, 1121, 1122, 1123})
+#: The ramps of highways, arterials, collectors and local streets (FTYPE
+#: ``RAMP``): bridge approaches, slip ramps. A segment of these types the
+#: file calls ST, WAY or BLVD is an ordinary street and stays one.
+OTHER_RAMP_TYPES = frozenset({1221, 1222, 1223, 1321, 1421, 1471, 1521})
+#: `street_kinds` values for a street edge whose only way is one nobody can
+#: drive onto from a lot, or reach across (`_open_way_kind`, release 10
+#: move read 2026-11-19): ``freeway`` -- an interstate, the Sunset, or a
+#: freeway ramp; ``limited`` -- another freeway (HWY 217, the US 30 stub) or
+#: any other ramp; ``rail`` -- a railroad lies between the line and its
+#: street. Listed weakest reading first: where two apply the later is kept.
+LIMITED_KINDS = ("freeway", "limited", "rail")
+#: The FLATS acquire key of the OpenStreetMap extract that carries the
+#: railways (`flats/config/pipeline.yaml` osm_land_use), and so the raw
+#: file's name. Only ``railway=rail`` outside a tunnel is a barrier: light
+#: rail runs down the middle of streets a lot does front (Interstate Ave,
+#: E Burnside), between the lot line and the street's own centreline.
+RAIL_KEY = "osm_land_use"
 #: A private polygon carrying a drive is the drive's own tract when nothing
 #: is built on it: the assessor's building value is at most this. A mobile
 #: home park ($12,780), a school or an office campus is somebody's land.
@@ -531,6 +559,141 @@ def _open_way(x1: float, y1: float, x2: float, y2: float, outward: float,
     return found >= ALLEY_SAMPLES_MIN_HIT
 
 
+def limited_kind(type_code: int, ftype: object = None, name: object = None) -> str | None:
+    """Which of `LIMITED_KINDS` one RLIS STREETS segment is, or None for a
+    way a lot can front: ``freeway`` -- an interstate or the Sunset (TYPE
+    1110 under one of `INTERSTATE_NAMES`) or a freeway ramp (1120-1123,
+    FTYPE ``RAMP``); ``limited`` -- any other 1110 or 1120-1123 segment, and
+    the ramp of any other road. ``ftype`` None is a file without the
+    column: the ramp types are then ramps whatever they are called.
+    """
+    ftype = None if ftype is None or ftype != ftype else str(ftype).strip().upper()
+    if type_code == FREEWAY_TYPE:
+        named = "" if name is None or name != name else str(name).strip().upper()
+        return "freeway" if named in INTERSTATE_NAMES else "limited"
+    if type_code in FREEWAY_RAMP_TYPES:
+        return "freeway" if ftype in (None, "RAMP") else "limited"
+    if type_code in OTHER_RAMP_TYPES:
+        return "limited" if ftype in (None, "RAMP") else None
+    return None
+
+
+def _stricter(a: str | None, b: str | None) -> str | None:
+    """The later of two `LIMITED_KINDS` (None is no kind at all)."""
+    if a is None or b is None:
+        return a if b is None else b
+    return a if LIMITED_KINDS.index(a) >= LIMITED_KINDS.index(b) else b
+
+
+def _open_way_kind(x1: float, y1: float, x2: float, y2: float, outward: float,
+                   lot_tree, lot_geoms, lot_private, lot_barrier, way_tree, way_geoms,
+                   way_limited=None, rail_tree=None, rail_geoms=None) -> str | None:
+    """`_open_way`, and what the way across the edge is.
+
+    The rays are `_open_way`'s. A ray finds a STREET when the nearest
+    centreline it crosses that is not a freeway or ramp (``way_limited``,
+    parallel to ``way_geoms``: `limited_kind` of each) lies nearer than
+    every freeway or ramp centreline, every railroad (``rail_geoms``) and
+    everything `_open_way` stops at. Three such rays: ``street``.
+
+    Fewer, but three that `_open_way` passes (it counts a freeway's
+    centreline as a street's and knows no railroad the taxlot file does not
+    draw): the edge is one `_open_way` calls a street edge and no code
+    does, and the answer is why -- the strictest of what stopped its rays
+    (`LIMITED_KINDS`): the freeway or ramp crossed first or alone, or
+    ``rail``. None where `_open_way` itself finds no way.
+
+    With no ``way_limited`` and no rails the answer is ``street`` or None,
+    `_open_way` exactly.
+    """
+    from shapely.geometry import LineString, Point
+
+    ln = math.hypot(x2 - x1, y2 - y1)
+    ex, ey = (x2 - x1) / ln, (y2 - y1) / ln
+    nx, ny = outward * ey, -outward * ex
+    clean = loose = 0
+    why: str | None = None
+    for k, s in enumerate(ALLEY_SAMPLES):
+        px, py = x1 + s * ln * ex, y1 + s * ln * ey
+        p = Point(px, py)
+        inside = Point(px - NEIGHBOUR_OFFSET_FT * nx, py - NEIGHBOUR_OFFSET_FT * ny)
+        ray = LineString([(px, py), (px + WIDE_ROAD_RAY_FT * nx, py + WIDE_ROAD_RAY_FT * ny)])
+        plain = limited = math.inf
+        kind: str | None = None
+        for j in way_tree.query(ray):
+            x = ray.intersection(way_geoms[j])
+            if x.is_empty:
+                continue
+            d = x.distance(p)
+            got = None if way_limited is None else way_limited[j]
+            if got is None:
+                plain = min(plain, d)
+            elif d < limited or (d == limited and _stricter(kind, got) == got):
+                limited, kind = d, got
+        way = min(plain, limited)
+        if way < math.inf:
+            block = math.inf
+            for j in lot_tree.query(ray):
+                g = lot_geoms[j]
+                if g.contains(inside):
+                    continue
+                x = ray.intersection(g)
+                if x.is_empty:
+                    continue
+                if lot_barrier is not None and lot_barrier[j]:
+                    blocked = True
+                else:
+                    blocked = lot_private[j] and x.length > WIDE_ROAD_CROSS_MIN_FT
+                if blocked:
+                    block = min(block, x.distance(p))
+            if block > way:
+                loose += 1
+                rail = math.inf
+                if rail_tree is not None and plain < math.inf:
+                    for j in rail_tree.query(ray):
+                        x = ray.intersection(rail_geoms[j])
+                        if not x.is_empty:
+                            rail = min(rail, x.distance(p))
+                if limited <= plain:
+                    why = _stricter(why, kind)
+                elif rail <= plain:
+                    why = _stricter(why, "rail")
+                elif block > plain:
+                    clean += 1
+        left = len(ALLEY_SAMPLES) - k - 1
+        if clean >= ALLEY_SAMPLES_MIN_HIT or loose + left < ALLEY_SAMPLES_MIN_HIT:
+            break
+    if clean >= ALLEY_SAMPLES_MIN_HIT:
+        return "street"
+    if loose >= ALLEY_SAMPLES_MIN_HIT:
+        return why
+    return None
+
+
+def load_rail(path: Path):
+    """The railroads of the OpenStreetMap extract (`RAIL_KEY`) as an array
+    of lines in the working CRS, or None when the raw file is absent.
+    ``railway=rail`` only, and not in a tunnel: light rail and streetcars
+    run in streets, and a line underground is in nobody's way."""
+    import numpy as np
+    from shapely.geometry import shape
+
+    if not path.exists():
+        return None
+    lines = []
+    for f in load_geojson_features(path):
+        p = f.get("properties") or {}
+        g = f.get("geometry")
+        if p.get("railway") != "rail" or not g or p.get("tunnel") not in (None, "", "no"):
+            continue
+        if g.get("type") not in ("LineString", "MultiLineString"):
+            continue
+        geom = shape(g)
+        if not geom.is_empty:
+            lines.append(geom)
+    return np.array(lines, dtype=object)
+
+
 def dead_ends(street_geoms) -> list:
     """Where the streets end: every centreline endpoint, snapped to the foot,
     that exactly one segment touches, as shapely Points.
@@ -597,7 +760,9 @@ def fronts_cul_de_sac(edges, dead_tree, dead_points) -> bool:
 def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
                  simplify_tol: float, *, alley_tree=None, alley_geoms=None,
                  lot_tree=None, lot_geoms=None, lot_private=None,
-                 way_tree=None, way_geoms=None, lot_barrier=None) -> dict:
+                 way_tree=None, way_geoms=None, lot_barrier=None,
+                 street_limited=None, street_plain=None, way_limited=None,
+                 rail_tree=None, rail_geoms=None) -> dict:
     """Classify one lot polygon. Returns dict of edge/tier attributes.
 
     ``alley_tree``/``alley_geoms`` hold the alley centerlines separately from
@@ -623,6 +788,20 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
     too wide for the 50 ft test -- on a lot the midpoint test already put on
     a street or alley only; a lot it found landlocked stays tier D. Not
     given, the midpoint test alone decides, as it did until 2026-11-18.
+
+    ``street_limited``/``street_plain`` (parallel to ``street_geoms``) and
+    ``way_limited`` (parallel to ``way_geoms``) say which centrelines are a
+    freeway's or a ramp's (`limited_kind`) and which are ways a lot can
+    front (not those, not a drive); ``rail_tree``/``rail_geoms`` hold the
+    railroads. Given, each street edge is asked what its way is
+    (``way_kinds``, parallel to ``edges``): None for a street, else one of
+    `LIMITED_KINDS` -- the only centrelines within the threshold are a
+    freeway's or a ramp's and no street is open across the line, or the
+    open-way test passed only by counting a freeway or by crossing a
+    railroad (`_open_way_kind`). Such an edge stays ``F`` here: whether it
+    is a street lot line is the code's question, and FLATS reads the lot
+    without it as well (`limited_readings`). Not given, ``way_kinds`` is
+    None on every edge.
     """
     import shapely
     from shapely.geometry import LineString, Point
@@ -651,6 +830,7 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
     alley_flags = []
     alley_widths = []
     dists = []
+    way_kinds: list = []
     demoted = 0
     for x1, y1, x2, y2, ln, _b in edges:
         mid = Point((x1 + x2) / 2, (y1 + y2) / 2)
@@ -658,6 +838,18 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
         dist = mid.distance(street_geoms[nearest_idx])
         is_front = dist <= threshold_ft
         front_flags.append(is_front)
+        # A street edge by the midpoint test whose only centrelines within
+        # reach are a freeway's or a ramp's (with or without a drive beside
+        # them): no way a lot fronts made it one.
+        kind = None
+        if is_front and street_limited is not None and street_plain is not None                 and not street_plain[nearest_idx]:
+            near = [int(k) for k in street_tree.query(mid, predicate="dwithin", distance=threshold_ft)]
+            if not any(street_plain[k] for k in near):
+                for k in near:
+                    kind = _stricter(kind, street_limited[k])
+                if kind is not None and len({street_limited[k] for k in near}) > 1:
+                    kind = _stricter(kind, "limited")  # a drive or another kind beside it
+        way_kinds.append(kind)
         is_alley = False
         width = None
         if not is_front and alley_tree is not None and len(alley_geoms):
@@ -684,14 +876,29 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
         for k, ((x1, y1, x2, y2, ln, _b), dist) in enumerate(zip(edges, dists)):
             if front_flags[k] or alley_flags[k] or dist > WIDE_ROAD_RAY_FT + ln / 2:
                 continue
-            front_flags[k] = _open_way(x1, y1, x2, y2, outward, lot_tree, lot_geoms,
-                                       lot_private, lot_barrier, way_tree, way_geoms)
+            got = _open_way_kind(x1, y1, x2, y2, outward, lot_tree, lot_geoms,
+                                 lot_private, lot_barrier, way_tree, way_geoms,
+                                 way_limited, rail_tree, rail_geoms)
+            front_flags[k] = got is not None
+            way_kinds[k] = None if got == "street" else got
+    # A midpoint street edge only a freeway or ramp made (above) is a
+    # street's after all where the right-of-way is open across it to one --
+    # the foot of a ramp, where its centreline ends short of the street's.
+    if way_tree is not None and lot_tree is not None and way_limited is not None:
+        for k, (x1, y1, x2, y2, _ln, _b) in enumerate(edges):
+            if way_kinds[k] is None or not front_flags[k] or dists[k] > threshold_ft:
+                continue
+            got = _open_way_kind(x1, y1, x2, y2, outward, lot_tree, lot_geoms,
+                                 lot_private, lot_barrier, way_tree, way_geoms,
+                                 way_limited, rail_tree, rail_geoms)
+            way_kinds[k] = None if got == "street" else _stricter(way_kinds[k], got)
 
     # A lot with an alley and no street: the alley is its frontage, as it
     # was before alleys were told apart. Demoting it would make the lot
     # landlocked, which a lot on a public way is not.
     if not any(front_flags) and any(alley_flags):
         front_flags, alley_flags = alley_flags, [False] * len(edges)
+        way_kinds = [None] * len(edges)
 
     # A street line is a street line only where the street is (FOLLOWUPS
     # 172, `_street_touch`): with the fabric in hand each one is cut where it
@@ -705,8 +912,10 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
     beside = [False] * len(edges)
     if lot_tree is not None and any(front_flags):
         ways = (street_tree, alley_tree)
-        cut, cut_front, cut_alley, cut_width, cut_beside = [], [], [], [], []
-        for e, is_front, is_alley, width in zip(edges, front_flags, alley_flags, alley_widths):
+        cut, cut_front, cut_alley, cut_width, cut_beside, cut_kind = [], [], [], [], [], []
+        for e, is_front, is_alley, width, kind in zip(
+            edges, front_flags, alley_flags, alley_widths, way_kinds
+        ):
             x1, y1, x2, y2, ln, b = e
             parts = (
                 _street_touch(x1, y1, x2, y2, outward, lot_tree, lot_geoms, lot_private, ways)
@@ -718,6 +927,7 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
                 cut_alley.append(is_alley)
                 cut_width.append(width)
                 cut_beside.append(is_front and not parts[0][2])
+                cut_kind.append(kind)
                 continue
             for t0, t1, on_street in parts:
                 px1, py1 = x1 + (x2 - x1) * t0 / ln, y1 + (y2 - y1) * t0 / ln
@@ -727,9 +937,11 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
                 cut_alley.append(False)
                 cut_width.append(None)
                 cut_beside.append(not on_street)
+                cut_kind.append(kind)
         edges, front_flags, alley_flags, alley_widths, beside = (
             cut, cut_front, cut_alley, cut_width, cut_beside
         )
+        way_kinds = cut_kind
 
     if not any(front_flags):
         return {**none, "alley_edges_demoted": demoted}
@@ -837,6 +1049,7 @@ def classify_lot(geom, street_tree, street_geoms, threshold_ft: float,
         "neighbour_samples": samples,
         "street_rays": street_rays,
         "alley_cover": cover,
+        "way_kinds": [k if c[4] == "F" else None for k, c in zip(way_kinds, classed)],
     }
 
 
@@ -1302,6 +1515,39 @@ def without_streets(r: dict, drop: set[int]) -> dict:
     }
 
 
+def with_way_kinds(kinds: list, results: list) -> list:
+    """`street_kinds` with `classify_lot`'s ``way_kinds`` laid over it: a
+    street edge `_drive_kind` calls ``street`` (a public way within reach,
+    or none at all) takes the `LIMITED_KINDS` value `classify_lot` gave it,
+    where it gave one. A lot with no kinds measured stays None."""
+    out = []
+    for k, r in zip(kinds, results):
+        way = r.get("way_kinds") if k is not None else None
+        if not way or len(way) != len(k):
+            out.append(k)
+            continue
+        out.append([w if x == "street" and w else x for x, w in zip(k, way)])
+    return out
+
+
+def limited_readings(results: list, kinds: list, readings: list) -> list:
+    """``readings`` (`drive_readings`) with one more per lot that has a
+    street edge of `LIMITED_KINDS`: ``limited`` -- the lot without those
+    edges (`without_streets`), what s4 wrote before it looked across wide
+    roads and what Portland's Title 33 says of a freeway (33.910.030: a
+    street "does not include ... the interstate freeways and the Sunset
+    Highway including their ramps"). FLATS chooses between the readings by
+    each place's code (`flats.ingest.quadfit.limited_reading`)."""
+    out = []
+    for r, k, got in zip(results, kinds, readings):
+        drop = {i for i, x in enumerate(k or ()) if x in LIMITED_KINDS}
+        if not drop:
+            out.append(got)
+            continue
+        out.append({**(got or {}), "limited": without_streets(r, drop)})
+    return out
+
+
 def drive_readings(results: list, kinds: list) -> list:
     """Per lot, the second readings a drive calls for, keyed by what was
     dropped: ``doubtful`` -- the street edges only a drive on other land
@@ -1386,10 +1632,32 @@ def main() -> None:
     # (`_open_way`): no alley, no private road, no drive. Without TYPE in
     # s1 a drive cannot be told from a street, and the test is not run.
     if all_types is not None:
-        way_geoms = all_geoms[~is_alley & ~np.isin(all_types, list(DRIVE_TYPES))]
+        is_way = ~is_alley & ~np.isin(all_types, list(DRIVE_TYPES))
+        way_geoms = all_geoms[is_way]
         tree_ways = STRtree(way_geoms)
+        # Which centrelines are a freeway's or a ramp's (`limited_kind`), and
+        # which are ways a lot can front. A lot line whose only way is one of
+        # the first, or that reaches its street only across one or across a
+        # railroad, is marked for FLATS (`classify_lot` ``way_kinds``).
+        _ftype = list(streets["ftype"]) if "ftype" in streets.columns else [None] * len(streets)
+        _name = list(streets["name"]) if "name" in streets.columns else [None] * len(streets)
+        all_limited = np.array(
+            [limited_kind(int(t), f, n) for t, f, n in zip(all_types, _ftype, _name)], dtype=object
+        )
+        all_plain = np.array(
+            [k is None and int(t) not in DRIVE_TYPES for k, t in zip(all_limited, all_types)]
+        )
+        way_limited = all_limited[is_way]
+        rail_geoms = load_rail(DATA_DIR / "raw" / f"{RAIL_KEY}.geojson")
+        if rail_geoms is None:
+            print(f"s4: raw/{RAIL_KEY}.geojson absent -- a railroad between a lot line and "
+                  f"its street is not read")
+        tree_rail = STRtree(rail_geoms) if rail_geoms is not None and len(rail_geoms) else None
+        print(f"s4: {int(sum(k is not None for k in all_limited)):,} freeway and ramp segments, "
+              f"{0 if rail_geoms is None else len(rail_geoms):,} railroad lines")
     else:
         way_geoms, tree_ways = None, None
+        all_limited = all_plain = way_limited = rail_geoms = tree_rail = None
     thr = rules.defaults.street_threshold_ft
     tol = rules.defaults.simplify_tolerance_ft
     alley_is_street = {
@@ -1411,6 +1679,8 @@ def main() -> None:
                 geom, tree_all, all_geoms, thr, tol,
                 lot_tree=tree_lots, lot_geoms=lot_geoms, lot_private=lot_private,
                 way_tree=tree_ways, way_geoms=way_geoms, lot_barrier=lot_barrier,
+                street_limited=all_limited, street_plain=all_plain, way_limited=way_limited,
+                rail_tree=tree_rail, rail_geoms=rail_geoms,
             ))
         else:
             results.append(classify_lot(
@@ -1418,6 +1688,9 @@ def main() -> None:
                 alley_tree=tree_alleys, alley_geoms=alley_geoms,
                 lot_tree=tree_lots, lot_geoms=lot_geoms, lot_private=lot_private,
                 way_tree=tree_ways, way_geoms=way_geoms, lot_barrier=lot_barrier,
+                street_limited=None if all_limited is None else all_limited[~is_alley],
+                street_plain=None if all_plain is None else all_plain[~is_alley],
+                way_limited=way_limited, rail_tree=tree_rail, rail_geoms=rail_geoms,
             ))
         if n and n % 20000 == 0:
             print(f"  {n:,}/{len(lots):,}")
@@ -1442,6 +1715,7 @@ def main() -> None:
         ways = [by_all if alley_is_street.get(j, False) else by_street for j in lots["jurisdiction"]]
     kinds = street_kinds(results, lots["geom"], lots["TLID"].astype(str), ways, thr,
                          tree_lots, lot_geoms, lot_private, lot_built, fabric_tlid)
+    kinds = with_way_kinds(kinds, results)
     lots["street_kind_json"] = [None if k is None else json.dumps(k) for k in kinds]
     if all_types is not None:
         from collections import Counter as _KCounter
@@ -1600,7 +1874,10 @@ def main() -> None:
     # the worse answer (`drive_readings`). Measured here, on the same terms
     # as the first reading -- the zone and the park across every line, the
     # bulb, the width and depth against the fronts that are left.
-    readings = drive_readings(results, kinds)
+    readings = limited_readings(results, kinds, drive_readings(results, kinds))
+    _lim = lots.assign(_l=[bool(g) and "limited" in g for g in readings]).groupby("jurisdiction")["_l"].sum()
+    print("s4 lots with a street edge only a freeway, a ramp or a way across a railroad makes: "
+          + (", ".join(f"{j} {int(v):,}" for j, v in _lim[_lim > 0].items()) or "none"))
     flat = [(li, key, alt) for li, got in enumerate(readings) if got for key, alt in got.items()]
     sans: list = [None] * len(results)
     if flat:
