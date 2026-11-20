@@ -202,7 +202,9 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
         # The foundation model (FOLLOWUPS 209), priced now from the stored
         # measurement with the current settings; null when not measured. A note,
         # never a colour.
-        "foundation": await flats_foundation.lot_foundation(session, lot.county, lot.tlid),
+        "foundation": await flats_foundation.lot_foundation(
+            session, lot.county, lot.tlid, drawing=flats_foundation.drawn_ring(results)
+        ),
         "pending_changes": [
             e.as_dict() for e in entries if e.kind == "adopted_change" and e.effective and e.effective > today
         ],

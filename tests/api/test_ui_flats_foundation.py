@@ -25,7 +25,7 @@ from app.models.flats import FlatsLotFoundation, FlatsLotResult
 from flats.foundation import ground as grounds
 from flats.foundation import measure, oldbuild, record, settings
 from scripts.flats_foundation import load
-from tests.api.test_ui_flats_lots import _login, _seed
+from tests.api.test_ui_flats_lots import LOT_B_DRAWING, _login, _seed
 
 pytestmark = pytest.mark.asyncio
 
@@ -35,7 +35,7 @@ WHEN = "2026-11-19T12:00:00+00:00"
 DRAWING = "the rel9 drawn buildings (test)"
 
 
-def _doc(tlid: str = A, *, grow_ft: float | None = None) -> dict:
+def _doc(tlid: str = A, *, grow_ft: float | None = None, ring: list | None = None) -> dict:
     s = settings.load()
     m = measure.measure(
         grounds.plane(s, 3.0, 1.0), s, tlid=tlid, county="multnomah",
@@ -43,7 +43,7 @@ def _doc(tlid: str = A, *, grow_ft: float | None = None) -> dict:
     )
     box = oldbuild.Outline(((((30.0, -5.0), (55.0, -5.0), (55.0, 12.0), (30.0, 12.0), (30.0, -5.0))),), "B1", 1925)
     m = measure.with_old_buildings(m, True, oldbuild.measure_all([box], s))
-    doc = record.document(m, drawing=DRAWING, measured_at=WHEN)
+    doc = record.document(m, drawing=DRAWING, measured_at=WHEN, run="run 128" if ring else None, ring=ring)
     if grow_ft is not None:  # as if measured under other settings
         geometry = json.loads(doc["lot"]["geometry"])
         geometry["grow_ft"] = grow_ft
@@ -116,6 +116,44 @@ async def test_a_record_under_other_dimensions_needs_re_measuring(client: AsyncC
     panel = page.text.split('id="lot-foundation"', 1)[1].split("<!-- end lot-foundation -->", 1)[0]
     assert 'data-foundation-status="needs_remeasuring"' in page.text
     assert "Needs re-measuring" in panel and "$" not in panel
+
+
+async def test_a_record_measured_on_another_drawing_shows_no_figure(client: AsyncClient, session: AsyncSession):
+    # Slice 4: a record stamped with the ring it was measured on is priced only
+    # while the lot's drawn building is that ring; once the drawing moves, the
+    # report and the page say "measured on an earlier drawing" and show no figure.
+    await _login(client, session)
+    await _seed(session)
+    ring = LOT_B_DRAWING["building"]
+    await _store(session, _doc(B, ring=ring))
+    same = (await client.get(f"/api/flats/lot/multnomah/{B}")).json()["foundation"]
+    assert same["status"] == "priced" and same["drawing_checked"] is True
+    assert same["measured_on"]["run"] == "run 128" and same["measured_on"]["drawing_hash"] == record.ring_hash(ring)
+    assert "drawn_ring" not in same["measured_on"]
+
+    row = await session.get(FlatsLotFoundation, ("multnomah", B))
+    moved = [[x + 6.0, y] for x, y in ring]  # the pod drawn 6 ft along since
+    row.record = _doc(B, ring=moved)
+    await session.commit()
+    f = (await client.get(f"/api/flats/lot/multnomah/{B}")).json()["foundation"]
+    assert f["status"] == "needs_remeasuring" and f["remeasure_because"] == ["drawing"]
+    assert "methods" not in f and "old_buildings" not in f and "style" not in f
+    assert f["status_words"].startswith("Measured on an earlier drawing -- needs re-measuring")
+
+    page = await client.get(f"/flats/lots/multnomah/{B.replace(' ', '%20')}")
+    panel = page.text.split('id="lot-foundation"', 1)[1].split("<!-- end lot-foundation -->", 1)[0]
+    assert 'data-foundation-status="needs_remeasuring"' in page.text
+    assert "Measured on an earlier drawing" in panel and "$" not in panel
+
+
+async def test_a_lot_with_no_drawing_on_the_page_is_priced_unchecked(client: AsyncClient, session: AsyncSession):
+    # Lot A's results carry no drawing: a stamped record is priced, and says the
+    # drawing was not checked.
+    await _login(client, session)
+    await _seed(session)
+    await _store(session, _doc(A, ring=LOT_B_DRAWING["building"]))
+    f = (await client.get(f"/api/flats/lot/multnomah/{A}")).json()["foundation"]
+    assert f["status"] == "priced" and f["drawing_checked"] is False
 
 
 async def test_the_lot_page_shows_the_panel_beside_the_colour(client: AsyncClient, session: AsyncSession):

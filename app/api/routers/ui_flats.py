@@ -4927,7 +4927,9 @@ async def flats_lot(
             # Frost depth for the lot's place (FOLLOWUPS 197): a note, never a colour.
             "frost": describe_frost(lot.jurisdiction, lot.county),
             # The foundation model, priced now (FOLLOWUPS 209): a note, never a colour.
-            "foundation": await flats_foundation.lot_foundation(session, lot.county, lot.tlid),
+            "foundation": await flats_foundation.lot_foundation(
+                session, lot.county, lot.tlid, drawing=flats_foundation.drawn_ring(card["results"])
+            ),
             "outline": _outline(geojson),
             "lat": lat,
             "lon": lon,
