@@ -18,8 +18,12 @@ further away than the old 50 ft test. It also counted:
 
 ## The fix
 
-Branch `flats/open-way-fix` (from `flats/rel11` d4803423), head ea8a94c1 plus a small addition in
-progress. Hand-off: `../vicinitideals-worktrees/open-way-fix.handoff.md`.
+Branch `flats/open-way-fix` (from `flats/rel11` d4803423), head 8d10998a, **fast-forwarded into
+`flats/rel11` 2026-11-20** (full FLATS suite 8,743 passed). Hand-off:
+`../vicinitideals-worktrees/open-way-fix.handoff.md`; expected moves:
+`../vicinitideals-worktrees/open-way-fix.expected_moves.tsv`. Steph's three 2026-11-19 fire rulings
+(below) are built in and in the rulings register on the branch. About 24 lots are expected to gain
+GREEN on the wide-road ruling (ceiling about 80 with measured curbs), each read one by one.
 
 - Portland: a freeway or ramp is not a street (PCC 33.910.030, quoted in the city's rule file). The
   lot is screened as if that line were an ordinary side or rear line.
@@ -50,6 +54,8 @@ Logged as Q52 to Q56 in `../vicinitideals-worktrees/QUESTIONS-FOR-STEPH-scratch.
 - Q54: may an engine standing on a wide main road (centre line 50 to 150 ft away) count for GREEN?
 - Q55: a lot whose only street side is a freeway: yellow (as built) or red?
 - Q56: a road-widening strip that still cannot be measured: worst case (as built) or yellow?
+- Q57 (not asked, low): an engine on the near side of a divided main road (two carriageways or a
+  frontage road) is kept YELLOW under FIRE-ROAD-UNCLEAR; 2 lots, both red for another reason.
 
 ## What the fire code says (read 2026-11-19; Steph: "read for yourself on access")
 
