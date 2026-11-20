@@ -88,9 +88,10 @@ class Dem:
             a[gap] = more[0][gap]
         return a, tf
 
-    def z_reader(self, ring: Any) -> tuple[Callable[[Any], Any] | None, str | None, float | None]:
+    def z_reader(self, ring: Any, *, coarse: bool = False) -> tuple[Callable[[Any], Any] | None, str | None, float | None]:
         """A function from (N, 2) EPSG:2913 points to ground (ft) round the
-        footprint ``ring``, the model used, and its cell size (m)."""
+        footprint ``ring``, the model used, and its cell size (m). ``coarse``
+        skips the 1 m model (the slice-4 retry for a 1 m grid with blank cells)."""
         import numpy as np
         import shapely
 
@@ -100,7 +101,7 @@ class Dem:
         b = fp.buffer(PAD_FT).bounds
         fx, fy = self._fwd.transform([b[0], b[2], b[0], b[2]], [b[1], b[1], b[3], b[3]])
         bounds = (min(fx), min(fy), max(fx), max(fy))
-        got = self._fine(bounds) if self.tiles else None
+        got = self._fine(bounds) if self.tiles and not coarse else None
         source = ONE_M
         if got is None or np.isnan(got[0]).mean() > 0.5:
             got = self._read(self.coarse, bounds) if self.coarse is not None else None

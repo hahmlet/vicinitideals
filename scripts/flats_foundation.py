@@ -1,8 +1,10 @@
 """FD6 foundation model, build steps 8 and 9: real ground under each drawn building,
-old buildings under it, and the grid vs six-readings comparison (FOLLOWUPS 209).
+old buildings under it, and the grid vs six-readings comparison (FOLLOWUPS 209);
+and the slice-4 release routine, ``measure-run``.
 
-Never a colour: nothing here is read by the screen, and nothing is written to
-the database. Three steps, each reading files in place and writing Parquet:
+Never a colour: nothing here is read by the screen, and only ``load`` writes
+to the database (``flats.lot_foundation``). The steps read files in place and
+write Parquet:
 
 ``grid`` (on LXC 137, light: one process, nice, ``GDAL_CACHEMAX`` small)
     For every lot in the lot file: the drawn building (FD5 extract's
@@ -38,6 +40,25 @@ the database. Three steps, each reading files in place and writing Parquet:
     records as ``records.jsonl.gz`` (what ``load`` reads: the app image has no
     pyarrow) and ``meta.json``. No prices.
 
+``measure-run`` (on LXC 137, light; slice 4 -- the release routine)
+    Every lot a run's assign output draws a building on (``--colours``, default
+    green and yellow), measured from the sources themselves, in one command:
+    the drawn ring, its frame and a ground grid (1 m model, else the 10 m one);
+    the ground class from the soil survey and the mapped hazards under the
+    footprint (FD2 pass 1's rules, :mod:`flats.foundation.inputs`), the frost
+    register's depth, the assessor's year built, the street-side face's turn,
+    and the RLIS old buildings with the "held" flag. Each record is stamped
+    with ``--drawing`` / ``--run`` and the drawn ring and its hash, so the lot
+    page can tell when the drawing has moved since. One process; every source
+    is cut as it is read to what lies within reach of a drawn footprint, so it
+    stays well under 1 GB; nice it to 19. Restartable: the population, the
+    lot rows and each part of ``--part`` lots are written once (a part
+    atomically), and a re-run with the same arguments carries on from the
+    first part not written. Writes the bundle ``load`` and ``python -m
+    flats.foundation reprice`` read: ``records.jsonl.gz``, the five measured
+    tables, ``status.parquet`` (one row per drawn lot: the facts behind its
+    ground class, or why it was not measured) and ``meta.json``.
+
 ``load`` (the api container; asyncpg only)
     Upserts ``records.jsonl.gz`` into ``flats.lot_foundation`` by county + tlid,
     in one transaction. Idempotent: loading the same file again changes nothing
@@ -58,6 +79,7 @@ import os
 import sys
 import time
 from collections import Counter, defaultdict
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
@@ -487,6 +509,586 @@ def _compare(args: argparse.Namespace) -> None:
     print(text)
 
 
+# ---------------------------------------------------------------- measure-run (LXC 137; slice 4)
+
+#: What a run's lot-status table holds per lot (one row per drawn lot, measured or not).
+STATUS_FIELDS = (
+    "county", "tlid", "colour", "layer_id", "ground_source", "cell_m", "ground_class", "alt_ground_class",
+    "ground_class_unread", "soil_no_data", "soil_missing", "mukey", "comp_name", "alt_comp", "slide_mapped",
+    "slide_top", "liq_top2", "fema_zone", "fema_source", "flood_100", "frost_register_in", "year_built",
+    "front_face_turn_deg", "old_buildings_held", "old_buildings_n", "drawing_hash", "error",
+)
+POP_COLS = ("TLID", "colour", "layer_id", "jurisdiction", "drawing")
+
+
+def _rss_mb() -> int:
+    import resource
+
+    return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024
+
+
+def county_of(layer_id: str | None) -> str | None:
+    """A lot's county from its rules layer id (``<state>/<county>/...``)."""
+    parts = (layer_id or "").split("/")
+    return parts[1] if len(parts) > 1 and parts[1] else None
+
+
+def population(assign: Path, colours: set[str], out: Path, batch: int = 20000) -> dict[str, Any]:
+    """Every lot of a run's assign output with a drawn building and one of
+    ``colours``, streamed, in county + TLID order: TLID, county, colour,
+    layer_id, jurisdiction, the drawn ring (JSON) and its hash."""
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    from flats.foundation import record
+
+    recs: list[dict[str, Any]] = []
+    n: Counter[str] = Counter()
+    for b in pq.ParquetFile(assign).iter_batches(batch_size=batch, columns=list(POP_COLS)):
+        cols = {name: b.column(name).to_pylist() for name in POP_COLS}
+        for i, tlid in enumerate(cols["TLID"]):
+            colour = cols["colour"][i]
+            if colour not in colours:
+                continue
+            d = cols["drawing"][i]
+            ring = (json.loads(d) or {}).get("building") if d else None
+            if not ring:
+                n[f"{colour} not drawn"] += 1
+                continue
+            county = county_of(cols["layer_id"][i])
+            n[f"{colour} {county}"] += 1
+            recs.append({"TLID": tlid, "county": county, "colour": colour, "layer_id": cols["layer_id"][i],
+                         "jurisdiction": cols["jurisdiction"][i], "ring": json.dumps(ring),
+                         "drawing_hash": record.ring_hash(ring)})
+    seen = Counter(r["TLID"] for r in recs)
+    dup = sorted(t for t, k in seen.items() if k > 1)
+    if dup:
+        raise SystemExit(f"{len(dup)} TLIDs drawn twice in {assign}, e.g. {dup[:3]}")
+    recs.sort(key=lambda r: (str(r["county"]), r["TLID"]))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    tmp = out.with_suffix(".tmp")
+    pq.write_table(pa.Table.from_pylist(recs), tmp, compression="zstd")
+    os.replace(tmp, out)
+    return {"lots": len(recs), "counts": dict(sorted(n.items()))}
+
+
+def _chunks(seq: list[Any], size: int) -> list[list[Any]]:
+    return [seq[i : i + size] for i in range(0, len(seq), size)]
+
+
+def extract_rows(quadfit_dir: Path, parts: list[list[str]], out: Path, batch: int = 20000) -> dict[str, Any]:
+    """The lots' rows of quadfit s4 / s5o, streamed, one small pair of files per
+    part (``out/part-NNNN/``), and each lot's box (``out/lot_bounds.parquet``)."""
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    import shapely
+
+    part_of = {t: k for k, tl in enumerate(parts) for t in tl}
+    counts: dict[str, int] = {}
+    bounds: list[dict[str, Any]] = []
+    for name in ("s4_lots.parquet", "s5o_lots.parquet"):
+        pf = pq.ParquetFile(quadfit_dir / name)
+        got = []
+        for b in pf.iter_batches(batch_size=batch):
+            t = pa.Table.from_batches([b])
+            keep = [i for i, k in enumerate(t.column("TLID").to_pylist()) if k in part_of]
+            if keep:
+                got.append(t.take(keep))
+        tab = pa.concat_tables(got) if got else pf.schema_arrow.empty_table()
+        counts[name] = tab.num_rows
+        tl = tab.column("TLID").to_pylist()
+        if name == "s4_lots.parquet" and "wkb" in tab.column_names:
+            g = shapely.from_wkb(tab.column("wkb").to_numpy(zero_copy_only=False))
+            bb = shapely.bounds(g)
+            bounds = [{"TLID": t, "x0": float(b[0]), "y0": float(b[1]), "x1": float(b[2]), "y1": float(b[3])}
+                      for t, b in zip(tl, bb, strict=True) if all(v == v for v in b)]
+        by: dict[int, list[int]] = defaultdict(list)
+        for i, t in enumerate(tl):
+            by[part_of[t]].append(i)
+        for k in range(len(parts)):
+            d = out / f"part-{k:04d}"
+            d.mkdir(parents=True, exist_ok=True)
+            pq.write_table(tab.take(by.get(k, [])), d / name, compression="zstd")
+        del tab, got
+    pq.write_table(pa.Table.from_pylist(bounds), out / "lot_bounds.parquet", compression="zstd")
+    (out / "done.json").write_text(json.dumps(counts), encoding="utf-8")
+    return counts
+
+
+class Sources:
+    """The per-lot input sources of a measure run, each cut as it is read to
+    what lies within reach of a drawn footprint (so one light process holds
+    them): the NFHL flood zones, the hazard extract, the soil survey, the RLIS
+    footprints (with each lot's "held" flag) and the occupancy years. Cutting
+    changes no answer: every answer reads only features within that reach."""
+
+    def __init__(self, args: argparse.Namespace, pop: list[dict[str, Any]],
+                 lot_bounds: dict[str, tuple[float, float, float, float]], log: Any) -> None:
+        import numpy as np
+        import shapely
+
+        self.log = log
+        self.pods = np.array([shapely.Polygon(json.loads(r["ring"])) for r in pop], dtype=object)
+        self.pod_tree = shapely.STRtree(self.pods)
+        self.nfhl_meta: dict[str, Any] | None = None
+        self._nfhl(Path(args.nfhl) if args.nfhl else None)
+        self._hazards(Path(args.hazards))
+        self._soil(Path(args.soil_extract), Path(args.soil_attrs))
+        self._footprints(Path(args.footprints), lot_bounds)
+        self._occupancy(Path(args.occupancy), {(str(r["county"]), r["TLID"]) for r in pop})
+
+    def _near(self, geoms: Any, distance: float) -> Any:
+        """Indices of ``geoms`` within ``distance`` of any drawn footprint."""
+        import numpy as np
+
+        if not len(geoms):
+            return np.zeros(0, dtype=int)
+        return np.unique(self.pod_tree.query(geoms, predicate="dwithin", distance=distance)[0])
+
+    # -- NFHL (FD2 fix-flood)
+    def _nfhl(self, path: Path | None) -> None:
+        import numpy as np
+        import shapely
+        from pyproj import Transformer
+        from shapely.geometry import shape
+
+        self.nfhl_geoms: list[Any] = []
+        self.nfhl_props: list[dict[str, Any]] = []
+        self.nfhl_tree: Any = None
+        if path is None:
+            return
+        data = json.loads(path.read_text(encoding="utf-8"))
+        tf = Transformer.from_crs(4326, 2913, always_xy=True)
+        geoms, props = [], []
+        for f in data.get("features", []):
+            if not f.get("geometry"):
+                continue
+            g = shapely.make_valid(shapely.transform(shape(f["geometry"]), lambda xy: np.column_stack(
+                tf.transform(xy[:, 0], xy[:, 1]))))
+            geoms.append(g)
+            props.append(f.get("properties") or {})
+        info = {k: v for k, v in data.items() if k != "features"}
+        del data
+        keep = self._near(np.array(geoms, dtype=object), 1.0)
+        self.nfhl_geoms = [geoms[i] for i in keep]
+        self.nfhl_props = [props[i] for i in keep]
+        self.nfhl_tree = shapely.STRtree(np.array(self.nfhl_geoms, dtype=object)) if self.nfhl_geoms else None
+        self.nfhl_meta = {"path": str(path), **info, "features": len(geoms), "kept": len(self.nfhl_geoms)}
+        self.log(f"nfhl {len(geoms)} -> {len(self.nfhl_geoms)}")
+
+    def nfhl_hits(self, fp: Any) -> list[dict[str, Any]]:
+        import shapely
+
+        if self.nfhl_tree is None:
+            return []
+        return [self.nfhl_props[i] for i in self.nfhl_tree.query(fp, predicate="intersects")
+                if shapely.area(shapely.intersection(fp, self.nfhl_geoms[i])) > 0]
+
+    # -- hazards (FD2 pass 1 _hazards on the same extract)
+    def _hazards(self, extract: Path) -> None:
+        import importlib.util
+
+        import pyarrow.parquet as pq
+        import shapely
+
+        from flats.foundation import inputs as fin
+        from flats.ingest.hazards import Feature, RasterLayer, VectorLayer, load_registry
+
+        spec_ = importlib.util.spec_from_file_location("flats_lot_hazards", REPO / "scripts" / "flats_lot_hazards.py")
+        mod = importlib.util.module_from_spec(spec_)  # type: ignore[arg-type]
+        sys.modules.setdefault("flats_lot_hazards", mod)
+        spec_.loader.exec_module(mod)  # type: ignore[union-attr]
+        registry = load_registry()
+        meta = json.loads((extract / mod.META_FILE).read_text(encoding="utf-8"))
+        keys = [k for k in meta["layers"] if k in fin.HAZARD_KEYS or registry.layers[k].kind == "coverage"]
+        self.reach_ft = fin.hazard_reach_ft(registry.layers[k].nearest_ft for k in keys)
+        self.hazard_meta: dict[str, Any] = {"extract": str(extract), "reach_ft": self.reach_ft, "layers": {}}
+        kept: dict[str, list[Any]] = {}
+        for key in keys:
+            if registry.layers[key].kind == "raster":
+                continue
+            feats, n = [], 0
+            for b in pq.ParquetFile(extract / mod.LAYER_DIR / f"{key}.parquet").iter_batches(batch_size=5000):
+                g = shapely.from_wkb(b.column("wkb").to_numpy(zero_copy_only=False))
+                n += len(g)
+                st, cd, lb, at = (b.column(c).to_pylist() for c in ("state", "code", "label", "attrs"))
+                for i in self._near(g, self.reach_ft):
+                    feats.append(Feature(st[i], cd[i], lb[i], json.loads(at[i]) if at[i] else {}, g[i]))
+            kept[key] = feats
+            self.hazard_meta["layers"][key] = {"features": n, "kept": len(feats)}
+            self.log(f"hazard {key} {n} -> {len(feats)}")
+        self.haz_cov = {k: VectorLayer(registry.layers[k], kept[k]) for k in keys if registry.layers[k].kind == "coverage"}
+        self.haz_layers: list[Any] = []
+        for key in keys:
+            spec = registry.layers[key]
+            if spec.kind == "coverage":
+                continue
+            if spec.coverage and spec.coverage not in self.haz_cov:
+                raise SystemExit(f"{key}: its coverage {spec.coverage} is not in the extract")
+            if spec.kind == "raster":
+                tif = extract / mod.LAYER_DIR / f"{key}.tif"
+                path = str(tif) if tif.exists() else meta["layers"][key]["raster"]["path"]
+                self.haz_layers.append(RasterLayer(spec, path, working_srid=mod.OUT_SRID))
+                self.hazard_meta["layers"][key] = {"raster": path}
+            else:
+                self.haz_layers.append(VectorLayer(spec, kept[key]))
+        self.haz_have = {lay.spec.key for lay in self.haz_layers}
+        self.scarps = next((x for x in self.haz_layers if x.spec.key == "landslide_scarps"), None)
+
+    def hazards(self, fp: Any, layer_id: str | None) -> dict[str, Any]:
+        from flats.foundation import inputs as fin
+        from flats.ingest.hazards import measure_shape
+
+        rows = list(measure_shape(fp, self.haz_layers, self.haz_cov, jurisdiction=layer_id))
+        scarp = None
+        if self.scarps is not None:
+            ring = fp.buffer(fin.SCARP_RING_FT)
+            scarp = any(f.geom.intersects(ring) for f in self.scarps.features(ring))
+        out = fin.hazard_facts(rows, self.haz_have, scarp_within_100ft=scarp)
+        return fin.with_nfhl(out, self.nfhl_hits(fp) if out.get("fema_zone") == "not mapped" else None)
+
+    # -- soil (FD2 pass 1 _soil)
+    def _soil(self, extract: Path, attrs: Path) -> None:
+        import numpy as np
+        import pyarrow.parquet as pq
+        import shapely
+
+        geoms, keys, n = [], [], 0
+        for b in pq.ParquetFile(extract / "polygons.parquet").iter_batches(batch_size=20000, columns=["mukey", "wkb"]):
+            g = shapely.from_wkb(b.column("wkb").to_numpy(zero_copy_only=False))
+            n += len(g)
+            mk = b.column("mukey").to_pylist()
+            for i in self._near(g, 0.0):
+                geoms.append(g[i])
+                keys.append(str(mk[i]))
+        self.soil_geoms = np.array(geoms, dtype=object)
+        self.soil_keys = keys
+        self.soil_tree = shapely.STRtree(self.soil_geoms)
+        self.soil_units = json.loads(attrs.read_text(encoding="utf-8"))["units"]
+        self.soil_meta = {"extract": str(extract), "attrs": str(attrs), "polygons": n, "kept": len(geoms)}
+        self.log(f"soil {n} -> {len(geoms)}")
+
+    def soil(self, fp: Any) -> dict[str, Any]:
+        import shapely
+
+        from flats.foundation import inputs as fin
+
+        area: dict[str, float] = defaultdict(float)
+        for i in self.soil_tree.query(fp, predicate="intersects"):
+            a = float(shapely.area(shapely.intersection(fp, self.soil_geoms[i])))
+            if a > 0:
+                area[self.soil_keys[i]] += a
+        return fin.soil_facts(area, float(fp.area), self.soil_units)
+
+    # -- RLIS footprints (FD5 pass 2): the old buildings, and "held" round each lot
+    def _footprints(self, path: Path, lot_bounds: dict[str, tuple[float, float, float, float]]) -> None:
+        import numpy as np
+        import shapely
+        from shapely.geometry import shape
+
+        from flats.foundation import inputs as fin
+
+        s = settings.load()
+        near = (s.grow_ft + 1.0) * 1.5 + 1.0  # past the mitred grow ring round each pod
+        tl = list(lot_bounds)
+        box_tree = shapely.STRtree(np.array([shapely.box(*fin.held_box(lot_bounds[t])) for t in tl], dtype=object))
+        held = np.zeros(len(tl), dtype=bool)
+        geoms: list[Any] = []
+        props: list[dict[str, Any]] = []
+        n = 0
+        buf_g: list[Any] = []
+        buf_p: list[dict[str, Any]] = []
+
+        def flush() -> None:
+            if not buf_g:
+                return
+            arr = np.array(buf_g, dtype=object)
+            # no predicate: boxes meet boxes, exactly FD5 pass 2's STRtree.query(lot.buffer(1500))
+            held[np.unique(box_tree.query(arr)[1])] = True
+            for i in self._near(arr, near):
+                geoms.append(buf_g[i])
+                props.append(buf_p[i])
+            buf_g.clear()
+            buf_p.clear()
+
+        with gzip.open(path, "rt", encoding="utf-8") as fh:
+            for line in fh:
+                if not line.strip():
+                    continue
+                d = json.loads(line)
+                if not d.get("g"):
+                    continue
+                g = shape(d["g"])
+                if not g.is_valid:
+                    g = shapely.make_valid(g)
+                p = d.get("p") or {}
+                buf_g.append(g)
+                buf_p.append({k: p.get(k) for k in ("YEAR_BUILT", "BLDG_ID")})
+                n += 1
+                if len(buf_g) >= 20000:
+                    flush()
+        flush()
+        self.fp_geoms = geoms
+        self.fp_props = props
+        self.fp_tree = shapely.STRtree(np.array(geoms, dtype=object)) if geoms else None
+        self.held = {t: bool(h) for t, h in zip(tl, held, strict=True)}
+        self.fp_meta = {"path": str(path), "footprints": n, "kept": len(geoms), "lots_held": int(held.sum()),
+                        "lots": len(tl)}
+        self.log(f"footprints {n} -> {len(geoms)}; held round {int(held.sum())} of {len(tl)} lots")
+
+    def old_buildings(self, fr: Frame, s: Any) -> tuple[Any, ...]:
+        import shapely
+
+        from flats.foundation import oldbuild
+
+        if self.fp_tree is None:
+            return ()
+        pod = shapely.Polygon([fr.fl, fr.fr, fr.br, fr.bl])
+        idx = self.fp_tree.query(shapely.buffer(pod, s.grow_ft + 1.0, join_style="mitre"), predicate="intersects")
+        outs = oldbuild.model_outlines(fr, [self.fp_geoms[i] for i in idx], [self.fp_props[i] for i in idx], s)
+        return oldbuild.measure_all(outs, s)
+
+    # -- occupancy years (FD2 pass 1)
+    def _occupancy(self, path: Path, want: set[tuple[str, str]]) -> None:
+        self.years: dict[tuple[str, str], Any] = {}
+        with gzip.open(path, "rt", encoding="utf-8", newline="") as fh:
+            for r in csv.DictReader(fh):
+                k = ((r.get("county") or "").lower(), r.get("tlid") or "")
+                if k in want:
+                    self.years[k] = r.get("year_built")
+        self.occ_meta = {"path": str(path), "lots": len(self.years)}
+        self.log(f"occupancy rows for {len(self.years)} lots")
+
+    def meta(self) -> dict[str, Any]:
+        return {"nfhl": self.nfhl_meta, "hazards": self.hazard_meta, "soil": self.soil_meta,
+                "footprints": self.fp_meta, "occupancy": self.occ_meta}
+
+
+_FROST: dict[tuple[str | None, str | None], Any] = {}
+
+
+def frost_in(layer_id: str | None, county: str | None) -> Any:
+    """The live frost register's figure for a place, as FD2 pass 1 read it
+    (``flats.frost.describe(layer_id, county)["inches"]``), cached."""
+    from flats import frost as register
+
+    key = (layer_id, (county or "").lower() or None)
+    if key not in _FROST:
+        _FROST[key] = register.describe(layer_id, county).get("inches")
+    return _FROST[key]
+
+
+def _status(p: Mapping[str, Any], **kw: Any) -> dict[str, Any]:
+    st: dict[str, Any] = dict.fromkeys(STATUS_FIELDS)
+    st.update(county=p["county"], tlid=p["TLID"], colour=p["colour"], layer_id=p["layer_id"],
+              drawing_hash=p["drawing_hash"], **kw)
+    return st
+
+
+def measure_lot(p: Mapping[str, Any], row: Mapping[str, Any] | None, src: Sources, dem: Any, layers: Any, s: Any,
+                grid: tuple[Any, Any], *, drawing: str, run: str, measured_at: str
+                ) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+    """One drawn lot: its measured record (None when it cannot be measured) and
+    its status row. The ground grid is the 1 m model's, else (blank cells, or
+    no 1 m tile) the 10 m model's."""
+    import numpy as np
+    import shapely
+
+    from flats.foundation import inputs as fin
+    from flats.foundation import record
+    from flats.ingest import quadfit
+
+    tlid, county, layer_id = p["TLID"], p["county"], p["layer_id"]
+    ring = json.loads(p["ring"])
+    if row is None:
+        return None, _status(p, error="LookupError: lot row not in s4")
+    ql = quadfit.lot_from_row(dict(row), layers)
+    streets = tuple(dict.fromkeys(quadfit._street_lines(ql) + quadfit._side_street_lines(ql)))
+    fr = frame(ring, streets)
+    gx, gy = grid
+    pts = fr.world(gx.ravel(), gy.ravel(), s.length_ft, s.width_ft)
+    z = None
+    src_name = cell = None
+    for coarse in (False, True):
+        z_of, src_name, cell = dem.z_reader(ring, coarse=coarse)
+        if z_of is None:
+            continue
+        z = np.asarray(z_of(pts), dtype=float).reshape(gy.shape)
+        if np.isfinite(z).all():
+            break
+        z = None
+    if z is None:
+        return None, _status(p, error="LookupError: no elevation model covers the whole grid")
+    g = grounds.cell_grid(z.tolist(), s, cell, f"{src_name} grid")
+    m = measure.measure(g, s, tlid=tlid, county=county)
+    fp = shapely.Polygon(ring)
+    soil = src.soil(fp)
+    haz = src.hazards(fp, layer_id)
+    turn = fin.front_face(fr.fl, fr.fr, fr.bl, fr.br, streets)["front_face_turn_deg"]
+    ins, facts = fin.model_inputs(soil, haz, frost_in=frost_in(layer_id, county),
+                                  year=src.years.get((str(county), tlid)), turn_deg=turn)
+    m = measure.with_inputs(m, ins)
+    held = src.held.get(tlid, False)
+    m = measure.with_old_buildings(m, held, src.old_buildings(fr, s))
+    doc = record.document(m, drawing=drawing, measured_at=measured_at, run=run, ring=ring)
+    st = _status(p, **facts)
+    st.update(ground_source=m.ground_source, cell_m=m.cell_m, ground_class=ins["ground_class"],
+              alt_ground_class=ins["alt_ground_class"], frost_register_in=ins["frost_register_in"],
+              year_built=ins["year_built"], front_face_turn_deg=ins["front_face_turn_deg"],
+              old_buildings_held=held, old_buildings_n=len(m.old_buildings))
+    return doc, st
+
+
+def _measure_run(args: argparse.Namespace) -> None:
+    """``measure-run``: see the module docstring."""
+    os.environ.setdefault("GDAL_CACHEMAX", "64")
+    import shutil
+    from datetime import datetime, timezone
+
+    import numpy as np
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    from flats.foundation import record
+    from flats.foundation.terrain import Dem
+    from flats.ingest import quadfit
+    from flats.rules.loader import load_rules
+
+    t0 = time.time()
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+    logf = (out / "run.log").open("a", encoding="utf-8")
+
+    def log(msg: str) -> None:
+        line = f"{time.strftime('%H:%M:%S')} {msg} [{time.time() - t0:.0f}s, peak {_rss_mb()} MB]"
+        print(line, flush=True)
+        logf.write(line + "\n")
+        logf.flush()
+
+    s = settings.load()
+    run_json = out / "run.json"
+    want = {"assign": str(args.assign), "quadfit": str(args.quadfit), "colours": args.colours, "part": args.part,
+            "drawing": args.drawing, "run": args.run, "limit": args.limit, "geometry_hash": record.settings_hash(s)}
+    if run_json.exists():
+        have = json.loads(run_json.read_text(encoding="utf-8"))
+        if {k: have.get(k) for k in want} != want:
+            raise SystemExit(f"{out} holds another run ({have}); use a new --out")
+        measured_at = have["measured_at"]
+    else:
+        measured_at = args.measured_at or datetime.now(timezone.utc).isoformat(timespec="seconds")
+        run_json.write_text(json.dumps({**want, "measured_at": measured_at}, indent=1), encoding="utf-8")
+    pop_path = out / "population.parquet"
+    if not pop_path.exists():
+        log("population " + json.dumps(population(Path(args.assign), set(args.colours.split(",")), pop_path)))
+    pop = pq.read_table(pop_path).to_pylist()
+    if args.limit:
+        pop = pop[: args.limit]
+    parts = _chunks(pop, args.part)
+    rows_dir = out / "rows"
+    if not (rows_dir / "done.json").exists():
+        log("rows " + json.dumps(extract_rows(Path(args.quadfit), [[p["TLID"] for p in c] for c in parts], rows_dir)))
+    pdir = out / "parts"
+    pdir.mkdir(exist_ok=True)
+    todo = [k for k in range(len(parts)) if not (pdir / f"part-{k:04d}").exists()]
+    log(f"lots {len(pop)} parts {len(parts)} to do {len(todo)}")
+    if todo:
+        lb = {r["TLID"]: (r["x0"], r["y0"], r["x1"], r["y1"])
+              for r in pq.read_table(rows_dir / "lot_bounds.parquet").to_pylist()}
+        src = Sources(args, pop, lb, log)
+        (out / "sources.json").write_text(json.dumps(src.meta(), indent=1, default=str), encoding="utf-8")
+        layers = load_rules()
+        dem = Dem(Path(args.dem), Path(args.coarse) if args.coarse else None)
+        _x0, _y0, xs, ys = grounds.grid_centres(s)
+        gx, gy = np.meshgrid(np.array(xs), np.array(ys))  # rows front to back, each left to right
+        log(f"sources loaded; 1 m tiles {len(dem.tiles)}, 10 m model {dem.coarse is not None}")
+        for k in todo:
+            rd = rows_dir / f"part-{k:04d}"
+            qrows = {r["TLID"]: r for r in quadfit.iter_rows(rd / "s4_lots.parquet", rd / "s5o_lots.parquet")}
+            docs, stats = [], []
+            n: Counter[str] = Counter()
+            for p in parts[k]:
+                try:
+                    doc, st = measure_lot(p, qrows.get(p["TLID"]), src, dem, layers, s, (gx, gy),
+                                          drawing=args.drawing, run=args.run, measured_at=measured_at)
+                except Exception as exc:  # noqa: BLE001 -- recorded per lot, the run goes on
+                    doc, st = None, _status(p, error=f"{type(exc).__name__}: {exc}"[:300])
+                if doc is not None:
+                    docs.append(doc)
+                n["error" if st["error"] else str(st["ground_source"])] += 1
+                stats.append(st)
+            tmp = pdir / f".tmp-{k:04d}"
+            if tmp.exists():
+                shutil.rmtree(tmp)
+            tmp.mkdir()
+            record.write_jsonl(tmp / "records.jsonl.gz", docs)
+            pq.write_table(pa.Table.from_pylist(stats), tmp / "status.parquet", compression="zstd")
+            os.replace(tmp, pdir / f"part-{k:04d}")
+            log(f"part {k + 1}/{len(parts)} {dict(n)}")
+    merge_run(out, len(parts), log)
+    logf.close()
+
+
+def merge_run(out: Path, n_parts: int, log: Any) -> dict[str, Any]:
+    """Join a measure run's parts into the bundle: ``records.jsonl.gz``, the five
+    measured tables (``lots/`` ... Parquet), ``status.parquet`` and ``meta.json``."""
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    from flats.foundation import record
+
+    pdir = out / "parts"
+    parts = [pdir / f"part-{k:04d}" for k in range(n_parts)]
+    missing = [p.name for p in parts if not p.exists()]
+    if missing:
+        raise SystemExit(f"parts not measured: {missing[:5]}")
+    n = 0
+    tables: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    tmp = out / "records.jsonl.gz.tmp"
+    with gzip.open(tmp, "wt", encoding="utf-8", newline="\n") as fh:
+        for p in parts:
+            for doc in record.read_jsonl(p / "records.jsonl.gz"):
+                fh.write(json.dumps(doc, separators=(",", ":"), allow_nan=False))
+                fh.write("\n")
+                n += 1
+                for name, recs in record.table_rows(doc).items():
+                    tables[name].extend(recs)
+    os.replace(tmp, out / "records.jsonl.gz")
+    for name in record.TABLES:
+        d = out / name
+        d.mkdir(exist_ok=True)
+        for old in d.glob("part-*.parquet"):
+            old.unlink()
+        _write(out, name, 0, tables[name])
+    del tables
+    status = pa.concat_tables([pq.read_table(p / "status.parquet") for p in parts], promote_options="default")
+    pq.write_table(status, out / "status.parquet", compression="zstd")
+    st = status.to_pylist()
+    run = json.loads((out / "run.json").read_text(encoding="utf-8"))
+    src = json.loads((out / "sources.json").read_text(encoding="utf-8")) if (out / "sources.json").exists() else None
+    ok = [r for r in st if not r["error"]]
+    meta = {
+        "records": n,
+        "lots": len(st),
+        "errors": dict(Counter(str(r["error"]).split(":")[0] for r in st if r["error"])),
+        "by_colour_county": dict(sorted(Counter(f"{r['colour']} {r['county']}" for r in ok).items())),
+        "ground_source": dict(Counter(str(r["ground_source"]) for r in ok)),
+        "ground_class": dict(Counter(str(r["ground_class"]) for r in ok)),
+        "drawing": run["drawing"],
+        "run": run["run"],
+        "measured_at": run["measured_at"],
+        "model_version": record.MODEL_VERSION,
+        "record_version": record.RECORD_VERSION,
+        "geometry_hash": run["geometry_hash"],
+        "assign": run["assign"],
+        "quadfit": run["quadfit"],
+        "sources": src,
+        "code": str(REPO),
+    }
+    (out / "meta.json").write_text(json.dumps(meta, indent=1, default=str), encoding="utf-8")
+    log(f"merged {n} records of {len(st)} lots; errors {meta['errors']}")
+    return meta
+
+
 # ---------------------------------------------------------------- bundle (PC) and load (api container)
 
 
@@ -679,12 +1281,31 @@ def main(argv: list[str] | None = None) -> None:
     b.add_argument("--drawing", required=True, help="the drawings the pods were measured under")
     b.add_argument("--measured-at", default=None, help="ISO time (default: the grid run's meta.json time)")
     b.add_argument("--out", required=True)
+    mr = sub.add_parser("measure-run", help="measure every drawn lot of a run, from the sources (LXC 137)")
+    mr.add_argument("--assign", required=True, help="the run's assign output (lots.parquet)")
+    mr.add_argument("--quadfit", required=True, help="quadfit data dir holding s4_lots / s5o_lots parquet")
+    mr.add_argument("--dem", required=True, help="1 m tiles (quadfit raw/dem)")
+    mr.add_argument("--coarse", help="10 m model (quadfit raw/dem10_utm)")
+    mr.add_argument("--hazards", required=True, help="FD2 hazard extract (flats_lot_hazards.py extract)")
+    mr.add_argument("--soil-extract", required=True, help="soil extract dir holding polygons.parquet")
+    mr.add_argument("--soil-attrs", required=True, help="FD2 soil_attrs.json")
+    mr.add_argument("--occupancy", required=True, help="occupancy.csv.gz (year built)")
+    mr.add_argument("--footprints", required=True, help="RLIS footprints.geojsonl.gz")
+    mr.add_argument("--nfhl", help="FEMA NFHL layer 28 GeoJSON (FD2 fix-flood)")
+    mr.add_argument("--drawing", required=True, help="the label of the drawings measured (e.g. the release)")
+    mr.add_argument("--run", required=True, help="the run label (e.g. run 128)")
+    mr.add_argument("--colours", default="green,yellow")
+    mr.add_argument("--measured-at", default=None, help="ISO time (default: now, kept across restarts)")
+    mr.add_argument("--out", required=True)
+    mr.add_argument("--limit", type=int, default=0)
+    mr.add_argument("--part", type=int, default=PART)
     ld = sub.add_parser("load", help="upsert records.jsonl.gz into flats.lot_foundation (api container)")
     ld.add_argument("--records", required=True)
     ld.add_argument("--db-url", default=None, help="default: app settings' database_url")
     ld.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
-    {"grid": _grid, "old-buildings": _old, "compare": _compare, "bundle": _bundle, "load": _load}[args.cmd](args)
+    {"grid": _grid, "old-buildings": _old, "compare": _compare, "bundle": _bundle, "measure-run": _measure_run,
+     "load": _load}[args.cmd](args)
 
 
 if __name__ == "__main__":

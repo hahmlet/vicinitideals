@@ -266,15 +266,21 @@ def test_no_section_4_or_6_number_is_written_in_the_python() -> None:
     (12 in a ft, 27 cu ft a cu yd, 144 sq in a sq ft, 0.5 for a mid-point) is a
     smell: the settings belong in the YAML. (``__main__`` holds only the
     reference model's report bins and quantiles; ``terrain`` is FD2 pass 1's
-    elevation reader, copied as it ran -- metres to feet and its 120 ft window.)"""
+    elevation reader, copied as it ran -- metres to feet and its 120 ft window;
+    ``inputs`` is FD2 pass 1's ground-class rules, copied as they ran -- the
+    FD2 hand-off's cut-offs, not section 4 or 6 settings; ``record``'s
+    ``SAME_RING_FT`` is how far a stored drawing may sit from the page's and
+    still be the same drawing, not a model number.)"""
     allowed = {0.0, 0.5, 1.0, 2.0, 12.0, 27.0, 144.0}
+    also = {"record.py": {0.15}}
     for path in PKG.glob("*.py"):
-        if path.name in ("__main__.py", "terrain.py"):
+        if path.name in ("__main__.py", "terrain.py", "inputs.py"):
             continue
         tree = ast.parse(path.read_text(encoding="utf-8"))
         for node in ast.walk(tree):
             if isinstance(node, ast.Constant) and isinstance(node.value, float):
-                assert node.value in allowed, f"{path.name}:{node.lineno} hard-codes {node.value}"
+                ok = allowed | also.get(path.name, set())
+                assert node.value in ok, f"{path.name}:{node.lineno} hard-codes {node.value}"
 
 
 def test_the_package_imports_nothing_from_app_or_the_screen() -> None:
