@@ -63,3 +63,5 @@ So: two layers. MEASURE stores every physical fact per lot once (no prices; per-
 ## Status
 
 2026-11-19: step 1 lane started (builder agent, branch `flats/foundation-model`).
+
+2026-11-19 evening: step 1 DONE on `flats/foundation-model` a02a75eb (not merged). Every FD6 section 8 value matched; lot-file shares match; 144 foundation tests; measure and price layers split, re-price test passes. Nine spec-vs-reference disagreements listed in `../vicinitideals-worktrees/foundation-model.handoff.md` (to pass to the foundation agent). Ties follow the rule as written. Slice 2 started: real ground on 137 for the 9,517 lots (light work only), old buildings (spec 5.8, FD7), own frost depth.
