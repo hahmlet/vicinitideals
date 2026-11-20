@@ -63,4 +63,13 @@ Opened 2026-11-20. Source: `../Factory-Sim/docs/research/FD8-reply-to-flats-foun
 - Answer to FD8 for the foundation agent: `../vicinitideals-worktrees/TO-FOUNDATION-AGENT-2026-11-20-v2.md`
  (asks key issue 3, railing as guard, side-entry units; delivery question dropped on Steph's word).
 - Stair reach: Steph asked whether the 8 ft steps actually hit anything. The screen checks each door
-  (off the lot, onto the court or lane) as a note only; a count on the run 128 drawings is running.
+  (off the lot, onto the court or lane) as a note only. COUNTED 2026-11-20 on run 128 drawings
+  (`/root/stair_reach/` on 137, matches the cap counts exactly), 44,211 drawn lots:
+  - off the lot: 5,968 lots (824 green), 4,680 by 1 ft or more, 2,043 by 4 ft or more; mostly front doors;
+  - onto the court: 25,708 (7,887 green); onto the lane: 15,898 (712 green); any: 41,859 (8,655 green);
+  - the court and lane are drawn flush to the wall (about 0.13 ft off), so ANY step on that face hits
+    them -- the placement leaves no room for steps at all. At 6+ risers: court 4,294, lane 3,321.
+  - Risers by worst door (lots not red): 1: 2,499; 2: 10,836; 3: 9,053; 4: 6,063; 5: 4,026; 6: 3,088; 7: 1,208.
+  - ASKED STEPH 2026-11-20: (1) reserve the steps' room in placement (wall-to-parking strip and inside the
+    lot), rides this release, re-bound -- recommended; or allow steps onto the paving; or note only.
+    (2) where room can't be found: yellow (recommended) / red / note.
