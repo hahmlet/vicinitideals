@@ -581,7 +581,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
   FIRE-WIDE-ROAD:
-    description: "Wide road: the fire hose reaches the building only from a road whose centre line is more than 50 ft from the lot line (a wide arterial or highway), where the screen stands no fire engine; measured from the middle of that road it reaches. Held yellow until someone confirms an engine can stand on that road beside the lot (coordinator default 2026-11-19, pending Steph)"
+    description: "Wide road: the fire hose reaches the building only from a road whose centre line is more than 50 ft from the lot line (a wide arterial or highway), where the screen stands no fire engine; measured from the middle of that road it reaches. Or the hose reaches only with the engine stood on a state highway the lot meets across a wide right-of-way: the engine would have to stand on a state highway, and it is not confirmed that it may. Held yellow until someone confirms an engine can stand on that road beside the lot (coordinator default 2026-11-19, pending Steph)"
     kind: categorical
     risk: possible
     severity: 5

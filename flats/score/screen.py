@@ -1248,6 +1248,14 @@ class LotFacts:
     #: the route misses on every reading above and this reaches: the lot is
     #: held YELLOW with FIRE-WIDE-ROAD, never cleared on it.
     fire_route_wide_ft: float | None = None
+    #: The route reaches (``fire_route_ft`` inside the limit) only with the
+    #: engine stood on a state highway (RLIS TYPE 1200) that the lot meets
+    #: over a wide-road street line -- one whose midpoint is more than
+    #: :data:`flats.fit.fire.MAX_GAP_FT` from every truck road -- and misses
+    #: without those standing places
+    #: (:func:`flats.ingest.quadfit._state_road_held`). Held YELLOW with
+    #: FIRE-WIDE-ROAD: whether an engine may stand there is not confirmed.
+    fire_on_state_road: bool = False
     #: The lot's street lines are one street that bends, read as one front
     #: where its code states no corner test (:data:`CORNER_READ_AS_BEND`,
     #: :func:`flats.ingest.quadfit.read_as_bend`). Set by the bridge.
@@ -2574,6 +2582,13 @@ def _checks(
             # Reached only from a road past the 50 ft a truck is stood
             # within: the truck's place on a wide road is unmeasured, and
             # the miss is not known to be one. YELLOW, never GREEN.
+            unchecked.append("fire_access_ft")
+            unmeasured.add(FIRE_WIDE_ROAD)
+        elif lot.fire_route_tried and not missed and lot.fire_on_state_road:
+            # Reaches only with the engine stood on a state highway the lot
+            # meets across a wide right-of-way: not confirmed that it may
+            # stand there (rel10d item 6, a coordinator default pending
+            # Steph). YELLOW, never GREEN; a miss stays a miss.
             unchecked.append("fire_access_ft")
             unmeasured.add(FIRE_WIDE_ROAD)
         elif lot.fire_route_ft is not None:

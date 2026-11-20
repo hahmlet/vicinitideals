@@ -943,6 +943,9 @@ class Network:
     rules: FireRoadRules
     #: The street edges (curbs and widths) the hose is measured from.
     edges: object = None
+    #: The state highways among the truck roads, indexed
+    #: (:func:`flats.fit.fire.state_roads`); None where nobody read them.
+    state_roads: object = None
 
     def at(self, layer_id: str | None) -> Roads:
         ft = self.rules.dead_end_ft(layer_id)

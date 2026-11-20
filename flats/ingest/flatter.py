@@ -260,6 +260,7 @@ def flatter_checked(
             fire_route_freed_ft=None,
             fire_route_row_ft=None,
             fire_route_wide_ft=None,
+            fire_on_state_road=False,
             site_grade_pct=None,
             site_grade_source=None,
             site_grade_tried=False,

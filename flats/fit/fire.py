@@ -168,6 +168,31 @@ def truck_lines(path: Path, edges: "StreetEdges | None" = None) -> tuple[np.ndar
     return geoms, kinds
 
 
+#: RLIS STREETS TYPE 1200: a state highway that is no freeway (McLoughlin
+#: Blvd, Highway 213, Tualatin Valley Hwy). One of :data:`TRUCK_TYPES`: a
+#: lot that fronts one in the ordinary way has a truck stood on it. Where a
+#: lot reaches one only across a wide right-of-way the standing place is
+#: nobody's measurement (:func:`flats.ingest.quadfit._state_road_held`).
+STATE_ROAD_TYPE = 1200
+
+
+class TruckRoads(tuple):
+    """The truck roads as :func:`point_offset` takes them -- (index,
+    centrelines[, street edges[, walks]]) -- that also say which of them are
+    state highways (``state_roads``: :func:`state_roads`, or None where
+    nobody read the types)."""
+
+    state_roads: "tuple[shapely.STRtree, np.ndarray] | None" = None
+
+
+def state_roads(path: Path) -> tuple[shapely.STRtree, np.ndarray] | None:
+    """quadfit s1's :data:`STATE_ROAD_TYPE` centrelines, indexed; None where
+    the file holds none."""
+    geoms, kinds = truck_lines(path)
+    keep = np.asarray(geoms, dtype=object)[kinds == STATE_ROAD_TYPE]
+    return (shapely.STRtree(keep), keep) if len(keep) else None
+
+
 #: RLIS TYPE codes of the freeways and their ramps: no place to stand
 #: (:data:`TRUCK_TYPES` leaves them out), but a road a truck drives, so a
 #: street that runs onto one is no dead end there
@@ -442,7 +467,9 @@ __all__ = [
     "MAX_GAP_FT",
     "READINGS",
     "PAVED_IF_WIDE_TYPES",
+    "STATE_ROAD_TYPE",
     "TRUCK_TYPES",
+    "TruckRoads",
     "LINK_TYPES",
     "hose_offsets",
     "link_lines",
@@ -450,6 +477,7 @@ __all__ = [
     "point_offset",
     "reachable",
     "route_ft",
+    "state_roads",
     "street_offsets",
     "truck_lines",
 ]

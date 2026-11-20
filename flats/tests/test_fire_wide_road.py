@@ -178,3 +178,141 @@ def test_the_screen_holds_a_lot_reached_only_from_a_wide_road_yellow() -> None:
     )
     codes = {f.code for f in result.flags}
     assert "FIRE-DEAD-END" in codes and "FIRE-WIDE-ROAD" not in codes
+
+
+# -- a route that stands the engine on a state highway across a wide road ----
+#
+# rel10d move read item 6 (2026-11-19). A wide-road line can still have
+# points inside the 50 ft a truck is stood within, where the road bends
+# toward the lot: Oregon City 32E16BB06000's long line has its midpoint
+# 50.01 ft from Highway 213's centre line and 20 of its 40 points inside
+# 50 ft, and the lot went RED to GREEN on a 134 ft route from the highway.
+# The buildings are the ones the rel10d bound drew.
+
+STATE = json.loads(
+    (Path(__file__).parent / "fixtures" / "fire_state_road_lots.json").read_text(encoding="utf-8")
+)
+
+
+def _state_case(corpus, policies, tlid: str, *, retype: dict[int, int] | None = None, nearer_ft: float = 0.0):
+    """The lot fire-checked on the building the bound drew, its roads typed
+    as filed (``retype``: one RLIS TYPE read as another; ``nearer_ft``: the
+    state highway moved that far toward the lot's wide-road line)."""
+    import dataclasses
+
+    from flats.ingest.quadfit import fire_checked
+
+    fx = STATE[tlid]
+    ox, oy = fx["origin"]
+
+    def world(wkt: str):
+        return affinity.translate(shapely.from_wkt(wkt), ox, oy)
+
+    cut = fx["new"]
+    edges = [[x1 + ox, y1 + oy, x2 + ox, y2 + oy, cls] for x1, y1, x2, y2, cls in cut["edges"]]
+    row = {
+        "TLID": fx["tlid"],
+        "jurisdiction": fx["jurisdiction"],
+        "zone": fx["zone"],
+        "tier": cut["tier"],
+        "area_sqft": fx["area_sqft"],
+        "frontage_ft": cut["frontage_ft"],
+        "lot_width_ft": cut["w"],
+        "lot_depth_ft": cut["d"],
+        "edges_json": json.dumps(edges),
+        "front_bearings_json": json.dumps(cut["fb"]),
+        "street_kind_json": json.dumps(cut["kinds"]),
+        "fronts_cul_de_sac": False,
+        "split_zone": False,
+        "ovl_fema_sfha": False,
+        "ovl_fema_floodway": False,
+        "sewer_main_dist_ft": 12.0,
+        "in_sewer_district": None,
+        "wkb": shapely.to_wkb(world(fx["env"])),
+        "lot_wkb": shapely.to_wkb(world(fx["lot"])),
+    }
+    types = [(retype or {}).get(kind, kind) for _, kind, _, _, _ in fx["streets"]]
+    lines = [world(street[4]) for street in fx["streets"]]
+    if nearer_ft:
+        x1, y1, x2, y2, _ = max(edges, key=lambda e: (e[4] == "F") * np.hypot(e[2] - e[0], e[3] - e[1]))
+        mid = shapely.Point((x1 + x2) / 2, (y1 + y2) / 2)
+        highway = shapely.union_all([g for g, t in zip(lines, types) if t == fire.STATE_ROAD_TYPE])
+        (fx_, fy_), (tx, ty) = shapely.shortest_line(highway, mid).coords
+        gap = np.hypot(tx - fx_, ty - fy_)
+        dx, dy = (tx - fx_) / gap * nearer_ft, (ty - fy_) / gap * nearer_ft
+        lines = [
+            affinity.translate(g, dx, dy) if t == fire.STATE_ROAD_TYPE else g for g, t in zip(lines, types)
+        ]
+    truck = [(g, t) for g, t in zip(lines, types) if t in fire.TRUCK_TYPES]
+    geoms = np.array([g for g, _ in truck], dtype=object)
+    roads = fire.TruckRoads((shapely.STRtree(geoms), geoms))
+    state = np.array([g for g, t in truck if t == fire.STATE_ROAD_TYPE], dtype=object)
+    roads.state_roads = (shapely.STRtree(state), state) if len(state) else None
+    lot = lot_from_row(row, corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    drawn = [[x + ox, y + oy] for x, y in fx["drawn"]]
+    s = dataclasses.replace(s, drawing={**(s.drawing or {}), "fits": True, "building": drawn})
+    return fire_checked(s, lot, roads, policy=policies[0], relief=policies[1])
+
+
+def test_a_route_only_from_a_state_highway_across_a_wide_road_is_held_yellow(corpus, policies) -> None:
+    """Oregon City 32E16BB06000: 134 ft with the engine on Highway 213,
+    past the limit from Conway Dr alone. Not confirmed that an engine may
+    stand on the highway: held, never GREEN."""
+    s = _state_case(corpus, policies, "32E16BB06000")
+    assert s.facts.fire_route_tried
+    assert s.facts.fire_route_ft == pytest.approx(133.9, abs=0.5)
+    assert s.facts.fire_on_state_road
+    for result in (s.screening, s.signed):
+        assert check(result, "fire_access_ft") is None
+        assert "fire_access_ft" in result.unchecked
+        assert result.triage is not Triage.green
+    assert FACT_UNOBSERVED in s.signed.reasons
+    assert "FIRE-WIDE-ROAD" in {f.code for f in s.signed.flags}
+
+
+def test_a_wide_arterial_inside_the_reach_keeps_its_truck(corpus, policies) -> None:
+    """The hold is the state highways' (RLIS TYPE 1200) alone: the same
+    road typed an arterial stands the truck as before."""
+    s = _state_case(corpus, policies, "32E16BB06000", retype={1200: 1400})
+    assert s.facts.fire_route_ft == pytest.approx(133.9, abs=0.5)
+    assert not s.facts.fire_on_state_road
+    assert check(s.signed, "fire_access_ft").verdict is Verdict.passes
+    assert "FIRE-WIDE-ROAD" not in {f.code for f in s.signed.flags}
+
+
+def test_a_lot_that_fronts_a_state_highway_in_the_ordinary_way_keeps_its_truck(corpus, policies) -> None:
+    """The highway 5 ft nearer: the line's midpoint is inside the 50 ft
+    midpoint test, an ordinary frontage (McLoughlin, TV Highway), and
+    nothing is held."""
+    s = _state_case(corpus, policies, "32E16BB06000", nearer_ft=5.0)
+    assert s.facts.fire_route_tried and s.facts.fire_route_ft <= 150.0
+    assert not s.facts.fire_on_state_road
+    assert check(s.signed, "fire_access_ft").verdict is Verdict.passes
+    assert "FIRE-WIDE-ROAD" not in {f.code for f in s.signed.flags}
+
+
+def test_a_route_that_reaches_without_the_state_highway_is_left_alone(corpus, policies) -> None:
+    """Gladstone 22E19DD02700 on McLoughlin Blvd, a wide-road line with 14
+    points inside 50 ft: its 149 ft route comes on from River Rd, and
+    stands without the highway."""
+    s = _state_case(corpus, policies, "22E19DD02700")
+    assert s.facts.fire_route_ft == pytest.approx(148.9, abs=0.5)
+    assert not s.facts.fire_on_state_road
+    assert check(s.signed, "fire_access_ft").verdict is Verdict.passes
+    assert "FIRE-WIDE-ROAD" not in {f.code for f in s.signed.flags}
+    # The same route with McLoughlin no truck road at all.
+    s = _state_case(corpus, policies, "22E19DD02700", retype={1200: 1110})
+    assert s.facts.fire_route_ft == pytest.approx(148.9, abs=0.5)
+
+
+def test_the_screen_holds_a_route_stood_on_a_state_highway_yellow() -> None:
+    result = run(facts(fire_route_ft=134.0, fire_route_tried=True, fire_on_state_road=True))
+    assert check(result, "fire_access_ft") is None
+    assert FACT_UNOBSERVED in result.reasons
+    assert result.triage not in (Triage.green, Triage.red)
+    assert "FIRE-WIDE-ROAD" in {f.code for f in result.flags}
+    # GREEN to YELLOW only: a route that misses is a miss whatever it stood on.
+    result = run(facts(fire_route_ft=170.0, fire_route_tried=True, fire_on_state_road=True))
+    assert result.triage is Triage.red
+    assert check(result, "fire_access_ft").verdict is Verdict.fails
