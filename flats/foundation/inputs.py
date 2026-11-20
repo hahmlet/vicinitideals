@@ -25,7 +25,9 @@ Every missing input stays missing (None), never a guess: a lot whose soil
 cannot be read sorts NO-DATA, and with no named series under it the
 foundation model calls its ground "not sorted" (:mod:`flats.foundation.support`).
 A hazard check whose layer holds no answer for the footprint does not match
-(FD2's rule) and is named in ``ground_class_unread``.
+(FD2's rule) and is named in ``ground_class_unread``; the foundation model
+does not take FD2's class for such a lot (it could be the unread one), but
+:data:`UNREAD`, which sorts "not sorted" (slice 4: "never guess ordinary").
 
 Never a colour: nothing here is read by the screen.
 """
@@ -50,6 +52,10 @@ WET_CM = 2 * CM_PER_FT
 PAN_CM = 3.5 * CM_PER_FT
 
 GROUND_ORDER = ("HAZ-SLIDE", "HAZ-LIQ", "FLOOD", "NO-DATA", "ROCK", "COBBLE", "SWELL", "SOFT", "WET-FINE", "FIRM")
+#: The model's class for a lot with a check above FD2's class that could not be
+#: made: in no group's list, so :func:`flats.foundation.support.group_of_class`
+#: sorts it "not sorted".
+UNREAD = "UNREAD"
 WET_DRAINAGE = frozenset({"Very poorly drained", "Poorly drained", "Somewhat poorly drained"})
 ORGANIC_UNIFIED = frozenset({"OL", "OH", "PT"})
 BEDROCK_KINDS = frozenset({"Lithic bedrock", "Paralithic bedrock", "Densic bedrock"})
@@ -492,12 +498,14 @@ def model_inputs(
     """The fields :func:`flats.foundation.measure.with_inputs` takes, and the
     facts behind the ground class (for the run's lot-status table). The two
     lot-file fields no price reads (``relief_input_ft``, ``bldg_overlap_share``)
-    are not worked out: None."""
+    are not worked out: None. A lot with a check above its class that could not
+    be made gets :data:`UNREAD` ("not sorted"), never FD2's class; FD2's class
+    stays in the facts (``fd2_ground_class``)."""
     cls = classes(soil, hazards)
     yb = year_built(year)
     inputs = {
         "relief_input_ft": None,
-        "ground_class": cls["ground_class"],
+        "ground_class": UNREAD if cls["ground_class_unread"] else cls["ground_class"],
         "alt_ground_class": cls["alt_ground_class"],
         "frost_register_in": _num(frost_in),
         "bldg_overlap_share": None,
@@ -505,6 +513,7 @@ def model_inputs(
         "year_built": None if yb is None else float(yb),
     }
     facts = {
+        "fd2_ground_class": cls["ground_class"],
         "ground_class_unread": cls["ground_class_unread"],
         "soil_no_data": soil.get("soil_no_data"),
         "soil_missing": soil.get("soil_missing"),

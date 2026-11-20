@@ -513,8 +513,8 @@ def _compare(args: argparse.Namespace) -> None:
 
 #: What a run's lot-status table holds per lot (one row per drawn lot, measured or not).
 STATUS_FIELDS = (
-    "county", "tlid", "colour", "layer_id", "ground_source", "cell_m", "ground_class", "alt_ground_class",
-    "ground_class_unread", "soil_no_data", "soil_missing", "mukey", "comp_name", "alt_comp", "slide_mapped",
+    "county", "tlid", "colour", "layer_id", "ground_source", "cell_m", "ground_class", "fd2_ground_class",
+    "alt_ground_class", "ground_class_unread", "soil_no_data", "soil_missing", "mukey", "comp_name", "alt_comp", "slide_mapped",
     "slide_top", "liq_top2", "fema_zone", "fema_source", "flood_100", "frost_register_in", "year_built",
     "front_face_turn_deg", "old_buildings_held", "old_buildings_n", "drawing_hash", "error",
 )
