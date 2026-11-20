@@ -24,18 +24,18 @@ Files: `data/flats/books/building-codes/` (gitignored).
 
 ## Waiting on Steph
 
-1. A second, harder sample before printing a whole book (plumbing ch. 6 or 7; fire ch. 5 + App. D).
-2. Which books first. Coordinator's suggestion: fire ch. 5 + App. D and the residential code, since
-   the scan and the foundation model rest on them; plumbing and electrical when the factory design
-   work needs them.
+Steph is printing chapters (2026-11-19). Drop folders and the order wanted are in the status log
+under "Where Steph drops printed chapters". First arrivals double as the two open tests: fire
+ch. 5 + App. D (pictures) and plumbing ch. 6 or 7 (wide tables). Check each on arrival and tell
+Steph at once if a chapter loses pictures or tables, before they print the rest.
 
-Decided by Steph 2026-11-19: internal use only, not posted publicly. NEC copy: Steph says it came
-through a municipal library; kept for internal use.
+Decided by Steph 2026-11-19: internal use only, not posted publicly. Older interpretations citing
+the 2023 edition stand where the code text is unchanged. Elevator and boiler rulings left out.
 
 ## Then (Claude)
 
 - Reading pass over the interpretation inventory: confirm the section, edition and date of each
-  (flats-batch-reader), OCR the five scanned ones, drop elevator and boiler unless wanted.
+  (flats-batch-reader), OCR the five scanned ones; elevator and boiler left out (Steph).
 - Section cutter front end for UpCodes prints (reuse the code-library tools: tables, superscripts,
   notes). No encoding.
 - Tag Oregon wording per section from the matrix and change summary; attach interpretations and

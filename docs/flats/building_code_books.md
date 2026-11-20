@@ -96,6 +96,11 @@ Collected 2026-11-19 (scout). Held in `state-interps/`, `state-alternate-methods
 - The plumbing matrix names four against its sections (22-01 at 309.5, 22-04 at 408.6, 14-01 at
   501.1, 15-02 at 507.2).
 - Re-check each quarter and once in early October (new rows appeared 2026-01-20, 08-28, 11-05).
+- **Steph 2026-11-19:** an older ruling that cites the 2023 edition still stands as "at least a safe
+  bet" where the code text it interprets is unchanged. So each note says which edition it was
+  issued under and, where we hold both texts, whether the section's wording changed since.
+- **Steph 2026-11-19: leave out elevator and boiler rulings.** They stay in the folder and the
+  inventory but are not attached to any section.
 - Plan: each becomes a short cited note on the section it concerns (number, date, link), with the
   PDF kept beside the book. The pattern-read sections need a reading pass before they are attached.
 
@@ -123,6 +128,19 @@ What the print does not carry:
 
 Next test before printing a whole book: one hard chapter. For plumbing, Chapter 6 (water supply,
 big sizing tables) or Chapter 7 (drainage tables); for fire, Chapter 5 and Appendix D (figures).
+
+## Where Steph drops printed chapters
+
+One PDF per chapter, same print settings as the samples, straight into the book's folder (not
+`docs/`). File names as the site gives them; they are renamed on arrival.
+
+| Book | Folder | Wanted first |
+|---|---|---|
+| Fire | `data/flats/books/building-codes/ofc-2025/` | Chapter 5 and Appendix D (also the picture test), then 1, 2, 3, 9, 10, 33, Appendices B and C; the rest later |
+| Residential, 2023 edition | `data/flats/books/building-codes/orsc-2023/` | Chapters 3 and 4 only (foundations, stairs, guards), because the 2026 book replaces it |
+| Residential, 2026 edition | `data/flats/books/building-codes/orsc-2026/` | Whole book when it is published |
+| Plumbing | `data/flats/books/building-codes/opsc-2026/` | Chapter 6 or 7 first (the wide-table test), then all |
+| Electrical | `data/flats/books/building-codes/nec-2026/`, `oesc-2026/` | Nothing: the NEC and the state table are held |
 
 ## How the work would go
 
