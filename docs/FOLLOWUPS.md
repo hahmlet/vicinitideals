@@ -160,6 +160,8 @@ the full one.)
 72. [Steph] [scan: NO] **Oregon Explorer statewide map** -- PARKED. [file](followups/72-oregon-explorer.md)
 92. [Steph] [scan: YES (parked)] **Parking layout generator (was the second item 27)** -- PARKED by Steph 2026-10-04; scoping only, nothing built. [file](followups/92-parking-layout-generator.md)
 
+210. [Claude] [Steph] [scan: no] **State building code books as an agent reference library (fire, residential, electrical, plumbing; plus state interpretations and alternate methods); NOT encoded** -- Steph 11-19; two UpCodes chapter prints extract cleanly with Oregon amendments already merged; waiting on a harder sample chapter, which books first, and a lawful NEC source. Status log docs/flats/building_code_books.md. [file](followups/210-building-code-books.md)
+
 ## 3. Copilot queue -- low priority, not time-sensitive
 
 23. [Copilot] [scan: NO] **Page check** -- SHIPPED 2026-09-30 (a203e9f1). [file](followups/23-page-check.md)
