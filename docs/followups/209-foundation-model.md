@@ -56,8 +56,30 @@ So: two layers. MEASURE stores every physical fact per lot once (no prices; per-
 ## Open
 
 - Framed low wall on top of a shorter concrete wall as a variant (FD6 section 11): engineer's call.
-- Code rules marked "recalled" in FD6 section 4 (R312 guard height, R311.7.8 handrail, R401.3,
-  R311.7.3): re-read against the ORSC before the numbers go on a page.
+- **Code numbers re-read against the printed 2023 ORSC, 2026-11-19** (chapters 1 to 4 arrived from
+  Steph; reader's full findings: `../vicinitideals-worktrees/orsc-foundation-read.findings.md`).
+  Of 20 code-sourced settings: 9 confirmed, 2 differ, 5 right number but a condition ignored,
+  4 not found in the cited section. NOT changed in FLATS: the settings are the foundation agent's,
+  so the findings go back to it (through Steph) and FLATS follows its answer. The ones that matter:
+  - Stair riser: the model uses 7.75 in; Oregon's maximum is 8 in (R311.7.5.1). Counts more steps
+    than the code needs.
+  - Mid-height bar: added over 48 in in the model; the printed table adds it over 60 in. Overprices.
+  - Guard: the 30 in is measured to the ground anywhere within 36 in out from the edge, not just
+    under the landing. On ground falling away the model can miss a guard (the one unsafe-side gap).
+  - Landing: 8 in drop only where the door does not swing over it; no top landing needed at a
+    door other than the main exit when the outside stair has 3 risers or fewer.
+  - Not found where cited: "plus 2 bars per wall line", 26 in edge depth, 24 in fill limit (cites
+    chapter 5, not held), 16 in party strip (the table gives 15 in). End and party footing widths
+    of 12 and 14 in are under the table's 15 in for two storeys on 1,500 psf soil.
+  - Not held at all: slope setbacks for footings (R403.1.9, slopes steeper than 1 in 3), fill
+    under footings must be designed and tested (R401.2), a tall crawl space counts as a storey
+    (over 6 ft above grade round half the building, or 12 ft anywhere), 6 in fall in 10 ft away
+    from the building (R401.3), continuous footings under interior bracing walls for a building
+    over 50 ft long in the higher earthquake categories, crawl access.
+  - **The 2026 ORSC has been mandatory since 2026-10-01.** Only its Chapter 1 is held. Its
+    chapter 3 is renumbered (guards become R321), so every R311/R312 citation here is a 2023
+    number, and none of the above is checked against the 2026 chapters 3 and 4.
+  - The slope setback (R403.1.9) could also be a screen matter on steep lots: not looked at.
 - Step-free entry requirement in any jurisdiction (the foundation agent's FOLLOWUPS 237).
 
 ## Status
