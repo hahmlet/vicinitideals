@@ -79,8 +79,10 @@ Coordinator's calls on that reading (cautious; Steph may overrule):
 - Q55 freeway-only lot: stays YELLOW (an access easement or private road the map does not show is
   possible).
 
-A scout is checking each local fire agency's published guide for anything more specific
-(files to `data/flats/books/fire-agencies/`).
+Scout 2026-11-19: no local fire agency says more than the state code on which roads an engine
+may stand on (whole-document search of the Clackamas Fire, Tualatin Valley, Gresham, Portland and
+Canby guides; files and `sources.md` in `data/flats/books/fire-agencies/`). So these calls need no
+per-city rule. Newer guide editions were found: FOLLOWUPS 212.
 
 ## Not done
 
