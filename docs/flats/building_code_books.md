@@ -57,6 +57,12 @@ Across all books, the state also publishes:
   the names of a book-sharing site in its file name; noted so the source can be re-checked if
   it ever matters.) NFPA also lets anyone read the NEC free on its own site.
 
+- **Extraction test of the held NEC file, 2026-11-19: poor.** 1,004 pages, each a scanned picture
+  with machine-read text behind it, in two columns. The text has reading errors ("BONDI.",
+  "CIRC ITS") and no table comes out as a table. Usable for looking a section up by eye; not good
+  enough to cut into clean section files. A chapter-by-chapter print from a site that serves real
+  text (as for fire and plumbing) would be far better, if one carries the 2026 NEC.
+
 ## Oregon Plumbing Specialty Code (OPSC) 2026
 
 - Based on the 2024 Uniform Plumbing Code.
@@ -140,7 +146,7 @@ One PDF per chapter, same print settings as the samples, straight into the book'
 | Residential, 2023 edition | `data/flats/books/building-codes/orsc-2023/` | Chapters 3 and 4 only (foundations, stairs, guards), because the 2026 book replaces it |
 | Residential, 2026 edition | `data/flats/books/building-codes/orsc-2026/` | Whole book when it is published |
 | Plumbing | `data/flats/books/building-codes/opsc-2026/` | Chapter 6 or 7 first (the wide-table test), then all |
-| Electrical | `data/flats/books/building-codes/nec-2026/`, `oesc-2026/` | Nothing: the NEC and the state table are held |
+| Electrical | `data/flats/books/building-codes/nec-2026/`, `oesc-2026/` | The held NEC is a scan with reading errors; chapter prints with real text wanted if a site has the 2026 NEC. Lowest priority. |
 
 ## How the work would go
 
