@@ -137,10 +137,10 @@ def challenges(
                 "",
                 infill.longest_ft,
                 "ft",
-                f"a wall crosses a building standing today (longest stretch {infill.longest_ft:.1f} ft); "
-                f"if it had a basement: B ${d(infill.total('B', 'low')):,}-{d(infill.total('B', 'high')):,}, "
-                f"A ${d(infill.total('A', 'low')):,}-{d(infill.total('A', 'high')):,} "
-                f"(likely {infill.basement_share:.0%}, built {infill.year_band})",
+                f"a wall crosses a mapped building (house, garage or shed; longest stretch {infill.longest_ft:.1f} ft); "
+                f"if it had a basement: raised floor ${d(infill.total('B', 'low')):,}-{d(infill.total('B', 'high')):,}, "
+                f"slab ${d(infill.total('A', 'low')):,}-{d(infill.total('A', 'high')):,} more "
+                f"(a basement likely {infill.basement_share:.0%} of the time, built {infill.year_band})",
             )
         )
     return tuple(out)

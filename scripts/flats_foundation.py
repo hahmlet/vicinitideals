@@ -28,6 +28,23 @@ the database. Three steps, each reading files in place and writing Parquet:
     Prices every lot twice -- from the lot file's six readings and from the grid
     -- with the same lot-file inputs and old buildings, and prints the
     comparison; writes both assessed tables.
+
+``bundle`` (this PC; FD6 step 10)
+    The whole measured record of every lot: the grid record (or, where the grid
+    has blank cells, the six readings), the lot-file inputs and the old
+    buildings, labelled with the drawing it was measured under. Writes the five
+    measured tables (``lots`` / ``lines`` / ``doors`` / ``buildings`` /
+    ``stretches``, Parquet, for ``python -m flats.foundation reprice``), the same
+    records as ``records.jsonl.gz`` (what ``load`` reads: the app image has no
+    pyarrow) and ``meta.json``. No prices.
+
+``load`` (the api container; asyncpg only)
+    Upserts ``records.jsonl.gz`` into ``flats.lot_foundation`` by county + tlid,
+    in one transaction. Idempotent: loading the same file again changes nothing
+    but ``loaded_at``. Touches no lot, result, run, colour or flag::
+
+        docker compose run --rm api python scripts/flats_foundation.py load \\
+            --records /app/data/flats/foundation/<name>/records.jsonl.gz [--dry-run]
 """
 
 from __future__ import annotations
@@ -470,6 +487,170 @@ def _compare(args: argparse.Namespace) -> None:
     print(text)
 
 
+# ---------------------------------------------------------------- bundle (PC) and load (api container)
+
+
+def _bundle(args: argparse.Namespace) -> None:
+    from datetime import datetime, timezone
+
+    from flats.foundation import record
+
+    t0 = time.time()
+    s = settings.load()
+    g = Path(args.grid)
+    by_lines: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    by_doors: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for r in read_parts(g / "lines"):
+        by_lines[r["tlid"]].append(r)
+    for r in read_parts(g / "doors"):
+        by_doors[r["tlid"]].append(r)
+    glots = {r["tlid"]: r for r in read_parts(g / "lots")}
+    old = Path(args.old)
+    by_b: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    by_s: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for r in read_parts(old / "buildings"):
+        by_b[r["tlid"]].append(r)
+    for r in read_parts(old / "stretches"):
+        by_s[r["tlid"]].append(r)
+    old_held = {r["tlid"]: r["old_buildings_held"] for r in read_parts(old / "old_lots")}
+    meta_path = g / "meta.json"
+    grid_meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
+    measured_at = args.measured_at or datetime.fromtimestamp(meta_path.stat().st_mtime, timezone.utc).isoformat(
+        timespec="seconds"
+    )
+    docs, n = [], Counter()
+    for row in _lot_rows(Path(args.lots)):
+        tlid = row["TLID"]
+        gl = glots.get(tlid)
+        if gl is not None:
+            m = rows.from_measured_rows(gl, by_lines[tlid], by_doors[tlid])
+            m = measure.with_inputs(m, lots_mod.inputs_of(row))
+        else:
+            m = lots_mod.measure_row(row, s)
+        if m is None:
+            n["no grid and no six readings"] += 1
+            continue
+        held = bool(old_held.get(tlid, False))
+        m = measure.with_old_buildings(m, held, rows.old_buildings_from_rows(by_b.get(tlid, []), by_s.get(tlid, [])))
+        n[m.ground_source] += 1
+        docs.append(record.document(m, drawing=args.drawing, measured_at=measured_at))
+    out = Path(args.out)
+    out.mkdir(parents=True, exist_ok=True)
+    tables: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for d in docs:
+        for name, recs in record.table_rows(d).items():
+            tables[name].extend(recs)
+    for name in record.TABLES:
+        _write(out, name, 0, tables[name])
+    written = record.write_jsonl(out / "records.jsonl.gz", docs)
+    meta = {
+        "records": written,
+        "counts": dict(n),
+        "drawing": args.drawing,
+        "measured_at": measured_at,
+        "model_version": record.MODEL_VERSION,
+        "record_version": record.RECORD_VERSION,
+        "geometry_hash": record.settings_hash(s),
+        "grid": str(g),
+        "grid_meta": grid_meta,
+        "old": str(old),
+        "seconds": round(time.time() - t0, 1),
+    }
+    (out / "meta.json").write_text(json.dumps(meta, indent=1, default=list), encoding="utf-8")
+    print(json.dumps({k: v for k, v in meta.items() if k != "grid_meta"}, indent=1), flush=True)
+
+
+def _dsn(url: str) -> str:
+    return url.replace("postgresql+asyncpg://", "postgresql://", 1)
+
+
+_UPSERT = """
+INSERT INTO flats.lot_foundation
+    (county, tlid, record_version, model_version, geometry_hash, drawing, ground_source, cell_m, measured_at,
+     loaded_at, record)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, now(), $10::jsonb)
+ON CONFLICT (county, tlid) DO UPDATE SET
+    record_version = EXCLUDED.record_version, model_version = EXCLUDED.model_version,
+    geometry_hash = EXCLUDED.geometry_hash, drawing = EXCLUDED.drawing, ground_source = EXCLUDED.ground_source,
+    cell_m = EXCLUDED.cell_m, measured_at = EXCLUDED.measured_at, loaded_at = now(), record = EXCLUDED.record
+"""
+
+
+def _load_row(doc: dict[str, Any]) -> tuple[Any, ...]:
+    from datetime import datetime
+
+    lot, on = doc["lot"], doc["measured_on"]
+    if not lot.get("county") or not lot.get("tlid"):
+        raise ValueError("a record without county and tlid")
+    when = datetime.fromisoformat(str(on["measured_at"]))
+    return (
+        lot["county"],
+        lot["tlid"],
+        int(doc["record_version"]),
+        str(doc["model_version"]),
+        str(doc["geometry_hash"]),
+        str(on["drawing"]),
+        str(on["ground_source"]),
+        on.get("cell_m"),
+        when,
+        json.dumps(doc, separators=(",", ":"), allow_nan=False),
+    )
+
+
+async def load(records_path: Path, db_url: str, *, dry_run: bool = False, batch_size: int = 500) -> dict[str, Any]:
+    """Upsert every record of ``records.jsonl.gz`` into ``flats.lot_foundation`` by
+    county + tlid, in one transaction (rolled back on ``dry_run``)."""
+    import asyncpg
+
+    from flats.foundation import record
+
+    report: dict[str, Any] = {"records": str(records_path), "dry_run": dry_run}
+    conn = await asyncpg.connect(_dsn(db_url))
+    try:
+        tx = conn.transaction()
+        await tx.start()
+        try:
+            before = await conn.fetchval("SELECT count(*) FROM flats.lot_foundation")
+            batch: list[tuple[Any, ...]] = []
+            read = 0
+            for doc in record.read_jsonl(Path(records_path)):
+                batch.append(_load_row(doc))
+                read += 1
+                if len(batch) >= batch_size:
+                    await conn.executemany(_UPSERT, batch)
+                    batch = []
+            if batch:
+                await conn.executemany(_UPSERT, batch)
+            after = await conn.fetchval("SELECT count(*) FROM flats.lot_foundation")
+            in_copy = await conn.fetchval(
+                "SELECT count(*) FROM flats.lot_foundation f "
+                "JOIN flats.lots l ON l.county = f.county AND l.tlid = f.tlid "
+                "JOIN flats.snapshots s ON s.id = l.snapshot_id AND s.status = 'current'"
+            )
+            report.update(written=read, new=after - before, rows_in_table=after, in_current_copy=in_copy)
+        except BaseException:
+            await tx.rollback()
+            raise
+        if dry_run:
+            await tx.rollback()
+        else:
+            await tx.commit()
+    finally:
+        await conn.close()
+    return report
+
+
+def _load(args: argparse.Namespace) -> None:
+    import asyncio
+
+    db_url = args.db_url
+    if db_url is None:
+        from app.config import settings as app_settings
+
+        db_url = app_settings.database_url
+    print(json.dumps(asyncio.run(load(Path(args.records), db_url, dry_run=args.dry_run)), indent=1, default=str))
+
+
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -491,8 +672,19 @@ def main(argv: list[str] | None = None) -> None:
     c.add_argument("--old", required=True)
     c.add_argument("--lots", required=True)
     c.add_argument("--out", required=True)
+    b = sub.add_parser("bundle", help="the whole measured record of every lot, for the app and reprice (this PC)")
+    b.add_argument("--grid", required=True)
+    b.add_argument("--old", required=True)
+    b.add_argument("--lots", required=True)
+    b.add_argument("--drawing", required=True, help="the drawings the pods were measured under")
+    b.add_argument("--measured-at", default=None, help="ISO time (default: the grid run's meta.json time)")
+    b.add_argument("--out", required=True)
+    ld = sub.add_parser("load", help="upsert records.jsonl.gz into flats.lot_foundation (api container)")
+    ld.add_argument("--records", required=True)
+    ld.add_argument("--db-url", default=None, help="default: app settings' database_url")
+    ld.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
-    {"grid": _grid, "old-buildings": _old, "compare": _compare}[args.cmd](args)
+    {"grid": _grid, "old-buildings": _old, "compare": _compare, "bundle": _bundle, "load": _load}[args.cmd](args)
 
 
 if __name__ == "__main__":

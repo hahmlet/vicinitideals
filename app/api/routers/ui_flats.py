@@ -79,6 +79,7 @@ from app.models.flats import (
 )
 from app.models.org import MembershipStatus, User
 from app.services import flats_flags as flag_history
+from app.services import flats_foundation
 from app.services import flats_hazards
 from app.services import flats_price
 from app.services import flats_refresh as refresh_service
@@ -4925,6 +4926,8 @@ async def flats_lot(
             "hazards": await flats_hazards.lot_hazards(session, lot),
             # Frost depth for the lot's place (FOLLOWUPS 197): a note, never a colour.
             "frost": describe_frost(lot.jurisdiction, lot.county),
+            # The foundation model, priced now (FOLLOWUPS 209): a note, never a colour.
+            "foundation": await flats_foundation.lot_foundation(session, lot.county, lot.tlid),
             "outline": _outline(geojson),
             "lat": lat,
             "lon": lon,

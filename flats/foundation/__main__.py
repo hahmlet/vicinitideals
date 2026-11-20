@@ -2,6 +2,7 @@
 
     uv run python -m flats.foundation <path to fd2_lots.csv>
     uv run python -m flats.foundation --test-lots      # the section 8 test lots only
+    uv run python -m flats.foundation reprice --measured <dir | records.jsonl.gz> [--settings other.yaml] [--out file]
 
 Reads the lot file where it lies and prints counts and shares only: no lot row
 is written anywhere, into the repo or out of it. Every lot with all six
@@ -201,7 +202,26 @@ def lot_file(path: Path, s: Settings) -> list[LotResult]:
     return results
 
 
+def _reprice(argv: list[str]) -> None:
+    import json
+
+    from flats.foundation import reprice
+
+    ap = argparse.ArgumentParser(prog="python -m flats.foundation reprice", description="Bulk what-if pricing of the measured records.")
+    ap.add_argument("--measured", required=True, type=Path, help="a bundle directory of measured Parquet tables, or its records.jsonl.gz")
+    ap.add_argument("--settings", type=Path, default=None, help="settings file to price under (default flats/config/foundation.yaml)")
+    ap.add_argument("--out", type=Path, default=None, help="priced table, .parquet or .csv (default foundation_priced.parquet)")
+    args = ap.parse_args(argv)
+    print(json.dumps(reprice.main(args.measured, args.settings, args.out), indent=1))
+
+
 def main(argv: list[str] | None = None) -> None:
+    import sys
+
+    argv = sys.argv[1:] if argv is None else argv
+    if argv and argv[0] == "reprice":
+        _reprice(argv[1:])
+        return
     ap = argparse.ArgumentParser(prog="python -m flats.foundation", description=__doc__.split("\n\n")[0])
     ap.add_argument("lots", nargs="?", type=Path, help="lot file (fd2_lots.csv), read in place")
     ap.add_argument("--test-lots", action="store_true", help="print the section 8 test-lot tables")

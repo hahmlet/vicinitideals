@@ -29,7 +29,6 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from functools import lru_cache
 
 from flats.foundation import cost as costing
 from flats.foundation.ground import Ground
@@ -91,9 +90,10 @@ def embed_of(m: Measured, s: Settings) -> float:
     return s.embed_in
 
 
-@lru_cache(maxsize=32)
 def _with_embed(s: Settings, embed_in: float) -> Settings:
     # A's edge is footing depth + slab top (edge_d_in's source): it moves with the footing.
+    # Not cached: Settings compare without their prices, so a cache keyed on them
+    # would hand back another file's prices.
     return s.replace(embed_in=embed_in, edge_d_in=s.edge_d_in + embed_in - s.embed_in)
 
 

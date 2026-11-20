@@ -150,7 +150,7 @@ def assess(m: Measured, s: Settings, *, group: str | None = None) -> LotResult:
     old = infill_mod.assess(m, model.lot_settings(m, s), embed)
     if old.wall_crossed:
         flags.append(WALL_CROSSES_OLD)
-        words.append(f"wall crosses an old building: longest stretch {old.longest_ft:.1f} ft (basement cost conditional, not in the total)")
+        words.append(f"wall crosses a mapped building: longest stretch {old.longest_ft:.1f} ft (basement cost conditional, not in the total)")
     return LotResult(
         measured=m,
         group=group,

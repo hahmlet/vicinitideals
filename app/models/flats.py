@@ -638,6 +638,38 @@ class FlatsLotSoil(Base):
     share: Mapped[float] = mapped_column(Numeric(8, 5), nullable=False)
 
 
+class FlatsLotFoundation(Base):
+    """The foundation model's MEASURED record for the pod drawn on one lot
+    (FOLLOWUPS 209, :mod:`flats.foundation`): the ground under each wall line
+    and door and the mapped buildings under the pod, as one JSONB document
+    (:mod:`flats.foundation.record`). No price is stored: the lot report prices
+    the record at read time with ``flats/config/foundation.yaml``.
+
+    Keyed on the durable ``(county, tlid)``, not a lot row, so a county refresh
+    does not drop it; ``drawing`` names the drawn building it was measured
+    under. A NOTE, never a colour: nothing that screens reads it. Filled by
+    ``scripts/flats_foundation.py load``.
+    """
+
+    __tablename__ = "lot_foundation"
+    __table_args__ = ({"schema": SCHEMA},)
+
+    county: Mapped[str] = mapped_column(String(40), primary_key=True)
+    tlid: Mapped[str] = mapped_column(String(40), primary_key=True)
+    #: Layout of ``record``; a record in another layout reads "needs re-measuring".
+    record_version: Mapped[int] = mapped_column(Integer, nullable=False)
+    model_version: Mapped[str] = mapped_column(String(40), nullable=False)
+    #: Hash of the geometric settings measured under (compare ``record.settings_hash``).
+    geometry_hash: Mapped[str] = mapped_column(String(16), nullable=False)
+    #: What it was measured on: the drawn building, the ground source and its cell size.
+    drawing: Mapped[str] = mapped_column(String(240), nullable=False)
+    ground_source: Mapped[str] = mapped_column(String(40), nullable=False)
+    cell_m: Mapped[float | None] = mapped_column(Numeric(6, 2))
+    measured_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    loaded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    record: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+
+
 class FlatsLotWorksAs(Base):
     """For one lot, one design, one run: whether the pod comes out GREEN as an
     apartment and as townhomes. The Lots page's "Works as" filter reads this

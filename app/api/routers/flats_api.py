@@ -23,7 +23,7 @@ from sqlalchemy import select
 from app.api.deps import DBSession
 from app.api.routers import ui_flats as lots
 from app.models.flats import FlatsLot, FlatsRun
-from app.services import flats_hazards
+from app.services import flats_foundation, flats_hazards
 from flats import rulings
 from flats.frost import describe as describe_frost
 from flats.encode.attribution import claimed_sections, section_at
@@ -146,7 +146,12 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
     (green / yellow / red / unknown), the verdict, the reasons and binding
     constraint, and the entries in `rulings` OUTRANK your own reading of the
     code: report them as given, and do not re-derive a ruling from code text.
-    `pending_changes` are adopted code changes not yet in force. Get the county
+    `pending_changes` are adopted code changes not yet in force. `foundation`
+    (null when the lot is not measured) is the foundation model for the drawn
+    pod: style, cost range per method (money as strings), the cheaper method,
+    challenges, easy parts, steps at each door, and a separate "if a mapped
+    building here had a basement" figure that is never in a total; it is a
+    note, never part of the colour. Get the county
     and tlid from flats_find_lot; a TLID contains spaces, pass it exactly.
     Answers from the live run (`run`); 404 when the lot is unknown."""
     county, tlid = lots._no_nul(county), lots._no_nul(tlid)
@@ -194,6 +199,10 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
         "hazards": await flats_hazards.lot_hazards(session, lot),
         # Frost depth for the lot's place (FOLLOWUPS 197): a note, never a colour.
         "frost": describe_frost(lot.jurisdiction, lot.county),
+        # The foundation model (FOLLOWUPS 209), priced now from the stored
+        # measurement with the current settings; null when not measured. A note,
+        # never a colour.
+        "foundation": await flats_foundation.lot_foundation(session, lot.county, lot.tlid),
         "pending_changes": [
             e.as_dict() for e in entries if e.kind == "adopted_change" and e.effective and e.effective > today
         ],
