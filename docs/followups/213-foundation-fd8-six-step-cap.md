@@ -45,7 +45,18 @@ Opened 2026-11-20. Source: `../Factory-Sim/docs/research/FD8-reply-to-flats-foun
 
 ## Status
 
-- Branch `flats/foundation-fd8` (worktree `../vicinitideals-worktrees/foundation-fd8`), worker
-  fd8-builder building; hand-off will be `../vicinitideals-worktrees/foundation-fd8.handoff.md`.
+- BUILT 2026-11-20: branch `flats/foundation-fd8` head 3d4a2a8a (rulings 8c4ecdd0), pushed, not merged.
+  Hand-off `../vicinitideals-worktrees/foundation-fd8.handoff.md`. The cap runs inside the screen pass
+  (last step, needs `--dem` and `--foundation-classes /root/foundation/run128_fd8/status.parquet`).
+  FD8 key matches to the dollar; full FLATS suite green after one test fix (test_flatter, cap held off).
+- Re-measure on 137 (`/root/foundation/run128_fd8`, run 128 drawings): RED 7,438 (570 now green),
+  near-cap YELLOW 1,208 (224 green), class-unread YELLOW 319 (101 green). FD8 said 5,991; the stair-foot
+  ground adds about 1,820, the real door positions and faces about 830. At the wall it would be 6,824.
+  Told Steph; measuring where the stair lands is the physical answer, kept.
+- Next: bound on the rel-next drawings after rel11 ships (BOUND SCOPE in the hand-off), move read
+  (every GREEN-to-RED read for a true over-cap), release, then report counts to the foundation agent.
+- Later (coordinator build call, not Steph): the flatter-placement search (FOLLOWUPS 57) does not try the
+  cap, so a plan it moves can still be over the cap. Letting it try placements that clear the cap could
+  rescue some of the 570.
 - Answer to FD8 for the foundation agent: `../vicinitideals-worktrees/TO-FOUNDATION-AGENT-2026-11-20-v2.md`
   (asks key issue 3, delivery for the precast units, railing as guard, side-entry units).
