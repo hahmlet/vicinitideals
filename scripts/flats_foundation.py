@@ -79,7 +79,7 @@ import os
 import sys
 import time
 from collections import Counter, defaultdict
-from collections.abc import Mapping
+from collections.abc import Iterator, Mapping
 from pathlib import Path
 from typing import Any
 
@@ -576,7 +576,7 @@ def _chunks(seq: list[Any], size: int) -> list[list[Any]]:
     return [seq[i : i + size] for i in range(0, len(seq), size)]
 
 
-def extract_rows(quadfit_dir: Path, parts: list[list[str]], out: Path, batch: int = 20000) -> dict[str, Any]:
+def extract_rows(quadfit_dir: Path, parts: list[list[str]], out: Path) -> dict[str, Any]:
     """The lots' rows of quadfit s4 / s5o, streamed, one small pair of files per
     part (``out/part-NNNN/``), and each lot's box (``out/lot_bounds.parquet``)."""
     import pyarrow as pa
@@ -586,15 +586,19 @@ def extract_rows(quadfit_dir: Path, parts: list[list[str]], out: Path, batch: in
     part_of = {t: k for k, tl in enumerate(parts) for t in tl}
     counts: dict[str, int] = {}
     bounds: list[dict[str, Any]] = []
+    pool = pa.default_memory_pool()
     for name in ("s4_lots.parquet", "s5o_lots.parquet"):
         pf = pq.ParquetFile(quadfit_dir / name)
-        got = []
-        for b in pf.iter_batches(batch_size=batch):
-            t = pa.Table.from_batches([b])
-            keep = [i for i, k in enumerate(t.column("TLID").to_pylist()) if k in part_of]
-            if keep:
-                got.append(t.take(keep))
-        tab = pa.concat_tables(got) if got else pf.schema_arrow.empty_table()
+        # One column at a time (a file is one row group, so a batch reader would
+        # decode every column of it at once): the rows wanted, then each column cut to them.
+        keep = pa.array([i for i, k in enumerate(pf.read(columns=["TLID"]).column("TLID").to_pylist()) if k in part_of],
+                        type=pa.int64())
+        cols = {}
+        for c in pf.schema_arrow.names:
+            cols[c] = pf.read(columns=[c]).column(c).take(keep)
+            pool.release_unused()
+        tab = pa.table(cols)
+        del cols
         counts[name] = tab.num_rows
         tl = tab.column("TLID").to_pylist()
         if name == "s4_lots.parquet" and "wkb" in tab.column_names:
@@ -609,10 +613,51 @@ def extract_rows(quadfit_dir: Path, parts: list[list[str]], out: Path, batch: in
             d = out / f"part-{k:04d}"
             d.mkdir(parents=True, exist_ok=True)
             pq.write_table(tab.take(by.get(k, [])), d / name, compression="zstd")
-        del tab, got
+        del tab
+        pool.release_unused()
     pq.write_table(pa.Table.from_pylist(bounds), out / "lot_bounds.parquet", compression="zstd")
     (out / "done.json").write_text(json.dumps(counts), encoding="utf-8")
     return counts
+
+
+def geojson_features(text: str) -> Iterator[dict[str, Any]]:
+    """The features of a GeoJSON FeatureCollection one at a time, without
+    building the whole document (a 35 MB NFHL file parses to ~10x that)."""
+    dec = json.JSONDecoder()
+    start = text.find('"features"')
+    if start < 0:
+        return
+    pos = text.index("[", start) + 1
+    while True:
+        while pos < len(text) and (text[pos].isspace() or text[pos] == ","):
+            pos += 1
+        if pos >= len(text) or text[pos] == "]":
+            return
+        obj, pos = dec.raw_decode(text, pos)
+        yield obj
+
+
+def geojson_head(text: str) -> dict[str, Any]:
+    """A FeatureCollection's top-level members other than ``features`` (strings
+    and numbers only: those before the features, and those after the last
+    ``]``), read without parsing the features."""
+    import re
+
+    out: dict[str, Any] = {}
+    dec = json.JSONDecoder()
+    start = text.find('"features"')
+    outside = text if start < 0 else text[:start] + " " + text[text.rfind("]") + 1 :]
+    for m in re.finditer(r'"(\w+)"\s*:\s*', outside):
+        key = m.group(1)
+        if key in out or key == "type":
+            continue
+        try:
+            v, _ = dec.raw_decode(m.string, m.end())
+        except ValueError:
+            continue
+        if isinstance(v, (str, int, float)):
+            out[key] = v
+    return out
 
 
 class Sources:
@@ -657,24 +702,23 @@ class Sources:
         self.nfhl_tree: Any = None
         if path is None:
             return
-        data = json.loads(path.read_text(encoding="utf-8"))
+        text = path.read_text(encoding="utf-8")
         tf = Transformer.from_crs(4326, 2913, always_xy=True)
-        geoms, props = [], []
-        for f in data.get("features", []):
+        self.nfhl_geoms, n = [], 0
+        for f in geojson_features(text):
             if not f.get("geometry"):
                 continue
+            n += 1
             g = shapely.make_valid(shapely.transform(shape(f["geometry"]), lambda xy: np.column_stack(
                 tf.transform(xy[:, 0], xy[:, 1]))))
-            geoms.append(g)
-            props.append(f.get("properties") or {})
-        info = {k: v for k, v in data.items() if k != "features"}
-        del data
-        keep = self._near(np.array(geoms, dtype=object), 1.0)
-        self.nfhl_geoms = [geoms[i] for i in keep]
-        self.nfhl_props = [props[i] for i in keep]
+            if len(self._near(np.array([g], dtype=object), 1.0)):
+                self.nfhl_geoms.append(g)
+                self.nfhl_props.append(f.get("properties") or {})
+        info = geojson_head(text)
+        del text
         self.nfhl_tree = shapely.STRtree(np.array(self.nfhl_geoms, dtype=object)) if self.nfhl_geoms else None
-        self.nfhl_meta = {"path": str(path), **info, "features": len(geoms), "kept": len(self.nfhl_geoms)}
-        self.log(f"nfhl {len(geoms)} -> {len(self.nfhl_geoms)}")
+        self.nfhl_meta = {"path": str(path), **info, "features": n, "kept": len(self.nfhl_geoms)}
+        self.log(f"nfhl {n} -> {len(self.nfhl_geoms)}")
 
     def nfhl_hits(self, fp: Any) -> list[dict[str, Any]]:
         import shapely
@@ -980,6 +1024,7 @@ def _measure_run(args: argparse.Namespace) -> None:
     pop_path = out / "population.parquet"
     if not pop_path.exists():
         log("population " + json.dumps(population(Path(args.assign), set(args.colours.split(",")), pop_path)))
+        pa.default_memory_pool().release_unused()
     pop = pq.read_table(pop_path).to_pylist()
     if args.limit:
         pop = pop[: args.limit]
