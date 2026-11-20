@@ -94,9 +94,10 @@ class FlatLot:
 
 @lru_cache(maxsize=16)
 def flat_lot(s: Settings) -> FlatLot:
-    """FD3_flat_lot_takeoff.py ``slab()`` and ``stem_wall()``, on its own pod
-    length (``fd3_length_ft``, 80 ft 3-3/4 in; see the settings file)."""
-    length, width = s.fd3_length_ft, s.width_ft
+    """FD3_flat_lot_takeoff.py ``slab()`` and ``stem_wall()``, on the length
+    ``fixed_length_ft`` (the framing; FD3 drew 80 ft 3-3/4 in, see the settings
+    file) and the building width."""
+    length, width = s.fixed_length_ft, s.width_ft
     perim = 2 * (length + width)
     area = length * width
     parties = len(s.party_x_ft)

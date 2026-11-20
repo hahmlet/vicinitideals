@@ -17,11 +17,14 @@ from pathlib import Path
 
 import pytest
 
+from flats.tests.foundation_key import key_settings
 from flats.foundation import classify, infill, lot, measure, model, oldbuild, rows, settings
 from flats.foundation import ground as grounds
 from flats.foundation.frame import SIX_UV, frame
 
-S = settings.load()
+#: The FD6 answer key's dimensions (production carries the framing; see foundation_key).
+S = key_settings()
+PROD = settings.load()
 #: FD7 is written at one 18 in footing depth.
 S18 = S.replace(use_frost_register=False)
 

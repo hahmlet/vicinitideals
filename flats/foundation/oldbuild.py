@@ -126,7 +126,7 @@ def model_outlines(frame: Any, geoms: Sequence[Any], props: Sequence[dict[str, A
             if poly.geom_type != "Polygon" or poly.is_empty:
                 continue
             xy = np.asarray(poly.exterior.coords, dtype=float)
-            mx = frame.model(xy, s.length_ft, s.width_ft)
+            mx = frame.model(xy, s.length_ft, s.width_ft, s.box_ft)
             rings.append(tuple((float(a), float(b)) for a, b in mx))
         if not rings:
             continue

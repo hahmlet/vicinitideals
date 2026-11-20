@@ -194,7 +194,7 @@ def _grid(args: argparse.Namespace) -> None:
                 fb = six[[2, 3, 0, 1, 5, 4]]
                 fr_rec["six_max_diff_lr_ft"] = float(np.max(np.abs(lr - g6)))
                 fr_rec["six_max_diff_fb_ft"] = float(np.max(np.abs(fb - g6)))
-            pts = fr.world(gx.ravel(), gy.ravel(), s.length_ft, s.width_ft)
+            pts = fr.world(gx.ravel(), gy.ravel(), s.length_ft, s.width_ft, s.box_ft)
             z = np.asarray(z_of(pts), dtype=float).reshape(gy.shape)
             if not np.isfinite(z).all():
                 raise ValueError(f"grid has {int((~np.isfinite(z)).sum())} blank cells")
@@ -950,7 +950,7 @@ def measure_lot(p: Mapping[str, Any], row: Mapping[str, Any] | None, src: Source
     streets = tuple(dict.fromkeys(quadfit._street_lines(ql) + quadfit._side_street_lines(ql)))
     fr = frame(ring, streets)
     gx, gy = grid
-    pts = fr.world(gx.ravel(), gy.ravel(), s.length_ft, s.width_ft)
+    pts = fr.world(gx.ravel(), gy.ravel(), s.length_ft, s.width_ft, s.box_ft)
     z = None
     src_name = cell = None
     for coarse in (False, True):

@@ -46,6 +46,54 @@ def _moved(ring, dx: float = 0.0, dy: float = 0.0) -> list[list[float]]:
     return [[x + dx, y + dy] for x, y in ring]
 
 
+# ---------------------------------------------------------------- the framing footprint
+
+
+def test_the_framing_sits_centred_in_the_drawn_finished_box() -> None:
+    from flats.foundation.frame import frame
+
+    fr = frame(RING, ((7_639_900.0, 689_990.0, 7_640_200.0, 689_990.0),))  # a street along the front
+    x0, y0 = RING[0]
+    got = fr.world([0.0, S.length_ft], [0.0, S.width_ft], S.length_ft, S.width_ft, S.box_ft)
+    assert got[0] == pytest.approx([x0 + 1.625 / 12, y0 + 1.53125 / 12])  # 1-5/8 in in, 1-17/32 in in
+    assert got[1] == pytest.approx([x0 + 80 - 1.625 / 12, y0 + 25 - 1.53125 / 12])
+    back = fr.model(got, S.length_ft, S.width_ft, S.box_ft)
+    assert back[1] == pytest.approx([S.length_ft, S.width_ft])
+    # without a box the model spans the drawn rectangle, as before
+    assert fr.world([80.0], [25.0], 80.0, 25.0)[0] == pytest.approx([x0 + 80, y0 + 25])
+
+
+def test_a_record_names_the_footprint_it_was_measured_on() -> None:
+    on = _doc()["measured_on"]
+    assert on["footprint"] == "framing 956.75 x 296.9375 in, centred in the 80 x 25 ft finished faces"
+    assert record.footprint_words({"length_ft": 80, "width_ft": 25}) == "80 x 25 ft (the finished faces)"
+
+
+def test_a_record_on_another_footprint_reads_needs_remeasuring() -> None:
+    from flats.tests.foundation_key import key_settings
+
+    old = key_settings()
+    m = measure.measure(grounds.plane(old, 2.0, 1.0), old, tlid="1S2E08BA  -09500", county="multnomah",
+                        inputs={"ground_class": "FIRM", "frost_register_in": 12.0})
+    doc = json.loads(json.dumps(record.document(m, drawing="d", measured_at=WHEN, run="run 128", ring=RING)))
+    out = report.describe(doc, S, version=VERSION, drawing=RING)
+    assert out["status"] == report.NEEDS_REMEASURING and out["remeasure_because"][0] == "footprint"
+    assert "length_ft" in out["remeasure_because"]
+    assert "Measured on a different building footprint" in out["status_words"]
+    assert "framing 960 x 300 in" in out["status_words"] and "framing 956.75 x 296.9375 in" in out["status_words"]
+    assert "methods" not in out and "$" not in out["status_words"]
+    # a slice-3 record (finished size, no footprint stamp) says so too
+    geo = json.loads(doc["lot"]["geometry"])
+    for k in ("finished_length_ft", "finished_width_ft"):
+        geo.pop(k)
+    doc["lot"]["geometry"] = json.dumps(geo)
+    doc["measured_on"].pop("footprint")
+    out = report.describe(doc, S, version=VERSION)
+    assert out["remeasure_because"][0] == "footprint" and "80 x 25 ft (the finished faces)" in out["status_words"]
+    # measured on the shipped footprint: priced
+    assert report.describe(_doc(), S, version=VERSION, drawing=RING)["status"] == report.PRICED
+
+
 # ---------------------------------------------------------------- the drawing stamp
 
 
@@ -56,7 +104,7 @@ def test_a_record_carries_the_ring_it_was_measured_on() -> None:
     assert on["drawing_hash"] == record.ring_hash(RING) and on["drawn_ring"] == RING
     # a slice-3 record (no ring given) is stamped with nothing new
     plain = record.document(measure.measure(grounds.plane(S, 2.0, 1.0), S), drawing="d", measured_at=WHEN)
-    assert set(plain["measured_on"]) == {"drawing", "ground_source", "cell_m", "measured_at"}
+    assert set(plain["measured_on"]) == {"drawing", "ground_source", "cell_m", "measured_at", "footprint"}
 
 
 def test_the_ring_hash_holds_through_rounding_and_moves_with_the_drawing() -> None:

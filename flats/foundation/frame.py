@@ -49,21 +49,30 @@ class Frame:
         fl, fr, bl = (np.array(p, dtype=float) for p in (self.fl, self.fr, self.bl))
         return fl + u[..., None] * (fr - fl) + v[..., None] * (bl - fl)
 
-    def world(self, x_ft: Any, y_ft: Any, length_ft: float, width_ft: float) -> Any:
-        """Model (x, y) -> world points: x / length along the drawn front, y / width across."""
+    def world(self, x_ft: Any, y_ft: Any, length_ft: float, width_ft: float,
+              box_ft: tuple[float, float] | None = None) -> Any:
+        """Model (x, y) -> world points. Without ``box_ft`` the model's
+        ``length_ft`` x ``width_ft`` spans the drawn rectangle (x / length along
+        the drawn front, y / width across). With ``box_ft`` = (length, width)
+        of the drawn rectangle, the model's footprint sits centred inside it
+        (the framing inside the finished faces, DECISIONS N-finished)."""
         import numpy as np
 
-        return self.at(np.asarray(x_ft, dtype=float) / length_ft, np.asarray(y_ft, dtype=float) / width_ft)
+        bl_ft, bw_ft = box_ft if box_ft is not None else (length_ft, width_ft)
+        x = np.asarray(x_ft, dtype=float) + (bl_ft - length_ft) / 2
+        y = np.asarray(y_ft, dtype=float) + (bw_ft - width_ft) / 2
+        return self.at(x / bl_ft, y / bw_ft)
 
-    def model(self, pts: Any, length_ft: float, width_ft: float) -> Any:
+    def model(self, pts: Any, length_ft: float, width_ft: float, box_ft: tuple[float, float] | None = None) -> Any:
         """World points (N, 2) -> model (x, y) (N, 2), the inverse of :meth:`world`."""
         import numpy as np
 
+        bl_ft, bw_ft = box_ft if box_ft is not None else (length_ft, width_ft)
         p = np.asarray(pts, dtype=float).reshape(-1, 2)
         fl, fr, bl = (np.array(q, dtype=float) for q in (self.fl, self.fr, self.bl))
         m = np.column_stack([fr - fl, bl - fl])  # columns: along, across
         uv = np.linalg.solve(m, (p - fl).T).T
-        return np.column_stack([uv[:, 0] * length_ft, uv[:, 1] * width_ft])
+        return np.column_stack([uv[:, 0] * bl_ft - (bl_ft - length_ft) / 2, uv[:, 1] * bw_ft - (bw_ft - width_ft) / 2])
 
 
 def _dist_to_lines(x: float, y: float, lines: Sequence[Seg]) -> float:

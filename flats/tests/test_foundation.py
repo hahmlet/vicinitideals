@@ -19,13 +19,17 @@ from pathlib import Path
 import pytest
 import yaml
 
+from flats.tests.foundation_key import KEY_DIMS, key_settings
 from flats import foundation
 from flats.foundation import cost as costing
 from flats.foundation import ground as grounds
 from flats.foundation import classify, lot, measure, model, rows, settings, support
 from flats.foundation.__main__ import TEST_LOTS, ft_in, main, row_of
+from flats.foundation.__main__ import test_lots as print_test_lots
 
-S = settings.load()
+#: The FD6 answer key's dimensions (production carries the framing; see foundation_key).
+S = key_settings()
+PROD = settings.load()
 PKG = Path(foundation.__file__).parent
 
 
@@ -123,10 +127,13 @@ def test_a_flags_as_stated(name: str) -> None:
 
 
 def test_the_script_prints_the_section_8_tables(capsys: pytest.CaptureFixture[str]) -> None:
-    main(["--test-lots"])
+    print_test_lots(S)  # on the answer key's dimensions
     out = capsys.readouterr().out
     assert "| 6 ft along | 8 ft 5 in | 7 ft 6 in | 59.3 | 1,121 | 3,420 | 0 | 8 ft 0 in | 6-13 | 74 | 12.2 | 8 | 30,569-62,573 |" in out
     assert "| flat | 2 ft 2 in | 0 ft 8 in | 48.1 | 409 | 910 | 0 | 0 ft 8 in | 1-1 | 8 | 3.0 | 0 | 17,011-28,732 | - |" in out
+    main(["--test-lots"])  # the shipped settings (the framing footprint): the same tables, other figures
+    shipped = capsys.readouterr().out
+    assert "| 6 ft along |" in shipped and "| flat |" in shipped and shipped != out
 
 
 def test_wet_season_changes_only_the_flat_rock_and_haul_lines() -> None:
@@ -211,6 +218,17 @@ def test_every_setting_and_price_loads_with_a_label() -> None:
 def test_recalled_code_rules_stay_labelled_recalled() -> None:
     assert S.sources["doors.guard_over_in"].startswith("[code, recalled, R312]")
     assert S.sources["doors.handrail_risers"].startswith("[code, recalled, R311.7.8]")
+
+
+def test_the_shipped_building_is_the_framing_inside_the_finished_faces() -> None:
+    # DECISIONS N-finished, FOLLOWUPS 238(i): 956.75 x 296.9375 in framing in the 80 x 25 ft trim faces
+    assert (PROD.finished_length_ft, PROD.finished_width_ft) == (80, 25)
+    assert PROD.length_ft * 12 == pytest.approx(956.75) and PROD.width_ft * 12 == pytest.approx(296.9375)
+    assert [x * 12 for x in PROD.party_x_ft] == pytest.approx([238.875, 478.375, 717.875])
+    assert [x * 80 / PROD.length_ft for x in PROD.door_x_ft] == pytest.approx([10, 30, 50, 70])
+    assert PROD.fixed_length_ft == PROD.length_ft
+    # every other setting is the same as on the answer key's dimensions
+    assert PROD.replace(**{k: getattr(S, k) for k in KEY_DIMS}) == S
 
 
 def test_section_4_values_as_the_spec_gives_them() -> None:

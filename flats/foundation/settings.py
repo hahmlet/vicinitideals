@@ -37,7 +37,7 @@ class Price:
 #: section -> the settings it holds, in file order. A setting's name is unique
 #: across sections, so :class:`Settings` is flat.
 SECTIONS: dict[str, tuple[str, ...]] = {
-    "building": ("length_ft", "width_ft", "party_x_ft", "door_x_ft"),
+    "building": ("finished_length_ft", "finished_width_ft", "length_ft", "width_ft", "party_x_ft", "door_x_ft"),
     "raised": (
         "clear_in",
         "floor_depth_in",
@@ -120,7 +120,7 @@ SECTIONS: dict[str, tuple[str, ...]] = {
         "share_not_held",
     ),
     "flat_lot": (
-        "fd3_length_ft",
+        "fixed_length_ft",
         "homes",
         "party_strip_w_in",
         "party_strip_d_in",
@@ -178,7 +178,10 @@ _BOOLS = {"use_frost_register"}
 class Settings:
     """Every FD6 section 4 setting and section 6 price, by name."""
 
-    # building
+    # building: the finished faces as drawn (the screen's 80 x 25 ft), and the
+    # framing footprint the foundation is measured and priced on, centred inside
+    finished_length_ft: float
+    finished_width_ft: float
     length_ft: float
     width_ft: float
     party_x_ft: tuple[float, ...]
@@ -271,7 +274,7 @@ class Settings:
     share_1960_on: float
     share_not_held: float
     # flat-lot takeoff (FD3)
-    fd3_length_ft: float
+    fixed_length_ft: float
     homes: int
     party_strip_w_in: float
     party_strip_d_in: float
@@ -292,6 +295,11 @@ class Settings:
     def replace(self, **changes: Any) -> Settings:
         """A copy with some settings changed (a test, a sensitivity run)."""
         return dataclasses.replace(self, **changes)
+
+    @property
+    def box_ft(self) -> tuple[float, float]:
+        """The drawn rectangle (finished faces) the framing footprint sits centred in."""
+        return (self.finished_length_ft, self.finished_width_ft)
 
     def price(self, key: str) -> Price:
         return self.prices[key]

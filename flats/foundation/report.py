@@ -16,6 +16,7 @@ or its flags; the block says so (``never_a_colour``).
 
 from __future__ import annotations
 
+import json
 from collections.abc import Mapping, Sequence
 from decimal import ROUND_HALF_EVEN, Decimal
 from typing import Any
@@ -24,6 +25,7 @@ from flats.foundation import classify, record, support
 from flats.foundation import cost as costing
 from flats.foundation import lot as lots
 from flats.foundation import model
+from flats.foundation.measure import geometry_of
 from flats.foundation.settings import Settings
 
 PRICED = "priced"
@@ -299,6 +301,22 @@ def describe(
         out.update(status=NEEDS_REMEASURING, remeasure_because=["drawing"], status_words=EARLIER_DRAWING)
         return out
     stale = record.staleness(doc, s)
+    if stale and record.FOOTPRINT_KEYS & set(stale):
+        on = doc.get("measured_on") or {}
+        try:
+            was = on.get("footprint") or record.footprint_words(json.loads(doc["lot"]["geometry"]))
+        except (KeyError, TypeError, ValueError):
+            was = "another footprint"
+        out.update(
+            status=NEEDS_REMEASURING,
+            remeasure_because=["footprint", *stale],
+            status_words=(
+                f"Measured on a different building footprint -- needs re-measuring: this lot was measured on {was}, "
+                f"and the model now uses {record.footprint_words(dict(geometry_of(s)))}, so no figure is shown "
+                "until it is measured again."
+            ),
+        )
+        return out
     if stale:
         out.update(
             status=NEEDS_REMEASURING,

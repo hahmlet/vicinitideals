@@ -85,3 +85,7 @@ nine spec-vs-answer-key differences: `../vicinitideals-worktrees/foundation-mode
 4. Screw-pile version (B+P): not priced over old basements; no per-lot answer key exists.
 5. Pass the nine differences and the grid findings (lump allowance about 20% small) back to the foundation agent.
 6. Code rules marked "recalled": re-read when the residential code chapters arrive (FOLLOWUPS 210).
+7. Tell the foundation agent: the FLATS model now measures and prices the FRAMING footprint (79 ft 8-3/4 in x
+   24 ft 8-15/16 in centred in the 80 x 25 ft finished faces; DECISIONS N-finished, FOLLOWUPS 238(i)); its FD6
+   answer key (`FD6_foundation_model.py`) and the FD3 takeoff are still on the old sizes (80 x 25 ft walls,
+   80 ft 3-3/4 in fixed lines), and our answer-key tests run on those as explicit overrides.

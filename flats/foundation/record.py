@@ -41,6 +41,8 @@ MODEL_VERSION = "fd6-slice2"
 
 #: What a record's lot row says it was measured on.
 MEASURED_ON = ("drawing", "ground_source", "cell_m", "measured_at")
+#: ... and the footprint it was measured on, in words (from its geometry; slice 4).
+MEASURED_ON_FOOTPRINT = "footprint"
 #: Added by the slice-4 routine (absent on the slice-3 records): the run whose
 #: drawing was measured, a hash of the drawn building ring, and the ring itself
 #: (EPSG:2913 ft, to 0.01 ft) so the read side can tell a moved drawing.
@@ -48,10 +50,31 @@ MEASURED_ON_DRAWING = ("run", "drawing_hash", "drawn_ring")
 #: A vertex of the drawing now may sit this far (ft) from the measured one and
 #: still be the same drawing (stored rings are rounded on the way to the app).
 SAME_RING_FT = 0.15
+#: The geometric settings that ARE the building footprint: a record measured
+#: under others was measured on a different footprint (``measured_on.footprint``
+#: names the one it was).
+FOOTPRINT_KEYS = frozenset({"finished_length_ft", "finished_width_ft", "length_ft", "width_ft", "party_x_ft",
+                            "door_x_ft"})
 
 
 def _plain(geometry: Mapping[str, Any]) -> dict[str, Any]:
     return {k: list(v) if isinstance(v, tuple) else v for k, v in geometry.items()}
+
+
+def footprint_words(geometry: Mapping[str, Any]) -> str:
+    """The footprint a record was measured on, in words, from its geometric
+    settings: the framing inches inside the finished box, or (a record from
+    before the framing size, slice 3) the finished size alone."""
+    length, width = float(geometry["length_ft"]), float(geometry["width_ft"])
+    box = (geometry.get("finished_length_ft"), geometry.get("finished_width_ft"))
+    if None in box:
+        return f"{length:g} x {width:g} ft (the finished faces)"
+    return (f"framing {_inches(length)} x {_inches(width)} in, centred in the "
+            f"{float(box[0]):g} x {float(box[1]):g} ft finished faces")
+
+
+def _inches(ft: float) -> str:
+    return f"{ft * 12:.4f}".rstrip("0").rstrip(".")
 
 
 def geometry_hash(geometry: Mapping[str, Any]) -> str:
@@ -121,6 +144,7 @@ def document(
         "ground_source": m.ground_source,
         "cell_m": m.cell_m,
         "measured_at": measured_at,
+        "footprint": footprint_words(dict(m.geometry)),
     }
     if run is not None:
         on["run"] = run
@@ -215,6 +239,7 @@ def documents_from_tables(tables: Mapping[str, Iterable[Mapping[str, Any]]]) -> 
             "ground_source": lot.get("ground_source"),
             "cell_m": lot.get("cell_m"),
             "measured_at": extra["measured_at"],
+            "footprint": footprint_words(geometry),
         }
         for name, v in drawn.items():
             if v is not None:
