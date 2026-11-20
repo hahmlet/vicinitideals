@@ -13,8 +13,11 @@ Which methods a lot is *compared* on is
 
 :func:`from_row` reads one lot-file row (``fd2_lots.csv``): the six readings
 ``z_front_left`` ... ``z_back_right``, ``relief_ft``, ``elev_cell_m``,
-``front_face_turn_deg``, the ground classes, ``frost_register_in`` and
-``bldg_overlap_share``. It returns None when a reading is missing.
+``front_face_turn_deg``, the ground classes, ``frost_register_in``,
+``bldg_overlap_share`` and ``year_built``. It returns None when a reading is
+missing. Old buildings are attached to a record separately
+(:func:`flats.foundation.measure.with_old_buildings`); :func:`assess` prices them
+conditionally (:mod:`flats.foundation.infill`), outside every main total.
 
 Never a colour: nothing here is read by the screen.
 """
@@ -27,6 +30,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 
 from flats.foundation import classify, model, support
+from flats.foundation import infill as infill_mod
 from flats.foundation.ground import Ground, six_readings
 from flats.foundation.measure import Measured, measure
 from flats.foundation.settings import Settings
@@ -35,6 +39,7 @@ READINGS = ("z_front_left", "z_front_mid", "z_front_right", "z_back_left", "z_ba
 
 COARSE = "coarse_ground_model"
 FRONT_GUESS = "front_face_guess"
+WALL_CROSSES_OLD = "wall_crosses_old_building"
 
 
 def num(text: str | None) -> float | None:
@@ -63,7 +68,8 @@ class LotResult:
     measured: Measured
     group: str
     applicable: tuple[str, ...]
-    #: Footing depth used (in): the ``embed_in`` setting, one depth for every lot.
+    #: Footing depth used (in): the lot's frost-register depth with
+    #: ``use_frost_register``, else the ``embed_in`` setting.
     embed_in_used: float
     methods: dict[str, model.MethodResult]
     flags: tuple[str, ...]
@@ -72,6 +78,9 @@ class LotResult:
     style: classify.Style
     challenges: tuple[classify.Item, ...]
     easy: tuple[classify.Item, ...]
+    #: Old buildings under the pod, priced "if it had a basement": NOT in any
+    #: method's cost.
+    infill: infill_mod.Infill
 
     def __getitem__(self, method: str) -> model.MethodResult:
         return self.methods[method]
@@ -137,18 +146,24 @@ def assess(m: Measured, s: Settings, *, group: str | None = None) -> LotResult:
     if m.front_face_turn_deg is not None and m.front_face_turn_deg > s.front_face_guess_over_deg:
         flags.append(FRONT_GUESS)
         words.append(f"the street-side face is turned {m.front_face_turn_deg:.0f} degrees: which face carries the front doors is a guess")
+    embed = model.embed_of(m, s)
+    old = infill_mod.assess(m, model.lot_settings(m, s), embed)
+    if old.wall_crossed:
+        flags.append(WALL_CROSSES_OLD)
+        words.append(f"wall crosses an old building: longest stretch {old.longest_ft:.1f} ft (basement cost conditional, not in the total)")
     return LotResult(
         measured=m,
         group=group,
         applicable=applicable,
-        embed_in_used=s.embed_in,
+        embed_in_used=embed,
         methods=methods,
         flags=tuple(flags),
         flag_words=tuple(words),
         cheaper=_cheaper(methods, applicable),
         style=classify.style(group, methods, applicable),
-        challenges=classify.challenges(m, group, methods, applicable, s),
+        challenges=classify.challenges(m, group, methods, applicable, s, old),
         easy=classify.easy_parts(m, group, methods, applicable, s),
+        infill=old,
     )
 
 
@@ -180,15 +195,20 @@ def measure_row(row: Mapping[str, str], s: Settings) -> Measured | None:
     ground = ground_from_row(row, s)
     if ground is None:
         return None
-    inputs = {
+    return measure(ground, s, tlid=row.get("TLID") or row.get("tlid"), county=row.get("county"), inputs=inputs_of(row))
+
+
+def inputs_of(row: Mapping[str, str]) -> dict[str, object]:
+    """The lot-file fields a record keeps but does not measure."""
+    return {
         "relief_input_ft": num(row.get("relief_ft")),
         "ground_class": row.get("ground_class"),
         "alt_ground_class": row.get("alt_ground_class"),
         "frost_register_in": num(row.get("frost_register_in")),
         "bldg_overlap_share": num(row.get("bldg_overlap_share")),
         "front_face_turn_deg": num(row.get("front_face_turn_deg")),
+        "year_built": num(row.get("year_built")),
     }
-    return measure(ground, s, tlid=row.get("TLID") or row.get("tlid"), county=row.get("county"), inputs=inputs)
 
 
 def from_row(row: Mapping[str, str], s: Settings) -> LotResult | None:

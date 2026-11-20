@@ -25,13 +25,18 @@ What is kept (FD6 section 2 and more, for cheap analysis later):
   largest, smallest and mean, and the drop area;
 * per door (eight): the drop at the door;
 * under the slab (1 ft cells): fill volume, deepest fill, area with fill over each
-  of ``fill_bands_in`` (12, 24, 48 in).
+  of ``fill_bands_in`` (12, 24, 48 in);
+* old buildings (FD6 section 5.8, :mod:`flats.foundation.oldbuild`): for each
+  building outline under the pod, grown by ``grow_ft``, the stretches of each wall
+  line over it (length, whether it reaches a pod corner), the pod floor over it,
+  and the year built where held. Attached by :func:`with_old_buildings`.
 """
 
 from __future__ import annotations
 
 import math
-from collections.abc import Mapping
+import dataclasses
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 from flats.foundation.ground import Ground, high_low
@@ -51,6 +56,8 @@ GEOMETRIC: tuple[str, ...] = (
     "fill_cell_ft",
     "lump_share",
     "fill_bands_in",
+    "grow_ft",
+    "corner_within_ft",
 )
 
 
@@ -131,6 +138,49 @@ class DoorMeasure:
     drop_in: float
 
 
+@dataclass(frozen=True, slots=True)
+class Stretch:
+    """One stretch of one wall line over an old building's grown outline (model ft)."""
+
+    line: str
+    kind: str
+    x0: float
+    y0: float
+    x1: float
+    y1: float
+    length_ft: float
+    #: An end of the stretch is at a pod corner (within ``corner_within_ft``).
+    corner: bool
+
+
+@dataclass(frozen=True, slots=True)
+class OldBuilding:
+    """One building standing today whose outline, grown by ``grow_ft``, reaches the pod."""
+
+    #: The footprint's own id (RLIS ``BLDG_ID``), or None.
+    bldg_id: str | None
+    #: The footprint's own year built (RLIS ``YEAR_BUILT``; None when 0 / not held).
+    #: Information only: the basement likelihood uses the lot's year (pass 2's source).
+    year_built: int | None
+    #: The footprint's area (sq ft), before growing.
+    area_sf: float
+    #: Pod floor over the grown outline (sq ft).
+    floor_sf: float
+    stretches: tuple[Stretch, ...]
+
+    @property
+    def wall_ft(self) -> float:
+        return sum(st.length_ft for st in self.stretches)
+
+    @property
+    def longest_ft(self) -> float:
+        return max((st.length_ft for st in self.stretches), default=0.0)
+
+    @property
+    def corner(self) -> bool:
+        return any(st.corner for st in self.stretches)
+
+
 @dataclass(frozen=True)
 class Measured:
     """One lot, measured. Flat and storable: see :mod:`flats.foundation.rows`."""
@@ -169,9 +219,39 @@ class Measured:
     bldg_overlap_share: float | None
     front_face_turn_deg: float | None
     geometry: tuple[tuple[str, object], ...]
+    #: The lot's year built (assessor, the lot file's ``year_built``), or None.
+    year_built: int | None = None
+    #: Building outlines were looked for (the footprint layer covers the lot):
+    #: False means "not held", not "no old building".
+    old_buildings_held: bool = False
+    old_buildings: tuple[OldBuilding, ...] = ()
 
     def line(self, name: str) -> LineMeasure:
         return next(ln for ln in self.lines if ln.name == name)
+
+
+#: The lot-file fields a record keeps but does not measure.
+INPUT_FIELDS = ("relief_input_ft", "ground_class", "alt_ground_class", "frost_register_in", "bldg_overlap_share", "front_face_turn_deg", "year_built")
+
+
+def with_inputs(m: Measured, inputs: Mapping[str, object]) -> Measured:
+    """The record with its lot-file inputs replaced (a grid measured on one machine,
+    its lot-file fields joined on another). Only the fields named are changed."""
+    conv = {
+        "ground_class": _str,
+        "alt_ground_class": _str,
+        "year_built": _year,
+    }
+    changes = {k: conv.get(k, _opt)(v) for k, v in inputs.items() if k in INPUT_FIELDS}
+    unknown = set(inputs) - set(INPUT_FIELDS)
+    if unknown:
+        raise ValueError(f"not lot-file inputs: {sorted(unknown)}")
+    return dataclasses.replace(m, **changes)
+
+
+def with_old_buildings(m: Measured, held: bool, buildings: Sequence[OldBuilding]) -> Measured:
+    """The record with its old buildings attached (measured by :mod:`flats.foundation.oldbuild`)."""
+    return dataclasses.replace(m, old_buildings_held=bool(held), old_buildings=tuple(buildings))
 
 
 def _fall(ground: Ground, s: Settings) -> tuple[float, float]:
@@ -195,7 +275,7 @@ def measure(
     """Measure one lot from its ground. ``inputs`` carries the lot-file fields the
     record keeps but does not measure: ``relief_input_ft``, ``ground_class``,
     ``alt_ground_class``, ``frost_register_in``, ``bldg_overlap_share``,
-    ``front_face_turn_deg``."""
+    ``front_face_turn_deg``, ``year_built``."""
     inputs = dict(inputs or {})
     high, low = high_low(ground, s)
     top = high + ground.lump_ft
@@ -257,6 +337,7 @@ def measure(
         bldg_overlap_share=_opt(inputs.get("bldg_overlap_share")),
         front_face_turn_deg=_opt(inputs.get("front_face_turn_deg")),
         geometry=geometry_of(s),
+        year_built=_year(inputs.get("year_built")),
     )
 
 
@@ -266,3 +347,12 @@ def _opt(v: object) -> float | None:
 
 def _str(v: object) -> str | None:
     return None if v is None or v == "" else str(v)
+
+
+def _year(v: object) -> int | None:
+    """A year built; blank, zero or not a number is None (not held)."""
+    try:
+        y = int(float(v))  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return None
+    return y if y > 0 else None

@@ -208,14 +208,17 @@ def test_ground_and_lot_challenges() -> None:
     r = lot.run_lot(g, S, group=None, inputs=inputs)
     assert r.group == support.PILES and r.style.standard == ("B+P",) and r.style.cheaper_low is None
     codes = _codes(r.challenges)
-    assert {(classify.PILES, ""), (classify.COARSE, ""), (classify.FRONT_GUESS, ""), (classify.OLD_BUILDING, "")} <= codes
+    assert {(classify.PILES, ""), (classify.COARSE, ""), (classify.FRONT_GUESS, "")} <= codes
+    # The share of the pod over a building no longer raises a challenge on its own:
+    # only a measured wall over an old outline does (slice 2, test_foundation_old_buildings).
+    assert (classify.WALL_OVER_OLD, "") not in codes
     assert not any(i.method == "A" for i in r.challenges + r.easy), "no slab on piles ground"
     own = lot.run_lot(g, S, group=None, inputs={"ground_class": "NO-DATA", "alt_ground_class": "FLOOD"})
     assert own.group == support.OWN_LOOK and (classify.OWN_LOOK, "") in _codes(own.challenges)
     unsorted = lot.run_lot(g, S, group=None, inputs={"ground_class": "NO-DATA"})
     assert unsorted.group == support.NOT_SORTED and (classify.NOT_SORTED, "") in _codes(unsorted.challenges)
     small = lot.run_lot(g, S, group=None, inputs={"ground_class": "FIRM", "bldg_overlap_share": 0.2})
-    assert (classify.OLD_BUILDING, "") not in _codes(small.challenges)
+    assert (classify.WALL_OVER_OLD, "") not in _codes(small.challenges)
     assert (classify.ORDINARY, "") in _codes(small.easy)
 
 

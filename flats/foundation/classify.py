@@ -12,6 +12,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from flats.foundation import cost as costing
+from flats.foundation import infill as infill_mod
 from flats.foundation import model, support
 from flats.foundation.measure import Measured
 from flats.foundation.settings import Settings
@@ -28,8 +30,9 @@ OWN_LOOK = "own_look_ground"
 NOT_SORTED = "ground_not_sorted"
 COARSE = "coarse_ground_model"
 FRONT_GUESS = "front_face_guess"
-OLD_BUILDING = "old_building_later"
-CHALLENGES = (TALL_WALL, WALL_OVER_STANDARD, DEEP_FILL, RETAINED_EDGE, GUARDS, LONG_STAIR, PILES, OWN_LOOK, NOT_SORTED, COARSE, FRONT_GUESS, OLD_BUILDING)
+#: A wall line crosses a building standing today (FD6 5.8): value = longest stretch (ft).
+WALL_OVER_OLD = "wall_over_old_building"
+CHALLENGES = (TALL_WALL, WALL_OVER_STANDARD, DEEP_FILL, RETAINED_EDGE, GUARDS, LONG_STAIR, PILES, OWN_LOOK, NOT_SORTED, COARSE, FRONT_GUESS, WALL_OVER_OLD)
 
 # easy-part codes
 NEAR_FLAT = "near_flat"
@@ -87,7 +90,14 @@ def style(group: str, methods: dict[str, model.MethodResult], applicable: tuple[
     return Style(standard, lo, hi, words)
 
 
-def challenges(m: Measured, group: str, methods: dict[str, model.MethodResult], applicable: tuple[str, ...], s: Settings) -> tuple[Item, ...]:
+def challenges(
+    m: Measured,
+    group: str,
+    methods: dict[str, model.MethodResult],
+    applicable: tuple[str, ...],
+    s: Settings,
+    infill: infill_mod.Infill | None = None,
+) -> tuple[Item, ...]:
     out: list[Item] = []
     on = [x for x in applicable if x != "A wet"]
     for name in on:
@@ -119,9 +129,19 @@ def challenges(m: Measured, group: str, methods: dict[str, model.MethodResult], 
         out.append(Item(COARSE, "", m.cell_m, "m", f"ground read from {m.cell_m:g} m cells: relief understated"))
     if m.front_face_turn_deg is not None and m.front_face_turn_deg > s.front_face_guess_over_deg:
         out.append(Item(FRONT_GUESS, "", m.front_face_turn_deg, "deg", "which face carries the front doors is a guess"))
-    if m.bldg_overlap_share is not None and m.bldg_overlap_share >= s.old_building_share_min:
+    if infill is not None and infill.wall_crossed:
+        d = costing.dollars
         out.append(
-            Item(OLD_BUILDING, "", m.bldg_overlap_share, "share", f"{m.bldg_overlap_share:.0%} of the pod over a building standing today (basement exposure sized later)")
+            Item(
+                WALL_OVER_OLD,
+                "",
+                infill.longest_ft,
+                "ft",
+                f"a wall crosses a building standing today (longest stretch {infill.longest_ft:.1f} ft); "
+                f"if it had a basement: B ${d(infill.total('B', 'low')):,}-{d(infill.total('B', 'high')):,}, "
+                f"A ${d(infill.total('A', 'low')):,}-{d(infill.total('A', 'high')):,} "
+                f"(likely {infill.basement_share:.0%}, built {infill.year_band})",
+            )
         )
     return tuple(out)
 

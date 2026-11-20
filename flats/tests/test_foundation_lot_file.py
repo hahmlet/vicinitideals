@@ -66,7 +66,8 @@ def _reference():
 def compared() -> dict[str, object]:
     ref = _reference()
     p = ref.Params()
-    s = settings.load()
+    # The reference model uses one 18 in footing depth on every lot.
+    s = settings.load().replace(use_frost_register=False)
     s0 = s.replace(tolerance_in=0.0)
     with LOTS.open(newline="", encoding="utf-8") as fh:
         lot_rows = list(csv.DictReader(fh))

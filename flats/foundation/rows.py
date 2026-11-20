@@ -3,7 +3,9 @@
 Shaped to be written to Parquet (or a table) later; this slice writes nothing.
 
 * **Measured** (:func:`measured_rows` / :func:`from_measured_rows`): the MEASURE
-  layer's record, enough to re-price without the ground. A wall line's station
+  layer's record, enough to re-price without the ground. Old buildings under
+  the pod are two more child tables (:func:`old_building_rows`): one row per
+  building and one per stretch of wall over it. A wall line's station
   drops are one list column (``drops_in``), so every per-foot wall height can be
   re-derived. ``geometry`` is the JSON of the geometric settings measured under.
 * **Assessed** (:func:`assessed_rows`): the PRICE layer's output for reading and
@@ -18,7 +20,7 @@ import json
 from typing import Any
 
 from flats.foundation.lot import LotResult
-from flats.foundation.measure import GEOMETRIC, DoorMeasure, LineMeasure, Measured
+from flats.foundation.measure import GEOMETRIC, DoorMeasure, LineMeasure, Measured, OldBuilding, Stretch
 from flats.foundation.model import MethodResult
 
 _ORDER = {name: i for i, name in enumerate(GEOMETRIC)}
@@ -67,6 +69,9 @@ def measured_rows(m: Measured) -> tuple[dict[str, Any], list[dict[str, Any]], li
         frost_register_in=m.frost_register_in,
         bldg_overlap_share=m.bldg_overlap_share,
         front_face_turn_deg=m.front_face_turn_deg,
+        year_built=m.year_built,
+        old_buildings_held=m.old_buildings_held,
+        old_buildings_n=len(m.old_buildings),
         geometry=json.dumps(geometry, sort_keys=True),
     )
     lines = [
@@ -87,7 +92,66 @@ def measured_rows(m: Measured) -> tuple[dict[str, Any], list[dict[str, Any]], li
     return lot, lines, doors
 
 
-def from_measured_rows(lot: dict[str, Any], lines: list[dict[str, Any]], doors: list[dict[str, Any]]) -> Measured:
+def old_building_rows(m: Measured) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """One row per old building under the pod, and one per stretch of wall over it."""
+    bldgs, stretches = [], []
+    for i, b in enumerate(m.old_buildings):
+        bldgs.append(
+            {
+                "tlid": m.tlid,
+                "bldg": i,
+                "bldg_id": b.bldg_id,
+                "bldg_year_built": b.year_built,
+                "area_sf": b.area_sf,
+                "floor_sf": b.floor_sf,
+                "wall_ft": b.wall_ft,
+                "longest_ft": b.longest_ft,
+                "corner": b.corner,
+            }
+        )
+        for st in b.stretches:
+            stretches.append(
+                {
+                    "tlid": m.tlid,
+                    "bldg": i,
+                    "line": st.line,
+                    "kind": st.kind,
+                    "x0": st.x0,
+                    "y0": st.y0,
+                    "x1": st.x1,
+                    "y1": st.y1,
+                    "length_ft": st.length_ft,
+                    "corner": st.corner,
+                }
+            )
+    return bldgs, stretches
+
+
+def old_buildings_from_rows(bldgs: list[dict[str, Any]], stretches: list[dict[str, Any]]) -> tuple[OldBuilding, ...]:
+    by: dict[int, list[Stretch]] = {}
+    for r in stretches:
+        by.setdefault(int(r["bldg"]), []).append(
+            Stretch(r["line"], r["kind"], r["x0"], r["y0"], r["x1"], r["y1"], r["length_ft"], bool(r["corner"]))
+        )
+    return tuple(
+        OldBuilding(
+            bldg_id=r["bldg_id"],
+            year_built=None if r["bldg_year_built"] is None else int(r["bldg_year_built"]),
+            area_sf=r["area_sf"],
+            floor_sf=r["floor_sf"],
+            stretches=tuple(by.get(int(r["bldg"]), ())),
+        )
+        for r in sorted(bldgs, key=lambda r: int(r["bldg"]))
+    )
+
+
+def from_measured_rows(
+    lot: dict[str, Any],
+    lines: list[dict[str, Any]],
+    doors: list[dict[str, Any]],
+    bldgs: list[dict[str, Any]] | None = None,
+    stretches: list[dict[str, Any]] | None = None,
+) -> Measured:
     """The record back from its rows (nothing else is read)."""
     geometry = json.loads(lot["geometry"])
     readings = tuple(lot[c] for c in READING_COLUMNS)
@@ -128,6 +192,9 @@ def from_measured_rows(lot: dict[str, Any], lines: list[dict[str, Any]], doors: 
         bldg_overlap_share=lot["bldg_overlap_share"],
         front_face_turn_deg=lot["front_face_turn_deg"],
         geometry=tuple((k, tuple(v) if isinstance(v, list) else v) for k, v in sorted(geometry.items(), key=lambda kv: _ORDER[kv[0]])),
+        year_built=None if lot.get("year_built") is None else int(lot["year_built"]),
+        old_buildings_held=bool(lot.get("old_buildings_held") or False),
+        old_buildings=old_buildings_from_rows(bldgs or [], stretches or []),
     )
 
 
@@ -179,6 +246,23 @@ def assessed_rows(res: LotResult) -> tuple[dict[str, Any], list[dict[str, Any]],
         "challenges": ";".join(f"{i.code}:{i.method}" if i.method else i.code for i in res.challenges),
         "easy": ";".join(f"{i.code}:{i.method}" if i.method else i.code for i in res.easy),
     }
+    old = res.infill
+    lot.update(
+        old_buildings_held=old.held,
+        old_buildings_n=len(old.buildings),
+        old_wall_ft=old.wall_ft,
+        old_floor_sf=old.floor_sf,
+        old_longest_ft=old.longest_ft,
+        old_b_remedy=";".join(bc.b_remedy for bc in old.buildings),
+        old_year_built=old.year_built,
+        old_year_band=old.year_band,
+        old_basement_share=old.basement_share,
+        old_backfill_ft=old.backfill_ft,
+    )
+    for method in ("B", "A"):
+        for prices in ("low", "high"):
+            lot[f"old_if_basement_{method.lower()}_{prices}"] = str(old.total(method, prices))
+            lot[f"old_weighted_{method.lower()}_{prices}"] = str(old.weighted(method, prices))
     for c in res.cheaper:
         key = f"cheaper_vs_{METHOD_KEYS[c.against]}_{c.prices}"
         lot[key] = c.cheaper

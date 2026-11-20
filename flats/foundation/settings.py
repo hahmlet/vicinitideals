@@ -59,7 +59,7 @@ SECTIONS: dict[str, tuple[str, ...]] = {
         "trench_w_in",
         "haul_share",
     ),
-    "shared": ("embed_in", "bar_lb_per_ft", "lap", "concrete_waste", "rock_ton_per_yd3"),
+    "shared": ("embed_in", "use_frost_register", "bar_lb_per_ft", "lap", "concrete_waste", "rock_ton_per_yd3"),
     "slab": (
         "slab_top_in",
         "slab_t_in",
@@ -84,6 +84,8 @@ SECTIONS: dict[str, tuple[str, ...]] = {
         "high_point_across_ft",
         "fill_cell_ft",
         "lump_share",
+        "grid_step_ft",
+        "grid_margin_ft",
         "coarse_cell_over_m",
         "front_face_guess_over_deg",
         "tolerance_in",
@@ -93,12 +95,30 @@ SECTIONS: dict[str, tuple[str, ...]] = {
         "tall_wall_over_ft",
         "long_stair_over_ft",
         "guard_doors_min",
-        "old_building_share_min",
         "near_flat_relief_ft",
         "low_wall_max_ft",
         "shallow_fill_max_in",
     ),
     "ground_support": ("own_look_classes", "piles_classes", "footing_classes", "piles_per_pod"),
+    "old_buildings": (
+        "grow_ft",
+        "corner_within_ft",
+        "basement_floor_ft",
+        "deep_stem_in",
+        "bridge_run_ft",
+        "bridge_corner_ft",
+        "bridge_bars",
+        "bridge_bar_lb_per_ft",
+        "bridge_past_ft",
+        "bridge_pad_extra_w_ft",
+        "bridge_pad_len_ft",
+        "year_band_1",
+        "year_band_2",
+        "share_before_1940",
+        "share_1940_1959",
+        "share_1960_on",
+        "share_not_held",
+    ),
     "flat_lot": (
         "fd3_length_ft",
         "homes",
@@ -138,7 +158,20 @@ PRICES: tuple[str, ...] = (
 )
 
 _LISTS = {"party_x_ft", "door_x_ft", "fill_bands_in", "wall_bands_ft", "own_look_classes", "piles_classes", "footing_classes"}
-_INTS = {"vert_bars_extra_per_line", "level_bars_base", "handrail_risers", "piles_per_pod", "homes", "slab_edge_bars", "vents", "guard_doors_min"}
+_INTS = {
+    "vert_bars_extra_per_line",
+    "level_bars_base",
+    "handrail_risers",
+    "piles_per_pod",
+    "homes",
+    "slab_edge_bars",
+    "vents",
+    "guard_doors_min",
+    "bridge_bars",
+    "year_band_1",
+    "year_band_2",
+}
+_BOOLS = {"use_frost_register"}
 
 
 @dataclass(frozen=True)
@@ -172,6 +205,7 @@ class Settings:
     haul_share: float
     # shared
     embed_in: float
+    use_frost_register: bool
     bar_lb_per_ft: float
     lap: float
     concrete_waste: float
@@ -198,6 +232,8 @@ class Settings:
     high_point_across_ft: float
     fill_cell_ft: float
     lump_share: float
+    grid_step_ft: float
+    grid_margin_ft: float
     coarse_cell_over_m: float
     front_face_guess_over_deg: float
     tolerance_in: float
@@ -208,7 +244,6 @@ class Settings:
     tall_wall_over_ft: float
     long_stair_over_ft: float
     guard_doors_min: int
-    old_building_share_min: float
     near_flat_relief_ft: float
     low_wall_max_ft: float
     shallow_fill_max_in: float
@@ -217,6 +252,24 @@ class Settings:
     piles_classes: tuple[str, ...]
     footing_classes: tuple[str, ...]
     piles_per_pod: int
+    # old buildings under the pod (FD6 5.8, FD7)
+    grow_ft: float
+    corner_within_ft: float
+    basement_floor_ft: float
+    deep_stem_in: float
+    bridge_run_ft: float
+    bridge_corner_ft: float
+    bridge_bars: int
+    bridge_bar_lb_per_ft: float
+    bridge_past_ft: float
+    bridge_pad_extra_w_ft: float
+    bridge_pad_len_ft: float
+    year_band_1: int
+    year_band_2: int
+    share_before_1940: float
+    share_1940_1959: float
+    share_1960_on: float
+    share_not_held: float
     # flat-lot takeoff (FD3)
     fd3_length_ft: float
     homes: int
@@ -255,6 +308,10 @@ def _number(where: str, raw: Any, *, integer: bool) -> float | int:
 
 
 def _value(name: str, raw: Any) -> Any:
+    if name in _BOOLS:
+        if not isinstance(raw, bool):
+            raise ValueError(f"{name}: value must be true or false, got {raw!r}")
+        return raw
     if name in _LISTS:
         if not isinstance(raw, list) or not raw:
             raise ValueError(f"{name}: value must be a non-empty list")

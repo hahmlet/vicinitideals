@@ -15,6 +15,11 @@ B wall = drop + clear + footing depth - footing thickness; B door = drop +
 clear + floor depth; A edge = drop + edge depth; A door = drop + slab top. So a
 price, size or threshold change re-prices stored records without the ground.
 
+Footing depth is per lot (:func:`embed_of`): with ``use_frost_register`` the
+lot's own frost-register depth (stored in the record) replaces ``embed_in`` for
+B's wall and dig and A's edge depth and edge dig (:func:`lot_settings`); the FD6
+section 8 reference is ``use_frost_register: false``.
+
 Quantities are kept before and after their factors (over-order, laps) so the
 factors can be re-tuned. Two simplifications, both slightly generous, are
 stated on every B result (:data:`B_SIMPLIFICATIONS`).
@@ -24,6 +29,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from functools import lru_cache
 
 from flats.foundation import cost as costing
 from flats.foundation.ground import Ground
@@ -75,6 +81,26 @@ def _record(src: Measured | Ground, s: Settings) -> Measured:
             raise ValueError(f"record measured under other geometric settings ({', '.join(changed)}): re-measure")
         return src
     return measure(src, s)
+
+
+def embed_of(m: Measured, s: Settings) -> float:
+    """The lot's footing depth (in): its frost-register depth when
+    ``use_frost_register`` and the record holds one, else ``embed_in``."""
+    if s.use_frost_register and m.frost_register_in is not None and m.frost_register_in > 0:
+        return float(m.frost_register_in)
+    return s.embed_in
+
+
+@lru_cache(maxsize=32)
+def _with_embed(s: Settings, embed_in: float) -> Settings:
+    # A's edge is footing depth + slab top (edge_d_in's source): it moves with the footing.
+    return s.replace(embed_in=embed_in, edge_d_in=s.edge_d_in + embed_in - s.embed_in)
+
+
+def lot_settings(m: Measured, s: Settings) -> Settings:
+    """The settings as they apply on this lot (its own footing depth)."""
+    e = embed_of(m, s)
+    return s if e == s.embed_in else _with_embed(s, e)
 
 
 # ---------------------------------------------------------------- results
@@ -276,6 +302,7 @@ def _guard_flag(door_res, flags: list[str], words: list[str], s: Settings) -> No
 def raised(src: Measured | Ground, s: Settings, *, piles: bool = False) -> MethodResult:
     """B (or B+P with ``piles``): one concrete wall, top level, raised cassette floor."""
     m = _record(src, s)
+    s = lot_settings(m, s)
     offset = s.clear_in + s.embed_in - s.footing_t_in  # wall = drop + offset
     floor_above_high = s.clear_in + s.floor_depth_in
     conc_ft3 = level_ft = upright_ft = form = 0.0
@@ -357,6 +384,7 @@ def raised(src: Measured | Ground, s: Settings, *, piles: bool = False) -> Metho
 def slab(src: Measured | Ground, s: Settings, *, wet: bool = False) -> MethodResult:
     """A: slab set above the highest ground, low side built up in rock behind a deeper edge."""
     m = _record(src, s)
+    s = lot_settings(m, s)
     edge_ft3 = form = level_ft = upright_ft = 0.0
     unbalanced_max = 0.0
     edge_len_h = edge_run = 0.0

@@ -102,7 +102,10 @@ raised:
 shared:
   embed_in:
     value: 18
-    source: "[FLATS pass 2] footing bottom below the ground beside it: frost 12 in, Gresham 18 in; one 18 in depth for every lot (FD6 section 3 default)"
+    source: "[FLATS pass 2] footing bottom below the ground beside it: frost 12 in, Gresham 18 in; one 18 in depth for every lot (FD6 section 3 default); with use_frost_register, the depth for a lot whose register depth is not held"
+  use_frost_register:
+    value: true
+    source: "coordinator 2026-11-19 (slice 2): each lot's own frost depth from the FLATS frost register (lot file frost_register_in, stored in the measured record) sets B's footing depth; false = embed_in on every lot (the FD6 section 8 reference)"
   bar_lb_per_ft:
     value: 0.668
     source: FD3 (No. 4 bar weight)
@@ -182,6 +185,12 @@ sampling:
   lump_share:
     value: 0.5
     source: "FD6 section 5.1 reference model [est]: lump allowance = half of (relief inside the footprint minus the range of the six readings), never below zero; an engineer's call"
+  grid_step_ft:
+    value: 1
+    source: "[build] a ground grid is sampled every 1 ft in the building's own frame (FD6 section 3: grid in the building frame); changing it needs a re-measure"
+  grid_margin_ft:
+    value: 10
+    source: "coordinator 2026-11-19 (slice 2): the grid takes in the footprint plus a 10 ft margin all round"
   coarse_cell_over_m:
     value: 3
     source: "FD6 section 7 (coarse ground model: cell over 3 m; relief understated) [FLATS pass 1]"
@@ -214,9 +223,6 @@ classify:
   guard_doors_min:
     value: 1
     source: "[est] challenge: a guard at this many doors or more"
-  old_building_share_min:
-    value: 0.25
-    source: "[FLATS pass 2] FD6 section 5.8: a quarter or more of the pod stands where a building stands today; sized in a later slice"
   near_flat_relief_ft:
     value: 1
     source: "[est] easy: relief under the building (sampled, with the lump allowance) 1 ft or less"
@@ -241,6 +247,63 @@ ground_support:
   piles_per_pod:
     value: 34
     source: "[calc, FD3 screw_piles()] 15 kip piles: 12 per long wall, 6 under the party lines, 4 at the ends"
+
+# Old buildings under the pod (FD6 section 5.8; FD7-building-over-infill.md and
+# FD7_infill_cases.py). Measured: the stretches of wall over an old outline grown
+# by grow_ft. Priced as a CONDITIONAL cost, "if this building had a basement",
+# kept out of the main total, and weighted by the basement share for the year built.
+old_buildings:
+  grow_ft:
+    value: 3
+    source: "[est] FD6 section 5.8 step 1: the old hole was dug wider than the basement (FD7 section 2: 2-3 ft all round); grown with square corners; changing it needs a re-measure"
+  corner_within_ft:
+    value: 0.01
+    source: "[build] a stretch reaches a pod corner when it ends within this of one"
+  basement_floor_ft:
+    value: 7
+    source: "[est] FD7 section 2: old basement floor 7 ft below the ground"
+  deep_stem_in:
+    value: 10
+    source: "[est] FD7_infill_cases.py DEEP_STEM_FT: the deepened wall is at or over the 8 ft limit (as FD6's engineered wall)"
+  bridge_run_ft:
+    value: 12.61
+    source: "[calc] FD7_infill_cases.py bridge(29 in wall, 2 No. 5 bars) span_ft = 12.608: the longest gap a 29 in wall bridges in a run (strength only; FD7 section 5 working figure 8-10 ft)"
+  bridge_corner_ft:
+    value: 4.85
+    source: "[calc] FD7_infill_cases.py bridge(29 in wall, 2 No. 5 bars) cantilever_ft = 4.851: the longest overhang at a corner (FD7 section 5 working figure about 4 ft)"
+  bridge_bars:
+    value: 4
+    source: "[calc] FD7_infill_cases.py remedies(): two heavier bars top and bottom through the gap"
+  bridge_bar_lb_per_ft:
+    value: 1.043
+    source: "FD7_infill_cases.py remedies(): No. 5 bar weight"
+  bridge_past_ft:
+    value: 16
+    source: "[est] FD7_infill_cases.py remedies(): the bridging bars run 8 ft past each side of the gap"
+  bridge_pad_extra_w_ft:
+    value: 1.5
+    source: "[est] FD7_infill_cases.py remedies(): the footing widened (to 3 ft) beside the gap: 1.5 ft of extra width, footing thickness as raised.footing_t_in"
+  bridge_pad_len_ft:
+    value: 6
+    source: "[est] FD7_infill_cases.py remedies(): the widened footing runs 6 ft beside the gap (one side at a corner, both sides in a run)"
+  year_band_1:
+    value: 1940
+    source: "FD7 section 2, FD7_basement_share.py BANDS: 'before 1940' is a year below this"
+  year_band_2:
+    value: 1960
+    source: "FD7 section 2, FD7_basement_share.py BANDS: '1940-1959' is a year below this; '1960 on' from it"
+  share_before_1940:
+    value: 0.80
+    source: "[agency, American Housing Survey 2019, detached houses in the Portland metro area; FD7 section 2] any basement, built before 1940"
+  share_1940_1959:
+    value: 0.39
+    source: "[agency, American Housing Survey 2019; FD7 section 2] any basement, built 1940-1959"
+  share_1960_on:
+    value: 0.14
+    source: "[agency, American Housing Survey 2019; FD7 section 2] any basement, built 1960 on"
+  share_not_held:
+    value: 0.28
+    source: "[agency, American Housing Survey 2019; FD7 section 2] any basement, all years (the lot's year built is not held)"
 
 # The flat-lot takeoff (FD3_flat_lot_takeoff.py) behind the section 6 lines
 # that do not follow the ground. FD3 drew the pod at 80 ft 3-3/4 in
