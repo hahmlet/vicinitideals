@@ -81,3 +81,11 @@ Opened 2026-11-20. Source: `../Factory-Sim/docs/research/FD8-reply-to-flats-foun
   platform measured from the larger of the wall and stair-foot drops (railing sides/cost only, cap
   unchanged); no stock side-entry units; railing stays the guard [est]; 2026 ORSC not yet read; our
   counts confirmed. Passed to stair-room-builder to fold in and match the key.
+- STAIR ROOM + FD9 BUILT 2026-11-21: branch head a78c1ade (pushed). All 11 FD9 test lots match door
+  by door; full FLATS suite 8,588 passed (3 local-only errors in test_foundation_lot_file.py, which
+  still calls the old reference's as_flats_built -- move it to the FD9 reference before release).
+  Estimated on run 128 drawings (sample): about 1,800 RED for no step room (626 green, 1,176 yellow;
+  lot line 1,111 mostly Portland CM/CE drawn at the line; fire access after re-placement about 500;
+  court 319; lane 373); about 15,200 re-placed with colour held; none improved.
+  Move read must check the front-lot-line reds for a drawing window limit (e.g. `1N1E23BB  -19300`).
+- Steps standing in setbacks: not modelled; FOLLOWUPS 214.
