@@ -5040,9 +5040,11 @@ def street_through_checked(s: Screened, lot: QuadfitLot, streets: Any) -> Screen
 
 EDGE_SAG = "EDGE-SAG"
 DEDICATION_JOG = "DEDICATION-JOG"
-#: The least bow that marks a lot (the gap-fixes scout's floor: 1,111 of
-#: rel9's 9,517 greens bowed this much or more).
-EDGE_SAG_MARK_FT = 0.05
+#: A bow above this marks a lot. Zero: any widening can re-place a plan --
+#: six of the eleven Fix 5 GREEN gains on the rel11 bound bowed only 0.0001 to
+#: 0.005 ft (1N1E09DA -00500: 0.00013 ft), and the no-sag re-run kept each
+#: one's old plan. On the rel11 lots 196,874 of 430,854 bow at all.
+EDGE_SAG_MARK_FT = 0.0
 #: Feet a drawn building may stand off the envelope and still be inside it:
 #: the drawing's rings are rounded to a tenth of a foot.
 IN_ENVELOPE_TOL_FT = 0.1
@@ -5075,7 +5077,7 @@ def marks_checked(s: Screened, lot: QuadfitLot) -> Screened:
 
     * EDGE-SAG: the lot's yard strips were widened by its own line's bow
       inside a traced edge (FOLLOWUPS 205, gap-fixes Fix 5:
-      :func:`flats.geom.envelope.edge_sags`), by at least
+      :func:`flats.geom.envelope.edge_sags`), by more than
       :data:`EDGE_SAG_MARK_FT`; bounds 0 to the largest bow, feet. On a lot
       GREEN on either reading it is raised only where the drawn plan stands
       on the lot and its building inside the envelope (:func:`_plan_held`):
@@ -5094,13 +5096,13 @@ def marks_checked(s: Screened, lot: QuadfitLot) -> Screened:
 
         bow = max(edge_sags(lot.lot_geom, lot.edges), default=0.0)
         green = flag_plan.Colour.green in (s.screening.colour, s.signed.colour)
-        if bow >= EDGE_SAG_MARK_FT and (not green or _plan_held(s)):
+        if bow > EDGE_SAG_MARK_FT and (not green or _plan_held(s)):
             marks.append(
                 flag_plan.Flag(
                     EDGE_SAG,
                     flag_plan.LOT,
                     EDGE_SAG_READ,
-                    bounds=(0.0, round(bow, 2)),
+                    bounds=(0.0, round(bow, 4)),
                     source="yard strips widened by the lot line's bow inside the traced edge (FOLLOWUPS 205)"
                     + ("; the drawn plan stands on the lot and inside the envelope" if green else ""),
                 )

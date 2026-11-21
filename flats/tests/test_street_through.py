@@ -256,6 +256,17 @@ def test_a_bowed_lot_carries_edge_sag_and_keeps_its_colour(corpus, policies) -> 
     assert got.signed.triage is s.signed.triage and got.signed.reasons == s.signed.reasons
 
 
+def test_a_bow_of_a_ten_thousandth_of_a_foot_still_marks_the_lot(corpus, policies) -> None:  # noqa: F811
+    # rel11: 1N1E09DA -00500 bowed 0.00013 ft and Fix 5 still re-placed its plan.
+    lot, s = _bowed(corpus, policies)
+    faint = shapely.Polygon(
+        [(X0, Y0), (X0 + W / 2, Y0 + 0.0002), (X0 + W, Y0), (X0 + W, Y0 + D), (X0, Y0 + D)]
+    )
+    got = marks_checked(s, dataclasses.replace(lot, lot_geom=faint))
+    (flag,) = [f for f in got.signed.flags if f.code == EDGE_SAG]
+    assert 0.0 < flag.bounds[1] <= 0.0002
+
+
 def test_a_green_with_its_building_off_the_envelope_carries_no_edge_sag(corpus, policies) -> None:  # noqa: F811
     lot, s = _bowed(corpus, policies)
     off = _with(s, building=_box(X0 - 3, Y0 + 20, X0 + 22, Y0 + 100))
