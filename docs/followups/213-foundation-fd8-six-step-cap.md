@@ -73,3 +73,11 @@ Opened 2026-11-20. Source: `../Factory-Sim/docs/research/FD8-reply-to-flats-foun
   - ASKED STEPH 2026-11-20: (1) reserve the steps' room in placement (wall-to-parking strip and inside the
     lot), rides this release, re-bound -- recommended; or allow steps onto the paving; or note only.
     (2) where room can't be found: yellow (recommended) / red / note.
+  - RULED 2026-11-20 (rulings.yaml 68e546fe on the branch): leave room; no room = RED with a flag
+    (door, what it hits, by how much) so lots come back if parking, steps or door orientation change.
+    Worker stair-room-builder building it on the branch.
+- FD9 (foundation agent's reply to v2, `../Factory-Sim/docs/research/FD9-reply-to-flats-fd8-answer.md`,
+  read 2026-11-21): key issue 3 built into FD6_foundation_model.py (11 test lots); one correction --
+  platform measured from the larger of the wall and stair-foot drops (railing sides/cost only, cap
+  unchanged); no stock side-entry units; railing stays the guard [est]; 2026 ORSC not yet read; our
+  counts confirmed. Passed to stair-room-builder to fold in and match the key.
