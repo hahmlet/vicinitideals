@@ -596,6 +596,22 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FIRE_WIDE_ROAD]
+  FIRE-NEAR-PASS:
+    description: "Fire hose near pass: the hose route clears the 150 ft limit (OFC 503.1.1) by less than the drawn building is measured to (the fit's half foot, flats/config/slack.yaml fit_ft), so the measurement cannot tell it from a miss; the bounds are the route and the limit (rel11 move read F1)"
+    kind: parametric
+    risk: possible
+    # Holds a green: at the yellow line.
+    severity: 3
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Measure the hose route on the site plan or the survey at acquisition: round the building from where the truck stands, against the 150 ft"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FIRE_NEAR_PASS]
   FIRE-ROAD-UNCLEAR:
     description: "Divided road: the fire hose reaches the building only with the fire engine stood on a wide road or state highway that has a second road line close beyond it -- the other half of a divided highway, or a road with a frontage road beside it -- which the street centre lines cannot tell from a freeway. Steph's wide-main-road ruling (2026-11-19) does not cover it: held yellow until someone looks at the road"
     kind: categorical
