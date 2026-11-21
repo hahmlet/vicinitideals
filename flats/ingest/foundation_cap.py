@@ -226,6 +226,9 @@ def stair_room_of(
         xs = [d.x_ft - half, d.x_ft + half, d.x_ft]
         pts = fr.world(xs + xs, [y0] * 3 + [y1] * 3, s.length_ft, s.width_ft, s.box_ft)
         wall, foot = pts[:3], pts[3:]
+        # The frame stretches the pod's plan onto the drawn ring; the unit
+        # runs its own length out of the wall, in feet on the ground.
+        foot = [w + (f - w) * (run_ft / max(float(((f - w) ** 2).sum()) ** 0.5, 1e-9)) for w, f in zip(wall, foot)]
         box = shapely.Polygon([tuple(wall[0]), tuple(wall[1]), tuple(foot[1]), tuple(foot[0])])
         lines = [shapely.LineString([tuple(wall[i]), tuple(foot[i])]) for i in range(3)]
         name = model.door_name(d, r.doors)
