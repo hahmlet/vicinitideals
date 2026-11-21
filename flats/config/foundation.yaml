@@ -1,0 +1,453 @@
+# Foundation model settings (FOLLOWUPS 209; design: Factory-Sim
+# docs/research/FD6-foundation-model-spec.md, sections 4 and 6).
+#
+# A NOTE for the lot report, never a colour: nothing the screen, a check or a
+# flag reads comes from here (flats/foundation/ never imports flats.score).
+#
+# Every value is research, not engineering: a code minimum, a hand calculation
+# or an estimate that a licensed engineer will replace. Each one sits here once,
+# with its source label, so it can be replaced in one place. No number from
+# FD6 sections 4 or 6 is written in the Python; the loader
+# (flats/foundation/settings.py) refuses a file where any entry lacks a value
+# or a source, or where an expected entry is missing or an unknown one appears.
+#
+# Labels (FD6 header): [code] read in the 2023 ORSC; [code, recalled] a code
+# rule written from memory and not yet re-read -- kept exactly so until the
+# code agent re-reads it (FOLLOWUPS 209 Open); [calc] arithmetic from labelled
+# inputs; [est] estimate; [Steph] decided by Steph; [guide], [vendor listing],
+# [bid data] public prices of that kind; FD3 / FD4 / FD6 the research note or
+# its reference script. Nothing here is a quote.
+#
+# Shape: every setting is {value, source}; every price is {low, high, unit,
+# source}. Low and high are carried separately all the way through and never
+# averaged (FD6 section 6).
+
+spec: FD6-foundation-model-spec.md (Factory-Sim, 2026-11-19)
+
+# The screen places the pod as its finished faces, 80 x 25 ft trim to trim. The
+# foundation carries the FRAMING, 79 ft 8-3/4 in x 24 ft 8-15/16 in, centred
+# inside that drawn box (about 1-5/8 in in from each end, 1-17/32 in from front
+# and back: the skin). Measured and priced on the framing (Steph 2026-11-19).
+building:
+  finished_length_ft:
+    value: 80
+    source: DECISIONS N-finished (80 x 25 ft trim face to trim face; the drawn pod)
+  finished_width_ft:
+    value: 25
+    source: DECISIONS N-finished (80 x 25 ft trim face to trim face; the drawn pod)
+  length_ft:
+    value: 79.72916666666667
+    source: "DECISIONS N-finished, Factory-Sim FOLLOWUPS 238(i): framing 956.75 in (79 ft 8-3/4 in) = 4 x 238-1/4 in + 3 x 1-1/4 in [calc]"
+  width_ft:
+    value: 24.744791666666668
+    source: "DECISIONS N-finished, Factory-Sim FOLLOWUPS 238(i): framing 296.9375 in (24 ft 8-15/16 in) [calc]"
+  party_x_ft:
+    value: [19.90625, 39.864583333333336, 59.822916666666664]
+    source: "DECISIONS N-finished, FOLLOWUPS 238(i): party-line centres 238.875, 478.375 and 717.875 in from the framing's end (238-1/4 in homes, 1-1/4 in gaps) [calc]"
+  door_x_ft:
+    value: [9.966145833333334, 29.8984375, 49.83072916666667, 69.76302083333334]
+    source: "[est] the plan's door positions have not been read (front and back of each home); 10, 30, 50, 70 ft on 80 ft, scaled to the 956.75 in framing (FOLLOWUPS 238(i))"
+
+# B: raised floor of twelve factory cassettes on one concrete wall on a strip footing.
+raised:
+  clear_in:
+    value: 18
+    source: "[est] HANDOFFS A 27 (l): highest ground to underside of floor framing"
+  floor_depth_in:
+    value: 14.75
+    source: FD3 (truss and deck)
+  footing_t_in:
+    value: 7
+    source: "[code R403.1.1] footing thickness"
+  footing_w_long_in:
+    value: 18
+    source: "[calc, FD3] at 1,500 psf (long walls)"
+  footing_w_end_in:
+    value: 12
+    source: "[calc, FD3] at 1,500 psf (end walls)"
+  footing_w_party_in:
+    value: 14
+    source: "[calc, FD3] at 1,500 psf (party lines)"
+  stem_outside_in:
+    value: 8
+    source: "[est] wall thickness, outside lines"
+  stem_party_in:
+    value: 10
+    source: "[est] wall thickness, party lines"
+  plain_wall_max_in:
+    value: 96
+    source: "[code R404.1.4.2] tallest standard wall 8 ft; taller walls take their bars from the code's reinforced-wall tables (not opened) or an engineer"
+  engineered_stem_in:
+    value: 10
+    source: "[est] wall thickness above the tallest standard wall"
+  vert_bar_spacing_ft:
+    value: 4
+    source: "[code R403.1.3.1, R404.1.4.2] upright No. 4 bars every 4 ft"
+  vert_bars_extra_per_line:
+    value: 2
+    source: "[code R403.1.3.1, R404.1.4.2] plus 2 upright bars per wall line"
+  vert_bar_extra_in:
+    value: 18
+    source: "FD6 section 5.4 (upright bar length = average wall height + 18 in) and the reference model"
+  level_bars_base:
+    value: 2
+    source: "[code R403.1.3.1] 2 level bars per wall line (one in the footing, one within 12 in of the top)"
+  level_bar_third_over_in:
+    value: 48
+    source: "[est] a third level bar where the line's tallest point is over 4 ft; Table R404.1.2(1) not opened"
+  level_bar_fourth_over_in:
+    value: 96
+    source: "[est] a fourth level bar over 8 ft; Table R404.1.2(1) not opened"
+  footing_max_slope:
+    value: 0.1
+    source: "[code R403.1.5] footing bottom level, or sloped no more than 1 in 10; otherwise stepped (reported per line, not modelled: the footing is modelled on a slope, FD6 5.3)"
+  trench_w_in:
+    value: 24
+    source: "FD3 (footing trench width for the dig) [est]"
+  haul_share:
+    value: 0.25
+    source: "FD3 [est] most of the dig stays in the crawlspace; a quarter is hauled away"
+
+# Shared by A and B.
+shared:
+  embed_in:
+    value: 18
+    source: "[FLATS pass 2] footing bottom below the ground beside it: frost 12 in, Gresham 18 in; one 18 in depth for every lot (FD6 section 3 default); with use_frost_register, the depth for a lot whose register depth is not held"
+  use_frost_register:
+    value: true
+    source: "coordinator 2026-11-19 (slice 2): each lot's own frost depth from the FLATS frost register (lot file frost_register_in, stored in the measured record) sets B's footing depth; false = embed_in on every lot (the FD6 section 8 reference)"
+  bar_lb_per_ft:
+    value: 0.668
+    source: FD3 (No. 4 bar weight)
+  lap:
+    value: 1.10
+    source: FD3 (bar laps and hooks)
+  concrete_waste:
+    value: 1.07
+    source: FD3 (concrete over-order)
+  rock_ton_per_yd3:
+    value: 1.9
+    source: "[est] rock, compacted"
+
+# A: 4 in slab with a turned-down edge, on rock; the low side built up in rock
+# behind a deeper edge.
+slab:
+  slab_top_in:
+    value: 8
+    source: FD3 (slab top above the highest ground)
+  slab_t_in:
+    value: 4
+    source: FD3 (4 in slab)
+  edge_w_in:
+    value: 15
+    source: "[code Table R403.1], FD3 (edge on a flat lot, 15 in wide)"
+  edge_d_in:
+    value: 26
+    source: "[code Table R403.1], FD3 (edge on a flat lot, 26 in deep = footing depth 18 in + slab top 8 in; move with embed_in and slab_top_in)"
+  edge_extra_t_in:
+    value: 8
+    source: "FD6 section 5.6 (the low-side edge goes deeper by 8 in x fill depth; the reference model uses the B outside wall thickness)"
+  fill_limit_in:
+    value: 24
+    source: "[code R506.2.1] deepest fill before an approved design is needed: 24 in of clean sand or gravel (8 in of earth)"
+  unbalanced_limit_in:
+    value: 48
+    source: "[code R404.1.4.2, R404.1.3.2.2] deepest fill an edge may hold back without an engineer: 4 ft"
+  uprights_fill_over_in:
+    value: 24
+    source: "FD6 section 5.6 (uprights every 4 ft on an outside line where the fill is over 24 in)"
+
+# Doors and steps (A and B).
+doors:
+  landing_drop_in:
+    value: 8
+    source: "[code R311.3.1, Oregon] floor up to 8 in above the landing outside a door"
+  riser_in:
+    value: 7.75
+    source: "[code R311.7.5] riser 7.75 in (Oregon allows 8)"
+  tread_in:
+    value: 10
+    source: "[est] tread 10 in (Oregon minimum 9)"
+  landing_depth_in:
+    value: 36
+    source: "[code R311.3] landing depth"
+  guard_over_in:
+    value: 30
+    source: "[code, recalled, R312] guard when the landing is higher than 30 in"
+  handrail_risers:
+    value: 4
+    source: "[code, recalled, R311.7.8] handrail when a stair has 4 or more risers"
+
+# How the ground and the walls are sampled.
+sampling:
+  station_ft:
+    value: 1
+    source: "- (FD6 section 4: station spacing along a wall)"
+  high_point_along_ft:
+    value: 2
+    source: "FD6 reference model (high point sampled every 2 ft along the footprint)"
+  high_point_across_ft:
+    value: 2.5
+    source: "FD6 reference model (high point sampled every 2.5 ft across the footprint)"
+  fill_cell_ft:
+    value: 1
+    source: "FD6 section 5.6 (fill added up over the footprint in 1 ft cells)"
+  lump_share:
+    value: 0.5
+    source: "FD6 section 5.1 reference model [est]: lump allowance = half of (relief inside the footprint minus the range of the six readings), never below zero; an engineer's call"
+  grid_step_ft:
+    value: 1
+    source: "[build] a ground grid is sampled every 1 ft in the building's own frame (FD6 section 3: grid in the building frame); changing it needs a re-measure"
+  grid_margin_ft:
+    value: 10
+    source: "coordinator 2026-11-19 (slice 2): the grid takes in the footprint plus a 10 ft margin all round"
+  coarse_cell_over_m:
+    value: 3
+    source: "FD6 section 7 (coarse ground model: cell over 3 m; relief understated) [FLATS pass 1]"
+  front_face_guess_over_deg:
+    value: 45
+    source: "FD6 section 3 (front_face_turn_deg over 45 marks lots where the front face is a guess)"
+  tolerance_in:
+    value: 0.000001
+    source: "[build] numerical tolerance on every threshold test, so floating-point noise never adds a riser or a flag"
+
+# What the measured record keeps beyond FD6 section 2 (Steph 2026-11-19: "get
+# what data you can ... so we can run cheap analysis").
+record:
+  fill_bands_in:
+    value: [12, 24, 48]
+    source: "Steph 2026-11-19 via the coordinator: footprint area with fill over 12, 24 and 48 in (measured; changing it needs a re-measure)"
+  wall_bands_ft:
+    value: [3, 4, 5, 6, 8]
+    source: "Steph 2026-11-19 via the coordinator: length of wall in each height band (under 3, 3-4, 4-5, 5-6, 6-8, over 8 ft); the FD6 section 8 bins"
+
+# Plain-words classification of each lot: foundation style, challenges, easy
+# parts. Derived in the price layer from the stored record; my thresholds are [est].
+classify:
+  tall_wall_over_ft:
+    value: 6
+    source: "[est] challenge: B's tallest wall over 6 ft (FD6 section 10: an engineer may ask for more above about 4-6 ft)"
+  long_stair_over_ft:
+    value: 8
+    source: "[est] challenge: a stair running more than 8 ft out from the wall (FD6 section 8 reports the share at 8 ft)"
+  guard_doors_min:
+    value: 1
+    source: "[est] challenge: a guard at this many doors or more"
+  near_flat_relief_ft:
+    value: 1
+    source: "[est] easy: relief under the building (sampled, with the lump allowance) 1 ft or less"
+  low_wall_max_ft:
+    value: 4
+    source: "[est] easy: every B wall 4 ft or under (FD6 section 8 bin)"
+  shallow_fill_max_in:
+    value: 12
+    source: "[est] easy: deepest fill under the slab 12 in or less"
+
+# Ground-support groups (FD6 section 5.7; FD4 section 1; FD4_lot_reading.py bin_of()).
+ground_support:
+  own_look_classes:
+    value: [HAZ-SLIDE, HAZ-LIQ, FLOOD]
+    source: "FD4 section 1, FD4_lot_reading.py OWN_LOOK [est: grouping]"
+  piles_classes:
+    value: [SOFT, SWELL]
+    source: "FD4 section 1, FD4_lot_reading.py PILES [est: grouping]"
+  footing_classes:
+    value: [FIRM, WET-FINE, COBBLE, ROCK]
+    source: "FD4 section 1, FD4_lot_reading.py FOOTING [est: grouping]"
+  piles_per_pod:
+    value: 34
+    source: "[calc, FD3 screw_piles()] 15 kip piles: 12 per long wall, 6 under the party lines, 4 at the ends"
+
+# Old buildings under the pod (FD6 section 5.8; FD7-building-over-infill.md and
+# FD7_infill_cases.py). Measured: the stretches of wall over an old outline grown
+# by grow_ft. Priced as a CONDITIONAL cost, "if this building had a basement",
+# kept out of the main total, and weighted by the basement share for the year built.
+old_buildings:
+  grow_ft:
+    value: 3
+    source: "[est] FD6 section 5.8 step 1: the old hole was dug wider than the basement (FD7 section 2: 2-3 ft all round); grown with square corners; changing it needs a re-measure"
+  corner_within_ft:
+    value: 0.01
+    source: "[build] a stretch reaches a pod corner when it ends within this of one"
+  basement_floor_ft:
+    value: 7
+    source: "[est] FD7 section 2: old basement floor 7 ft below the ground"
+  deep_stem_in:
+    value: 10
+    source: "[est] FD7_infill_cases.py DEEP_STEM_FT: the deepened wall is at or over the 8 ft limit (as FD6's engineered wall)"
+  bridge_run_ft:
+    value: 12.61
+    source: "[calc] FD7_infill_cases.py bridge(29 in wall, 2 No. 5 bars) span_ft = 12.608: the longest gap a 29 in wall bridges in a run (strength only; FD7 section 5 working figure 8-10 ft)"
+  bridge_corner_ft:
+    value: 4.85
+    source: "[calc] FD7_infill_cases.py bridge(29 in wall, 2 No. 5 bars) cantilever_ft = 4.851: the longest overhang at a corner (FD7 section 5 working figure about 4 ft)"
+  bridge_bars:
+    value: 4
+    source: "[calc] FD7_infill_cases.py remedies(): two heavier bars top and bottom through the gap"
+  bridge_bar_lb_per_ft:
+    value: 1.043
+    source: "FD7_infill_cases.py remedies(): No. 5 bar weight"
+  bridge_past_ft:
+    value: 16
+    source: "[est] FD7_infill_cases.py remedies(): the bridging bars run 8 ft past each side of the gap"
+  bridge_pad_extra_w_ft:
+    value: 1.5
+    source: "[est] FD7_infill_cases.py remedies(): the footing widened (to 3 ft) beside the gap: 1.5 ft of extra width, footing thickness as raised.footing_t_in"
+  bridge_pad_len_ft:
+    value: 6
+    source: "[est] FD7_infill_cases.py remedies(): the widened footing runs 6 ft beside the gap (one side at a corner, both sides in a run)"
+  year_band_1:
+    value: 1940
+    source: "FD7 section 2, FD7_basement_share.py BANDS: 'before 1940' is a year below this"
+  year_band_2:
+    value: 1960
+    source: "FD7 section 2, FD7_basement_share.py BANDS: '1940-1959' is a year below this; '1960 on' from it"
+  share_before_1940:
+    value: 0.80
+    source: "[agency, American Housing Survey 2019, detached houses in the Portland metro area; FD7 section 2] any basement, built before 1940"
+  share_1940_1959:
+    value: 0.39
+    source: "[agency, American Housing Survey 2019; FD7 section 2] any basement, built 1940-1959"
+  share_1960_on:
+    value: 0.14
+    source: "[agency, American Housing Survey 2019; FD7 section 2] any basement, built 1960 on"
+  share_not_held:
+    value: 0.28
+    source: "[agency, American Housing Survey 2019; FD7 section 2] any basement, all years (the lot's year built is not held)"
+
+# The flat-lot takeoff (FD3_flat_lot_takeoff.py) behind the section 6 lines
+# that do not follow the ground. FD3 drew the pod at 80 ft 3-3/4 in
+# (DECISIONS N-25x20, before N-finished); the fixed lines are now worked on the
+# framing footprint (length here, width = building.width_ft). The FD6 answer
+# key's 80.3125 ft is used only by the tests that prove the arithmetic.
+flat_lot:
+  fixed_length_ft:
+    value: 79.72916666666667
+    source: "DECISIONS N-finished, FOLLOWUPS 238(i): the framing length, 956.75 in (was FD3's POD_L_FT 963.75 in); used only for the fixed lines of section 6"
+  homes:
+    value: 4
+    source: DECISIONS N-finished (four homes a pod)
+  party_strip_w_in:
+    value: 16
+    source: "FD3, [code R403.1.3.4] party-line thickening 16 in wide"
+  party_strip_d_in:
+    value: 12
+    source: "FD3, [code R403.1.3.4] party-line thickening 12 in deep"
+  strip_soil_in:
+    value: 8
+    source: "FD3 [est] topsoil stripped under the slab"
+  radon_layer_in:
+    value: 4
+    source: FD3 (clean rock layer for radon)
+  radon_rock_ton_per_yd3:
+    value: 1.4
+    source: "FD3 [est] clean open rock is lighter"
+  wet_extra_base_in:
+    value: 10
+    source: "FD3 [est] 18 in working pad in the wet season"
+  spoil_edge_extra_w_in:
+    value: 6
+    source: FD3 (edge trench dug 6 in wider than the edge)
+  slab_edge_bars:
+    value: 2
+    source: FD3 (two bars round the slab edge and along each party strip)
+  slab_membrane_factor:
+    value: 1.10
+    source: FD3 (ground sheet under the slab, laps)
+  crawl_membrane_factor:
+    value: 1.15
+    source: FD3 (ground sheet in the crawlspace, laps and turn-up, R408.2)
+  edge_board_sf_per_ft:
+    value: 2.0
+    source: FD3 (slab-edge insulation, 2 sq ft per ft of edge) [est R-15]
+  vents:
+    value: 30
+    source: "FD3 [est] about 30 crawlspace vents (13.4 sq ft net)"
+
+# Section 6 prices, low and high.
+prices:
+  concrete_yd3:
+    low: 160
+    high: 220
+    unit: per cu yd
+    source: "[guide]"
+  bar_lb:
+    low: 0.76
+    high: 1.42
+    unit: per lb
+    source: "[vendor listing]"
+  form_sf:
+    low: 0.50
+    high: 1.50
+    unit: per sq ft per use
+    source: "[est] our own panels reused, ties and release. Built on the job with labour it is $5.30-7.30 [agency, Iowa assessor table, old]; not used (FD6 section 10)"
+  rock_ton:
+    low: 35
+    high: 55
+    unit: per ton, placed
+    source: "[bid data] ODOT"
+  riser:
+    low: 60
+    high: 130
+    unit: per riser (B every riser; A every riser after the first)
+    source: "low: treated wood built on site, materials [est]; high: precast steps, installed [vendor listing]"
+  step_pad:
+    low: 60
+    high: 100
+    unit: per door (A)
+    source: "[est] B-walk pad, bagged mix"
+  rail_ft:
+    low: 15
+    high: 85
+    unit: per ft
+    source: "low: wood, materials [est]; high: iron, installed [vendor listing]"
+  pile:
+    low: 550
+    high: 950
+    unit: each, installed
+    source: "[vendor listing] Texas, 2-7/8 in x 15 ft, new construction"
+  pump:
+    low: 900
+    high: 1750
+    unit: per pour (one pour)
+    source: "[guide, low trust]"
+  haul_yd3:
+    low: 15
+    high: 65
+    unit: per cu yd of digging hauled away
+    source: "[guide] tip fee to [bid data] all-in digging and haul"
+  slab_membrane_sf:
+    low: 0.23
+    high: 0.33
+    unit: per sq ft (10-15 mil, under the slab)
+    source: "[snippet]"
+  crawl_membrane_sf:
+    low: 0.06
+    high: 0.23
+    unit: per sq ft (crawlspace ground sheet)
+    source: "[vendor listing] 6 mil to [snippet] 10 mil"
+  edge_board_sf:
+    low: 2.4
+    high: 2.8
+    unit: per sq ft (3 in foam)
+    source: "[vendor listing] 3 in foam at $0.93 a sq ft-inch"
+  vent:
+    low: 13
+    high: 35
+    unit: each
+    source: "[snippet]"
+  radon_pipe:
+    low: 100
+    high: 200
+    unit: per home
+    source: "[est]"
+  fill_testing:
+    low: 400
+    high: 800
+    unit: per pod
+    source: "[agency, Utah rates] two visits and a lab test [est hours]"
+  cassettes_12:
+    low: 10000
+    high: 15000
+    unit: per pod (twelve floor cassettes, B)
+    source: "[est] trusses, deck, R-30, fixings; the factory model will replace it"

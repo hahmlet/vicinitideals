@@ -128,6 +128,10 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # source each layer was loaded from. A note, never a colour.
         "lot_hazards",
         "hazard_layers",
+        # The foundation model's measured record per lot (0153, FOLLOWUPS 209):
+        # one JSONB document by county + TLID, priced at read time. A note,
+        # never a colour.
+        "lot_foundation",
         # Per-lot human marks (0148), separate from the run's own results.
         "lot_marks",
         "lot_results",
