@@ -73,6 +73,108 @@ def test_fd8_section_3_under_stephs_decisions(name: str) -> None:
     assert (c.state == caps.RED) == (outcome == "red")
 
 
+# ---------------------------------------------------------------- FD9: the eleven test lots, door by door
+
+#: Factory-Sim ``docs/research/FD6_foundation_model.py`` (FD9 re-issue, no arguments), the
+#: shipped settings on a plane over the framing: (along, across, front doors on the far
+#: face), then per method (A dry, B) the unit risers, railing sides and door $ of the eight
+#: doors (front four then back four, left to right; None = over the cap), the cost
+#: (None = over the cap), and the ordinary lot's cap state with the best method's margin.
+FD9_LOTS = {
+    "flat": ((0, 0, False),
+             ((0,) * 8, (0,) * 8, (60,) * 8), (16798, 28379),
+             ((4,) * 8, (1,) * 8, (1460,) * 8), (29095, 40207), caps.FITS, -43.5),
+    "1 ft along": ((1, 0, False),
+                   ((1, 1, 1, 2, 1, 1, 1, 2), (0,) * 8, (614, 614, 614, 769, 614, 614, 614, 769)), (24792, 38007),
+                   ((4, 5, 5, 5, 4, 5, 5, 6), (1, 2, 2, 2, 1, 2, 2, 2),
+                    (1460, 2054, 2054, 2054, 1460, 2054, 2054, 2292)), (33984, 45834), caps.FITS, -31.9),
+    "2 ft along": ((2, 0, False),
+                   ((1, 2, 2, 4, 1, 2, 2, 4), (0, 0, 0, 2, 0, 0, 0, 2), (614, 769, 769, 1829, 614, 769, 769, 1829)),
+                   (30509, 45486),
+                   ((4, 5, 6, 7, 4, 5, 6, 7), (2, 2, 2, 0, 2, 2, 2, 0), (1829, 2054, 2292, None, 1829, 2054, 2292, None)),
+                   None, caps.FITS, -20.3),
+    "2 ft across": ((0, 2, False),
+                    ((0, 0, 0, 0, 5, 5, 5, 5), (0, 0, 0, 0, 2, 2, 2, 2), (60, 60, 60, 60, 2054, 2054, 2054, 2054)),
+                    (30811, 45816),
+                    ((4, 4, 4, 4, 7, 7, 7, 7), (1, 1, 1, 1, 0, 0, 0, 0), (1460,) * 4 + (None,) * 4),
+                    None, caps.FITS, -12.5),
+    "1 ft across": ((0, 1, False),
+                    ((0, 0, 0, 0, 2, 2, 2, 2), (0,) * 8, (60, 60, 60, 60, 769, 769, 769, 769)), (22696, 35939),
+                    ((4, 4, 4, 4, 6, 6, 6, 6), (1, 1, 1, 1, 2, 2, 2, 2), (1460,) * 4 + (2292,) * 4),
+                    (33476, 45292), caps.FITS, -29.4),
+    "3 ft along, 1 ft across": ((3, 1, False),
+                                ((1, 3, 3, 5, 3, 5, 5, 7), (0, 0, 0, 2, 0, 2, 2, 0),
+                                 (614, 939, 939, 2054, 939, 2054, 2054, None)), None,
+                                ((4, 6, 7, 8, 6, 8, 8, 10), (2, 2, 0, 0, 2, 0, 0, 0),
+                                 (1829, 2292, None, None, 2292, None, None, None)), None, caps.RED, 3.4),
+    "4 ft along": ((4, 0, False),
+                   ((1, 3, 4, 7, 1, 4, 4, 7), (0, 0, 2, 0, 0, 2, 2, 0), (614, 939, 1829, None, 614, 1829, 1829, None)),
+                   None,
+                   ((4, 7, 8, 10, 4, 7, 7, 10), (2, 0, 0, 0, 2, 0, 0, 0), (1829, None, None, None, 1829, None, None, None)),
+                   None, caps.RED, 3.0),
+    "6 ft along": ((6, 0, False),
+                   ((1, 5, 6, 10, 1, 5, 6, 10), (0, 2, 2, 0, 0, 2, 2, 0),
+                    (614, 2054, 2292, None, 614, 2054, 2292, None)), None,
+                   ((5, 8, 10, 13, 4, 9, 9, 14), (2, 0, 0, 0, 2, 0, 0, 0), (2054, None, None, None, 1829, None, None, None)),
+                   None, caps.RED, 26.2),
+    "2 ft 6 in along, 1 ft across": ((2.5, 1, False),
+                                     ((1, 2, 3, 4, 3, 5, 5, 7), (0, 0, 0, 2, 0, 2, 2, 0), None), None,
+                                     ((4, 6, 6, 8, 6, 8, 8, 10), (2, 2, 2, 0, 2, 0, 0, 0), None), None,
+                                     caps.NEAR, 1.5),
+    "2 ft 6 in along, 1 ft across, front doors on the far face": (
+        (2.5, 1, True),
+        ((3, 4, 5, 6, 1, 2, 3, 5), (0, 2, 2, 2, 0, 0, 0, 2), None), (38803, 56671),
+        ((6, 7, 8, 9, 4, 6, 6, 8), (2, 0, 0, 0, 2, 2, 2, 0), None), None, caps.CLOSE, -0.2),
+    "2 ft 9 in across": ((0, 2.75, False),
+                         ((0, 0, 0, 0, 7, 7, 7, 7), (0,) * 8, (60,) * 4 + (None,) * 4), None,
+                         ((4, 4, 4, 4, 8, 8, 8, 8), (1, 1, 1, 1, 0, 0, 0, 0), (1460,) * 4 + (None,) * 4), None,
+                         caps.NEAR, 0.3),
+}
+
+
+def _left_to_right(doors: tuple[model.DoorResult, ...], far: bool) -> tuple[model.DoorResult, ...]:
+    """The key reads each face left to right from the street. FLATS turns the
+    whole frame (front doors on the far face, left and right as seen from it),
+    so on the turned lot each face's four doors read the other way round; the
+    shipped door positions are symmetric about the middle, so they are the
+    same doors."""
+    return tuple(doors[3::-1] + doors[:3:-1]) if far else doors
+
+
+@pytest.mark.parametrize("name", list(FD9_LOTS))
+def test_fd9_the_eleven_test_lots_door_by_door(name: str) -> None:
+    (along, across, far), a_doors, a_cost, b_doors, b_cost, state, margin = FD9_LOTS[name]
+    s = PROD.replace(use_frost_register=False)
+    # the far face: the frame turned end for end, the plane falling the other way
+    g = grounds.plane(s, -along, -across) if far else grounds.plane(s, along, across)
+    a, b = model.slab(g, s), model.raised(g, s)
+    for r, (units, sides, dollars), cost in ((a, a_doors, a_cost), (b, b_doors, b_cost)):
+        ds = _left_to_right(r.doors, far)
+        assert tuple(d.units for d in ds) == units
+        assert tuple(d.rail_sides for d in ds) == sides
+        if dollars is not None:
+            got = tuple(None if d.over_cap else _d(costing.unit_door_cost(s, d.units, d.rail_sides)[0]) if d.units
+                        else 60 for d in ds)
+            assert got == dollars
+        assert _cost(r) == cost
+    c = caps.cap_of({"A dry": a, "B": b}, support.ORDINARY, s)
+    assert c.state == state and c.best == "A dry"
+    assert c.over_by_in == pytest.approx(margin, abs=0.05)
+
+
+def test_fd9_the_platform_stands_on_the_lower_ground() -> None:
+    """FD9 section 2: on rising ground the unit stands on the ground at the wall
+    (the larger drop), so B's front doors on the "1 ft across" lot are four-riser
+    units with one railing side, $1,460 each; measured from the foot they read a
+    guard and two sides. The cap does not move."""
+    s = PROD.replace(use_frost_register=False)
+    b = model.raised(grounds.plane(s, 0, 1), s)
+    front = [d for d in b.doors if d.face == "front"]
+    assert [(d.units, d.rail_sides, d.guard) for d in front] == [(4, 1, False)] * 4
+    assert {_d(costing.unit_door_cost(s, d.units, d.rail_sides)[0]) for d in front} == {1460}
+    assert all(d.platform_in == pytest.approx(4 * s.riser_in) for d in front)
+
+
 def test_fd8_precast_steps_alone() -> None:
     """The steps line of the flat lot: B eight four-riser units with a railing
     each side where the platform needs a guard, else one; A eight step pads."""

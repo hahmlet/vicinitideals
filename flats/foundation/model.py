@@ -296,7 +296,11 @@ def _unit_door(door: DoorMeasure, floor_above_high_in: float, s: Settings) -> Do
     over = k > s.cap_risers
     platform = k * s.riser_in
     if s.guard_box and door.box_drop_in is not None:
-        platform = max(platform, platform + door.box_drop_in - foot_drop)
+        # the unit stands on the lower of the ground at the wall and at its foot (the
+        # larger drop, the ground its height was tested on), so its platform is never
+        # above the threshold it serves where the ground rises away from the door (FD9 2)
+        base = test - floor_above_high_in
+        platform = max(platform, platform + door.box_drop_in - base)
     guard = (not over) and _over(platform, s.guard_over_in, s)
     handrail = k >= s.handrail_risers
     sides = 0 if over else 2 if guard else 1 if handrail else 0
