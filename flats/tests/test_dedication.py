@@ -1491,6 +1491,28 @@ def test_a_jog_in_the_lot_line_square_to_the_street_reads_the_street_across_it()
     assert got[4] == pytest.approx(-6.0)
 
 
+def test_measure_names_the_lines_the_jog_reading_read_across_the_street() -> None:
+    """rel11 move read G1: a bound can name a lot the jog reading moved only
+    where the row says so. ``jogs`` gets the jog's key and nothing else; the
+    rows are the same with or without it."""
+    lot = shapely.Polygon(
+        [(X0, Y0), (X0 + 100, Y0), (X0 + 100, Y0 + 10), (X0 + 120, Y0 + 10), (X0 + 120, Y0 + 200), (X0, Y0 + 200)]
+    )
+    johnson = LineString([(X0 - 500, Y0 - 24 + 28.0), (X0 + 500, Y0 - 24 - 28.0)])
+    maps = [_cmap([johnson], ["SW JOHNSON ST"], (1450,))]
+    jog = [X0 + 100, Y0, X0 + 100, Y0 + 10, "F"]
+    front = [X0, Y0, X0 + 100, Y0, "F"]
+    jogs: list = []
+    rows = dedication.measure([front, jog], WASHCO, maps, lot=lot, jogs=jogs)
+    assert jogs == [dedication.key(*jog[:4])]
+    assert rows == dedication.measure([front, jog], WASHCO, maps, lot=lot)
+    # A lot truly drawn over the road reads negative and is no jog.
+    over = LineString([(X0 - 500, Y0 + 6), (X0 + 500, Y0 + 6)])
+    jogs = []
+    dedication.measure([FRONT], WASHCO, [_cmap([over], ["SW EDY RD"], (1500,))], lot=LOT_BOX, jogs=jogs)
+    assert jogs == []
+
+
 # --- a line on a road too wide for the 60 ft reach -------------------------
 
 #: Milwaukie 11E36AD07300 (R-MD), release 10's false RED: 25,346 sq ft, three

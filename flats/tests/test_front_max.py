@@ -95,6 +95,49 @@ def test_the_raster_cell_is_not_read_as_a_miss() -> None:
     assert check(got, FRONT_MAX).verdict is Verdict.passes
 
 
+@pytest.mark.parametrize("drawn", [21.2, 21.38, 21.5])
+def test_a_miss_inside_the_fits_tolerance_is_held_yellow_never_red_nor_green(drawn: float) -> None:
+    # rel11 move read N1: Tigard RES-B, minimum and maximum front both 20 ft;
+    # the widened minimum strip leaves the building 0.2-0.5 ft past the
+    # allowance (2S103DD00435: 20.38 ft past the line's one-foot allowance).
+    got = run(facts(front_max_streets=streets((True, drawn, drawn, 0.0)), front_max_tried=True), rules(**MAX))
+    c = check(got, FRONT_MAX)
+    assert c.verdict is Verdict.tolerated
+    assert c.tolerance == 0.5
+    assert not got.binds
+    assert "MEASURE-TOLERANCE" in codes(got)
+    assert got.colour is Colour.yellow
+
+
+def test_a_miss_past_the_fits_tolerance_is_still_red() -> None:
+    # 2S102CD02607: 0.58 ft past the allowance, more than the half foot.
+    got = run(facts(front_max_streets=streets((True, 21.58, 21.58, 0.0)), front_max_tried=True), rules(**MAX))
+    assert check(got, FRONT_MAX).verdict is Verdict.fails
+    assert got.colour is Colour.red
+
+
+def test_no_fit_tolerance_leaves_the_front_maximum_literal() -> None:
+    from flats.tests.test_round2_rulings import DESIGN, fit
+    from flats.score.screen import screen
+
+    got = screen(
+        rules(**MAX),
+        facts(front_max_streets=streets((True, 21.2, 21.2, 0.0)), front_max_tried=True),
+        DESIGN,
+        fit(),
+        policy=slack.SlackPolicy(tolerance={}),
+        relief=relief.load_policy(),
+    )
+    assert check(got, FRONT_MAX).verdict is Verdict.fails
+
+
+def test_a_tolerated_maximum_is_not_clear_to_the_bridge() -> None:
+    got = run(facts(front_max_streets=streets((True, 21.2, 21.2, 0.0)), front_max_tried=True), rules(**MAX))
+    s = SimpleNamespace(screening=got, signed=got)
+    assert not quadfit._front_max_clear(s)
+    assert quadfit._front_max_tolerated(got)
+
+
 def test_tried_with_nothing_drawn_is_held_never_passed() -> None:
     got = run(facts(front_max_tried=True), rules(**MAX))
     assert check(got, FRONT_MAX) is None

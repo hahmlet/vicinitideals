@@ -303,6 +303,23 @@ CLOSER_LOOK_PLAN_OFF_LOT = "CLOSER_LOOK_PLAN_OFF_LOT"
 #: ``side_yard_court_overlap_ft``) were measured against no carve. Never
 #: GREEN on that drawing.
 CLOSER_LOOK_PLAN_ON_CARVE = "CLOSER_LOOK_PLAN_ON_CARVE"
+#: A street centreline that is no alley or private drive runs through the
+#: lot within reach of the drawn building, lane or court
+#: (:func:`flats.ingest.quadfit.street_through_checked`, rel11 move read G2:
+#: Clackamas 21E11AB01100, WALTER through the lot 25.8 ft from the court).
+#: The plan may stand on road land the lot does not own: never GREEN on it.
+CLOSER_LOOK_STREET_THROUGH_LOT = "CLOSER_LOOK_STREET_THROUGH_LOT"
+#: Records beside the colour, below the yellow line, for a bound to name the
+#: lane a move came from (rel11 move read G1,
+#: :func:`flats.ingest.quadfit.marks_checked`): the lot's yard strips were
+#: widened by how far its own line bows inside the traced edge (FOLLOWUPS
+#: 205, gap-fixes Fix 5), and -- on a GREEN -- the plan drawn on that
+#: envelope stands on the lot and its building inside the envelope.
+EDGE_SAG_READ = "EDGE_SAG_READ"
+#: ... and a street line's half-width was read across the street where the
+#: centreline stood on the lot's side of a jog but off the lot (FOLLOWUPS
+#: 158, false-reds-194 Fix C).
+DEDICATION_JOG_READ = "DEDICATION_JOG_READ"
 #: No street meets the lot along as much line as the narrowest driveway the
 #: code allows here (:func:`flats.ingest.quadfit.drive_touch_checked`,
 #: FOLLOWUPS 201: Portland 1N2E25DA -10200 touches NE San Rafael St along
@@ -1748,11 +1765,24 @@ def _checks(
     unmeasured: set[str] = set()
     where = rules.jurisdiction
 
-    def check(name: str, observed: float, threshold: float | None, *, is_maximum: bool) -> None:
+    def check(
+        name: str,
+        observed: float,
+        threshold: float | None,
+        *,
+        is_maximum: bool,
+        tolerance: float | None = None,
+    ) -> None:
+        """``tolerance`` is a check's own allowance beyond the policy's: a
+        miss within it is ``tolerated`` (held out of GREEN with
+        MEASURE-TOLERANCE), never a pass and never a fail."""
         if threshold is None:
             unchecked.append(name)
             return
-        out.append(policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where))
+        got = policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where)
+        if tolerance is not None and got.verdict is Verdict.fails and -got.slack <= tolerance:
+            got = dataclasses.replace(got, tolerance=float(tolerance), verdict=Verdict.tolerated)
+        out.append(got)
 
     def counted(
         name: str, observed: float, most: float | None, cap: float, *, is_maximum: bool = True
@@ -2615,7 +2645,9 @@ def _checks(
 
     # The building's distance from the street against a stated maximum
     # front setback (FOLLOWUPS 147).
-    _front_max(rules, lot, check, unchecked, unmeasured)
+    _front_max(
+        rules, lot, check, unchecked, unmeasured, raster_ft=policy.tolerance_for("fit_ft", where)
+    )
     # Each side wall against a stated maximum side setback (FOLLOWUPS 170).
     _side_max(rules, lot, check, unchecked, unmeasured)
     # Glass on every non-street wall, and no wall that close to a side or
@@ -4415,6 +4447,8 @@ def _front_max(
     check: Callable[..., None],
     unchecked: list[str],
     unmeasured: set[str],
+    *,
+    raster_ft: float = 0.0,
 ) -> None:
     """The drawn building against a stated maximum front setback
     (FOLLOWUPS 147).
@@ -4435,7 +4469,16 @@ def _front_max(
     every one misses. A maximum that may not reach the lot at all
     (:func:`_front_max_conditional`) never fails. Anything else is
     :data:`FRONT_MAX_STREET`: held out of GREEN, never failed. A zone that asks a building share of the frontage
-    is measured there (:func:`_building_frontage`) and not again here."""
+    is measured there (:func:`_building_frontage`) and not again here.
+
+    A miss past the allowance by no more than ``raster_ft`` (the fit's own
+    tolerance, ``fit_ft``, half a foot: the drawing stands on the fit's
+    raster, and every acquisition is surveyed) is ``tolerated`` -- held out
+    of GREEN with MEASURE-TOLERANCE, the way the drive's gap to a lot line
+    is (:func:`flats.ingest.quadfit.driveway_lot_line_checked`) -- not
+    failed. Never a pass (rel11 move read N1: Tigard RES-B and Wilsonville V,
+    whose minimum and maximum front are both 20 ft, left 0.2 to 0.6 ft past
+    the maximum by the envelope's widened minimum strip)."""
     cap = _pct(rules, "setback_front_max_ft")
     if cap is None or _pct(rules, "building_frontage_min_pct") is not None:
         return
@@ -4470,7 +4513,9 @@ def _front_max(
         check(FRONT_MAX, min(observed, cap), cap, is_maximum=True)
     elif failed:
         observed = max(lenient) if how == "every" else min(lenient)
-        check(FRONT_MAX, observed - FRONT_MAX_DRAWN_TOL_FT, cap, is_maximum=True)
+        check(
+            FRONT_MAX, observed - FRONT_MAX_DRAWN_TOL_FT, cap, is_maximum=True, tolerance=raster_ft
+        )
     else:
         unchecked.append(FRONT_MAX)
         unmeasured.add(FRONT_MAX_STREET)
@@ -5536,6 +5581,9 @@ __all__ = [
     "CLOSER_LOOK_DISTRICT_EDGE",
     "CLOSER_LOOK_PLAN_OFF_LOT",
     "CLOSER_LOOK_PLAN_ON_CARVE",
+    "CLOSER_LOOK_STREET_THROUGH_LOT",
+    "EDGE_SAG_READ",
+    "DEDICATION_JOG_READ",
     "CLOSER_LOOK_DRIVE_TOUCH",
     "CLOSER_LOOK_DRIVEWAY_SIDEWALK",
     "CLOSER_LOOK_DRIVEWAY_LOT_LINE",

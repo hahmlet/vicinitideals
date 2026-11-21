@@ -264,7 +264,10 @@ from flats.score.screen import (
     CLOSER_LOOK_DRIVEWAY_SIDEWALK,
     CLOSER_LOOK_PLAN_OFF_LOT,
     CLOSER_LOOK_PLAN_ON_CARVE,
+    CLOSER_LOOK_STREET_THROUGH_LOT,
+    DEDICATION_JOG_READ,
     DRIVEWAY_LOT_LINE,
+    EDGE_SAG_READ,
     CLOSER_LOOK_SPLIT_ZONE,
     CLOSER_LOOK_DISTRICT_EDGE,
     FRONT_MAX,
@@ -1334,6 +1337,12 @@ class QuadfitLot:
     #: FOLLOWUPS 161; :mod:`flats.geom.sight_triangle`); None where no layer
     #: was in hand or the layer declares none -- nothing is then checked.
     clear_vision: Any = None
+    #: How many of the lot's street lines the dedication's jog reading
+    #: (FOLLOWUPS 158, :func:`flats.geom.dedication.measure` ``jogs``) read as
+    #: across the street (``road_jogs_json``); 0 where none or nothing
+    #: measured. A mark for the bound (:func:`marks_checked`), read nowhere
+    #: else.
+    road_jogs: int = 0
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -2495,7 +2504,19 @@ def lot_from_row(
         pdx_overlays=pdx.decode(row.get(pdx.ROW_KEY)),
         sewer=sewer.reading_of(row),
         clear_vision=_clear_vision(row, layers),
+        road_jogs=_count_json(row.get("road_jogs_json")),
     )
+
+
+def _count_json(raw: object) -> int:
+    """The length of a JSON list on a row; 0 where absent or unreadable."""
+    if not raw:
+        return 0
+    try:
+        got = json.loads(raw)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return 0
+    return len(got) if isinstance(got, list) else 0
 
 
 def _clear_vision(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> Any:
@@ -3289,7 +3310,16 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
             lot_wkb = row.get("lot_wkb")
             lot = shapely.from_wkb(lot_wkb) if lot_wkb else None
             stretches = stretch_labels() if dedication.applies(layer_id) else ()
-            row["road_widths_json"] = json.dumps(dedication.measure(edges, layer_id, maps, lot, stretches))
+            jogs: list[tuple[float, float, float, float]] = []
+            row["road_widths_json"] = json.dumps(
+                dedication.measure(edges, layer_id, maps, lot, stretches, jogs=jogs)
+            )
+            # The lines the jog reading (FOLLOWUPS 158) read as across the
+            # street: a mark for the bound (:func:`marks_checked`).
+            if jogs:
+                row["road_jogs_json"] = json.dumps([list(k) for k in jogs])
+            else:
+                row.pop("road_jogs_json", None)
         if not ranked:
             continue
         row["street_ranks_json"] = json.dumps(street_ranks(edges, layer_id, maps))
@@ -4953,6 +4983,148 @@ def plan_on_carve_checked(s: Screened, lot: QuadfitLot) -> Screened:
     return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
 
 
+STREET_THROUGH = "MEASURE-STREET-THROUGH-LOT"
+
+
+def street_through_checked(s: Screened, lot: QuadfitLot, streets: Any) -> Screened:
+    """``s`` held out of GREEN where a street centreline runs through the lot
+    within reach of the drawn building, lane or court (rel11 move read G2,
+    :func:`flats.geom.street_through.crossings`).
+
+    Clackamas unincorporated 21E11AB01100 (R7) went GREEN on rel11 with WALTER
+    (RLIS TYPE 1500) running 160 ft through the lot and the drawn court
+    25.8 ft from it: the lot is probably cut by a road it does not own, so
+    the plan may stand on road land. A GREEN (on either reading) so placed is
+    YELLOW with MEASURE-STREET-THROUGH-LOT, naming the street, never moved
+    toward GREEN; a GREEN with no fitting drawing and such a street through
+    it is held too (nothing showed the plan clear of it). Only a GREEN is
+    asked, as :func:`plan_on_carve_checked` asks: a YELLOW or RED lot is
+    already held. ``streets`` None (no centrelines loaded) asks nothing."""
+    if streets is None or lot.lot_geom is None or lot.lot_geom.is_empty:
+        return s
+    if flag_plan.Colour.green not in (s.screening.colour, s.signed.colour):
+        return s
+    from shapely.geometry import Polygon
+
+    from flats.geom import street_through
+
+    plan = s.drawing
+    shapes: list[Any] = []
+    if plan and plan.get("fits"):
+        for name in ("building", "lane", "court"):
+            ring = plan.get(name)
+            if not ring or len(ring) < 4:
+                continue
+            shape = Polygon(ring)
+            shapes.append(shape if shape.is_valid else shape.buffer(0))
+    got = street_through.crossings(lot.lot_geom, _street_lines(lot), shapes or None, streets)
+    if not got:
+        return s
+    said = "; ".join(c.words() for c in got[:3])
+    if not shapes:
+        said = f"no fitting plan drawn; {said}"
+    flag = flag_plan.Flag(STREET_THROUGH, flag_plan.LOT, CLOSER_LOOK_STREET_THROUGH_LOT, source=said)
+
+    def ask(x: Screening) -> Screening:
+        reasons = (
+            x.reasons
+            if CLOSER_LOOK_STREET_THROUGH_LOT in x.reasons
+            else (*x.reasons, CLOSER_LOOK_STREET_THROUGH_LOT)
+        )
+        triage = Triage.yellow if x.triage is Triage.green else x.triage
+        flags = x.flags if any(f.code == flag.code for f in x.flags) else (*x.flags, flag)
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
+EDGE_SAG = "EDGE-SAG"
+DEDICATION_JOG = "DEDICATION-JOG"
+#: The least bow that marks a lot (the gap-fixes scout's floor: 1,111 of
+#: rel9's 9,517 greens bowed this much or more).
+EDGE_SAG_MARK_FT = 0.05
+#: Feet a drawn building may stand off the envelope and still be inside it:
+#: the drawing's rings are rounded to a tenth of a foot.
+IN_ENVELOPE_TOL_FT = 0.1
+
+
+def _plan_held(s: Screened) -> bool:
+    """Whether ``s``'s drawn plan fits, stands on the lot (no
+    MEASURE-PLAN-OFF-LOT on either reading) and its building inside the
+    envelope it was fitted on."""
+    plan = s.drawing
+    if not plan or not plan.get("fits") or s.envelope is None or s.envelope.geom is None:
+        return False
+    if any(f.code == PLAN_OFF_LOT for r in (s.screening, s.signed) for f in r.flags):
+        return False
+    ring = plan.get("building")
+    if not ring or len(ring) < 4:
+        return False
+    from shapely.geometry import Polygon
+
+    body = Polygon(ring)
+    if not body.is_valid:
+        body = body.buffer(0)
+    return bool(s.envelope.geom.buffer(IN_ENVELOPE_TOL_FT).covers(body))
+
+
+def marks_checked(s: Screened, lot: QuadfitLot) -> Screened:
+    """``s`` with records, below the yellow line, that name the lane a bound
+    move came from where the row would otherwise carry none (rel11 move read
+    G1). The colour, the triage and the reasons are not touched.
+
+    * EDGE-SAG: the lot's yard strips were widened by its own line's bow
+      inside a traced edge (FOLLOWUPS 205, gap-fixes Fix 5:
+      :func:`flats.geom.envelope.edge_sags`), by at least
+      :data:`EDGE_SAG_MARK_FT`; bounds 0 to the largest bow, feet. On a lot
+      GREEN on either reading it is raised only where the drawn plan stands
+      on the lot and its building inside the envelope (:func:`_plan_held`):
+      a GREEN gained on a plan the bow re-placed is attributable to Fix 5
+      only so, and a GREEN without the mark is read by hand.
+    * DEDICATION-JOG: a street line's half-width was read with the street
+      across it where the centreline stood on the lot's side of a jog but
+      off the lot (FOLLOWUPS 158, false-reds-194 Fix C;
+      :attr:`QuadfitLot.road_jogs`); bounds the number of lines so read.
+      Only on an envelope FLATS cut, the only one the strip is cut from."""
+    if s.envelope is None or s.envelope.source != "flats":
+        return s
+    marks: list[flag_plan.Flag] = []
+    if lot.edges is not None and lot.lot_geom is not None and not lot.lot_geom.is_empty:
+        from flats.geom.envelope import edge_sags
+
+        bow = max(edge_sags(lot.lot_geom, lot.edges), default=0.0)
+        green = flag_plan.Colour.green in (s.screening.colour, s.signed.colour)
+        if bow >= EDGE_SAG_MARK_FT and (not green or _plan_held(s)):
+            marks.append(
+                flag_plan.Flag(
+                    EDGE_SAG,
+                    flag_plan.LOT,
+                    EDGE_SAG_READ,
+                    bounds=(0.0, round(bow, 2)),
+                    source="yard strips widened by the lot line's bow inside the traced edge (FOLLOWUPS 205)"
+                    + ("; the drawn plan stands on the lot and inside the envelope" if green else ""),
+                )
+            )
+    if lot.road_jogs:
+        marks.append(
+            flag_plan.Flag(
+                DEDICATION_JOG,
+                flag_plan.LOT,
+                DEDICATION_JOG_READ,
+                bounds=(float(lot.road_jogs), float(lot.road_jogs)),
+                source="street half-width read across a jog in the lot line (FOLLOWUPS 158)",
+            )
+        )
+    if not marks:
+        return s
+
+    def add(x: Screening) -> Screening:
+        have = {f.code for f in x.flags}
+        return dataclasses.replace(x, flags=(*x.flags, *(m for m in marks if m.code not in have)))
+
+    return dataclasses.replace(s, screening=add(s.screening), signed=add(s.signed))
+
+
 DRIVE_TOUCH = "ACCESS-DRIVE-TOUCH"
 
 
@@ -6613,6 +6785,8 @@ def _screen_lot_once(
         won = drawn_edge_checked(won, lot)
         won = plan_on_lot_checked(won, lot)
         won = plan_on_carve_checked(won, lot)
+        # A street drawn through the lot, near the plan (rel11 G2).
+        won = street_through_checked(won, lot, _WORKER.get("through_streets"))
         won = drive_touch_checked(won)
         won = driveway_lot_line_checked(won, policy)
         won = road_standin_checked(won, lot)
@@ -6623,6 +6797,8 @@ def _screen_lot_once(
         # Outside public sewer is RED; no data for the place is a flag only
         # (Steph 2026-11-10, rulings.yaml 2026-11-10-no-public-sewer-red).
         won = sewer.checked(won, lot.sewer)
+        # Records for the bound, last, on the colour that stands (rel11 G1).
+        won = marks_checked(won, lot)
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
 
@@ -7023,11 +7199,22 @@ def _front_max_screened(s: Screened, *, policy: SlackPolicy, relief: ReliefPolic
 
 
 def _front_max_clear(s: Screened) -> bool:
-    """Whether ``s`` clears the maximum front setback under both readings."""
+    """Whether ``s`` clears the maximum front setback under both readings: a
+    miss inside the fit's tolerance (``tolerated``, :func:`flats.score.screen._front_max`)
+    is no clear, so a slide or another window that clears it outright is
+    still looked for (rel11 move read N1)."""
     return all(
-        FRONT_MAX not in r.unchecked and all(c.check != FRONT_MAX for c in r.binds)
+        FRONT_MAX not in r.unchecked
+        and all(c.check != FRONT_MAX for c in r.binds)
+        and not _front_max_tolerated(r)
         for r in (s.screening, s.signed)
     )
+
+
+def _front_max_tolerated(r: Screening) -> bool:
+    """Whether ``r`` reads the maximum front setback missed inside the fit's
+    tolerance: held out of GREEN, not failed."""
+    return any(c.check == FRONT_MAX and c.verdict is CheckVerdict.tolerated for c in r.checks)
 
 
 #: How far a drawing past the maximum may be slid toward its street: the
@@ -7299,7 +7486,10 @@ def front_max_checked(
     # wall's far end past it turns the fail into a question: kept, held out of
     # GREEN, where no window below clears it (rel3 read finding 1).
     fallback = out
-    if any(c.check == FRONT_MAX for r in (out.screening, out.signed) for c in r.binds):
+    if any(
+        any(c.check == FRONT_MAX for c in r.binds) or _front_max_tolerated(r)
+        for r in (out.screening, out.signed)
+    ):
         # The raster's own slack first, then, for a plan with no lane, the
         # whole drawing pulled to the maximum (FOLLOWUPS 194 item 1).
         for snap, pull in ((False, False), (True, False), (False, True), (True, True)):
@@ -7384,6 +7574,7 @@ def _no_worse_but_front(base: Screened, cand: Screened, *, question: bool = Fals
                 flags=tuple(
                     f for f in r.flags
                     if f.code not in ("MEASURE-FRONT-MAX-STREET", "MEASURE-FRONT-MAX-DRAWN")
+                    and not (f.code == "MEASURE-TOLERANCE" and f.key.endswith(flag_plan.SEP + FRONT_MAX))
                 ),
             )
 
@@ -9497,6 +9688,14 @@ def _init_worker(
         _WORKER["roads"] = plain
     else:
         _WORKER["roads"] = None
+    # Every street centreline (not the truck roads alone) for the street
+    # drawn through a lot (:func:`street_through_checked`).
+    if roads is not None:
+        from flats.geom import street_through
+
+        _WORKER["through_streets"] = street_through.load(roads)
+    else:
+        _WORKER["through_streets"] = None
     _WORKER["terrain"] = terrain_at(dem) if dem is not None else None
 
 

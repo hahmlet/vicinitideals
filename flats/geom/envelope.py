@@ -469,6 +469,15 @@ def _sag(rings: list[Ring], x1: float, y1: float, x2: float, y2: float) -> float
     return _sag_between_vertices(rings, x1, y1, x2, y2)
 
 
+def edge_sags(lot: BaseGeometry, edges: LotEdges) -> tuple[float, ...]:
+    """:func:`_sag` of each of ``edges`` on ``lot``'s own rings, in order: how
+    far each yard strip :func:`buildable` cuts is widened past its setback
+    (FOLLOWUPS 205). A record for the bridge's marks (rel11 move read G1),
+    read nowhere in the cut."""
+    rings = _rings(lot)
+    return tuple(_sag(rings, e.x1, e.y1, e.x2, e.y2) for e in edges.edges)
+
+
 def _sag_between_vertices(rings: list[Ring], x1: float, y1: float, x2: float, y2: float) -> float:
     """:func:`_sag` for an edge that ends between the ring's vertices."""
     from shapely.ops import substring

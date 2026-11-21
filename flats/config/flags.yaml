@@ -1143,6 +1143,51 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_PLAN_ON_CARVE]
+  MEASURE-STREET-THROUGH-LOT:
+    description: "A street centre line (not an alley or a private drive) runs through the lot within 50 ft of the drawn building, driveway lane or parking court: the lot may be cut by a road it does not own, and the plan may stand on its right-of-way (rel11 move read G2, Clackamas 21E11AB01100: WALTER through the lot, 25.8 ft from the court)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Read the deed and the county road records for the street's right-of-way, then draw the plan off it (another placement may hold it), or survey the lot"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_STREET_THROUGH_LOT]
+  EDGE-SAG:
+    description: "A record for the bound, below the yellow line: the lot's own line bows inside the traced edge, so its yard strips were widened by that much (FOLLOWUPS 205, gap-fixes Fix 5); on a GREEN, raised only where the drawn plan stands on the lot and its building inside the envelope (rel11 move read G1)"
+    kind: parametric
+    risk: unlikely
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Nothing to answer: the bow is measured on the lot's own line"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [EDGE_SAG_READ]
+  DEDICATION-JOG:
+    description: "A record for the bound, below the yellow line: a street line's half-width was read with the street across it where the centreline stood on the lot's side of a jog but off the lot (FOLLOWUPS 158, false-reds-194 Fix C; rel11 move read G1)"
+    kind: parametric
+    risk: unlikely
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Nothing to answer: the jog is measured on the lot's own line and the centreline"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [DEDICATION_JOG_READ]
   ACCESS-DRIVE-TOUCH:
     description: "No street meets the lot along as much line as the narrowest driveway the code allows here, so the drive to the parking court would cross another lot (FOLLOWUPS 201, Portland 1N2E25DA -10200: 8 ft of street line against 33.266.120.D.2's 9 ft driveway)"
     kind: categorical

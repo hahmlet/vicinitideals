@@ -108,6 +108,7 @@ from __future__ import annotations
 import dataclasses
 import math
 import re
+from contextvars import ContextVar
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Iterable, Mapping, Sequence
 
@@ -474,6 +475,15 @@ def _inward(edge: Sequence[Any], lot: Any) -> tuple[float, float] | None:
 #: still be read as on the lot (a lot drawn to the centre line itself).
 ON_LOT_TOL_FT = 0.5
 
+#: Set by :func:`measure` while it reads one street line: :func:`_signed`
+#: notes each point where the centreline stood on the lot's side of the line
+#: but off the lot -- the jog reading of FOLLOWUPS 158, which reads the
+#: street as across the line where the reading before it read the road as
+#: drawn into the lot. :func:`measure` hands the lines so read back
+#: (``jogs``), so a bound can name the lots the jog reading moved (rel11 move
+#: read G1).
+_JOGGED: ContextVar[list[bool] | None] = ContextVar("dedication_jogged", default=None)
+
 
 def _signed(line: Any, p: Any, inward: tuple[float, float] | None, lot: Any = None) -> float:
     """The distance from lot-line point ``p`` to centreline ``line``, NEGATIVE
@@ -492,7 +502,12 @@ def _signed(line: Any, p: Any, inward: tuple[float, float] | None, lot: Any = No
     c = line.interpolate(line.project(p))
     on_lot = lot is None or bool(lot.buffer(ON_LOT_TOL_FT).covers(c))
     if inward is not None:
-        inside = (c.x - p.x) * inward[0] + (c.y - p.y) * inward[1] > 0 and on_lot
+        toward = (c.x - p.x) * inward[0] + (c.y - p.y) * inward[1] > 0
+        inside = toward and on_lot
+        if toward and not on_lot:
+            seen = _JOGGED.get()
+            if seen is not None:
+                seen.append(True)
     else:
         inside = bool(lot.contains(c))
     return -d if inside else d
@@ -685,6 +700,7 @@ def measure(
     maps: Sequence[ClassMap],
     lot: Any = None,
     stretches: Sequence[str] = (),
+    jogs: list[tuple[float, float, float, float]] | None = None,
 ) -> list[list[Any]]:
     """Every street line of one lot, as ``[x1, y1, x2, y2, half_width_ft,
     public, names, classes, on_stretch]`` -- the half-width None where
@@ -693,13 +709,26 @@ def measure(
     the class name on each map read for the layer (``{map key: class or
     None}``), ``on_stretch`` each row label of ``stretches`` whose street the
     line may be on, read for its stretch (:func:`stretch_readings`; ``{label:
-    True, False or None}``). Empty where no map gives the streets."""
+    True, False or None}``). Empty where no map gives the streets.
+
+    ``jogs``, given, gets the :func:`key` of each line whose reading met a
+    centreline on the lot's side of it but off the lot (:data:`_JOGGED`,
+    FOLLOWUPS 158): a mark, nothing more; the rows are the same either way."""
     cmap = _streets_for(layer_id, maps)
     if cmap is None:
         return []
     ranked = [m for m in maps if _reads(m, layer_id)]
     lines = [e for e in edges if len(e) >= 5 and e[4] == STREET_CLASS]
-    reads = [read_line(e, cmap, lot=lot) for e in lines]  # type: ignore[arg-type]
+    reads = []
+    for e in lines:
+        seen: list[bool] = []
+        token = _JOGGED.set(seen)
+        try:
+            reads.append(read_line(e, cmap, lot=lot))  # type: ignore[arg-type]
+        finally:
+            _JOGGED.reset(token)
+        if seen and jogs is not None:
+            jogs.append(_line_key(*(float(v) for v in e[:4])))
     ranks = {m.key: _lot_ranks(lines, [names for _, _, names in reads], m) for m in ranked}
     # A city map naming its private streets: Metro's "private" alone gives up
     # nothing only where that map agrees (:func:`_private_reading`).
@@ -881,6 +910,11 @@ def _point_ranks(edge: Sequence[Any], cmap: ClassMap) -> list[int | None]:
 def key(x1: float, y1: float, x2: float, y2: float) -> tuple[float, float, float, float]:
     """The coordinates a measured line is looked up by."""
     return (round(float(x1), 3), round(float(y1), 3), round(float(x2), 3), round(float(y2), 3))
+
+
+#: :func:`key` by another name, for :func:`measure`, whose loop names a map
+#: ``key``.
+_line_key = key
 
 
 def _number(v: object) -> float | None:
