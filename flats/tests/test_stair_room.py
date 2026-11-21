@@ -241,6 +241,13 @@ def test_reconciled_never_makes_a_lot_greener(green) -> None:
     # A green first placement takes the kept-room plan as it reads.
     plain = fc.reconciled(_with_hits(green), alt)
     assert plain.signed.colour is Colour.green and fc.STAIR_MOVED not in plain.signed.reasons
+    # A view red on the first placement stays red, whatever the second reads
+    # (found on 137: 11E25AB04400 read red, then yellow kept-room).
+    bind = flag_plan.Bind("fit_ft", 80.0, 90.0, 10.0)
+    red = dataclasses.replace(green.signed, triage=Triage.red, binds=(bind,))
+    half = _with_hits(dataclasses.replace(green, signed=red, screening=yellow))
+    mixed = fc.reconciled(half, alt)
+    assert mixed.signed is red and mixed.screening.colour is Colour.yellow
 
 
 def test_reconciled_red_elsewhere_is_red_on_the_steps(green) -> None:

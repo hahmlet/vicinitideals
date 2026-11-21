@@ -472,7 +472,8 @@ def reconciled(first: Any, alt: Any) -> Any:
       that leaves them room does not pass), the other reasons named.
     * Otherwise ``alt`` (its steps have room, or it would be red): never
       better than ``first`` read -- a better colour is held at ``first``'s
-      with :data:`STAIR_MOVED_FLAG`, so nothing becomes GREEN that was not.
+      with :data:`STAIR_MOVED_FLAG`, so nothing becomes GREEN that was not,
+      and a view red on the first placement stays as it read.
     """
     if _red(alt.signed) or _red(alt.screening):
         if STAIR_ROOM in alt.signed.reasons or STAIR_ROOM in alt.screening.reasons:
@@ -483,6 +484,10 @@ def reconciled(first: Any, alt: Any) -> Any:
     def held(x: Any, before: Any) -> Any:
         from flats.score.screen import Triage
 
+        # A view already red on the first placement stays as it read: a
+        # second placement never takes a red lot out of red.
+        if _red(before):
+            return before
         if _rank(x) >= _rank(before) or any(f.code == STAIR_MOVED_FLAG for f in x.flags):
             return x
         words = (f"foundation: the plan was stood again to leave the steps room and reads {x.colour.value} "
