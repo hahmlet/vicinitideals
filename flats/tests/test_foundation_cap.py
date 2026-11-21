@@ -4,7 +4,7 @@
 after the sewer: RED only when every method open to the lot fails the cap,
 YELLOW where the best is within 2 in over, where the ground class is unread
 and B is over, or where the ground could not be read; a note within 2 in
-under and where the steps would run off the lot. Never makes a lot GREEN.
+under. Never makes a lot GREEN. Room for the steps: test_stair_room.
 """
 
 from __future__ import annotations
@@ -71,6 +71,8 @@ def test_flat_ground_fits_and_keeps_green(green) -> None:
     assert out.foundation["state"] == caps.FITS
     assert out.signed.colour is Colour.green and not out.signed.flags
     assert out.foundation["door_face_rule"]
+    # Every measured lot carries where its steps land (FOLLOWUPS 213).
+    assert set(out.foundation["stair_room"]) >= {"hits", "need", "standoff_ft"}
 
 
 def test_steep_ground_is_red_with_the_cap_reason_and_names_the_door(green) -> None:
@@ -122,7 +124,7 @@ def test_held_states_turn_green_yellow_at_or_over_the_line(green, state, flag, r
     assert fc._apply(out, _facts(state)) == out  # idempotent
 
 
-@pytest.mark.parametrize("facts", [_facts(caps.CLOSE), _facts(caps.FITS, stair_reach=["front door 1"])])
+@pytest.mark.parametrize("facts", [_facts(caps.CLOSE)])
 def test_notes_do_not_move_the_colour(green, facts) -> None:
     from flats.score import flags as flag_plan
     from flats.score.flags import Colour
@@ -146,7 +148,7 @@ def test_every_flag_is_in_the_register() -> None:
     from flats.score import flags as flag_plan
 
     reg = flag_plan.registry()
-    for code in (*fc.YELLOW_FLAGS, *fc.NOTE_FLAGS):
+    for code in (*fc.YELLOW_FLAGS, *fc.NOTE_FLAGS, *fc.RED_FLAGS):
         assert code in reg, code
 
 

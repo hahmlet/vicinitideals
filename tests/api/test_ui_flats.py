@@ -3253,6 +3253,9 @@ async def test_foundation_cap_reasons_are_said_in_words() -> None:
     assert _REASON_WORDS[foundation_cap.FOUNDATION_STEPS_CAP].startswith(
         "foundation: a door needs more than six steps on every method")
     assert "six-step cap" in _CHECK_WORDS[foundation_cap.CHECK]
+    # No room for the steps (Steph 2026-11-20, rulings.yaml 2026-11-20-stair-no-room-red-flag).
+    assert _REASON_WORDS[foundation_cap.STAIR_ROOM].startswith("foundation: no room for the steps")
+    assert "steps" in _CHECK_WORDS[foundation_cap.STAIR_CHECK]
 
 
 async def test_institutional_land_is_said_in_words() -> None:

@@ -286,6 +286,34 @@ class Parking(BaseModel):
         return math.ceil(stalls) * self.stall_width_ft
 
 
+class StairRoom(BaseModel):
+    """Room the screen keeps for the precast steps at the doors (FOLLOWUPS 213).
+
+    Steph 2026-11-20 (rulings.yaml ``2026-11-20-stair-room-reserved``):
+    placement keeps a strip between each door face and the drawn court or
+    lane as deep as that face's precast steps need, and keeps every stair
+    inside the lot. Never in a catalog: the screen's stair-room pass
+    (:func:`flats.ingest.quadfit._stair_room`) sets it on a lot whose first
+    placement left the steps no room and stands the plan again with it, so
+    the fit, the drawing and every check after them see the strip. One depth
+    per kind, the worst door's run (uniform, not per door: the cautious side).
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    #: The standoff behind the rear wall is kept at least this deep
+    #: (:attr:`Parking.building_gap_ft` is raised to it).
+    court_ft: float = Field(default=0.0, ge=0)
+    #: A clear strip this wide between the building's side and the lane (or
+    #: a court beside the building): the room is that much wider.
+    flank_ft: float = Field(default=0.0, ge=0)
+    #: Each long face stands at least this far inside the lot, where a window
+    #: allows (:func:`flats.fit.draw.draw` ``stair_lot``).
+    lot_ft: float = Field(default=0.0, ge=0)
+    #: Placements tried with room kept, the first included.
+    passes: int = Field(default=0, ge=0)
+
+
 class DeliverySpec(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -390,6 +418,9 @@ class Design(BaseModel):
     door_face: Literal["width"] | None = None
     parking: Parking
     delivery: DeliverySpec
+    #: Room kept for the steps at the doors, set only by the screen's
+    #: stair-room pass (:class:`StairRoom`); ``None`` in every catalog entry.
+    stairs: StairRoom | None = None
     #: Which plat path this entry is costed for. Defaults to the path the rule
     #: files already model, so an entry that says nothing keeps its meaning.
     plat: Plat = Plat.one_lot
@@ -516,6 +547,20 @@ class Design(BaseModel):
     def court_width_ft(self) -> float:
         """Width the design's own floor takes across a rear court."""
         return self.parking.court_width_ft(self.stalls_required)
+
+    @property
+    def flank_reserve_ft(self) -> float:
+        """The stair strip kept between the building's side and its lane or
+        beside court (:attr:`StairRoom.flank_ft`); 0 for a catalog entry."""
+        return self.stairs.flank_ft if self.stairs is not None else 0.0
+
+    def reserving(self, room: StairRoom) -> Design:
+        """This design with ``room`` kept for the steps: the rear standoff
+        raised to ``room.court_ft`` and the room recorded for the fit and the
+        drawing. The key is unchanged (the same building)."""
+        gap = max(self.parking.building_gap_ft, room.court_ft)
+        parking = self.parking.model_copy(update={"building_gap_ft": gap})
+        return self.model_copy(update={"stairs": room, "parking": parking})
 
     def oriented(
         self, *, axis_required: bool = False

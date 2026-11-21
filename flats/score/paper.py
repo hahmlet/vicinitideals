@@ -1852,7 +1852,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         # behind both, so the lane is never added to the court. This is the
         # rectangle quadfit's site plan draws inside the setbacks, and it is
         # why the pod end-on is not a 36 ft question: six stalls are 54.
-        building = width_ft + across.lane_ft - lane_overlap
+        building = width_ft + across.lane_ft - lane_overlap + design.flank_reserve_ft
         court_width = across.width_ft - court_overlap
         if court_width > building:
             envelope_ft, width_binding = court_width, ACROSS_COURT

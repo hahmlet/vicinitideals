@@ -76,6 +76,7 @@ from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import (
     COURT_BETWEEN_TOL_FT,
     AlleyStretch,
+    StairLot,
     court_on_stretch,
     draw,
     stretch_window,
@@ -5717,8 +5718,61 @@ def _screen_lot_once(
             won, terrain=terrain, lot_geom=lot.lot_geom, classes=lot.foundation_classes, tlid=lot.tlid,
             streets=lambda: (*_street_lines(lot), *_side_street_lines(lot)),
         )
+        # Room for those steps (rulings.yaml 2026-11-20-stair-room-reserved /
+        # -stair-no-room-red-flag): stood again keeping it, else RED.
+        won = _stair_room(
+            won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads,
+            bound=bound, pool=pool, terrain=terrain, room=room,
+        )
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
+
+
+def _stair_room(
+    won: Screened,
+    lot: QuadfitLot,
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float,
+    roads: Any,
+    bound: bool,
+    pool: dict[Any, dict[Any, Fitter]] | None,
+    terrain: Any,
+    room: bool,
+) -> Screened:
+    """``won`` once its doors' precast steps have room (FOLLOWUPS 213; Steph
+    2026-11-20, rulings.yaml 2026-11-20-stair-room-reserved and
+    2026-11-20-stair-no-room-red-flag).
+
+    Where a drawn unit lands on the court's stalls, the lane or past the lot
+    line (:func:`flats.ingest.foundation_cap.stair_room_of`), the lot is
+    screened again, the whole way, with the plan keeping that much room
+    (:meth:`flats.designs.model.Design.reserving`: the standoff off the rear
+    wall raised, a strip beside the building before its lane, the long faces
+    kept that far inside the lot), so the fit, the drawing, the flatter
+    search, the door-face rule and every check after them stand on the
+    placement that leaves the steps room. The new placement's steps are
+    measured again there and, where they still land, the room widened, up to
+    :data:`flats.ingest.foundation_cap.STAIR_PASSES` placements. No room at
+    the end: RED with the flag naming the door
+    (:func:`flats.ingest.foundation_cap.no_room`). A lot already red is left
+    alone; nothing becomes GREEN that was not
+    (:func:`flats.ingest.foundation_cap.reconciled`).
+    """
+    if not foundation_cap.stair_hits(won):
+        return won
+    if won.signed.colour is flag_plan.Colour.red and won.screening.colour is flag_plan.Colour.red:
+        return won
+    kept = foundation_cap.next_room(won)
+    if kept is None:
+        return foundation_cap.no_room(won)
+    (alt,) = _screen_lot_once(
+        lot, [won.design.reserving(kept)], rules=rules, policy=policy, relief=relief,
+        step_deg=step_deg, roads=roads, bound=bound, pool=pool, terrain=terrain, room=room,
+    )
+    return foundation_cap.reconciled(won, alt)
 
 
 class _Eased:
@@ -7417,6 +7471,7 @@ def _beside_drawn(
         side_streets=_side_street_lines(here),
         beside_band_ft=beside.band_ft,
         beside_len_ft=beside.length_ft,
+        flank_gap_ft=design.flank_reserve_ft,
     )
 
 
@@ -7569,6 +7624,7 @@ def _court_drawn(
         paved_across_ft=None if fit.column else max(across.width_ft, across.lane_ft),
         gap_ft=gap,
         side_drive=side_drive,
+        flank_gap_ft=design.flank_reserve_ft,
         **_column_draw(design, got, alley, fit, here),
     )
 
@@ -7917,6 +7973,8 @@ def drawing_for(
             include_frontmost=include_frontmost,
             yard=yard,
             yard_moves=False,
+            flank_gap_ft=s.design.flank_reserve_ft,
+            stair_lot=stair_lot_of(s),
         )
         return None if got is None else got.to_json(s.envelope.geom if s.envelope else None)
     if s.fit.column:
@@ -7965,11 +8023,24 @@ def drawing_for(
         yard=yard,
         yard_moves=_lane_in_from_street(s),
         stretch=stretch,
+        flank_gap_ft=s.design.flank_reserve_ft,
+        stair_lot=stair_lot_of(s),
         **_column_draw(s.design, s.rules, alley, s.fit, s.lot),
     )
     if got is None:
         return None
     return got.to_json(s.envelope.geom if s.envelope else None)
+
+
+def stair_lot_of(s: Screened) -> StairLot | None:
+    """The room kept on the lot for the precast steps at ``s``'s doors
+    (:attr:`flats.designs.model.StairRoom.lot_ft`), or None where none is
+    kept -- every first placement (FOLLOWUPS 213)."""
+    room = s.design.stairs
+    lot = s.lot.lot_geom
+    if room is None or room.lot_ft <= 0 or lot is None or lot.is_empty:
+        return None
+    return StairLot(lot, room.lot_ft)
 
 
 #: A stall band's standing in the choice of front: Steph's ruling of

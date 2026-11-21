@@ -116,7 +116,8 @@ def _plan(
         return _Plan(
             base_ft=side
             + court.band_ft
-            - side_yard_court_overlap_ft(rules, court.band_ft, corner=corner),
+            - side_yard_court_overlap_ft(rules, court.band_ft, corner=corner)
+            + design.flank_reserve_ft,
             floor_ft=0.0,
             run=lambda t: deep + t + _beside_beyond(court, deep + t, rules, carved_rear_ft),
             over=lambda t: _beside_over(court, deep + t, rules, carved_rear_ft),
@@ -130,7 +131,8 @@ def _plan(
         return _Plan(
             base_ft=side
             + lane
-            - side_yard_lane_overlap_ft(rules, lane, corner=corner),
+            - side_yard_lane_overlap_ft(rules, lane, corner=corner)
+            + design.flank_reserve_ft,
             floor_ft=0.0,
             run=lambda t: deep + t + beyond,
             over=lambda _t: over,
@@ -144,7 +146,8 @@ def _plan(
     return _Plan(
         base_ft=side
         + court.lane_ft
-        - side_yard_lane_overlap_ft(rules, court.lane_ft, corner=corner),
+        - side_yard_lane_overlap_ft(rules, court.lane_ft, corner=corner)
+        + design.flank_reserve_ft,
         floor_ft=court.width_ft
         - side_yard_court_overlap_ft(
             rules, court.width_ft, lane_ft=court.lane_ft, corner=corner

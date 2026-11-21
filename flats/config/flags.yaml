@@ -1125,21 +1125,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FOUNDATION_CAP_CLOSE]
-  FOUNDATION-STAIR-REACH:
-    description: "The precast steps at a door of the drawn building would run off the lot or onto the drawn parking court or lane (FD8 2e). A note only: the stairs can turn or the building shift on site, so the colour does not move."
+  FOUNDATION-STAIR-ROOM:
+    description: "No placement found leaves the precast steps at a door room: the unit, 4 ft wide and as deep as its risers need, lands on the drawn parking court's stalls, on the drive lane, or past the lot line, even with the plan stood again keeping that much room (FOLLOWUPS 213). Steph 2026-11-20 (rulings.yaml 2026-11-20-stair-room-reserved, 2026-11-20-stair-no-room-red-flag): red, with this flag naming the door, what it lands on and by how much, so the lot can be found and screened again if the parking layout, the steps or the front-door orientation change."
     kind: categorical
-    risk: possible
-    severity: 2
+    risk: likely
+    severity: 5
     absorbs: null
     resolution: document_review
     scope: per_lot
     key: [lot]
-    path: "Turn the steps along the wall or shift the building at design; check the landing stays on the lot and off the drive aisle"
+    path: "Screen the lot again when the parking layout, the step design (side-entry units, steps turned along the wall) or the front-door orientation changes; the foundation_cap facts name each door"
     priority: later
     status: pending
     approved_by: null
     approved_on: null
-    raised_from: [FOUNDATION_STAIR_REACH]
+    raised_from: [FOUNDATION_STAIR_ROOM]
+  FOUNDATION-STAIR-MOVED:
+    description: "The plan was stood again to leave the precast steps room (FOLLOWUPS 213), and on the new placement it reads better than the first placement did. Nothing becomes green that was not (Steph 2026-11-20, rulings.yaml 2026-11-20-stair-room-reserved), so it is held at the first placement's colour: yellow."
+    kind: categorical
+    risk: possible
+    severity: 3
+    absorbs: null
+    resolution: document_review
+    scope: per_lot
+    key: [lot]
+    path: "Read the two placements on the lot page; the second leaves the steps room, and what held the first back may not apply to it"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FOUNDATION_STAIR_MOVED]
   HISTORIC-LISTING-UNSETTLED:
     description: "The lot appears on a city's, county's or the state's historic list, but whether that protects a building here is not settled: the state may only have surveyed it, the city's list or the code that says what a listing does is not held, the listing is an object rather than a building, or the address only nearly fixes the lot (FOLLOWUPS 87, flats/config/historic/protection.yaml). A protected building would make the lot red under Steph's 2026-10-14 ruling, so it does not stay green on the doubt."
     kind: categorical
