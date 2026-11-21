@@ -3861,3 +3861,33 @@
     open lot in front of it. Replaces the foundation model's front-face guess.
     FOLLOWUPS 213.
   source: Steph 2026-11-20 (chat)
+- id: 2026-11-20-stair-room-reserved
+  kind: ruling
+  date: 2026-11-20
+  scope: {}
+  question: >-
+    The parking court and drive lane are drawn flush to the building wall, so
+    the precast steps at the doors on that face land on the parking; about
+    6,000 lots also have steps that run past the lot line. How should the steps
+    be handled?
+  ruling: '"Leave room (Recommended)"'
+  effect: >-
+    Placement keeps a strip between each door face and the drawn court or lane
+    as deep as that face's precast steps need, and keeps every stair inside the
+    lot. Some lots stop fitting. FOLLOWUPS 213.
+  source: Steph 2026-11-20 (chat)
+- id: 2026-11-20-stair-no-room-red-flag
+  kind: ruling
+  date: 2026-11-20
+  scope: {}
+  question: >-
+    After placement tries to leave room for the steps, what colour is a lot
+    where the steps still hit the parking or run off the lot?
+  ruling: >-
+    "Red with a flag so that if we change parking in the future or steps or the
+    orientation of the front doors, we can bring them back"
+  effect: >-
+    RED, with a flag naming the door and what it hits (court, lane or lot line)
+    and by how much, so the lot can be found and re-screened if the parking
+    layout, the step design or the front-door orientation changes. FOLLOWUPS 213.
+  source: Steph 2026-11-20 (chat)
