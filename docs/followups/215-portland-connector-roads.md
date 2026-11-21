@@ -26,3 +26,11 @@ Decision pending: none.
 Fire-hose near MISSES (under 0.5 ft over 150 ft) stay RED: `fire_access_ft` has no slack in
 `flats/config/slack.yaml`. The near-PASS side is held YELLOW (FIRE-NEAR-PASS, 0.5 ft, rel11). Making a
 near miss YELLOW too would mirror it (cautious direction; small count). Coordinator call, not Steph.
+
+## F5, F6 (display only, from holds-fire-moves.findings.md, 2026-11-21)
+
+- F5: `1S1E16CD  -03400` -- the shown front reading lacks the MEASURE-TOLERANCE mark that moved it
+  (the other reading passed). Carry the mark onto the shown row.
+- F6: lots over 150 ft held YELLOW for another fire reason (dead end, narrow street, unclear road;
+  screen.py ~L5343-5355) lack FIRE-HOSE-VALIDATE, e.g. 1N130DC00400 189 ft. Raise it there too.
+Neither moves a colour.
