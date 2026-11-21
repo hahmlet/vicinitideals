@@ -45,6 +45,62 @@ def test_overlay_columns_any_touch_and_area():
     assert sqft[1] == 0.0 and sqft[2] == 0.0
 
 
+def test_portland_1996_flood_area_flags_portland_lots_only():
+    """PCC 24.50.040 E (FOLLOWUPS 202): the City's 1996 flood map is measured
+    on Portland ground and nowhere else, as its own flag beside FEMA's."""
+    from shapely.geometry import box
+
+    from common import load_overlays
+    from s0_acquire import PHASE2_LAYERS
+    from s5o_overlays import overlay_columns
+
+    [spec] = [o for o in load_overlays().overlays if o.key == "pdx_flood_1996"]
+    assert spec.action == "flag" and spec.jurisdictions == ["portland"] and spec.buffer_ft == 0
+    assert "24.50.040 E" in spec.citation
+    assert PHASE2_LAYERS["overlay_pdx_flood_1996"]["url"].endswith("/Public/Hazard/MapServer/30")
+
+    area = [box(50, 0, 200, 100)]
+    lots = _lots([
+        {"jurisdiction": "portland", "lot_geom": box(0, 0, 100, 100)},        # half inside
+        {"jurisdiction": "portland", "lot_geom": box(400, 0, 500, 100)},      # outside
+        {"jurisdiction": "gresham", "lot_geom": box(0, 0, 100, 100)},         # inside, not Portland
+        {"jurisdiction": "multnomah_unincorporated", "home_jurisdiction": "portland",
+         "lot_geom": box(0, 0, 100, 100)},                                    # a Portland pocket
+    ])
+    flags, sqft = overlay_columns(lots, spec, area)
+    assert list(flags) == [True, False, False, True]
+    assert sqft[0] == pytest.approx(50 * 100, rel=1e-6) and sqft[1] == sqft[2] == 0.0
+
+
+def test_portland_river_environmental_overlay_is_carved_on_portland_lots_only():
+    """PCC 33.475.440.O (FOLLOWUPS 202, 2026-11-18): the River Environmental
+    overlay "e" is carved whole on Portland ground and nowhere else."""
+    from shapely.geometry import box
+
+    from common import load_overlays
+    from s0_acquire import PHASE2_LAYERS
+    from s5o_overlays import carve_regions
+
+    [spec] = [o for o in load_overlays().overlays if o.key == "pdx_river_e"]
+    assert (spec.action, spec.layer, spec.within, spec.buffer_ft) == ("carve", "pdx_river_e", None, 0)
+    assert spec.jurisdictions == ["portland"] and "33.475.440.O" in spec.citation
+    assert PHASE2_LAYERS["overlay_pdx_river_e"]["url"].endswith("/BPS_Zoning_Code_Layers/MapServer/110")
+
+    e = [box(50, 0, 200, 100)]
+    lot = box(0, 0, 100, 100)
+    lots = _lots([
+        {"jurisdiction": "portland", "lot_geom": lot},                         # half inside
+        {"jurisdiction": "portland", "lot_geom": box(400, 0, 500, 100)},       # clear of it
+        {"jurisdiction": "gresham", "lot_geom": lot},                          # inside, not Portland
+        {"jurisdiction": "multnomah_unincorporated", "home_jurisdiction": "portland",
+         "lot_geom": lot},                                                     # a Portland pocket
+    ])
+    region = carve_regions(lots, [spec], {"pdx_river_e": e})
+    assert region[0].equals(box(50, 0, 100, 100))
+    assert region[1] is None and region[2] is None
+    assert region[3].equals(box(50, 0, 100, 100))
+
+
 def test_fill_holes_recovers_the_resource_a_buffer_ring_leaves_out():
     """A lot sitting inside a wetland must not read as clear ground.
 
@@ -288,3 +344,208 @@ def test_dem_stats_on_synthetic_ramp(tmp_path):
     # tile_of: inside -> 0, outside -> None (drives the tile-sorted loop).
     assert dem.tile_of(poly) == 0
     assert dem.tile_of(far) is None
+
+
+# --- FOLLOWUPS 204 (2026-11-18): Portland "s", Oregon City 17.44 and 17.48 ---
+
+
+def _one(key):
+    from common import load_overlays
+
+    [spec] = [o for o in load_overlays().overlays if o.key == key]
+    return spec
+
+
+def test_portland_scenic_overlay_flags_portland_lots_only():
+    """PCC 33.480: every Portland lot the "s" overlay touches is flagged; the
+    scenic corridor setback itself is FLATS's, per street line."""
+    from shapely.geometry import box
+
+    from s0_acquire import PHASE2_LAYERS
+    from s5o_overlays import overlay_columns
+
+    spec = _one("pdx_scenic")
+    assert spec.action == "flag" and spec.jurisdictions == ["portland"] and spec.buffer_ft == 0
+    assert "33.480.035" in spec.citation
+    assert PHASE2_LAYERS["overlay_pdx_scenic"]["url"].endswith("/BPS_Zoning_Code_Layers/MapServer/137")
+
+    s = [box(50, 0, 200, 100)]
+    lot = box(0, 0, 100, 100)
+    lots = _lots([
+        {"jurisdiction": "portland", "lot_geom": lot},                         # half inside
+        {"jurisdiction": "portland", "lot_geom": box(400, 0, 500, 100)},       # clear of it
+        {"jurisdiction": "gresham", "lot_geom": lot},                          # inside, not Portland
+        {"jurisdiction": "portland", "lot_geom": box(-50, 0, 50, 100)},        # the overlay stops at its line
+    ])
+    flags, sqft = overlay_columns(lots, spec, s)
+    assert list(flags) == [True, False, False, False]
+    assert sqft[0] == pytest.approx(50 * 100, rel=1e-6)
+
+
+def test_oregon_city_geologic_hazards_flag_the_site_and_carve_the_core(tmp_path, monkeypatch):
+    """OCMC 17.44: the whole overlay flags the property (17.44.025); the
+    landslide, landslide-buffer and slope polygons are carved (17.44.060.H);
+    the slope buffer alone is flagged and not carved."""
+    from shapely.geometry import box, mapping
+
+    import s5o_overlays
+    from s0_acquire import PHASE2_LAYERS
+    from s5o_overlays import carve_regions, overlay_columns
+
+    site, core = _one("oregon_city_geohazard"), _one("oregon_city_geohazard_core")
+    assert (site.action, site.layer) == ("flag", "oregon_city_geohazard")
+    assert (core.action, core.layer, core.buffer_ft) == ("carve", "oregon_city_geohazard", 0)
+    assert site.jurisdictions == core.jurisdictions == ["oregon_city"]
+    assert not site.keep_where
+    assert core.keep_where == {"IN_LANDSLIDE": ["Y"], "IN_LANDSLIDE_BUFFER": ["Y"], "IN_SLOPE": ["Y"]}
+    held = PHASE2_LAYERS["overlay_oregon_city_geohazard"]
+    assert held["url"].endswith("/HazardsAndFloodInfo_PUBLIC/MapServer/11")
+    assert set(core.keep_where) <= set(held["fields"])
+
+    def marks(**yes):
+        base = dict.fromkeys(("IN_SLOPE", "IN_SLOPE_BUFFER", "IN_LANDSLIDE", "IN_LANDSLIDE_BUFFER"), "N")
+        base.update({k: "Y" for k in yes})
+        return base
+
+    monkeypatch.setattr(s5o_overlays, "RAW_DIR", tmp_path)
+    _write_layer(tmp_path / "overlay_oregon_city_geohazard.geojson", [
+        (marks(IN_LANDSLIDE=1), mapping(box(0, 0, 20, 100))),            # a mapped landslide
+        (marks(IN_LANDSLIDE_BUFFER=1), mapping(box(20, 0, 40, 100))),    # its buffer
+        (marks(IN_SLOPE=1), mapping(box(200, 0, 220, 100))),             # a 25 percent slope
+        (marks(IN_SLOPE_BUFFER=1), mapping(box(220, 0, 260, 100))),      # the slope's buffer
+    ])
+    whole = s5o_overlays._load_layer_geoms("overlay_oregon_city_geohazard")
+    kept = s5o_overlays._load_layer_geoms("overlay_oregon_city_geohazard", keep_where=core.keep_where)
+    assert len(whole) == 4 and sorted(g.bounds[0] for g in kept) == [0, 20, 200]
+
+    lots = _lots([
+        {"jurisdiction": "oregon_city", "lot_geom": box(0, 0, 100, 100)},      # landslide and buffer on it
+        {"jurisdiction": "oregon_city", "lot_geom": box(210, 0, 300, 100)},    # slope and slope buffer
+        {"jurisdiction": "oregon_city", "lot_geom": box(230, 0, 300, 100)},    # the slope buffer only
+        {"jurisdiction": "oregon_city", "lot_geom": box(400, 0, 500, 100)},    # clear of the overlay
+        {"jurisdiction": "west_linn", "lot_geom": box(0, 0, 100, 100)},        # inside, not Oregon City
+    ])
+    flags, _ = overlay_columns(lots, site, whole)
+    assert list(flags) == [True, True, True, False, False]
+    region = carve_regions(lots, [core], {"oregon_city_geohazard_core": kept})
+    assert region[0].equals(box(0, 0, 40, 100))
+    assert region[1].equals(box(210, 0, 220, 100))
+    assert region[2] is None and region[3] is None and region[4] is None
+
+
+def test_oregon_city_greenway_kills_oregon_city_lots_only():
+    """OCMC 17.48.050: a Greenway permit for all developments, as Milwaukie's
+    conditional use is -- a kill, measured on Oregon City ground alone."""
+    from shapely.geometry import box
+
+    from s0_acquire import PHASE2_LAYERS
+    from s5o_overlays import overlay_columns
+
+    spec, mil = _one("oregon_city_greenway"), _one("milwaukie_greenway")
+    assert spec.action == mil.action == "kill"
+    assert spec.jurisdictions == ["oregon_city"] and "17.48.050" in spec.citation
+    assert PHASE2_LAYERS["overlay_oregon_city_greenway"]["url"].endswith(
+        "/WaterAndNaturalResources/MapServer/10")
+
+    wrg = [box(0, 0, 150, 100)]
+    lots = _lots([
+        {"jurisdiction": "oregon_city", "lot_geom": box(0, 0, 100, 100)},      # whole lot inside
+        {"jurisdiction": "oregon_city", "lot_geom": box(100, 0, 200, 100)},    # part inside
+        {"jurisdiction": "oregon_city", "lot_geom": box(400, 0, 500, 100)},    # outside
+        {"jurisdiction": "milwaukie", "lot_geom": box(0, 0, 100, 100)},        # inside, not Oregon City
+    ])
+    flags, _ = overlay_columns(lots, spec, wrg)
+    assert list(flags) == [True, True, False, False]
+
+
+def test_clackamas_landslides_flag_the_lot_and_carve_the_mapped_ground():
+    """ZDO 1003.02: no development in an area of land movement short of a
+    Type II permit -- the state's mapped deposits and scarp flanks are carved,
+    and the unincorporated lot holding any of either is flagged."""
+    from shapely.geometry import box
+
+    from s0_acquire import DSL_BBOX_4326, PHASE2_LAYERS
+    from s5o_overlays import carve_regions, overlay_columns
+
+    for key, layer in (("clackamas_landslide", "/SLIDO_Inventory/MapServer/11"),
+                       ("clackamas_landslide_scarp", "/SLIDO_Inventory/MapServer/3")):
+        site, core = _one(key), _one(f"{key}_core")
+        assert (site.action, site.layer) == ("flag", key)
+        assert (core.action, core.layer, core.buffer_ft) == ("carve", key, 0)
+        assert site.jurisdictions == core.jurisdictions == ["clackamas_unincorporated"]
+        assert not site.keep_where and not core.keep_where
+        assert "1003.02(A)" in site.citation and "No development or grading shall be allowed" in core.citation
+        held = PHASE2_LAYERS[f"overlay_{key}"]
+        assert held["url"].endswith(layer) and held["bbox"] == DSL_BBOX_4326
+
+    site, core = _one("clackamas_landslide"), _one("clackamas_landslide_core")
+    slide = [box(0, 0, 60, 100)]
+    lots = _lots([
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(0, 0, 50, 100)},     # whole lot on it
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(40, 0, 140, 100)},   # a fan across one end
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(61, 0, 161, 100)},   # a foot clear of it
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(400, 0, 500, 100)},  # clear
+        {"jurisdiction": "gladstone", "lot_geom": box(0, 0, 50, 100)},                    # on it, a city's lot
+    ])
+    flags, _ = overlay_columns(lots, site, slide)
+    assert list(flags) == [True, True, False, False, False]
+    region = carve_regions(lots, [core], {"clackamas_landslide_core": slide})
+    assert region[0].equals(box(0, 0, 50, 100))       # nothing left to stand on
+    assert region[1].equals(box(40, 0, 60, 100))      # the pod must stand clear of this
+    assert region[2] is None and region[3] is None and region[4] is None
+
+
+def test_gladstone_landslide_ground_is_flagged_and_never_carved():
+    """GMC 17.58.020(2): a study before the building permit on unstable soils,
+    ruled YELLOW with a note (2026-11-18-gladstone-landslide-yellow-note). The
+    county's SLIDO layers flag a Gladstone lot that holds any of them and carve
+    nothing; the county's own keys still pass Gladstone by."""
+    from shapely.geometry import box
+
+    from s5o_overlays import carve_regions, overlay_columns
+
+    slide = [box(0, 0, 60, 100)]
+    lots = _lots([
+        {"jurisdiction": "gladstone", "lot_geom": box(40, 0, 140, 100)},                 # holds some of it
+        {"jurisdiction": "gladstone", "lot_geom": box(61, 0, 161, 100)},                 # a foot clear
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(0, 0, 50, 100)},    # the county's own
+    ])
+    for key, county in (("gladstone_landslide", "clackamas_landslide"),
+                        ("gladstone_landslide_scarp", "clackamas_landslide_scarp")):
+        site = _one(key)
+        assert (site.action, site.layer, site.jurisdictions) == ("flag", county, ["gladstone"])
+        assert "17.58.020(2)" in site.citation
+        flags, _ = overlay_columns(lots, site, slide)
+        assert list(flags) == [True, False, False]
+    region = carve_regions(lots, [_one("clackamas_landslide_core")], {"clackamas_landslide_core": slide})
+    assert region[0] is None and region[1] is None
+
+
+def test_clackamas_floodplain_district_carves_the_flood_fringe_there_only():
+    """ZDO 845.01(3): no quadplex or townhouse development in the Floodplain
+    Management District, which 703.04 applies to FEMA's flood area. The
+    fringe every other jurisdiction builds in with a raised floor is carved
+    in the unincorporated county, and stays fema_sfha's flag on the lot."""
+    from shapely.geometry import box
+
+    from s5o_overlays import carve_regions, overlay_columns
+
+    fmd, fringe = _one("clackamas_fmd"), _one("fema_sfha")
+    assert (fmd.action, fmd.layer, fmd.buffer_ft) == ("carve", "fema_sfha", 0)
+    assert fmd.jurisdictions == ["clackamas_unincorporated"]
+    assert "845.01(3)" in fmd.citation and "703.04" in fmd.citation and "703.05(J)" in fmd.citation
+    assert (fringe.action, fringe.layer, fringe.jurisdictions) == ("flag", "fema_sfha", "all")
+
+    sfha = [box(0, 0, 30, 100)]
+    lots = _lots([
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(0, 0, 30, 100)},    # wholly in the district
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(10, 0, 110, 100)},  # the district on one end
+        {"jurisdiction": "clackamas_unincorporated", "lot_geom": box(200, 0, 300, 100)}, # clear
+        {"jurisdiction": "gresham", "lot_geom": box(10, 0, 110, 100)},                   # fringe, by right there
+    ])
+    region = carve_regions(lots, [fmd], {"clackamas_fmd": sfha})
+    assert region[0].equals(box(0, 0, 30, 100))
+    assert region[1].equals(box(10, 0, 30, 100))
+    assert region[2] is None and region[3] is None
+    flags, _ = overlay_columns(lots, fringe, sfha)
+    assert list(flags) == [True, True, False, True]

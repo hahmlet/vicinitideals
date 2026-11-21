@@ -162,6 +162,8 @@ _LABELS: dict[str, str] = {
     "parking_covered_required": "covered parking required",
     "solar_shade_limit": "height capped by shade on the lot to the north",
     "alley_improved_required": "alley access only from an improved alley",
+    "min_density_conditions_use": "use allowed only at the minimum density",
+    "ground_floor_commercial_min_pct": "ground floor near the street in commercial use",
     "front_lot_line_corner": "which street is the front on a corner lot",
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
@@ -186,11 +188,13 @@ _LABELS: dict[str, str] = {
     "setback_rear_ft": "rear setback",
     "setback_side_ft": "interior side setback",
     "setback_side_total_ft": "combined side setbacks",
+    "setback_side_larger_ft": "larger of two unequal side setbacks",
     "setback_side_max_ft": "max. side setback",
     "setback_street_side_ft": "corner side yard (street side) setback",
     "setback_alley_side_ft": "alley-side setback",
     "setback_street_off_corridor_ft": "street setback off a mapped corridor",
     "setback_street_across_nonresidential_ft": "street setback facing no residential zone",
+    "setback_scenic_corridor_ft": "scenic corridor setback",
     "row_to_centerline_local_ft": "right-of-way to centerline, local street",
     "row_to_centerline_neighborhood_route_ft": "right-of-way to centerline, neighborhood route",
     "row_to_centerline_collector_ft": "right-of-way to centerline, collector",
@@ -252,6 +256,21 @@ _F: tuple[FieldDef, ...] = (
         "side_setback",
     ),
     FieldDef(
+        "setback_side_larger_ft",
+        "length_ft",
+        "The LARGER of two unequal side setbacks, where the code names both: "
+        "Milwaukie 19.301.5.A, \"one side yard shall be at least 5 ft and one "
+        "side yard shall be at least 10 ft\" (Steph 2026-11-18, rulings.yaml "
+        "2026-11-18-milwaukie-side-yards-5-and-10). setback_side_ft holds the "
+        "smaller, on every side lot line; this one is owed on ONE side lot "
+        "line, and the envelope lays it on whichever of the lot's two lets "
+        "the building fit -- on every side line where they do not fall in "
+        "two. Held as printed, not as a sum: the pair's total is printed "
+        "nowhere.",
+        False,
+        "side_setback",
+    ),
+    FieldDef(
         "setback_side_max_ft",
         "length_ft",
         "MAXIMUM side setback, read as holding EVERY side wall to the side "
@@ -283,6 +302,17 @@ _F: tuple[FieldDef, ...] = (
         "the shared number would open the far side yard too. The envelope "
         "applies it to the side edge on the alley and to no other; absent, "
         "that line takes setback_side_ft.",
+        False,
+    ),
+    FieldDef(
+        "setback_scenic_corridor_ft",
+        "length_ft",
+        "Minimum setback from a street lot line that abuts a mapped scenic "
+        "corridor (Portland 33.480.040.B.2.a and Table 480-1: 20 ft in most "
+        "base zones, 3 ft in RM2). A fact about ONE street line, so it is "
+        "held apart from setback_front_ft and read per line: the envelope "
+        "gives a street edge flagged on_scenic the larger of this and its "
+        "class's number, and no other edge; absent, no line takes it.",
         False,
     ),
     FieldDef(
@@ -889,6 +919,35 @@ _F: tuple[FieldDef, ...] = (
         "on is held at YELLOW (FAR-MIN) -- a bigger building could meet it -- "
         "and never failed on it. A net denominator the code names travels as "
         "`measured_on`, as a density's does.",
+        False,
+    ),
+    FieldDef(
+        "min_density_conditions_use",
+        "bool",
+        "True where the code writes the minimum density into the use "
+        "permission itself, not into the standards: Estacada EMC 16.26.020 "
+        "(D)(4) allows a fourplex in the Downtown zone \"provided that ... the "
+        "residential density of the development is not less than sixteen (16) "
+        "dwelling units per acre\". A lot one pod leaves under the density is "
+        "then not a big lot flagged for more homes (DENSITY-MIN, below the "
+        "yellow line) but a use that depends on more homes: held YELLOW with "
+        "DENSITY-USE, never GREEN (FOLLOWUPS 203). Steph may rule it RED: "
+        "`flats.score.screen.USE_DENSITY_MISS_IS_WALL`. Optional: absent "
+        "means the density is an ordinary standard.",
+        None,
+    ),
+    FieldDef(
+        "ground_floor_commercial_min_pct",
+        "percent",
+        "The least share of the building's ground floor, near the street, "
+        "the code requires in commercial (or customer-heavy civic) use: "
+        "Gresham GDC 4.1121(A), \"a minimum of 75 percent of a building's "
+        "ground-floor floor area within 40 feet of the right-of-way\" on named "
+        "stretches of E Powell, N Main and NE 3rd. The pod is four homes and "
+        "has none, but whether any of it stands within the code's distance of "
+        "that street is not measured, so a lot it reaches is held YELLOW with "
+        "GROUND-FLOOR-USE, never GREEN and not RED on this alone "
+        "(FOLLOWUPS 203). Optional: absent means no such rule was read.",
         False,
     ),
     FieldDef("max_coverage_pct", "percent", "Maximum building coverage, flat percentage.", True, "max_lot_coverage"),
@@ -2288,6 +2347,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # CX, 33.130.215.B.1.b), and a zone silent about it keeps the
         # across-the-street number on every street line.
         "setback_street_across_nonresidential_ft",
+        # The setback on a street line that abuts a mapped scenic corridor:
+        # one code in the corpus states it (Portland 33.480.040.B.2.a), and a
+        # code silent about it has no scenic corridor setback.
+        "setback_scenic_corridor_ft",
         # The right-of-way a lot gives up to reach a distance from the street's
         # centre line: one county's Middle Housing sections state it (Washington
         # County CDC 302-2.14 C(1) to 306), so silence is the ordinary case.
@@ -2316,6 +2379,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",
+        # One zone names two unequal side yards (Milwaukie R-MD, 19.301.5.A).
+        "setback_side_larger_ft",
         # One city states a maximum side setback (Hillsboro SCR-MD, SCR-HD, SCR-DNC).
         "setback_side_max_ft",
         "setback_front_max_ft",
@@ -2361,6 +2426,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "max_far",
         # A floor on the amount of building: Canby's Downtown Overlay alone.
         "min_far",
+        # Estacada D alone writes its density into the use (FOLLOWUPS 203).
+        "min_density_conditions_use",
+        # Gresham 4.1121's named streets alone (FOLLOWUPS 203).
+        "ground_floor_commercial_min_pct",
         "max_coverage_pct",
         "max_impervious_pct",
         "coverage_curve",

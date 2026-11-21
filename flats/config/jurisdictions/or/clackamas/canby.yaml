@@ -1871,7 +1871,34 @@ code:
 # wherever parking_front_prohibited holds (paper.side_court), and the rear court stands behind the
 # rear wall, in front of no facade. A street on neither list owes no ban, which the encoded ban only
 # over-asks. The rest of 16.41.060 is objectives and design vocabulary.
+# READ AND NOT ENCODED (FOLLOWUPS 204, 2026-11-18): the city's own resource and hazard rules, read
+# whole -- CMC 16.130 Riparian Preservation and 16.140 Wetlands from the export Steph saved that day
+# (data/flats/books/steph-drop-2026-11-18/canby/canby-or-1.html, which also holds 16.110 Historic
+# Preservation), checked against the city's December 2010 chapter PDFs, and the overlay zones
+# 16.37 (RO), 16.39 (WO) and 16.40 (H) from those PDFs (data/flats/books/overlays/canby/code/). None
+# reaches a GREEN today, so nothing is encoded:
+# - 16.130 bars structures and impervious surface in the riparian area (16.130.040 A), but the
+#   corridor exists only along the Molalla River, 75 ft from top of bank inside the city
+#   (16.130.030(1)) and the county's 100 ft outside it (16.130.030(2)); "Isolated wetlands and minor
+#   streams (including adjacent wetlands) have no riparian setback" (16.130.020(11)(c)). The nearest
+#   Canby green is 877 ft from the Molalla (USGS NHD flowline, measured 2026-11-18).
+# - 16.140 prohibits "New development or expansion of existing development" inside a locally
+#   significant wetland on the Canby Wetlands and Riparian Corridors Map (16.140.050(1), 16.140.030)
+#   and asks for a delineation within 50 ft of one. The map is adopted by reference and kept "on
+#   file" (16.37.020, 16.39.020); it is not public. The overlay zones that carry both chapters (RO,
+#   WO) and the hazard overlay H (16.40: flood-prone or steep-slope properties; uses beyond one
+#   house per lot are conditional) are drawn on the zoning map, and the adopted January 2014 zoning
+#   map, georeferenced with the lots placed on it, shows no RO, WO or H on any green; the Metro and
+#   state wetland layers show none within 200 ft (clackamas-overlay-check, 2026-11-18). An
+#   unmapped wetland that later meets DSL's criteria is the same removal-fill risk any city carries.
 crossrefs:
+  # FOLLOWUPS 105 round 5 (2026-11-13).
+  "10.1.20":
+    outcome: misread
+    note: >-
+      Not a reference: the 1984 ordinance's own numbering in the definitions' history notes,
+      "(Ord. 740 section 10.1.20(B) [part], 1984)" after each defined term (cmc.16.04.030.txt#L3
+      and sixty-five more). Every mention is that note; the same shape as 10.3.05 below.
   # FOLLOWUPS 105 round 3 (2026-11-08): every binding reference in this layer followed.
   # Eight of them are the 1984 ordinance's own numbering printed in the history notes.
   "10.3.05":

@@ -37,7 +37,7 @@ from flats.geom import curbs  # noqa: E402
 from flats.geom.curbs import Source, StreetEdges  # noqa: E402
 from flats.ingest.quadfit import fire_checked, lot_from_row, screen_lot  # noqa: E402
 from flats.score import flags as flag_plan  # noqa: E402
-from flats.score.screen import Triage  # noqa: E402
+from flats.score.screen import FIRE_HOSE_ALLOWANCE_FT, Triage  # noqa: E402
 from flats.score.slack import Verdict  # noqa: E402
 from flats.tests.test_fire import (  # noqa: E402
     X0,
@@ -325,7 +325,9 @@ def test_the_bridge_measures_the_curb_reading_only_where_the_strict_one_misses(c
     # A curb drawn 12 ft off the lot line: 8 ft nearer than the middle
     # (22 against 30), 18 nearer measured from the curb: a limit 9 ft short
     # of the middle's route.
-    tight = _limit(green, middle - 9.0)
+    # The screen passes to the limit plus the 5 ft allowance (rulings.yaml
+    # 2026-11-21-fire-hose-five-ft), so the limit is set 5 ft shorter.
+    tight = _limit(green, middle - 9.0 - FIRE_HOSE_ALLOWANCE_FT)
     got = fire_checked(tight, lot, (tree, geoms, edges), policy=policies[0], relief=policies[1])
     assert got.facts.fire_route_ft == pytest.approx(middle - 8.0, abs=0.01)
     assert got.facts.fire_route_curb_ft == pytest.approx(middle - 18.0, abs=0.01)
@@ -338,13 +340,26 @@ def test_the_bridge_measures_the_curb_reading_only_where_the_strict_one_misses(c
     assert got.facts.fire_route_ft == pytest.approx(middle - 8.0, abs=0.01)
     assert got.facts.fire_route_curb_ft is None
 
+    # The bridge measures against the same line the screen passes to: a
+    # route 4 ft past the code's figure is inside the 5 ft allowance
+    # (rulings.yaml 2026-11-21-fire-hose-five-ft), so it passes, and the
+    # curb reading is not measured for it.
+    over = _limit(green, middle - 12.0)
+    got = fire_checked(over, lot, (tree, geoms, edges), policy=policies[0], relief=policies[1])
+    assert got.facts.fire_route_ft == pytest.approx(middle - 8.0, abs=0.01)
+    assert got.facts.fire_route_curb_ft is None
+    assert got.signed.triage is not Triage.red
+    assert "FIRE-HOSE-VALIDATE" in {f.code for f in got.signed.flags}
+
 
 def test_an_unmeasured_street_red_on_the_middle_alone_is_flagged(corpus, policies) -> None:
     # Nothing measured: the strict route from the middle, the curb reading
     # from the narrowest street's curb, 10 ft nearer -- the old offset.
     lot, green, tree, geoms = _bridge(corpus, policies)
     middle = fire_checked(green, lot, (tree, geoms), policy=policies[0], relief=policies[1]).facts.fire_route_ft
-    got = fire_checked(_limit(green, middle - 5.0), lot, (tree, geoms), policy=policies[0], relief=policies[1])
+    got = fire_checked(
+        _limit(green, middle - 5.0 - FIRE_HOSE_ALLOWANCE_FT), lot, (tree, geoms), policy=policies[0], relief=policies[1]
+    )
     assert got.facts.fire_route_ft == pytest.approx(middle, abs=0.01)
     assert got.facts.fire_route_curb_ft == pytest.approx(middle - 10.0, abs=0.01)
     assert got.signed.triage is Triage.red

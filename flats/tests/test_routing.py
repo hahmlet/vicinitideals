@@ -251,6 +251,12 @@ OPEN = {
     #   The layer is switched off.
     "or/clackamas/lake-oswego 50.04.001.1 -> 50.04.003.10",
     "or/clackamas/lake-oswego 50.04.001.2 -> 50.04.003.10",
+    # - 40.35, Beaverton (2026-11-18, overlay-fixes-b, FOLLOWUPS 204 item 3):
+    #   70.20.10's pointer sends landmark changes and demolition to 40.35 Historic
+    #   Review, stored that day and read for the historic list
+    #   (flats/config/historic/protection.yaml `beaverton`, 40.35.10.1 and the
+    #   Type 3 demolition). A list reading, not a zone standard, so no zone cites it.
+    "or/washington/beaverton 70.20.10 -> 40.35",
     # - 60.50.25.14, Beaverton: Vehicle Camping, a use the pod is not.
     "or/washington/beaverton 20.05.20 -> 60.50.25.14",
     "or/washington/beaverton 20.10.20 -> 60.50.25.14",
@@ -289,6 +295,15 @@ OPEN = {
     # "are subject to" pattern no longer sees it. Set aside as before (trees out
     # of the screen, ruling 2026-11-01-trees-ignored-entered-per-lot).
     "or/multnomah/portland 33.537.140 -> 33.537.125",
+    # 2026-11-18 (FOLLOWUPS 204): arrived when the scenic corridor setback was
+    # quoted from 33.480.040.B.2.a. The pointer is B.2.e(1)-(3) (33.480.txt
+    # L157-L173): "When alterations are made to a site with an existing
+    # nonconforming use, allowed use, limited use, or conditional use, and the
+    # alterations are over the threshold stated in 33.258.070.D.2.a", the
+    # landscaping is brought up to standard. Alterations to a site that keeps
+    # its use; the pod is new development, which provides the landscaping "at
+    # the time of development" (L155-L156). Nothing is quoted from 33.258.
+    "or/multnomah/portland 33.480.040 -> 33.258.070",
     "or/multnomah/portland 33.537.150 -> 33.537.125",
     "or/clackamas/_unincorporated 401.04 -> 401.07",
     "or/clackamas/_unincorporated 406.04 -> 406.07",
@@ -392,6 +407,11 @@ OPEN = {
     "or/washington/beaverton 70.20.05 -> 70.20.10.6",
     "or/washington/hillsboro 12.50.140 -> 12.80.150",
     "or/washington/hillsboro 12.80.040 -> 12.80.170",
+    # Visible since Subchapter 12.70 was fetched (FOLLOWUPS 105 round 5, 2026-11-13):
+    # Development Review "subject to the Type II procedure as described in Section
+    # 12.70.040" (12.80/12.80.040.txt#L40). Notice and appeal steps; the tier the
+    # review lands in is carried by review_discretion. Listed open.
+    "or/washington/hillsboro 12.80.040 -> 12.70.040",
     # 2026-10-08: was FOLLOWED while EFU's farm-labor-housing variant was
     # encoded (its citation landed in the target). Steph's by-right-only
     # ruling removed that variant, so the row is open again. 39.4245(A)

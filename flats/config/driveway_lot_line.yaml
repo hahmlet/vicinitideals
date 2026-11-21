@@ -1,0 +1,108 @@
+# How close a driveway may come to a lot line that is not a street
+# (FOLLOWUPS 201 add-on G, the fg4-rate-B blind read, lot 41 1S112CC06300).
+#
+# Read by flats.geom.driveway_lot_line; the screen step is
+# flats.ingest.quadfit.driveway_lot_line_checked. Stored as printed: the
+# code's two figures and the condition that chooses between them.
+#
+# A place's figures are a floor on the gap between the drawn drive lane and
+# every lot line that is not a street (or an alley) -- the conservative
+# reading of "may be located as close as". The condition that picks the
+# figure is an unmeasured site fact here (`unmeasured`), so the screen takes
+# the larger figure for GREEN; a plan that clears only the smaller is YELLOW
+# with ACCESS-DRIVEWAY-SIDEWALK-TYPE; one that misses the smaller too fails
+# the standard.
+#
+# Options (FOLLOWUPS 205, Gladstone): `figures_ft` may instead be derived as
+# `offset_ft` (a curb cut's distance off the line) plus each `wings_ft`
+# (its approach wings, since the cut is measured wing to wing and the screen
+# draws only the throat), each stored as printed with its cite. `zones`
+# empty means every zone. `lines` names the lot lines measured to (side,
+# rear; default both). `miss: yellow` makes a plan short of the smaller
+# figure YELLOW with ACCESS-DRIVEWAY-LOT-LINE instead of RED, where the
+# code offers a way out the screen cannot weigh (default red).
+
+places:
+  or/washington/beaverton:
+    # 60.05.60.1.A: "the standards and guidelines in this section apply to
+    # single-detached dwellings ... and middle housing in the RMA, RMB, RMC,
+    # and CM-RM zoning districts" (60.05/60.05.60.txt#L5).
+    zones: [RMA, RMB, RMC, CM-RM]
+    figures_ft: [3, 6]
+    unmeasured: >-
+      the sidewalk type the Beaverton Engineering Design Manual classifies for
+      the street, which picks 3 ft or 6 ft; no layer holds it
+    cite: >-
+      Beaverton BDC Table 60.05.60.2 S12 (plexes): "Notwithstanding the corner
+      clearance for driveway standards in the Beaverton Engineering Design
+      Manual (EDM), driveways may be located as close as 3 or 6 feet from
+      property lines depending on sidewalk type classified by the EDM. This
+      standard does not apply to shared driveways serving two lots."; Table
+      60.05.60.3 S12.a (townhouses) prints the same 3 or 6 feet for lot lines
+      external to the development site
+    quote: "or/washington/beaverton/60.05/60.05.60.txt#L397-L399"
+    quote_also: "or/washington/beaverton/60.05/60.05.60.txt#L876"
+    via: "or/washington/beaverton/60.05/60.05.60.txt#L5"
+    # NOT CHANGED HERE (item 194's list, toward GREEN, needs a gain read):
+    # S12 opens "Notwithstanding the corner clearance for driveway standards
+    # in the ... EDM", so for these zones the EDM 210.21 C corner clearance
+    # the screen applies to Beaverton (driveway_spacing.yaml, 25 / 50 / 150
+    # ft from the cross street) may be stricter than the code asks of the pod.
+
+  or/clackamas/gladstone:
+    # GMC 17.50.040(14) installs curb cuts "according to city standards": the
+    # Public Works Design Standards 2017 (pwds.5.streets, FOLLOWUPS 205).
+    # 5.0070(D)(5): "Curb cuts shall be a minimum of 5 ft. from the property
+    # line, unless a shared driveway is installed" (L480, printed p.10), and
+    # (A) measures a curb cut "from the top of approach wing to the top of
+    # approach wing ... NOT just the 'throat' or drivable section" (L442-L444,
+    # p.9). (C) holds driveways to Standard Drawings 503A, 503B, 504A and 504B
+    # (L453). The drawings are scans with no text layer, read off the page
+    # images 2026-11-18 (Public Works Standard Drawings 2017,
+    # https://www.ci.gladstone.or.us/media/17156): 503A "Residential Driveway
+    # with Sidewalk Away from Curb" (PDF p.54) draws a 3' wing each side of a
+    # 10' min / 30' max throat; 503B "Residential Driveway with Sidewalk
+    # Adjacent to Curb" (p.55) a 6' wing each side of a 10' min / 24' max
+    # throat; 504A / 504B (commercial, pp.56-57) the same 3' / 6'. Neither
+    # drawing dimensions the approach to the property line. The screen draws
+    # the lane, the throat, so the lane must stand the 5 ft plus a wing off
+    # the line: 8 ft (503A) or 11 ft (503B). Which drawing applies turns on
+    # the sidewalk's place, which no layer holds: GREEN needs 11.
+    #
+    # Applies to every zone: 5.0070 governs every driveway approach.
+    # Measured to SIDE lines only: (D)(5) places the curb cut, at the street,
+    # off the property line beside it; a rear line is no curb cut's
+    # neighbour. The whole drawn lane is measured, not only its mouth: the
+    # stricter answer, as the lane runs straight from the street.
+    #
+    # Short of 8 ft is YELLOW, never RED (`miss: yellow`): "unless a shared
+    # driveway is installed" is a way out the screen cannot weigh (a
+    # neighbour's agreement), and PWDS 1.0060(D) leaves "any deviations" to
+    # the Public Works Director (pwds.1.general is not stored; Section One,
+    # printed p.2). Coordinator's brief 2026-11-18: yellow, never red.
+    lines: [side]
+    miss: yellow
+    offset_ft:
+      value: 5
+      cite: Gladstone PWDS 2017 5.0070(D)(5), curb cuts a minimum of 5 ft from the property line unless a shared driveway is installed (printed p.10)
+      quote: "or/clackamas/gladstone/pwds.5.streets.txt#L480"
+    wings_ft:
+      - value: 3
+        cite: Gladstone Public Works Standard Drawing 503A (2017), Residential Driveway with Sidewalk Away from Curb, 3' approach wing each side (Standard Drawings PDF p.54; scan, no text layer); 504A the same
+        drawing: "503A"
+        page: 54
+      - value: 6
+        cite: Gladstone Public Works Standard Drawing 503B (2017), Residential Driveway with Sidewalk Adjacent to Curb, 6' approach wing each side (Standard Drawings PDF p.55; scan, no text layer); 504B the same
+        drawing: "503B"
+        page: 55
+    unmeasured: >-
+      whether the street's sidewalk stands away from the curb (Standard
+      Drawing 503A, 3 ft wings) or against it (503B, 6 ft wings); no layer
+      holds it
+    cite: >-
+      Gladstone PWDS 2017 5.0070(D)(5): "Curb cuts shall be a minimum of 5 ft.
+      from the property line, unless a shared driveway is installed."; 5.0070(A):
+      curb cuts "are measured from the top of approach wing to the top of
+      approach wing"; Standard Drawings 503A (3' wings) and 503B (6' wings)
+    quote: "or/clackamas/gladstone/pwds.5.streets.txt#L480"
+    quote_also: "or/clackamas/gladstone/pwds.5.streets.txt#L442-L444,L453"

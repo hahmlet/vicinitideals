@@ -43,6 +43,8 @@ SUB_DISTRICT_BLOCKS = {2, 3, 15, 16, 17, 18, 19, 20, 22, 23}
 
 def test_every_drawn_condition_is_a_registered_condition() -> None:
     assert DRAWN_CONDITIONS == (
+        # Beaverton's Significant Groves, the city's own 2009 inventory polygons (FOLLOWUPS 204).
+        "beaverton_significant_grove",
         # Bethany ASC 1 and 1A, Map 5 of the Bethany Community Plan (FOLLOWUPS 130).
         "bethany_asc_1",
         "bethany_asc_1a",

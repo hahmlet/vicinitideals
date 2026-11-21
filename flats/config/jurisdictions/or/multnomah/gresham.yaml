@@ -1061,8 +1061,8 @@ readings:
       10.1102 applies "on land lying north of Marine Drive" and caps a NEW structure at "a height
       equivalent to an elevation of three feet above the elevation of that portion of the Marine
       Drive roadway which abuts the development site" -- three feet above a road, not thirty-five
-      above grade, which a 26-foot pod clears only where the site sits some twenty-three feet
-      below the roadway. That is registered as the site fact `north_of_marine_drive`, held
+      above grade, which the pod (20 ft; 26 ft when this was written) clears only where the site
+      sits some seventeen feet below the roadway. That is registered as the site fact `north_of_marine_drive`, held
       unmeasured, and the footnote reason records that Gresham has fourteen lots north of latitude
       45.5555, all LDR-5, all addressed on NE Marine Dr, thirteen red and one in review. THE LINE
       ON THIS CARD IS THE OTHER LIMB and it is the relieving one: 10.1102(B)'s 45 feet above grade
@@ -1543,6 +1543,21 @@ definitions:
     cite: "Gresham Development Code 3.0100, Lot, Corner Lot"
 
 crossrefs:
+  # FOLLOWUPS 105 round 5 (2026-11-13): the binding rows left in this layer.
+  "4.115":
+    outcome: misread
+    note: >-
+      A split of 4.1152: "Headings in Section 4.115 2 apply as follows" (4/4.1152.txt#L2;
+      also 4/4.1150.txt#L24 and eleven more in 4.1152). The column gap falls inside the
+      number. 4.1152 is held and was read whole by FOLLOWUPS 112; 4.1102(C) takes quadplexes
+      out of it (4/4.1102.txt#L13-L14).
+  "4.114":
+    outcome: misread
+    note: >-
+      A split of 4.1142, the Downtown street types: "For each street type in Section 4.114 2"
+      (4/4.1141.txt#L6, 4/4.1140.txt#L12, 4/4.1152.txt#L706). 4.1142 is held and its access
+      bars are encoded (no townhouse or parking access from Urban Boulevard, Beech, Main or
+      Stanley; the Downtown Local curb-cut permission).
   # FOLLOWUPS 105 round 4 (2026-11-09): binding since the max front setback was encoded.
   "10.0200":
     outcome: other_building
@@ -1786,6 +1801,33 @@ code:
     # 6.04), so the thinness guard reads it as a landing page and the corpus
     # watch re-refused it every sweep. Read 2026-08-26; unchanged 2026-11-09.
     allow_thin: true
+  # Future Street Plans (FOLLOWUPS 105 round 5, 2026-11-13; fetched under the
+  # standing download OK of 2026-11-09). Cited beside the flag-lot height limits
+  # (4.0136) and by the Downtown, Civic and Rockwood design standards. Read in
+  # full; the reading follows (the ruling went stale once the text was held).
+  - id: "9.0700.future-street-plans"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0700.pdf
+    title: "Section 9.0700 - Future Street Plans"
+    # READ 2026-11-13, NOT ENCODED (procedure):
+    # Fetched 2026-11-13 (9.0700.future-street-plans.txt). A Future Street Plan is required of
+    # Type II and III partitions and subdivisions, design reviews level D and E (C at the
+    # Manager's discretion), Special Use Review uses, and townhouse projects in MDR-24, THR-SW
+    # and HDR-PV (L40-L48). A quadplex on one lot is neither a land division nor a Special Use
+    # and the townhouse row is the unit-lot path; which design review level it takes is set in
+    # Article 7, not held, so a plan may be required. A plan is a drawing, not a distance. The 4.0136 mention is flag lot CREATION
+    # (4/4.0136.txt#L18), a land division. The design-standard mentions (4.1152, 4.1252, 7.0512 A1 S1) do
+    # not reach the pod: 4.1102(C) and 7.0502(B) exempt quadplexes and Table 4.1220 refuses
+    # one in Civic. What can still reach a pod lot: where an adopted future street abuts or
+    # crosses the site, the site plan shows the alignment (Downtown 9.0720 B, L123-L125;
+    # Rockwood 9.0731, L188-L190), the Manager "may require dedication" if a traffic analysis
+    # finds it needed and roughly proportional (L134-L139, L202-L206), and "may require
+    # modification ... to reserve portions of the site for future street acquisition",
+    # limiting them to landscaping or surface parking (9.0712, L103-L108). Every one of those
+    # is a decider's condition, never a stated distance, so at most it is the conditions tier
+    # (2026-10-14-review-tiers), GREEN with a flag inside the UGB
+    # (2026-10-15-clear-objective-green-flag). NOT ENCODED: no future-street map (Downtown
+    # Plan, Appendix 39, the Manager's recorded index) is held, so no lot can be told it is
+    # crossed. Run 124: 89 Gresham GREENs, 5 of them Downtown (DRL-1 1, DRL-2 4).
   # The chapter Table 4.0130's height cell points at. Every district column in
   # that table prints its maximum height with note 12 stuck to the number --
   # "35 ft.12" -- and note 12 sends a shoreline lot here. The footnote ledger
@@ -4800,8 +4842,17 @@ zones:
         - value: 25
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54-L55,L139"
+        # Note 8's alley figure, 16, where the alley is observed along the
+        # whole rear line (`alley_at_rear`, which the bridge holds only where
+        # the alley's cover vouches for the whole line): every home lot runs
+        # street to rear, so the corner home lot abuts it. An alley down a
+        # side line runs beside the far end lot, not the corner one, so it
+        # keeps the shared-access 25 (was `abuts_alley` until 2026-11-14).
+        # Steph 2026-11-14, rulings.yaml 2026-11-14-gresham-mdr24-alley-corner-
+        # width-16: the 2026-10-20 ruling's "whether or not an alley is
+        # observed" no longer hides the alley case.
         - value: 16
-          when: [unit_lots, corner_lot, abuts_alley]
+          when: [unit_lots, corner_lot, alley_at_rear]
           quote: "or/multnomah/gresham/4/4.0130.txt#L47,L54-L55,L139"
     orientation_constraint:
       # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
@@ -5937,6 +5988,26 @@ zones:
       cite: "GDC 3.0100, Primary Street: for the Downtown Design District the street type hierarchy of Map 4.1140 (Urban Boulevard, Main Avenue, Urban Local, other Unique Streets, Downtown Local)"
       quote: "or/multnomah/gresham/3/3.0103.txt#L762-L766"
       via: "or/multnomah/gresham/3/3.0103.txt#L220-L221"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Downtown. MAXIMUM front setback 15-20 ft + >=50% frontage occupancy
       (7.0420(J)) effectively force the long axis parallel to the street — axis_required. Max-front-setback
       placement band not modeled (blind spot).'
@@ -6179,6 +6250,26 @@ zones:
       cite: "GDC 3.0100, Primary Street: for the Downtown Design District the street type hierarchy of Map 4.1140 (Urban Boulevard, Main Avenue, Urban Local, other Unique Streets, Downtown Local)"
       quote: "or/multnomah/gresham/3/3.0103.txt#L762-L766"
       via: "or/multnomah/gresham/3/3.0103.txt#L220-L221"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Same as DRL-1; height 50 ft.'
   DCC:
     section: ["4.11", "7.042"]
@@ -6228,6 +6319,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 18
           when: [unit_lots]
@@ -6254,6 +6346,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 12
           when: [unit_lots]
@@ -6277,6 +6370,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: true
           when: [unit_lots]
@@ -6295,6 +6389,7 @@ zones:
           when: [alley_at_rear]
           cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
           quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+          via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
         - value: false
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
@@ -6311,11 +6406,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: lane
           when: [unit_lots]
           cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
           quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L106-L108"
     # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
     # from a single approach on the side of the corner lot.
     corner_access_street:
@@ -6324,6 +6421,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L99-L100,L887-L888"
       variants:
         - value: side
           when: [unit_lots]
@@ -6603,6 +6701,26 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: 'OPENED 2026-10-29 (FOLLOWUPS 109 chunk 5) as four townhouses on four unit lots, on the Townhouse P of Table 4.1120 and the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row of Table 4.1130, read as DMU reads them: front 10, street side 10, garage 15, side 5, rear 10 (3 on an alley), the row''s long face to the street (4.1152 S6; 7.0431 does not list DCC or DTM), the Downtown Local curb-cut permission as a judgement review, and Map 4.1140''s street-type bars (gresham_downtown_barred_street). The townhouse row''s maximum front setback (10 to 20 by street type) is not encoded here, as the plex row''s is not. The one-lot plex below is unchanged. Read against Tables 4.1120 and 4.1130 on 2026-08-19. The Downtown Commercial Core is the largest unencoded district in Gresham and it screens closed, which is worth stating precisely because the reason is narrow. A quadplex is not prohibited here; it is allowed on a small legacy lot -- 7,600 sq ft or less, 70 feet of frontage or less, north of NE 8th Street -- and two of those three gates are facts nobody has measured. The lot-area gate is measured and rides on the variant as a band, so the day frontage and that street line are computed the permission opens on the right lots rather than on all of them. Every dimensional standard comes from the Table 4.1130 row headed "Single-detached, duplex, triplex, and quadplex dwellings in any district" (L492): its numbers are identical across all six street-type columns, so nothing here turns on which street the lot fronts. Height 85 and floor area ratio 3.0 are the DCC column of a table whose second column is not a district but the N Main Avenue strip -- 45 feet and 1.5 -- and note 1 sends any part of a site within 110 feet of that centre line to it. Both of those numbers still clear a 26 ft pod, so the strip is ruled in the footnote ledger rather than encoded as a variant. The MAXIMUM front setback of this row (L508) is 20 feet on four street types and 15 on Beech; not encoded, for the same reason it is not encoded on DRL-1 and DRL-2, and the same blind spot.'
   DTM:
     section: ["4.11", "7.042"]
@@ -6652,6 +6770,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 18
           when: [unit_lots]
@@ -6678,6 +6797,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 12
           when: [unit_lots]
@@ -6701,6 +6821,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: true
           when: [unit_lots]
@@ -6719,6 +6840,7 @@ zones:
           when: [alley_at_rear]
           cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
           quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+          via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
         - value: false
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
@@ -6735,11 +6857,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: lane
           when: [unit_lots]
           cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
           quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L106-L108"
     # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
     # from a single approach on the side of the corner lot.
     corner_access_street:
@@ -6748,6 +6872,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L99-L100,L887-L888"
       variants:
         - value: side
           when: [unit_lots]
@@ -7023,6 +7148,26 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: 'OPENED 2026-10-29 (FOLLOWUPS 109 chunk 5) as four townhouses on four unit lots, on the Townhouse P of Table 4.1120 and the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row of Table 4.1130, read as DMU reads them: front 10, street side 10, garage 15, side 5, rear 10 (3 on an alley), the row''s long face to the street (4.1152 S6; 7.0431 does not list DCC or DTM), the Downtown Local curb-cut permission as a judgement review, and Map 4.1140''s street-type bars (gresham_downtown_barred_street). The townhouse row''s maximum front setback (10 to 20 by street type) is not encoded here, as the plex row''s is not. The one-lot plex below is unchanged. Read against Tables 4.1120 and 4.1130 on 2026-08-19. Downtown Transit Mid-Rise, and the same L1 limitation as DCC without the geography: a quadplex is allowed on a lot of record 6,500 sq ft or smaller with 70 feet of street frontage or less. The lot-area half is measured and rides on the variant as a band; the frontage maximum is not, so the base false binds. Read together with the minimum lot size the same table states for this building -- 5,000 sq ft -- the permission is a window rather than a threshold: between 5,000 and 6,500 sq ft, and nothing outside it. That is the shape a screen gets wrong by taking either number alone. Height 85 and floor area ratio 3.0 from the DTM column; minimum net density 20 units per acre, which four units clear on any lot small enough to qualify. Dimensional standards from the L492 row, identical across every street type.'
   DMU:
     section: ["4.11"]
@@ -7072,6 +7217,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 18
           when: [unit_lots]
@@ -7098,6 +7244,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: 12
           when: [unit_lots]
@@ -7121,6 +7268,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: true
           when: [unit_lots]
@@ -7139,6 +7287,7 @@ zones:
           when: [alley_at_rear]
           cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
           quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+          via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
         - value: false
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
@@ -7155,11 +7304,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      via: "or/multnomah/gresham/7/7.0420.txt#L4-L5"
       variants:
         - value: lane
           when: [unit_lots]
           cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
           quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L106-L108"
     # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
     # from a single approach on the side of the corner lot.
     corner_access_street:
@@ -7168,6 +7319,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L99-L100,L887-L888"
       variants:
         - value: side
           when: [unit_lots]
@@ -7317,6 +7469,26 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: >-
       Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
       unit lots, under Steph's 2026-10-15 ruling. Table 4.1120 reads NP for a
@@ -7369,6 +7541,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: true
           when: [unit_lots]
@@ -7387,6 +7560,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: 18
           when: [unit_lots]
@@ -7413,6 +7587,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: 12
           when: [unit_lots]
@@ -7436,6 +7611,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: true
           when: [unit_lots]
@@ -7449,11 +7625,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L53,L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: false
           when: [alley_at_rear]
           cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
           quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
         - value: false
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
@@ -7470,11 +7648,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: lane
           when: [unit_lots]
           cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
           quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L106-L108"
     # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
     # from a single approach on the side of the corner lot.
     corner_access_street:
@@ -7483,6 +7663,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L99-L100,L887-L888"
       variants:
         - value: side
           when: [unit_lots]
@@ -7632,6 +7813,26 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: >-
       Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
       unit lots, under Steph's 2026-10-15 ruling. Table 4.1120 reads NP for a
@@ -7684,6 +7885,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: true
           when: [unit_lots]
@@ -7702,6 +7904,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L22-L27"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: 18
           when: [unit_lots]
@@ -7728,6 +7931,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L43-L46,L53-L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: 12
           when: [unit_lots]
@@ -7751,6 +7955,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L53-L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: true
           when: [unit_lots]
@@ -7764,11 +7969,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L4-L5,L53,L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: false
           when: [alley_at_rear]
           cite: GDC 7.0420(B)(5)(c), parking spaces may be located in the rear yard setback when there is an alley
           quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
         - value: false
           when: [unit_lots]
           cite: GDC 4.1152(A)(4)(S14)(a)(i), townhouse off-street parking areas located in the rear yard
@@ -7785,11 +7992,13 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
       retrieved: '2026-08-27'
       quote: "or/multnomah/gresham/7/7.0420.txt#L56"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L66-L67"
       variants:
         - value: lane
           when: [unit_lots]
           cite: GDC 9.0822, driveway pass-through, and 4.1152(A)(4)(S14)(a)(i), townhouse side-yard parking prohibition
           quote: "or/multnomah/gresham/9.0800.parking.txt#L162-L163"
+          via: "or/multnomah/gresham/4.1100.downtown.txt#L54-L55,L106-L108"
     # 4.1152 S14(a)(ii): a townhouse project with a corner lot takes access
     # from a single approach on the side of the corner lot.
     corner_access_street:
@@ -7798,6 +8007,7 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
       retrieved: '2026-09-01'
       quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L13-L14"
+      via: "or/multnomah/gresham/4.1100.downtown.txt#L99-L100,L887-L888"
       variants:
         - value: side
           when: [unit_lots]
@@ -7948,6 +8158,26 @@ zones:
       value: judgement
       quote: "or/multnomah/gresham/4/4.1142.txt#L23-L24,L37"
       via: "or/multnomah/gresham/4/4.1140.txt#L7-L11"
+    ground_floor_commercial_min_pct:
+      # FOLLOWUPS 203. GDC 4.1121(A): on the north side of E Powell between
+      # NW Miller and NE Roberts, on N Main between E Powell and NE 4th, on NE
+      # 3rd between N Main and NE Hood and the north side of NE 3rd between NE
+      # Hood and NE Kelly, "a minimum of 75 percent of a building's
+      # ground-floor floor area within 40 feet of the right-of-way shall have
+      # Commercial uses or Civic uses". The pod's ground floor is four homes,
+      # and how much of it stands within 40 ft is not measured, so a lot on a
+      # named stretch is YELLOW (GROUND-FLOOR-USE), never GREEN. The stretches
+      # are typed onto the RLIS centrelines (flats.geom.first_floor_uses);
+      # not asked off them (4.1121(A) states the share "in the following
+      # locations" only); an unanswered fact holds the lot out of GREEN.
+      exempt: true
+      cite: Gresham GDC 4.1121(A), the required first-floor uses apply in the named locations only
+      quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
+      variants:
+        - value: 75
+          when: [gresham_first_floor_uses_street]
+          cite: Gresham GDC 4.1121(A), required first-floor uses on the named street stretches, a minimum of 75 percent of a building's ground-floor floor area within 40 feet of the right-of-way in Commercial or Civic uses
+          quote: "or/multnomah/gresham/4/4.1121.txt#L1-L6"
     notes: >-
       Opened 2026-10-28 (FOLLOWUPS 109 chunk 4) as four townhouses on four
       unit lots, under Steph's 2026-10-15 ruling. Table 4.1120 reads NP for a
@@ -8685,6 +8915,7 @@ zones:
     min_frontage_line:
       value: radius_end
       quote: "or/multnomah/gresham/4/4.0430.txt#L141,L144"
+      via: "or/multnomah/gresham/4/4.0430.txt#L8,L14-L18,L144"
     min_frontage_ft:
       value: 100
       quote: "or/multnomah/gresham/4/4.0430.txt#L8,L14-L18"
@@ -9141,6 +9372,7 @@ zones:
     min_frontage_line:
       value: radius_end
       quote: "or/multnomah/gresham/4/4.0430.txt#L141,L144"
+      via: "or/multnomah/gresham/4/4.0430.txt#L8,L14-L18,L144"
     min_frontage_ft:
       # Row B: 100 ft for residential. Note 11 rewrites it for townhouses --
       # 16 ft interior, 32 ft on a corner without an alley or shared access,

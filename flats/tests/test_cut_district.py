@@ -27,13 +27,39 @@ import shapely
 from shapely.geometry import Point
 
 from flats.encode.load import load_trusted
-from flats.geom.drawn import INSIDE_SHARE, OUTSIDE_SHARE, load_area, share_inside
-from flats.ingest.quadfit import _screen_lot_once, drawn_cut, lot_from_row, observed_facts
+from flats.geom.drawn import (
+    EDGE_MIN_SQFT,
+    INSIDE_SHARE,
+    OUTSIDE_SHARE,
+    edge_piece,
+    load_area,
+    observed_drawn,
+    share_inside,
+)
+from flats.geom.split_zone import PIECE_MIN_SQFT, REACH_MIN_SQFT
+from flats.ingest.quadfit import (
+    DISTRICT_EDGE,
+    DrawnEdge,
+    _plan_shapes,
+    _screen_lot_once,
+    drawn_cut,
+    drawn_edge_checked,
+    drawn_edges,
+    lot_from_row,
+    observed_facts,
+)
 from flats.rules.conditions import CONDITIONS, DRAWN_CONDITIONS
 from flats.rules.resolver import RuleSet
 from flats.score import flags as flag_plan, relief, slack
 from flats.score.configure import configure
-from flats.score.screen import AREA_FLAGS, AREA_REVIEWS, LotFacts, area_review
+from flats.score.screen import (
+    AREA_FLAGS,
+    AREA_REVIEWS,
+    CLOSER_LOOK_DISTRICT_EDGE,
+    LotFacts,
+    Triage,
+    area_review,
+)
 from flats.tests.test_quadfit_bridge import X0, Y0, pod4, row
 from flats.tests.test_worst_bound import OFF_PLAN_DISTRICTS
 
@@ -273,3 +299,134 @@ def test_a_cut_review_area_is_asked_as_if_inside() -> None:
     assert area_review(config) is None
     assert area_review(config, lot) == PLAN_REVIEW
     assert area_review(config, dataclasses.replace(lot, drawn_cut=())) is None
+
+
+# --- an answered lot whose plan stands across the line (split-zone tolerances) -------
+
+
+def _square() -> shapely.Polygon:
+    return shapely.box(0, 0, 1000, 1000)
+
+
+@pytest.mark.parametrize(
+    ("lot", "answer", "piece_sqft"),
+    [
+        (shapely.box(100, 100, 200, 200), True, None),  # wholly in
+        (shapely.box(2000, 0, 2100, 100), False, None),  # wholly out
+        (shapely.box(905, 0, 1005, 100), True, 500.0),  # 95 % in, 500 sq ft out
+        (shapely.box(-5, 0, 95, 100), True, 500.0),
+        (shapely.box(995, 0, 1095, 100), False, 500.0),  # 5 % in, 500 sq ft in
+        (shapely.box(999.5, 0, 1099.5, 100), False, None),  # 50 sq ft in: noise
+    ],
+)
+def test_the_piece_across_the_line_of_an_answered_lot(lot, answer, piece_sqft) -> None:
+    area = _square()
+    assert observed_drawn(lot, area) is answer
+    piece = edge_piece(lot, area, answer)
+    if piece_sqft is None:
+        assert piece is None
+    else:
+        assert piece.area == pytest.approx(piece_sqft)
+        assert piece.area >= EDGE_MIN_SQFT == PIECE_MIN_SQFT
+
+
+def test_a_cut_lot_has_no_edge_piece_because_it_is_unanswered() -> None:
+    lot = shapely.box(950, 0, 1050, 100)  # 50 % in
+    assert observed_drawn(lot, _square()) is None
+
+
+def _answered_near_line(area, inside: bool) -> shapely.Polygon:
+    """A 100 x 100 lot 95 % on one side of the area's longest edge."""
+    p = _edge_midpoint(area)
+    probe = p.buffer(2)
+    # Step off the edge along the normal until the lot sits 95 % on one side.
+    for d in [x / 2 for x in range(0, 400)]:
+        for sx, sy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            lot = shapely.box(p.x - 50 + sx * d, p.y - 50 + sy * d, p.x + 50 + sx * d, p.y + 50 + sy * d)
+            share = share_inside(lot, area)
+            want = 0.95 if inside else 0.05
+            if abs(share - want) < 0.01:
+                return lot
+    raise AssertionError(f"no lot found near {probe}")
+
+
+@pytest.mark.parametrize("inside", [True, False])
+def test_an_answered_lot_names_the_piece_across_the_line(trusted, inside) -> None:
+    layers = trusted.rules.layers
+    area = load_area(_review_file(layers))
+    lot = _answered_near_line(area, inside)
+    r = row(jurisdiction="washington_unincorporated", zone="R-9", lot_wkb=shapely.to_wkb(lot))
+    observed = observed_facts(r, layers)
+    assert observed[PLAN_REVIEW] is inside
+    assert drawn_cut(r, layers, observed) == ()
+    (edge,) = [e for e in drawn_edges(r, layers, observed) if e.condition == PLAN_REVIEW]
+    assert edge.inside is inside
+    assert 300 < edge.sqft < 700
+    # Overridden by something else (a map code): no edge on that answer.
+    flipped = {**observed, PLAN_REVIEW: not inside}
+    assert all(e.condition != PLAN_REVIEW for e in drawn_edges(r, layers, flipped))
+
+
+def test_wholly_inside_outside_and_cut_lots_have_no_edge(trusted) -> None:
+    layers = trusted.rules.layers
+    area = load_area(_review_file(layers))
+    geoms = getattr(area, "geoms", [area])
+    inside = max(geoms, key=lambda g: g.area).representative_point().buffer(3)
+    minx, miny, _, _ = area.bounds
+    outside = shapely.box(minx - 3000, miny - 3000, minx - 2900, miny - 2900)
+    cut = _edge_midpoint(area).buffer(10)
+    for lot in (inside, outside, cut):
+        r = row(jurisdiction="washington_unincorporated", zone="R-9", lot_wkb=shapely.to_wkb(lot))
+        observed = observed_facts(r, layers)
+        assert all(e.condition != PLAN_REVIEW for e in drawn_edges(r, layers, observed))
+
+
+def _green_rm2(corpus, policies):
+    """A drawn RM2 plan, taken as GREEN: the check moves only GREEN, and what
+    else holds this lot (its minimum density) is not what is tested here."""
+    s = _rm2(corpus, policies, 100.0, answers={FRONTAGE_AREA: False, EASTERN: False}, cut="(none)")
+    assert s.drawing is not None
+    green = [f for f in s.signed.flags if not flag_plan.severity_of(f)]
+    s = dataclasses.replace(
+        s,
+        screening=dataclasses.replace(s.screening, triage=Triage.green, reasons=()),
+        signed=dataclasses.replace(s.signed, triage=Triage.green, reasons=(), flags=tuple(green)),
+    )
+    assert s.signed.colour is flag_plan.Colour.green
+    return s
+
+
+def _lot_with_edge(geom) -> object:
+    lot = lot_from_row(row(**_big(100.0, 200.0), jurisdiction="portland", zone="RM2"))
+    edge = DrawnEdge(EASTERN, False, float(geom.area), geom)
+    return dataclasses.replace(lot, drawn_edges=(edge,))
+
+
+def test_a_plan_across_an_answered_line_is_yellow_and_names_the_district(corpus, policies) -> None:
+    s = _green_rm2(corpus, policies)
+    # The whole lot as the piece across the line: the plan surely stands on it.
+    lot = _lot_with_edge(shapely.box(X0 - 50, Y0 - 50, X0 + 150, Y0 + 250))
+    out = drawn_edge_checked(s, lot)
+    assert out.signed.colour is flag_plan.Colour.yellow
+    assert CLOSER_LOOK_DISTRICT_EDGE in out.signed.reasons
+    (flag,) = [f for f in out.signed.flags if f.code == DISTRICT_EDGE]
+    assert EASTERN in flag.source
+    assert flag_plan.severity_of(flag) >= flag_plan.colour_rules().yellow_at_severity
+
+
+def test_a_plan_clear_of_the_piece_or_on_a_sliver_of_it_keeps_its_colour(corpus, policies) -> None:
+    s = _green_rm2(corpus, policies)
+    far = shapely.box(X0 + 5000, Y0, X0 + 5100, Y0 + 100)
+    assert drawn_edge_checked(s, _lot_with_edge(far)) is s
+    # A piece the plan touches by 10 sq ft or less is the line's noise.
+    plan = shapely.union_all(_plan_shapes(s.drawing))
+    x0, y0, _, _ = plan.bounds
+    corner = shapely.box(x0, y0, x0 + 3, y0 + 3).intersection(plan)
+    assert 0 < corner.area <= REACH_MIN_SQFT
+    assert drawn_edge_checked(s, _lot_with_edge(corner)).signed.colour is flag_plan.Colour.green
+
+
+def test_a_lot_with_no_drawing_reaches_every_edge(corpus, policies) -> None:
+    s = dataclasses.replace(_green_rm2(corpus, policies), drawing=None)
+    far = shapely.box(X0 + 5000, Y0, X0 + 5100, Y0 + 100)
+    assert drawn_edge_checked(s, _lot_with_edge(far)).signed.colour is flag_plan.Colour.yellow

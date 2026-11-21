@@ -474,3 +474,101 @@ def test_the_bridge_holds_a_court_or_drive_in_the_corner_area(monkeypatch) -> No
     assert run(both, far_court, corner_lane).facts.sight_corner_parking
     # A city silent on parked cars: nothing read.
     assert not run(rule(), corner_court, corner_lane).facts.sight_corner_parking
+
+
+# --- the engineer-set area (Steph 2026-11-14) ---------------------------------
+
+
+ENGINEER_RULINGS = {
+    "or/clackamas/oregon-city": "2026-11-14-oregon-city-engineer-sight-area-green",
+    "or/washington/hillsboro": "2026-11-14-hillsboro-engineer-sight-area-green",
+}
+
+
+def test_only_oregon_city_and_hillsboro_leave_the_corner_area_to_the_engineer(layers) -> None:
+    marked = {
+        k: v.clear_vision.corner.engineer_set
+        for k, v in layers.items()
+        if v.clear_vision is not None and v.clear_vision.corner is not None and v.clear_vision.corner.engineer_set
+    }
+    assert marked == ENGINEER_RULINGS
+    for k in marked:
+        assert layers[k].clear_vision.corner.status == "unsettled"
+        # The drive's own area is not the ruling's: it still holds.
+        drive = layers[k].clear_vision.driveway
+        assert drive is None or not drive.engineer_set
+    text = Path("flats/config/rulings.yaml").read_text(encoding="utf-8")
+    for rid in ENGINEER_RULINGS.values():
+        assert f"- id: {rid}\n" in text
+
+
+def test_an_engineer_set_area_flags_and_keeps_nothing_for_sure() -> None:
+    from flats.score.screen import SIGHT_CORNER_ENGINEER
+
+    lot, edges = square()
+    r = rule(status="unsettled", legs_ft=(40.0,), engineer_set="2026-11-14-oregon-city-engineer-sight-area-green")
+    got = sight.corner_areas(lot, edges, r)
+    assert got.low.is_empty and got.high.area == pytest.approx(800.0)
+    assert got.reason == SIGHT_CORNER_ENGINEER
+    # Its alley corners too ("street" includes alley): the same area.
+    alone = sight.corner_areas(*alley_lot(), r)
+    assert alone.reason == SIGHT_CORNER_ENGINEER
+    # Only on an unsettled rule.
+    with pytest.raises(ValueError):
+        rule(engineer_set="x")
+
+
+def test_the_engineer_set_key_is_checked_at_load() -> None:
+    from flats.rules.loader import _parse_clear_vision
+
+    base = {"status": "unsettled", "kind": "wedge", "sight_ft": 500, "eye_back_ft": 14.5,
+            "source": "b.txt#L1", "note": "x" * 40}
+    ok = _parse_clear_vision({"corner": {**base, "engineer_set": "r-1"}}, where="w", problems=[])
+    assert ok.corner.engineer_set == "r-1"
+    for bad in (
+        {"corner": {**base, "status": "read", "engineer_set": "r-1"}},
+        {"corner": {**base, "engineer_set": ""}},
+        {"driveway": {**base, "engineer_set": "r-1"}},
+    ):
+        problems: list[str] = []
+        _parse_clear_vision(bad, where="w", problems=problems)
+        assert problems, bad
+
+
+def test_a_fit_held_only_by_the_engineer_set_area_is_green_with_its_flag() -> None:
+    from flats.score.flags import load_registry
+    from flats.score.screen import SIGHT_CORNER_ENGINEER, SIGHT_DRIVEWAY, Triage
+
+    green = _screen(sight_corner_doubt=SIGHT_CORNER_ENGINEER, sight_cite="OCMC 10.32")
+    assert green.triage is Triage.green and SIGHT_CORNER_ENGINEER not in green.reasons
+    assert any(f.code == "SIGHT-CORNER-ENGINEER" for f in green.flags)
+    assert load_registry()["SIGHT-CORNER-ENGINEER"].severity < 3
+    # Any measured sight rule still binds: the drive's area holds it YELLOW.
+    held = _screen(sight_corner_doubt=SIGHT_CORNER_ENGINEER, sight_driveway_doubt=True)
+    assert held.triage is Triage.yellow and SIGHT_DRIVEWAY in held.reasons
+
+
+def test_the_bridge_flags_a_court_in_the_engineer_set_area(monkeypatch) -> None:
+    from flats.ingest import quadfit
+    from flats.score.screen import SIGHT_CORNER_ENGINEER, LotFacts, Triage
+
+    monkeypatch.setattr(quadfit, "screen", lambda *a, **k: "rescreened")
+    monkeypatch.setattr(quadfit, "_if_signed", lambda *a, **k: "signed")
+    lot_geom, edges = square()
+    r = rule(status="unsettled", legs_ft=(40.0,), vehicles=True, vehicles_quote="v#L1",
+             engineer_set="2026-11-14-oregon-city-engineer-sight-area-green")
+    lot = SimpleNamespace(
+        clear_vision=SimpleNamespace(corner=r, driveway=None), lot_geom=lot_geom, edges=edges, zone="R",
+    )
+    green = SimpleNamespace(triage=Triage.green, colour=None)
+
+    def run(court: list):
+        s = _S(LotFacts(lot_sqft=10000), green, green,
+               {"fits": True, "court": court, "lane": None, "building": _ring(50, 50, 90, 90)})
+        return quadfit.sight_corner_court_checked(s, lot, policy=None, relief=None)
+
+    flagged = run(_ring(2, 2, 30, 30))
+    assert flagged.facts.sight_corner_doubt == SIGHT_CORNER_ENGINEER
+    assert not flagged.facts.sight_corner_parking and flagged.screening == "rescreened"
+    clear = run(_ring(60, 60, 95, 95))
+    assert clear.facts.sight_corner_doubt is None and clear.screening is green

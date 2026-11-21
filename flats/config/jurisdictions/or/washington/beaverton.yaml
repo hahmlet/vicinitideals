@@ -264,6 +264,29 @@ code:
   nth: 2
   end: "40.47. Legal Lot Determination"
   extraction: plain
+# Read 2026-11-18 for the historic list and the Significant Groves (FOLLOWUPS 204
+# items 3 and 4): what a landmark listing does, and what building in a grove takes.
+- id: "bdc.40.35.historic-review"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 40.35 - Historic Review"
+  start: "40.35. Historic Review"
+  nth: 2
+  end: "40.40. Home Occupation"
+  extraction: plain
+- id: "bdc.40.90.tree-plan"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 40.90 - Tree Plan"
+  start: "40.90. Tree Plan"
+  nth: 2
+  end: "40.91. Tree Applications"
+  extraction: plain
+- id: "bdc.60.60.trees-and-vegetation"
+  url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
+  title: "BDC 60.60 - Trees and Vegetation"
+  start: "60.60. Trees and Vegetation"
+  nth: 2
+  end: "60.61. Trees and Vegetation - Cooper Mountain"
+  extraction: plain
 - id: "bdc.60.05.design-review-standards"
   url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
   title: "BDC 60.05 - Design Review Design Principles, Standards and Guidelines"
@@ -551,11 +574,12 @@ defaults:
 # Beaverton street line takes no strip; the county-zoned pockets inside the
 # city read the county's 25 to 45 feet. A doubt (FOLLOWUPS 77).
 #
-# NOT ENCODED: minimum FAR. The Multiple Use table prints a minimum floor
-# area ratio (row B.1, 0.30 to 0.60; 20.20.15.txt#L20-L22)
-# and the Cooper Mountain table one for CM-CS and CM-HDR (row I.1, 0.4;
-# 20.22.15.txt#L75). No field holds a floor on FAR. A
-# four-unit pod on a large lot can fall under it; a doubt.
+# ENCODED 2026-11-18 (FOLLOWUPS 203): the Multiple Use table's minimum floor
+# area ratio (row B.1, 0.30 to 0.60; 20.20.15.txt#L20-L22) as `min_far` in
+# RC-E, TC-MU, TC-HDR, SC-MU, SC-HDR and SC-S. NOT ENCODED: the Cooper
+# Mountain table's (row I.1, 0.4 for CM-CS and CM-HDR; 20.22.15.txt#L75) and
+# the Downtown zones' (Chapter 70), outside that item's two tables; a
+# four-unit pod on a large lot can fall under them; a doubt.
 #
 # ENCODED 2026-10-21 (FOLLOWUPS 109): the frontage occupancy of
 # 60.05.15.6.A, "At least 60 percent of the site's Primary Frontage ...
@@ -661,6 +685,7 @@ zones:
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.90.definitions.txt#L2914-L2917"
+      via: "or/washington/beaverton/bdc.90.definitions.txt#L3"
     cite_default:
       cite: "Beaverton BDC 20.05 (MR Multi-Unit Residential), Tables 20.05.15 and 20.05.20.A"
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
@@ -779,6 +804,7 @@ zones:
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+      via: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2398-L2401"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -925,6 +951,7 @@ zones:
           when: [unit_lots]
           cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
           quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
+          via: "or/washington/beaverton/60.05/60.05.60.txt#L5-L6"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -977,6 +1004,7 @@ zones:
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+      via: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2398-L2401"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -1132,6 +1160,7 @@ zones:
           when: [unit_lots]
           cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
           quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
+          via: "or/washington/beaverton/60.05/60.05.60.txt#L5-L6"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -1184,6 +1213,7 @@ zones:
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+      via: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2398-L2401"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -1344,6 +1374,7 @@ zones:
           when: [unit_lots]
           cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
           quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
+          via: "or/washington/beaverton/60.05/60.05.60.txt#L5-L6"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -1405,6 +1436,7 @@ zones:
       url: https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf
       retrieved: '2026-09-29'
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2459"
+      via: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L2398-L2401"
     # SIDE-YARD PARKING, ROUND 3 (FOLLOWUPS 146, read 2026-11-05). 60.30.10.9.B lets middle-housing
     # parking stand in side and rear yards in this zone; the yard definition
     # (Chapter 90, Yard Side, bdc.90.definitions.txt#L2914-L2917) keeps a
@@ -1554,6 +1586,7 @@ zones:
           when: [unit_lots]
           cite: Beaverton BDC Table 60.05.60.3 S13.b-c, townhouse parking in the front yard only at 12 ft wide on any lot, and a consolidated driveway not allowed between the front building facade and the front lot line
           quote: "or/washington/beaverton/60.05/60.05.60.txt#L884,L887-L898"
+          via: "or/washington/beaverton/60.05/60.05.60.txt#L5-L6"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -2756,8 +2789,8 @@ zones:
   # BDC 20.20, Multiple Use Zoning Districts. Table 20.20.15 (columns
   # RC-E OI-WS C-WS TC-MU TC-HDR SC-MU SC-HDR SC-S SC-E1 SC-E3) and Table
   # 20.20.20.A. No row states a minimum lot area, a lot width or a height
-  # for the zones that admit the pod. NOT ENCODED: B.1 minimum FAR (no
-  # field). Note 70 (the South Cooper Mountain housing-variety rule) asks
+  # for the zones that admit the pod. B.1 minimum FAR encoded 2026-11-18
+  # (`min_far`, FOLLOWUPS 203). Note 70 (the South Cooper Mountain housing-variety rule) asks
   # one housing type of a site up to 15 acres, which the pod is.
   # ------------------------------------------------------------------
   RC-E:
@@ -2931,6 +2964,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L44"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (RC-E 0.30); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.30
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (RC-E 0.30); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 12 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -3107,6 +3161,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L47"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (TC-MU 0.50); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.50
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (TC-MU 0.50); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -3283,6 +3358,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L48"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (TC-HDR 0.30); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.30
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (TC-HDR 0.30); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -3468,6 +3564,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L50"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (SC-MU 0.40); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.40
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (SC-MU 0.40); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
@@ -3654,6 +3771,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L51"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (SC-HDR 0.40); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.40
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (SC-HDR 0.40); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
@@ -3838,6 +3976,27 @@ zones:
       cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
       quote: "or/washington/beaverton/60.05/60.05.15.txt#L102,L105-L106"
       via: "or/washington/beaverton/10/10.25.txt#L37,L52"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 20.20.15 row B.1 prints a minimum
+      # FAR for every Multiple Use column (SC-S 0.60); until now no field held
+      # it. FAR is "the ratio of gross floor area in square feet to net square
+      # footage on a site" (20.25.10.1.A); the pod's floor area over the whole
+      # lot is the lowest it can score, so a pass there is certain. Missed, it
+      # is the more-pods rule (rulings.yaml 2026-11-04-min-floor-area-more-pods):
+      # YELLOW with FAR-MIN, RED only where the pods it needs clearly cannot
+      # stand. Row B.2's lower figure needs a PUD or Design Review Build-Out
+      # Concept Plan, an application the pod does not make, so B.1 is held.
+      #
+      # A DOUBT, held: 20.25.10.1.C and .4 send "Multiple Use Developments with
+      # single-use residential buildings" to "minimum residential densities and
+      # non-residential minimum FARs ... as follows", and what follows is
+      # Figure 20.25.10.A, an image not stored. It may spare a residential-only
+      # building the FAR floor (row A.1 is the "Minimum for residential only
+      # project" density). Unread, so the floor is held (the conservative side).
+      value: 0.60
+      cite: "Beaverton BDC Table 20.20.15, B.1 Floor Area Ratio (FAR) - Minimum (SC-S 0.60); note 3 and 20.25.10.1.A"
+      quote: "or/washington/beaverton/20.20/20.20.15.txt#L13-L15,L20-L22,L105"
+      via: "or/washington/beaverton/20.25/20.25.10.txt#L4,L9,L22"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
@@ -4028,15 +4187,18 @@ zones:
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
       variants:
         - value: 12
           when: [beaverton_active_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
         - value: 16
           when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 60 du/net acre (all-
       residential development); 120 ft; front 6 (max 12), street side 6,
@@ -4198,15 +4360,18 @@ zones:
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
       variants:
         - value: 12
           when: [beaverton_active_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
         - value: 16
           when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre (18 where
       Figure 70.15.10.2.3 says so, not encoded); 65 ft; front 6 (max 16),
@@ -4367,15 +4532,18 @@ zones:
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
       variants:
         - value: 12
           when: [beaverton_active_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
         - value: 16
           when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 43 du/net acre; 75 ft;
       front 6 (max 16), street side 6, side 10 and rear 20 (0 as RC-BC).
@@ -4548,15 +4716,18 @@ zones:
       exempt: true
       cite: "Beaverton BDC 70.20.10.6.D.1, only building facades fronting the streets designated in Figure 70.20.10.6.2 are subject to the Active Ground Floor Design rules"
       quote: "or/washington/beaverton/70.20/70.20.10.txt#L486-L489"
+      via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
       variants:
         - value: 12
           when: [beaverton_active_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.3 and S2.c, Type B frontages may comply with the Residential Active Ground Floor Design, whose ground floor shall have a minimum floor-to-floor height of 12 feet"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L415,L491"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
         - value: 16
           when: [beaverton_active_frontage, beaverton_type_a_frontage]
           cite: "Beaverton BDC 70.20.10.6.D.2 and S1.a, Type A frontages comply with the Non-residential Active Ground Floor Design: minimum floor-to-floor height of the ground floor 16 feet (Areas C and D take a Type A frontage, D.4)"
           quote: "or/washington/beaverton/70.20/70.20.10.txt#L377-L378,L490,L492-L496"
+          via: "or/washington/beaverton/bdc.70.downtown.txt#L43-L45,L198-L202"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; 30 to 60 du/net acre; 60 ft;
       front 10 (max 20), street side 10, interior 0 (side 10 and rear 20
@@ -4709,6 +4880,43 @@ zone_rulings:
       (10.35.txt L1,L3), so the code zones a
       street as the land beside it and prints no ROW district. No lot
       stands on a street; nothing to screen.
+
+# Areas the city's own layers trace (flats/geom/drawn.py). FOLLOWUPS 204 item 4.
+drawn_areas:
+  beaverton_significant_grove:
+    condition: beaverton_significant_grove
+    zones: [MR, RMA, RMB, RMC, NS, CS, CC, GC, RC-E, TC-MU, TC-HDR, SC-MU, SC-HDR, SC-S, RC-BC, RC-OT, RC-MU, RC-DT]
+    file: or/washington/beaverton/significant-groves.geojson
+    source: >-
+      The City of Beaverton's own Inventory of Significant Trees and Groves
+      polygons, gisweb.beavertonoregon.gov Public_SharedServices/
+      pubNaturalResources MapServer layers 2, 3 and 4 ("2009 TI - Significant
+      Grove (a)", "(b)", "(c)"), queried in EPSG:2913 on 2026-11-18 and saved
+      unchanged but for 0.01 ft precision: 212 polygons, about 778 acres,
+      each with its grove code.
+    quote: "or/washington/beaverton/bdc.60.60.trees-and-vegetation.txt#L54-L62"
+    cite: BDC 60.60.15.2.C; 40.90.15.2.A.2-3 and C.4; 40.90.15.3.A.1-2; Chapter 90, Significant Grove
+    note: >-
+      A Significant Grove is a grove "mapped on the City's Inventory of
+      Significant Trees and Groves" outside the Cooper Mountain Community
+      Plan area (bdc.90.definitions.txt#L2359-L2361), so the Cooper Mountain
+      zones (CM-*), whose trees 40.91 and 60.61 govern, are not listed. In a
+      grove a project keeps 25 percent of the surveyed trees' DBH (15 percent
+      in a Multiple Use zone) or goes to a Tree Plan Three public hearing
+      (60.60.15.2.C.1, L54-L62); removing up to 75 (85) percent is Tree Plan
+      Two before the Director (bdc.40.90.tree-plan.txt#L116-L131), approved
+      where removal "is necessary to accommodate physical development where
+      no reasonable alternative exists" (L143-L144), and more is Tree Plan
+      Three, Type 3 (L181-L192). Those are judgement criteria and the
+      preserved share is of trees no public record counts, so inside the
+      urban growth boundary the lot is GREEN with CLEAR-OBJECTIVE
+      (rulings.yaml 2026-10-15-clear-objective-green-flag; ORS 197A.400's
+      exceptions do not name tree codes); where ORS 197A.400 does not reach
+      the lot it is a closer look with REVIEW-CONDITIONS. No tree limit moves
+      a colour (2026-11-01-trees-ignored-entered-per-lot): the flag records
+      the grove. Against FLATS' own lots (2026-11-10 table): 162 Beaverton
+      lots at least 90 percent inside, 485 the line cuts (asked as inside,
+      FOLLOWUPS 188), 664 touched at most 10 percent.
 
 # Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
 clear_vision:

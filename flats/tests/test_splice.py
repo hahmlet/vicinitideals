@@ -180,6 +180,29 @@ def test_the_audit_needs_a_full_run(tmp_path: Path) -> None:
         audit(tmp_path / "s", tmp_path / "wv")
 
 
+def test_a_partial_run_may_re_measure_the_lots_it_screened(tmp_path: Path) -> None:
+    """rel10b (2026-11-18): s4 re-run with the wide-road street line and s5o with the
+    FEMA layer that gained Portland's own study change the rows of the lots the
+    partial run re-screens. Those rows are replaced whole, so the splice takes them;
+    a changed row on a lot the partial run did not screen is still another county."""
+    s4a = _measured(tmp_path / "s4a.parquet", {"W1": 1.0, "W2": 2.0, "T1": 3.0})
+    s4b = _measured(tmp_path / "s4b.parquet", {"W1": 1.5, "W2": 2.0, "T1": 3.0})
+    s4c = _measured(tmp_path / "s4c.parquet", {"W1": 1.5, "W2": 2.5, "T1": 3.0})
+    base = bridge(tmp_path / "full", {"W1": "green", "W2": "red", "T1": "red"}, s4=s4a)
+    part = bridge(tmp_path / "p", {"W1": "yellow"}, s4=s4b, tlids=["W1"])
+
+    meta = splice(base, part, tmp_path / "out", change="W1 re-measured")
+
+    assert meta["s4"] == s4b
+    assert meta["lineage"]["splices"][-1]["measured"] == {"s4": s4b}
+    got = pd.read_parquet(tmp_path / "out" / "lots.parquet")
+    assert dict(zip(got["TLID"], got["if_signed"])) == {"W1": "yellow", "W2": "red", "T1": "red"}
+
+    wider = bridge(tmp_path / "p2", {"W1": "yellow"}, s4=s4c, tlids=["W1"])
+    with pytest.raises(SystemExit, match="1 measured lots changed 'area_sqft' outside"):
+        splice(base, wider, tmp_path / "out2", change="x")
+
+
 def test_a_new_measurement_column_splices_only_when_declared(tmp_path: Path) -> None:
     """The item 50 site twins: the partial's s5o adds a column and changes no old
     one. Undeclared it is another county; declared it splices and is recorded."""

@@ -515,6 +515,265 @@ def test_a_real_rear_alley_that_stops_short_leaves_the_north_of_the_line_uncover
 
 
 # ---------------------------------------------------------------------------
+# s4 -- a lot line on a road too wide for the 50 ft midpoint test
+# ---------------------------------------------------------------------------
+
+
+def _classify_wide(lot, streets, lots, rows=(), barriers=(), wide=True):
+    """s4 as it runs since 2026-11-18: the fabric (this lot, private
+    neighbours ``lots``, right-of-way ``rows``, river/rail/water
+    ``barriers``) and the public street centrelines the open-way test looks
+    across to. ``wide=False`` is s4 before that day."""
+    from s4_edges import classify_lot
+
+    sg = np.array(streets, dtype=object)
+    lg = np.array([lot, *lots, *rows, *barriers], dtype=object)
+    private = np.array([True] * (1 + len(lots)) + [False] * (len(rows) + len(barriers)))
+    barrier = np.array([False] * (1 + len(lots) + len(rows)) + [True] * len(barriers))
+    extra = dict(way_tree=STRtree(sg), way_geoms=sg, lot_barrier=barrier) if wide else {}
+    return classify_lot(
+        lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL,
+        lot_tree=STRtree(lg), lot_geoms=lg, lot_private=private, **extra,
+    )
+
+
+def _farmington():
+    """1S117CA01500 (15970 SW Farmington Rd, Washington County R-9), squared
+    off: 263 ft along Farmington Rd on the north, its centreline 60 ft out
+    (the lot line's midpoint is 59.8 ft from it in s1_streets); 127 ft along
+    SW 160th Ave on the west, its centreline 36 ft out; private lots south
+    and east."""
+    lot = Polygon([(0, 0), (263, 0), (263, 127), (0, 127)])
+    farmington = LineString([(-300, 187), (600, 187)])
+    sw_160th = LineString([(-36, -300), (-36, 400)])
+    neighbours = [shapely.box(0, -100, 263, 0), shapely.box(263, 0, 400, 127)]
+    return lot, [farmington, sw_160th], neighbours
+
+
+def test_a_corner_on_a_wide_arterial_is_a_corner_lot():
+    """FOLLOWUPS 201 item 5: the Farmington line's midpoint is past the 50 ft
+    test, so s4 read the corner lot as a one-street lot on 160th and the
+    busy-road driveway spacing check never ran -- a false GREEN. With the
+    right-of-way open across the line, it is a street line and the lot a
+    corner lot."""
+    lot, streets, neighbours = _farmington()
+    before = _classify_wide(lot, streets, neighbours, wide=False)
+    assert [e[4] for e in before["edges"]].count("F") == 1
+    assert before["tier"] == "A"
+
+    for rows in ([], [shapely.box(-300, 127, 600, 247)]):  # a gap, or a ROADS polygon
+        r = _classify_wide(lot, streets, neighbours, rows)
+        fronts = [e for e in r["edges"] if e[4] == "F"]
+        assert len(fronts) == 2
+        assert r["tier"] == "B"
+        assert r["frontage_ft"] == pytest.approx(263 + 127, abs=1)
+        north = [e for e in fronts if min(e[1], e[3]) > 120]
+        assert len(north) == 1 and abs(north[0][2] - north[0][0]) == pytest.approx(263, abs=1)
+
+
+def test_a_wide_road_behind_a_neighbours_lot_is_not_frontage():
+    """The 50 ft threshold stays: a street 60 ft away across a neighbour's
+    lot (audit_landlocked's 6,947) is not frontage, however open the rest of
+    the gap is."""
+    lot, streets, neighbours = _farmington()
+    between = shapely.box(-10, 127, 300, 160)
+    r = _classify_wide(lot, streets, [*neighbours, between])
+    assert [e[4] for e in r["edges"]].count("F") == 1
+    assert r["tier"] == "A"
+
+
+def test_a_street_beyond_a_river_or_rail_line_is_not_frontage():
+    """A river, rail or water polygon is not private land, but a street on
+    its far side is not one the lot abuts."""
+    lot, streets, neighbours = _farmington()
+    river = shapely.box(-300, 140, 600, 170)
+    r = _classify_wide(lot, streets, neighbours, barriers=[river])
+    assert [e[4] for e in r["edges"]].count("F") == 1
+
+
+def test_a_lot_on_the_wide_road_alone_stays_landlocked():
+    """The open-way test adds a missed second street; it does not give a
+    landlocked lot its first. Without 160th the lot keeps tier D (RED) --
+    recovering those lots moves them toward GREEN, a separate change."""
+    lot, (farmington, _sw_160th), neighbours = _farmington()
+    west = shapely.box(-100, 0, 0, 127)
+    r = _classify_wide(lot, [farmington], [*neighbours, west])
+    assert r["tier"] == "D"
+    assert r["edges"] == []
+
+
+def test_a_short_stretch_of_open_road_does_not_make_the_line_a_street():
+    """Three rays of five must find the road: a neighbour across most of the
+    line, the road open only past its east end, leaves it a side line."""
+    lot, streets, neighbours = _farmington()
+    across = shapely.box(-10, 127, 200, 160)  # covers the 10/30/50/70 % rays
+    r = _classify_wide(lot, streets, [*neighbours, across])
+    assert [e[4] for e in r["edges"]].count("F") == 1
+
+
+# ---------------------------------------------------------------------------
+# s4 -- a freeway, a ramp or a railroad across the line is not a street
+# ---------------------------------------------------------------------------
+
+
+def _real_lot(tlid, *, kinds=True, rail=True, drop=()):
+    """One lot of ``fixtures/open_way_lots.json`` through s4 as `main` runs
+    it: the fabric round it, the street centrelines by RLIS type, the
+    railroads. ``kinds=False`` is s4 as release 10 ran it (no freeway, ramp
+    or railroad known); ``drop`` leaves street names out."""
+    import json
+    import re
+    from pathlib import Path
+
+    from common import NOT_A_TAXLOT_RE
+    from s4_edges import DRIVE_TYPES, WIDE_ROAD_BARRIER_RE, classify_lot, limited_kind
+
+    fx = json.loads((Path(__file__).parent / "fixtures" / "open_way_lots.json").read_text())[tlid]
+    lot = shapely.from_wkt(fx["lot"])
+    fabric = [(tlid, fx["lot"]), *fx["fabric"]]
+    lg = np.array([shapely.from_wkt(w) for _, w in fabric], dtype=object)
+    private = np.array([not re.search(NOT_A_TAXLOT_RE, t) for t, _ in fabric])
+    barrier = np.array([bool(re.search(WIDE_ROAD_BARRIER_RE, t)) for t, _ in fabric])
+    streets = [s for s in fx["streets"] if s[0] not in drop]
+    sg = np.array([shapely.from_wkt(s[3]) for s in streets], dtype=object)
+    limited = np.array([limited_kind(s[1], s[2], s[0]) for s in streets], dtype=object)
+    drive = np.array([s[1] in DRIVE_TYPES for s in streets])
+    plain = np.array([k is None and not d for k, d in zip(limited, drive)])
+    ways = sg[~drive]
+    extra = {}
+    if kinds:
+        rails = np.array([shapely.from_wkt(w) for w in fx["rail"]], dtype=object)
+        extra = dict(
+            street_limited=limited, street_plain=plain, way_limited=limited[~drive],
+            rail_tree=STRtree(rails) if rail and len(rails) else None, rail_geoms=rails,
+        )
+    r = classify_lot(
+        lot, STRtree(sg), sg, STREET_THRESHOLD, SIMPLIFY_TOL,
+        lot_tree=STRtree(lg), lot_geoms=lg, lot_private=private,
+        way_tree=STRtree(ways), way_geoms=ways, lot_barrier=barrier, **extra,
+    )
+    return fx, r
+
+
+def _way_of(r, x1, y1, x2, y2):
+    """The ``way_kinds`` entry of the street edge between two corners."""
+    for e, k in zip(r["edges"], r.get("way_kinds") or [None] * len(r["edges"])):
+        ends = {(round(e[0]), round(e[1])), (round(e[2]), round(e[3]))}
+        if ends == {(round(x1), round(y1)), (round(x2), round(y2))}:
+            return e[4], k
+    raise AssertionError("no such edge")
+
+
+def test_a_line_facing_only_a_freeway_ramp_is_marked_a_freeway_line():
+    """1S2E04AC -09600 (Portland R2.5), release 10's false GREEN: the east
+    line faces the Washington St ramp of I-205 and the freeway behind it and
+    no street. The open-way test crossed the ramp centreline and called the
+    lot a corner lot. s4 now says what the way is; the reading without the
+    line is the one-street lot on Taylor St it was before."""
+    from s4_edges import limited_readings, with_way_kinds
+
+    fx, before = _real_lot("1S2E04AC  -09600", kinds=False)
+    assert before["tier"] == fx["new"]["tier"] == "B"
+    assert _way_of(before, 421.1, 515.3, 417.4, 377.1) == ("F", None)
+
+    _, r = _real_lot("1S2E04AC  -09600")
+    assert [e[:5] for e in r["edges"]] == [e[:5] for e in before["edges"]]  # s4's classes do not move
+    assert _way_of(r, 421.1, 515.3, 417.4, 377.1) == ("F", "freeway")
+    assert _way_of(r, 331.1, 517.7, 421.1, 515.3) == ("F", None)  # Taylor St
+
+    kinds = with_way_kinds([["street" if e[4] == "F" else None for e in r["edges"]]], [r])
+    assert kinds[0].count("freeway") == 1 and kinds[0].count("street") == 1
+    (alt,) = limited_readings([r], kinds, [None])
+    assert set(alt) == {"limited"}
+    assert alt["limited"]["tier"] == fx["base"]["tier"] == "A"
+    fronts = [e for e in alt["limited"]["edges"] if e[4] == "F"]
+    assert len(fronts) == 1 and round(fronts[0][1]) in (515, 518)
+
+
+def test_a_street_beyond_a_railroad_is_marked_a_rail_line():
+    """1S205CD03601 (Hillsboro MR-2), release 10's false GREEN: the 303 ft
+    line looks across open right-of-way to Tualatin Valley Hwy 91 ft out,
+    and the Portland & Western track lies 30 ft out between them. The taxlot
+    file draws no rail polygon there, so only the OSM railway can say."""
+    fx, before = _real_lot("1S205CD03601", kinds=False)
+    assert before["tier"] == fx["new"]["tier"] == "B"
+    assert _way_of(before, 316.2, 556.5, 572.4, 394.6) == ("F", None)
+
+    _, r = _real_lot("1S205CD03601")
+    assert _way_of(r, 316.2, 556.5, 572.4, 394.6) == ("F", "rail")
+    assert _way_of(r, 572.4, 394.6, 514.9, 295) == ("F", None)  # Minter Bridge Rd
+
+    # No railroad given: the highway is a street the lot is open to.
+    _, bare = _real_lot("1S205CD03601", rail=False)
+    assert _way_of(bare, 316.2, 556.5, 572.4, 394.6) == ("F", None)
+
+
+def test_a_street_nearer_than_the_freeway_keeps_the_line_a_street_line():
+    """The Farmington corner with a freeway beyond the arterial: the street
+    is crossed first, so the line is the street's. With the freeway nearer
+    than the street, it is the freeway's."""
+    from s4_edges import _open_way_kind
+
+    lot, (farmington, sw_160th), neighbours = _farmington()
+    lg = np.array([lot, *neighbours], dtype=object)
+    private = np.array([True] * len(lg))
+    args = (0.0, 127.0, 263.0, 127.0, -1.0, STRtree(lg), lg, private, None)
+    far = LineString([(-300, 240), (600, 240)])
+    near = LineString([(-300, 150), (600, 150)])
+    for freeway, want in ((far, "street"), (near, "freeway")):
+        wg = np.array([farmington, sw_160th, freeway], dtype=object)
+        kinds = np.array([None, None, "freeway"], dtype=object)
+        assert _open_way_kind(*args, STRtree(wg), wg, way_limited=kinds) == want
+        assert _open_way_kind(*args, STRtree(wg), wg) == "street"  # `_open_way` exactly
+    rail = np.array([LineString([(-300, 160), (600, 160)])], dtype=object)
+    wg = np.array([farmington, sw_160th], dtype=object)
+    assert _open_way_kind(*args, STRtree(wg), wg, rail_tree=STRtree(rail), rail_geoms=rail) == "rail"
+    beyond = np.array([LineString([(-300, 230), (600, 230)])], dtype=object)
+    assert _open_way_kind(*args, STRtree(wg), wg, rail_tree=STRtree(beyond), rail_geoms=beyond) == "street"
+
+
+def test_which_rlis_segments_are_freeways_and_ramps():
+    """RLIS STREETS TYPE 1110 is a freeway, 1120-1123 its ramps; Portland's
+    33.910.030 names "the interstate freeways and the Sunset Highway
+    including their ramps", so those are ``freeway`` and the rest of the
+    class (Hwy 217, the US 30 stub, a ramp typed as a street) ``limited``.
+    The ramp of an arterial is ``limited`` only where the file calls it a
+    ramp; a highway (1200) is a street."""
+    from s4_edges import limited_kind
+
+    assert limited_kind(1110, "FWY", "I205") == "freeway"
+    assert limited_kind(1110, "FWY", "SUNSET") == "freeway"
+    assert limited_kind(1110, "HWY", "HWY 217") == "limited"
+    assert limited_kind(1121, "RAMP", "WASHINGTON ST-I205 FWY") == "freeway"
+    assert limited_kind(1122, "ST", "GLISAN") == "limited"
+    assert limited_kind(1221, "RAMP", "HWY 224-17TH AVE") == "limited"
+    assert limited_kind(1421, "BLVD", "MARTIN LUTHER KING JR") is None
+    assert limited_kind(1200, "HWY", "TUALATIN VALLEY") is None
+    assert limited_kind(1500, "ST", "TAYLOR") is None
+    assert limited_kind(1121) == "freeway" and limited_kind(1321) == "limited"
+
+
+def test_only_a_surface_railroad_is_read_from_the_osm_extract(tmp_path):
+    """Light rail and streetcars run in streets and a tunnel is in nobody's
+    way: neither stops a lot line reaching its street."""
+    import json
+
+    from s4_edges import load_rail
+
+    def feature(**tags):
+        return {"type": "Feature", "properties": tags,
+                "geometry": {"type": "LineString", "coordinates": [[0, 0], [10, 0]]}}
+
+    path = tmp_path / "osm_land_use.geojson"
+    path.write_text(json.dumps({"type": "FeatureCollection", "features": [
+        feature(railway="rail"), feature(railway="rail", tunnel="yes"),
+        feature(railway="light_rail"), feature(landuse="railway"), feature(railway="rail", tunnel="no"),
+    ]}))
+    assert len(load_rail(path)) == 2
+    assert load_rail(tmp_path / "absent.geojson") is None
+
+
+# ---------------------------------------------------------------------------
 # s4 -- the zone across each lot line
 # ---------------------------------------------------------------------------
 

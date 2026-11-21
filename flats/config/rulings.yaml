@@ -1193,6 +1193,7 @@
     treated as outside the Floodplain Management District.
   effect: The prohibition is not encoded; fetching the district map stays queued as the check.
   source: Steph 2026-09-30, docs/HUMAN_TODO.md item 17
+  superseded_by: 2026-11-18-clackamas-flood-ban-red
 
 - id: 2026-10-09-clackamas-design-review-zones-red
   kind: ruling
@@ -3427,6 +3428,7 @@
     check, not only those next to a busier street. Fairview has no GREEN lots
     today, so nothing moves now. To encode on a rel10 lane (FOLLOWUPS 192).
   source: Steph 2026-11-14 (chat, question sheet item 3), ../vicinitideals-worktrees/drive-spacing.handoff.md
+  encoded_in: [flats/config/driveway_spacing.yaml, flats/geom/driveway_spacing.py]
 - id: 2026-11-14-oregon-city-engineer-sight-area-green
   kind: ruling
   date: 2026-11-14
@@ -3441,6 +3443,7 @@
     rules (2026-10-15 ORS 197A.400). Any measured sight rule still binds. Moot
     today. To encode on a rel10 lane (FOLLOWUPS 192).
   source: Steph 2026-11-14 (chat, question sheet item 4), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/clackamas/oregon-city.yaml, flats/geom/sight_triangle.py, flats/score/screen.py, flats/ingest/quadfit.py]
 - id: 2026-11-14-hillsboro-engineer-sight-area-green
   kind: ruling
   date: 2026-11-14
@@ -3455,6 +3458,7 @@
     rules (2026-10-15 ORS 197A.400). Any measured sight rule still binds. Moot
     today. To encode on a rel10 lane (FOLLOWUPS 192).
   source: Steph 2026-11-14 (chat, question sheet item 4), ../vicinitideals-worktrees/sight-leftovers.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml, flats/geom/sight_triangle.py, flats/score/screen.py, flats/ingest/quadfit.py]
 - id: 2026-11-14-parked-cars-obstruct-sight
   kind: ruling
   date: 2026-11-14
@@ -3521,6 +3525,7 @@
     ruling's "whether or not an alley" no longer hides it. No lot depends on it
     today. Low priority (FOLLOWUPS 192).
   source: Steph 2026-11-14 (chat, question sheet item 8), ../vicinitideals-worktrees/gresham-4-1152.handoff.md
+  encoded_in: [flats/config/jurisdictions/or/multnomah/gresham.yaml]
 - id: 2026-11-14-no-city-contact
   kind: ruling
   date: 2026-11-14
@@ -3891,3 +3896,134 @@
     and by how much, so the lot can be found and re-screened if the parking
     layout, the step design or the front-door orientation changes. FOLLOWUPS 213.
   source: Steph 2026-11-20 (chat)
+- id: 2026-11-19-fire-engine-on-a-wide-main-road
+  kind: ruling
+  date: 2026-11-19
+  scope: {}
+  question: >-
+    A lot line faces a wide main road whose centre line runs more than 50 ft
+    from it (quadfit calls such a line a street line across a right-of-way
+    up to 150 ft wide since 2026-11-18). Does a fire engine standing on that
+    road count for the 150 ft hose route (OFC 503.1.1), and may the lot be
+    GREEN on it?
+  ruling: '"wide main road, I''m good with green"'
+  effect: >-
+    An engine stood on the wide main road a public street line faces counts
+    for the hose route, and the lot may be GREEN on it. OFC 503.1.1 names no
+    kind of road and no width ("Access roads shall be within 150 feet of all
+    portions of the exterior wall of the first story of the building",
+    flats/provenance/docs/or/ofc.2022.applications-guide.txt#L132-L135; the
+    2025 text, held outside the corpus, was read by the coordinator the same
+    day and says the same). The hose starts where it always does (rulings
+    2026-10-05-fire-hose-from-curb and 2026-10-05-unmeasured-street-narrow):
+    10 ft out from the near curb, the road's middle where no curb or width is
+    measured. A lot whose fire check rests on this carries FIRE-WIDE-ROAD (a
+    note below the yellow line) saying how far out the road runs. NOT
+    covered: a lot line marked a freeway's, a ramp's or beyond a railroad
+    (no engine stands there); a wide road with a second road line close
+    beyond it -- a divided highway's other half, a frontage road -- which
+    cannot be told from a freeway (held YELLOW, FIRE-ROAD-UNCLEAR); a route
+    that does not reach from the wide road either (RED, ruling
+    2026-10-01-fire-access-150ft-red). A lot the long dead end's or the
+    narrow street's question holds stays held. Not built with it, and
+    unblocked by it: choosing the front after measuring the fire route, and
+    lifting the 3-acre cap on the fire retry. Built on flats/open-way-fix;
+    not live until released.
+  source: >-
+    Steph 2026-11-19 (chat, relayed by the coordinator),
+    ../vicinitideals-worktrees/open-way-fix.handoff.md
+  encoded_in: [flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
+- id: 2026-11-19-fire-engine-on-a-state-highway
+  kind: ruling
+  date: 2026-11-19
+  scope: {}
+  question: >-
+    A lot meets a state highway that is no freeway (RLIS type 1200: Highway
+    213, McLoughlin Blvd) across a wide right-of-way, and the hose reaches
+    only with the engine stood on the highway. Does it count? Asked of
+    32E16BB06000 (14200 Conway Dr, Oregon City), which Steph looked at on the
+    aerial.
+  ruling: >-
+    "the state highway running its length (not the rear, the side) is a 1
+    lane highway with generous margins. The fire chief makes the call, but
+    I'd say it's green"
+  effect: >-
+    An engine standing on a state highway counts the same as on any other
+    wide main road (ruling 2026-11-19-fire-engine-on-a-wide-main-road); the
+    YELLOW hold built for it earlier the same day is removed. A lot whose
+    fire check rests on a state highway across a wide right-of-way carries
+    FIRE-WIDE-ROAD naming the highway (a note below the yellow line). NOT
+    covered, unchanged: a line marked a freeway's, a ramp's (RLIS 1110,
+    112x) or beyond a railroad; and a highway that cannot be told from a
+    freeway -- a second carriageway or a frontage road close beyond it --
+    which stays YELLOW (FIRE-ROAD-UNCLEAR). Built on flats/open-way-fix; not
+    live until released.
+  source: >-
+    Steph 2026-11-19 (chat, relayed by the coordinator),
+    ../vicinitideals-worktrees/open-way-fix.handoff.md
+  encoded_in: [flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml]
+- id: 2026-11-19-freeway-only-lot-yellow
+  kind: ruling
+  date: 2026-11-19
+  scope: {}
+  question: >-
+    A lot's only street line faces a freeway, a ramp or a railroad, so no
+    street is left once that line is dropped. RED or YELLOW? Asked of the
+    parcel west of 11240 SW Barbur Blvd (1S1E31BD  -02000).
+  ruling: >-
+    "we would probably need a fire access easement with the business ... to
+    use their parking lot as fire access. yellow"
+  effect: >-
+    A lot with no street left once its freeway, ramp or railroad line is
+    dropped is held YELLOW (ACCESS-LIMITED-WAY), never RED on that alone and
+    never GREEN: it may be reached over a neighbour's land by easement. As
+    built (flats/ingest/quadfit.py limited_reading); no code change. A named
+    private road serves as a fire access road as a public one does (Steph the
+    same day): a lot reached by one (RLIS 1700) keeps its fire reading from
+    that road and is not a freeway-only lot.
+  source: >-
+    Steph 2026-11-19 (chat, relayed by the coordinator),
+    ../vicinitideals-worktrees/open-way-fix.handoff.md
+  encoded_in: [flats/ingest/quadfit.py, flats/score/screen.py]
+- id: 2026-11-21-fire-hose-five-ft
+  kind: ruling
+  date: 2026-11-21
+  scope: {}
+  question: >-
+    A measured fire hose route runs just past the 150 ft OFC 503.1.1 sets
+    ("Access roads shall be within 150 feet of all portions of the exterior
+    wall of the first story of the building",
+    flats/provenance/docs/or/ofc.2022.applications-guide.txt#L132-L134), or
+    just inside it (rel11 move read F1: 1S101DD01500 GREEN at 149.994 ft).
+    Does a route a few feet over pass, and does a near pass need holding?
+  ruling: >-
+    "Fire hose rule: if it fits within 5 ft, it's green. We are conservative
+    on where the hose starts". Asked to clarify, Steph chose "Up to 155 ft is
+    green", and added "and everything over 150 gets a flag to validate hose
+    length".
+  effect: >-
+    The code's figure stays as printed: fire_access_max_ft 150
+    (flats/config/jurisdictions/or/_state.yaml). The screen adds a separate
+    5 ft allowance (flats/score/screen.py FIRE_HOSE_ALLOWANCE_FT), so a
+    measured route of 155 ft or less passes the fire check and the lot may be
+    GREEN; past 155 ft it is RED as before (ruling
+    2026-10-01-fire-access-150ft-red). The reason is the hose start, already
+    cautious: 10 ft out from the near curb, never past the street's middle
+    (rulings 2026-10-05-fire-hose-from-curb, 2026-10-05-unmeasured-street-narrow).
+    Every lot whose checked route runs past 150 ft, any colour, carries
+    FIRE-HOSE-VALIDATE (a note below the yellow line) naming the route, the
+    150 ft and the 5 ft. A route of 150 ft or less passes however close; no
+    near-pass hold (the FIRE-NEAR-PASS draft, 5bd6120f, is withdrawn). The
+    screen gives the long dead end's, the narrow street's and the wide
+    road's readings the same 155 ft, and takes the first two only where the
+    code's reading misses it; a road not told from a freeway
+    (FIRE-ROAD-UNCLEAR) is held as before. The bridge
+    (flats/ingest/quadfit.py fire_checked) measures against the same 155 ft
+    (flats/score/screen.py fire_reach_ft, one setting): the dead-end and
+    narrow-street readings are kept or dropped at 155, the re-placement
+    retry, the turn and the from-the-curb reading start past 155, and the
+    wide-road reading reaches to 155. The 150 ft dead-end length (OFC
+    503.2.5) is a separate rule and is unchanged. Built on
+    flats/rel11-firenear; not live until released.
+  source: Steph 2026-11-21 (chat)
+  encoded_in: [flats/score/screen.py, flats/ingest/quadfit.py, flats/config/flags.yaml]

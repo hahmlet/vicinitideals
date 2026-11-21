@@ -141,7 +141,7 @@ from flats.rules.model import (
     Value,
 )
 from flats.rules.resolver import RuleSet
-from flats.rules.resource_overlays import BY_KEY as RESOURCE_PERMITS
+from flats.rules.resource_overlays import AREAS as RESOURCE_PERMITS
 from flats.score import flags as flag_plan
 from flats.score.paper import paper_fit
 
@@ -2869,6 +2869,7 @@ _RULE_COLOUR_WORDS = {
 _CHECK_WORDS = {
     "fit_ft": "the building and its parking do not fit",
     "use": "the zone does not allow four attached homes",
+    "mapped_open_space": "mapped open space reaches into the lot",
     "min_lot_area_sqft": "lot smaller than the minimum",
     "min_frontage_ft": "street frontage shorter than the minimum",
     "min_lot_width_ft": "lot narrower than the minimum",
@@ -2940,12 +2941,24 @@ _REASON_WORDS = {
     "CONDO_AIR_PARCEL": "condominium air parcel, not land",
     "CLOSER_LOOK_MIN_DENSITY": "closer look: the lot is big enough that the city wants more homes on it than four",
     "CLOSER_LOOK_MIN_FAR": "closer look: the city asks for more floor area on a lot this size than the four homes give — a bigger building could meet it",
+    "CLOSER_LOOK_USE_DENSITY": "closer look: the city allows the four homes here only if the lot carries a minimum number of homes per acre, and one building on a lot this size is below it — more homes could meet it",
+    "CLOSER_LOOK_GROUND_FLOOR_USE": "closer look: on this street the city wants most of a building's ground floor near the street to be shops or offices, and these are four homes — it may work only if the building can sit far enough back",
     "DRIVEWAY_NEAR_INTERSECTION_100FT": "Durham asks the driveway to stand at least 100 ft from a street intersection, and on this lot it cannot, so a new driveway needs the city's agreement; worth a call about access",
     "CLOSER_LOOK_SLOPE": "closer look: the ground under the building and its parking slopes between 5% and 15% — a stepped foundation or retaining walls to price",
     "CLOSER_LOOK_STEEP_COARSE": "closer look: the coarse elevation map shows ground too steep to build on where the building and its parking would go — the lot was screened as though it were buildable until the detailed lidar map or a survey checks it",
     "CLOSER_LOOK_ROOF_BOOK": "closer look: the city holds new homes here to the styles of a design book we have not read (the Villebois Architectural Pattern Book in Wilsonville), so we do not know whether a flat roof is allowed -- get the book and check its roof forms",
     "CLOSER_LOOK_ROOF_ELEMENTS": "closer look: the city wants the street face to show three roof design features from its list (Tualatin), half of which need a sloped roof, and this building's flat roof reaches three only with deep eaves, an overhang and roof sections at different heights, none of them in the design yet -- a design change to confirm with the architect",
     "CLOSER_LOOK_ENTRANCE_SIDE": "closer look: fits only with doors facing the side — the code wants the front doors to face the street, and the building fits only turned sideways with its doors toward a side yard; it needs a street-facing door on the end home (a design change)",
+    "CLOSER_LOOK_DRIVEWAY_SIDEWALK": "closer look: the driveway sits between the code's two distances from a neighbour's lot line (Beaverton 3 or 6 ft; Gladstone 8 or 11 ft, the curb cut's 5 ft plus its 3 or 6 ft wing); which one applies depends on the street's sidewalk type, which we do not hold, so it is only clear at the smaller",
+    "CLOSER_LOOK_DRIVEWAY_LOT_LINE": "closer look: the driveway's curb cut cannot stand as far from a neighbour's lot line as the city's standards ask (5 ft beyond the cut's wings), with the building and parking where they fit; a driveway shared with the neighbour, or the city's approval, is the way through",
+    "DRIVEWAY_LOT_LINE": "the driveway cannot stand far enough from a neighbour's lot line: the code asks at least 3 ft (6 ft on some sidewalk types), and the building and parking leave less",
+    "CLOSER_LOOK_DRIVE_TOUCH": "closer look: the lot meets its street along less line than the narrowest driveway the code allows, so the drive to the parking would cross a neighbouring lot; a shared driveway with a recorded easement may answer it",
+    "CLOSER_LOOK_DISTRICT_EDGE": "closer look: the lot was read as wholly inside (or wholly outside) a mapped district because nearly all of it is, but the building or its parking stands on the part across the district's line, where the other side's rules apply and were not checked",
+    "CLOSER_LOOK_PLAN_OFF_LOT": "closer look: the drawn driveway or parking court stands more than a foot past the lot line, so the plan that passed is not one this lot holds; another placement may fit",
+    "CLOSER_LOOK_PLAN_ON_CARVE": "closer look: the drawn building, driveway or parking court stands on ground a mapped overlay keeps building and paving off (a river, stream, wetland, flood or hillside area), or no plan clear of it was drawn; another placement may fit",
+    "CLOSER_LOOK_STREET_THROUGH_LOT": "closer look: a street's centre line runs through the lot near the drawn building, driveway or parking court, so the plan may stand on road land the lot does not own; check the deed and the county road records for the street's right-of-way",
+    "EDGE_SAG_READ": "a record, not a question: the lot's own line bows inside the traced outline, so its yards were measured from the true line and the building was placed on that slightly smaller area",
+    "DEDICATION_JOG_READ": "a record, not a question: a short step in the street line was read with the street across it, not as road drawn into the lot, when working out the land given up for the street",
     "CLOSER_LOOK_SPLIT_ZONE": "closer look: the lot lies in more than one zoning district and the building or its parking stands across the line; the city's code has no rule that puts the whole lot in one, and the standards were read from the district that covers most of it",
     "BETHANY_ASC1_PD": "Central Bethany: the lot is in Area of Special Concern 1 of the Bethany Community Plan, where development must follow the conditions of approval of the 1994 Central Bethany Planned Development (Resolution and Order 94-104), which we do not hold — the lot keeps its colour (Steph 2026-10-30), but read those conditions before relying on the plan",
     "RALEIGH_HILLS_ASC_U": "Raleigh Hills ASC U: the lot is Area of Special Concern U of the Raleigh Hills - Garden Home Community Plan, where the conditions Washington County set in its 1974 case #74-96C still apply — we do not hold them (they are not online), so the lot stays yellow until they are read (Steph 2026-10-31)",
@@ -2965,8 +2978,11 @@ _REASON_WORDS = {
     "STANDARD_NOT_ENCODED": "a standard the zone states is not encoded",
     "USE_NOT_ENCODED": "whether the zone allows a fourplex is not encoded",
     "USE_PROHIBITED": "the zone forbids the use outright",
+    "MAPPED_OPEN_SPACE": "open space mapped on Clackamas County's Comprehensive Plan Map 4-06 reaches into the lot, by more than the width of the map's own line — red, whatever would fit beside it: we are not fighting to develop open space (Steph, 2026-11-18)",
     "INSTITUTIONAL_USE": "institutional land — a school, park, hospital, public site, utility, airport, marina, transit hub, railway, public pool or plaza, or mall — red and left out of the scan (churches and charities are still screened)",
     "COUNTY_ROLL_RED": "the county's tax roll rules it out — public land, a tract or common parcel, open space, or a parcel the county values at $0 — red and left out of the scan (churches and charities are still screened)",
+    "STREET_LINE_LIMITED_WAY": "one side of the lot faces a freeway, a ramp or a railroad rather than a street it can use — checked both as a street side and as an ordinary side, and held yellow for a person to look at that side",
+    "HOUSING_AUTHORITY_LAND": "a housing authority owns the lot, with no building and no tax on the county's roll — held yellow for a person to decide, not ruled out as other public land is",
     "POD_CANNOT_FIT": "red by arithmetic: the lot is smaller than the building's footprint, or too narrow for a building 20 ft or wider — no zoning changes that",
     "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
     "STREET_RANK_UNKNOWN": "closer look: the lot's parking works off only one of its two streets, and a street has no class on file, so it is not known the street that works is the quieter one the code sends the driveway to",
@@ -2982,10 +2998,13 @@ _REASON_WORDS = {
     "SIGHT_DRIVEWAY": "the building stands inside the clear-vision area the city keeps where the drive meets the street, at least if the curb is at the lot line; the drive's place or the curb's may clear it",
     "SIGHT_CORNER_ALLEY": "the building stands where the city's clear-vision triangle at the corner of a street and an alley may reach; where the alley's paving runs is not mapped, so check it",
     "SIGHT_CORNER_PARKING": "the parking court or the drive as drawn reaches the corner's clear-vision triangle, which the city keeps parked cars or driveways out of; placing them elsewhere may clear it",
+    "SIGHT_CORNER_ENGINEER": "the building, or its parking where the city keeps cars out, stands where the corner's clear-vision area might reach; the city engineer sets that area's size case by case, so the lot stays green with this note",
     "SIGHT_DRIVEWAY_NOTE": "Portland's driveway clear zone may reach the building; a note for the street permit, the colour is unchanged",
     "COURT_GROUND_UNREAD": "the lot's yards could not be read from the lot lines, so it is not known whether the parking court stays out of the front and side yards",
     "PARKING_STRIP_UNCONFIRMED": "fits only without the planted strip the city keeps between parking and the lot lines; whether a townhome project owes that strip is still open",
     "FIRE_HOSE_START": "the fire hose reaches if measured from the curb, not from 10 ft out from it; where the street's width is not measured, from the curb of the narrowest street a fire truck may use",
+    "FIRE_WIDE_ROAD": "the fire hose reaches with the fire engine standing on a wide main road or state highway beside the lot, its centre line more than 50 ft from the lot line; Steph ruled 2026-11-19 that this counts, and the fire chief makes the final call",
+    "FIRE_HOSE_VALIDATE": "the fire hose route measures over the code's 150 ft; up to 155 ft is green because the hose is already measured from a cautious starting point (Steph 2026-11-21), but the length needs checking on the site plan",
     "CORNER_READ_AS_BEND": "the lot's street lines are all one street that bends, and the city's code does not say whether that makes a corner lot, so it was screened the stricter way: one front on one street",
     "PDX_MAIN_STREET_MIN_FAR": "Portland's Centers Main Street overlay (the \"m\" on the zoning map) sets a minimum floor area: half the lot's area in the inner neighbourhoods, a quarter in the eastern and western, counted on the part of the lot inside the overlay -- on a lot this big the four homes are too little building, so it is red",
     "PDX_PROTECTED_RESOURCE": "a protected historic building stands on the lot -- a city or National Register landmark, or a contributing building in a historic, conservation or National Register district -- and removing it needs the city's demolition review, a hearing nobody can count on, so it is red",
@@ -4662,6 +4681,8 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
         ("Nearest sewer main", ft(sewer.get("main_dist_ft"))),
         ("In a flood hazard area", yes(flood.get("sfha"))),
         ("In a floodway", yes(flood.get("floodway"))),
+        # Portland's own flood map beside FEMA's, PCC 24.50.040 E (FOLLOWUPS 202).
+        ("In Portland's 1996 flood area", yes(flood.get("pdx_1996"))),
         # Distance to transit, measured once per TriMet release. Shown, not
         # screened (Steph 2026-09-30): the pod parks four either way.
         ("Near transit: no parking can be required", _reform_said(transit.get("parking_reform")) if transit else ""),

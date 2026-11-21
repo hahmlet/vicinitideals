@@ -228,6 +228,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [DRIVEWAY_SPACING_UNREAD]
+  OWNER-HOUSING-AUTHORITY:
+    description: "A housing authority owns this lot, with no building and no tax on the county's roll: not ruled out as other public land is, and not an ordinary private lot (Steph 2026-11-18: yellow, not red)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "A person decides whether the housing authority's lot is one to pursue (rulings.yaml 2026-11-18-housing-authority-land-yellow)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [HOUSING_AUTHORITY_LAND]
+  ACCESS-LIMITED-WAY:
+    description: "One of this lot's street lines faces a freeway, a freeway or highway ramp, or a street on the far side of a railroad: no driveway, frontage or fire engine comes off it, and outside Portland no code read here says whether the line is still a street lot line for the yards"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "A person looks at the named side: the lot was screened with the line as a street line and without it and the worse answer kept (coordinator's stricter default 2026-11-19, pending Steph; Portland's own freeways are settled by PCC 33.910.030)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [STREET_LINE_LIMITED_WAY]
   ACCESS-STREET-RANK-UNKNOWN:
     description: "A corner lot's parking works off one street but not the other, and a street line has no class: nothing says the street that works is the quieter one the code sends the driveway to (Steph 2026-10-09: \"yellow, then measure\")"
     kind: categorical
@@ -425,6 +455,24 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [SIGHT_CORNER_PARKING]
+  SIGHT-CORNER-ENGINEER:
+    description: "The building, or the parking court or drive where the city keeps cars out of the area, stands where the corner clear-vision area might reach; the city engineer sets that area's size case by case (Oregon City 10.32.020, Hillsboro DCS 230.5.1), so it was drawn at its largest plausible size. Steph 2026-11-14: GREEN with this flag"
+    kind: categorical
+    risk: unlikely
+    # Steph 2026-11-14 ("Green", rulings.yaml 2026-11-14-oregon-city-/
+    # hillsboro-engineer-sight-area-green): below the yellow line, so a lot
+    # otherwise GREEN stays GREEN with the flag beside it.
+    severity: 2
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot, design]
+    path: "At permit: the city engineer sets the corner's clear-vision area from the street's speed; place the building, court and drive outside it"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [SIGHT_CORNER_ENGINEER]
   SIDE-YARD-PARKING-SILENT:
     description: "The fit depends on side-yard parking the code neither allows nor forbids; Steph's silent-code ruling keeps the lot yellow"
     kind: categorical
@@ -527,6 +575,53 @@ types:
     scope: per_lot
     key: [lot, design]
     path: "Measure the street's paved width (20 ft clear needed, OFC 503.2.1) or ask the fire marshal whether a truck may use it (FOLLOWUPS 178(b))"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  FIRE-WIDE-ROAD:
+    description: "Wide road: the fire hose reaches the building with the fire engine stood on a wide main road beside the lot -- an arterial or a state highway whose centre line runs more than 50 ft from the lot line (up to 150 ft, with nothing private, no freeway, ramp or railroad between) -- the hose started 10 ft out from that road's near curb, or at its middle where no curb or width is measured. An engine standing there counts (Steph 2026-11-19: \"wide main road, I'm good with green\"; of a state highway: \"The fire chief makes the call, but I'd say it's green\"). Marks the answers that rest on those rulings; the bounds are the hose route and the 150 ft"
+    kind: parametric
+    risk: possible
+    # Marks the reading, never holds a green: below the yellow line.
+    severity: 1
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot, design]
+    path: "Look at the road beside the lot: can a fire engine stop on it and reach the lot (no wall, ditch or grade between)? The fire chief makes the call"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FIRE_WIDE_ROAD]
+  FIRE-HOSE-VALIDATE:
+    description: "Validate the hose length: the measured fire hose route runs past the code's 150 ft (OFC 503.1.1). Up to 155 ft passes, because the hose start is already cautious -- 10 ft out from the near curb, never past the street's middle (Steph 2026-11-21: \"if it fits within 5 ft, it's green\"; \"Up to 155 ft is green\"; \"everything over 150 gets a flag to validate hose length\"). Past 155 ft the lot stays RED. The bounds are the 150 ft and the route"
+    kind: parametric
+    risk: possible
+    # A note on every colour, never holds a green: below the yellow line.
+    severity: 1
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Measure the hose route on the site plan or the survey at acquisition, from where the engine will stand, round the building to its farthest wall"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FIRE_HOSE_VALIDATE]
+  FIRE-ROAD-UNCLEAR:
+    description: "Divided road: the fire hose reaches the building only with the fire engine stood on a wide road or state highway that has a second road line close beyond it -- the other half of a divided highway, or a road with a frontage road beside it -- which the street centre lines cannot tell from a freeway. Steph's wide-main-road ruling (2026-11-19) does not cover it: held yellow until someone looks at the road"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Look at the road beside the lot on the aerial: is it a divided highway with no way off it, or an ordinary road a fire engine can stop on? If an engine can stop there and reach the lot, the route stands"
     priority: later
     status: pending
     approved_by: null
@@ -747,6 +842,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-CORNER-HOME-LOT:
+    description: "The zone asks a corner townhouse lot for one width or frontage and an interior one for another; this corner parcel's streets are not plainly two straight streets meeting at one corner, so which of the plat's home lots are corner lots is unsettled, and a home lot clears one number and not the other"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Measure whether a curve (Gresham: a street curve of 60 degrees or more, 3.0103) or a further street makes a middle home lot a corner lot, from the lot's street lines and the plat's curve data (FOLLOWUPS 191)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-WALL-OPENINGS:
     description: "Gresham asks for clear glass on every wall that does not face a street, and the building code bans windows within 3 ft of a side or rear lot line; no fitting building was drawn to measure how far its walls stand from those lines"
     kind: categorical
@@ -944,6 +1054,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_MIN_FAR]
+  DENSITY-USE:
+    description: "The code allows the four homes here only at a minimum density, written into the use permission itself (Estacada EMC 16.26.020 (D)(4): a fourplex 'provided that ... the residential density of the development is not less than sixteen (16) dwelling units per acre'), and one pod on this lot is below it; more homes on the lot could reach it. Not the big-lot DENSITY-MIN flag: the use depends on it (FOLLOWUPS 203). The bounds are the density one pod gives and the density asked"
+    kind: parametric
+    risk: possible
+    severity: 3
+    absorbs: units
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "A plan with enough homes to reach the density, or Steph's ruling that the use is refused (RED) below it"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_USE_DENSITY]
+  GROUND-FLOOR-USE:
+    description: "The code requires part of the ground floor near the street in commercial use on this street (Gresham GDC 4.1121(A): 75 percent of the ground-floor floor area within 40 feet of the right-of-way, on the named stretches of E Powell, N Main and NE 3rd) and the pod is four homes; whether any of the building stands within that distance of the street is not measured (FOLLOWUPS 203). The bounds are the commercial share the pod gives and the share asked"
+    kind: parametric
+    risk: likely
+    severity: 3
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "Place the building more than 40 feet from the named street, if the other downtown standards allow it, or give up the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_GROUND_FLOOR_USE]
   SLOPE-GRADE:
     description: "The ground under the building and its parking falls between 5% and 15% (or past 15% on the coarse elevation map only): a stepped foundation or retaining walls to price (Steph 2026-10-04)"
     kind: parametric
@@ -974,6 +1114,141 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_SPLIT_ZONE]
+  DISTRICT-EDGE:
+    description: "The lot was answered inside (or outside) a traced district because 90 % or more of it lies on that side, and its building, lane or court stands on the piece across the district's line, where the other side's rules govern and were not read (FOLLOWUPS 188; read as ZONE-SPLIT is, Steph 2026-10-14: \"first check if the city has a rule on this. If no, I would say yellow\")"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot]
+    path: "Ask the planning counter whether the district's rules reach the part of the lot the building stands on, or have a survey say where the district line runs"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_DISTRICT_EDGE]
+  MEASURE-PLAN-OFF-LOT:
+    description: "The drawn driveway lane or parking court stands more than 1 ft past the lot line: the plan the fit passed is not one this lot holds (FOLLOWUPS 201, Portland 1N1E23CB -21200, a through lot whose side-yard overlap put the lane and court past the far street line)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Draw the plan with the lane and court inside the lot (another placement may hold them), or survey the lot line"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_PLAN_OFF_LOT]
+  MEASURE-PLAN-ON-CARVE:
+    description: "The drawn building, driveway lane or parking court stands more than half a foot onto ground an overlay carve takes off the lot, or nothing fitting was drawn on a lot a carve touches: the lane and court the fit draws into a side setback were measured against no carve (carve-overlap, 2026-11-18; Portland River Environmental ruling 2026-11-18-river-e-clear-stays-green asks the building, court and lane clear of it)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Draw the plan with the building, lane and court off the carved ground (another placement may hold them), or have the mapped area delineated on the site"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_PLAN_ON_CARVE]
+  MEASURE-STREET-THROUGH-LOT:
+    description: "A street centre line (not an alley or a private drive) runs through the lot within 50 ft of the drawn building, driveway lane or parking court: the lot may be cut by a road it does not own, and the plan may stand on its right-of-way (rel11 move read G2, Clackamas 21E11AB01100: WALTER through the lot, 25.8 ft from the court)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Read the deed and the county road records for the street's right-of-way, then draw the plan off it (another placement may hold it), or survey the lot"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_STREET_THROUGH_LOT]
+  EDGE-SAG:
+    description: "A record for the bound, below the yellow line: the lot's own line bows inside the traced edge, so its yard strips were widened by that much (FOLLOWUPS 205, gap-fixes Fix 5); on a GREEN, raised only where the drawn plan stands on the lot and its building inside the envelope (rel11 move read G1)"
+    kind: parametric
+    risk: unlikely
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Nothing to answer: the bow is measured on the lot's own line"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [EDGE_SAG_READ]
+  DEDICATION-JOG:
+    description: "A record for the bound, below the yellow line: a street line's half-width was read with the street across it where the centreline stood on the lot's side of a jog but off the lot (FOLLOWUPS 158, false-reds-194 Fix C; rel11 move read G1)"
+    kind: parametric
+    risk: unlikely
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Nothing to answer: the jog is measured on the lot's own line and the centreline"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [DEDICATION_JOG_READ]
+  ACCESS-DRIVE-TOUCH:
+    description: "No street meets the lot along as much line as the narrowest driveway the code allows here, so the drive to the parking court would cross another lot (FOLLOWUPS 201, Portland 1N2E25DA -10200: 8 ft of street line against 33.266.120.D.2's 9 ft driveway)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Check the street line on a survey; a shared driveway with a recorded easement (Portland 33.266.120.D.3) or a plan without parking may answer it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_DRIVE_TOUCH]
+  ACCESS-DRIVEWAY-SIDEWALK-TYPE:
+    description: "The drive lane clears the smaller of the code's two gaps to a lot line but not the larger, and the sidewalk type that picks one is not held (Beaverton BDC Table 60.05.60.2 S12: 3 or 6 ft by the EDM's sidewalk type; FOLLOWUPS 201 add-on G, 1S112CC06300. Gladstone PWDS 5.0070(D)(5) and Standard Drawings 503A/503B: the curb cut 5 ft off the line, its wings 3 ft with the sidewalk away from the curb or 6 ft with it adjacent, so 8 or 11 ft to the lane; FOLLOWUPS 205)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Find the street's sidewalk type (Beaverton: the Engineering Design Manual; Gladstone: whether the sidewalk is set back from the curb); at the smaller figure the plan stands"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_DRIVEWAY_SIDEWALK]
+  ACCESS-DRIVEWAY-LOT-LINE:
+    description: "The drive lane misses even the smaller of the code's gaps to a side lot line, with the plan slid as far as its building and court allow, where the code offers a way out the screen cannot weigh (Gladstone PWDS 5.0070(D)(5): 'Curb cuts shall be a minimum of 5 ft. from the property line, unless a shared driveway is installed', the cut measured wing to wing, 5.0070(A); FOLLOWUPS 205)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Agree a shared driveway with the neighbour, or ask the Public Works Director for a deviation (PWDS 1.0060(D)); otherwise re-plan the drive away from the line"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_DRIVEWAY_LOT_LINE]
   # --- Portland's overlays (flats/geom/pdx_overlays.py, FOLLOWUPS 109) ------
   PDX-MAIN-STREET-TRANSIT:
     description: "The townhouse form on a lot in Portland's Centers Main Street overlay (\"m\"): PCC 33.415.300.B bars \"Houses, attached houses, and duplexes\" within 100 ft of a transit street, and four homes each on its own lot are attached houses unless the lots come from a middle housing land division (33.910). No map of the city's transit streets is held, so every street is taken as one. The apartment form (a fourplex) is not barred."
@@ -1439,6 +1714,21 @@ types:
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-ABUTS-LOWER-DENSITY-ZONE:
     description: "Whether a lot line abuts a lower-density zone"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the zoning layer per lot line"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ABUTS-COMMERCIAL-ZONE:
+    description: "Whether a lot line abuts a commercial zone (King City 16.124.110 C.3's ten-foot buffer; FOLLOWUPS 192)"
     kind: categorical
     risk: possible
     severity: 5
@@ -2482,6 +2772,22 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-BEAVERTON-SIGNIFICANT-GROVE:
+    description: "Whether the lot lies in a Significant Grove on Beaverton's Inventory of Significant Trees and Groves, where a project keeps 25 percent of the surveyed trees' DBH (15 percent in a Multiple Use zone) or goes to a Tree Plan Three hearing (BDC 60.60.15.2.C, FOLLOWUPS 204): GREEN with CLEAR-OBJECTIVE inside the urban growth boundary (Steph 2026-10-15)"
+    kind: categorical
+    risk: unlikely
+    # No standard turns on the fact; inside the UGB it carries CLEAR-OBJECTIVE.
+    severity: 2
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The city's own grove polygons (pubNaturalResources MapServer 2-4) are held as Beaverton's drawn_areas; a lot divided since 2026-11-10 is placed by its own shape"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-BETHANY-ASC-1:
     description: "Whether the lot lies in Bethany Community Plan Area of Special Concern 1 (Central Bethany), whose development follows the 1994 Central Bethany Planned Development's conditions of approval. The answer only carries BETHANY-ASC1-PD-CONDITIONS, below the yellow line (Steph 2026-10-30), so no standard leans on it"
     kind: categorical
@@ -2524,6 +2830,23 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "Check the lot's street lines against the traced Figure 12.65.930-A (FOLLOWUPS 147): a lot on an Active Use Street and an ordinary street, on both Active Use types, or on a line only partly beside one is held; read the coverage on the Active Use frontage alone, and confirm the street in the approved PUD"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-GRESHAM-FIRST-FLOOR-USES-STREET:
+    description: "Whether a street line of the Gresham Downtown lot abuts a stretch where GDC 4.1121(A) requires 75 percent of a building's ground floor within 40 feet of the right-of-way in Commercial or Civic uses (the north side of E Powell between NW Miller and NE Roberts, N Main between E Powell and NE 4th, NE 3rd between N Main and NE Hood, the north side of NE 3rd between NE Hood and NE Kelly)"
+    kind: categorical
+    risk: possible
+    # The answer True carries GROUND-FLOOR-USE at the yellow line, so an
+    # unanswered lot is held at it too.
+    severity: 3
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Check the lot's street lines against the stretches 4.1121(A) names (typed onto RLIS centrelines, flats.geom.first_floor_uses, FOLLOWUPS 203): a street line no traced centreline explains near a named stretch is held; read which side of E Powell or NE 3rd east of Hood the lot is on"
     priority: later
     status: pending
     approved_by: null
@@ -2755,6 +3078,21 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "The slope classes of a South subdistrict lot, and how much of the lot is in the Flood Risk Area, before a land division into unit lots"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PDX-FLAG-LOT:
+    description: "Whether the lot is a flag lot under Portland's code (PCC 33.910.030), which gives a flag lot the same setback along every lot line, a landscaped buffer round the flag and coverage on the flag alone (PCC 33.110.255, 33.120.284); the lot's shape does not show it to be an ordinary lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, fact]
+    path: "Our own measure of the lot's shape: the flag and the pole drawn apart, and the flag-lot standards held as numbers"
     priority: later
     status: pending
     approved_by: null

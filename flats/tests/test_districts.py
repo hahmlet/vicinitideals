@@ -212,6 +212,24 @@ RULINGS: dict[str, dict[str, str]] = {
         ),
         "HD": "overlay: Historic District, ZDO 202 and Section 707.",
         "HC": "overlay: Historic Corridor, ZDO 202 and Section 707.",
+        # ZDO Section 703 arrived in the store on 2026-11-18 (FOLLOWUPS 204,
+        # flats/clackamas-fixes) and brought three abbreviations with it.
+        "FMD": (
+            "overlay: Floodplain Management District, ZDO Section 703, applied "
+            "to FEMA's special flood hazard areas (703.04). ZDO 845.01(3) "
+            "prohibits the quadplex in it; quadfit carves the flood area off "
+            "every unincorporated lot (overlays.yaml clackamas_fmd)."
+        ),
+        "SFHA": (
+            "not-a-zone: special flood hazard area, the FEMA map area ZDO "
+            "703.04 applies the Floodplain Management District to (defined at "
+            "703.05(GG))."
+        ),
+        "FIS": (
+            "not-a-zone: the Flood Insurance Study for Clackamas County dated "
+            "January 18, 2019, the FEMA document ZDO 703.04 adopts with its "
+            "rate maps."
+        ),
     },
     "or/clackamas/gladstone": {
         "FM": "overlay: Flood Management Area District, GMC 17.29.",

@@ -464,6 +464,26 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "gresham_first_floor_uses_street",
+        "site_fact",
+        "A street line of the Gresham Downtown lot abuts, at any point, a "
+        "stretch where GDC 4.1121(A) requires 75 percent of a building's "
+        "ground floor within 40 feet of the right-of-way in Commercial or "
+        "Civic uses: the north side of E Powell between NW Miller and NE "
+        "Roberts, N Main between E Powell and NE 4th, NE 3rd between N Main "
+        "and NE Hood, and the north side of NE 3rd between NE Hood and NE "
+        "Kelly. The code names the stretches in words; the RLIS centrelines "
+        "are typed by them "
+        "(flats/config/areas/or/multnomah/gresham/downtown-first-floor-uses.geojson, "
+        "flats.geom.first_floor_uses). Answered per Downtown lot from its "
+        "street lines: True at any point on a named stretch (from the north "
+        "side where only that side is named), False when every street line "
+        "reads another traced centreline, unanswered -- out of GREEN -- where "
+        "a street line no traced centreline explains lies near a named stretch.",
+        evidence="GDC 4.1121(A) named stretches, typed onto RLIS centrelines, against the lot's s4 street lines",
+        assume=None,
+    ),
+    ConditionDef(
         "hillsboro_active_use_street",
         "site_fact",
         "A street line of the Hillsboro lot abuts, at any point, a South "
@@ -950,6 +970,18 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "abuts_commercial_zone",
+        "site_fact",
+        "A lot line that is not a street lot line abuts a commercial zone. "
+        "King City 16.124.110 C asks a multi-family property for five feet of "
+        "buffer beside a single-family zone (C.2, `abuts_lower_density_zone`) "
+        "and ten beside a commercial one (C.3), so the two neighbours are two "
+        "facts. True when ANY line has such a zone across it. Assumed "
+        "unknown, which leaves the ten feet binding.",
+        evidence="jurisdiction zoning polygons, adjacency on the shared edge",
+        assume=None,
+    ),
+    ConditionDef(
         "faces_residential_zone_across_street",
         "site_fact",
         "A STREET lot line has a residential zone on the far side of the "
@@ -1023,16 +1055,23 @@ _C: tuple[ConditionDef, ...] = (
     ConditionDef(
         "willamette_greenway_zone",
         "site_fact",
-        "Some part of the lot is in Milwaukie's Willamette Greenway Zone, the "
-        "WG on the city's Zoning Map (MMC 19.401). There \"all land use "
+        "Some part of the lot is in a city's Willamette Greenway. Milwaukie's "
+        "Willamette Greenway Zone, the WG on the city's Zoning Map (MMC "
+        "19.401): there \"all land use "
         "actions and any change or intensification of use, or development "
         "permitted in the underlying zone, are conditional uses\" (19.401.3), "
         "and none of the thirteen exemptions in 19.401.5.B is a new dwelling. "
+        "Oregon City's Willamette River Greenway Overlay District, the WRG "
+        "(OCMC 17.48): \"A Willamette River Greenway permit shall be required "
+        "for all developments\" (17.48.050), none of whose exceptions is a new "
+        "dwelling, decided on the considerations of 17.48.080. "
         "Statewide Goal 15 is what the zone implements, so the state's middle "
         "housing law leaves it standing (ORS 197A.420(5)(b)).",
         evidence=(
-            "Milwaukie Zoning Map WG boundary, any part of the lot inside it "
-            "(quadfit s5o ovl_milwaukie_greenway)"
+            "Milwaukie Zoning Map WG boundary (quadfit s5o "
+            "ovl_milwaukie_greenway) or Oregon City's Willamette River "
+            "Greenway layer (ovl_oregon_city_greenway), any part of the lot "
+            "inside it"
         ),
         assume=None,
     ),
@@ -1363,6 +1402,25 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "beaverton_significant_grove",
+        "site_fact",
+        "The lot lies in a Significant Grove mapped on Beaverton's Inventory "
+        "of Significant Trees and Groves (BDC Chapter 90): a project there "
+        "preserves at least 25 percent of the surveyed trees' DBH (15 percent "
+        "in a Multiple Use zone) or goes to a Tree Plan Three public hearing "
+        "(BDC 60.60.15.2.C), and removing trees in the grove is a Tree Plan "
+        "application whose criteria are judgement (40.90.15). Inside an urban "
+        "growth boundary it is GREEN with CLEAR-OBJECTIVE (Steph 2026-10-15); "
+        "where the statute does not reach the lot it is YELLOW with "
+        "REVIEW-CONDITIONS. Answered from the city's own grove polygons, "
+        "traced as Beaverton's drawn_areas (FOLLOWUPS 204).",
+        evidence=(
+            "City of Beaverton pubNaturalResources MapServer layers 2-4, "
+            "2009 TI - Significant Grove (a), (b) and (c), retrieved 2026-11-18"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "east_hillsboro_city_standards",
         "site_fact",
         "The lot is an R-5 or R-24 lot in the Reedville or Tualatin Valley Highway "
@@ -1555,6 +1613,24 @@ _C: tuple[ConditionDef, ...] = (
             "Area and every lot touching it -- split 2026-11-08 (FOLLOWUPS 58) "
             "from the Johnson Creek unmeasured tracing, held as Portland's "
             "drawn_areas"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "pdx_flag_lot",
+        "site_fact",
+        "The lot is a flag lot as Portland's Title 33 defines one (33.910.030: "
+        "a flag behind another lot, reached by a pole that provides the only "
+        "street frontage and is at some point narrower than the zone's minimum "
+        "lot width). 33.110.255 and 33.120.284 then set the same setback along "
+        "every lot line, a landscaped buffer round the flag, and coverage on "
+        "the flag alone -- standards no value here carries, so the lot is held. "
+        "Not `flag_lot`: that name is assumed False wherever nobody looked, and "
+        "this one decides the colour. Assumed unknown; answered False only, "
+        "where the outline is plainly an ordinary lot's.",
+        evidence=(
+            "the lot's own ring of edges against the zone's minimum lot width "
+            "(flats.geom.flag_lot, flats/config/flag_lot.yaml)"
         ),
         assume=None,
     ),
@@ -2062,6 +2138,7 @@ NEIGHBOUR_ZONE_CONDITIONS: tuple[str, ...] = (
     "abuts_residential_zone",
     "abuts_lower_density_zone",
     "abuts_nonresidential_zone",
+    "abuts_commercial_zone",
 )
 
 #: The site facts about what open land lies across the lot lines, answered
@@ -2076,6 +2153,7 @@ PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
 #: inside a zone -- on a map nobody publishes as data, in a layer the city
 #: publishes apart from its zoning, or along a line the code names in words.
 DRAWN_CONDITIONS: tuple[str, ...] = (
+    "beaverton_significant_grove",
     "bethany_asc_1",
     "bethany_asc_1a",
     "bethany_asc_3",

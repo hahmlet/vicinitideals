@@ -170,6 +170,8 @@ S5O_WANTED = (
     "in_sewer_district",
     "ovl_fema_sfha",
     "ovl_fema_floodway",
+    # Portland's own 1996 flood map, PCC 24.50.040 E (FOLLOWUPS 202).
+    "ovl_pdx_flood_1996",
 )
 QUADFIT_WANTED = (
     "triage",
@@ -430,7 +432,11 @@ def lot_facts(s4: dict[str, Any], s5o: dict[str, Any], observed: dict[str, Any],
                 "main_dist_ft": _num(s5o.get("sewer_main_dist_ft")),
                 "in_district": s5o.get("in_sewer_district"),
             },
-            "flood": {"sfha": s5o.get("ovl_fema_sfha"), "floodway": s5o.get("ovl_fema_floodway")},
+            "flood": {
+                "sfha": s5o.get("ovl_fema_sfha"),
+                "floodway": s5o.get("ovl_fema_floodway"),
+                "pdx_1996": s5o.get("ovl_pdx_flood_1996"),
+            },
             "quadfit": {
                 "triage": quadfit.get("triage"),
                 "binding_constraint": quadfit.get("binding_constraint"),
@@ -456,6 +462,7 @@ ASSESSOR = (
     ("PROP_CODE", "prop_code", "str"),
     ("STATECLASS", "state_class", "str"),
     ("LANDUSE", "land_use", "str"),
+    ("TAXCODE", "tax_code", "str"),
 )
 
 

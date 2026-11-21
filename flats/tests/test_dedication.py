@@ -46,6 +46,7 @@ KING_CITY = "or/washington/king-city"
 OREGON_CITY = "or/clackamas/oregon-city"
 MILWAUKIE = "or/clackamas/milwaukie"
 TIGARD = "or/washington/tigard"
+HILLSBORO = "or/washington/hillsboro"
 # A lot in unincorporated Washington County near Bull Mountain.
 X0, Y0 = 7_620_000.0, 650_000.0
 FRONT = [X0, Y0, X0 + 50, Y0, "F"]
@@ -360,6 +361,9 @@ def oc_row(
         "ovl_oregon_city_nrod_sqft": 0.0,
         "ovl_fema_sfha": False,
         "ovl_fema_floodway": False,
+        # 2026-11-18 (FOLLOWUPS 204): Oregon City's greenway is measured now
+        # (OCMC 17.48); a row with no answer is held, so the lot says it is clear.
+        "ovl_oregon_city_greenway": False,
         "sewer_main_dist_ft": 12.0,
         "in_sewer_district": None,
         # 2026-11-13 (drive-spacing, FOLLOWUPS 178): this city now holds a
@@ -569,6 +573,99 @@ def test_milwaukie_lists_all_twenty_nine_rows(rules) -> None:
     table = rules.resolve(MILWAUKIE, "R-MD").get(dedication.NAMED_FIELD)
     assert len(table) == 29
     assert sorted({ft for _, ft in table}) == [25, 30, 40]
+
+
+# --- Hillsboro (12.50.130 J.2, Table 12.50.130-1; FOLLOWUPS 205) ----------
+#
+# "the front setback shall be increased by the distance specified, measured
+# from the center of the street right-of-way" on the streets the table
+# names. Until this was held, a lot on SE Bentley Street was measured from
+# today's lot line and read GREEN with a building in the widening strip.
+
+BENTLEY_ROW = "SE Bentley St (east of SE 32nd Ave)"
+
+
+@pytest.mark.parametrize(
+    ("street", "distance"),
+    [
+        (["BENTLEY ST"], 30),
+        (["CEDAR ST"], 30),
+        (["BROGDEN ST"], 30),
+        (["MAIN ST"], 35),
+        (["28TH AVE"], 37),
+        (["CORNELL RD"], 49),
+        # Printed at 49 north of the light rail and 37 south of it; the light
+        # rail is no street the bridge can find, so the deeper holds throughout.
+        (["BROOKWOOD AVE"], 49),
+        # Listed at 49 and at 61 for two stretches: the stretch is not read.
+        (["10TH AVE"], 61),
+        (["40TH AVE"], 27),
+        # A street the table leaves out takes none.
+        (["SUNRISE LN"], 0),
+        (["BROOKWOOD PKWY"], 0),
+        # A line that may be on either of two streets takes the deeper.
+        (["40TH AVE", "BENTLEY ST"], 30),
+    ],
+)
+def test_hillsboro_reads_its_listed_streets(rules, street, distance) -> None:
+    assert strip(rules, HILLSBORO, "R-10", 0.0, names=street) == distance
+
+
+def test_hillsboro_unread_street_takes_the_deepest(rules) -> None:
+    assert strip(rules, HILLSBORO, "R-10", 0.0, names=None) == 61
+    assert strip(rules, HILLSBORO, "R-10", None, names=["BENTLEY ST"]) == 30
+
+
+def test_hillsboro_lists_all_thirty_eight_rows(rules) -> None:
+    table = rules.resolve(HILLSBORO, "R-10").get(dedication.NAMED_FIELD)
+    assert len(table) == 38
+    assert sorted({ft for _, ft in table}) == [27, 30, 35, 37, 49, 61]
+    # Every row's street reads as a street name: nothing of its stretch is
+    # left in the name (a nested bracket would leave some).
+    for label, _ in table:
+        assert dedication.street_key(label).rsplit(" ", 1)[-1] in {"AVE", "ST", "RD", "DR", "LN", "PL", "CT", "TER"}, label
+
+
+def test_every_hillsboro_zone_holds_the_widening_table(rules, layers) -> None:
+    for zone in layers[HILLSBORO].zones:
+        rule = dedication.rule_of(rules.resolve(HILLSBORO, zone))
+        assert rule is not None and len(rule.named) == 38, zone
+
+
+def test_a_bentley_street_lot_is_measured_from_the_future_right_of_way(rules) -> None:
+    """The three false greens of FOLLOWUPS 205 (3311, 3327 and 3969 SE Bentley
+    St): a 48 ft right-of-way, so the line 30 ft off the centre is 6 ft inside
+    the lot, and the front yard starts there."""
+    assert strip(rules, HILLSBORO, "R-10", 24.0, names=["BENTLEY ST"]) == 6
+    assert strip(rules, HILLSBORO, "R-10", 24.0, names=["SUNRISE LN"]) == 0
+    got = rules.resolve(HILLSBORO, "R-10")
+    on = envelope_for(lot_from_row(row(24.0, None, names=["BENTLEY ST"], classes={})), got)
+    off = envelope_for(lot_from_row(row(24.0, None, names=["SUNRISE LN"], classes={})), got)
+    assert on.source == off.source == "flats"
+    assert on.sqft < off.sqft
+    # A street already 60 ft wide gives up nothing.
+    assert strip(rules, HILLSBORO, "R-10", 30.0, names=["BENTLEY ST"]) == 0
+
+
+def test_bentley_street_west_of_32nd_is_off_the_row(rules) -> None:
+    """"SE Bentley St from SE 32nd Ave east to city boundary": a line the
+    bridge reads west of 32nd is free of the row; one it reads east of it, or
+    cannot read, is held."""
+    rule = dedication.rule_of(rules.resolve(HILLSBORO, "R-10"))
+    assert dedication.stretch_of(BENTLEY_ROW) == dedication.Stretch("BENTLEY ST", "east", ("32ND AVE",))
+    assert rule.required(["BENTLEY ST"], {}, {BENTLEY_ROW: False}) == 0
+    assert rule.required(["BENTLEY ST"], {}, {BENTLEY_ROW: True}) == 30
+    assert rule.required(["BENTLEY ST"], {}, {BENTLEY_ROW: None}) == 30
+    assert rule.required(["BENTLEY ST"], {}, {}) == 30
+
+
+def test_a_hillsboro_stretch_printed_with_an_offset_holds_the_whole_street(rules) -> None:
+    """"SE Elm St from SE 12th Ave west 225 feet" names no second street: the
+    row reads as no stretch, and no reading takes a line off it."""
+    rule = dedication.rule_of(rules.resolve(HILLSBORO, "R-10"))
+    label = "SE Elm St (SE 12th Ave west 225 feet)"
+    assert label in rule.labels and dedication.stretch_of(label) is None
+    assert rule.required(["ELM ST"], {}, {label: False}) == 27
 
 
 # --- Tigard (18.210.030.A.1, Table 18.910.1) ------------------------------
@@ -1095,7 +1192,7 @@ def test_every_layer_a_dedication_reaches_is_measured(layers) -> None:
         )
 
     stating = {lid for lid, layer in layers.items() if states(layer)}
-    assert stating == {WASHCO, SHERWOOD, KING_CITY, OREGON_CITY, MILWAUKIE, TIGARD}
+    assert stating == {WASHCO, SHERWOOD, KING_CITY, OREGON_CITY, MILWAUKIE, TIGARD, HILLSBORO}
     reached = set(stating)
     for lid, layer in layers.items():
         for ruling in layer.zone_rulings.values():
@@ -1159,7 +1256,7 @@ def test_milwaukie_lets_a_dedication_take_a_lot_below_its_minimum(rules) -> None
 
 @pytest.mark.parametrize(
     ("layer", "zone"),
-    [(OREGON_CITY, "R-10"), (SHERWOOD, "MDRL"), (TIGARD, "RES-A"), (KING_CITY, "R-9")],
+    [(OREGON_CITY, "R-10"), (SHERWOOD, "MDRL"), (TIGARD, "RES-A"), (KING_CITY, "R-9"), (HILLSBORO, "R-10")],
 )
 def test_elsewhere_the_strip_comes_off_the_minimum_lot_area(rules, layer, zone) -> None:
     got = rules.resolve(layer, zone)
@@ -1291,8 +1388,10 @@ def test_every_bracketed_row_reads_as_a_stretch(rules) -> None:
     from flats.ingest.quadfit import stretch_labels
 
     got = stretch_labels()
-    # 18 of Milwaukie's 29 rows, King City's three "between" rows.
-    assert len(got) == 21
+    # 18 of Milwaukie's 29 rows, King City's three "between" rows, and the
+    # 33 of Hillsboro's 38 whose bracket reads as "A to B" or "east of A" (an
+    # end the bridge cannot find, "city boundary", leaves the row holding).
+    assert len(got) == 54
     for zone, layer in (("R-MD", MILWAUKIE), ("KTTC", KING_CITY)):
         for label, _ in rules.resolve(layer, zone).get(dedication.NAMED_FIELD):
             if "(" in str(label):
@@ -1370,3 +1469,143 @@ def test_king_city_off_the_stretch_takes_all_other_streets(rules) -> None:
     assert _named_strip(rules, KING_CITY, "KTTC", ["131ST AVE"], {label: None}) == 33
     # A line that may be on a second street keeps that one's distance.
     assert _named_strip(rules, KING_CITY, "KTTC", ["131ST AVE", "FISCHER RD"], {label: False}) == 33
+
+
+def test_a_jog_in_the_lot_line_square_to_the_street_reads_the_street_across_it() -> None:
+    """Washington County 1S212AD01301 (R-15): the front line steps 10 ft in,
+    square to Johnson St, whose centre line runs a few degrees off the lot
+    line. The jog's nearest centreline point stands a hair past its inward
+    side, off the lot: the road is not drawn into the lot, and the jog read
+    as though it were cut an 80 ft strip round a 10 ft line (FOLLOWUPS 158)."""
+    lot = shapely.Polygon(
+        [(X0, Y0), (X0 + 100, Y0), (X0 + 100, Y0 + 10), (X0 + 120, Y0 + 10), (X0 + 120, Y0 + 200), (X0, Y0 + 200)]
+    )
+    johnson = LineString([(X0 - 500, Y0 - 24 + 28.0), (X0 + 500, Y0 - 24 - 28.0)])
+    cmap = _cmap([johnson], ["SW JOHNSON ST"], (1450,))
+    jog = [X0 + 100, Y0, X0 + 100, Y0 + 10, "F"]
+    width, _, _ = dedication.read_line(jog, cmap, lot=lot)
+    assert width is not None and width > 0
+    # A line the centre runs across inside the lot still reads negative.
+    over = LineString([(X0 - 500, Y0 + 6), (X0 + 500, Y0 + 6)])
+    (got,) = dedication.measure([FRONT], WASHCO, [_cmap([over], ["SW EDY RD"], (1500,))], lot=LOT_BOX)
+    assert got[4] == pytest.approx(-6.0)
+
+
+def test_measure_names_the_lines_the_jog_reading_read_across_the_street() -> None:
+    """rel11 move read G1: a bound can name a lot the jog reading moved only
+    where the row says so. ``jogs`` gets the jog's key and nothing else; the
+    rows are the same with or without it."""
+    lot = shapely.Polygon(
+        [(X0, Y0), (X0 + 100, Y0), (X0 + 100, Y0 + 10), (X0 + 120, Y0 + 10), (X0 + 120, Y0 + 200), (X0, Y0 + 200)]
+    )
+    johnson = LineString([(X0 - 500, Y0 - 24 + 28.0), (X0 + 500, Y0 - 24 - 28.0)])
+    maps = [_cmap([johnson], ["SW JOHNSON ST"], (1450,))]
+    jog = [X0 + 100, Y0, X0 + 100, Y0 + 10, "F"]
+    front = [X0, Y0, X0 + 100, Y0, "F"]
+    jogs: list = []
+    rows = dedication.measure([front, jog], WASHCO, maps, lot=lot, jogs=jogs)
+    assert jogs == [dedication.key(*jog[:4])]
+    assert rows == dedication.measure([front, jog], WASHCO, maps, lot=lot)
+    # A lot truly drawn over the road reads negative and is no jog.
+    over = LineString([(X0 - 500, Y0 + 6), (X0 + 500, Y0 + 6)])
+    jogs = []
+    dedication.measure([FRONT], WASHCO, [_cmap([over], ["SW EDY RD"], (1500,))], lot=LOT_BOX, jogs=jogs)
+    assert jogs == []
+
+
+# --- a line on a road too wide for the 60 ft reach -------------------------
+
+#: Milwaukie 11E36AD07300 (R-MD), release 10's false RED: 25,346 sq ft, three
+#: lines along Highway 224 with its centre line 70-77 ft out, and Sellwood St
+#: on the south. Off the LXC 137 stage files (s3 lot, s1 streets), feet,
+#: EPSG:2913 less ``HWY_ORIGIN``.
+HWY_ORIGIN = (7_656_100.0, 653_500.0)
+HWY_LOT_RING = [
+    (283.3, 308), (283.6, 393), (283.8, 438.2), (309.3, 437.5), (309.4, 487.2), (309.6, 537.2),
+    (309.7, 577.1), (338.7, 532.8), (366.4, 487.6), (392.7, 441.5), (410, 409.1), (426.5, 376.4),
+    (442.4, 343.3), (449.1, 329.8), (455.7, 316.2), (462.2, 302.6),
+]
+HWY_STREETS = [
+    ("HWY 224", 1200, [(203.3, 814.1), (259.6, 754.9), (309.6, 695.8), (356.4, 634.2), (400, 570.1),
+                       (459, 475.6), (500, 398.4), (555.5, 287.3), (635.6, 109.2)]),
+    ("SE WASHINGTON ST", 1500, [(120.8, 755.4), (144.3, 738.2), (166.4, 715.2)]),
+    ("SE 35TH AVE", 1500, [(166.4, 715.2), (164.2, 283)]),
+    ("SE SELLWOOD ST", 1500, [(164.2, 283), (471.8, 277.7)]),
+    ("SE 35TH AVE", 1500, [(164.2, 283), (163.9, 224.6)]),
+]
+#: The lot's street lines as s4 reads them since the wide-road test.
+HWY_LINES = [
+    [309.7, 577.1, 366.4, 487.6, "F"],
+    [366.4, 487.6, 392.7, 441.5, "F"],
+    [392.7, 441.5, 462.2, 302.6, "F"],
+    [462.2, 302.6, 283.3, 307.9, "F"],
+]
+
+
+def _at(points):
+    return [(x + HWY_ORIGIN[0], y + HWY_ORIGIN[1]) for x, y in points]
+
+
+def _hwy_map(streets=HWY_STREETS, **over) -> ClassMap:
+    lines = [LineString(_at(pts)) for _, _, pts in streets]
+    cmap = _cmap(
+        lines, [n for n, _, _ in streets], tuple(t for _, t, _ in streets),
+        key="street_class_milwaukie", layer=MILWAUKIE,
+    )
+    return ClassMap(**{**cmap.__dict__, **over})
+
+
+def _hwy_line(i: int) -> list:
+    x1, y1, x2, y2, cls = HWY_LINES[i]
+    (a, b), (c, d) = _at([(x1, y1), (x2, y2)])
+    return [a, b, c, d, cls]
+
+
+def test_a_line_on_a_highway_70_ft_wide_is_measured_across_the_right_of_way(rules) -> None:
+    """The centre line of Highway 224 is past the 60 ft reach from every
+    point of the line, so it was unmeasured and the lot gave up the whole
+    40 ft. Measured square across the right-of-way it is 70 ft out, and
+    Milwaukie's deepest distance to centre line asks nothing of the lot."""
+    lot = shapely.Polygon(_at(HWY_LOT_RING))
+    cmap = _hwy_map()
+    for i in (0, 1, 2):
+        width, public, names = dedication.read_line(_hwy_line(i), cmap, lot=lot)
+        assert public and names is None
+        assert 69.0 <= width <= 78.0
+        assert dedication.depth_ft(strip(rules, MILWAUKIE, "R-MD", 0.0, names=None), width) == 0.0
+    # The Sellwood St line is read as it always was, name and all.
+    width, public, names = dedication.read_line(_hwy_line(3), cmap, lot=lot)
+    assert public and names == ("SELLWOOD ST",) and 20.0 <= width <= 31.0
+    got = dedication.measure([_hwy_line(i) for i in range(4)], MILWAUKIE, [cmap], lot=lot)
+    assert [m[6] for m in got] == [None, None, None, ["SELLWOOD ST"]]
+    assert all(m[4] is not None and m[5] for m in got)
+
+
+def test_what_the_reading_across_cannot_measure_stays_unmeasured() -> None:
+    lot = shapely.Polygon(_at(HWY_LOT_RING))
+    cmap = _hwy_map()
+    line = _hwy_line(2)
+    # Without the lot's shape nothing says which side is off the lot.
+    assert dedication.read_line(line, cmap) == (None, True, None)
+    # A private drive nearer than the highway: not the street's centre line.
+    drive = ("", 1800, [(480, 300), (420, 420), (380, 500)])
+    assert dedication.read_line(line, _hwy_map([*HWY_STREETS, drive]), lot=lot)[0] is None
+    # A centreline within 50 ft of the midpoint is no wide-road line: the
+    # readings that failed on it stay failed (a stub off its far end).
+    stub = ("SE STUB ST", 1500, [(440, 380), (470, 395)])
+    assert dedication.read_line(line, _hwy_map([*HWY_STREETS, stub]), lot=lot)[0] is None
+    # Nothing within 150 ft: unmeasured, the whole distance.
+    far = [("HWY 224", 1200, [(x + 120, y + 60) for x, y in HWY_STREETS[0][2]]), *HWY_STREETS[1:]]
+    assert dedication.read_line(line, _hwy_map(far), lot=lot) == (None, True, None)
+    assert dedication.depth_ft(40.0, None) == 40.0
+
+
+def test_an_openstreetmap_street_nearer_than_metros_brings_the_reading_in() -> None:
+    lot = shapely.Polygon(_at(HWY_LOT_RING))
+    frontage_road = LineString(_at([(385, 560), (445, 465), (486, 388), (540, 280)]))
+    plain = dedication.read_line(_hwy_line(2), _hwy_map(), lot=lot)[0]
+    for fclass, moves in (("residential", True), ("footway", False), ("service", False)):
+        cmap = _hwy_map(osm=Lines.build([frontage_road]), osm_classes=(fclass,))
+        width = dedication.read_line(_hwy_line(2), cmap, lot=lot)[0]
+        assert (width < plain - 5.0) is moves
+        assert width <= plain

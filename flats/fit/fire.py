@@ -113,20 +113,28 @@ SIMPLIFY_FT = 0.5
 
 
 def street_offsets(
-    points: np.ndarray, centrelines: shapely.STRtree | None, geoms: Sequence[BaseGeometry]
+    points: np.ndarray,
+    centrelines: shapely.STRtree | None,
+    geoms: Sequence[BaseGeometry],
+    max_gap_ft: float = MAX_GAP_FT,
 ) -> np.ndarray:
     """How far past each street lot line point the truck stands: the distance
     to the nearest centreline of a road it can use, less :data:`HALF_ROAD_FT`,
     never below zero; infinite past :data:`MAX_GAP_FT`. Zero for every point
     where no centreline is held -- the lot line itself, which is a SHORTER
     offset than the real one: callers that cannot supply centrelines get a
-    measure that may clear a lot it should not, and only the tests do that."""
+    measure that may clear a lot it should not, and only the tests do that.
+
+    ``max_gap_ft`` is :data:`MAX_GAP_FT` for the code's reading; the
+    wide-road reading (:func:`flats.ingest.quadfit._wide_road_read`), which
+    stands the engine on the road a wide-road street line faces, asks
+    farther."""
     if centrelines is None or not len(geoms) or not len(points):
         return np.zeros(len(points))
     pts = shapely.points(points)
     idx = centrelines.nearest(pts)
     gap = shapely.distance(pts, np.asarray(geoms, dtype=object)[idx])
-    return np.where(gap > MAX_GAP_FT, math.inf, np.maximum(gap - HALF_ROAD_FT, 0.0))
+    return np.where(gap > max_gap_ft, math.inf, np.maximum(gap - HALF_ROAD_FT, 0.0))
 
 
 def load_truck_roads(
@@ -159,6 +167,32 @@ def truck_lines(path: Path, edges: "StreetEdges | None" = None) -> tuple[np.ndar
             geoms = np.concatenate([geoms, np.asarray([maybe[i] for i in ok], dtype=object)])
             kinds = np.concatenate([kinds, kind[sel].to_numpy(dtype=float)[ok]])
     return geoms, kinds
+
+
+#: RLIS STREETS TYPE 1200: a state highway that is no freeway (McLoughlin
+#: Blvd, Highway 213, Tualatin Valley Hwy). One of :data:`TRUCK_TYPES`: an
+#: engine stands on one as on any other road (Steph 2026-11-19, of Highway
+#: 213 beside Oregon City 32E16BB06000: "I'd say it's green"). Read apart
+#: only to name it on the lots whose fire reading rests on one across a
+#: wide right-of-way (:func:`flats.ingest.quadfit._wide_road_read`).
+STATE_ROAD_TYPE = 1200
+
+
+class TruckRoads(tuple):
+    """The truck roads as :func:`point_offset` takes them -- (index,
+    centrelines[, street edges[, walks]]) -- that also say which of them are
+    state highways (``state_roads``: :func:`state_roads`, or None where
+    nobody read the types)."""
+
+    state_roads: "tuple[shapely.STRtree, np.ndarray] | None" = None
+
+
+def state_roads(path: Path) -> tuple[shapely.STRtree, np.ndarray] | None:
+    """quadfit s1's :data:`STATE_ROAD_TYPE` centrelines, indexed; None where
+    the file holds none."""
+    geoms, kinds = truck_lines(path)
+    keep = np.asarray(geoms, dtype=object)[kinds == STATE_ROAD_TYPE]
+    return (shapely.STRtree(keep), keep) if len(keep) else None
 
 
 #: RLIS TYPE codes of the freeways and their ramps: no place to stand
@@ -331,6 +365,7 @@ def hose_offsets(
     geoms: Sequence[BaseGeometry],
     edges: StreetEdges | None = None,
     walks: Walks | None = None,
+    max_gap_ft: float = MAX_GAP_FT,
 ) -> tuple[np.ndarray, np.ndarray]:
     """How far past each street lot line point the hose starts, read two
     ways: (strict, curb).
@@ -353,7 +388,7 @@ def hose_offsets(
     from the point to that centreline and along it to where a truck can
     stand (:func:`_walked`); infinite where none can.
     """
-    old = street_offsets(points, centrelines, geoms)
+    old = street_offsets(points, centrelines, geoms, max_gap_ft)
     if centrelines is None or not len(geoms) or not len(points):
         return old, old.copy()
     from flats.geom.curbs import Source
@@ -400,13 +435,14 @@ def point_offset(
     walks: Walks | None = None,
     *,
     reading: str = "strict",
+    max_gap_ft: float = MAX_GAP_FT,
 ) -> Callable[[np.ndarray], np.ndarray]:
     """:func:`hose_offsets` bound to one street index, as :func:`route_ft`
     takes it: the ``reading`` of :data:`READINGS` asked for."""
     if reading not in READINGS:
         raise ValueError(f"reading must be one of {READINGS}, not {reading!r}")
     pick = READINGS.index(reading)
-    return lambda pts: hose_offsets(pts, centrelines, geoms, edges, walks)[pick]
+    return lambda pts: hose_offsets(pts, centrelines, geoms, edges, walks, max_gap_ft)[pick]
 
 
 def reachable(
@@ -433,7 +469,9 @@ __all__ = [
     "MAX_GAP_FT",
     "READINGS",
     "PAVED_IF_WIDE_TYPES",
+    "STATE_ROAD_TYPE",
     "TRUCK_TYPES",
+    "TruckRoads",
     "LINK_TYPES",
     "hose_offsets",
     "link_lines",
@@ -441,6 +479,7 @@ __all__ = [
     "point_offset",
     "reachable",
     "route_ft",
+    "state_roads",
     "street_offsets",
     "truck_lines",
 ]

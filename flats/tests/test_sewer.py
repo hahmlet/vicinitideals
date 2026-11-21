@@ -163,7 +163,14 @@ def test_a_place_with_no_data_is_unmeasured_never_outside(snap: Path) -> None:
 
 def test_the_real_file_leaves_canby_estacada_and_multnomah_pockets_unmeasured() -> None:
     spec = sewer.load_spec()
-    for place in ("or/clackamas/canby", "or/clackamas/estacada", "or/multnomah/_unincorporated"):
+    # Happy Valley since 2026-11-18 (FOLLOWUPS 194(2)): WES maps no mains,
+    # so a lot outside CCSD#1 there is a gap in the map, not a finding.
+    for place in (
+        "or/clackamas/canby",
+        "or/clackamas/estacada",
+        "or/multnomah/_unincorporated",
+        "or/clackamas/happy-valley",
+    ):
         assert not spec.measures(place), place
     for place in ("or/washington/hillsboro", "or/clackamas/_unincorporated", "or/multnomah/portland"):
         assert spec.measures(place), place

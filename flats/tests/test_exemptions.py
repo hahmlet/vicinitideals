@@ -255,7 +255,12 @@ pytestmark = pytest.mark.unit
 # the all-other-districts row ticks it (zdo.1001.txt#L31-L32,L94,L99-L105, read by column
 # position). The quoted lines print section numbers, so numeric; a blank cell states nothing.
 # rel7 add-ons 2026-11-10: roof-ban (+4) and fg4-fixes 4a (+9) land together: 246 -> 259 numeric.
-EXPECTED = {"stated": 484, "numeric": 272, "marker": 0, "dash": 2, "silent": 7}
+EXPECTED = {"stated": 484, "numeric": 279, "marker": 0, "dash": 2, "silent": 7}
+# 272 -> 279 numeric on 2026-11-18 (flats/commercial-fixes, FOLLOWUPS 203): Gresham's seven
+# Downtown sub-districts (DCC, DTM, DMU, DEM, DCL, DRL-1, DRL-2) hold
+# ground_floor_commercial_min_pct exempt: true off the stretches GDC 4.1121(A) names "in the
+# following locations" (4/4.1121.txt#L1-L6), the 75 percent in a variant under
+# gresham_first_floor_uses_street (flats.geom.first_floor_uses).
 # rel9 merge of rel8 final 2026-11-15: kc-buffer (+4, 266 -> 270) and the Hillsboro hold (+2) together: 272.
 # 266 -> 270 numeric on 2026-11-13 (FOLLOWUPS 146, kc-buffer): King City's 16.124.110 C buffer
 # is owed only "on all portions of the lot abutting a lesser zone" (kcc.16.124.landscaping.txt

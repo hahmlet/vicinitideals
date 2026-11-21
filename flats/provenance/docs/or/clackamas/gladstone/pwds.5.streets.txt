@@ -1,0 +1,668 @@
+City of Gladstone
+                                           Public Works Design Standards
+
+                                                                   Table of Contents
+
+SECTION FIVE – STREET REQUIREMENTS ................................                                                                              .............................                     1
+    5.0000               STREETS .......................................................................................................................................... 1
+          5.0010           General Design Requirements ............................................................................................................. 1
+               5.0011            Right-of-Way and Pavement Width ............................................................................................... 1
+               5.0012            Parking............................................................................................................................................ 1
+               5.0013            Access ............................................................................................................................................. 1
+               5.0014            Traffic Analysis ............................................................................................................................... 2
+               5.0015            Intersections ................................................................................................................................... 3
+               5.0016            Half-Street plus Travel Lane Construction...................................................................................... 4
+               5.0017            Street Classification ........................................................................................................................ 4
+               5.0018            Design Speed .................................................................................................................................. 4
+          5.0020           Horizontal/Vertical Curves, and Grades .............................................................................................. 5
+               5.0021            Horizontal Curves ........................................................................................................................... 5
+               5.0022            Vertical Curves ............................................................................................................................... 6
+               5.0023            Grades ............................................................................................................................................ 6
+          5.0030           Pavement Design ................................................................................................................................. 6
+          5.0040           Concrete Curb ...................................................................................................................................... 7
+               5.0041            Curb Return Radius ........................................................................................................................ 7
+          5.0050           Sidewalks ............................................................................................................................................. 7
+               5.0051            Sidewalk Ramps.............................................................................................................................. 8
+          5.0060           Bikeways/Bike Paths ............................................................................................................................ 8
+               5.0061            Bikeway Location, Width ................................................................................................................ 8
+               5.0062            Design Criteria ................................................................................................................................ 8
+               5.0063            Construction ................................................................................................................................... 9
+          5.0070           Driveways and Approaches ................................................................................................................. 9
+          5.0080           Street Lighting, Trees, Names and Signage ....................................................................................... 10
+               5.0081            Street Lighting .............................................................................................................................. 10
+               5.0082            Street Trees .................................................................................................................................. 11
+               5.0083            Street Names, Traffic Control Signage, and Pavement Markings ................................................ 11
+          5.0090           Dead-end Streets and Cul-de-sacs ..................................................................................................... 12
+          5.0100           Alleys and Private Residential Streets/Accessways ........................................................................... 12
+               5.0101            Alleys ............................................................................................................................................ 12
+               5.0102            Private Residential Accessways .................................................................................................... 12
+          5.0110           Local Street Design for Adverse Topography..................................................................................... 13
+          5.0120           Medians ............................................................................................................................................. 13
+          5.0130           Guardrails .......................................................................................................................................... 13
+          5.0140           Pavement Transitions ........................................................................................................................ 13
+          5.0150           Monument Boxes .............................................................................................................................. 14
+          5.0160           (Intentionally Left Blank) ................................................................................................................... 14
+          5.0170           Private Streets ................................................................................................................................... 14
+
+City of Gladstone Public Works Design Standards 2017                                              i                                                     Section Five-Street Requirements
+
+City of Gladstone Public Works Design Standards 2017                                                                                  Section Five-Street Requirements
+
+                         SECTION FIVE – STREET REQUIREMENTS
+
+5.0000          STREETS
+
+5.0010       General Design Requirements
+A.   Performance Standards - All street designs shall provide for the safe and efficient travel of the public.  Streets
+     shall be designed to carry the recommended traffic volumes identified for each street classification.
+B.   Streets shall be designed to meet or exceed minimum guidelines.  These guidelines are set forth in the
+     "AASHTO Policy on Geometric Design of Highways and Streets" (latest edition).  Traffic Control Devices shall
+     conform to the "Manual on Uniform Traffic Control Devices for Streets and Highways", Federal Highway
+     Administration, with Oregon Supplements, Oregon Department of Transportation (latest edition).
+C.   All vertical and horizontal curves shall meet the guidelines of the AASHTO Policy on Geometric Design of
+     Highways and Streets and the design speed for each street classification.  Where practical, the Design Engineer
+     shall provide the decision stopping sight distance set forth in the AASHTO policy.  But in no case shall less than
+     the minimum stopping sight distance given be permitted.
+
+     5.0011      Right-of-Way and Pavement Width
+     A.   Design Speeds for each street classification shall be as shown in Subsection 5.0018, Design Speed.  The
+          design speed can be equal to the 85th percentile vehicle speed.  If the street improvement will increase
+          the 85th percentile vehicle speed, the value of the design speed will be determined by the Public Works
+          Director.
+     B.   Refer  to   Section  17.50.040      of  the  Gladstone  Municipal  Code          for  right-of-way  width  for  each      street
+          classification.
+
+     5.0012      Parking
+                   Street Class                     Parking Lanes            Parking Required
+
+       Arterial                                   None                      May be allowed
+       Collector / Neighborhood Route             2                         May be allowed
+       Local / Cul-de-sac                         2                         Yes
+
+     A.   Where on-street parking is required on selected arterials and collectors, pullout areas shall be provided.
+     B.   On Arterial and Collector streets, no parking is allowed within 45 ft. of the curb return.
+     C.   On neighborhood routes, local streets and cul-de-sacs, no parking is allowed within 30 ft. of curb return.
+     D.   One off-street parking space is required for each single-family residential unit.
+     E.   For streets designated collector and below, the Public Works Director may consider design modifications
+          to conserve major trees in the public right-of-way.  Subject to approval by the                      Public Works Director,
+          parking lanes may be removed on one or both sides of a street.
+     F.   Diagonal parking will not be allowed on new streets.
+
+     5.0013      Access
+     All development shall be provided public street access.  Access roads (public and/or private), driveways, and
+     easements shall be as set forth in other sections of these Design Standards.
+
+City of Gladstone Public Works Design Standards 2017                 1                                     Section Five-Street Requirements
+     5.0014       Traffic Analysis
+     A.    The Public Works Director will require a traffic analysis report as determined by the type of development
+           and its potential impact to existing street systems.  A traffic analysis will generally be required for a
+           development:
+           1.   When it will generate 1,000 vehicle trips per weekday or more
+           2.   When     a development's location, proposed site plan, and traffic characteristics could affect traffic
+                safety,  access  management,  street  capacity,  or  known  traffic  problems  or  deficiencies  in  a
+                development's study area.
+     B.    The report will be prepared by a traffic engineer licensed to practice in the State of Oregon.  At a
+           minimum, the report shall contain the following:
+           1.   Purpose of Report and Study Objectives
+                a.    A  discussion  of  key  traffic  issues  to  be  addressed  and  the  transportation  system  and
+                      development objectives related to a specific development.
+                b.    General transportation system objectives are:
+                          to maintain easy and safe traffic flow on surrounding street system;
+                          to provide effective and safe transfer of vehicle traffic between the site and the street
+                           system;
+                          to  provide     convenient,  safe  and  efficient  on-site  and  off-site  movement  of  vehicles,
+                           pedestrians, transit, service and delivery vehicles, and bicycles;
+                          To   effectively  mitigate  adverse  site-generated  traffic  impacts  on  affected  streets  and
+                           intersections.  Site-specific objectives may be established by the City for each study.
+           2.   Executive Summary
+                A  concise  summary  of  the  study  purpose/objectives,  site  location  and  study  area,  development
+                description, key assumptions, findings, conclusions and recommendations.
+           3.   Description of Site and Study Area Roadways
+                a.    A  description  of  the  site  and  study  area,  existing  traffic  conditions  in  the  study  area,  and
+                      anticipated nearby development and committed roadway improvements  which  would affect
+                      future traffic in the study area.
+                b.    The study area will be defined by:
+                          All roads, ramps, and intersections through which peak hour site traffic composes at least 5%
+                           of the existing capacity of an intersection approach, or roadway sections on which accident
+                           character or residential traffic character is expected to be significantly impacted.
+           4.   On-site Traffic Evaluation
+                A  study  of  the  impacts  of  the  development  to  traffic  and  an  evaluation  of  the  proposed  (and
+                alternative) site access locations, the adequacy of access drive depth, driveway lanes, and queuing
+                storage, the safety and efficiency of proposed vehicular circulation, parking layout, pedestrian and
+                service  vehicle  routes/facilities,  together  with  recommendations  for  on-site  traffic  markings  and
+                controls.
+           5.   Technical Appendix
+                A technical appendix including worksheets, charts, and drawings to support findings described in the
+                body of the report.
+           6.   Recommendations for Public Improvements
+
+City of Gladstone Public Works Design Standards 2017                   2                                       Section Five-Street Requirements
+                a.    Recommendations  should  be  made  for  external  roadway  improvements  to  mitigate  traffic
+                      impacts, such as additional through lanes and turn lanes, and traffic control devices necessitated
+                      as a result of the development.  Recommended improvements to transit facilities, and pedestrian
+                      and bike circulation should also be reported.
+                b.    The recommendations should specify the time period                     within which improvements should be
+                      made, particularly if improvements are associated with a phased development, the estimated
+                      cost of improvements, and any monitoring of operating conditions and improvements that may
+                      be needed.  If needed street improvements unrelated to the development are identified during
+                      the analysis, such improvements should be reported.
+           7.   Access Management
+                On sites with arterial and collector street frontages, the report shall evaluate and recommend the use
+                of access management plans or techniques:
+                a.    To  separate  basic  conflict  areas  (reduce  number  of  driveways  or  increase  spacing  between
+                      driveways and intersections);
+                b.    To remove turning vehicles or queues from the through lanes (reduce both the frequency and
+                      severity  of  conflicts  by  providing  separate  paths  and  storage  area  for  turning  vehicles  and
+                      queues).
+                c.    These techniques may include turn restrictions, striping, medians, frontage roads, channelization
+                      of lanes or driveways, shared driveways and access between similar uses, access consolidation,
+                      lanes for left or right turns, and other Transportation System Management (TSM) actions.
+           8.   A review of alternative access points for site access to highways, city streets, and county roads.
+           9.   The analysis of alternate access proposals should include:
+                a.    Existing  daily  and  P.M.  peak  hour  counts  by  traffic  movements  at  intersections  effected  by
+                      generated traffic from the development (use traffic flow diagrams).
+                b.    Projected daily and P.M. peak hour volumes for these same intersections and proposed access
+                      points when the development is in full service.  (Use traffic flow diagrams)
+                c.    A  determination  of  the  existing  levels  of  service  and  projected  levels  of  service  at  each
+                      intersection and access points studied.
+                d.    A discussion of the need for traffic signals.  This should include a traffic warrant computation
+                      based on the MUTCD.
+           10.  The recommendations made in the report should be specific, and shall be based on the acceptable
+                level of service as defined by the Transportation System Plan adopted by the City.  As an example, if a
+                traffic signal is recommended, the recommendation should include the type of traffic signal control
+                and what movements should be signalized.  If storage lanes for right turns or left turns are warranted,
+                the recommendation should include the amount of                      storage needed.  If several intersections are
+                involved for signalization and an interconnect system is considered, specific analysis shall be made
+                concerning progression of traffic between intersections.
+           11.  The report shall include a discussion of bike and pedestrian usage and the availability of mass transit
+                to serve the development.
+
+     5.0015      Intersections
+     A.    Connecting street intersections shall be located to provide for traffic flow, safety, and turning movements,
+           as conditions warrant.
+     B.    At intersecting centerlines, a tangent section of a minimum of 25 ft.                    shall be carried in each direction
+           away from the intersection.
+
+City of Gladstone Public Works Design Standards 2017                  3                                      Section Five-Street Requirements
+     C.    Arterial Intersections:  Exclusive left and right turn lanes shall be provided; bus turnouts shall be provided
+           if  traffic  flow  and  safety  conditions       warrant;  designated  crosswalks  shall  be  provided  at  controlled
+           locations; street alignments across intersections shall be continuous.
+     D.    Collector, Neighborhood Routes and Local Street Intersections:  Street and intersection alignments shall
+           facilitate local circulation and discourage non-local, through traffic.
+     E.    Streets shall be aligned so as to intersect at right angles (90).                 Angles between 90 and 75 must be
+           approved by the Public Works Director.  Angles of 75 and lower will not be permitted.  Intersection of
+           more than two streets at one point will not be permitted.
+     F.    New streets shall intersect with existing street intersections so that centerlines are not offset, except as
+           provided below.  Where existing streets adjacent to a proposed development do not                                 align properly,
+           conditions may be required of the development to provide for proper alignment.
+     G.    For intersections which are not directly aligned with street centerlines, the centerline spacing must meet
+           the minimum separation distance shown in the table below.
+                                                                     Intersection
+                               Street Class                          Spacing (Ft.)
+
+             Arterial                                               500*
+             Collector                                              200*
+             Neighborhood Route / Local / Cul-de-sac                150
+
+           *The   Public Works Director         may permit a minimum spacing of not less than 300 ft.                     (Arterial), 150 ft.
+           (Collector), when findings are made to establish that:
+           1.   Without the change, there could be no public street access from the parcel(s) to the existing street,
+                or
+           2.   The change is necessary to support local pedestrian, bicycle circulation and access, and
+           3.   The change is necessary due to topographic constraints, and
+           4.   All other provisions of the street design requirements can be met.
+
+     5.0016      Half-Street plus Travel Lane Construction
+     A.    Half-streets will only be approved when the abutting or opposite frontage property is undeveloped and
+           the full improvement will be provided with development of the abutting or opposite (upon right-of-way
+           dedication) frontage property.  Where such a street is justified, the right-of-way and pavement width will
+           be determined by the Public Works Director.  In no case shall the pavement width required be less than
+           that necessary to provide two lanes of traffic to pass at a safe distance, but will generally be a half street
+           improvement plus a travel lane in the opposite direction.
+     B.    A development on an unimproved street shall be responsible for constructing a continuous, City-standard
+           street connection to the nearest developed (publicly-maintained) street.
+
+     5.0017      Street Classification
+     All streets within the City shall be classified as designated in the Transportation System Plan.  The classification
+     for any street not listed shall be that determined by the Public Works Director.
+
+     5.0018      Design Speed
+     A.    Design speeds for classified streets shall be as shown in the table below.
+
+City of Gladstone Public Works Design Standards 2017                   4                                      Section Five-Street Requirements
+            Arterial                                                35-45 MPH
+            Collector                                               30 MPH
+            Neighborhood Route / Local / Cul-de-sac                 25 MPH or based on minimum 150-200 ft. stopping sight
+                                                                    distance
+
+     B.   Where existing traffic conditions identify speeds in excess of design speeds listed, then the higher speed
+          shall be used for design purposes.
+
+5.0020       Horizontal/Vertical Curves, and Grades
+
+     5.0021      Horizontal Curves
+     A.   Horizontal curve alignments shall meet the minimum radius requirements shown in the following tables.
+                                                  Arterial and Collector Streets
+
+              Design         Friction
+               Speed          Factor
+              (MPH)             (F)         E= -4%          -2.5%            0%            2.5%           4.0%           6.0%
+
+                                                                       Centerline radius, in feet
+                 25           0.165           333            298            252            219             203            185
+                 30           0.160           500            444            375            324             300            273
+                 35           0.155           710            628            527            454             419            380
+                 40           0.150           970            853            711            609             561            508
+                 45           0.145          1286            1125           931            794             730            658
+                 50           0.140          1667            1449           1190           1010            926            833
+                 55           0.130          2241            1921           1551           1301           1186           1061
+
+                                  Neighborhood Routes, Local Streets and Cul-de-sacs
+
+              Design
+               Speed         Friction
+              (MPH)         Factor (F)      E= -4%          -2.5%            0%            2.5%           4.0%           6.0%
+
+                                                                       Centerline radius, in feet
+                 25           0.252           196            184            165            150             143            134
+                 30           0.221           332            306            272            244             230            214
+
+     B.   Where superelevation is used, street curves shall be designed as determined/approved by the                               Public
+          Works Director for maximum superelevation rate of 0.04.  If terrain dictates sharp curvature, a maximum
+          superelevation  rate  of  0.06  is  justified  if  the  curve  is  long  enough  by  AASHTO  Policy  to  provide  an
+          adequate superelevation transition.
+     C.   Request for design speeds less than 25 MPH will be determined/approved by the Public Works Director
+          based on topography, right-of-way, or geographic conditions for the applicant.  Request must show that a
+          reduction in centerline radius will not compromise safety.
+
+City of Gladstone Public Works Design Standards 2017                 5                                     Section Five-Street Requirements
+                                   f = friction factor
+             R =    V²             e = superelevation, in feet
+                    15(e + f)      R = centerline radius, in feet
+                                   V = design speed, in MPH
+
+     5.0022      Vertical Curves
+     A.    Vertical curve length shall be based on AASHTO Policy design criteria which includes design speed, crest
+           vertical curve, and sag vertical curve.  Stopping sight distance for crest and sag vertical curves shall be
+           based on sight distance and headlight sight distance, respectively.
+     B.    All vertical curves shall be parabolic and the length shall meet the minimum length required for each
+           location.
+
+     5.0023      Grades
+     A.    Maximum grades for each street classification shall be as listed in the table below, except as approved by
+           the Public Works Director.
+             Arterial                                                   08%
+             Collector                                                  10%
+             Neighborhood Route / Local / Cul-de-sac                    15%
+
+     B.    Minimum grade for all streets shall be 0.0050 ft. per ft. however, in all cases street grades shall allow for
+           proper and adequate drainage.  Cul-de-sac "bulbs" shall have a minimum slope of 0.0050 ft. per ft.  Any
+           grade change of more than 1% shall be accomplished with vertical curves.
+
+5.0030       Pavement Design
+A.   In general, all streets shall be constructed with asphaltic concrete; however, Portland Cement Concrete (PCC)
+     streets are permitted as approved by the Public Works Director.
+B.   Typical flexible pavement thickness for neighborhood routes, local streets and alleys shall be as shown in the
+     Standard Drawings.
+C.   The Design Engineer shall provide a street structural design section for all roadways classified collector and
+     higher, and for all streets, including local streets, in industrial zones.
+D.   Asphalt pavement may be designed using any nationally recognized procedure.  The procedures contained in
+     the following references are preferred.
+     1.    “AASHTO Guide for Design of Pavement Structures, 1986”.  American Association of State Highway and
+           Transportation Officials.
+     2.    “Thickness Design      –  Asphalt Pavements for Highways and Streets”.  The Asphalt Institute, September,
+           1981.
+E.   Concrete pavement may be designed using any nationally recognized procedure.  The procedures contained in
+     the following references are preferred.
+     1.    “AASHTO Guide for Design of Pavement Structures”, 1986.
+     2.    “Thickness Design for Concrete Highway and Street Pavements”, Portland Cement Association, 1984.
+F.   The minimum approved Street section shall be as follows:
+     1.    Local streets  –   4 in. of asphaltic concrete, consisting of 4 in. of ½ in. dense graded level 3 HMAC in (2) 2
+           in. lifts, with 12 in. rock base.        PCC alternate equals 6 in. plain concrete pavement (ODOT 00756) on
+           compacted subgrade.
+
+City of Gladstone Public Works Design Standards 2017                  6                                      Section Five-Street Requirements
+     2.    Neighborhood routes –  4 in. of asphaltic concrete, consisting of 4 in. of ½ in. dense graded level 3 HMAC
+           in (2) 2 in. lifts  with 12 in. rock base.  PCC alternate equals 6 in. plain concrete pavement (ODOT 00756)
+           on compacted subgrade.
+     3.    Collectors –  5 in. of asphaltic concrete, consisting of a 2 in. lift of ½ in. dense graded level 3 HMAC over a
+           3 in. lift of ½ in. dense graded HMAC, with 14 in.              rock base.  PCC alternate equals 7 in. plain concrete
+           pavement (ODOT 00756) on compacted subgrade.
+     4.    Arterial –  6 in. of asphaltic concrete, consisting of a 2 in. lift of ½ in. dense graded level 3 HMAC,                        with
+           14 in. rock base.
+     5.    Each lift shall be tested, approved and accepted prior to the next one being placed over.
+     6.    Rock base shall consist of required amount of 1-1/2” -0 crushed rock and 2 in. of 3/4” -0 leveling course.
+G.   Fabric may be required on any of the street types depending on soil and weather conditions.  (Resolution 05-
+     10 4/11/05)
+
+5.0040       Concrete Curb
+A.   All new development projects shall construct street improvements with concrete curbs.  Monolithic Curb and
+     Gutter, as shown in the Standard Drawings, shall be used unless Standard Curb is approved by the                                   Public
+     Works Director.
+B.   Top  of  curb  elevation  and  centerline          elevations  shall  be  equal  in  standard  street  cross-sections,  unless
+     otherwise approved by the Public Works Director.  In non-standard street cross-sections, the maximum cross-
+     slope shall be 3.5%.
+C.   Control joint spacing in curbs shall be at a 15 ft. maximum at all curb return points and at driveway curb-drop
+     transition points.
+D.   A minimum of two drainage block-outs to accommodate 3 in.                          drain pipe shall be provided for each lot.
+     Typically these block-outs are located 5 ft. from each side of property line and shall extend 3 in. beyond the
+     sidewalk.
+
+     5.0041      Curb Return Radius
+     A.    Curb return radius at street intersections shall be designed to accommodate all expected traffic.  Curb
+           extensions and/or special crosswalk/sidewalk features designed to enhance pedestrian safety may be
+           required to encourage pedestrian usage.  Minimum curb radii required are as shown in the table below.
+             Intersection                                                       Radius
+
+             Arterial  –  Arterial                                              35 ft.
+             Arterial  –  Collector                                             25 ft.
+             Arterial  –  Neighborhood Route or Local Street                    20 ft.
+             Collector  –  Collector                                            25 ft.
+             Collector  –  Neighborhood Route or Local Street                   15 ft.
+             Neighborhood Route  –  Neighborhood Route                          15 ft.
+             Local Street  –  Local Street                                      15 ft.
+
+     B.    Larger  curb  radii  may  be  required  on  streets  serving  commercial/industrial  properties                       for  vehicle
+           movements.
+
+5.0050       Sidewalks
+A.   In general, new sidewalks with curbs are required for any development requiring a development permit.  The
+     location of the sidewalk within a development will be determined in the Development Review process.
+
+City of Gladstone Public Works Design Standards 2017                   7                                      Section Five-Street Requirements
+B.   All  sidewalks  and  curb  ramps  shall  comply  with  and  be constructed  in  accordance  with  all  current  ADA
+     standards.
+C.   Sidewalks shall be a minimum 6 ft. wide, unless otherwise approved by the Public Works Director and shall be
+     typically separated from the face of the curb by a 6 ft. planter strip.  The minimum permitted slope across the
+     planter strip shall be 1:50 (2%).  The maximum permitted slope across the planter strip shall be 1:4 (25%).
+D.   Sidewalks  shall  be  within  the  dedicated  right-of-way,  unless  specifically  approved  by  the                     Public  Works
+     Director.
+E.   Sidewalks and curb ramps shall have a maximum running slope 1:12 (8.33%) and a maximum cross slope of
+     1:50 (2%).  Where steeply sloped roadways and constrained right-of-way preclude a running slope of 1:12
+     (8.33%), the least possible running slope shall be provided.
+F.   Pedestrian curb ramps shall have yellow truncated domes that extend the full width of the ramp and cover the
+     first 2 ft. of the ramp closest to the street.  Transitions from the ramp to the walkway, gutter, and street must
+     be flush (level) and free of abrupt level changes.  The gutter or adjacent roadway must have a slope of no
+     more than 1:20 (5%) toward the ramp.  The flared sides or “wings” of the curb ramp shall typically be 1:12
+     (8.33%) in slope, but shall not exceed 1:10 (10%).
+G.   Sidewalk joints shall be finished with a 3 in. shine in new construction, or if construction is infill work, finish
+     shall match existing pattern.  A light broom finish is required on all sidewalk and curb ramps perpendicular to
+     the direction of travel.
+H.   Any damaged, cracked, or broken sidewalk panels shall be removed and replaced in whole.  No partial repairs.
+I.   All  structures  in  the  sidewalk  area  shall  be  located  to  provide  a  minimum  unobstructed  width  of  48 in.
+     horizontal.  Where mailboxes or other objects are within the sidewalk area, the walk shall be widened to
+     provide adequate clearance, or be aligned to go around any obstacles.  Alternate alignments and widths must
+     be approved by the Public Works Director.  A 7 ft. vertical clearance above the sidewalk shall be maintained.
+     (Resolution 05-10 4/11/05)
+
+     5.0051      Sidewalk Ramps
+     All  intersections  shall  contain  sidewalk  ramps  (for  access)  located  within  the  curb  return.    All  street
+     intersections shall typically have twin curb ramps as shown in Standard Drawing 507B.  Sidewalk ramps shall
+     be located with regard to storm water flows, street grades, utility or light pole locations and existing opposing
+     ramps.  Sidewalk ramps shall meet all applicable guidelines of the Americans with Disabilities Act (ADA).
+
+5.0060       Bikeways/Bike Paths
+The need for bikeways shall be determined by the City’s Transportation System Plan.  Bikeway facilities shall meet
+the requirements of the following documents:
+     1.    AASHTO, “Guide to Development of Bicycle Facilities”
+     2.    ODOT, “Oregon Bicycle & Pedestrian Plan”, latest edition
+     3.    “Manual   on   Uniform   Traffic   Control   Devices”   (MUTCD)                 with   Oregon   supplements   by   Oregon
+           Transportation Commission
+
+     5.0061      Bikeway Location, Width
+     Bikeway location and width shall be as determined by the City’s Transportation System Plan.
+
+     5.0062      Design Criteria
+     A.    In  general,  bikeway  design  shall  meet  the  adopted  standards  referred  to  in                       Subsection 5.0060,
+           Bikeways/Bike Paths.
+
+City of Gladstone Public Works Design Standards 2017                   8                                      Section Five-Street Requirements
+     B.   All bikeways shall have a minimum slope of 2% in any direction and a maximum cross-slope of 5%.  On
+          curved alignments, the cross-slope shall be to the inside of the curve.
+     C.   Bikeway curvature will be based on a minimum design speed of 20 MPH.
+     D.   Bikeway grades shall be limited to a maximum of 5%.  Where topography dictates, grades over 5% are
+          acceptable when a higher design speed is used and additional width is provided.
+     E.   All  design  shall  conform  to  the  minimum  requirements  of  the  Oregon  Bike  and  Pedestrian  (ODOT)
+          standards.
+     F.   When bikeways are integrated with a curb, all inlet grates shall be designed to protect the bicyclist from
+          the grate or opening.
+
+     5.0063      Construction
+     A.   Bikeways shall be either asphalt or concrete surfaced.  The structural section of the bikeway shall conform
+          to the requirements shown in Standard Drawing 510.
+     B.   When drainage such as side ditches is required parallel with the bikeway, the ditch centerline shall be at
+          least 5 ft. from the edge of the pavement.  Ditch side slope adjacent to the bikeway shall be no steeper
+          than 2:1 when measuring the horizontal distance to the vertical distance.
+     C.   When culverts cross bikeways, the ends of the pipe shall be no closer than 5 ft. from the edge of the
+          bikeway.
+
+5.0070       Driveways and Approaches
+A.   Access to private property shall be permitted with the use of driveway curb cuts.  The access points with the
+     street shall be the minimum necessary to provide access while not inhibiting the safe circulation and carrying
+     capacity of the street.  Curb cuts are measured from the top of approach wing to the top of approach wing
+     (i.e. the width of the allowable curb cut section or approach includes all lowered or dropped curb sections,
+     NOT just the “throat” or drivable section of the approach).Driveways shall meet all applicable guidelines of the
+     Americans with Disabilities Act (ADA).
+B.   On arterial and collector        streets and above, one driveway/approach per site frontage will be the normal
+     maximum number.  Double frontage lots and corner lots on these streets may be limited to access from a
+     single street, usually the lower classification street.  If additional driveways are approved by the Public Works
+     Director, a finding shall be made that no imminent traffic hazard would result and impacts on through traffic
+     would be minimal.  Restrictions may be imposed on additional driveways, such as limited turn movements,
+     shared access between uses, closure of existing driveways, or other access management actions.  Commercial
+     developments with frontage greater than 250 ft. may request an additional driveway if needed.
+C.   Driveways and approaches shall conform to Standard Drawing 503A, 503B, 504A and 504B, to specifications
+     listed in this section, and to Street Technical Requirements and Concrete Structures Technical requirements of
+     this manual, and shall consist of a standard gray commercially mixed concrete in the right of way with a
+     minimum breaking strength of 3300 psi after 28 days.  No expansion joints are allowed in the street right-of-
+     way.  In existing developments the approach may be asphalt to match the neighboring properties, but only as
+     specifically approved by the Public Works Director.  If asphalt is approved, the following street section applies:
+     10 in. rock base with 4 in. asphalt (size of rock and class of asphalt per Public Works Construction Standards).
+     All approaches at their intersection with the street shall be not greater than 36 ft.
+D.   Width and Location of Curb Cuts
+     1.   Minimum curb cut width shall be 16 ft.
+     2.   Maximum curb cut width shall be 36 ft.  No curb cuts shall be allowed any closer to an intersecting street
+          right-of-way line than the following:
+          a.    On an arterial when intersected by another arterial, 150 ft.
+
+City of Gladstone Public Works Design Standards 2017                  9                                      Section Five-Street Requirements
+           b.   On an arterial when intersected by a collector, neighborhood route or local street 100 ft.
+           c.   On a collector when intersecting an arterial, 100 ft.
+           d.   On a collector when intersected by another collector, a neighborhood route or local street, 35 ft.
+           e.   On a neighborhood route when intersecting any other street, 35 ft.
+           f.   On a local street when intersecting any other street, 35 ft.
+     3.    There shall be a minimum distance between any two adjacent curb cuts on the same side of a public
+           street except for one-way entrances and exits, as follows:
+           a.   On an arterial street, 150 ft.
+           b.   On a collector street, 75 ft.
+           c.   Between any two curb cuts on the same lot on a neighborhood route or local street, 30 ft.
+     4.    Curb cuts shall be kept to a minimum,              consolidation of driveways is preferred.  Adequate line of sight
+           pursuant to engineering standards should be afforded at each driveway.
+     5.    Curb cuts shall be a minimum of 5 ft. from the property line, unless a shared driveway is installed.
+     6.    For  classification  of   collector  and  above,  driveways  adjacent  to  street  intersections  shall  be  located
+           beyond the required queue length for traffic movements at the intersection.  If this requirement prohibits
+           access to the site, a driveway with restricted turn movements may be allowed.
+     7.    Within commercial, industrial, and multi-family areas, shared driveways and internal access between
+           similar uses are encouraged to reduce the access points to the higher classified roadways; to improve
+           internal site circulation; and to reduce local trips or movements on the street system.  Shared driveways
+           or internal access between uses will be established by means of common access easements at the time of
+           development.
+     8.    Multi-family access driveways will be required to meet the same access requirements as commercial
+           driveways if the multi-family site generates 100 or more trips per day.
+
+5.0080       Street Lighting, Trees, Names and Signage
+
+     5.0081      Street Lighting
+     A.    A complete street lighting system shall be the responsibility of the developer. All streets fronting the
+           property shall provide adequate lighting as determined by the Public Works Director. All developers will
+           be  required  to  submit  a  lighting  plan  to  the          Public  Works  Director        that   conforms     to  Illuminating
+           Engineering Society (IES) Standards except as modified by the City.
+     B.    For new subdivisions or land use actions requiring street light installation, all plans for street lights shall
+           be submitted with the construction plan submittal.  Approvals for street light plans will be issued as part
+           of the construction plan package.
+     C.    Required street lights shall be acquired through Portland General Electric (PGE)
+                1.    Standard    street light luminaires       (Schedule 95)      and poles     (Schedule 91)      shall be    PGE   owned,
+                      maintained, and energized under PGE Option A.
+                2.    Standard street light luminaires shall be LEDway by Cree or a PGE-approved equal as determined
+                      by the Public Works Director. No Cobrahead luminaires are permitted. Decorative luminaires and
+                      poles (PGE-approved, Schedule 91, Option B) may be submitted to the Public Works Director for
+                      review and approval on a case-by-case basis or may be required by the Public Works Director to
+                      match existing areas or for special circumstances.
+                3.    Standard    luminaire     and  pole    color  shall  be  Bronze.     Standard  pole  height  30’  with  6’  mast.
+                      Alternatives will require the Public Works Director’s review and approval.
+
+City of Gladstone Public Works Design Standards 2017                  10                                      Section Five-Street Requirements
+                4.    Streetlight luminaire and poles for new development will be determined by the                            Public Works
+                      Director.
+
+     D.   It is the policy of the City to light streets to the IES Standards listed below:
+
+                                                                      Average                      Uniformity
+                                            Area                      Maintained                   Average to
+             Street Classification          Classification            Illumination                 Minimum
+
+                                            Commercial                1.5 foot-candles
+             Arterials                      Intermediate              1.1 foot-candles             3 to 1
+                                            Residential               0.8 foot-candles
+
+                                            Commercial                1.0 foot-candles
+             Collector                      Intermediate              0.8 foot-candles             4 to1
+                                            Residential               0.5 foot-candles
+
+             Neighborhood Route             Commercial                0.8 foot-candles
+             Local                          Intermediate              0.6 foot-candles             6 to1
+             Cul-de-sac                     Residential               0.4 foot-candles
+
+     E.   Definitions:
+     Arterials:  That part of a roadway system which serves as the principal network for through-traffic flow.  These
+     are the routes that connect areas of principal traffic generation and important rural highways entering the
+     City.
+     Collector:  The distributor and collector roadways servicing traffic between major and local roadways.  These
+     are roadways used mainly for traffic movements within residential, commercial and industrial areas.
+     Neighborhood  Route  and  Local:              Roadways  used  primarily  for  direct  access  to  residential,  commercial,
+     industrial or other abutting property.  They do not include roadways carrying through traffic.
+     Commercial:  A business area of the City where ordinarily there are many pedestrians during night hours.  This
+     definition applies to densely developed business areas outside, as well as within, the central part of the City.
+     The area contains land use which attracts a relatively heavy volume of nighttime vehicular and/or pedestrian
+     traffic on a frequent basis.
+     Intermediate:  Those areas of a municipality often with moderately heavy nighttime pedestrian activity such
+     as in blocks having libraries, community recreation centers, large apartment buildings, industrial buildings, or
+     neighborhood retail stores.
+     Residential:  A residential development, or a mixture of residential and small commercial establishments, with
+     few pedestrians at night.
+
+     5.0082       Street Trees
+     Street trees in the public right-of-way, or within the yard setback and/or buffer area immediately adjacent to
+     the right-of-way, will be required of all developments.  The particular species will be reviewed and approved
+     as part of overall project submittals.  A deposit for street trees to assure installation of the trees prior to
+     occupancy shall be required prior to subdivision acceptance by the City and the release of building permits by
+     the Building Official.
+
+     5.0083       Street Names, Traffic Control Signage, and Pavement Markings
+     Street names for all new development will be approved by the City prior to recording of any maps or plats.
+     The development shall pay for all street name and traffic control signage prior to the signing of the final plat or
+
+City of Gladstone Public Works Design Standards 2017                  11                                      Section Five-Street Requirements
+     map by the City.  All new signage and pavement markings shall be installed new developments in accordance
+     with an approved signage and marking plan following City Standards and MUTCD guidelines.
+
+5.0090       Dead-end Streets and Cul-de-sacs
+A.   A standard cul-de-sac turnaround shall be provided at the end of a dead-end street that does not provide
+     looped circulation.  Alternative turnaround configurations may be used when the dead-end street is less than
+     200 ft. long or when conditions warrant, with approval from the Public Works Director.
+B.   Cul-de-sacs shall not be more than 400 ft. in length, measured along the centerline of the street right-of-way.
+     The measurement shall be taken from the intersecting street centerline to the farthest point of the cul-de-sac.
+C.   The minimum outside curb radius for cul-de-sac bulbs shall be 48 ft., unless otherwise approved by the Public
+     Works Director
+D.   Turnaround requirements from the              Oregon Fire Code Applications Guide shall be applied to all dead-end
+     streets.
+E.   A “No Outlet” (MUTCD W14-2a) sign shall be installed in advance, along with three Type 4 (MUTCD OM4-3)
+     object markers at the end of all dead end streets.
+
+5.0100       Alleys and Private Residential Streets/Accessways
+
+     5.0101      Alleys
+     A.   Alleys - Commercial and Industrial
+          1.    Alleyways may be provided in commercial and industrial developments with approval by the Public
+                Works  Director.    When  approved,  alleyways  shall  be  dedicated  to  the  City.    Standard  alleyway
+                dimensions shall be a 12 ft. wide paved surface inside a 16 ft. wide right-of-way.
+          2.    Design for alleyways shall meet the same criteria as other public streets.  The exception to those
+                criteria  may  be  centerline  radius  and  design  speed.    Generally,  alleyways  shall  be  designed  for
+                one-way operation.
+     B.   Alleys - Residential Districts
+          To serve development, alleys allow for efficient lot use, support front yard pedestrian orientation and
+          landscape spaces, and reduce lot coverage by driveways.  Alleys serve as a common driveway for access,
+          utilities, and deliveries.  Alley design shall conform to the latest adopted Transportation System Plan.
+
+     5.0102      Private Residential Accessways
+     In general, private residential streets and accessways shall be provided for multi-family developments such as
+     condominiums and apartments.  Interior design for private accessways in a manufactured home park shall
+     meet the standards of Chapter 48 of the Community Development Code.  The standards for private residential
+     accessways include:
+     1.   Dead-end accessways which exceed 150 ft. in length shall be provided with an approved turnaround.
+     2.   "Private Street" signage and driveway approach shall be placed at the intersection with the public street
+          to clearly identify the private accessway.
+     3.   Private maintenance of the private streets/accessways shall be provided by a Homeowner's Association or
+          other appropriate entity.  Maintenance shall ensure continual emergency accessibility at all times.
+     4.   Location of private accessways shall meet the Oregon Fire Code and meet the minimum pavement section
+          of local residential streets.
+     5.   Private residential accessways will be allowed in Manufactured Home Parks but shall not be allowed in
+          Manufactured Home Subdivisions.
+
+City of Gladstone Public Works Design Standards 2017                 12                                     Section Five-Street Requirements
+5.0110       Local Street Design for Adverse Topography
+A.   In standard local street design, the top of curb elevations shall equal the finished centerline elevations, except
+     in situations of adverse topography.  The Design Engineer may utilize an "offset" or unequal crown section
+     when the existing ground slope exceeds 8% across the roadway section.
+B.   The offset crown design shall meet the following conditions:
+     1.    Minimum distance from "crown" to face of curb is 10 ft.
+     2.    Maximum cross-slope of pavement is 5%.
+     3.    Maximum differential in top of curb elevation from one side to the other is 1 ft.
+C.   The existing     ground "side-slope" criteria are          based on the relationship of the slope of the ground to the
+     transverse slope of the roadway profile.  This relationship shall be met for the entire length of the roadway
+     alignment utilizing an offset crown.
+
+5.0120       Medians
+Raised medians are allowed on certain streets, but must be approved by the Public Works Director.  If medians are
+allowed, the following criteria must be met:
+     1.    The median must be set back at least 2 ft. from the median lane on both sides.
+     2.    Street lighting shall be sufficient to provide illumination of the median.
+     3.    Objects such as trees, shrubs, signs, light poles, etc., shall not physically or visually interfere with vehicle
+           or pedestrian traffic or traveled way.  Medians and objects within the median can be site specific and will
+           be subject to City approvals.
+     4.    Medians  in  the  public  right-of-way  are  maintained  by  the  Public  Works  Department.    Planting  and
+           irrigation  plans  for  medians  shall  be  submitted  to  the  Public  Works  Department  for  its  review  and
+           approval.  Inspections of planting and irrigation systems shall be coordinated directly with the Public
+           Works Department Street Utility Supervisor.  Irrigation of medians shall be designed to water lawn areas
+           and shrub areas separately.
+
+5.0130       Guardrails
+A.   The  decision  of  whether  to  install  guardrails  shall  be  based  on  the  information  found  in  the  AASHTO
+     publication, AASHTO RSDG-3 “Roadside Design Guide.”
+B.   Guardrails shall be designed and constructed per ODOT’s Standard Drawings for Design and Construction.
+
+5.0140       Pavement Transitions
+A.   In the direction of vehicular traffic, street width transitions from a narrower width to a wider width shall be
+     designed with a three to one taper.  Delineators, as approved by the City, shall be installed to define the
+     configurations.
+B.   In the direction of vehicular traffic, street width transitions from a wider width to a narrower width and the
+     length of transition taper shall be determined as shown below.
+             L =   S x W      for S = 45 MPH or greater           Where    L = minimum length of taper (ft.)
+             L =   S² x W     for S less than 45 MPH                       S = Design speed (MPH)
+                     60                                                    W = EP to EP offset width
+                                                                           EP = Edge of pavement to center line
+
+C.   Delineators, as approved by the City, may be installed to define the configuration.  Maximum spacing of
+     delineators shall be the numerical value of the design speed, in ft. (e.g. 35 ft. spacing for 35 MPH).
+
+City of Gladstone Public Works Design Standards 2017                  13                                      Section Five-Street Requirements
+5.0150       Monument Boxes
+Monument boxes shall be installed and be in accordance with all Clackamas County Surveyor specifications and
+requirements.
+
+5.0160       (Intentionally Left Blank)
+
+5.0170       Private Streets
+Private  streets  must  meet  the  identical  requirements  of  public  or  City  streets  with  respect  to  design  and
+construction standards; however, the City has no maintenance responsibilities for private streets.
+
+City of Gladstone Public Works Design Standards 2017                 14                                     Section Five-Street Requirements

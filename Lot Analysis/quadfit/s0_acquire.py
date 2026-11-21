@@ -200,6 +200,25 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_pdx_ezone_v": {
         "url": f"{_PDX}/BPS_Zoning_Code_Layers/MapServer/116",
         "fields": ["OVRLY", "ZONE", "PLDIST"]},
+    # PCC 33.475.400-.450: the River Environmental overlay "e" (FOLLOWUPS
+    # 202, 2026-11-18); carved whole like v (overlays.yaml pdx_river_e).
+    "overlay_pdx_river_e": {
+        "url": f"{_PDX}/BPS_Zoning_Code_Layers/MapServer/110",
+        "fields": ["OVRLY", "ZONE", "PLDIST"]},
+    # PCC 24.50.040 E: the City's "Composite February 1996 Flood Inundation
+    # Area Mapping" is a regulated flood area beside the FIRMs (FOLLOWUPS 202,
+    # 2026-11-18). Layer 30 is that composite; layer 0 is the regional
+    # Willamette-basin delineation and is not fetched.
+    "overlay_pdx_flood_1996": {
+        "url": f"{_PDX}/Hazard/MapServer/30",
+        "fields": ["OBJECTID"]},
+    # PCC 33.480: the Scenic Resource overlay "s" (FOLLOWUPS 204, 2026-11-18);
+    # flagged (overlays.yaml pdx_scenic). The scenic corridor LINES its
+    # setback is read against are FLATS's own (pipeline.yaml
+    # scenic_corridors_pdx), not a quadfit layer.
+    "overlay_pdx_scenic": {
+        "url": f"{_PDX}/BPS_Zoning_Code_Layers/MapServer/137",
+        "fields": ["OVRLY", "ZONE", "PLDIST"]},
     # Gresham natural resource / hazard overlays
     "overlay_gresham_wetlands": {
         "url": f"{_GRE}/Environmental/MapServer/15",
@@ -453,6 +472,35 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_oregon_city_nrod": {
         "url": "https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/2",
         "fields": ["NROD", "Acres"]},
+    # OCMC 17.44, the Geologic Hazards Overlay (FOLLOWUPS 204, 2026-11-18):
+    # layer 11 is the whole overlay, each polygon marked for the slope, the
+    # landslide and the buffer of each (layers 9 and 10 are its parts).
+    # Flagged whole and carved where IN_LANDSLIDE, IN_LANDSLIDE_BUFFER or
+    # IN_SLOPE (overlays.yaml oregon_city_geohazard, _core).
+    "overlay_oregon_city_geohazard": {
+        "url": "https://maps.orcity.org/arcgis/rest/services/HazardsAndFloodInfo_PUBLIC/MapServer/11",
+        "fields": ["IN_SLOPE", "IN_SLOPE_BUFFER", "IN_LANDSLIDE", "IN_LANDSLIDE_BUFFER"]},
+    # OCMC 17.48, the Willamette River Greenway (FOLLOWUPS 204, 2026-11-18):
+    # a kill, as Milwaukie's is (overlays.yaml oregon_city_greenway).
+    "overlay_oregon_city_greenway": {
+        "url": "https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/10",
+        "fields": ["OBJECTID"]},
+    # ---------------- Unincorporated Clackamas: mass movement (ZDO 1003.02) -
+    # FOLLOWUPS 204, 2026-11-18. The section names DOGAMI's mapping as "the
+    # principal source of information for determining mass movement hazards";
+    # the state's landslide inventory (SLIDO 4.6) is that mapping as it
+    # stands. Two polygon layers, each flagged and carved (overlays.yaml
+    # clackamas_landslide, clackamas_landslide_scarp and their _core twins):
+    # the deposits, and the scarp flanks above them. A statewide service,
+    # asked for the run area.
+    "overlay_clackamas_landslide": {
+        "url": "https://gis.dogami.oregon.gov/arcgis/rest/services/Public/SLIDO_Inventory/MapServer/11",
+        "fields": ["UNIQUE_ID", "TYPE_MOVE", "MOVE_CLASS", "DEEP_SHAL", "CONFIDENCE", "AGE", "REF_ID_COD"],
+        "bbox": DSL_BBOX_4326},
+    "overlay_clackamas_landslide_scarp": {
+        "url": "https://gis.dogami.oregon.gov/arcgis/rest/services/Public/SLIDO_Inventory/MapServer/3",
+        "fields": ["UNIQUE_ID", "REF_ID_COD"],
+        "bbox": DSL_BBOX_4326},
     # ---------------- Tualatin (the last unscreened jurisdiction) ----------
     # The service was recorded as "confirmed, layers not enumerated" on
     # 2026-09-01 and stayed that way because Tualatin had no green to lose.
@@ -548,15 +596,24 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     # is what a missing layer looks like rather than a dry county: the NFHL holds
     # 2,592 flood areas under 41005C.
     #
-    # DFIRM_ID is FEMA's study identifier and its first five digits are the
-    # county FIPS code -- 41051 Multnomah, 41005 Clackamas. Any third county
-    # added to rules.yaml needs its ID added here in the same breath, or it
-    # inherits the same silent pass.
+    # DFIRM_ID is FEMA's study identifier. A countywide study is the county
+    # FIPS code plus C -- 41051C Multnomah, 41005C Clackamas, 41067C
+    # Washington -- but a community mapped on its own is filed under its NFIP
+    # community ID instead, and the county studies then hold only slivers of
+    # it. The City of Portland is one: 410183. The filter named the three
+    # county studies alone until 2026-11-18, so every Portland lot was measured
+    # against no FEMA data and read "not in a flood area" (5,524 Portland lots
+    # touch the 100-year zone; 13 were GREEN that the fringe ruling holds
+    # YELLOW). NFHL layer 22 (Political Jurisdictions), queried 2026-11-18 for
+    # "CO_FIPS" IN ('051', '005', '067'), names exactly these four studies.
+    # tests/test_overlay_coverage.py maps every jurisdiction to its study; a new
+    # jurisdiction needs its study looked up there and added here in the same
+    # breath, or it inherits the same silent pass.
     "overlay_fema_flood": {
         "url": "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28",
         "fields": ["FLD_ZONE", "ZONE_SUBTY", "SFHA_TF", "STATIC_BFE"],
         # NFHL rejects the unquoted/spaceless form intermittently — keep quoted
-        "where": "\"DFIRM_ID\" IN ('41051C', '41005C', '41067C')"},
+        "where": "\"DFIRM_ID\" IN ('41051C', '41005C', '41067C', '410183')"},
     # Sewer mains (split-candidate proximity; water skipped — see caveats)
     "util_sewer_portland": {
         "url": f"{_PDX}/Utilities_Sewer/MapServer/3",

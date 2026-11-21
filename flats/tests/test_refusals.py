@@ -407,7 +407,18 @@ pytestmark = pytest.mark.unit
 # roof pitch -- 210.375 C(1) / 220.355 C(1) (a development set behind another dwelling) NOT ENCODED.
 # 297 -> 298 comments on 2026-11-11 (flats/roof-rereads, FOLLOWUPS 181(b)): Tualatin's new
 # roof_design_elements_min default -- 73A.020(2)(b) (a facade behind another dwelling) NOT ENCODED.
-EXPECTED = {"notes": 163, "comments": 298, "tests": 18}
+# 298 -> 300 comments on 2026-11-13 (flats/crossref-5, FOLLOWUPS 105 round 5): Gresham 9.0700
+# Future Street Plans, fetched and read; the Manager's reservation/dedication of a mapped future
+# street is NOT ENCODED (a decider's condition, and no future-street map is held), written twice
+# on the declaration's comment block.
+# 300 -> 302 comments on 2026-11-19 (rel11 assembly, counted on the merged branch):
+# -1 flats/commercial-fixes (FOLLOWUPS 203): Beaverton's two "NOT ENCODED: minimum FAR" comments are
+# encoded (Table 20.20.15 row B.1) and one new comment refuses the Cooper Mountain / CM zones' FAR;
+# +1 flats/overlay-fixes-a (FOLLOWUPS 204): Portland 33.480's scenic standards that nothing measures;
+# +2 flats/gladstone-fixes (FOLLOWUPS 204 / 205): the two 2026-11-18 Gladstone reading blocks (17.58, 17.50).
+# The 2026-08 narrative above that ZDO 845.01(3) "stays unencoded" is history: it is held since
+# flats/clackamas-fixes (quadfit clackamas_fmd carve, ruling 2026-11-18-clackamas-flood-ban-red).
+EXPECTED = {"notes": 163, "comments": 302, "tests": 18}
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no

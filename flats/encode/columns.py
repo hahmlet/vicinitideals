@@ -299,8 +299,10 @@ _ZERO_IS_THE_SAME_AS_NONE = frozenset(
         "setback_rear_ft",
         "setback_street_side_ft",
         "setback_street_off_corridor_ft",
+        "setback_scenic_corridor_ft",
         "setback_street_across_nonresidential_ft",
         "setback_side_total_ft",
+        "setback_side_larger_ft",
         "setback_garage_entrance_ft",
         "min_landscaped_pct",
     }
@@ -892,7 +894,12 @@ def _citations(path: Path) -> Iterator[tuple[str, str, str, str, str, list[int]]
 #: own cell would report the one correct reading as a misread (FOLLOWUPS 150,
 #: 2026-11-05). Readiness still checks that the quoted line prints it.
 _NEIGHBOUR_FACTS = frozenset(
-    {"abuts_lower_density_zone", "abuts_residential_zone", "abuts_nonresidential_zone"}
+    {
+        "abuts_lower_density_zone",
+        "abuts_residential_zone",
+        "abuts_nonresidential_zone",
+        "abuts_commercial_zone",
+    }
 )
 
 

@@ -51,6 +51,7 @@ from flats.rules.net_area import DEDUCTIONS, NetArea
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
     DrawnArea,
+    FreewayRuling,
     LotZone,
     POCKET_ZONE_FROM_MAP,
     ZONE_RULING_OUTCOMES,
@@ -2049,12 +2050,57 @@ def _parse_private_drives(
     )
 
 
+def _parse_freeways(raw: object, *, where: str, problems: list[str]) -> FreewayRuling | None:
+    """Whether a freeway or its ramp is a street here::
+
+        freeways:
+          street: false
+          quote: "or/multnomah/portland/33.910/33.910.030.txt#L1011"
+          says: "the interstate freeways and the Sunset Highway including their ramps"
+          cite: PCC 33.910.030 (Street)
+          note: >-
+            ...
+
+    The shape of ``private_drives`` (:func:`_parse_private_drives`) without
+    its ``access_choice``. Absent: the code is silent.
+    """
+    if raw is None:
+        return None
+    at = f"{where}.freeways"
+    if not isinstance(raw, dict):
+        problems.append(f"{at}: expected street, quote, says and note")
+        return None
+    extra = set(raw) - {"street", "quote", "says", "cite", "note"}
+    if extra:
+        problems.append(f"{at}: unexpected {', '.join(sorted(str(e) for e in extra))}")
+        return None
+    street = raw.get("street")
+    if not isinstance(street, bool):
+        problems.append(f"{at}.street: true or false")
+        return None
+    quote, says, note = raw.get("quote"), raw.get("says"), raw.get("note")
+    if not isinstance(quote, str) or "#L" not in quote:
+        problems.append(f"{at}.quote: a store pointer, path#Lnn")
+        return None
+    if not isinstance(says, str) or not says.strip():
+        problems.append(f"{at}.says: the words the quoted line holds")
+        return None
+    if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
+        problems.append(f"{at}: a note of at least {MIN_RULING} characters")
+        return None
+    cite = raw.get("cite")
+    return FreewayRuling(
+        street=street, quote=quote.strip(), says=says.strip(),
+        cite=None if cite is None else str(cite), note=note.strip(),
+    )
+
+
 _SIGHT_KEYS = frozenset({
     "status", "kind", "legs_ft", "base_ft", "depth_ft", "depth_from", "sight_ft",
     "eye_back_ft", "basis", "except_zones", "unsettled_zones", "exempt_no_setback",
     "exempt_at_lot_line", "note_only", "quote", "says", "source", "cite", "ruling", "note",
     "zone_legs_ft", "vehicles", "driveways", "vehicles_quote", "alley", "alley_legs_ft",
-    "alley_quote", "class_map", "class_rank_min",
+    "alley_quote", "class_map", "class_rank_min", "engineer_set",
 })
 _SIGHT_KINDS = {"corner": ("triangle", "asymmetric", "wedge"), "driveway": ("edge", "apex", "wedge")}
 
@@ -2188,6 +2234,13 @@ def _parse_sight_rule(raw: object, *, at: str, which: str, problems: list[str]) 
         return None
     if cmap is not None:
         extras["class_map"], extras["class_rank_min"] = cmap, cmin
+    engineer = raw.get("engineer_set")
+    if engineer is not None:
+        # The ruling that makes the engineer-set area a flag (Steph 2026-11-14).
+        if which != "corner" or status != "unsettled" or not isinstance(engineer, str) or not engineer.strip():
+            problems.append(f"{at}.engineer_set: a ruling id, on an unsettled corner rule only")
+            return None
+        extras["engineer_set"] = engineer.strip()
     zone_legs: dict[str, tuple[float, ...]] = {}
     for z, v in (raw.get("zone_legs_ft") or {}).items():
         got = _feet(v)
@@ -2938,6 +2991,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             private_drives=_parse_private_drives(
                 raw.get("private_drives"), where=where, problems=problems
             ),
+            freeways=_parse_freeways(raw.get("freeways"), where=where, problems=problems),
             clear_vision=_parse_clear_vision(
                 raw.get("clear_vision"), where=where, problems=problems
             ),

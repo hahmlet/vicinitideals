@@ -52,6 +52,13 @@ REACH_STEP_FT = 2.0
 #: Joined into the row, one JSON document per split-zoned lot.
 ROW_KEY = "split_zones_json"
 
+#: What the flag names where the lot's own district is nowhere on the maps
+#: under it and no other district's ground is big enough to name: the lot's
+#: ground is mapped as nothing the screen can stand on (FOLLOWUPS 201,
+#: Cornelius 1N335CD01200 -- read R-10 by hand off the city's printed map,
+#: while Metro's layer has no R-10 under it at all).
+UNMAPPED = "ground the zoning maps do not show as the screened district"
+
 
 @dataclass(frozen=True, slots=True)
 class Piece:
@@ -146,9 +153,13 @@ def pieces_of(
             continue
         made.append(Piece(zone, float(ground.area), ground, _reach_ft(ground, own_ground)))
     pieces = tuple(sorted(made, key=lambda p: (-p.sqft, p.zone)))
-    # Nothing of the lot's own district on the maps while others lie on it:
-    # the maps and the corpus disagree about what the lot is.
-    return Split(pieces=pieces, unresolved=own_sqft <= 0.0 and bool(pieces), own_sqft=own_sqft)
+    # Nothing of the lot's own district on the maps beyond a noise sliver:
+    # the maps and the corpus disagree about what the lot is, whether other
+    # districts lie on it or nothing does. Only split-marked lots are asked
+    # (:func:`with_split_zones`), so a lot the maps show whole in its own
+    # district never reaches here. Before FOLLOWUPS 201 a lot with no piece
+    # over the noise line read as not split at all and went unflagged.
+    return Split(pieces=pieces, unresolved=own_sqft < PIECE_MIN_SQFT, own_sqft=own_sqft)
 
 
 def encode(split: Split) -> str:

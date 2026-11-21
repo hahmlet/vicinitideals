@@ -31,7 +31,9 @@ Paths are under `flats/provenance/docs/or/`.
 | `west-linn` | protected | Permit only with approval, on value to the community: `clackamas/west-linn/25.willamette-historic.txt#L518-L526`. Owner consented in writing: `#L218`. The 25 addresses are on the city's page: `clackamas/west-linn/historic-landmarks.city-page.txt`. |
 | `troutdale` | protected; 2 trees and 2 cemeteries doubtful | Type III before the Historic Landmarks Commission, on findings: `multnomah/troutdale/6.500.historic-landmarks.txt#L195-L204`. |
 | `tigard` | doubtful | Demolition in the overlay zone needs approval (`washington/tigard/tdc.18.755.historic-resources.txt#L81`), but nothing held shows each row of the Historic Sites map carries that zone. |
-| `washington-county` | doubtful | Demolition is Type III (`washington/_unincorporated/cdc.373.historic-cultural-resource-overlay.txt#L235-L236`). The owner exemption (`#L287-L291`) rests on ORS 197.772(3), which `oar.660-023-0200.txt#L125-L128` limits to the owner at designation. What remains is that the inventory saying which buildings count (`#L169-L171`) is not held. |
+| `washington-county` | doubtful | Demolition is Type III (`washington/_unincorporated/cdc.373.historic-cultural-resource-overlay.txt#L235-L236`). The owner exemption (`#L287-L291`) rests on ORS 197.772(3), which `oar.660-023-0200.txt#L125-L128` limits to the owner at designation. What remains is that the inventory saying which buildings count (`#L169-L171`) is not held. The list is the county's Goal 5 Historic/Cultural layer: a record whose note names the lot the resource stands on goes on that lot; one the county marks gone, removed, or with no taxlot names none. |
+| `beaverton` | doubtful | Demolishing a designated landmark is Type 3 before the Planning Commission, on a weighing (`washington/beaverton/bdc.40.35.historic-review.txt#L134-L135`, `#L143-L144`). A landmark is what the Council designates (`bdc.90.definitions.txt#L1336-L1338`); the list is the city's 1984-86 inventory, and which entries were designated is not held. |
+| `milwaukie` | doubtful | The Commission reviews demolishing a significant or contributing resource (`clackamas/milwaukie/19.400.overlays.txt#L2706`) but may only suspend the permit, then it issues (`#L2782-L2786`). |
 
 ## The state's lists
 
@@ -70,7 +72,6 @@ there, and the `why` travels on the YELLOW. They wait for whoever brings the loc
 
 | Place | Reading | Demolition |
 |---|---|---|
-| Milwaukie | doubtful | Hearing, but a stay only: after it the permit issues |
 | Sandy | protected | Type IV, City Council decides |
 | Wilsonville | protected | Prohibited unless its criteria are met |
 | Estacada | doubtful | Committee review; may not prevent removal of an uneconomic building |

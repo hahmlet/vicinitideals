@@ -263,6 +263,67 @@ def test_a_route_past_the_limit_is_red_and_no_relief_softens_it() -> None:
     assert any(c.check == "fire_access_ft" for c in result.binding)
 
 
+# --- the 5 ft allowance (Steph 2026-11-21) -------------------------------
+
+
+def _codes(result) -> set[str]:
+    return {f.code for f in result.flags}
+
+
+def _validate(result):
+    return [f for f in result.flags if f.code == "FIRE-HOSE-VALIDATE"]
+
+
+def test_a_route_inside_150_ft_is_green_with_no_note() -> None:
+    """rel11 move read F1 (1S101DD01500, 149.994 ft) stays GREEN: 150 ft or
+    less passes however close (rulings.yaml 2026-11-21-fire-hose-five-ft)."""
+    from flats.score.flags import Colour
+
+    for route in (149.0, 149.994, 150.0):
+        result = run(facts(fire_route_ft=route, fire_route_tried=True))
+        assert check(result, "fire_access_ft").verdict is Verdict.passes, route
+        assert not _validate(result), route
+        assert result.colour is Colour.green, route
+
+
+def test_a_route_up_to_155_ft_passes_with_a_note_to_validate_it() -> None:
+    """Steph 2026-11-21: "if it fits within 5 ft, it's green"; "Up to 155 ft
+    is green"; "everything over 150 gets a flag to validate hose length"."""
+    from flats.score.flags import Colour
+
+    for route in (152.0, 155.0):
+        result = run(facts(fire_route_ft=route, fire_route_tried=True))
+        c = check(result, "fire_access_ft")
+        assert c.verdict is Verdict.passes, route
+        assert c.threshold == 155.0  # 150 as printed + the 5 ft allowance
+        assert not result.binding
+        (note,) = _validate(result)
+        assert note.bounds == pytest.approx((150.0, route))
+        assert f"{route:.1f} ft" in note.source and "150 ft" in note.source and "5 ft" in note.source
+        assert result.colour is Colour.green, route
+
+
+def test_a_route_past_155_ft_is_red_and_still_noted() -> None:
+    from flats.score.flags import Colour
+
+    result = run(facts(fire_route_ft=156.0, fire_route_tried=True))
+    assert check(result, "fire_access_ft").verdict is Verdict.fails
+    assert any(c.check == "fire_access_ft" for c in result.binding)
+    (note,) = _validate(result)
+    assert "past it" in note.source
+    assert result.colour is Colour.red
+
+
+def test_the_code_figure_stays_as_printed_and_the_note_is_below_the_line() -> None:
+    from flats.score.flags import registry
+    from flats.score.screen import FIRE_HOSE_ALLOWANCE_FT, fire_reach_ft
+
+    r = rules()
+    assert r.get("fire_access_max_ft") == 150
+    assert fire_reach_ft(r) == 150.0 + FIRE_HOSE_ALLOWANCE_FT == 155.0
+    assert registry()["FIRE-HOSE-VALIDATE"].severity < 3
+
+
 def test_every_relief_policy_answers_unavailable_for_the_fire_check() -> None:
     policy = relief.load_policy()
     assert "fire_access_ft" in NO_ZONING_RELIEF

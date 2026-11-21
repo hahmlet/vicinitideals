@@ -253,7 +253,9 @@ def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
     Household Living row starts at five units on site. See
     test_portland_parking_max."""
     ruled = list(dispositions(PORTLAND))
-    assert len(ruled) == 142
+    # 2026-11-18 (FOLLOWUPS 204): 144 with Chapter 33.480's two, Table 480-1
+    # note [1] (encoded) and Table 480-2 note [1] (dismissed).
+    assert len(ruled) == 144
     assert [row for row in ruled if row.state == "unread"] == []
     assert not [row for row in qualified() if row.blocking]
 

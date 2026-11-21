@@ -114,7 +114,6 @@ measured:
   or/multnomah/fairview: "the city's public mains"
   or/multnomah/wood-village: "the city's sewer mains"
   or/clackamas/_unincorporated: "the county's sanitary district boundaries"
-  or/clackamas/happy-valley: "CCSD#1 (the county's district boundaries)"
   or/clackamas/oregon-city: "Tri-City district and the city's mains"
   or/clackamas/west-linn: "Tri-City district and the city's mains"
   or/clackamas/gladstone: "Tri-City district and the city's mains"
@@ -129,6 +128,14 @@ measured:
 unmeasured:
   or/clackamas/canby: "the city's sewer layer needs a token (Canby CSS/FeatureServer/3); not used"
   or/clackamas/estacada: "no public sewer layer found (2026-11-10)"
+  # Moved out of `measured` 2026-11-18 (FOLLOWUPS 194(2), the rel8 move read
+  # F3: 177 lots went yellow to red on this ground). Happy Valley is served
+  # by WES, which publishes no main linework, so "measured" rested on the
+  # CCSD#1 political boundary alone: no main and no district there is a gap
+  # in the map, not a finding, which is what this list holds (header above).
+  or/clackamas/happy-valley: >-
+    WES publishes no sanitary mains; the CCSD#1 district polygon alone maps
+    only the lots inside it
   or/multnomah/_unincorporated: >-
     only Dunthorpe-Riverdale is a district; the rest is served, where it is,
     by a city's contract, which no layer maps

@@ -39,7 +39,54 @@ def tier(**kw: Any) -> str | None:
 
 def test_the_four_tiers_steph_ruled_are_on() -> None:
     on = {t.key: t.enabled for t in roll.load_rules().tiers}
-    assert on == {"public_land": True, "tract": True, "open_space": True, "no_address": True}
+    # public_owner: Multnomah's public land by owner of record (FOLLOWUPS
+    # 205, flats/tests/test_public_owner.py).
+    assert on == {
+        "public_land": True, "public_owner": True, "tract": True, "condo_common": True, "open_space": True, "no_address": True,
+    }
+
+
+# --- condominium shared ground (rulings.yaml 2026-11-18-condo-common-ground-red, FOLLOWUPS 201) ---
+
+#: The class hunt's lots, as the roll shows them (round 4, run 128 GREEN).
+CONDO = {"county": "multnomah", "PROP_CODE": "102", "BLDGSQFT": 0.0, **ZERO}
+
+
+@pytest.mark.parametrize(
+    "tlid, address",
+    [("1N1E35AA  -60000", "NE CLACKAMAS ST"), ("1S2E03DA  -70000", "SE 122ND AVE"), ("1N2E25AC  -04000", "15305 NE KNOTT ST")],
+)
+def test_the_intakes_common_ground_mark_is_red(tlid: str, address: str) -> None:
+    # The mark alone decides, whatever the lot number or the address: before
+    # the ruling nothing in scoring read it and these three were GREEN.
+    got = tier(tlid=tlid, site_address=address, condo_reason="SUSPECT_CONDO_COMMON_AREA", **CONDO)
+    assert got == "condo_common"
+
+
+def test_a_condo_air_parcel_or_unknown_area_mark_is_not_this_tier() -> None:
+    assert tier(condo_reason="SUSPECT_CONDO_UNKNOWN_AREA") is None
+    assert tier(condo_reason=None) is None
+
+
+def test_code_702_with_the_common_element_pattern_is_red() -> None:
+    # 1N1E22DD -70000: code 702, every value $0, no building, lot number 70000.
+    row = {**CONDO, "PROP_CODE": "702"}
+    assert tier(tlid="1N1E22DD  -70000", site_address="NE BEECH ST", **row) == "condo_common"
+
+
+@pytest.mark.parametrize(
+    "over",
+    [
+        {"tlid": "1S1E03CB  -50000"},  # not the common-element numbering
+        {"BLDGSQFT": 1200.0},  # a building on the roll
+        {**WORTH},  # valued
+        {"county": "washington"},  # 702 read only where the roll was checked
+        {"PROP_CODE": "701"},
+    ],
+)
+def test_code_702_needs_the_whole_pattern(over: dict[str, Any]) -> None:
+    row = {**CONDO, "PROP_CODE": "702", "tlid": "1N1E22DD  -70000", "site_address": "NE BEECH ST", **over}
+    assert tier(**row) is None
 
 
 @pytest.mark.parametrize(

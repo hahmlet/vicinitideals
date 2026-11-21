@@ -68,7 +68,14 @@ def test_note_8_states_the_corner_townhouse_width_by_access(rules: RuleSet) -> N
     # Note 8 prints 42 ft without, 25 ft with "a shared access"; the pod's one
     # drive serving four lots is a shared access (4.0100 L548; page check 372).
     assert width(rules, "MDR-24", "unit_lots", "corner_lot") == 25
-    assert width(rules, "MDR-24", "unit_lots", "corner_lot", "abuts_alley") == 16
+    # Note 8's alley figure, 16, where the alley runs the rear line (Steph
+    # 2026-11-14, rulings 2026-11-14-gresham-mdr24-alley-corner-width-16):
+    # every home lot runs street to rear, so the corner one abuts it.
+    assert width(rules, "MDR-24", "unit_lots", "corner_lot", "alley_at_rear") == 16
+    # An alley down a side line runs beside the far end lot, not the corner
+    # one, so the lot-level alley fact alone keeps the shared-access 25.
+    assert width(rules, "MDR-24", "unit_lots", "corner_lot", "alley_at_side") == 25
+    assert width(rules, "MDR-24", "unit_lots", "corner_lot", "abuts_alley") == 25
 
 
 def test_note_10_states_the_corner_townhouse_frontage_by_access(rules: RuleSet) -> None:
@@ -130,6 +137,8 @@ def test_no_corner_configuration_resolves_two_variants_at_once(rules: RuleSet) -
             ("unit_lots",),
             ("unit_lots", "corner_lot"),
             ("unit_lots", "corner_lot", "abuts_alley"),
+            ("unit_lots", "corner_lot", "alley_at_rear"),
+            ("unit_lots", "corner_lot", "alley_at_side"),
         ):
             got = rules.resolve(GRESHAM, zone, conditions, lot={"lot_sqft": 12_000})
             assert not got.ambiguous, f"{zone} {conditions}: {got.ambiguous}"

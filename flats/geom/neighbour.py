@@ -1,4 +1,9 @@
-"""What zone lies across each lot line, read into the three neighbour-zoning facts.
+"""What zone lies across each lot line, read into the neighbour-zoning facts.
+
+(A fourth, ``abuts_commercial_zone``, joined the three below on 2026-11-14:
+King City 16.124.110 C asks five feet beside a single-family zone and ten
+beside a commercial one, so the two neighbours are two facts. It is an
+any-line fact, like ``abuts_lower_density_zone``.)
 
 The registry has carried ``abuts_residential_zone``,
 ``abuts_lower_density_zone`` and ``abuts_nonresidential_zone`` since the

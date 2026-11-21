@@ -42,34 +42,6 @@ crossrefs:
       "Subsection 15.50.715.E.4." (12.21.450), cited for cottage cluster height. There is no Title
       15 of the zoning code; the text intends 12.50.715 (cottage clusters). A cottage cluster is
       detached cottages around a common court, not the pod's attached fourplex.
-  "12.70.040":
-    outcome: procedure
-    note: >-
-      Type II procedure ("either a Type II procedure as described in Section 12.70.040 or a Type
-      I", 12.80.100). Notice, decision and appeal steps; the tier the review lands in is already
-      carried by review_discretion.
-  "12.70.110":
-    outcome: procedure
-    note: >-
-      Application submittal requirements ("More specific submittal requirements are provided on
-      application forms and checklists as authorized in Section 12.70.110"). What to file, not
-      ground the building gives up.
-  "12.70.120":
-    outcome: procedure
-    note: >-
-      Conditions of approval: "Pursuant to Section 12.70.120, the Review Authority may impose
-      conditions on the approval" (12.80.099). The conditions tier is already carried by
-      review_discretion.
-  "12.70.140":
-    outcome: procedure
-    note: >-
-      "Refer to Section 12.70.140" (12.80.096): Expiration of a Decision (12.80, "J. Expiration of
-      a Decision"). When an approval lapses; a process, no ground taken.
-  "12.70.150":
-    outcome: procedure
-    note: >-
-      "Refer to Section 12.70.150" (12.80.096): Extension of a Decision (12.80, "K. Extension of a
-      Decision"). How an approval is extended; a process, no ground taken.
 code:
 - id: "cdc.12.30.300.lots-of-record"
   url: https://api.municode.com/PublicationPdfDownload/4450
@@ -222,12 +194,48 @@ code:
   start: "SUBCHAPTER 12.68"
   end: "SUBCHAPTER 12.70"
   extraction: plain
+# Subchapter 12.70, Procedures (FOLLOWUPS 105 round 5, 2026-11-13): the most
+# cited unheld subchapter in this layer (12.70.200 x19, 12.70.050 x30, 12.70.030
+# x25). Read: review types I-IV, notice, hearings, conditions, expiry, appeals,
+# and the transportation studies. 12.70.200 states the study methods and the
+# mitigation it can order; who must study is 12.70.210 A (a Traffic Management
+# Plan at 20 or more trips in any hour onto a residential route, L1862) and
+# 12.70.220 A (an impact analysis above 50 peak-hour trips, L1921; or where the
+# City Engineer finds a significant impact, L1928-L1931). Four homes make a few
+# peak-hour trips, far under both counts; the City Engineer limb is a decider's
+# finding, the conditions tier at most. No dimension on the lot.
+# Holding it retires the procedure rulings on 12.70.040, .110, .120, .140 and
+# .150 (Type II, submittal, conditions, expiry, extension; notes in git history).
+- id: "cdc.12.70.procedures"
+  url: https://api.municode.com/PublicationPdfDownload/4450
+  title: "CDC Subchapter 12.70 - Procedures (review types 12.70.020-.060, transportation studies 12.70.200-.230)"
+  start: "SUBCHAPTER 12.70"
+  end: "SUBCHAPTER 12.80"
+  extraction: plain
 - id: "cdc.12.80.applications"
   url: https://api.municode.com/PublicationPdfDownload/4450
   title: "CDC Subchapter 12.80 - Applications (annexation 12.80.010, middle housing land divisions 12.80.099)"
   start: "SUBCHAPTER 12.80"
   end: "CODE COMPARATIVE AND DISPOSITION TABLE*"
   extraction: plain
+# The Public Works Design and Construction Standards' driveway rules (230.6
+# and Figure 230.6, September 2025 edition), which CDC 12.50.715 C.2 sends a
+# quadplex's driveway approach to and 12.50.510 B.1 applies to every public
+# improvement; read for flats/config/driveway_spacing.yaml (FOLLOWUPS 205).
+# The city's own address for the file
+# (https://www.hillsboro-oregon.gov/home/showpublisheddocument/18188/638932854908670000)
+# refuses an automated reader, so the stored text is the Internet Archive's
+# copy of that file, taken 2026-01-13: second-hand (the store calls it a
+# lead, not evidence), and a later edition is not seen until someone reads
+# the city's page. It is read only to take GREEN away, never to grant it.
+- id: "dcs.230.6.driveways"
+  url: http://web.archive.org/web/20260113215751id_/https://www.hillsboro-oregon.gov/home/showpublisheddocument/18188/638932854908670000
+  title: "Hillsboro Design and Construction Standards (September 2025), Section 200 Roadways: 230.6 Driveways and Figure 230.6"
+  start: "230.6. Driveways"
+  end: "230.7. Cul-de-sacs"
+  extraction: plain
+  # One subsection and its figure.
+  allow_thin: true
 definitions:
   # Read 2026-09-29 from CDC 12.01.500, which is on disk whole
   # (cdc.12.01.general.txt runs from the Subchapter 12.01 heading to the
@@ -450,6 +458,84 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/4450
     retrieved: '2026-09-29'
     quote: "or/washington/hillsboro/12.01/12.01.500.txt#L349-L351,L354-L357"
+  # STREET WIDENING (FOLLOWUPS 205). 12.50.130 J.2: "additional setbacks
+  # beyond the minimum standards in the base zones shall be required on the
+  # streets identified in Table 12.50.130-1 ... the front setback shall be
+  # increased by the distance specified, measured from the center of the
+  # street right-of-way. This distance represents the eventual right-of-way
+  # width as specified in the TSP" (12.50.130.txt#L117-L120). So the zone's
+  # yard is measured from a line the listed distance off the centre line
+  # (flats/geom/dedication.py): the strip is the distance less the measured
+  # half-width. Every one of the table's 38 rows is held, the feet as
+  # printed, the street first and its printed stretch in brackets after it.
+  #
+  # How a stretch is read. A row holds along the WHOLE street unless the
+  # bridge reads the lot line off its stretch, and it reads only the two
+  # forms it reads elsewhere: "(A to B)" between two streets it finds
+  # crossing, and "(east of A)". Two printed forms are written into those:
+  # "from A <direction> to city boundary / terminus" as "<direction> of A"
+  # (Bentley, Cedar, 26th; E Main "from the east line of 10th Ave easterly
+  # to the City boundary"), and "from the east line of 5th Ave easterly to
+  # 10th Ave" as "5th Ave to 10th Ave", and SE 10th "from SE Maple St north
+  # to SE Walnut St" as "SE Maple St to SE Walnut St". A stretch printed with an offset
+  # ("90 feet south of", "west 225 feet"), from the light-rail line, or to
+  # an end with no direction ("to city boundary", "to end of road") keeps
+  # its printed words, reads as no stretch, and so holds the whole street:
+  # Brookwood Avenue is 49 feet everywhere, though it prints 37 south of the
+  # light rail. Directions are dropped from a street's name, so a row on SE
+  # 10th also holds NE 10th unless the line is read off the stretch.
+  # "NW Hyde St from NW 273rd Ave to NW 269th Ave (NE 28th Ave)" drops its
+  # own bracket (the second name of 269th). A street line whose street
+  # cannot be named takes the deepest row, 61 feet.
+  #
+  # The strip comes off the lot area: "lot area excludes any portion of a
+  # lot, parcel or tract located within public right-of-way"
+  # (12.01.500.txt#L336), and J.2 calls the distance the eventual
+  # right-of-way.
+  row_to_centerline_named_ft:
+    value:
+      - ["SE 11th Ave (SE Walnut St to 90 feet south of SE Alder St)", 27]
+      - ["SE 11th Pl (SE Maple St to SE Walnut St)", 27]
+      - ["SE 12th Ave (SE Maple St to E Main St and from SE Elm St to SE Alder St)", 27]
+      - ["SE 15th Ave (400 feet north of SE Oak St to SE Walnut St, and from 50 feet south of SE Alder St north 510 feet)", 27]
+      - ["SE 16th Ave (SE Oak St to SE Walnut St and from 50 feet south of SE Alder St north 510 feet)", 27]
+      - ["SE 26th Ave (south of E Main St)", 27]
+      - ["SE 40th Ave (SE Bentley St to SE Ash St)", 27]
+      - ["SE Alder St (SE 11th Ave to SE 21st Ave)", 27]
+      - ["SE Ash St (350 feet west of SE 40th Ave eastward to city boundary)", 27]
+      - ["SE Bentley St (east of SE 32nd Ave)", 30]
+      - ["SE Cedar St (east of SE 32nd Ave)", 30]
+      - ["SE Currin Dr (SE River Rd to city boundary)", 27]
+      - ["SE Currin Ln (SE River Rd to city boundary)", 27]
+      - ["SE Elm St (SE 12th Ave west 225 feet)", 27]
+      - ["SE Maple Ct (SE 18th Ave west 465 feet)", 27]
+      - ["SE Walnut St (50 feet east of S.E. 15th Ave eastward to end of street)", 27]
+      - ["NW Brookwood Ave (LRT alignment north to US 26)", 49]
+      - ["Brookwood Ave (NW and SW, LRT alignment south to UGB)", 37]
+      - ["NE 8th Ave (N Arrington Rd to 120 feet south of NE Queens Ln)", 27]
+      - ["NE 9th Ave (130 feet north of NE Arrington Rd to 120 feet south of NE Queens Ln)", 27]
+      - ["NE 25th Ave (E Main St to end of road)", 27]
+      - ["NE 28th Ave (E Main St to NE Cornell Rd)", 37]
+      - ["NE Arrington Rd (NE Jackson School Rd to NE Cornell Rd)", 27]
+      - ["NE Birchwood Ln (NE Grant St north 160 feet)", 27]
+      - ["NE Birchwood Ter (NE Grant St to NE Donelson Rd)", 27]
+      - ["NE Cornell Rd (E Main St to city boundary)", 49]
+      - ["NE Lincoln St (NE Cornell Rd to NE 12th Ave)", 27]
+      - ["NE Queens Ln (NE 8th Ave to NE Delsey Rd)", 27]
+      - ["NW Brogden St", 30]
+      - ["NW Forest St (NW Connell Ave to city boundary)", 27]
+      - ["NW Hyde St (NW 273rd Ave to NW 269th Ave)", 27]
+      - ["E Main St (east of 10th Ave)", 35]
+      - ["N Dennis Ave (NW Garibaldi St to NW Forest St)", 27]
+      - ["NE 11th Dr (E Main St to NE 12th Ave)", 27]
+      - ["NW Padgett Rd (NW 10th Ave and NW Donelson St)", 27]
+      - ["E Main St (5th Ave to 10th Ave)", 35]
+      - ["SE 10th Ave (SE Maple St to SE Walnut St)", 49]
+      - ["SE 10th Ave (SE Walnut St to SE Oak St)", 61]
+    cite: Hillsboro CDC 12.50.130 J.2 and Table 12.50.130-1, Special Street-Facing Setback Requirements, distance from the center of the street right-of-way by named street
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/12.50/12.50.130.txt#L117-L120,L124-L141,L145-L164"
 
 # THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-29. Each applies
 # in every zone below unless the zone says otherwise.
@@ -482,16 +568,12 @@ defaults:
 # by an amount no table states; `utility_easement` is registered and no
 # number hangs on it.
 #
-# NOT ENCODED: 12.50.130 J, increased setbacks beside substandard
-# right-of-way (12.50.130.txt#L114-L121). J.1: beside
-# an alley under 20 feet wide, the setback is at least 10 feet from the
-# alley's centerline. J.2: on the streets named in Table 12.50.130-1
-# (L529-L576, about fifty street segments, 27 to 61 feet), "the front
-# setback shall be increased by the distance specified, measured from the
-# center of the street right-of-way" -- the future right-of-way the TSP
-# plans. Both need a lot's street by name or the alley's width, which
-# nothing measures, and both only push the building back. The same kind of
-# rule as right-of-way dedication in the county layer; a doubt.
+# 12.50.130 J, increased setbacks beside substandard right-of-way
+# (12.50.130.txt#L114-L121). J.2, the streets named in Table 12.50.130-1,
+# is held in the defaults as row_to_centerline_named_ft (FOLLOWUPS 205).
+# NOT ENCODED: J.1, beside an alley under 20 feet wide the setback is at
+# least 10 feet from the alley's centerline. It needs the alley's width,
+# which nothing measures, and it only pushes the building back; a doubt.
 #
 # THE STORY IS TEN FEET (Steph 2026-09-29: "Yes, that math holds").
 # 12.50.140 B.6 measures height in the single-dwelling and multi-dwelling
@@ -528,7 +610,9 @@ defaults:
 # L679-L684,L700-L702). A quadplex on one flag lot is allowed. Every zone
 # below that states a minimum frontage under 25 feet carries a
 # `flag_lot` variant of 25; a zone whose table states no frontage row does
-# not, which is a doubt.
+# not, which is a doubt. The UC zones carry none: 12.40.160 B creates flag
+# lots only in standard and light-rail zones (L7-L8, L10), and a UC zone is
+# neither (12.01.200.txt#L5; FOLLOWUPS 191 removed three untied 25s).
 # AmberGlen's 12.64.550 D, "Flag lots are Not Permitted", reaches UC-RM, UC-MU,
 # UC-AC, UC-NC and UC-OR through 12.64.520 A, and those five refuse a flag lot
 # on quadplex_allowed (2026-11-09).
@@ -1316,6 +1400,7 @@ zones:
           when: [hillsboro_downtown_plan_district]
           cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
           quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
+          via: "or/washington/hillsboro/12.61/12.61.200.txt#L2,L4-L6"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.21.620-1, Housing Types Permitted in the SCR-LD Zone (Quadplex P)
@@ -2438,6 +2523,7 @@ zones:
           when: [hillsboro_downtown_plan_district]
           cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
           quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
+          via: "or/washington/hillsboro/12.61/12.61.200.txt#L2,L4-L6"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.22.420-1, Housing Types Permitted in the SCR-MD Zone (Quadplex P)
@@ -2595,6 +2681,7 @@ zones:
           when: [hillsboro_downtown_plan_district]
           cite: "Hillsboro CDC 12.61.800.B.7: flat roofs not permitted as the primary roof form; minimum pitch 4/12 hipped, 6/12 gabled"
           quote: "or/washington/hillsboro/12.61/12.61.800.txt#L3,L7,L26-L31"
+          via: "or/washington/hillsboro/12.61/12.61.200.txt#L2,L4-L6"
     quadplex_allowed:
       value: true
       cite: Hillsboro CDC Table 12.22.520-1, Housing Types Permitted in the SCR-HD Zone (Quadplex P)
@@ -3167,7 +3254,8 @@ zones:
   #   applies to parcels "containing only residential development", which is
   #   the pod's case, and minimum FAR to parcels with only non-residential
   #   development. The MU-C, MU-VTC and SCR-V minimum FARs carry no such
-  #   carve-out; no field holds a minimum FAR, so none is encoded, a doubt.
+  #   carve-out. MU-VTC's is encoded (2026-11-04) and SCR-V's (2026-11-18,
+  #   FOLLOWUPS 203); MU-C's is not yet, a doubt.
   # - NOT ENCODED: "Front Property Line Coverage" (UC-RM, UC-MU, UC-AC,
   #   UC-NC, UC-OR), a share of the primary street frontage the first two
   #   or three stories of the front facade must occupy. No field holds a
@@ -3838,6 +3926,34 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.460-1, maximum density does not apply to quadplexes
       quote: "or/washington/hillsboro/12.24/12.24.460.txt#L12,L26-L28"
+    min_far:
+      # FOLLOWUPS 203 (2026-11-18). Table 12.24.460-1: "Minimum FAR - < 1,300
+      # feet from an LRT station 0.5 - > 1,300 feet from an LRT station 0.4",
+      # banded on the measured distance to a MAX station like the density
+      # above; a lot at exactly 1,300 ft, which neither row names, stays on
+      # the 0.5. 12.50.150.B.1: "projects developed after September 4, 2014
+      # must comply with the minimum FAR standard of the applicable base
+      # zone". FAR is gross floor area over net lot area (12.01.500); the
+      # pod's floor area over the whole lot is the lowest it can score, so a
+      # pass there is certain. Missed, it is the more-pods rule (rulings.yaml
+      # 2026-11-04-min-floor-area-more-pods): YELLOW with FAR-MIN, RED only
+      # where the pods it needs clearly cannot stand. The 12.50.150.C.1
+      # exemption needs an approved Concept Development Plan, which the pod
+      # does not have.
+      #
+      # A DOUBT, held: 12.50.150.A says the floors "are intended to achieve
+      # an increased intensity of non-residential development", and the UC
+      # zones' carve-out for residential-only parcels (12.24.030 G.4) is not
+      # written for SCR-V. The purpose words are not a rule; the floor is held.
+      value: 0.5
+      cite: Hillsboro CDC Table 12.24.460-1, Minimum FAR, < 1,300 feet from an LRT station; 12.50.150.B.1
+      quote: "or/washington/hillsboro/12.24/12.24.460.txt#L12-L13,L33-L34"
+      via: "or/washington/hillsboro/12.50/12.50.150.txt#L4,L7"
+      variants:
+        - value: 0.4
+          band: {measure: lrt_station_ft, more_than: 1300}
+          cite: Hillsboro CDC Table 12.24.460-1, Minimum FAR, > 1,300 feet from an LRT station
+          quote: "or/washington/hillsboro/12.24/12.24.460.txt#L12-L13,L33,L35"
     min_lot_width_ft:
       # Front-yard garage access 20, rear-yard 15; the pod has no garage and
       # the larger is held.
@@ -3932,6 +4048,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
           quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
+          via: "or/washington/hillsboro/cdc.12.64.amberglen.txt#L875-L876,L882,L894-L895"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -3992,11 +4109,11 @@ zones:
       value: 18
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Lot Dimensions, frontage, quadplex
       quote: "or/washington/hillsboro/12.24/12.24.560.txt#L4,L15,L25,L30-L31"
-      variants:
-        - value: 25
-          when: [flag_lot]
-          cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
-          quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+      # No flag-lot variant: 12.40.160 B lets flag lots be created only in
+      # standard and light-rail zones (12.40.160.txt#L7-L8,L10), and a UC zone
+      # is neither (12.01.200.txt#L5); 12.64.550 D refuses the flag lot
+      # outright (quadplex_allowed above). The 25 ft once held here had no
+      # passage sending it to this zone (FOLLOWUPS 191, 2026-11-13).
     setback_front_ft:
       value: 0
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Setbacks, front to residential structure None
@@ -4080,6 +4197,7 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
           quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
+          via: "or/washington/hillsboro/cdc.12.64.amberglen.txt#L875-L876,L882,L894-L895"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -4126,11 +4244,11 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Lot Dimensions, lot frontage None
       quote: "or/washington/hillsboro/12.24/12.24.660.txt#L4,L15,L18"
-      variants:
-        - value: 25
-          when: [flag_lot]
-          cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
-          quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+      # No flag-lot variant: 12.40.160 B lets flag lots be created only in
+      # standard and light-rail zones (12.40.160.txt#L7-L8,L10), and a UC zone
+      # is neither (12.01.200.txt#L5); 12.64.550 D refuses the flag lot
+      # outright (quadplex_allowed above). The 25 ft once held here had no
+      # passage sending it to this zone (FOLLOWUPS 191, 2026-11-13).
     setback_front_ft:
       value: 0
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Setbacks, front None
@@ -4234,6 +4352,7 @@ zones:
           when: [inside_mapped_use_area, flag_lot]
           cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
           quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
+          via: "or/washington/hillsboro/cdc.12.64.amberglen.txt#L875-L876,L882,L894-L895"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -4274,11 +4393,11 @@ zones:
       exempt: true
       cite: Hillsboro CDC Table 12.24.760-1, Minimum Lot Dimensions, lot frontage None
       quote: "or/washington/hillsboro/12.24/12.24.760.txt#L4,L15,L18"
-      variants:
-        - value: 25
-          when: [flag_lot]
-          cite: Hillsboro CDC 12.40.160 C.2 and Table 12.40.160-1, one quadplex on one flag lot
-          quote: "or/washington/hillsboro/12.40/12.40.160.txt#L16-L18,L20-L25,L38-L39"
+      # No flag-lot variant: 12.40.160 B lets flag lots be created only in
+      # standard and light-rail zones (12.40.160.txt#L7-L8,L10), and a UC zone
+      # is neither (12.01.200.txt#L5); 12.64.550 D refuses the flag lot
+      # outright (quadplex_allowed above). The 25 ft once held here had no
+      # passage sending it to this zone (FOLLOWUPS 191, 2026-11-13).
     setback_front_ft:
       value: 0
       cite: Hillsboro CDC Table 12.24.760-1, Minimum Setbacks, front yard None
@@ -4372,6 +4491,7 @@ zones:
           when: [inside_mapped_use_area, flag_lot]
           cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
           quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
+          via: "or/washington/hillsboro/cdc.12.64.amberglen.txt#L875-L876,L882,L894-L895"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -4504,6 +4624,7 @@ zones:
           when: [inside_mapped_use_area, flag_lot]
           cite: Hillsboro CDC 12.64.550 D (flag lots are Not Permitted) and 12.64.520 A (UC-RM, UC-MU, UC-AC, UC-NC and UC-OR)
           quote: "or/washington/hillsboro/12.64/12.64.550.txt#L1,L19"
+          via: "or/washington/hillsboro/cdc.12.64.amberglen.txt#L875-L876,L882,L894-L895"
     review_discretion:
       value: conditions
       cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
@@ -5009,12 +5130,15 @@ clear_vision:
       The speed is not mapped: the wedge is drawn at 500 ft, AASHTO''s figure at 45 mph (the AASHTO table
       held at gmc-17.54-clear-vision.txt#L77), the design speed of a Hillsboro arterial (DCS Table 210.2,
       dcs-2025-combined.txt#L2272-L2276); it was 450 (read 2026-11-13). (B)(1)(a)(ii) reaches ''the intersections
-      of a street and an alley'' (L9). Unsettled: the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check):
-      the area bars buildings at its largest plausible size; a corner lot it reaches is YELLOW, never GREEN
-      and never RED on it.'
+      of a street and an alley'' (L9). Unsettled: the area is drawn at its largest plausible size (rulings.yaml
+      2026-11-09-sight-triangle-corner-check), never RED on it. The engineer evaluates it (engineer_set): a
+      corner lot held by it alone, building or parking court, is GREEN with flag SIGHT-CORNER-ENGINEER (Steph
+      2026-11-14, rulings.yaml 2026-11-14-hillsboro-engineer-sight-area-green: "Green"). The drive''s own
+      sight area (driveway, below) still holds YELLOW: the ruling named the corner area.'
     # Parked vehicles (FOLLOWUPS 161): 12.50.260(C)(3) 'plantings, walls, structures, or temporary or permanent obstructions' -- a parked car read as a temporary obstruction (judgement).
     vehicles: true
     vehicles_quote: or/washington/hillsboro/12.50/12.50.260.txt#L19
+    engineer_set: 2026-11-14-hillsboro-engineer-sight-area-green
     ruling: 2026-11-09-sight-triangle-corner-check
   driveway:
     status: unsettled

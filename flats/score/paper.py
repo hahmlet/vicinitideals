@@ -200,6 +200,25 @@ def _number(rules: "ZoneResolution", name: str) -> float | None:
     return float(got) if isinstance(got, (int, float)) else None
 
 
+def larger_side_yard_ft(rules: "ZoneResolution") -> float | None:
+    """The larger of two unequal side yards as a building is held to it
+    (``setback_side_larger_ft``), or None where the code states one side
+    yard or the larger is no more than the side yard itself.
+
+    The printed figure, plus what a side yard height plane adds to the side
+    yard at this design's height: the plane starts at the REQUIRED yard on
+    each side (Milwaukie 19.200, "Side yard height plane"), so what it adds
+    to the smaller yard it adds to the larger, once."""
+    larger = _number(rules, "setback_side_larger_ft")
+    if larger is None:
+        return None
+    side = _number(rules, "setback_side_ft") or 0.0
+    printed = getattr(rules.values.get("setback_side_ft"), "before_step_back", None)
+    plane = max(0.0, side - float(printed)) if printed is not None else 0.0
+    out = larger + plane
+    return out if out > side else None
+
+
 def _pair(side: float | None, total: float | None) -> float | None:
     """What both side yards take off the width, from whichever the code states.
 
@@ -1788,6 +1807,11 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     # the pair wider -- 5 ft either side of a "total 15" cell is still 15, but
     # 8 ft either side of one would be 16.
     sides = _pair(side, side_total)
+    # Two unequal side yards (Milwaukie 19.301.5.A): the smaller on one side
+    # of the paper lot and the larger on the other.
+    side_larger = larger_side_yard_ft(rules)
+    if side_larger is not None and side is not None:
+        sides = max(sides or 0.0, side + side_larger)
     court, court_from_code = court_depth(design, rules)
     across = court_across(design, rules)
     lane_overlap = side_yard_lane_overlap_ft(rules, across.lane_ft)
@@ -1811,6 +1835,8 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     used = [name for name, got in needed if got is not None]
     if side_total is not None:
         used.append("setback_side_total_ft")
+    if side_larger is not None:
+        used.append("setback_side_larger_ft")
     used += list(court_from_code)
     used += list(across.from_code)
     if court and yards_kept_clear(rules):
@@ -1945,6 +1971,13 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # front, the conservative direction. The envelope applies it
                 # to the street edge read off every stretch alone.
                 "setback_street_off_corridor_ft (street lines off a mapped corridor; the paper fit has no edges)",
+                # Portland's scenic corridor setback (33.480.040.B.2.a), a
+                # minimum on the street line that abuts a scenic drive. The
+                # paper fit has no line to read on the corridor; the envelope
+                # applies it, and every lot the Scenic Resource overlay
+                # touches is a closer look whatever the paper fit says
+                # (resource_overlays pdx_scenic).
+                "setback_scenic_corridor_ft (street lines on a scenic corridor; the paper fit has no edges)",
                 # The plain street row on a line facing no residential zone
                 # across the street -- zero in Portland's CM2/CM3/CE/CX, where
                 # the zone's street number is the 5 ft across-the-street one.

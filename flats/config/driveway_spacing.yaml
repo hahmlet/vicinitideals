@@ -51,6 +51,9 @@
 # intersection rule's `unread_cross`: the cross classes beside which the
 # code adds such a rule; within 150 ft of one (the module's
 # UNREAD_CROSS_REACH_FT, not a code figure) a driveway is never shown clear.
+# `corner_unread` (Fairview, ruling 2026-11-14-fairview-hold-every-corner):
+# a lot with two street directions is never shown clear, whatever the
+# classes (its `ruling` names the register entry).
 
 jurisdictions:
   or/washington/tigard:
@@ -360,6 +363,24 @@ jurisdictions:
       Minor Arterial: minor_arterial
       Standard Arterial: standard_arterial
       Major Arterial: major_arterial
+    # The city's layer omits whole streets around the Regional Center (NE
+    # Kelly Ave, NW 5th St, NW 3rd St, SE Main St and others: no line of
+    # them in its 4,419), so a lot on one read "street class not read"
+    # (FOLLOWUPS 194 item 4). Chapter 5 of the TSP says Downtown and Civic
+    # Neighborhood "have adopted street designs" instead. Such a street is
+    # read Local only where Metro types it a minor residential street AND
+    # OpenStreetMap calls it residential (ruling 2026-10-09-quiet-street-both-agree,
+    # "yes, when both agree"); any disagreement (N Main Ave is a Metro
+    # secondary arterial) leaves it unread. Not in the Downtown plan district:
+    # there the street types of Map 4.1140 govern, and on the Downtown Local
+    # type "no curb cuts are permitted without permission of the City" --
+    # a gate this reading does not answer, so those lots keep the map as drawn.
+    unlisted_quiet:
+      rank: 0
+      ruling: 2026-10-09-quiet-street-both-agree
+      held_zones: [DRL-1, DRL-2, DCC, DTM, DMU, DEM, DCL]
+      held_cite: GDC 4.1142(B)(7), Downtown Local street type, no curb cuts without permission of the City, allowed only in instances that permit no other options
+      held_quote: or/multnomah/gresham/4.1100.downtown.txt#L955-L957
     frontage: {}
     unread:
       minor_arterial:
@@ -539,9 +560,11 @@ jurisdictions:
     # TSP, which this corpus does not hold: collector and arterial
     # frontages are unread, and a local frontage beside a collector or
     # arterial (where stops and signals stand) is held unread within reach.
-    # A controlled local-local intersection is not mapped (hand-off
-    # question). (G)(3)'s access at the property line farthest from an
-    # intersection is the city's call the flag names.
+    # A controlled local-local intersection is not mapped either, so every
+    # corner lot is held unread (`corner_unread`, Steph 2026-11-14, rulings
+    # 2026-11-14-fairview-hold-every-corner: "follow your rec"), whatever
+    # its streets' classes. (G)(3)'s access at the property line farthest
+    # from an intersection is the city's call the flag names.
     classes:
       Local: local
       Neighborhood Collector: collector
@@ -567,6 +590,10 @@ jurisdictions:
         unread_cross: [collector, arterial]
         unread_cite: FMC 19.162.020(G)(2), access spacing at controlled intersections (four-way stop sign or traffic signal) determined by the TSP (not held; which intersections are controlled is not mapped)
         unread_quote: or/multnomah/fairview/19.162/19.162.020.txt#L109
+    corner_unread:
+      cite: FMC 19.162.020(G)(2), access spacing at controlled intersections (four-way stop sign or traffic signal) determined by the TSP (not held; stop signs are not mapped, so every corner lot is held)
+      quote: or/multnomah/fairview/19.162/19.162.020.txt#L109
+      ruling: 2026-11-14-fairview-hold-every-corner
 
   or/washington/sherwood:
     map: street_class_sherwood
@@ -660,3 +687,211 @@ jurisdictions:
         quote: or/clackamas/wilsonville/pws.201.2.23.txt#L43
         quote_also: or/clackamas/wilsonville/pws.201.2.23.txt#L42
     from_intersections: []
+
+  # --- FOLLOWUPS 205: Canby, Gladstone, Hillsboro -------------------------
+  #
+  # None of the three publishes a street-class map this corpus holds
+  # (Hillsboro publishes one, not acquired; see the hand-off). Each borrows
+  # the county map its county entry reads, for this check only, as Cornelius
+  # does by Steph's ruling of 2026-11-10. Steph RULED 2026-11-18 that the
+  # county street maps may stand in for these three, as built: `map_ruling`
+  # names it (rulings.yaml 2026-11-18-county-street-maps-stand-in-<city>). A street
+  # the map does not draw reads local under 2026-10-09-quiet-street-both-agree
+  # (Metro types it a minor residential street AND OpenStreetMap calls it
+  # residential, "yes, when both agree"). Neither county map is
+  # registered to serve these cities, so no other reader takes it up there.
+  # A busy city street the county map does not draw is neither: unread.
+
+  or/clackamas/canby:
+    # Clackamas County's road inventory (county roads only). CONNECTOR is
+    # left unnamed: Canby has no such class (unread).
+    #
+    # CMC Table 16.46.30 and the Minimum Driveway Spacing table of
+    # 16.10.070(B)(9)(g) print the same figures. Arterial: 330 ft driveway
+    # to driveway "or combine", private access "only ... through a requested
+    # variance" (note ***), "Direct access to this street will not be
+    # allowed if an alternative exists" (note 2). Collector: 100 ft driveway
+    # to driveway, note 2 again. No map holds driveways: both are barred.
+    # Neighborhood/Local: 50 ft from an intersection; the 30 ft of note ****
+    # and note (3) is for "single-family residential" driveways, and Canby's
+    # single-family dwelling is a detached one (16.04.190), so the pod takes
+    # 50. Table 16.46.30 measures "centerline on both sides of the street";
+    # (B)(9)(a) measures "from the stop bar at the intersection", which no
+    # map holds: the pass bound measures from the cross street's
+    # right-of-way line plus the 35 ft return allowance (`curb_return`), the
+    # fail bound centreline to centreline. The 10 ft between driveways on a
+    # local street is not held (see NOT HELD above). Note (1)'s "no closer
+    # than 60% of parcel frontage" and deviation, and (B)(10)'s approval of
+    # a closer driveway, are the city's call the flag names.
+    #
+    # "Industrial Streets" (100 ft from an intersection and between
+    # driveways, note 2) are a class no map holds: as in Cornelius, a street
+    # read local is unread wherever it may be one -- any line of it, by
+    # name, within 60 ft of an M-1, M-2 or C-M district on the city's zoning
+    # map (C-M, Commercial-Manufacturing, counted: its streets may be).
+    map: street_class_clackamas
+    map_ruling: 2026-11-18-county-street-maps-stand-in-canby
+    classes:
+      LOCAL: local
+      COLLECTOR: collector
+      MINOR ARTERIAL: arterial
+      MAJOR ARTERIAL: arterial
+    unlisted: local
+    industrial_streets:
+      zoning: zoning_canby
+      city_field: CITY
+      city: Canby
+      zones: [M-1, M-2, C-M]
+      reach_ft: 60
+      cite: Canby CMC 16.32.010 (M-1 Light Industrial), 16.34.010 (M-2 Heavy Industrial) and 16.30.010 (C-M); 16.10.070(B)(9)(g), Industrial Streets 100 feet from an intersection and between driveways
+      quote: or/clackamas/canby/cmc.16.32.010.txt#L1-L3
+      street_quote: or/clackamas/canby/cmc.16.10.070.txt#L263
+    frontage:
+      arterial:
+        figure_ft: 330
+        cite: Canby CMC Table 16.46.30, Arterial minimum spacing driveway to driveway 330 feet or combine, private access to arterial roadways only through a requested variance (note ***); 16.10.070(B)(9)(g), Arterial 330 feet, direct access not allowed if an alternative exists (note 2)
+        quote: or/clackamas/canby/cmc.16.46.030.txt#L10,L18
+        quote_also: or/clackamas/canby/cmc.16.10.070.txt#L261,L277
+      collector:
+        figure_ft: 100
+        cite: Canby CMC Table 16.46.30, Collector minimum spacing driveway to driveway 100 feet or combine; 16.10.070(B)(9)(g), Collector 100 feet, direct access not allowed if an alternative exists (note 2)
+        quote: or/clackamas/canby/cmc.16.46.030.txt#L11
+        quote_also: or/clackamas/canby/cmc.16.10.070.txt#L265,L277
+    from_intersections:
+      - driveway_on: [local]
+        cross: [local, collector, arterial]
+        figure_ft: 50
+        basis: curb_return
+        cite: Canby CMC Table 16.46.30, Neighborhood/Local minimum spacing of roadway to driveway 50 feet (30 feet for single-family residential driveways only, note ****); 16.10.070(B)(9)(g), Neighborhood Route, Local and Cul-de-sac 50 feet from an intersection, measured from the stop bar (B)(9)(a)
+        quote: or/clackamas/canby/cmc.16.46.030.txt#L12,L20
+        quote_also: or/clackamas/canby/cmc.16.10.070.txt#L215,L267-L271,L279
+
+  or/clackamas/gladstone:
+    # Clackamas County's road inventory (county roads only), standing in for
+    # the TSP the standards class streets by (PWDS 5.0017, pwds.5.streets
+    # L225-L227; the 1995 TSP is a scan with no text layer) under ruling
+    # 2026-11-18-county-street-maps-stand-in-gladstone; CONNECTOR is left
+    # unnamed (unread).
+    #
+    # GMC 17.50.040(14), as Ordinance 1545 leaves it: "Curb cuts and driveway
+    # installations shall be installed, according to city standards"
+    # (ord1545.txt#L2203-L2204); each residential zone holds middle housing
+    # to "development requirements specific to the lot or parcel or its
+    # frontage, in compliance with GMC Chapter 17.50" (L225-L231). The city
+    # standards are the Public Works Design Standards 2017, Section Five
+    # 5.0070 Driveways and Approaches (printed pp.9-10), held since
+    # 2026-11-18 from the copy Steph downloaded (pwds.5.streets):
+    #   * (D)(3) between any two adjacent curb cuts on the same side of a
+    #     public street: arterial 150 ft, collector 75 ft (L473-L476). No map
+    #     holds driveways, so a collector or arterial frontage is barred
+    #     (YELLOW with the flag, ruling 2026-11-09-busy-road-driveway-
+    #     spacing-yellow) -- the colour the unread entry gave it before the
+    #     standards were held. (B)'s one driveway per frontage and corner
+    #     lots "limited to access from a single street, usually the lower
+    #     classification street" (L446-L448) and (D)(6)'s queue length on a
+    #     collector and above (L481-L483) reach the same frontages.
+    #   * (D)(2): no curb cut "closer to an intersecting street right-of-way
+    #     line" than 35 ft on a neighborhood route or local street meeting
+    #     any other street (e, f; L463-L464, L471-L472). The county map has
+    #     no neighborhood route; one reads local or collector, and either
+    #     answer is the 35 ft or stricter. The 100 and 150 ft of (a)-(c) are
+    #     for a curb cut on an arterial or collector, barred already.
+    #   * NOT HELD: (D)(3)(c)'s 30 ft between two curb cuts on the same lot
+    #     (the pod has one); (D)(1)'s 16 ft minimum curb cut and (D)(5)'s 5 ft
+    #     from the property line (L462, L480): the pass bound's 20 ft apron
+    #     inset 5 ft from each end of the frontage (PASS_APRON_FT,
+    #     PASS_INSET_FT) already holds both wherever an intersection is in
+    #     reach; the drawn lane's own gap to a side line, with the approach
+    #     wings of Standard Drawings 503A/503B (not held), is in the hand-off.
+    map: street_class_clackamas
+    map_ruling: 2026-11-18-county-street-maps-stand-in-gladstone
+    classes:
+      LOCAL: local
+      COLLECTOR: collector
+      MINOR ARTERIAL: arterial
+      MAJOR ARTERIAL: arterial
+    unlisted: local
+    frontage:
+      collector:
+        figure_ft: 75
+        cite: Gladstone Public Works Design Standards 2017 5.0070(D)(3)(b), minimum distance between any two adjacent curb cuts on the same side of a collector street 75 ft (printed p.10), the city standards GMC 17.50.040(14) installs driveways to
+        quote: or/clackamas/gladstone/pwds.5.streets.txt#L473-L474,L476
+        quote_also: or/clackamas/gladstone/amended/ord1545.txt#L2203-L2204
+      arterial:
+        figure_ft: 150
+        cite: Gladstone Public Works Design Standards 2017 5.0070(D)(3)(a), minimum distance between any two adjacent curb cuts on the same side of an arterial street 150 ft (printed p.10), the city standards GMC 17.50.040(14) installs driveways to
+        quote: or/clackamas/gladstone/pwds.5.streets.txt#L473-L475
+        quote_also: or/clackamas/gladstone/amended/ord1545.txt#L2203-L2204
+    from_intersections:
+      - driveway_on: [local]
+        cross: [local, collector, arterial]
+        figure_ft: 35
+        basis: right_of_way_line
+        cite: Gladstone Public Works Design Standards 2017 5.0070(D)(2)(e)-(f), no curb cut closer to an intersecting street right-of-way line than 35 ft on a neighborhood route or a local street when intersecting any other street (printed pp.9-10)
+        quote: or/clackamas/gladstone/pwds.5.streets.txt#L463-L464,L471-L472
+
+  or/washington/hillsboro:
+    # Washington County's map, read as the county and Cornelius read it:
+    # FClass2 4 Collector and 3 / 2 Arterial are busy; 5 Neighborhood Route
+    # is the standards' own Neighborhood Route; 1 Freeway is unnamed.
+    #
+    # CDC 12.50.715 C.2 sends a quadplex's driveway approach to "the
+    # Hillsboro Design and Construction Standards" (b, c.ii), 12.50.510 B.1
+    # applies those standards to every public improvement, and 12.50.530
+    # B.4.c makes "property access points to arterial streets ... subject
+    # to approval by the Road Authority". Standards 230.6 H: "Driveway
+    # spacing shall meet the requirements shown in Figure 230.6" -- Arterial
+    # 600 ft and Collector 300 ft between driveways (barred: no map holds
+    # driveways; 230.6 F and G also keep driveways off both), Neighborhood
+    # Route and Local Road "See Subsection 230.6.C" (curb between driveways,
+    # not held). Its notes hold the driveway's edge 100 ft from Point A
+    # (where the right-of-way lines meet) at an intersection with a
+    # Collector or Arterial, 25 ft at one with a Local Road, and 10 ft from
+    # the curb's point of curvature (Point B) at any intersection (the pass
+    # bound adds the 35 ft return allowance). No note names an intersection
+    # with a Neighborhood Route: it takes the 100 ft, never the 25.
+    #
+    # Read for every lot, a judgement: c.ii names only lots "with more than
+    # 1 frontage" all on collectors or arterials, the sentence Wilsonville
+    # and Washington County are read by (`applies`), but here the standards
+    # reach a driveway on their own terms (12.50.510 B.1) and b sends even
+    # a local street's approaches to them. The stored standards are a
+    # second-hand copy (hillsboro.yaml `code:` dcs.230.6.driveways).
+    map: street_class_washington
+    map_ruling: 2026-11-18-county-street-maps-stand-in-hillsboro
+    classes:
+      '5': neighborhood_route
+      '4': collector
+      '3': arterial
+      '2': arterial
+    unlisted: local
+    frontage:
+      arterial:
+        figure_ft: 600
+        cite: Hillsboro Design and Construction Standards 230.6 H and Figure 230.6, Arterial minimum driveway spacing 600 ft; CDC 12.50.530 B.4.c, property access points to arterial streets subject to approval by the Road Authority
+        quote: or/washington/hillsboro/dcs.230.6.driveways.txt#L19,L45
+        quote_also: or/washington/hillsboro/12.50/12.50.530.txt#L32
+      collector:
+        figure_ft: 300
+        cite: Hillsboro Design and Construction Standards 230.6 H and Figure 230.6, Collector minimum driveway spacing 300 ft; CDC 12.50.715 C.2.c.ii, frontages only on collectors and/or arterial streets meet the access spacing standards of the Design and Construction Standards
+        quote: or/washington/hillsboro/dcs.230.6.driveways.txt#L19,L46
+        quote_also: or/washington/hillsboro/12.50/12.50.715.txt#L19-L20
+    from_intersections:
+      - driveway_on: [local, neighborhood_route]
+        cross: [neighborhood_route, collector, arterial]
+        figure_ft: 100
+        basis: right_of_way_line
+        cite: Hillsboro Design and Construction Standards Figure 230.6 note 1, the edge of driveway no less than 100 feet from the point of intersection (Point A) of right-of-way lines at intersection with Collector or Arterial (a Neighborhood Route, which no note names, held to the same)
+        quote: or/washington/hillsboro/dcs.230.6.driveways.txt#L28-L31
+      - driveway_on: [local, neighborhood_route]
+        cross: [local]
+        figure_ft: 25
+        basis: right_of_way_line
+        cite: Hillsboro Design and Construction Standards Figure 230.6 note 2, the edge of driveway no less than 25 feet from the point of intersection (Point A) of right-of-way lines at intersection with Local Road
+        quote: or/washington/hillsboro/dcs.230.6.driveways.txt#L32-L34
+      - driveway_on: [local, neighborhood_route]
+        cross: [local, neighborhood_route, collector, arterial]
+        figure_ft: 10
+        basis: curb_return
+        cite: Hillsboro Design and Construction Standards Figure 230.6 note 3, the edge of driveway no less than 10 feet from the point of curvature of the curb (Point B) adjacent to any intersection
+        quote: or/washington/hillsboro/dcs.230.6.driveways.txt#L35-L37

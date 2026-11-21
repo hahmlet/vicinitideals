@@ -253,3 +253,62 @@ def test_nothing_in_the_draft_is_verified(beaverton: Layer) -> None:
                 assert variant.status is not Status.verified, (zone, field)
     for field, value in beaverton.defaults.items():
         assert value.status is not Status.verified, field
+
+
+#: FOLLOWUPS 204 item 4: the city's own Significant Grove polygons.
+GROVES = "or/washington/beaverton/significant-groves.geojson"
+
+
+def test_the_grove_area_is_the_citys_own_layer_outside_cooper_mountain(beaverton: Layer) -> None:
+    import json
+
+    from flats.rules import loader
+    from flats.rules.conditions import DRAWN_CONDITIONS, condition
+
+    area = beaverton.drawn_areas["beaverton_significant_grove"]
+    assert area.file == GROVES and area.condition == "beaverton_significant_grove"
+    assert set(area.zones) == {z for z in ONE_LOT if not z.startswith("CM-")}
+    fact = condition("beaverton_significant_grove")
+    assert fact.kind == "site_fact" and fact.assume is None
+    assert "beaverton_significant_grove" in DRAWN_CONDITIONS
+    data = json.loads((loader.AREAS_ROOT / GROVES).read_text(encoding="utf-8"))
+    assert data["source"]["drawn"] is False and len(data["features"]) == 212
+    assert "Tree Plan 3" in _text(f"{BEAVERTON}/bdc.60.60.trees-and-vegetation.txt#L54-L62")
+    assert "Outside the Cooper Mountain Community Plan area" in _text(
+        f"{BEAVERTON}/bdc.90.definitions.txt#L2359-L2361"
+    )
+    assert "no reasonable alternative exists" in _text(f"{BEAVERTON}/bdc.40.90.tree-plan.txt#L143-L144")
+
+
+def test_a_lot_in_a_grove_is_answered_inside() -> None:
+    import json
+
+    import shapely
+    from shapely.geometry import shape
+
+    from flats.encode.load import load_trusted
+    from flats.ingest.quadfit import observed_facts
+    from flats.rules import loader
+    from flats.tests.test_quadfit_bridge import row
+
+    data = json.loads((loader.AREAS_ROOT / GROVES).read_text(encoding="utf-8"))
+    grove = max((shape(f["geometry"]) for f in data["features"]), key=lambda g: g.area)
+    lot = grove.representative_point().buffer(10, cap_style=3)
+    layers = load_trusted(strict=False).rules.layers
+    got = observed_facts(row(jurisdiction="beaverton", zone="RMA", lot_wkb=shapely.to_wkb(lot)), layers)
+    assert got["beaverton_significant_grove"] is True
+
+
+def test_a_grove_is_green_with_clear_objective_inside_the_ugb() -> None:
+    """Steph 2026-10-15: a judgement path inside the UGB is GREEN with a flag."""
+    from flats.score.flags import Colour
+    from flats.score.screen import CLOSER_LOOK_REVIEW_CONDITIONS
+    from flats.tests.test_washington_unincorporated import _bethany_screen
+
+    got = _bethany_screen(("beaverton_significant_grove",))
+    assert got.colour is Colour.green
+    (flag,) = [f for f in got.flags if f.code == "CLEAR-OBJECTIVE"]
+    assert "beaverton_significant_grove" in flag.key and "60.60.15.2.C" in flag.source
+    outside = _bethany_screen(("beaverton_significant_grove",), inside_ugb=False)
+    assert outside.colour is Colour.yellow
+    assert CLOSER_LOOK_REVIEW_CONDITIONS in outside.reasons

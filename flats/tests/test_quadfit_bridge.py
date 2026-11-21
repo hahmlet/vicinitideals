@@ -140,6 +140,8 @@ def test_a_plain_interior_lot_on_a_main() -> None:
         "constrained_sites_overlay": False,
         "in_floodplain": False,
         "public_sewer": True,
+        # FOLLOWUPS 205: a rectangle on a street is plainly not a flag lot.
+        "pdx_flag_lot": False,
     }
     # Every answer is one of the facts the module says it can observe.
     assert set(got) <= set(OBSERVABLE)
@@ -876,6 +878,218 @@ def test_the_carve_overlays_come_off_the_envelope_flats_cuts(corpus, policies) -
     assert s.envelope.source == "flats"
     # Less the across-the-street 5 on the street line.
     assert s.envelope.sqft == pytest.approx(50 * 65)
+
+
+def test_a_court_drawn_in_a_carve_moves_off_it_or_the_lot_is_not_green(corpus, policies) -> None:
+    """Portland's River Environmental overlay (FOLLOWUPS 202, 2026-11-18).
+
+    1S1E14CA  -02700 drew 679 sq ft of its parking court inside "e", which
+    the screen did not hold. s5o now carves "e" (``pdx_river_e``) into
+    ``carve_wkb``; the building, the court and the lane all stay off it, and
+    a plan that cannot is a miss, never GREEN.
+    """
+    w, d = 60, 160
+    lot = shapely.box(X0, Y0, X0 + w, Y0 + d)
+    edges = [
+        [X0, Y0, X0 + w, Y0, "F"],
+        [X0 + w, Y0, X0 + w, Y0 + d, "S"],
+        [X0 + w, Y0 + d, X0, Y0 + d, "R"],
+        [X0, Y0 + d, X0, Y0, "S"],
+    ]
+
+    def screened(area=None):
+        r = row(
+            zone="CM2",
+            neighbour_zones_json=walled(("portland", "CX")),
+            lot_wkb=shapely.to_wkb(lot),
+            edges_json=json.dumps(edges),
+            area_sqft=float(w * d),
+            frontage_ft=float(w),
+            lot_width_ft=float(w),
+            lot_depth_ft=float(d),
+            wkb=shapely.to_wkb(shapely.box(X0 + 5, Y0 + 5, X0 + w - 5, Y0 + d - 5)),
+            carve_wkb=None if area is None else shapely.to_wkb(area),
+        )
+        (s,) = screen_lot(
+            lot_from_row(r, corpus.layers), [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+        )
+        fit = next(c for c in s.screening.checks if c.check == "fit_ft")
+        return s, fit.slack
+
+    base, base_fit = screened()
+    assert base.drawing is not None and base.drawing["fits"] and base_fit >= 0
+    court = shapely.Polygon(base.drawing["court"])
+    assert court.area > 0
+    # A sliver of "e" in a corner the plan does not use changes nothing.
+    clear, clear_fit = screened(shapely.box(X0 + w - 4, Y0 + d - 4, X0 + w, Y0 + d))
+    assert clear.signed.triage is base.signed.triage and clear_fit == base_fit
+    assert clear.drawing is not None and clear.drawing["fits"]
+    # "e" over the court's ground, or over everything behind the building's
+    # band: whatever is drawn stays off it, and the plan misses.
+    for area in (court, shapely.box(X0, Y0 + 60, X0 + w, Y0 + d)):
+        s, fit = screened(area)
+        assert fit < 0 and s.signed.triage is not Triage.green
+        for part in ("building", "lane", "court"):
+            shape = (s.drawing or {}).get(part)
+            if shape:
+                assert shapely.Polygon(shape).intersection(area).area < 1.0, part
+
+
+def test_clackamas_slide_ground_under_the_building_is_red_and_beside_it_yellow(corpus, policies) -> None:
+    """Steph 2026-11-18 (rulings.yaml
+    2026-11-18-clackamas-landslide-under-building-red; ZDO 1003.02(A)): a
+    county lot is RED when the building would sit on mapped slide ground and
+    cannot be fitted clear of it; a lot that holds slide ground with the
+    building fitted clear stays YELLOW. 22E07CC04200 is the first case (the
+    whole lot on a deposit), 22E08CA03200 the second (a fan across one end).
+    The flood ban of 845.01(3) rides the same carve
+    (2026-11-18-clackamas-flood-ban-red)."""
+    from flats.score import flags as flag_plan
+
+    w, d = 80, 160
+    lot = shapely.box(X0, Y0, X0 + w, Y0 + d)
+    edges = [
+        [X0, Y0, X0 + w, Y0, "F"],
+        [X0 + w, Y0, X0 + w, Y0 + d, "S"],
+        [X0 + w, Y0 + d, X0, Y0 + d, "R"],
+        [X0, Y0 + d, X0, Y0, "S"],
+    ]
+
+    def screened(area=None, **over):
+        r = row(
+            jurisdiction="clackamas_unincorporated",
+            zone="R7",
+            lot_wkb=shapely.to_wkb(lot),
+            edges_json=json.dumps(edges),
+            area_sqft=float(w * d),
+            frontage_ft=float(w),
+            lot_width_ft=float(w),
+            lot_depth_ft=float(d),
+            wkb=shapely.to_wkb(shapely.box(X0 + 5, Y0 + 5, X0 + w - 5, Y0 + d - 5)),
+            carve_wkb=None if area is None else shapely.to_wkb(area),
+            **over,
+        )
+        (s,) = screen_lot(
+            lot_from_row(r, corpus.layers), [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+        )
+        fit = next(c for c in s.screening.checks if c.check == "fit_ft")
+        return s, fit.slack
+
+    base, base_fit = screened()
+    assert base.drawing is not None and base.drawing["fits"] and base_fit >= 0
+    assert base.signed.colour is not flag_plan.Colour.red
+    # Slide ground in a corner the plan does not use: the lot holds some, the
+    # building fits clear -- never GREEN, never RED.
+    corner = shapely.box(X0 + w - 4, Y0 + d - 4, X0 + w, Y0 + d)
+    beside, beside_fit = screened(corner, ovl_clackamas_landslide=True, ovl_clackamas_landslide_core=True)
+    assert beside_fit == base_fit and beside.drawing is not None and beside.drawing["fits"]
+    assert beside.signed.colour is flag_plan.Colour.yellow
+    assert beside.signed.triage is not Triage.green
+    for part in ("building", "lane", "court"):
+        shape = beside.drawing.get(part)
+        if shape:
+            assert shapely.Polygon(shape).intersection(corner).area < 1.0, part
+    # Slide ground under everything: nowhere to fit the building clear of it.
+    for column in ("ovl_clackamas_landslide", "ovl_clackamas_landslide_scarp"):
+        under, under_fit = screened(lot, **{column: True, f"{column}_core": True})
+        assert under_fit < 0 and not (under.drawing or {}).get("fits")
+        assert under.signed.colour is flag_plan.Colour.red
+    # The flood ban: the fringe over the whole lot, flagged by fema_sfha.
+    flooded, flooded_fit = screened(lot, ovl_fema_sfha=True, ovl_clackamas_fmd=True)
+    assert flooded_fit < 0 and flooded.signed.colour is flag_plan.Colour.red
+
+
+def test_a_clackamas_lot_on_mapped_open_space_is_red_whatever_fits_beside_it(corpus, policies) -> None:
+    """Steph 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red):
+    "if its free of mapped open space, it's available to be green. If it's
+    touching open space, it's a red. We aren't fighting on developing open
+    space." No quadfit column carries the open space traced off
+    Comprehensive Plan Map 4-06; the bridge reads it off the lot's own
+    shape, so the real tracing stands under these lots. A lot plainly on the
+    traced area is RED though the building fits clear of it; a lot within
+    the 14 ft its drawn line is wide, either side of that line, stays YELLOW
+    (coordinator 2026-11-18: the map only just reaches the lot line, a
+    person must look); a lot clear of it is what it was."""
+    from shapely.geometry import shape as geometry
+
+    from flats.geom.drawn import load_area
+    from flats.rules.loader import AREAS_ROOT
+    from flats.score import flags as flag_plan
+    from flats.score.screen import MAPPED_OPEN_SPACE, OPEN_SPACE_CHECK
+
+    file = "or/clackamas/_unincorporated/zdo-map-4-06-open-space.geojson"
+    mapped = load_area(file)
+    feats = json.loads((AREAS_ROOT / file).read_text(encoding="utf-8"))["features"]
+    traced = [geometry(f["geometry"]).buffer(0) for f in feats if f["properties"]["EDGE_FT"] == 14]
+    key = ("clackamas_open_space",)
+    w, d = 80, 160
+
+    def screened(x0: float, y0: float, **over):
+        edges = [
+            [x0, y0, x0 + w, y0, "F"],
+            [x0 + w, y0, x0 + w, y0 + d, "S"],
+            [x0 + w, y0 + d, x0, y0 + d, "R"],
+            [x0, y0 + d, x0, y0, "S"],
+        ]
+        over.setdefault("jurisdiction", "clackamas_unincorporated")
+        over.setdefault("zone", "R7")
+        r = row(
+            lot_wkb=shapely.to_wkb(shapely.box(x0, y0, x0 + w, y0 + d)),
+            edges_json=json.dumps(edges),
+            area_sqft=float(w * d),
+            frontage_ft=float(w),
+            lot_width_ft=float(w),
+            lot_depth_ft=float(d),
+            wkb=shapely.to_wkb(shapely.box(x0 + 5, y0 + 5, x0 + w - 5, y0 + d - 5)),
+            **over,
+        )
+        lot = lot_from_row(r, corpus.layers)
+        (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+        fit = next(c for c in s.screening.checks if c.check == "fit_ft")
+        return lot, s, fit.slack
+
+    east = max(traced, key=lambda g: g.bounds[2])
+    x = east.bounds[2]
+    y = next(c[1] for part in getattr(east, "geoms", [east]) for c in part.exterior.coords if c[0] == x)
+    # Clear: 20 ft east of the tracing's easternmost point. Nothing from this rule.
+    lot, clear, clear_fit = screened(x + 20, y - d / 2)
+    assert lot.facts.open_space == () and lot.facts.resource_permits == () and lot.carve is None
+    assert clear_fit >= 0 and clear.signed.colour is not flag_plan.Colour.red
+    assert not any(b.check == OPEN_SPACE_CHECK for b in clear.signed.binds)
+    # In the line's width: 8 ft east of it. The tracing cannot say whether
+    # the lot touches -- YELLOW, with the plan exactly where the clear lot's is.
+    lot, beside, fit = screened(x + 8, y - d / 2)
+    assert lot.facts.open_space == () and lot.facts.resource_permits == key and lot.carve is None
+    assert fit == clear_fit and beside.drawing is not None and beside.drawing["fits"]
+    assert beside.signed.colour is flag_plan.Colour.yellow and beside.signed.triage is not Triage.green
+    # Just over the line: the lot's west 6 ft lie over the tracing's
+    # easternmost point. Less than the line is wide, so the map cannot say the
+    # lot touches -- YELLOW the same way, never GREEN and not RED.
+    lot, strip, fit = screened(x - 6, y - d / 2)
+    over = shapely.box(x - 6, y - d / 2, x - 6 + w, y + d / 2).intersection(mapped).area
+    assert 0 < over < 0.05 * w * d
+    assert lot.facts.open_space == () and lot.facts.resource_permits == key and lot.carve is None
+    assert fit == clear_fit and strip.signed.colour is flag_plan.Colour.yellow
+    assert strip.signed.triage is not Triage.green
+    assert not any(b.check == OPEN_SPACE_CHECK for b in strip.signed.binds)
+    # On it: the lot's west 30 ft lie over the tracing, in a side yard the
+    # building never needs. RED all the same.
+    lot, on, on_fit = screened(x - 30, y - d / 2)
+    assert lot.facts.open_space == key and lot.facts.resource_permits == () and lot.carve is None
+    assert on_fit == clear_fit  # the building fits as well as on the clear lot
+    for answer in (on.screening, on.signed):
+        assert answer.triage is Triage.red and answer.colour is flag_plan.Colour.red
+        assert answer.reasons == (MAPPED_OPEN_SPACE,)
+        assert [b.check for b in answer.binds] == [OPEN_SPACE_CHECK]
+        assert "2026-11-18-clackamas-open-space-red" in answer.binds[0].source
+    # Wholly inside it: RED the same way.
+    spot = max(traced, key=lambda g: g.area).representative_point()
+    lot, under, _ = screened(spot.x - w / 2, spot.y - d / 2)
+    assert lot.facts.open_space == key and under.signed.colour is flag_plan.Colour.red
+    assert MAPPED_OPEN_SPACE in under.signed.reasons
+    # Another jurisdiction's lot on the same ground is not asked.
+    lot, _, _ = screened(spot.x - w / 2, spot.y - d / 2, jurisdiction="portland", zone="R5")
+    assert lot.facts.open_space == () and lot.facts.resource_permits == ()
 
 
 def test_ground_beyond_the_named_street_reach_comes_off_the_envelope(corpus, policies) -> None:

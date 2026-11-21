@@ -1061,6 +1061,21 @@ zones:
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
           via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -1126,6 +1141,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       value: 65
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1254,6 +1270,21 @@ zones:
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
           via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -1319,6 +1350,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1440,6 +1472,21 @@ zones:
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
           via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -1505,6 +1552,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
@@ -1613,6 +1661,22 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4246"
+      variants:
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -1680,6 +1744,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"
@@ -1820,6 +1885,21 @@ zones:
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
           via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -1879,6 +1959,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       # "Minimum lot width / All, except 50 feet, except / Townhouse 20 feet".
       # The pod on one lot is in "All".
@@ -1977,11 +2058,13 @@ zones:
       value: 5
       cite: OCMC 17.52.060.C, five-foot landscaped buffer where a parking lot and its drive aisles abut adjoining properties; 17.52.010 applicability
       quote: "or/clackamas/oregon-city/17.zoning.txt#L14791-L14797,L15324-L15330"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3922-L3930"
       variants:
         - exempt: true
           when: [unit_lots]
           cite: OCMC 17.52.010, the parking chapter "does not apply to ... townhouses"
           quote: "or/clackamas/oregon-city/17.zoning.txt#L14791-L14797"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3922-L3930"
         - value: 10
           when: [abuts_lower_density_zone]
           cite: OCMC Table 17.12.040 note 1 (ten-foot landscaped yard on the side abutting R-10, R-8 or R-6)
@@ -2151,6 +2234,21 @@ zones:
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
           via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     max_mass_footprint_sqft:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
@@ -2218,6 +2316,7 @@ zones:
       # is taken as lawful (rulings.yaml, Steph 2026-10-21).
       value: lot_standards
       quote: "or/clackamas/oregon-city/17.zoning.txt#L16292-L16296"
+      via: "or/clackamas/oregon-city/17.zoning.txt#L103-L104,L3916-L3920,L3925-L3930"
     min_lot_width_ft:
       value: 25
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"
@@ -2402,6 +2501,21 @@ zones:
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
           via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     min_lot_sqft:
       # 17.29.050.A: "Minimum lot areas: None." The safe use of `exempt` --
       # the paragraph is printed and states no standard, rather than being
@@ -2534,6 +2648,22 @@ zones:
       # districts.
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6964,L6993-L6994"
+      variants:
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     min_lot_sqft:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7144-L7145"
@@ -2704,6 +2834,21 @@ zones:
           cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
           via: "or/clackamas/oregon-city/17.zoning.txt#L3942-L3944"
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     min_lot_sqft:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7853"
@@ -2839,6 +2984,22 @@ zones:
       # 17.32.020.S: "Multi-family residential, triplexes, quadplexes,".
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7533-L7534"
+      variants:
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     min_lot_sqft:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7620-L7621"
@@ -2949,6 +3110,22 @@ zones:
       via: "or/clackamas/oregon-city/17.zoning.txt#L8017"
       cite: OCMC 17.35.020.R (permitted uses, Willamette Falls Downtown; the list
         runs across a page break whose running header reads OCMC 17.35.030)
+      variants:
+        # OCMC 17.48 (FOLLOWUPS 204 item 3, chapter read whole 2026-11-18): in
+        # the Willamette River Greenway overlay district "A Willamette River
+        # Greenway permit shall be required for all developments" (17.48.050;
+        # none of its exceptions A to O is a new dwelling), decided on the
+        # considerations of 17.48.080 -- "to the maximum extent practicable",
+        # "to the greatest possible degree" -- and within 150 ft of low water
+        # on Planning Commission findings (17.48.100). Held as Milwaukie's
+        # greenway is (MMC 19.401.3): the fact closes the use, and Goal 15 is
+        # what the overlay implements (ORS 197A.420(5)(b)). No way in is
+        # encoded here.
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
     min_lot_sqft:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8190"
@@ -3442,9 +3619,12 @@ clear_vision:
       ''existing structures'' and subjects ''All construction initiated after June 8, 1978, which encroaches
       on the clear vision area'' (L42). The size stays unsettled: the engineer sets it and the speed is
       not mapped. ''Street'' includes ''alley'' (L33), so a street-and-alley corner has one too. Unsettled:
-      the conservative default (rulings.yaml 2026-11-09-sight-triangle-corner-check): the area bars buildings
-      at its largest plausible size; a corner lot it reaches is YELLOW, never GREEN and never RED on it.'
+      the area is drawn at its largest plausible size (rulings.yaml 2026-11-09-sight-triangle-corner-check),
+      never RED on it. The engineer sets it (engineer_set): a corner lot held by it alone, building or
+      parking court, is GREEN with flag SIGHT-CORNER-ENGINEER (Steph 2026-11-14, rulings.yaml
+      2026-11-14-oregon-city-engineer-sight-area-green: "Green").'
     # Parked vehicles (FOLLOWUPS 161): 10.32.060 'A parked motor vehicle or other movable obstruction, located within the clear vision area'.
     vehicles: true
     vehicles_quote: data/flats/books/sight-manuals/oregon-city/ocmc-10.32-traffic-sight-obstructions.txt#L53
+    engineer_set: 2026-11-14-oregon-city-engineer-sight-area-green
     ruling: 2026-11-09-sight-triangle-corner-check

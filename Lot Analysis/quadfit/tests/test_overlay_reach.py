@@ -286,6 +286,14 @@ def test_a_borrowed_layer_keeps_its_own_jurisdiction_s_answer() -> None:
     assert "709.05" in wqra.citation
 
 
+#: Layers s0 writes by splitting another download (``s0_acquire.derive_fema_split``),
+#: named by the layer they are cut from.
+_S0_DERIVED = {
+    "overlay_fema_floodway": "overlay_fema_flood",
+    "overlay_fema_sfha": "overlay_fema_flood",
+}
+
+
 def test_every_borrowed_source_names_a_layer_something_actually_fetches() -> None:
     """A `source` typo would read as a missing layer, which is silence again."""
     import s0_acquire
@@ -297,7 +305,11 @@ def test_every_borrowed_source_names_a_layer_something_actually_fetches() -> Non
         assert spec.source in keys, (
             f"{spec.key} borrows {spec.source!r}, which is not an overlay key"
         )
-        assert f"overlay_{spec.source}" in s0_acquire.PHASE2_LAYERS, (
+        # 2026-11-19 (rel11 assembly): the FEMA floodway / fringe pair is not downloaded
+        # under its own name; s0's derive_fema_split cuts both from overlay_fema_flood.
+        # clackamas_fmd (flats/clackamas-fixes, ZDO 845.01(3)) borrows the fringe.
+        layer = _S0_DERIVED.get(f"overlay_{spec.source}", f"overlay_{spec.source}")
+        assert layer in s0_acquire.PHASE2_LAYERS, (
             f"{spec.key} borrows {spec.source!r}, which s0 never downloads"
         )
     for spec in _overlays().overlays:

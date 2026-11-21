@@ -156,6 +156,13 @@ DRIVEWAY_NEAR_INTERSECTION_100FT = "DRIVEWAY_NEAR_INTERSECTION_100FT"
 
 #: The zone forbids the use outright and lists no conditional-use path.
 USE_PROHIBITED = "USE_PROHIBITED"
+#: The lot touches mapped open space a standing ruling keeps this project off
+#: (:attr:`LotFacts.open_space`): RED outright, whatever would fit beside it.
+#: Steph 2026-11-18: "If it's touching open space, it's a red. We aren't
+#: fighting on developing open space."
+MAPPED_OPEN_SPACE = "MAPPED_OPEN_SPACE"
+#: The bind such a lot carries: no number, like the use gate's.
+OPEN_SPACE_CHECK = "mapped_open_space"
 #: The lot misses nothing but a minimum density: it is big enough that the
 #: city wants more homes on it than four. Never RED (Steph, 2026-10-02:
 #: "lots that fail for the only reason of min density need to go not red.
@@ -171,6 +178,47 @@ CLOSER_LOOK_MIN_FAR = "CLOSER_LOOK_MIN_FAR"
 #: Minimum amount-of-building checks stay soft unless the more-pods ruling
 #: proves a missed minimum FAR cannot physically fit.
 SOFT_FLOOR_CHECKS: frozenset[str] = MIN_DENSITY_CHECKS | {"min_far"}
+#: The lot misses a minimum density the code writes into the use permission
+#: itself (``min_density_conditions_use``: Estacada EMC 16.26.020 (D)(4)(2),
+#: a fourplex "provided that ... the residential density of the development
+#: is not less than sixteen (16) dwelling units per acre"). Not the big-lot
+#: flag below the yellow line: the use depends on more homes than one pod, so
+#: the lot is held YELLOW with DENSITY-USE (FOLLOWUPS 203).
+CLOSER_LOOK_USE_DENSITY = "CLOSER_LOOK_USE_DENSITY"
+#: Steph may rule that such a miss is RED (the use is not allowed at the
+#: density one pod gives). The one-line switch: True makes the miss a wall.
+USE_DENSITY_MISS_IS_WALL = False
+#: The code requires part of the ground floor near the street in commercial
+#: use (``ground_floor_commercial_min_pct``: Gresham GDC 4.1121(A)) and the pod
+#: is four homes. Whether any of the building stands within the code's
+#: distance of that street is not measured, so YELLOW, never GREEN
+#: (FOLLOWUPS 203).
+CLOSER_LOOK_GROUND_FLOOR_USE = "CLOSER_LOOK_GROUND_FLOOR_USE"
+
+
+def use_density(rules: ZoneResolution) -> bool:
+    """Whether the zone's use permission itself turns on its minimum density."""
+    return rules.get("min_density_conditions_use") is True
+
+
+def ground_floor_commercial_owed(rules: ZoneResolution) -> float | None:
+    """The ground-floor commercial share the code asks of this lot, percent;
+    None where it asks none. The pod's ground floor is all homes."""
+    need = rules.get("ground_floor_commercial_min_pct")
+    if need is None or isinstance(need, bool) or float(need) <= 0:
+        return None
+    return float(need)
+
+
+def _soft_floor(check: str, rules: ZoneResolution, min_far_no_room: bool) -> bool:
+    """Whether a miss of ``check`` is a soft floor -- a flag or a closer look,
+    never a wall: a minimum density (unless it conditions the use and
+    :data:`USE_DENSITY_MISS_IS_WALL`), or a minimum FAR more pods could meet."""
+    if check == "min_far":
+        return not min_far_no_room
+    if check in MIN_DENSITY_CHECKS:
+        return not (USE_DENSITY_MISS_IS_WALL and use_density(rules))
+    return False
 
 #: The lot standards each `lot_of_record_relief` lets an existing lot of
 #: record off, by check name. `lot_dimensions` also lifts the minimum density
@@ -236,6 +284,60 @@ CLOSER_LOOK_ENTRANCE_SIDE = "CLOSER_LOOK_ENTRANCE_SIDE"
 #: would say yellow." The standards were read from the one district the lot
 #: screens under.
 CLOSER_LOOK_SPLIT_ZONE = "CLOSER_LOOK_SPLIT_ZONE"
+#: The lot was answered inside (or outside) a traced district on the share of
+#: it the district holds, and its plan stands on the piece across the line
+#: (:func:`flats.ingest.quadfit.drawn_edge_checked`, FOLLOWUPS 188): read as
+#: :data:`CLOSER_LOOK_SPLIT_ZONE` is, ruling 2026-10-14-split-zones.
+CLOSER_LOOK_DISTRICT_EDGE = "CLOSER_LOOK_DISTRICT_EDGE"
+#: The drawn lane or parking court stands past the lot line by more than the
+#: drawing's tolerance (:func:`flats.ingest.quadfit.plan_on_lot_checked`,
+#: FOLLOWUPS 201: Portland 1N1E23CB -21200, a through lot whose side-yard
+#: overlap put the lane and court 4 ft past the far street line). The plan
+#: the fit passed is not one the lot holds: never GREEN on that drawing.
+CLOSER_LOOK_PLAN_OFF_LOT = "CLOSER_LOOK_PLAN_OFF_LOT"
+#: The drawn building, lane or parking court stands on ground an overlay
+#: carve takes off the lot (``carve_wkb``), or nothing fitting was drawn on a
+#: lot a carve touches (:func:`flats.ingest.quadfit.plan_on_carve_checked`).
+#: The fit keeps the building inside the envelope less the carve, but the
+#: lane and court it draws into a side setback (``side_yard_lane_overlap_ft``,
+#: ``side_yard_court_overlap_ft``) were measured against no carve. Never
+#: GREEN on that drawing.
+CLOSER_LOOK_PLAN_ON_CARVE = "CLOSER_LOOK_PLAN_ON_CARVE"
+#: A street centreline that is no alley or private drive runs through the
+#: lot within reach of the drawn building, lane or court
+#: (:func:`flats.ingest.quadfit.street_through_checked`, rel11 move read G2:
+#: Clackamas 21E11AB01100, WALTER through the lot 25.8 ft from the court).
+#: The plan may stand on road land the lot does not own: never GREEN on it.
+CLOSER_LOOK_STREET_THROUGH_LOT = "CLOSER_LOOK_STREET_THROUGH_LOT"
+#: Records beside the colour, below the yellow line, for a bound to name the
+#: lane a move came from (rel11 move read G1,
+#: :func:`flats.ingest.quadfit.marks_checked`): the lot's yard strips were
+#: widened by how far its own line bows inside the traced edge (FOLLOWUPS
+#: 205, gap-fixes Fix 5), and -- on a GREEN -- the plan drawn on that
+#: envelope stands on the lot and its building inside the envelope.
+EDGE_SAG_READ = "EDGE_SAG_READ"
+#: ... and a street line's half-width was read across the street where the
+#: centreline stood on the lot's side of a jog but off the lot (FOLLOWUPS
+#: 158, false-reds-194 Fix C).
+DEDICATION_JOG_READ = "DEDICATION_JOG_READ"
+#: No street meets the lot along as much line as the narrowest driveway the
+#: code allows here (:func:`flats.ingest.quadfit.drive_touch_checked`,
+#: FOLLOWUPS 201: Portland 1N2E25DA -10200 touches NE San Rafael St along
+#: 8 ft, and 33.266.120.D.2 asks 9 ft of a driveway on private property).
+#: The drive to the court would cross another lot: never GREEN on it.
+CLOSER_LOOK_DRIVE_TOUCH = "CLOSER_LOOK_DRIVE_TOUCH"
+#: The drive lane clears the smaller of a code's two floors on its gap to a
+#: lot line but not the larger, and the site fact that picks one is not held
+#: (:func:`flats.ingest.quadfit.driveway_lot_line_checked`: Beaverton S12, 3
+#: or 6 ft by the EDM's sidewalk type). Never GREEN on the smaller figure.
+CLOSER_LOOK_DRIVEWAY_SIDEWALK = "CLOSER_LOOK_DRIVEWAY_SIDEWALK"
+#: The drive lane misses even the smaller floor where the code offers a way
+#: out the screen cannot weigh (Gladstone PWDS 5.0070(D)(5), "unless a shared
+#: driveway is installed"): a closer look, never a fail.
+CLOSER_LOOK_DRIVEWAY_LOT_LINE = "CLOSER_LOOK_DRIVEWAY_LOT_LINE"
+#: The drive lane misses even the smaller floor, with the plan slid as far
+#: from the line as the building and court allow: the standard fails.
+DRIVEWAY_LOT_LINE = "DRIVEWAY_LOT_LINE"
 #: The pod is taken here only through a review whose decider may add
 #: conditions, or whose criteria weigh judgement words beside the measurable
 #: standards (:func:`review_with_conditions`). Steph 2026-10-14: "If it's
@@ -298,6 +400,12 @@ LEVER_FLAGS: dict[str, tuple[str, str]] = {
 #: GREEN with CLEAR-OBJECTIVE where ORS 197A.400 reaches the lot, else a
 #: closer look with REVIEW-CONDITIONS (Steph 2026-10-14, 2026-10-15).
 AREA_REVIEWS: dict[str, str] = {
+    "beaverton_significant_grove": (
+        "BDC 60.60.15.2.C: in a Significant Grove a project preserves 25 "
+        "percent of the surveyed trees' DBH (15 percent in a Multiple Use "
+        "zone) or goes to a Tree Plan Three public hearing; removing grove "
+        "trees is a Tree Plan application judged on criteria (BDC 40.90.15)"
+    ),
     "bethany_asc_1a": (
         "Bethany Community Plan, Area of Special Concern 1A design element 2: "
         "every development application through the Type III procedure"
@@ -433,6 +541,21 @@ DRIVEWAY_SPACING_BLOCKED = "DRIVEWAY_SPACING_BLOCKED"
 #: show a place on the frontage that clears it: a street class no map reads,
 #: intersections not found, or a placement between the two bounds.
 DRIVEWAY_SPACING_UNREAD = "DRIVEWAY_SPACING_UNREAD"
+#: A housing authority owns the lot bare and untaxed, by the county's owner
+#: of record (flats/config/roll_red.yaml, :func:`flats.geom.roll.owner_hold`).
+#: YELLOW with a flag: not RED as other public land is, and never GREEN on
+#: its own (Steph 2026-11-18, rulings.yaml
+#: 2026-11-18-housing-authority-land-yellow).
+HOUSING_AUTHORITY_LAND = "HOUSING_AUTHORITY_LAND"
+#: A line the geometry called a street line faces a freeway, a freeway or
+#: highway ramp, or a street on the far side of a railroad
+#: (:func:`flats.ingest.quadfit.limited_reading`). No driveway, no frontage
+#: and no fire engine comes off such a way, and where the code does not say
+#: whether the line is a street lot line the lot is screened both ways, the
+#: worse answer kept, and held YELLOW for a person to look at that side --
+#: never GREEN on its own (coordinator's stricter default, 2026-11-19,
+#: pending Steph).
+STREET_LINE_LIMITED_WAY = "STREET_LINE_LIMITED_WAY"
 #: A corner lot whose parking works off one street but not off the other,
 #: where a street line carries no class: nothing says the street that works
 #: is the quieter one the code sends the driveway to. A closer look, not a
@@ -487,11 +610,22 @@ SIGHT_CORNER_ALLEY = "SIGHT_CORNER_ALLEY"
 #: court's and drive's place is not searched for this, so YELLOW with a
 #: flag, never RED (:attr:`LotFacts.sight_corner_parking`).
 SIGHT_CORNER_PARKING = "SIGHT_CORNER_PARKING"
+#: The building (or, where the area keeps parked cars or driveways out, the
+#: drawn court or drive) stands where the corner clear-vision area might
+#: reach, and the code leaves that area's size to the city engineer case by
+#: case (Oregon City 10.32.020, Hillsboro DCS 230.5.1 / HCC 12.50.260): so
+#: no map or table can settle it. GREEN with a flag below the yellow line
+#: (Steph 2026-11-14, rulings.yaml 2026-11-14-oregon-city-engineer-sight-
+#: area-green and 2026-11-14-hillsboro-engineer-sight-area-green: "Green"),
+#: as for other judgement-only rules. Set only by an ``engineer_set`` rule;
+#: every other sight rule (a drive's, another city's) still holds.
+SIGHT_CORNER_ENGINEER = "SIGHT_CORNER_ENGINEER"
 SIGHT_RULINGS = {
     SIGHT_CORNER_ALLEY: "2026-11-09-sight-triangle-corner-check",
     SIGHT_CORNER_PARKING: "2026-11-09-sight-triangle-corner-check",
     SIGHT_CORNER_CURB: "2026-11-09-curb-position-middle-way",
     SIGHT_CORNER_UNSETTLED: "2026-11-09-sight-triangle-corner-check",
+    SIGHT_CORNER_ENGINEER: "2026-11-14-oregon-city-engineer-sight-area-green",
     SIGHT_DRIVEWAY: "2026-11-09-curb-position-middle-way",
     SIGHT_DRIVEWAY_NOTE: "2026-11-09-portland-driveway-clear-zone-note",
 }
@@ -702,6 +836,40 @@ FIRE_DEAD_END = "fire_dead_end"
 #: 2026-11-10-narrow-street-fire-yellow). Joins ``_checks``'s
 #: ``unmeasured``: held YELLOW, never GREEN.
 FIRE_NARROW_STREET = "fire_narrow_street"
+#: The hose reaches only with the engine stood on a wide road that has a
+#: second road line close beyond it -- the other carriageway of a divided
+#: highway, or a road with a frontage road beside it -- which the centre
+#: lines cannot tell from a freeway (:attr:`LotFacts.fire_road_unclear`;
+#: rulings.yaml 2026-11-19-fire-engine-on-a-wide-main-road leaves it out).
+#: Joins ``_checks``'s ``unmeasured``: held YELLOW, never GREEN.
+FIRE_ROAD_UNCLEAR = "fire_road_unclear"
+#: The fire check stands on an engine stood on a wide main road, its centre
+#: line more than 50 ft from the lot's street line: an arterial or a state
+#: highway (:attr:`LotFacts.fire_route_wide_ft`,
+#: :attr:`LotFacts.fire_on_state_road`; Steph 2026-11-19: "wide main road,
+#: I'm good with green", and of the state highway "I'd say it's green").
+#: FIRE-WIDE-ROAD marks the reading, below the yellow line.
+FIRE_WIDE_ROAD = "FIRE_WIDE_ROAD"
+#: Feet past the code's 150 ft (OFC 503.1.1, ``fire_access_max_ft``, stored
+#: as printed) a measured hose route may run and still pass: the hose start
+#: is already cautious -- 10 ft out from the near curb, never past the
+#: street's middle (rulings.yaml 2026-10-05-fire-hose-from-curb). Steph
+#: 2026-11-21 (rulings.yaml 2026-11-21-fire-hose-five-ft): "if it fits
+#: within 5 ft, it's green"; "Up to 155 ft is green".
+FIRE_HOSE_ALLOWANCE_FT = 5.0
+#: A measured hose route past the code's 150 ft, inside the allowance or
+#: past it: FIRE-HOSE-VALIDATE, a note below the yellow line on every colour
+#: (Steph 2026-11-21: "everything over 150 gets a flag to validate hose
+#: length").
+FIRE_HOSE_VALIDATE = "FIRE_HOSE_VALIDATE"
+
+
+def fire_reach_ft(rules: ZoneResolution) -> float | None:
+    """The hose route the fire check passes to: the code's figure
+    (``fire_access_max_ft``) plus :data:`FIRE_HOSE_ALLOWANCE_FT`, or None
+    where the zone states no fire limit."""
+    code = rules.get("fire_access_max_ft")
+    return None if code is None else float(code) + FIRE_HOSE_ALLOWANCE_FT
 
 #: The grade under a plan the bridge measured for and could not read --
 #: no elevation model covers the pad. Joins ``_checks``'s ``unmeasured``,
@@ -729,6 +897,19 @@ DRIVE_STREET = "drive_street"
 #: ``unmeasured``, so it reports as ``FACT_UNOBSERVED``: a question, never a
 #: pass, and never a red while some reading clears it.
 FRONTAGE_LINE = "min_frontage_line"
+
+#: Which home lots of a townhouse plat on a corner parcel are corner lots,
+#: where the zone states one townhouse-lot number for a corner lot and
+#: another for an interior lot (Gresham Table 4.0130 E.1/E.2 and G.1/G.2,
+#: 4.0430 note 11, 4.1130, 4.1230, 4.1415, 4.1508) and the lot's streets are
+#: not plainly two straight streets meeting at one corner
+#: (:attr:`LotFacts.two_straight_streets`): on a curve, or on a lot whose
+#: street lines nothing measured, a middle home lot may be a corner lot too.
+#: Raised only where a home lot clears one of the two numbers and not the
+#: other. Joins ``_checks``'s ``unmeasured``, so it reports as
+#: ``FACT_UNOBSERVED``: a question, never a pass, and never a red while one
+#: reading clears it (FOLLOWUPS 191).
+CORNER_HOME_LOT = "corner_home_lot"
 
 #: The drawn building against a stated maximum front setback
 #: (``setback_front_max_ft``, FOLLOWUPS 147), in a zone that asks no building
@@ -895,6 +1076,14 @@ class LotFacts:
     #: (:func:`flats.score.paper.side_street_fed`). False where nothing
     #: measured the lot, which keeps the lane beside the building.
     corner: bool = False
+    #: The lot's street lines are exactly two straight streets meeting at one
+    #: corner (:func:`flats.fit.frontage.two_straight_streets`): a townhouse
+    #: plat's middle home lots, and the end lot away from the corner, front
+    #: one straight street only and are interior lots (FOLLOWUPS 191,
+    #: :func:`_home_lots`). False where nothing measured the lot, or the
+    #: streets are anything else, which leaves which home lot is the corner
+    #: unsettled (:data:`CORNER_HOME_LOT`).
+    two_straight_streets: bool = False
     #: Street along two opposite lines (:func:`flats.geom.corner.through_lot`).
     #: Read only where the code names the street the front doors face
     #: (:data:`ENTRANCE_STREET`). False where nothing measured the lot; the
@@ -919,6 +1108,13 @@ class LotFacts:
     #: Empty where nothing read the overlays, which is every caller but the
     #: bridge.
     resource_permits: tuple[str, ...] = ()
+    #: The mapped open space the lot touches, by traced area key
+    #: (:data:`flats.rules.resource_overlays.TRACED`, an area with a
+    #: ``red_ruling``): RED outright (:data:`MAPPED_OPEN_SPACE`). A lot the
+    #: tracing only just reaches, or only just misses -- by less than its
+    #: drawn line is wide -- is in ``resource_permits`` instead.
+    #: Empty for every caller but the bridge.
+    open_space: tuple[str, ...] = ()
     #: The side of the largest square of open ground this plan leaves on the
     #: real lot -- off the building and its pavement, outside the front
     #: setback, off every overlay carve -- in one contiguous piece holding the
@@ -995,6 +1191,12 @@ class LotFacts:
     driveway_spacing: str | None = None
     #: The reading's short account per frontage.
     driveway_spacing_why: str = ""
+    #: The roll's account of a lot a housing authority owns bare and untaxed
+    #: (:data:`HOUSING_AUTHORITY_LAND`); empty on every other lot.
+    owner_hold: str = ""
+    #: Which of the lot's street lines faces a freeway, a ramp or a railroad,
+    #: in words (:data:`STREET_LINE_LIMITED_WAY`); empty on every other lot.
+    limited_way: str = ""
     #: The building's share of each street's frontage on the drawn plan,
     #: percent, in the same order (:func:`flats.fit.frontage.building_runs`):
     #: the building seen from the street within the maximum front setback.
@@ -1002,6 +1204,12 @@ class LotFacts:
     #: (``building_frontage_min_pct``); None where nobody measured it, which
     #: holds the lot out of GREEN.
     building_frontage_pct: tuple[float, ...] | None = None
+    #: The same shares at the least the measuring looks allow
+    #: (:func:`flats.fit.frontage.building_runs_bounded`, FOLLOWUPS 195): a
+    #: share counted at a minimum may be under it. A count that meets the
+    #: minimum whose least does not is unanswered (``tolerated``), never a
+    #: pass. None (nobody measured the bound) reads the count alone.
+    building_frontage_least_pct: tuple[float, ...] | None = None
     #: Distances to transit, feet, as ``(measure, ft)`` pairs
     #: (:data:`flats.rules.model.TRANSIT_MEASURES`), measured once per
     #: transit release by :mod:`flats.ingest.transit` and read by the rules
@@ -1077,6 +1285,33 @@ class LotFacts:
     #: the lot is held YELLOW with FIRE-NARROW-STREET (Steph 2026-11-10:
     #: "Very narrow, yes."), never cleared on it.
     fire_route_row_ft: float | None = None
+    #: The same route with the engine stood on the wide main road a public
+    #: street line faces across a right-of-way wider than
+    #: :data:`flats.fit.fire.MAX_GAP_FT` (quadfit s4's wide-road street
+    #: line, 2026-11-18: its centre line within 150 ft, nothing private, no
+    #: freeway, ramp or railroad between), the hose started where the
+    #: code's reading starts it -- 10 ft out from the near curb, the road's
+    #: middle where no curb or width is measured. Set only where the route
+    #: misses on every reading above and this reaches: the fire check is
+    #: made on it (:func:`flats.ingest.quadfit._wide_road_read`; Steph
+    #: 2026-11-19: "wide main road, I'm good with green") and
+    #: FIRE-WIDE-ROAD marks it.
+    fire_route_wide_ft: float | None = None
+    #: How far the centre line of the wide road the engine stands on runs
+    #: from the lot's street line, in feet (FIRE-WIDE-ROAD's note).
+    fire_wide_gap_ft: float | None = None
+    #: The fire check stands on an engine stood on a state highway (RLIS
+    #: TYPE 1200) the lot meets across a wide right-of-way: on the points of
+    #: a wide-road street line that fall inside 50 ft of it, or past them.
+    #: It counts as any wide main road does (Steph 2026-11-19: "The fire
+    #: chief makes the call, but I'd say it's green"); FIRE-WIDE-ROAD names
+    #: it. Never holds a lot.
+    fire_on_state_road: bool = False
+    #: A reading of the route reaches only with the engine stood on a wide
+    #: road that has a second road line close beyond it (a divided highway's
+    #: other carriageway, a frontage road): not told from a freeway, so the
+    #: lot is held YELLOW with FIRE-ROAD-UNCLEAR, never cleared on it.
+    fire_road_unclear: bool = False
     #: The lot's street lines are one street that bends, read as one front
     #: where its code states no corner test (:data:`CORNER_READ_AS_BEND`,
     #: :func:`flats.ingest.quadfit.read_as_bend`). Set by the bridge.
@@ -1190,7 +1425,8 @@ class LotFacts:
     #: where nothing was traced, or nothing cut.
     drawn_cut: tuple[str, ...] = ()
     #: Why the corner clear-vision area holds this lot out of GREEN
-    #: (:data:`SIGHT_CORNER_CURB` or :data:`SIGHT_CORNER_UNSETTLED`), set by
+    #: (:data:`SIGHT_CORNER_CURB` or :data:`SIGHT_CORNER_UNSETTLED`; or flags
+    #: it on a GREEN, :data:`SIGHT_CORNER_ENGINEER`), set by
     #: the bridge when the fit stands only on the smaller of the two areas
     #: (:mod:`flats.geom.sight_triangle`). None: clear, or not checked.
     sight_corner_doubt: str | None = None
@@ -1549,22 +1785,41 @@ def _checks(
     unmeasured: set[str] = set()
     where = rules.jurisdiction
 
-    def check(name: str, observed: float, threshold: float | None, *, is_maximum: bool) -> None:
+    def check(
+        name: str,
+        observed: float,
+        threshold: float | None,
+        *,
+        is_maximum: bool,
+        tolerance: float | None = None,
+    ) -> None:
+        """``tolerance`` is a check's own allowance beyond the policy's: a
+        miss within it is ``tolerated`` (held out of GREEN with
+        MEASURE-TOLERANCE), never a pass and never a fail."""
         if threshold is None:
             unchecked.append(name)
             return
-        out.append(policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where))
+        got = policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where)
+        if tolerance is not None and got.verdict is Verdict.fails and -got.slack <= tolerance:
+            got = dataclasses.replace(got, tolerance=float(tolerance), verdict=Verdict.tolerated)
+        out.append(got)
 
-    def counted(name: str, observed: float, most: float | None, cap: float) -> None:
-        """A ceiling on a quantity counted on a grid of looks, ``most`` the
-        highest the grid allows (:func:`flats.fit.frontage.street_runs_bounded`).
-        A count within the cap whose most is over it is ``tolerated``: the
+    def counted(
+        name: str, observed: float, most: float | None, cap: float, *, is_maximum: bool = True
+    ) -> None:
+        """A limit on a quantity counted on a grid of looks, ``most`` the
+        farthest the grid allows toward failing it: the highest for a
+        ceiling (:func:`flats.fit.frontage.street_runs_bounded`), the lowest
+        for a floor (:func:`flats.fit.frontage.building_runs_bounded`). A
+        count that meets the limit whose bound does not is ``tolerated``: the
         lot is held, a measurement question, never a pass (rel9 move read
-        F1, Beaverton 60.05.60.2 S11 lots counted at exactly 50.0 percent)."""
-        got = policy.evaluate(name, observed, cap, is_maximum=True, jurisdiction=where)
-        if got.verdict is Verdict.passes and most is not None and most > cap:
+        F1, Beaverton 60.05.60.2 S11 lots counted at exactly 50.0 percent;
+        FOLLOWUPS 195, Gresham building shares counted at exactly 50.0)."""
+        got = policy.evaluate(name, observed, cap, is_maximum=is_maximum, jurisdiction=where)
+        beyond = most is not None and (most > cap if is_maximum else most < cap)
+        if got.verdict is Verdict.passes and beyond:
             got = dataclasses.replace(
-                got, tolerance=float(most) - float(observed), verdict=Verdict.tolerated
+                got, tolerance=abs(float(observed) - float(most)), verdict=Verdict.tolerated
             )
         out.append(got)
 
@@ -1820,7 +2075,7 @@ def _checks(
         min_front, front_answered = lot_standard(
             rules, "min_frontage_ft", per_unit=per_unit, lots=design.units
         )
-        min_front = _row_of_home_lots(rules, design, "min_frontage_ft", min_front)
+        min_front = _row_of_home_lots(rules, design, "min_frontage_ft", min_front, lot=lot)
         # Owed on ONE street where the code says so (PCC 33.120.206.C.1, "at
         # least 90 feet of frontage on a street"): the longest of the lot's
         # streets, not their sum, and unchecked where they went unmeasured.
@@ -1925,7 +2180,7 @@ def _checks(
                     float(width_cap),
                 )
     # The building's share of the street frontage (FOLLOWUPS 109).
-    _building_frontage(rules, lot, design, beside, check, unchecked, unmeasured)
+    _building_frontage(rules, lot, design, beside, check, unchecked, unmeasured, counted=counted)
     # The front yard's share in vehicle area (Portland 33.266.120.C.1.b, 40
     # percent; Milwaukie 19.607.1.D, 50). An AREA share of the ground between
     # the front lot line and the building, which the pod's drive crosses
@@ -1981,7 +2236,7 @@ def _checks(
     min_width, width_answered = lot_standard(
         rules, "min_lot_width_ft", per_unit=per_unit, lots=design.units
     )
-    min_width = _row_of_home_lots(rules, design, "min_lot_width_ft", min_width)
+    min_width = _row_of_home_lots(rules, design, "min_lot_width_ft", min_width, lot=lot)
     if lot.lot_width_ft is not None and width_answered:
         lot_check("min_lot_width_ft", lot.lot_width_ft, min_width)
     else:
@@ -1996,7 +2251,7 @@ def _checks(
     min_avg, avg_answered = lot_standard(
         rules, "min_average_lot_width_ft", per_unit=per_unit, lots=design.units
     )
-    min_avg = _row_of_home_lots(rules, design, "min_average_lot_width_ft", min_avg)
+    min_avg = _row_of_home_lots(rules, design, "min_average_lot_width_ft", min_avg, lot=lot)
     if lot.avg_lot_width_ft is not None and avg_answered:
         lot_check("min_average_lot_width_ft", lot.avg_lot_width_ft, min_avg)
     else:
@@ -2028,7 +2283,7 @@ def _checks(
     else:
         unchecked.append("max_lot_depth_ratio")
     if per_unit:
-        _home_lots(rules, lot, design, check, unchecked)
+        _home_lots(rules, lot, design, check, unchecked, unmeasured)
 
     # The pavement this plan lays: what the leftover checks below take off
     # the lot. Its driveway alone -- no stalls -- is what a code that
@@ -2369,26 +2624,42 @@ def _checks(
 
     # The fire truck's reach (OFC 503.1.1, FOLLOWUPS 28): the hose's route
     # from the street to the far side of the building, against the 150 ft
-    # the state layer states for every zone. A route the bridge looked for
-    # and could not find is a fact nobody observed, never a pass.
-    reach = rules.get("fire_access_max_ft")
+    # the state layer states for every zone, plus the 5 ft Steph allows for
+    # the cautious hose start (FIRE_HOSE_ALLOWANCE_FT, 2026-11-21). A route
+    # the bridge looked for and could not find is a fact nobody observed,
+    # never a pass.
+    reach = fire_reach_ft(rules)
     if reach is not None:
         freed = lot.fire_route_freed_ft
         wide = lot.fire_route_row_ft
-        missed = lot.fire_route_ft is None or lot.fire_route_ft > float(reach)
-        if lot.fire_route_tried and missed and freed is not None and freed <= float(reach):
+        missed = lot.fire_route_ft is None or lot.fire_route_ft > reach
+        if lot.fire_route_tried and missed and freed is not None and freed <= reach:
             # Reached only up a long dead end with no turnaround seen
             # (FOLLOWUPS 168): the fire marshal's question, not a miss.
             unchecked.append("fire_access_ft")
             unmeasured.add(FIRE_DEAD_END)
-        elif lot.fire_route_tried and missed and wide is not None and wide <= float(reach):
+        elif lot.fire_route_tried and missed and wide is not None and wide <= reach:
             # Reached only by a street too narrow for the road and its
             # curbs, its pavement unmeasured (FOLLOWUPS 178(b)): a common
             # fire-review refusal, held YELLOW.
             unchecked.append("fire_access_ft")
             unmeasured.add(FIRE_NARROW_STREET)
+        elif fire_on_wide_road(lot, reach):
+            # Reached with the engine stood on a wide main road, its centre
+            # line 50 to 150 ft from the lot line: an engine standing there
+            # counts (Steph 2026-11-19: "wide main road, I'm good with
+            # green"; OFC 503.1.1 names no kind of road and no width). The
+            # check is made on that route; FIRE-WIDE-ROAD marks it.
+            check("fire_access_ft", lot.fire_route_wide_ft, reach, is_maximum=True)
+        elif lot.fire_route_tried and lot.fire_road_unclear:
+            # Reaches only with the engine stood on a road that cannot be
+            # told from a freeway (a second carriageway or a frontage road
+            # close beyond it): the ruling above leaves it out. YELLOW,
+            # never GREEN.
+            unchecked.append("fire_access_ft")
+            unmeasured.add(FIRE_ROAD_UNCLEAR)
         elif lot.fire_route_ft is not None:
-            check("fire_access_ft", lot.fire_route_ft, float(reach), is_maximum=True)
+            check("fire_access_ft", lot.fire_route_ft, reach, is_maximum=True)
         else:
             unchecked.append("fire_access_ft")
             if lot.fire_route_tried:
@@ -2396,7 +2667,9 @@ def _checks(
 
     # The building's distance from the street against a stated maximum
     # front setback (FOLLOWUPS 147).
-    _front_max(rules, lot, check, unchecked, unmeasured)
+    _front_max(
+        rules, lot, check, unchecked, unmeasured, raster_ft=policy.tolerance_for("fit_ft", where)
+    )
     # Each side wall against a stated maximum side setback (FOLLOWUPS 170).
     _side_max(rules, lot, check, unchecked, unmeasured)
     # Glass on every non-street wall, and no wall that close to a side or
@@ -3324,23 +3597,76 @@ def _side_yard(rules: ZoneResolution) -> float:
     return max(got, default=0.0)
 
 
+def _corner_split(
+    rules: ZoneResolution, lot: LotFacts | None
+) -> tuple[ZoneResolution | None, str]:
+    """How a townhouse plat on this parcel splits into corner and interior
+    home lots (FOLLOWUPS 191).
+
+    Returns the zone as an interior home lot reads it
+    (:attr:`ZoneResolution.interior`) and the layout: ``"corner"`` where every
+    home lot answers to the corner number -- a through lot, whose home lots
+    each run from one street to the other, and a code (Gresham's, "a lot that
+    has frontage on two or more streets", 3/3.0103.txt#L568-L569) that makes
+    each a corner; ``"interior"`` where the parcel is plainly two straight
+    streets meeting at one corner (:attr:`LotFacts.two_straight_streets`), so
+    only the end lot at that corner is one; ``"unsettled"`` otherwise
+    (:data:`CORNER_HOME_LOT`). ``(None, "corner")`` where the parcel is not a
+    corner or the zone states nothing apart for one: the resolution's own
+    numbers are every home lot's.
+
+    A code that prints a townhouse row for corner lots and another for
+    interior lots means the lot each home stands on: Gresham's Table 4.0130
+    E heads them "Width at building line: Interior lot" and "Corner lot"
+    (4/4.0130.txt#L40,L47), and an interior lot is "a lot other than a
+    corner lot, with frontage only on one street" (3/3.0103.txt#L579-L580).
+    """
+    interior = rules.interior if "corner_lot" in rules.conditions else None
+    if interior is None or lot is None or lot.through_lot:
+        return None, "corner"
+    return interior, "interior" if lot.two_straight_streets else "unsettled"
+
+
 def _row_of_home_lots(
-    rules: ZoneResolution, design: Design, name: str, parent: float | None
+    rules: ZoneResolution,
+    design: Design,
+    name: str,
+    parent: float | None,
+    *,
+    lot: LotFacts | None = None,
 ) -> float | None:
     """What a width standard asks of the parcel when the townhouse form cuts it
     into home lots side by side along the street: the middle lots one home wide
     each, and the two end lots each a home and the side yard on its outer line
     -- or the standard, where that is wider. Never less than ``parent``, the
     four-lots-abreast reading :func:`lot_standard` gives. Where the standard is
-    not one the zone states for townhouse lots, ``parent`` unchanged."""
+    not one the zone states for townhouse lots, ``parent`` unchanged.
+
+    On a corner parcel (:func:`_corner_split`) only the end lot at the corner
+    takes the corner number, the other end lot the interior one; where which
+    end is the corner is unsettled, each end takes the stricter of the two."""
     if parent is None or design.plat is not Plat.unit_lots:
         return parent
     each = home_lot_standard(rules, name, lots=design.units)
-    if each is None:
+    interior, layout = _corner_split(rules, lot)
+    inner = home_lot_standard(interior, name, lots=design.units) if interior is not None else each
+    if each is None and inner is None:
         return parent
     home = design.unit_width_ft
-    end = max(each, home + _side_yard(rules))
-    return max(parent, (design.units - 2) * home + 2 * end)
+    side = home + _side_yard(rules)
+
+    def end(*figures: float | None) -> float:
+        return max([side, *(f for f in figures if f is not None)])
+
+    if layout == "interior":
+        ends = end(each) + end(inner)
+    elif layout == "unsettled":
+        ends = 2 * end(each, inner)
+    else:
+        if each is None:
+            return parent
+        ends = 2 * end(each)
+    return max(parent, (design.units - 2) * home + ends)
 
 
 def _home_lots(
@@ -3349,6 +3675,7 @@ def _home_lots(
     design: Design,
     check: Callable[..., None],
     unchecked: list[str],
+    unmeasured: set[str] | None = None,
 ) -> None:
     """The townhouse form's middle home lots against the zone's townhouse-lot
     standards, one lot at a time (Steph 2026-10-15: "'Townhomes' will have
@@ -3361,35 +3688,72 @@ def _home_lots(
     being larger does not widen it. The end lots, which carry the side yards,
     are what :func:`_row_of_home_lots` asks of the parcel's own width.
 
+    On a corner parcel a middle home lot is an interior lot and takes the
+    zone's interior townhouse number, not the corner lot's (FOLLOWUPS 191,
+    :func:`_corner_split`): Gresham's MDR-24 asks a corner townhouse lot for
+    25 ft of frontage and an interior one for 16 (4/4.0130.txt#L78-L79,L81-L82,L142).
+    Where the parcel's streets leave unsettled which home lots are corners, a
+    home lot that clears one number and not the other is a question
+    (:data:`CORNER_HOME_LOT`), never a pass; one that clears both passes and
+    one that clears neither fails.
+
     Only standards the zone states for townhouse lots
     (:func:`flats.score.paper.home_lot_standard`); a middle housing land
     division's children inherit none (ORS 92.031(2)(b)), and nothing is
     checked for them here."""
     lots = design.units
     home = design.unit_width_ft
+    interior, layout = _corner_split(rules, lot)
+
+    def ask(name: str, field: str, observed: float, *, is_maximum: bool) -> None:
+        each = home_lot_standard(rules, field, lots=lots)
+        if interior is None:
+            if each is not None:
+                check(name, observed, each, is_maximum=is_maximum)
+            return
+        inner = home_lot_standard(interior, field, lots=lots)
+        if layout == "interior" or inner == each:
+            if inner is not None:
+                check(name, observed, inner, is_maximum=is_maximum)
+            return
+        readings = [f for f in (each, inner) if f is not None]
+        clears = [
+            f is None or (observed <= f if is_maximum else observed >= f) for f in (each, inner)
+        ]
+        if all(clears):
+            check(name, observed, (min if is_maximum else max)(readings), is_maximum=is_maximum)
+        elif not any(clears):
+            check(name, observed, (max if is_maximum else min)(readings), is_maximum=is_maximum)
+        else:
+            unchecked.append(name)
+            if unmeasured is not None:
+                unmeasured.add(CORNER_HOME_LOT)
+
     for name, field in (
         (HOME_LOT_WIDTH, "min_lot_width_ft"),
         (HOME_LOT_AVERAGE_WIDTH, "min_average_lot_width_ft"),
         (HOME_LOT_FRONTAGE, "min_frontage_ft"),
     ):
-        each = home_lot_standard(rules, field, lots=lots)
-        if each is not None:
-            check(name, home, each, is_maximum=False)
-    area = home_lot_standard(rules, "min_lot_sqft", lots=lots)
-    if area is not None:
+        ask(name, field, home, is_maximum=False)
+    stated = (rules,) if interior is None else (rules, interior)
+    if any(home_lot_standard(r, "min_lot_sqft", lots=lots) is not None for r in stated):
         deep = lot.lot_depth_ft
         if deep is None and lot.lot_width_ft:
             deep = lot.lot_sqft / lot.lot_width_ft
         if deep is None:
             unchecked.append(HOME_LOT_AREA)
         else:
-            check(HOME_LOT_AREA, home * deep, area, is_maximum=False)
-    ratio = home_lot_standard(rules, "max_lot_depth_ratio", lots=lots)
-    if ratio is not None:
+            ask(HOME_LOT_AREA, "min_lot_sqft", home * deep, is_maximum=False)
+    if any(home_lot_standard(r, "max_lot_depth_ratio", lots=lots) is not None for r in stated):
         if lot.lot_depth_ft is None:
             unchecked.append(HOME_LOT_DEPTH_RATIO)
         else:
-            check(HOME_LOT_DEPTH_RATIO, lot.lot_depth_ft / home, ratio, is_maximum=True)
+            ask(
+                HOME_LOT_DEPTH_RATIO,
+                "max_lot_depth_ratio",
+                lot.lot_depth_ft / home,
+                is_maximum=True,
+            )
 
 
 def fit_for(
@@ -3869,6 +4233,13 @@ def screen(
         side_yard_silent=stated_fit_fails,
     )
 
+    if lot.open_space:
+        # Steph 2026-11-18 (rulings.yaml 2026-11-18-clackamas-open-space-red):
+        # a lot touching mapped open space is RED outright, whatever the
+        # zone allows and whatever would fit clear of it. The bind is
+        # :func:`_account`'s, raised whether or not the zone is trusted.
+        return Screening(triage=Triage.red, reasons=(MAPPED_OPEN_SPACE,), **common)
+
     if use_blocked and use_path is not None and not use_path.available:
         if use_pending:
             # The zone's own path turns on a site fact nobody measured: RED
@@ -3913,6 +4284,10 @@ def screen(
         reasons.append(STREET_UNCONFIRMED)
     if (spacing := _driveway_spacing_reason(rules, lot)) is not None:
         reasons.append(spacing)
+    if lot.owner_hold:
+        reasons.append(HOUSING_AUTHORITY_LAND)
+    if lot.limited_way:
+        reasons.append(STREET_LINE_LIMITED_WAY)
     if lot.strip_waived:
         reasons.append(PARKING_STRIP_UNCONFIRMED)
     if lot.rear_court_short:
@@ -3939,11 +4314,15 @@ def screen(
     # offers around it (Steph, 2026-10-02): the lot is big enough that the
     # city wants more homes on it than four, which is a closer look -- a
     # bigger plan, or a split (FOLLOWUPS 31) -- and not a lot to throw away.
-    walls = [
-        o for o in outcomes
-        if o.check not in SOFT_FLOOR_CHECKS or (o.check == "min_far" and min_far_no_room)
-    ]
-    closer = (CLOSER_LOOK_MIN_DENSITY,) if any(o.check in MIN_DENSITY_CHECKS for o in outcomes) else ()
+    walls = [o for o in outcomes if not _soft_floor(o.check, rules, min_far_no_room)]
+    density_missed = any(
+        o.check in MIN_DENSITY_CHECKS and _soft_floor(o.check, rules, min_far_no_room)
+        for o in outcomes
+    )
+    # A density the use itself depends on is a closer look of its own
+    # (FOLLOWUPS 203), not the big-lot flag.
+    density_closer = CLOSER_LOOK_USE_DENSITY if use_density(rules) else CLOSER_LOOK_MIN_DENSITY
+    closer = (density_closer,) if density_missed else ()
     if any(o.check == "min_far" for o in outcomes) and not min_far_no_room:
         closer = (*closer, CLOSER_LOOK_MIN_FAR)
     # A pad on a grade between Steph's two lines: buildable, at a price.
@@ -3957,6 +4336,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_ENTRANCE_SIDE)
     if roof_elements_owed(rules, design) is not None:
         closer = (*closer, CLOSER_LOOK_ROOF_ELEMENTS)
+    if ground_floor_commercial_owed(rules) is not None:
+        closer = (*closer, CLOSER_LOOK_GROUND_FLOOR_USE)
     if roof_book_unread(rules, design):
         closer = (*closer, CLOSER_LOOK_ROOF_BOOK)
     if review is not None and not reach:
@@ -3977,7 +4358,8 @@ def screen(
         closer = (*closer, PARKING_SETBACK_DOUBT)
     if stated_fit_fails:
         closer = (*closer, SIDE_YARD_PARKING_SILENT)
-    if lot.sight_corner_doubt:
+    if lot.sight_corner_doubt and lot.sight_corner_doubt != SIGHT_CORNER_ENGINEER:
+        # The engineer-set area is a flag below the yellow line, not a hold.
         closer = (*closer, lot.sight_corner_doubt)
     if lot.sight_driveway_doubt:
         closer = (*closer, SIGHT_DRIVEWAY)
@@ -4087,6 +4469,8 @@ def _front_max(
     check: Callable[..., None],
     unchecked: list[str],
     unmeasured: set[str],
+    *,
+    raster_ft: float = 0.0,
 ) -> None:
     """The drawn building against a stated maximum front setback
     (FOLLOWUPS 147).
@@ -4107,7 +4491,16 @@ def _front_max(
     every one misses. A maximum that may not reach the lot at all
     (:func:`_front_max_conditional`) never fails. Anything else is
     :data:`FRONT_MAX_STREET`: held out of GREEN, never failed. A zone that asks a building share of the frontage
-    is measured there (:func:`_building_frontage`) and not again here."""
+    is measured there (:func:`_building_frontage`) and not again here.
+
+    A miss past the allowance by no more than ``raster_ft`` (the fit's own
+    tolerance, ``fit_ft``, half a foot: the drawing stands on the fit's
+    raster, and every acquisition is surveyed) is ``tolerated`` -- held out
+    of GREEN with MEASURE-TOLERANCE, the way the drive's gap to a lot line
+    is (:func:`flats.ingest.quadfit.driveway_lot_line_checked`) -- not
+    failed. Never a pass (rel11 move read N1: Tigard RES-B and Wilsonville V,
+    whose minimum and maximum front are both 20 ft, left 0.2 to 0.6 ft past
+    the maximum by the envelope's widened minimum strip)."""
     cap = _pct(rules, "setback_front_max_ft")
     if cap is None or _pct(rules, "building_frontage_min_pct") is not None:
         return
@@ -4142,7 +4535,9 @@ def _front_max(
         check(FRONT_MAX, min(observed, cap), cap, is_maximum=True)
     elif failed:
         observed = max(lenient) if how == "every" else min(lenient)
-        check(FRONT_MAX, observed - FRONT_MAX_DRAWN_TOL_FT, cap, is_maximum=True)
+        check(
+            FRONT_MAX, observed - FRONT_MAX_DRAWN_TOL_FT, cap, is_maximum=True, tolerance=raster_ft
+        )
     else:
         unchecked.append(FRONT_MAX)
         unmeasured.add(FRONT_MAX_STREET)
@@ -4244,6 +4639,8 @@ def _building_frontage(
     check: Callable[..., None],
     unchecked: list[str],
     unmeasured: set[str],
+    *,
+    counted: Callable[..., None] | None = None,
 ) -> None:
     """The building's share of the street frontage (FOLLOWUPS 109):
     Beaverton 60.05.15.6.A and Downtown 70.20.05.4 S1-S2, Washington County
@@ -4373,13 +4770,29 @@ def _building_frontage(
         unchecked.append(BUILDING_SHARE)
         unmeasured.add(BUILDING_FRONTAGE)
         return
+    # The shares at the least the measuring looks allow (FOLLOWUPS 195): a
+    # pass that holds only as counted is tolerated, never a pass.
+    low = lot.building_frontage_least_pct
+    if low is not None and len(low) != len(drawn):
+        low = None
+
+    def passed(observed: float, least: float | None, threshold: float, name: str = BUILDING_SHARE) -> None:
+        if counted is None or least is None:
+            check(name, observed, threshold, is_maximum=False)
+        else:
+            counted(name, observed, least, threshold, is_maximum=False)
+
     if primaries is not None:
         # The primary is held: the share is owed there, and the other streets
         # owe what the code asks of them, if anything.
         for a in primaries:
             rest = [float(drawn[b]) for b in range(len(drawn)) if b != a]
             if float(drawn[a]) >= need and (other is None or all(x >= other for x in rest)):
-                check(BUILDING_SHARE, float(drawn[a]), need, is_maximum=False)
+                passed(float(drawn[a]), None if low is None else float(low[a]), need)
+                if other is not None and low is not None and rest:
+                    least_rest = min(float(low[b]) for b in range(len(low)) if b != a)
+                    if least_rest < other:
+                        passed(min(rest), least_rest, float(other), BUILDING_OTHER_SHARE)
                 return
         unchecked.append(BUILDING_SHARE)
         if any(most(max(w, d), lines[a]) >= need for a in primaries):
@@ -4388,7 +4801,7 @@ def _building_frontage(
             unmeasured.add(FRONTAGE_STREET)
         return
     if min(drawn) >= need:
-        check(BUILDING_SHARE, min(drawn), need, is_maximum=False)
+        passed(min(drawn), None if low is None else min(float(x) for x in low), need)
         return
     unchecked.append(BUILDING_SHARE)
     if len(lines) == 1 and most(max(w, d), lines[0]) >= need:
@@ -4669,12 +5082,29 @@ def held_open(
 #: The flag type for each quantity the screen itself left unmeasured. A
 #: name not here is a site fact a rate is stated per, and takes that fact's
 #: own type (:func:`flats.score.flags.fact_code`).
+def fire_on_wide_road(lot: LotFacts, reach: float) -> bool:
+    """Whether the fire check is made on the route with the engine stood on
+    a wide main road (:attr:`LotFacts.fire_route_wide_ft`): the code's
+    reading misses, that route reaches, and neither the long dead end's nor
+    the narrow street's question is the lot's -- a lot they hold stays
+    held."""
+    wide = lot.fire_route_wide_ft
+    if not lot.fire_route_tried or lot.fire_road_unclear or wide is None or wide > reach:
+        return False
+    if lot.fire_route_ft is not None and lot.fire_route_ft <= reach:
+        return False
+    return not any(
+        v is not None and v <= reach for v in (lot.fire_route_freed_ft, lot.fire_route_row_ft)
+    )
+
+
 _MEASURED_FLAG: dict[str, str] = {
     UNPAVED: "MEASURE-PAVEMENT",
     UNSHAPED: "MEASURE-OUTDOOR-SHAPE",
     FIRE_ROUTE: "MEASURE-FIRE-ROUTE",
     FIRE_DEAD_END: "FIRE-DEAD-END",
     FIRE_NARROW_STREET: "FIRE-NARROW-STREET",
+    FIRE_ROAD_UNCLEAR: "FIRE-ROAD-UNCLEAR",
     SITE_GRADE: "MEASURE-SITE-GRADE",
     COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
     DRIVE_STREET: "MEASURE-DRIVE-STREET",
@@ -4691,11 +5121,14 @@ _MEASURED_FLAG: dict[str, str] = {
     ENTRANCE_STREET: "ENTRANCE-STREET",
     ENTRANCE_DRAWN: "ENTRANCE-DRAWN",
     STREET_DIRECTION: "MEASURE-STREET-DIRECTION",
+    CORNER_HOME_LOT: "MEASURE-CORNER-HOME-LOT",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on
-#: the bind it qualifies; USE_PROHIBITED has its bind.
-UNFLAGGED_REASONS: frozenset[str] = frozenset({RELIEF_UNCONFIRMED, USE_PROHIBITED})
+#: the bind it qualifies; USE_PROHIBITED and MAPPED_OPEN_SPACE have theirs.
+UNFLAGGED_REASONS: frozenset[str] = frozenset(
+    {RELIEF_UNCONFIRMED, USE_PROHIBITED, MAPPED_OPEN_SPACE}
+)
 
 
 def _flagged(
@@ -4803,6 +5236,10 @@ def _account(
         flag("ACCESS-DRIVEWAY-SPACING", spacing, source=lot.driveway_spacing_why)
     elif spacing == DRIVEWAY_SPACING_UNREAD:
         flag("ACCESS-DRIVEWAY-SPACING-UNREAD", spacing, source=lot.driveway_spacing_why)
+    if lot.owner_hold:
+        flag("OWNER-HOUSING-AUTHORITY", HOUSING_AUTHORITY_LAND, source=lot.owner_hold)
+    if lot.limited_way:
+        flag("ACCESS-LIMITED-WAY", STREET_LINE_LIMITED_WAY, source=lot.limited_way)
     if lot.strip_waived:
         flag("PARKING-STRIP-UNCONFIRMED", PARKING_STRIP_UNCONFIRMED, field=STRIP_FIELD)
     if lot.rear_court_short:
@@ -4823,6 +5260,7 @@ def _account(
         SIGHT_CORNER_CURB: "SIGHT-CORNER-CURB",
         SIGHT_CORNER_UNSETTLED: "SIGHT-CORNER-UNSETTLED",
         SIGHT_CORNER_ALLEY: "SIGHT-CORNER-ALLEY",
+        SIGHT_CORNER_ENGINEER: "SIGHT-CORNER-ENGINEER",
     }
     if lot.sight_corner_doubt in sight:
         flag(
@@ -4878,11 +5316,47 @@ def _account(
     # flag to check later"). The bind stands; the flag says one answer
     # from the fire marshal would lift it -- so only where the hose is the
     # one bind (a minimum density missed is a flag, never a bind).
+    # The fire check stands on an engine on a wide main road, or on a state
+    # highway across a wide right-of-way (Steph 2026-11-19: "wide main
+    # road, I'm good with green"; "The fire chief makes the call, but I'd
+    # say it's green"). The note says which and how far out, so the
+    # answers that rest on those rulings can be found.
+    fire_reach = fire_reach_ft(rules)
+    if fire_reach is not None and lot.fire_route_tried and not lot.fire_road_unclear:
+        on_wide = fire_on_wide_road(lot, fire_reach)
+        route = lot.fire_route_wide_ft if on_wide else lot.fire_route_ft
+        if route is not None and route <= fire_reach and (on_wide or lot.fire_on_state_road):
+            code_reach = float(rules.get("fire_access_max_ft"))
+            gap = lot.fire_wide_gap_ft
+            flag(
+                "FIRE-WIDE-ROAD",
+                FIRE_WIDE_ROAD,
+                bounds=(min(float(route), code_reach), max(float(route), code_reach)),
+                source=(
+                    "the engine stands on a "
+                    + ("state highway" if lot.fire_on_state_road else "wide road")
+                    + (f", its centre line {gap:.0f} ft from the lot line" if gap is not None else "")
+                    + f"; hose route {route:.0f} ft"
+                ),
+            )
+    fire_code = rules.get("fire_access_max_ft")
+    for c in checks:
+        if c.check == "fire_access_ft" and fire_code is not None and c.observed > float(fire_code):
+            code = float(fire_code)
+            flag(
+                "FIRE-HOSE-VALIDATE",
+                FIRE_HOSE_VALIDATE,
+                bounds=(code, float(c.observed)),
+                source=(
+                    f"hose route {c.observed:.1f} ft against the code's {code:g} ft (OFC 503.1.1)"
+                    f" and the {FIRE_HOSE_ALLOWANCE_FT:g} ft allowed for the cautious hose start"
+                    f" (Steph 2026-11-21): {'inside' if c.verdict is Verdict.passes else 'past'} it"
+                ),
+            )
     curb_route = lot.fire_route_curb_ft
     walls = [
         c for c in checks
-        if c.verdict is Verdict.fails
-        and (c.check not in SOFT_FLOOR_CHECKS or (c.check == "min_far" and min_far_no_room))
+        if c.verdict is Verdict.fails and not _soft_floor(c.check, rules, min_far_no_room)
     ]
     if curb_route is not None and use_path is None and [c.check for c in walls] == ["fire_access_ft"]:
         (c,) = walls
@@ -4891,9 +5365,22 @@ def _account(
     # A minimum density missed is a flag, never a bind (Steph 2026-10-02:
     # "Make it a flag for sure ... It would just be a low risk flag").
     for c in checks:
-        if c.check in MIN_DENSITY_CHECKS and c.verdict is Verdict.fails:
+        if (
+            c.check in MIN_DENSITY_CHECKS
+            and c.verdict is Verdict.fails
+            and _soft_floor(c.check, rules, min_far_no_room)
+        ):
             span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
-            flag("DENSITY-MIN", CLOSER_LOOK_MIN_DENSITY, bounds=span, source=c.check)
+            if use_density(rules):
+                # The use itself depends on the density (FOLLOWUPS 203).
+                flag(
+                    "DENSITY-USE",
+                    CLOSER_LOOK_USE_DENSITY,
+                    bounds=span,
+                    source=_cite(rules, "min_density_conditions_use"),
+                )
+            else:
+                flag("DENSITY-MIN", CLOSER_LOOK_MIN_DENSITY, bounds=span, source=c.check)
         if c.check == "min_far" and c.verdict is Verdict.fails and not min_far_no_room:
             span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
             flag("FAR-MIN", CLOSER_LOOK_MIN_FAR, bounds=span, source=_cite(rules, "min_far"))
@@ -4945,6 +5432,15 @@ def _account(
             CLOSER_LOOK_ROOF_ELEMENTS,
             bounds=(0.0, float(elements)),
             source=_cite(rules, "roof_design_elements_min"),
+        )
+    commercial = ground_floor_commercial_owed(rules)
+    if commercial is not None:
+        # The pod's ground floor is all homes (FOLLOWUPS 203).
+        flag(
+            "GROUND-FLOOR-USE",
+            CLOSER_LOOK_GROUND_FLOOR_USE,
+            bounds=(0.0, commercial),
+            source=_cite(rules, "ground_floor_commercial_min_pct"),
         )
     if roof_book_unread(rules, design):
         flag(
@@ -5007,10 +5503,7 @@ def _account(
     if rules.trusted:
         paths = {o.check: o for o in outcomes}
         for c in checks:
-            if c.verdict is not Verdict.fails or (
-                c.check in SOFT_FLOOR_CHECKS
-                and not (c.check == "min_far" and min_far_no_room)
-            ):
+            if c.verdict is not Verdict.fails or _soft_floor(c.check, rules, min_far_no_room):
                 continue
             # A Durham apron miss is a flag, not a bind: YELLOW, never RED on
             # this ground alone (2026-11-09-busy-road-driveway-spacing-yellow).
@@ -5044,7 +5537,20 @@ def _account(
                     relief_confirmed=use_path.confirmed,
                 )
             )
+    # Mapped open space the lot touches binds whatever the zone's standards
+    # are worth: the ruling is Steph's, not the zone's, and no path round it
+    # is taken.
+    for key in lot.open_space:
+        binds.append(Bind(OPEN_SPACE_CHECK, None, None, None, source=_open_space_source(key)))
     return _flagged(rules, design, raised), tuple(binds)
+
+
+def _open_space_source(key: str) -> str:
+    """Where the RED on mapped open space comes from: the ruling's id."""
+    from flats.rules.resource_overlays import AREAS
+
+    ruling = getattr(AREAS.get(key), "red_ruling", "")
+    return f"Steph's ruling {ruling} (flats/config/rulings.yaml)" if ruling else ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -5093,6 +5599,7 @@ __all__ = [
     "SIGHT_DRIVEWAY_NOTE",
     "SIGHT_CORNER_ALLEY",
     "SIGHT_CORNER_PARKING",
+    "SIGHT_CORNER_ENGINEER",
     "ALLEY_COURT_OFF_STRETCH",
     "ALLEY_COURT_OFF_STRETCH_RULING",
     "COURT_GROUND_UNREAD",
@@ -5103,8 +5610,21 @@ __all__ = [
     "THROUGH_FRONT_GUESSED",
     "CLOSER_LOOK_MIN_DENSITY",
     "CLOSER_LOOK_MIN_FAR",
+    "CLOSER_LOOK_USE_DENSITY",
+    "CLOSER_LOOK_GROUND_FLOOR_USE",
+    "USE_DENSITY_MISS_IS_WALL",
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_SPLIT_ZONE",
+    "CLOSER_LOOK_DISTRICT_EDGE",
+    "CLOSER_LOOK_PLAN_OFF_LOT",
+    "CLOSER_LOOK_PLAN_ON_CARVE",
+    "CLOSER_LOOK_STREET_THROUGH_LOT",
+    "EDGE_SAG_READ",
+    "DEDICATION_JOG_READ",
+    "CLOSER_LOOK_DRIVE_TOUCH",
+    "CLOSER_LOOK_DRIVEWAY_SIDEWALK",
+    "CLOSER_LOOK_DRIVEWAY_LOT_LINE",
+    "DRIVEWAY_LOT_LINE",
     "CLOSER_LOOK_SECOND_APPROACH",
     "CLOSER_LOOK_ROOF_CORNICE",
     "CLOSER_LOOK_HEIGHT_AS_MEASURED",
@@ -5129,9 +5649,13 @@ __all__ = [
     "STREET_UNCONFIRMED",
     "DRIVEWAY_SPACING_BLOCKED",
     "DRIVEWAY_SPACING_UNREAD",
+    "HOUSING_AUTHORITY_LAND",
+    "STREET_LINE_LIMITED_WAY",
     "STRIP_FIELD",
     "USE_NOT_ENCODED",
     "USE_PROHIBITED",
+    "MAPPED_OPEN_SPACE",
+    "OPEN_SPACE_CHECK",
     "BindingHistogram",
     "LotFacts",
     "ReliefPolicy",

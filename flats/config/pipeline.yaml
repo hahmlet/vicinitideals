@@ -88,9 +88,11 @@ datasets:
     fields:
       [TLID, SITEADDR, SITECITY, SITEZIP, JURIS_CITY, COUNTY, PROP_CODE,
        STATECLASS, LANDUSE, YEARBUILT, BLDGSQFT, LANDVAL, BLDGVAL, TOTALVAL,
-       ASSESSVAL, SALEDATE, SALEPRICE]
+       ASSESSVAL, SALEDATE, SALEPRICE, TAXCODE]
     notes: >-
-      The regional shapefile carries the three Metro counties; the filter keeps
+      TAXCODE (the tax code area, FOLLOWUPS 13) is carried into the lot's
+      assessor facts as tax_code, so the tax-impact snapshot joins on the lot
+      row. The regional shapefile carries the three Metro counties; the filter keeps
       the ones FLATS covers (Washington from 2026-09-30). Holes must be read through pyshp's
       __geo_interface__ — the delta helper's own converter splits interior rings
       into separate polygons, which inflates lot areas.
@@ -502,7 +504,63 @@ datasets:
     fields: [OVRLY, ZONE, PLDIST]
     serves: [or/multnomah/portland]
 
+  # PCC 33.475.400-.450, the River Environmental overlay "e" along the
+  # Willamette (FOLLOWUPS 202, read 2026-11-18): quadfit carves all of it
+  # (overlays.yaml pdx_river_e says why). Layer 110 is "River Overlay - River
+  # Environmental (e)".
+  overlay_pdx_river_e:
+    kind: arcgis
+    label: Portland River Environmental overlay zone
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/110
+    fields: [OVRLY, ZONE, PLDIST]
+    serves: [or/multnomah/portland]
+
+  # PCC 24.50.040 E adopts, beside the FIRMs, "The 'Composite February 1996
+  # Flood Inundation Area Mapping' published by the City. The identified areas
+  # are subject to the regulations of this Chapter." (FOLLOWUPS 202, read
+  # 2026-11-18 from the chapter as amended by Ord 192083). Hazard layer 30 is
+  # the City's "Title 24 Composite 1996 Flood Hazard Area"; layer 0 ("1996
+  # Flood Inundation Area") is the regional Willamette-basin delineation, not
+  # the composite (quadfit overlays.yaml pdx_flood_1996 says why).
+  overlay_pdx_flood_1996:
+    kind: arcgis
+    label: Portland Title 24 Composite 1996 Flood Hazard Area
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/Hazard/MapServer/30
+    fields: [OBJECTID]
+    serves: [or/multnomah/portland]
+
+  # PCC 33.480, the Scenic Resource overlay "s" (FOLLOWUPS 204 item 1, read
+  # 2026-11-18): quadfit flags every lot it touches (overlays.yaml pdx_scenic
+  # says why). Layer 137 is "Scenic Resource Zone (s)".
+  overlay_pdx_scenic:
+    kind: arcgis
+    label: Portland Scenic Resource overlay zone
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/137
+    fields: [OVRLY, ZONE, PLDIST]
+    serves: [or/multnomah/portland]
+
   # --- mapped corridors (flats/geom/corridor.py) ----------------------------
+
+  scenic_corridors_pdx:
+    kind: arcgis
+    label: Portland Scenic Corridors (Scenic Resources Protection Plan)
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/89
+    geometry: polyline
+    fields: [Number, Type, Subtype, Location, Inventory_code]
+    serves: [or/multnomah/portland]
+    notes: >-
+      48 lines: 21 scenic drives, 20 scenic waterways, 6 trails, 1 aerial
+      tram. Only the drives are read (corridor.py LINE_KEEP): PCC
+      33.480.040.B.2.a puts the scenic corridor setback "along street lot
+      lines that abut the Scenic Corridor". Read per street line, for lots
+      the s overlay touches, and answers no lot-level fact; carries
+      setback_scenic_corridor_ft to the line. No street-name field, so a
+      line is on a drive when the drawn line runs beside it or coincides
+      with the street it abuts.
 
   corridors_pdx:
     kind: arcgis
@@ -1100,15 +1158,23 @@ datasets:
     # (FOLLOWUPS 198, hazard_notes below): a STATIC_BFE is unreadable without
     # its vertical datum. The screen reads none of the three.
     fields: [FLD_ZONE, ZONE_SUBTY, SFHA_TF, STATIC_BFE, V_DATUM, DEPTH, LEN_UNIT]
-    where: '"DFIRM_ID" IN (''41051C'', ''41005C'', ''41067C'')'
+    where: '"DFIRM_ID" IN (''41051C'', ''41005C'', ''41067C'', ''410183'')'
     serves: [or/multnomah, or/clackamas, or/washington]
     notes: >-
       NFHL rejects the unquoted form of the where clause intermittently — keep
-      the quoting exactly as written. DFIRM_ID is the county FIPS: 41051C
-      Multnomah, 41005C Clackamas, 41067C Washington (added 2026-09-30). The clause named Multnomah alone until the
+      the quoting exactly as written. DFIRM_ID is FEMA's flood study ID. A
+      countywide study is the county FIPS plus C: 41051C Multnomah, 41005C
+      Clackamas, 41067C Washington (added 2026-09-30). A community mapped on
+      its own is filed under its NFIP community ID instead: 410183 is the City
+      of Portland (all three counties, plus Maywood Park and county pockets
+      inside it), added 2026-11-18 -- until then every Portland lot was
+      measured against no FEMA data (the county studies hold only edge
+      slivers of the city). NFHL layer 22 (Political Jurisdictions) queried
+      2026-11-18 with "CO_FIPS" IN ('051', '005', '067') AND "ST_FIPS" = '41'
+      names exactly these four studies. The clause named Multnomah alone until the
       first acquire snapshot (2026-09-18) showed 3,476 features for a dataset
-      serving both counties; a third county needs its ID added here in the
-      same breath as its jurisdictions.
+      serving both counties. A new jurisdiction needs its study found in
+      layer 22 and added here in the same breath (test_pipeline holds the map).
 
   # --- Clackamas city overlays ---------------------------------------------
   # The environmental layers quadfit's s5o screens against, registered here
@@ -1242,6 +1308,57 @@ datasets:
     url: https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/2
     fields: [NROD, Acres]
     serves: [or/clackamas/oregon-city]
+
+  # OCMC 17.44 (FOLLOWUPS 204 item 2, read 2026-11-18): the whole Geologic
+  # Hazards Overlay, each polygon marked for slope, landslide and the buffer
+  # of each. quadfit flags every lot it touches and carves the landslide,
+  # landslide-buffer and slope polygons (overlays.yaml oregon_city_geohazard).
+  overlay_oregon_city_geohazard:
+    kind: arcgis
+    label: Oregon City Geologic Hazards overlay zone
+    provides: overlay
+    url: https://maps.orcity.org/arcgis/rest/services/HazardsAndFloodInfo_PUBLIC/MapServer/11
+    fields: [IN_SLOPE, IN_SLOPE_BUFFER, IN_LANDSLIDE, IN_LANDSLIDE_BUFFER]
+    serves: [or/clackamas/oregon-city]
+
+  # OCMC 17.48 (FOLLOWUPS 204 item 3, read 2026-11-18): the Willamette River
+  # Greenway, answering willamette_greenway_zone for Oregon City lots as
+  # Milwaukie's layer does for Milwaukie's.
+  overlay_oregon_city_greenway:
+    kind: arcgis
+    label: Oregon City Willamette River Greenway overlay district
+    provides: overlay
+    url: https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/10
+    fields: [OBJECTID]
+    serves: [or/clackamas/oregon-city]
+
+  # ZDO 1003.02 (FOLLOWUPS 204, Section 1003 read 2026-11-18): mass movement
+  # hazard areas, whose "principal source of information" the section names
+  # as DOGAMI. The state's landslide inventory, SLIDO 4.6: the deposits and
+  # the scarp flanks above them. quadfit flags every unincorporated lot
+  # either touches and carves the mapped ground itself (overlays.yaml
+  # clackamas_landslide, clackamas_landslide_scarp and their _core twins).
+  # The hazard_notes section reads the same inventory from the 4.5
+  # geodatabase for the lot page's notes; nothing there screens. Gladstone
+  # reads the same two layers as a flag only (overlays.yaml
+  # gladstone_landslide, gladstone_landslide_scarp): GMC 17.58.020(2)'s study
+  # at building permit, ruling 2026-11-18-gladstone-landslide-yellow-note.
+  overlay_clackamas_landslide:
+    kind: arcgis
+    label: DOGAMI landslide inventory (SLIDO) deposits
+    provides: overlay
+    url: https://gis.dogami.oregon.gov/arcgis/rest/services/Public/SLIDO_Inventory/MapServer/11
+    fields: [UNIQUE_ID, TYPE_MOVE, MOVE_CLASS, DEEP_SHAL, CONFIDENCE, AGE, REF_ID_COD]
+    bbox_4326: [-123.25, 45.15, -122.20, 45.75]
+    serves: [or/clackamas/_unincorporated, or/clackamas/gladstone]
+  overlay_clackamas_landslide_scarp:
+    kind: arcgis
+    label: DOGAMI landslide inventory (SLIDO) scarp flanks
+    provides: overlay
+    url: https://gis.dogami.oregon.gov/arcgis/rest/services/Public/SLIDO_Inventory/MapServer/3
+    fields: [UNIQUE_ID, REF_ID_COD]
+    bbox_4326: [-123.25, 45.15, -122.20, 45.75]
+    serves: [or/clackamas/_unincorporated, or/clackamas/gladstone]
 
   overlay_tualatin_nrpo:
     kind: arcgis
@@ -1570,6 +1687,12 @@ hazard_notes:
       number: FloodManagement MapServer layer 1
       date: as held (the acquire snapshot's fetch date)
       page: https://geo.westlinnoregon.gov/server/rest/services/Operational/FloodManagement/MapServer/1
+    pdx_flood_1996:
+      publisher: City of Portland
+      title: Composite February 1996 Flood Inundation Area (PCC 24.50.040 E)
+      number: Portland Maps Public/Hazard MapServer layer 30
+      date: as held (the acquire snapshot's fetch date)
+      page: https://www.portlandmaps.com/arcgis/rest/services/Public/Hazard/MapServer/30
 
   #: One entry per measured layer. An area layer's rows sum to the lot: its
   #: classes, plus the part outside the map's coverage and the part it leaves
@@ -1713,3 +1836,12 @@ hazard_notes:
       code: Flood management area
       level: high
       serves: [or/clackamas/west-linn]
+    flood_pdx_1996:
+      hazard: flood
+      kind: polygon
+      title: Portland 1996 flood area (PCC 24.50.040 E)
+      publication: pdx_flood_1996
+      held: overlay_pdx_flood_1996
+      code: 1996 flood area
+      level: high
+      serves: [or/multnomah/portland]

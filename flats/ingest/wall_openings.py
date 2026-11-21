@@ -31,7 +31,7 @@ from __future__ import annotations
 
 import dataclasses
 import math
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 from shapely.geometry import MultiLineString, Polygon
 
@@ -197,9 +197,44 @@ def _elsewhere(
 ) -> Any | None:
     """The plan stood where every wall clears the floor, through the whole
     chain again and no worse than ``s`` in anything; None where no such
-    placement is found. Only a court reached down a lane beside the building
-    is moved: a court fed across a side yard, off an alley or a side street
-    has a drive the drawing does not place (as :mod:`flats.ingest.flatter`)."""
+    placement is found (:func:`stood_elsewhere`)."""
+    edges = s.lot.edges.edges
+    streets = _street_edges(s)
+
+    def keep(at: Any, drawn: dict[str, Any]) -> bool:
+        ring = drawn.get("building")
+        return bool(ring) and gap_ft(ring, edges, streets) >= floor
+
+    return stood_elsewhere(
+        s, lot, fitter, terrain, keep, rules=rules, policy=policy, relief=relief,
+        step_deg=step_deg, roads=roads,
+    )
+
+
+def stood_elsewhere(
+    s: Any,
+    lot: Any,
+    fitter: Any,
+    terrain: Any,
+    keep: Callable[[Any, dict[str, Any]], bool],
+    *,
+    rules: Any,
+    policy: Any,
+    relief: Any,
+    step_deg: float,
+    roads: Any,
+) -> Any | None:
+    """The plan stood at another placement the fit lists, one ``keep`` takes
+    (``keep(at, drawn)``: ``s`` at the listed angle, and the drawing there),
+    through the whole chain again and no worse than ``s`` in anything; None
+    where no such placement is found. Nearest the street first, every angle
+    the flatter-spot search lists (:func:`flats.ingest.flatter._angles`),
+    each way round the window stands (the lane on either flank). Only a
+    court reached down a lane beside the building is moved: a court fed
+    across a side yard, off an alley or a side street has a drive the
+    drawing does not place (as :mod:`flats.ingest.flatter`). Shared by the
+    glass check here and the drive's gap to a lot line
+    (:func:`flats.ingest.quadfit.driveway_lot_line_placed`)."""
     from flats.ingest import flatter
     from flats.ingest import quadfit as q
 
@@ -213,8 +248,6 @@ def _elsewhere(
         return None
     cap = flatter._max_front_ft(s, street)
     lines = MultiLineString([[(x1, y1), (x2, y2)] for x1, y1, x2, y2 in street])
-    edges = s.lot.edges.edges
-    streets = _street_edges(s)
 
     found: list[tuple[float, float, Any, Any]] = []
     for angle in flatter._angles(s, fitter):
@@ -231,7 +264,7 @@ def _elsewhere(
             if not drawn or not drawn.get("fits") or drawn.get("tight"):
                 continue
             ring = drawn.get("building")
-            if not ring or gap_ft(ring, edges, streets) < floor:
+            if not ring or not keep(at, drawn):
                 continue
             front = Polygon(ring).distance(lines)
             if cap is not None and front > cap + flatter.FRONT_TOL_FT:
@@ -249,6 +282,10 @@ def _elsewhere(
             fire_route_curb_ft=None,
             fire_route_freed_ft=None,
             fire_route_row_ft=None,
+            fire_route_wide_ft=None,
+            fire_wide_gap_ft=None,
+            fire_on_state_road=False,
+            fire_road_unclear=False,
             site_grade_pct=None,
             site_grade_source=None,
             site_grade_tried=False,

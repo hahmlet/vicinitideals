@@ -201,6 +201,24 @@ def test_measure_lots_writes_every_layer_and_skips_west_linn_elsewhere() -> None
     assert {r["hazard"] for r in rows} == {"liquefaction", "flood"}
 
 
+def test_portland_s_1996_flood_area_is_a_flood_note_on_portland_lots_only() -> None:
+    spec = REG.layers["flood_pdx_1996"]
+    assert spec.hazard == "flood" and spec.held == "overlay_pdx_flood_1996"
+    assert "24.50.040 E" in REG.publications[spec.publication].title
+    area = hz.VectorLayer(spec, [hz.Feature(hz.CLASS, "1996 flood area", "1996 flood area", {}, box(0, 0, 30, 100))])
+    lots = [
+        {"county": "multnomah", "tlid": "1S2E08BA  -09500", "jurisdiction": "or/multnomah/portland", "geom": LOT},
+        {"county": "multnomah", "tlid": "1N3E31CD  -11902", "jurisdiction": "or/multnomah/gresham", "geom": LOT},
+    ]
+    rows = [r for r in hz.measure_lots(lots, [area], {}) if r["state"] == hz.CLASS]
+    assert [(r["tlid"], r["layer"], r["area_sqft"]) for r in rows] == [("1S2E08BA  -09500", "flood_pdx_1996", 3_000.0)]
+    note = hz.describe(rows, jurisdiction="or/multnomah/portland")
+    flood = next(g for g in note["groups"] if g["hazard"] == "flood")
+    assert "flood_pdx_1996" in {x["layer"] for x in flood["layers"]}
+    gresham = hz.describe([], jurisdiction="or/multnomah/gresham")
+    assert "flood_pdx_1996" not in {x["layer"] for g in gresham["groups"] for x in g["layers"]}
+
+
 def test_a_layer_never_loaded_reads_not_loaded_and_the_note_is_never_a_colour() -> None:
     note = hz.describe([], jurisdiction="or/multnomah/portland")
     assert note["measured"] is False and note["never_a_colour"] is True

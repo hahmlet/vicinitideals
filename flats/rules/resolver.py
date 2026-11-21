@@ -214,6 +214,15 @@ class ZoneResolution:
     #: Zone codes whose standards this resolution read through a reference,
     #: least authoritative first.
     borrowed_from: tuple[str, ...] = ()
+    #: The same zone resolved without ``corner_lot``, where this resolution
+    #: holds both ``corner_lot`` and ``unit_lots``: the standards an interior
+    #: home lot of a townhouse plat on a corner parcel answers to. A code
+    #: that splits its townhouse rows by corner and interior lot (Gresham's
+    #: Table 4.0130 "Width at building line: Interior lot" / "Corner lot")
+    #: means the lot each home stands on, and only the plat's corner lot is a
+    #: corner (FOLLOWUPS 191; read by
+    #: :func:`flats.score.screen._home_lots`). None everywhere else.
+    interior: "ZoneResolution | None" = None
 
     @property
     def trusted(self) -> bool:
@@ -675,6 +684,14 @@ class RuleSet:
         else:
             verdict = Verdict.trusted
 
+        interior = None
+        if "corner_lot" in held and "unit_lots" in held:
+            # The plat's interior home lots (FOLLOWUPS 191): the zone as an
+            # interior lot reads it, everything else this lot holds kept.
+            interior = self.resolve(
+                layer_id, zone, [c for c in held if c != "corner_lot"], lot=lot
+            )
+
         return ZoneResolution(
             jurisdiction=layer_id,
             zone=zone,
@@ -693,4 +710,5 @@ class RuleSet:
             conditions=held,
             ambiguous=ambiguous,
             borrowed_from=borrowed_from,
+            interior=interior,
         )

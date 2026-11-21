@@ -1136,6 +1136,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     # 25 -> 26 on 2026-11-10 (rel7 assembly): flats/drift-wash (FOLLOWUPS 166): Cornelius GMU re-read from Ord. 2026-06.
     "max_height_stories": 26,
     "setback_side_total_ft": 3,
+    #: New on 2026-11-18 (FOLLOWUPS 205, flats/gap-fixes): Milwaukie R-MD,
+    #: MMC 19.301.5.A -- over 7,000 sq ft one side yard is 5 ft and the other
+    #: 10 ft. FLATS cuts its own envelope with the larger on one side; this
+    #: pipeline's s5 has one side yard and no column for a second.
+    "setback_side_larger_ft": 1,
     #: 2026-11-08 (FOLLOWUPS 52, flats/dropped-lots-fairview): +1, Clackamas SCMU ported.
     # 18 -> 16 on 2026-11-12 (pod80x25@3, FOLLOWUPS 185): Oregon City MUC-2/MUD hold
     # the "or two stories" limb instead of 25 ft.
@@ -1340,7 +1345,19 @@ UNEXPRESSIBLE: dict[str, int] = {
     "building_frontage_band_ft": 14,  # +13, fg4-fixes 2026-11-10 (1005.02(E))
     # 1 -> 2 on 2026-11-08 (FOLLOWUPS 147, 8adfedd5): Hillsboro MU-VTC's minimum
     # FAR, 0.5 inside the traced Center Cores and 0.4 outside (Table 12.24.360-1).
-    "min_far": 2,
+    # 2 -> 9 on 2026-11-19 (rel11 assembly): flats/commercial-fixes (FOLLOWUPS 203) --
+    # Beaverton RC-E, TC-MU, TC-HDR, SC-MU, SC-HDR, SC-S (BDC Table 20.20.15 row B.1)
+    # and Hillsboro SCR-V (Table 12.24.460-1).
+    "min_far": 9,
+    #: New on 2026-11-19 (rel11 assembly): flats/commercial-fixes (FOLLOWUPS 203) --
+    #: Estacada D, EMC 16.26.020(D)(4): the fourplex use is conditioned on 16 du/acre.
+    #: FLATS holds it as a closer look (DENSITY-USE); this pipeline has no column.
+    "min_density_conditions_use": 1,
+    #: New on 2026-11-19 (rel11 assembly): flats/overlay-fixes-a (FOLLOWUPS 204) --
+    #: Portland's scenic corridor setback (PCC 33.480.040.B.2.a, Table 480-1), taken
+    #: per street lot line on a mapped scenic drive. FLATS cuts its own envelope;
+    #: this pipeline's s5 has one front setback and no per-line column.
+    "setback_scenic_corridor_ft": 1,
     #: fg4-fixes 2026-11-10: Beaverton RMA, RMB, RMC and CM-RM let a plex's court
     #: stand in front behind the 10 ft yard within S11's half (60.05.60.2).
     #: Quadfit draws no court against the building.

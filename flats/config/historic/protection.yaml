@@ -44,10 +44,10 @@ lists:
       quote: "Proposed alterations affecting a non-building landmark, such as a monument, mile-post, or other object, shall be submitted to the Historic Resources Subcommittee and the Hearings Officer"
     # Rows the county's address cannot fix, and the state's record of the same landmark
     # (same name, same or next-door address) can. The lot comes from that record's row.
-    # Only ever yellow. Ely: the city prints 122 N Main, the state 112.
+    # Only ever yellow. Ely (class2-02) and Giese (class1-22) were borrowed here
+    # until 2026-11-18; gresham.csv now names their lots by hand (taxlot), so they
+    # take the list's RED (FOLLOWUPS 87; Giese rests on the state's point alone).
     state_points:
-      class1-22: shpo-52816
-      class2-02: shpo-52408
       class2-06: shpo-53222
       class2-07: shpo-52203
       class2-08: shpo-51574
@@ -134,6 +134,44 @@ lists:
     demolition_quote: "Any application to relocate or demolish a designated histo ric or cultural resource shall be reviewed through a Type III procedure."
     applies: flats/provenance/docs/or/washington/_unincorporated/cdc.373.historic-cultural-resource-overlay.txt#L169-L171
     applies_quote: "structures on the tax lot subject to the overlay district's provisions are those described in the Cultural Resources Inventory as significant"
+    # 2026-11-18 (FOLLOWUPS 204 item 5): the county's Goal 5 Historic/Cultural layer.
+    # A record whose note names the lot the resource stands on ("Resource on 19AC TL
+    # 4300") is put on that lot, since 373-5 reaches the structures the inventory
+    # describes; a record the county marks gone, removed, or with no taxlot (a road, a
+    # railroad, a community) names no lot.
+
+  beaverton:
+    county: washington
+    cities: [BEAVERTON]
+    reading: doubtful
+    why: >-
+      demolishing a designated landmark is a Type 3 case before the Planning Commission,
+      approved only on findings that its consequences outweigh preserving the landmark;
+      but a landmark is what the City Council designates, and this list is the city's
+      1984-86 historic resource inventory, ranked Important, Significant or Unrankable:
+      nothing held shows which entries the Council designated
+    cite: flats/provenance/docs/or/washington/beaverton/bdc.40.35.historic-review.txt#L14-L15
+    quote: "The scope of Historic Review shall be limited to the exterior alteration, modification, demolition, and moving of a designated historic landmark"
+    demolition: flats/provenance/docs/or/washington/beaverton/bdc.40.35.historic-review.txt#L134-L135
+    demolition_quote: "The Type 3 procedure, as described in Section 50.45. of this Code, shall apply to an application for Demolition of a Landmark. The decision making authority is the Planning Commission."
+    applies: flats/provenance/docs/or/washington/beaverton/bdc.90.definitions.txt#L1336-L1338
+    applies_quote: "as shall be designated by the Beaverton City Council"
+    also:
+      - cite: flats/provenance/docs/or/washington/beaverton/bdc.40.35.historic-review.txt#L143-L144
+        quote: "The economic, social, environmental, and energy consequences of allowing the demolition outweigh the preservation of the historic landmark."
+
+  milwaukie:
+    county: clackamas
+    cities: [MILWAUKIE]
+    reading: doubtful
+    why: >-
+      Milwaukie's Commission reviews demolishing a significant or contributing resource,
+      but may only suspend the permit, for 120 days at most, and then the building
+      official shall issue it
+    cite: flats/provenance/docs/or/clackamas/milwaukie/19.400.overlays.txt#L2782-L2786
+    quote: "the building official shall issue such permit"
+    applies: flats/provenance/docs/or/clackamas/milwaukie/19.400.overlays.txt#L2706
+    applies_quote: "This review applies to all resources determined to be \"significant\" or \"contributing\" on the inventory."
 
 # The state's lists (flats/config/historic/state/). The Historic Sites layer is an
 # inventory: `nrStat` and `elig` tell a listed resource from a surveyed one, and
@@ -303,10 +341,14 @@ state:
     beaverton:
       reading: doubtful
       why: >-
-        Beaverton puts a landmark's demolition under Chapter 40, whose landmark sections
-        are not stored
-      cite: flats/provenance/docs/or/washington/beaverton/70.15/70.15.10.txt#L224
-      quote: "are regulated by CHAPTER 40 of the Development Code: Alteration of Landmark, Emergency Demolition of a Landmark, and Demolition of a Landmark."
+        Beaverton's Planning Commission hears a designated landmark's demolition as a
+        Type 3 case, but the city's list held is its inventory, and which entries the
+        Council designated is not held
+      cite: flats/provenance/docs/or/washington/beaverton/bdc.40.35.historic-review.txt#L134-L135
+      quote: "The decision making authority is the Planning Commission."
+      also:
+        - cite: flats/provenance/docs/or/washington/beaverton/70.15/70.15.10.txt#L224
+          quote: "are regulated by CHAPTER 40 of the Development Code: Alteration of Landmark, Emergency Demolition of a Landmark, and Demolition of a Landmark."
     sherwood:
       reading: doubtful
       why: >-

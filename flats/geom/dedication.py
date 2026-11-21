@@ -108,6 +108,7 @@ from __future__ import annotations
 import dataclasses
 import math
 import re
+from contextvars import ContextVar
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Iterable, Mapping, Sequence
 
@@ -164,7 +165,7 @@ CLASS_FIELDS: dict[str, str] = {
     "principal_arterial": "row_to_centerline_principal_arterial_ft",
 }
 
-#: The distances listed by street name (King City, Milwaukie).
+#: The distances listed by street name (King City, Milwaukie, Hillsboro).
 NAMED_FIELD = "row_to_centerline_named_ft"
 
 #: The distance for a street the named list leaves out, where the code states
@@ -470,16 +471,43 @@ def _inward(edge: Sequence[Any], lot: Any) -> tuple[float, float] | None:
     return None
 
 
+#: Feet off the tax lot's shape a centreline's nearest point may stand and
+#: still be read as on the lot (a lot drawn to the centre line itself).
+ON_LOT_TOL_FT = 0.5
+
+#: Set by :func:`measure` while it reads one street line: :func:`_signed`
+#: notes each point where the centreline stood on the lot's side of the line
+#: but off the lot -- the jog reading of FOLLOWUPS 158, which reads the
+#: street as across the line where the reading before it read the road as
+#: drawn into the lot. :func:`measure` hands the lines so read back
+#: (``jogs``), so a bound can name the lots the jog reading moved (rel11 move
+#: read G1).
+_JOGGED: ContextVar[list[bool] | None] = ContextVar("dedication_jogged", default=None)
+
+
 def _signed(line: Any, p: Any, inward: tuple[float, float] | None, lot: Any = None) -> float:
     """The distance from lot-line point ``p`` to centreline ``line``, NEGATIVE
     where the centreline lies on the lot's side of the line (the tax lot is
-    drawn over the road, FOLLOWUPS 67 (b)). Unsigned without the lot."""
+    drawn over the road, FOLLOWUPS 67 (b)). Unsigned without the lot.
+
+    With the lot's shape, the centreline's nearest point must also stand on
+    the lot: a short jog in the lot line square to the street (Washington
+    County 1S212AD01301's 10 ft step) has the street off to its side, and
+    the nearest point a hair past its inward side read the whole road as
+    drawn into the lot -- an 80 ft strip round a 10 ft line (FOLLOWUPS 158).
+    Off the lot, the street is across the line, read as before."""
     d = float(line.distance(p))
     if d <= 0.0 or (inward is None and lot is None):
         return d
     c = line.interpolate(line.project(p))
+    on_lot = lot is None or bool(lot.buffer(ON_LOT_TOL_FT).covers(c))
     if inward is not None:
-        inside = (c.x - p.x) * inward[0] + (c.y - p.y) * inward[1] > 0
+        toward = (c.x - p.x) * inward[0] + (c.y - p.y) * inward[1] > 0
+        inside = toward and on_lot
+        if toward and not on_lot:
+            seen = _JOGGED.get()
+            if seen is not None:
+                seen.append(True)
     else:
         inside = bool(lot.contains(c))
     return -d if inside else d
@@ -547,7 +575,81 @@ def read_line(
     if len(widths) >= MIN_MEASURED:
         return min(widths), public, tuple(sorted(names))
     width, near_public, near_names = _nearest(points, cmap, through_private, inward, lot)
+    if width is None and public and near_public:
+        # A line on a road too wide for either reading above: measured
+        # across the right-of-way, the names left unread.
+        return _across(edge, points, cmap, inward), True, None
     return width, public and near_public, near_names
+
+
+#: How near a lot line's midpoint a centreline must run for quadfit s4's
+#: midpoint test to call the line a street line (``street_threshold_ft``).
+#: A street line with none that near is one s4 read across a wide
+#: right-of-way (``_open_way``, 2026-11-18), and only such a line is
+#: measured by :func:`_across`.
+WIDE_LINE_FT = 50.0
+
+#: OpenStreetMap ``fclass`` values that are a street: a line of one of them
+#: nearer than Metro's centreline brings :func:`_across`'s reading in. Its
+#: service roads, footways and cycle tracks are no street's centre line.
+OSM_STREETS: frozenset[str] = frozenset({
+    "motorway", "motorway_link", "trunk", "trunk_link", "primary", "primary_link",
+    "secondary", "secondary_link", "tertiary", "tertiary_link", "unclassified",
+    "residential", "living_street",
+})
+
+
+def _across(
+    edge: Sequence[float],
+    points: Sequence[Any],
+    cmap: ClassMap,
+    inward: tuple[float, float] | None,
+) -> float | None:
+    """The half-width of a line on a road too wide for
+    :data:`~flats.geom.corridor.FRONT_REACH_FT` (Milwaukie 11E36AD07300 on
+    Highway 224, its centre line 70 ft out): unmeasured until 2026-11-19,
+    so the lot gave up the whole distance and read RED.
+
+    From each sample point a ray runs square off the lot, away from it,
+    :data:`~flats.geom.corridor.CORRIDOR_REACH_FT` long -- the ray s4 found
+    the street with. The reading at the point is its distance to the
+    nearest centreline the ray crosses (or OpenStreetMap street,
+    :data:`OSM_STREETS`): the street across the line, or something nearer
+    than it, so the strip asked for is never short. The line's reading is
+    the smallest over at least :data:`MIN_MEASURED` points.
+
+    None -- unmeasured, the whole distance -- where the lot's shape does
+    not tell which side is off the lot, where a centreline runs within
+    :data:`WIDE_LINE_FT` of the line's midpoint (not a wide-road line: the
+    readings above are the ones that failed, and stay failed), where too
+    few rays cross a centreline, and where the nearest one a ray crosses
+    is a private road or drive.
+    """
+    if inward is None:
+        return None
+    from shapely.geometry import LineString, Point
+
+    x1, y1, x2, y2 = (float(v) for v in edge[:4])
+    if cmap.streets.near(Point((x1 + x2) / 2, (y1 + y2) / 2), WIDE_LINE_FT):
+        return None
+    widths: list[float] = []
+    for p in points:
+        ray = LineString(
+            [(p.x, p.y), (p.x - inward[0] * CORRIDOR_REACH_FT, p.y - inward[1] * CORRIDOR_REACH_FT)]
+        )
+        crossed = [int(i) for i in cmap.streets.tree.query(ray, predicate="intersects")]
+        if not crossed:
+            continue
+        s = min(crossed, key=lambda i: cmap.streets.lines[i].distance(p))
+        if cmap.types[s] in PRIVATE_TYPES:
+            return None
+        d = float(cmap.streets.lines[s].distance(p))
+        if cmap.osm is not None:
+            for i in cmap.osm.tree.query(ray, predicate="intersects"):
+                if cmap.osm_classes[int(i)] in OSM_STREETS:
+                    d = min(d, float(cmap.osm.lines[int(i)].distance(p)))
+        widths.append(d)
+    return min(widths) if len(widths) >= MIN_MEASURED else None
 
 
 def _nearest(
@@ -598,6 +700,7 @@ def measure(
     maps: Sequence[ClassMap],
     lot: Any = None,
     stretches: Sequence[str] = (),
+    jogs: list[tuple[float, float, float, float]] | None = None,
 ) -> list[list[Any]]:
     """Every street line of one lot, as ``[x1, y1, x2, y2, half_width_ft,
     public, names, classes, on_stretch]`` -- the half-width None where
@@ -606,13 +709,26 @@ def measure(
     the class name on each map read for the layer (``{map key: class or
     None}``), ``on_stretch`` each row label of ``stretches`` whose street the
     line may be on, read for its stretch (:func:`stretch_readings`; ``{label:
-    True, False or None}``). Empty where no map gives the streets."""
+    True, False or None}``). Empty where no map gives the streets.
+
+    ``jogs``, given, gets the :func:`key` of each line whose reading met a
+    centreline on the lot's side of it but off the lot (:data:`_JOGGED`,
+    FOLLOWUPS 158): a mark, nothing more; the rows are the same either way."""
     cmap = _streets_for(layer_id, maps)
     if cmap is None:
         return []
     ranked = [m for m in maps if _reads(m, layer_id)]
     lines = [e for e in edges if len(e) >= 5 and e[4] == STREET_CLASS]
-    reads = [read_line(e, cmap, lot=lot) for e in lines]  # type: ignore[arg-type]
+    reads = []
+    for e in lines:
+        seen: list[bool] = []
+        token = _JOGGED.set(seen)
+        try:
+            reads.append(read_line(e, cmap, lot=lot))  # type: ignore[arg-type]
+        finally:
+            _JOGGED.reset(token)
+        if seen and jogs is not None:
+            jogs.append(_line_key(*(float(v) for v in e[:4])))
     ranks = {m.key: _lot_ranks(lines, [names for _, _, names in reads], m) for m in ranked}
     # A city map naming its private streets: Metro's "private" alone gives up
     # nothing only where that map agrees (:func:`_private_reading`).
@@ -794,6 +910,11 @@ def _point_ranks(edge: Sequence[Any], cmap: ClassMap) -> list[int | None]:
 def key(x1: float, y1: float, x2: float, y2: float) -> tuple[float, float, float, float]:
     """The coordinates a measured line is looked up by."""
     return (round(float(x1), 3), round(float(y1), 3), round(float(x2), 3), round(float(y2), 3))
+
+
+#: :func:`key` by another name, for :func:`measure`, whose loop names a map
+#: ``key``.
+_line_key = key
 
 
 def _number(v: object) -> float | None:
