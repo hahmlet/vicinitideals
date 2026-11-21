@@ -252,6 +252,14 @@ def stair_room_of(
     return {"hits": hits, "need": {k: round(v, 2) for k, v in need.items()}, "standoff_ft": standoff_ft}
 
 
+def _terrain_key(terrain: Any) -> Any:
+    """Which elevation models ``terrain`` reads, for the cache key: the same
+    lot and drawing on other ground is another answer."""
+    tiles = tuple(getattr(x, "name", str(x)) for x in (getattr(terrain, "tiles", None) or ()))
+    coarse = getattr(getattr(terrain, "coarse", None), "name", None)
+    return (tiles, coarse) if tiles or coarse is not None else id(terrain)
+
+
 def facts_for(
     drawing: Mapping[str, Any] | None,
     *,
@@ -274,7 +282,7 @@ def facts_for(
         return None
     court, lane = (drawing or {}).get("court"), (drawing or {}).get("lane")
     key = (tlid, json.dumps(ring), required, json.dumps(court), json.dumps(lane), classes, tuple(streets),
-           round(standoff_ft, 3), beside, None if lot is None else lot.wkb)
+           round(standoff_ft, 3), beside, None if lot is None else lot.wkb, _terrain_key(terrain))
     if key in _CACHE:
         return _CACHE[key]
     s = foundation_settings.load()
