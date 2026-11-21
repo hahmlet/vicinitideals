@@ -850,12 +850,26 @@ FIRE_ROAD_UNCLEAR = "fire_road_unclear"
 #: I'm good with green", and of the state highway "I'd say it's green").
 #: FIRE-WIDE-ROAD marks the reading, below the yellow line.
 FIRE_WIDE_ROAD = "FIRE_WIDE_ROAD"
-#: The hose route clears the fire limit by less than the drawing is measured
-#: to (:func:`fire_near_band`): the measurement cannot tell it from a miss,
-#: so the pass is held YELLOW, never GREEN (rel11 move read F1:
-#: 1S101DD01500 cleared 150 ft by 0.006 ft). FIRE-NEAR-PASS names the route
-#: and the limit.
-FIRE_NEAR_PASS = "FIRE_NEAR_PASS"
+#: Feet past the code's 150 ft (OFC 503.1.1, ``fire_access_max_ft``, stored
+#: as printed) a measured hose route may run and still pass: the hose start
+#: is already cautious -- 10 ft out from the near curb, never past the
+#: street's middle (rulings.yaml 2026-10-05-fire-hose-from-curb). Steph
+#: 2026-11-21 (rulings.yaml 2026-11-21-fire-hose-five-ft): "if it fits
+#: within 5 ft, it's green"; "Up to 155 ft is green".
+FIRE_HOSE_ALLOWANCE_FT = 5.0
+#: A measured hose route past the code's 150 ft, inside the allowance or
+#: past it: FIRE-HOSE-VALIDATE, a note below the yellow line on every colour
+#: (Steph 2026-11-21: "everything over 150 gets a flag to validate hose
+#: length").
+FIRE_HOSE_VALIDATE = "FIRE_HOSE_VALIDATE"
+
+
+def fire_reach_ft(rules: ZoneResolution) -> float | None:
+    """The hose route the fire check passes to: the code's figure
+    (``fire_access_max_ft``) plus :data:`FIRE_HOSE_ALLOWANCE_FT`, or None
+    where the zone states no fire limit."""
+    code = rules.get("fire_access_max_ft")
+    return None if code is None else float(code) + FIRE_HOSE_ALLOWANCE_FT
 
 #: The grade under a plan the bridge measured for and could not read --
 #: no elevation model covers the pad. Joins ``_checks``'s ``unmeasured``,
@@ -2610,31 +2624,33 @@ def _checks(
 
     # The fire truck's reach (OFC 503.1.1, FOLLOWUPS 28): the hose's route
     # from the street to the far side of the building, against the 150 ft
-    # the state layer states for every zone. A route the bridge looked for
-    # and could not find is a fact nobody observed, never a pass.
-    reach = rules.get("fire_access_max_ft")
+    # the state layer states for every zone, plus the 5 ft Steph allows for
+    # the cautious hose start (FIRE_HOSE_ALLOWANCE_FT, 2026-11-21). A route
+    # the bridge looked for and could not find is a fact nobody observed,
+    # never a pass.
+    reach = fire_reach_ft(rules)
     if reach is not None:
         freed = lot.fire_route_freed_ft
         wide = lot.fire_route_row_ft
-        missed = lot.fire_route_ft is None or lot.fire_route_ft > float(reach)
-        if lot.fire_route_tried and missed and freed is not None and freed <= float(reach):
+        missed = lot.fire_route_ft is None or lot.fire_route_ft > reach
+        if lot.fire_route_tried and missed and freed is not None and freed <= reach:
             # Reached only up a long dead end with no turnaround seen
             # (FOLLOWUPS 168): the fire marshal's question, not a miss.
             unchecked.append("fire_access_ft")
             unmeasured.add(FIRE_DEAD_END)
-        elif lot.fire_route_tried and missed and wide is not None and wide <= float(reach):
+        elif lot.fire_route_tried and missed and wide is not None and wide <= reach:
             # Reached only by a street too narrow for the road and its
             # curbs, its pavement unmeasured (FOLLOWUPS 178(b)): a common
             # fire-review refusal, held YELLOW.
             unchecked.append("fire_access_ft")
             unmeasured.add(FIRE_NARROW_STREET)
-        elif fire_on_wide_road(lot, float(reach)):
+        elif fire_on_wide_road(lot, reach):
             # Reached with the engine stood on a wide main road, its centre
             # line 50 to 150 ft from the lot line: an engine standing there
             # counts (Steph 2026-11-19: "wide main road, I'm good with
             # green"; OFC 503.1.1 names no kind of road and no width). The
             # check is made on that route; FIRE-WIDE-ROAD marks it.
-            check("fire_access_ft", lot.fire_route_wide_ft, float(reach), is_maximum=True)
+            check("fire_access_ft", lot.fire_route_wide_ft, reach, is_maximum=True)
         elif lot.fire_route_tried and lot.fire_road_unclear:
             # Reaches only with the engine stood on a road that cannot be
             # told from a freeway (a second carriageway or a frontage road
@@ -2643,7 +2659,7 @@ def _checks(
             unchecked.append("fire_access_ft")
             unmeasured.add(FIRE_ROAD_UNCLEAR)
         elif lot.fire_route_ft is not None:
-            check("fire_access_ft", lot.fire_route_ft, float(reach), is_maximum=True)
+            check("fire_access_ft", lot.fire_route_ft, reach, is_maximum=True)
         else:
             unchecked.append("fire_access_ft")
             if lot.fire_route_tried:
@@ -4118,7 +4134,6 @@ def screen(
     checks = _unwaived(checks, unchecked, rules, config)
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))
-    fire_near = _fire_near_pass(checks, policy, where)
     worst_check = dominant(checks)
 
     # Every definite failure gets a second question: what would it take to
@@ -4216,7 +4231,6 @@ def screen(
         min_far_no_room=min_far_no_room,
         parking_setback_doubt=parking_setback_doubt,
         side_yard_silent=stated_fit_fails,
-        fire_near=fire_near,
     )
 
     if lot.open_space:
@@ -5068,38 +5082,6 @@ def held_open(
 #: The flag type for each quantity the screen itself left unmeasured. A
 #: name not here is a site fact a rate is stated per, and takes that fact's
 #: own type (:func:`flats.score.flags.fact_code`).
-def fire_near_band(policy: SlackPolicy, where: str | None) -> float:
-    """How close to the fire limit a passing hose route still cannot be told
-    from a miss (FIRE-NEAR-PASS).
-
-    The fire check's own tolerance (``fire_access_ft`` in
-    ``flats/config/slack.yaml``) is zero: a miss is RED by any amount. But
-    the route is walked to the walls of the drawn building, and the drawing
-    stands on the fit's raster, which is good to the fit's own tolerance
-    (``fit_ft``, half a foot) -- the same allowance the maximum front
-    setback, also measured to the drawn building, gives its near misses
-    (:func:`_front_max`, ``raster_ft``). A pass inside the larger of the two
-    is held. Tolerance still never manufactures a pass: this only takes one
-    away.
-    """
-    return max(policy.tolerance_for("fire_access_ft", where), policy.tolerance_for("fit_ft", where))
-
-
-def _fire_near_pass(
-    checks: Sequence[CheckResult], policy: SlackPolicy, where: str | None
-) -> tuple[CheckResult, float] | None:
-    """The fire check, where it passes by less than :func:`fire_near_band`."""
-    band = fire_near_band(policy, where)
-    hit = next(
-        (
-            c for c in checks
-            if c.check == "fire_access_ft" and c.verdict is Verdict.passes and c.slack < band
-        ),
-        None,
-    )
-    return (hit, band) if hit is not None else None
-
-
 def fire_on_wide_road(lot: LotFacts, reach: float) -> bool:
     """Whether the fire check is made on the route with the engine stood on
     a wide main road (:attr:`LotFacts.fire_route_wide_ft`): the code's
@@ -5199,7 +5181,6 @@ def _account(
     warnings: Sequence[str],
     min_far_no_room: bool,
     side_yard_silent: bool = False,
-    fire_near: tuple[CheckResult, float] | None = None,
 ) -> tuple[tuple[Flag, ...], tuple[Bind, ...]]:
     """The flag plan's record of one screening: every unknown as a flag and
     every confirmed miss as a bind (Steph's flag plan, 2026-10-02).
@@ -5340,16 +5321,17 @@ def _account(
     # road, I'm good with green"; "The fire chief makes the call, but I'd
     # say it's green"). The note says which and how far out, so the
     # answers that rest on those rulings can be found.
-    fire_reach = rules.get("fire_access_max_ft")
+    fire_reach = fire_reach_ft(rules)
     if fire_reach is not None and lot.fire_route_tried and not lot.fire_road_unclear:
-        on_wide = fire_on_wide_road(lot, float(fire_reach))
+        on_wide = fire_on_wide_road(lot, fire_reach)
         route = lot.fire_route_wide_ft if on_wide else lot.fire_route_ft
-        if route is not None and route <= float(fire_reach) and (on_wide or lot.fire_on_state_road):
+        if route is not None and route <= fire_reach and (on_wide or lot.fire_on_state_road):
+            code_reach = float(rules.get("fire_access_max_ft"))
             gap = lot.fire_wide_gap_ft
             flag(
                 "FIRE-WIDE-ROAD",
                 FIRE_WIDE_ROAD,
-                bounds=(float(route), float(fire_reach)),
+                bounds=(min(float(route), code_reach), max(float(route), code_reach)),
                 source=(
                     "the engine stands on a "
                     + ("state highway" if lot.fire_on_state_road else "wide road")
@@ -5357,18 +5339,20 @@ def _account(
                     + f"; hose route {route:.0f} ft"
                 ),
             )
-    if fire_near is not None:
-        near, band = fire_near
-        flag(
-            "FIRE-NEAR-PASS",
-            FIRE_NEAR_PASS,
-            bounds=(float(near.observed), float(near.threshold)),
-            source=(
-                f"hose route {near.observed:.3f} ft against the {near.threshold:g} ft limit"
-                f" (OFC 503.1.1): clear by {near.slack:.3f} ft, inside the {band:g} ft"
-                " the drawn building is measured to"
-            ),
-        )
+    fire_code = rules.get("fire_access_max_ft")
+    for c in checks:
+        if c.check == "fire_access_ft" and fire_code is not None and c.observed > float(fire_code):
+            code = float(fire_code)
+            flag(
+                "FIRE-HOSE-VALIDATE",
+                FIRE_HOSE_VALIDATE,
+                bounds=(code, float(c.observed)),
+                source=(
+                    f"hose route {c.observed:.1f} ft against the code's {code:g} ft (OFC 503.1.1)"
+                    f" and the {FIRE_HOSE_ALLOWANCE_FT:g} ft allowed for the cautious hose start"
+                    f" (Steph 2026-11-21): {'inside' if c.verdict is Verdict.passes else 'past'} it"
+                ),
+            )
     curb_route = lot.fire_route_curb_ft
     walls = [
         c for c in checks

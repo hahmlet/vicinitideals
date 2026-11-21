@@ -596,22 +596,22 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FIRE_WIDE_ROAD]
-  FIRE-NEAR-PASS:
-    description: "Fire hose near pass: the hose route clears the 150 ft limit (OFC 503.1.1) by less than the drawn building is measured to (the fit's half foot, flats/config/slack.yaml fit_ft), so the measurement cannot tell it from a miss; the bounds are the route and the limit (rel11 move read F1)"
+  FIRE-HOSE-VALIDATE:
+    description: "Validate the hose length: the measured fire hose route runs past the code's 150 ft (OFC 503.1.1). Up to 155 ft passes, because the hose start is already cautious -- 10 ft out from the near curb, never past the street's middle (Steph 2026-11-21: \"if it fits within 5 ft, it's green\"; \"Up to 155 ft is green\"; \"everything over 150 gets a flag to validate hose length\"). Past 155 ft the lot stays RED. The bounds are the 150 ft and the route"
     kind: parametric
     risk: possible
-    # Holds a green: at the yellow line.
-    severity: 3
+    # A note on every colour, never holds a green: below the yellow line.
+    severity: 1
     absorbs: null
     resolution: measurement
     scope: per_lot
     key: [lot, design]
-    path: "Measure the hose route on the site plan or the survey at acquisition: round the building from where the truck stands, against the 150 ft"
+    path: "Measure the hose route on the site plan or the survey at acquisition, from where the engine will stand, round the building to its farthest wall"
     priority: later
     status: pending
     approved_by: null
     approved_on: null
-    raised_from: [FIRE_NEAR_PASS]
+    raised_from: [FIRE_HOSE_VALIDATE]
   FIRE-ROAD-UNCLEAR:
     description: "Divided road: the fire hose reaches the building only with the fire engine stood on a wide road or state highway that has a second road line close beyond it -- the other half of a divided highway, or a road with a frontage road beside it -- which the street centre lines cannot tell from a freeway. Steph's wide-main-road ruling (2026-11-19) does not cover it: held yellow until someone looks at the road"
     kind: categorical

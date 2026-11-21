@@ -3905,3 +3905,43 @@
     Steph 2026-11-19 (chat, relayed by the coordinator),
     ../vicinitideals-worktrees/open-way-fix.handoff.md
   encoded_in: [flats/ingest/quadfit.py, flats/score/screen.py]
+- id: 2026-11-21-fire-hose-five-ft
+  kind: ruling
+  date: 2026-11-21
+  scope: {}
+  question: >-
+    A measured fire hose route runs just past the 150 ft OFC 503.1.1 sets
+    ("Access roads shall be within 150 feet of all portions of the exterior
+    wall of the first story of the building",
+    flats/provenance/docs/or/ofc.2022.applications-guide.txt#L132-L134), or
+    just inside it (rel11 move read F1: 1S101DD01500 GREEN at 149.994 ft).
+    Does a route a few feet over pass, and does a near pass need holding?
+  ruling: >-
+    "Fire hose rule: if it fits within 5 ft, it's green. We are conservative
+    on where the hose starts". Asked to clarify, Steph chose "Up to 155 ft is
+    green", and added "and everything over 150 gets a flag to validate hose
+    length".
+  effect: >-
+    The code's figure stays as printed: fire_access_max_ft 150
+    (flats/config/jurisdictions/or/_state.yaml). The screen adds a separate
+    5 ft allowance (flats/score/screen.py FIRE_HOSE_ALLOWANCE_FT), so a
+    measured route of 155 ft or less passes the fire check and the lot may be
+    GREEN; past 155 ft it is RED as before (ruling
+    2026-10-01-fire-access-150ft-red). The reason is the hose start, already
+    cautious: 10 ft out from the near curb, never past the street's middle
+    (rulings 2026-10-05-fire-hose-from-curb, 2026-10-05-unmeasured-street-narrow).
+    Every lot whose checked route runs past 150 ft, any colour, carries
+    FIRE-HOSE-VALIDATE (a note below the yellow line) naming the route, the
+    150 ft and the 5 ft. A route of 150 ft or less passes however close; no
+    near-pass hold (the FIRE-NEAR-PASS draft, 5bd6120f, is withdrawn). The
+    screen gives the long dead end's, the narrow street's and the wide
+    road's readings the same 155 ft, and takes the first two only where the
+    code's reading misses it; a road not told from a freeway
+    (FIRE-ROAD-UNCLEAR) is held as before. Not changed: the bridge (flats/ingest/quadfit.py
+    fire_checked) still measures those readings, and re-places a building,
+    only where the route is past 150 ft, and records a reading only where it
+    reaches within 150 ft -- so a lot reached on one of them at 150 to 155 ft
+    stays RED (cautious); the 150 ft dead-end length (OFC 503.2.5) is a
+    separate rule. Built on flats/rel11-firenear; not live until released.
+  source: Steph 2026-11-21 (chat)
+  encoded_in: [flats/score/screen.py, flats/config/flags.yaml]

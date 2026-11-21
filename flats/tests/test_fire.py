@@ -263,57 +263,65 @@ def test_a_route_past_the_limit_is_red_and_no_relief_softens_it() -> None:
     assert any(c.check == "fire_access_ft" for c in result.binding)
 
 
-# --- a pass the measurement cannot tell from a miss (rel11 F1) ------------
+# --- the 5 ft allowance (Steph 2026-11-21) -------------------------------
 
 
 def _codes(result) -> set[str]:
     return {f.code for f in result.flags}
 
 
-def test_a_pass_inside_the_drawings_half_foot_is_held_yellow() -> None:
-    """rel11 move read F1: 1S101DD01500 (Washington Co R-24) went GREEN on a
-    hose route of 149.994 ft against the 150 ft. The drawn building stands on
-    the fit's raster, good to its half foot; a pass by 0.006 ft cannot be
-    told from a miss."""
+def _validate(result):
+    return [f for f in result.flags if f.code == "FIRE-HOSE-VALIDATE"]
+
+
+def test_a_route_inside_150_ft_is_green_with_no_note() -> None:
+    """rel11 move read F1 (1S101DD01500, 149.994 ft) stays GREEN: 150 ft or
+    less passes however close (rulings.yaml 2026-11-21-fire-hose-five-ft)."""
     from flats.score.flags import Colour
 
-    result = run(facts(fire_route_ft=149.994, fire_route_tried=True))
-    c = check(result, "fire_access_ft")
-    assert c.verdict is Verdict.passes  # still a pass, never a fail
-    assert not result.binding
-    assert "FIRE-NEAR-PASS" in _codes(result)
-    (near,) = [f for f in result.flags if f.code == "FIRE-NEAR-PASS"]
-    assert near.bounds == pytest.approx((149.994, 150.0))
-    assert "149.994 ft" in near.source and "150 ft" in near.source
-    assert result.colour is Colour.yellow
-
-
-def test_a_clear_pass_stays_green() -> None:
-    from flats.score.flags import Colour
-
-    for route in (149.5, 140.0):  # exactly the half foot clears
+    for route in (149.0, 149.994, 150.0):
         result = run(facts(fire_route_ft=route, fire_route_tried=True))
-        assert "FIRE-NEAR-PASS" not in _codes(result), route
+        assert check(result, "fire_access_ft").verdict is Verdict.passes, route
+        assert not _validate(result), route
         assert result.colour is Colour.green, route
 
 
-def test_a_near_miss_is_unchanged_red() -> None:
-    """The hold only takes a pass away: a miss by 0.3 ft is RED as before
-    (the fire check's own tolerance is zero)."""
+def test_a_route_up_to_155_ft_passes_with_a_note_to_validate_it() -> None:
+    """Steph 2026-11-21: "if it fits within 5 ft, it's green"; "Up to 155 ft
+    is green"; "everything over 150 gets a flag to validate hose length"."""
     from flats.score.flags import Colour
 
-    result = run(facts(fire_route_ft=150.3, fire_route_tried=True))
+    for route in (152.0, 155.0):
+        result = run(facts(fire_route_ft=route, fire_route_tried=True))
+        c = check(result, "fire_access_ft")
+        assert c.verdict is Verdict.passes, route
+        assert c.threshold == 155.0  # 150 as printed + the 5 ft allowance
+        assert not result.binding
+        (note,) = _validate(result)
+        assert note.bounds == pytest.approx((150.0, route))
+        assert f"{route:.1f} ft" in note.source and "150 ft" in note.source and "5 ft" in note.source
+        assert result.colour is Colour.green, route
+
+
+def test_a_route_past_155_ft_is_red_and_still_noted() -> None:
+    from flats.score.flags import Colour
+
+    result = run(facts(fire_route_ft=156.0, fire_route_tried=True))
     assert check(result, "fire_access_ft").verdict is Verdict.fails
-    assert "FIRE-NEAR-PASS" not in _codes(result)
+    assert any(c.check == "fire_access_ft" for c in result.binding)
+    (note,) = _validate(result)
+    assert "past it" in note.source
     assert result.colour is Colour.red
 
 
-def test_the_band_is_the_larger_of_the_fire_and_fit_tolerances() -> None:
-    from flats.score.screen import fire_near_band
+def test_the_code_figure_stays_as_printed_and_the_note_is_below_the_line() -> None:
+    from flats.score.flags import registry
+    from flats.score.screen import FIRE_HOSE_ALLOWANCE_FT, fire_reach_ft
 
-    assert fire_near_band(slack.load_policy(), WHERE) == 0.5
-    assert fire_near_band(slack.SlackPolicy(tolerance={"fire_access_ft": 2.0, "fit_ft": 0.5}), WHERE) == 2.0
-    assert fire_near_band(slack.SlackPolicy(tolerance={}), WHERE) == 0.0
+    r = rules()
+    assert r.get("fire_access_max_ft") == 150
+    assert fire_reach_ft(r) == 150.0 + FIRE_HOSE_ALLOWANCE_FT == 155.0
+    assert registry()["FIRE-HOSE-VALIDATE"].severity < 3
 
 
 def test_every_relief_policy_answers_unavailable_for_the_fire_check() -> None:
