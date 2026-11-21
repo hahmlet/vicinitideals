@@ -20,3 +20,9 @@ After the buildable area grows or a street is dropped, the pod is re-placed and 
 new placement. Ties into "choose the front after measuring fire" (FOLLOWUPS 211 Not done).
 
 Decision pending: none.
+
+## F4 (from rel11-firenear, 2026-11-21)
+
+Fire-hose near MISSES (under 0.5 ft over 150 ft) stay RED: `fire_access_ft` has no slack in
+`flats/config/slack.yaml`. The near-PASS side is held YELLOW (FIRE-NEAR-PASS, 0.5 ft, rel11). Making a
+near miss YELLOW too would mirror it (cautious direction; small count). Coordinator call, not Steph.
