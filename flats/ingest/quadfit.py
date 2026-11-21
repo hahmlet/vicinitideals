@@ -286,6 +286,7 @@ from flats.score.screen import (
     _beside_beyond,
     _court_beyond_rear,
     _fix,
+    fire_reach_ft,
     fit_for,
     screen,
 )
@@ -7921,7 +7922,11 @@ def fire_checked(
         return fire.route_ft(Polygon(ring), lot.lot_geom, streets, offset)
 
     route = measure(s.drawing)
-    limit = float(s.rules.get("fire_access_max_ft"))
+    # The code's 150 ft plus the 5 ft allowed for the cautious hose start
+    # (rulings.yaml 2026-11-21-fire-hose-five-ft; the screen's own reach,
+    # :func:`flats.score.screen.fire_reach_ft`): every keep, drop and retry
+    # below is made against the line the fire check passes to.
+    limit = fire_reach_ft(s.rules)
     at = None
     if (route is None or route > limit) and fitter is not None:
         fronts = _street_lines(s.lot)

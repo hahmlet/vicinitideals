@@ -3937,11 +3937,13 @@
     screen gives the long dead end's, the narrow street's and the wide
     road's readings the same 155 ft, and takes the first two only where the
     code's reading misses it; a road not told from a freeway
-    (FIRE-ROAD-UNCLEAR) is held as before. Not changed: the bridge (flats/ingest/quadfit.py
-    fire_checked) still measures those readings, and re-places a building,
-    only where the route is past 150 ft, and records a reading only where it
-    reaches within 150 ft -- so a lot reached on one of them at 150 to 155 ft
-    stays RED (cautious); the 150 ft dead-end length (OFC 503.2.5) is a
-    separate rule. Built on flats/rel11-firenear; not live until released.
+    (FIRE-ROAD-UNCLEAR) is held as before. The bridge
+    (flats/ingest/quadfit.py fire_checked) measures against the same 155 ft
+    (flats/score/screen.py fire_reach_ft, one setting): the dead-end and
+    narrow-street readings are kept or dropped at 155, the re-placement
+    retry, the turn and the from-the-curb reading start past 155, and the
+    wide-road reading reaches to 155. The 150 ft dead-end length (OFC
+    503.2.5) is a separate rule and is unchanged. Built on
+    flats/rel11-firenear; not live until released.
   source: Steph 2026-11-21 (chat)
-  encoded_in: [flats/score/screen.py, flats/config/flags.yaml]
+  encoded_in: [flats/score/screen.py, flats/ingest/quadfit.py, flats/config/flags.yaml]

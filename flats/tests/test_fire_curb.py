@@ -340,6 +340,17 @@ def test_the_bridge_measures_the_curb_reading_only_where_the_strict_one_misses(c
     assert got.facts.fire_route_ft == pytest.approx(middle - 8.0, abs=0.01)
     assert got.facts.fire_route_curb_ft is None
 
+    # The bridge measures against the same line the screen passes to: a
+    # route 4 ft past the code's figure is inside the 5 ft allowance
+    # (rulings.yaml 2026-11-21-fire-hose-five-ft), so it passes, and the
+    # curb reading is not measured for it.
+    over = _limit(green, middle - 12.0)
+    got = fire_checked(over, lot, (tree, geoms, edges), policy=policies[0], relief=policies[1])
+    assert got.facts.fire_route_ft == pytest.approx(middle - 8.0, abs=0.01)
+    assert got.facts.fire_route_curb_ft is None
+    assert got.signed.triage is not Triage.red
+    assert "FIRE-HOSE-VALIDATE" in {f.code for f in got.signed.flags}
+
 
 def test_an_unmeasured_street_red_on_the_middle_alone_is_flagged(corpus, policies) -> None:
     # Nothing measured: the strict route from the middle, the curb reading

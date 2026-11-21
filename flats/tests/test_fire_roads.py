@@ -337,6 +337,32 @@ def test_the_screen_holds_a_lot_reached_only_up_a_long_dead_end_yellow() -> None
     assert result.triage is Triage.green
 
 
+def test_a_dead_end_lot_at_152_ft_on_the_codes_reading_now_passes() -> None:
+    """rulings.yaml 2026-11-21-fire-hose-five-ft: up to 155 ft passes. The
+    code's reading (the truck not driven up the long dead end) reaches at
+    152 ft, so the dead end's question no longer arises: GREEN, with the
+    note to validate the length (the five such lots on run ow11, e.g.
+    1S2E07CB  -10500 at 152.1 ft, were held YELLOW by FIRE-DEAD-END)."""
+    from flats.score.screen import Triage
+    from flats.score.slack import Verdict
+    from flats.tests.test_fire import check, facts, run
+
+    result = run(facts(fire_route_ft=152.0, fire_route_tried=True, fire_route_freed_ft=120.0))
+    assert check(result, "fire_access_ft").verdict is Verdict.passes
+    assert check(result, "fire_access_ft").observed == 152.0
+    codes = {f.code for f in result.flags}
+    assert "FIRE-DEAD-END" not in codes and "FIRE-HOSE-VALIDATE" in codes
+    assert result.triage is Triage.green
+    # Reached only up the long dead end at 152 ft: held YELLOW, as at 120.
+    result = run(facts(fire_route_ft=260.0, fire_route_tried=True, fire_route_freed_ft=152.0))
+    assert check(result, "fire_access_ft") is None
+    assert "FIRE-DEAD-END" in {f.code for f in result.flags}
+    assert result.triage not in (Triage.green, Triage.red)
+    # Past 155 on both readings: RED.
+    result = run(facts(fire_route_ft=260.0, fire_route_tried=True, fire_route_freed_ft=156.0))
+    assert result.triage is Triage.red
+
+
 # --- a right-of-way too narrow for the road and its curbs (2026-11-10) -----
 
 
