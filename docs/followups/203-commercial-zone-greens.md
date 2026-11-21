@@ -1,10 +1,9 @@
-# 203. Commercial / mixed-use zone greens outside Portland: 5 lots should not be plain green
+# 203. Commercial / mixed-use zone greens: what is still open
 
-**Status:** hunted 2026-11-18 on run 128 (report ../vicinitideals-worktrees/commercial-greens.findings.md). 139 greens in 28 zones, 11 jurisdictions. Use permission right everywhere; 134 lots / 25 zones confirmed right. Fix lane flats/commercial-fixes (from rel10d), rides the release after rel10.
+Shipped in rel11 (run 131, ee8baaba) 2026-11-21. Min floor area ratio held (Beaverton commercial zones, Hillsboro), Estacada D 16/acre use condition YELLOW, Gresham 4.1121 shop-front streets YELLOW, two Gresham historic lots RED (report ../vicinitideals-worktrees/commercial-greens.findings.md).
 
-1. Minimum floor area ratio printed, not encoded (-> YELLOW under the 2026-11-04 ruling, more pods could fit): Beaverton SC-HDR 1S116BA02200 (BDC Table 20.20.15 row B.1, min 0.40; pod 0.047); Hillsboro SCR-V 1N235AD00300 (CDC Table 12.24.460-1, 0.4 / 0.5 near station). Doubt recorded in both rule files: does the floor reach a residential-only project.
-2. Estacada D, 3 lots (34E20DC00200, 34E20DD08500, 34E29AB00300): EMC 16.26.020 item 4 allows a fourplex only "provided that... the residential density of the development is not less than sixteen (16) dwelling units per acre"; lots sit at 6.45 / 4.15 / 11.65. Screen treats it as the soft density flag; here it is a condition of the use. Built conservative: YELLOW (more pods could reach 16/acre). STEPH (non-blocking): yellow or red?
-3. Gresham 4.1121 required first-floor commercial on parts of E Powell, N Main, NE 3rd: not encoded; no green there today. Encode so a future lot cannot go green.
-4. Noted, not changed: Oregon City MUD (2 lots) "Twenty-five feet or two stories" held as two storeys (pod ~20 ft passes on storeys) -- a reading choice in the rule file. Not checked: street position of 8 of 10 Gresham DTM lots; whether 285 SW Wade St (Estacada D) is north of OR 224.
-
-2026-11-18 BUILT flats/commercial-fixes 1470b0f4 (from rel10d; hand-off ../vicinitideals-worktrees/commercial-fixes.handoff.md). Min FAR stored as printed in six Beaverton commercial zones + Hillsboro (0.5, 0.4 beyond 1,300 ft of a station); Estacada D 16/acre use condition YELLOW; Gresham 4.1121 shop-front street stretches YELLOW (worked from street names, not a map); Giese House + Ely Building rows added to historic/gresham.csv (Y->R). At merge the coordinator updates: test_refusals count 300->299, gaps.json regenerate, quadfit mirror ledger (min_far 2->9, new key min_density_conditions_use: 1). STEPH (non-blocking): Estacada D yellow or red; Gresham shop-front streets yellow or red.
+Open:
+1. STEPH (non-blocking): Estacada D (3 lots, EMC 16.26.020 item 4, 16 units/acre condition) stays yellow or goes red? Gresham shop-front street stretches yellow or red? Built yellow for both.
+2. Not checked: street position of 8 of 10 Gresham DTM lots; whether 285 SW Wade St (Estacada D) is north of OR 224.
+3. Reading choice in the rule file: Oregon City MUD (2 lots) "Twenty-five feet or two stories" held as two storeys.
+4. Doubt recorded in the Beaverton SC-HDR and Hillsboro SCR-V rule files: does the min floor ratio reach a residential-only project.
