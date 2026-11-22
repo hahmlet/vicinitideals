@@ -481,6 +481,14 @@ def _rank(x: Any) -> int:
     return _RANK[x.colour.value]
 
 
+def _held_on(x: Any) -> frozenset[str]:
+    """What a view is held on: its reasons and the codes of its flags at
+    yellow or above, the steps' own move left out."""
+    reg, at = flag_plan.registry(), flag_plan.colour_rules().yellow_at_severity
+    codes = {f.code for f in x.flags if flag_plan.severity_of(f, reg) >= at}
+    return frozenset({*x.reasons, *codes} - {STAIR_MOVED, STAIR_MOVED_FLAG})
+
+
 def reconciled(first: Any, alt: Any) -> Any:
     """The answer once ``alt`` -- ``first``'s plan stood again with room kept
     for the steps, through the whole screen -- is back.
@@ -493,8 +501,9 @@ def reconciled(first: Any, alt: Any) -> Any:
       :data:`STAIR_MOVED_FLAG` so the move is attributable: a better colour
       is held at ``first``'s, so nothing becomes GREEN that was not; a worse
       one reads as it is, the flag naming why (fd8 bound: 1,326 green ->
-      yellow re-placements named nothing). A view red on the first placement
-      stays as it read.
+      yellow re-placements named nothing). A view of the same colour held on
+      something else (:func:`_held_on`) carries it too, unless GREEN (fd8b
+      move read F2). A view red on the first placement stays as it read.
 
     ``first`` is the answer every search kept, capped once
     (:func:`flats.ingest.quadfit.foundation_checked`); ``alt`` is the whole
@@ -516,12 +525,25 @@ def reconciled(first: Any, alt: Any) -> Any:
         # second placement never takes a red lot out of red.
         if _red(before):
             return before
-        if _rank(x) == _rank(before) or any(f.code == STAIR_MOVED_FLAG for f in x.flags):
+        if any(f.code == STAIR_MOVED_FLAG for f in x.flags):
+            return x
+        same = _rank(x) == _rank(before)
+        # Same colour on what it is held on: nothing to attribute. A GREEN on
+        # GREEN is never flagged (the flag would turn it yellow).
+        if same and (x.colour is flag_plan.Colour.green or _held_on(x) == _held_on(before)):
             return x
         better = _rank(x) < _rank(before)
-        words = (f"foundation: the plan was stood again to leave the steps room and reads {x.colour.value} "
-                 f"there; the first placement read {before.colour.value}"
-                 + (", so it is held" if better else ", so the new placement's colour stands"))
+        if same:
+            # fd8b move read F2: 8 lots first yellow on the cap (NEAR-CAP,
+            # CLASS-UNREAD) read yellow after the move on something else
+            # (MEASURE-COURT-TURNS ...) and nothing said the plan had moved.
+            words = (f"foundation: the plan was stood again to leave the steps room and reads {x.colour.value} "
+                     f"there on {', '.join(sorted(_held_on(x))) or 'nothing named'}; the first placement read "
+                     f"{before.colour.value} on {', '.join(sorted(_held_on(before))) or 'nothing named'}")
+        else:
+            words = (f"foundation: the plan was stood again to leave the steps room and reads {x.colour.value} "
+                     f"there; the first placement read {before.colour.value}"
+                     + (", so it is held" if better else ", so the new placement's colour stands"))
         triage = Triage.yellow if better and x.triage is Triage.green else x.triage
         reasons = x.reasons if STAIR_MOVED in x.reasons else (*x.reasons, STAIR_MOVED)
         return dataclasses.replace(x, triage=triage, flags=(*x.flags, _flag(STAIR_MOVED_FLAG, STAIR_MOVED, words)),

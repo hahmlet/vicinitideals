@@ -151,6 +151,32 @@ def test_the_drawing_stands_the_building_back_so_its_steps_stay_on_the_lot() -> 
     assert not stairs_off_lot(kept.building, StairLot(lot, 4.0))
 
 
+def test_a_court_whose_drive_is_not_drawn_still_stands_back_to_keep_the_steps() -> None:
+    """fd8b move read F1 (1N1E23BB  -19300, 1N1E28CD  -02700): a court fed
+    off a side street, from a rear alley, beside or in a column has a drive
+    the drawing does not place (``yard_moves`` False), so its plan is not
+    moved back from the street for the yards. The steps stand on the
+    building, though: the plan stands back to keep their room, and no further."""
+    lot = shapely.box(-5, -2, 75, 125)
+    fitter = Fitter(ENVELOPE, angles=(0.0,))
+    fit = fitter.fit(50.0, 25.0, allow_flip=False, placement=False, lane_ft=12.0)
+
+    def drawn(stairs):
+        return draw(fitter, fit, width_ft=50.0, depth_ft=25.0, lane_ft=12.0, court_depth_ft=30.0,
+                    court_beyond_ft=10.0, street=SOUTH, yard=SOUTH, yard_moves=False,
+                    stair_lot=None if stairs is None else StairLot(lot, stairs))
+
+    # The first placement (nothing kept) is where it always was: at the street.
+    first = drawn(None)
+    assert first is not None and first.fits
+    assert first.building.bounds[1] == pytest.approx(0.0, abs=0.51)
+    kept = drawn(4.0)
+    assert kept is not None and kept.fits
+    assert not stairs_off_lot(kept.building, StairLot(lot, 4.0))
+    # Stood back only as far as the steps need (2 ft past the envelope's front).
+    assert 2.0 - 0.06 <= kept.building.bounds[1] <= 2.0 + 1.0
+
+
 def test_no_window_with_room_still_draws_the_nearest() -> None:
     """Where no window keeps the steps on the lot the plan is drawn where it
     would stand, and the screen reads the steps there (RED)."""
@@ -338,6 +364,24 @@ def test_a_worse_re_placement_reads_worse_with_the_flag(green, monkeypatch) -> N
         assert x.colour is Colour.yellow and fc.STAIR_MOVED in x.reasons
         assert any(f.code == "MEASURE-COURT-TURNS" for f in x.flags)
         assert any(f.code == fc.STAIR_MOVED_FLAG and "stands" in f.source for f in x.flags)
+
+
+def test_a_same_colour_re_placement_on_another_reason_carries_the_flag(green, monkeypatch) -> None:
+    """fd8b move read F2 (8 lots): first YELLOW on the cap (NEAR-CAP), the
+    plan with room kept YELLOW on its court's turns. The colour is the same
+    but what holds it is not: FOUNDATION-STAIR-MOVED says the plan moved."""
+    from flats.score.flags import Colour
+
+    first = _yellow(green, code=fc.NEAR_FLAG)
+    out, _ = _loop(monkeypatch, first, lambda d: _yellow(green))
+    for x in (out.signed, out.screening):
+        assert x.colour is Colour.yellow and fc.STAIR_MOVED in x.reasons
+        (flag,) = [f for f in x.flags if f.code == fc.STAIR_MOVED_FLAG]
+        assert "MEASURE-COURT-TURNS" in flag.source and fc.NEAR_FLAG in flag.source
+    # Held on the same thing after the move: nothing to attribute.
+    same, _ = _loop(monkeypatch, _yellow(green), lambda d: _yellow(green))
+    assert fc.STAIR_MOVED not in same.signed.reasons
+    assert not any(f.code == fc.STAIR_MOVED_FLAG for f in same.signed.flags)
 
 
 def test_a_red_re_placement_is_red_on_the_steps(green, monkeypatch) -> None:

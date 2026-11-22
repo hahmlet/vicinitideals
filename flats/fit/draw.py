@@ -832,6 +832,9 @@ def _place(
     yard = tuple(yard)
     bests: list[tuple[float, float, float, _Placed]] = []
     fallbacks: list[tuple[float, float, float, _Placed]] = []
+    # Windows that keep the steps' room whatever their court does: where the
+    # plan may stand back from the street to keep it (FOLLOWUPS 213 fd8-fix2).
+    roomy: list[tuple[float, float, float, _Placed]] = []
     for grid in grids:
         if fitter is not None:
             masks = fitter.court_masks(grid, d_cells, w_cells, over_ft)
@@ -871,18 +874,22 @@ def _place(
                 bx0, bx1 = (wx0, wx0 + across_b) if left else (wx1 - across_b, wx1)
                 building = np.where(way, _box_distance(bx0, by0, bx1, by1, pts), np.inf)
                 spread = _spread(bx0, by0, bx1, by1, gpts)
+                stair_bad = _stairs_bad(
+                    bx0, by0, bx1, by1, lot=stair_lot,
+                    depth_ft=stairs.depth_ft if stairs is not None else 0.0,
+                )
                 bad = _yard_bad(
                     wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b,
                     court=court, yard=yard_local,
                 ) | _stretch_bad(
                     wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b,
                     court=court, stretch=stretch, segs=segs,
-                ) | _stairs_bad(
-                    bx0, by0, bx1, by1, lot=stair_lot,
-                    depth_ft=stairs.depth_ft if stairs is not None else 0.0,
-                )
-                for clear in (True, False):
-                    ranked = np.where(bad, np.inf, building) if clear else building
+                ) | stair_bad
+                kinds = [(bests, bad), (fallbacks, None)]
+                if stair_lot is not None:
+                    kinds.append((roomy, stair_bad))
+                for into, skip in kinds:
+                    ranked = building if skip is None else np.where(skip, np.inf, building)
                     ranked = _near_tie(ranked, res)
                     i = int(np.lexsort((-court_ft, spread, ranked))[0])
                     if not math.isfinite(float(ranked[i])):
@@ -890,10 +897,15 @@ def _place(
                     key = (float(building[i]), float(spread[i]), -float(court_ft[i]))
                     hit = hits[i]
                     got = (*key, _Placed(grid, int(hit[0]), int(hit[1]), d_cells, low, left))
-                    (bests if clear else fallbacks).append(got)
+                    into.append(got)
     cell = max((g.res for g in grids), default=0.0)
     best = _pick_near(bests, cell)
-    fallback = _pick_near(fallbacks, cell)
+    # The nearest window at all -- or, where the steps' room is kept, the
+    # nearest that keeps it: the steps stand on the building, so standing it
+    # back to keep their room is a real move even where the court's drive is
+    # not drawn (fd8b move read F1: 1N1E23BB  -19300 kept a window the steps
+    # ran off the lot from while thousands kept them on it).
+    fallback = _pick_near(roomy, cell) or _pick_near(fallbacks, cell)
     if (
         # A court the partial alley feeds is reached from the alley: moving
         # the plan back toward it is how it reaches the stretch.
