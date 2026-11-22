@@ -403,9 +403,14 @@ def stair_hits(s: Any) -> list[dict[str, Any]]:
 
 
 def _red(x: Any) -> bool:
+    """Whether a view reads RED: on its triage, or on its colour -- a bind
+    with a discretionary path round it (a ``fit_ft`` miss open to a variance)
+    leaves the triage yellow and the colour red (fd8 bound: 47 NEAR-CAP and 2
+    CLASS-UNREAD lots went red on a kept-room plan's variance miss, the triage
+    read yellow, and :func:`reconciled` passed the red with no flag)."""
     from flats.score.screen import Triage
 
-    return x.triage is Triage.red
+    return x.triage is Triage.red or x.colour is flag_plan.Colour.red
 
 
 def next_room(s: Any) -> StairRoom | None:

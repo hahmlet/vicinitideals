@@ -444,3 +444,25 @@ def test_a_screen_keeping_room_draws_it(green) -> None:
     if s.drawing.get("lane"):
         assert b.distance(shapely.Polygon(s.drawing["lane"])) == pytest.approx(6.0, abs=0.2)
     assert not stairs_off_lot(b, StairLot(lot, 6.0))
+
+
+def test_a_kept_room_plan_red_on_a_variance_miss_is_red_on_the_steps(green, monkeypatch) -> None:
+    """fd8 bound, 1S1E19CC  -10100 / 1S1E16CC  -05900 / 1N1E36BA  -05700: the
+    kept-room plan missed its fit with a variance path -- triage YELLOW,
+    colour RED -- and passed as it read, red with only FOUNDATION-NEAR-CAP or
+    -CLASS-UNREAD on it. It is RED on the steps' room, by name."""
+    from flats.score import flags as flag_plan
+    from flats.score.flags import Colour
+    from flats.score.screen import Triage
+
+    miss = flag_plan.Bind("fit_ft", 100.0, 120.0, 20.0, relief="variance", relief_tier="discretionary")
+    soft = dataclasses.replace(green.signed, triage=Triage.yellow, binds=(miss,))
+    assert soft.colour is Colour.red and soft.triage is Triage.yellow
+    alt = dataclasses.replace(green, signed=soft, screening=dataclasses.replace(soft, binds=()))
+    out = fc.reconciled(_with_hits(green), alt)
+    assert out.design.stairs is None
+    for x in (out.signed, out.screening):
+        assert x.colour is Colour.red and fc.STAIR_ROOM in x.reasons
+    # Through the loop too.
+    out, _ = _loop(monkeypatch, green, lambda d: alt)
+    assert out.signed.colour is Colour.red and fc.STAIR_ROOM in out.signed.reasons
