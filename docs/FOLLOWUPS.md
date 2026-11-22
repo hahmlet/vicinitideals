@@ -46,7 +46,7 @@ the full one.)
 
 ## 1. Claude -- priority
 
-213. [Claude] [Steph: entrance-side red?] [scan: YES -- toward red] **Foundation reply FD8: adopt the precast steps, code fixes and real doors; RED where no foundation fits the six-step cap** -- opened 11-20; BUILT a78c1ade on flats/foundation-fd8 with step room + FD9 (about 7,400 red on the cap, 1,800 on step room), bound after rel11. [file](followups/213-foundation-fd8-six-step-cap.md)
+213. [Claude] [Steph: entrance-side red?] [scan: YES -- toward red] **Foundation reply FD8: adopt the precast steps, code fixes and real doors; RED where no foundation fits the six-step cap** -- opened 11-20; BUILT a78c1ade on flats/foundation-fd8 with step room + FD9; fd8 bound 11-22 NOT CLEAN (20 gained green, 7,275 moves unattributed: the cap check and the stair re-placement move lots they do not name) -- fix lane fd8-fix.brief.md. [file](followups/213-foundation-fd8-six-step-cap.md)
 214. [Claude] [scan: YES -- toward red] **Precast steps in a front or side setback: read and encode each city's projection allowances** -- opened 11-21, after the 213 release. [file](followups/214-step-setback-projections.md)
 215. [Claude] [scan: YES -- toward green] **Portland short connector roads read as limited roads; re-placement can land worse** -- opened 11-21 from the ow11 read, after rel11. [file](followups/215-portland-connector-roads.md)
 212. [Claude] [scan: no move expected] **Fire access rules still cite the 2022 fire code and the 2022 local guide; the 2025 code and 2025 guides are now held** -- found 11-19; 150 ft, 20 ft and dead-end figures re-read and unchanged; compare the rest, store the 2025 guide, re-point the citations; after rel11. [file](followups/212-fire-citations-2025.md)
