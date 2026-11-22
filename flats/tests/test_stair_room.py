@@ -10,7 +10,8 @@ Covered here: where a unit lands (:func:`flats.ingest.foundation_cap.
 stair_room_of`), the room kept (:meth:`flats.designs.model.Design.reserving`,
 the fit's wider room, the drawing's strip and lot test), the answer
 (:func:`~flats.ingest.foundation_cap.next_room`, ``no_room``, ``reconciled``)
-and the screen's loop (:func:`flats.ingest.quadfit._stair_room`).
+and the screen's loop (:func:`flats.ingest.quadfit.foundation_checked`), worked
+once on the answer every search kept (fd8-fix).
 """
 
 from __future__ import annotations
@@ -269,26 +270,153 @@ def test_reconciled_red_elsewhere_is_red_on_the_steps(green) -> None:
 # --- the screen's loop ----------------------------------------------------------
 
 
-def test_the_loop_screens_again_keeping_the_room(green, monkeypatch) -> None:
+def _yellow(s, code="MEASURE-COURT-TURNS"):
+    from flats.score import flags as flag_plan
+    from flats.score.screen import Triage
+
+    flag = flag_plan.Flag(code, flag_plan.LOT, "COURT_TURNS", source="x")
+    v = dataclasses.replace(s.signed, triage=Triage.yellow, flags=(*s.signed.flags, flag))
+    return dataclasses.replace(s, signed=v, screening=v)
+
+
+def _loop(monkeypatch, first, alt_of):
+    """``foundation_checked`` on ``first`` with the cap faked: the first
+    placement's steps land (HITS), a placement keeping room has them clear;
+    the whole screen again (``_screen_lot_plain``) answers ``alt_of(design)``."""
     from flats.ingest import quadfit
 
     seen = []
 
-    def fake(lot, designs, **kw):
+    def plain(lot, designs, **kw):
         seen.append(designs[0])
-        return [dataclasses.replace(green, design=designs[0],
-                                    foundation={"state": "fits", "stair_room": {"hits": [], "need": NEED}})]
+        return [dataclasses.replace(alt_of(designs[0]), design=designs[0])]
 
-    monkeypatch.setattr(quadfit, "_screen_lot_once", fake)
-    kw = dict(rules=None, policy=None, relief=None, step_deg=30.0, roads=None, bound=True, pool=None,
-              terrain=object(), room=True)
-    out = quadfit._stair_room(_with_hits(green), green.lot, **kw)
+    def cap(s, **kw):
+        hits = HITS if s.design.stairs is None else []
+        return dataclasses.replace(s, foundation={"state": "fits", "stair_room": {"hits": hits, "need": NEED}})
+
+    monkeypatch.setattr(quadfit, "_screen_lot_plain", plain)
+    monkeypatch.setattr(fc, "checked", cap)
+    kw = dict(rules=None, policy=None, relief=None, step_deg=30.0, roads=None, terrain=object())
+    (out,) = quadfit.foundation_checked(first.lot, [first.design], [first], **kw)
+    return out, seen
+
+
+def test_the_loop_screens_again_keeping_the_room(green, monkeypatch) -> None:
+    from flats.ingest import quadfit
+
+    out, seen = _loop(monkeypatch, green, lambda d: green)
     assert [d.stairs for d in seen] == [StairRoom(court_ft=6.25, lot_ft=3.5, passes=1)]
     assert out.design.parking.building_gap_ft == 6.25
     assert out.signed.colour is green.signed.colour
-    # Clear steps: nothing screened again.
-    seen.clear()
-    assert quadfit._stair_room(green, green.lot, **kw) is green and not seen
+    assert fc.STAIR_MOVED not in out.signed.reasons  # same colour: nothing moved
+    # No terrain: the cap is off and nothing is screened again.
+    assert quadfit.foundation_checked(green.lot, [green.design], [green], rules=None, policy=None,
+                                      relief=None, terrain=None) == [green]
+
+
+def test_a_better_re_placement_is_held_with_the_flag(green, monkeypatch) -> None:
+    """11E25AA02800 (fd8 bound): first YELLOW, the plan with room kept GREEN
+    (the narrow-lane reading) -- held YELLOW, FOUNDATION-STAIR-MOVED."""
+    from flats.score.flags import Colour
+
+    out, seen = _loop(monkeypatch, _yellow(green), lambda d: green)
+    assert len(seen) == 1
+    for x in (out.signed, out.screening):
+        assert x.colour is Colour.yellow and fc.STAIR_MOVED in x.reasons
+        assert any(f.code == fc.STAIR_MOVED_FLAG and "held" in f.source for f in x.flags)
+
+
+def test_a_worse_re_placement_reads_worse_with_the_flag(green, monkeypatch) -> None:
+    """11E25AA01700 (fd8 bound): first GREEN, the plan with room kept YELLOW
+    on its court's turns -- YELLOW as it reads, and FOUNDATION-STAIR-MOVED
+    names why (the bound's 1,326 green -> yellow moves named nothing)."""
+    from flats.score.flags import Colour
+
+    out, _ = _loop(monkeypatch, green, lambda d: _yellow(green))
+    for x in (out.signed, out.screening):
+        assert x.colour is Colour.yellow and fc.STAIR_MOVED in x.reasons
+        assert any(f.code == "MEASURE-COURT-TURNS" for f in x.flags)
+        assert any(f.code == fc.STAIR_MOVED_FLAG and "stands" in f.source for f in x.flags)
+
+
+def test_a_red_re_placement_is_red_on_the_steps(green, monkeypatch) -> None:
+    from flats.score import flags as flag_plan
+    from flats.score.flags import Colour
+    from flats.score.screen import Triage
+
+    bind = flag_plan.Bind("fit_ft", 80.0, 90.0, 10.0)
+    red = dataclasses.replace(green.signed, triage=Triage.red, binds=(bind,))
+    out, _ = _loop(monkeypatch, green, lambda d: dataclasses.replace(green, signed=red, screening=red))
+    assert out.signed.colour is Colour.red and fc.STAIR_ROOM in out.signed.reasons
+    assert out.design.stairs is None  # the first placement, red on its steps' room
+
+
+def test_the_cap_is_never_worked_inside_a_search(green, monkeypatch) -> None:
+    """fd8 bound, 11E25AA00301 / 1S112BD01300: the cap worked inside
+    ``_screen_lot_once`` turned the side-door reading red, so
+    :func:`side_door_checked` kept the street-facing miss -- RED on
+    ``fit_ft`` with no foundation reason. Every search now chooses without
+    the cap, and the cap reds the plan the search kept, by name."""
+    from flats.foundation import cap as caps
+    from flats.ingest import quadfit
+    from flats.score import flags as flag_plan
+    from flats.score.flags import Colour
+    from flats.score.screen import Triage
+
+    def boom(*a, **kw):
+        raise AssertionError("the six-step cap was worked inside a search")
+
+    monkeypatch.setattr(fc, "checked", boom)
+    # The street-facing plan missed its fit; the side-door plan fits, yellow.
+    miss = flag_plan.Bind("fit_ft", 60.0, 80.0, 20.0)
+    red = dataclasses.replace(green.signed, triage=Triage.red, binds=(miss,))
+    street = dataclasses.replace(green, signed=red, screening=red)
+    side = _yellow(green, code="ENTRANCE-SIDE-DOOR")
+    monkeypatch.setattr(quadfit, "_street_fit_missed", lambda s, d: (60.0, 80.0))
+    monkeypatch.setattr(quadfit, "door_bearings", lambda lot: (0.0,))
+    monkeypatch.setattr(quadfit, "_screen_lot_plain", lambda lot, designs, **kw: [side])
+    kw = dict(rules=None, policy=None, relief=None, step_deg=30.0, roads=None, terrain=object())
+    (kept,) = quadfit.side_door_checked(green.lot, [green.design], [street], **kw)
+    assert kept is side
+
+    # The cap, worked once on what the search kept, names itself.
+    def over(s, **kw):
+        facts = {"state": caps.RED, "height_in": 60.0, "cap_in": 51.5, "over_by_in": 8.5, "words": "w",
+                 "stair_room": {"hits": [], "need": NEED}}
+        return dataclasses.replace(s, foundation=facts, screening=fc._apply(s.screening, facts),
+                                   signed=fc._apply(s.signed, facts))
+
+    monkeypatch.setattr(fc, "checked", over)
+    (out,) = quadfit.foundation_checked(green.lot, [green.design], [kept], **kw)
+    assert out.signed.colour is Colour.red and fc.FOUNDATION_STEPS_CAP in out.signed.reasons
+    assert [b.check for b in out.signed.binds] == [fc.CHECK]
+
+
+def test_a_real_screen_never_works_the_cap_inside(monkeypatch) -> None:
+    """The whole real screen of a lot, the cap patched to fail if worked: no
+    pass inside :func:`screen_lot` works it (only :func:`foundation_checked`,
+    off without terrain), and the answer keeps the reading it stood on."""
+    from flats.ingest.quadfit import lot_from_row, screen_lot
+    from flats.score import relief, slack
+    from flats.tests.test_historic_lists import _corpus
+    from flats.tests.test_quadfit_bridge import row
+
+    def boom(*a, **kw):
+        raise AssertionError("the six-step cap was worked inside a search")
+
+    monkeypatch.setattr(fc, "checked", boom)
+    corpus = _corpus()
+    x0, y0, w, d = 7_650_000.0, 680_000.0, 160.0, 200.0
+    lot = shapely.box(x0, y0, x0 + w, y0 + d)
+    edges = [[x0, y0, x0 + w, y0, "F"], [x0 + w, y0, x0 + w, y0 + d, "S"],
+             [x0 + w, y0 + d, x0, y0 + d, "R"], [x0, y0 + d, x0, y0, "S"]]
+    r = row(TLID="1S3E10BC  -99999", zone="R-5", jurisdiction="gresham", area_sqft=w * d,
+            frontage_ft=w, lot_width_ft=w, lot_depth_ft=d, edges_json=json.dumps(edges),
+            lot_wkb=shapely.to_wkb(lot), wkb=shapely.to_wkb(shapely.box(x0 + 5, y0 + 2, x0 + w - 5, y0 + d - 5)))
+    (s,) = screen_lot(lot_from_row(r, corpus.layers), [_pod()], rules=corpus, policy=slack.load_policy(),
+                      relief=relief.load_policy(), step_deg=30.0)
+    assert s.screened_on is not None and s.screened_on.tlid == s.lot.tlid
 
 
 def test_a_screen_keeping_room_draws_it(green) -> None:

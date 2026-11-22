@@ -1,7 +1,7 @@
 """The six-step cap inside the screen pass (FD8; Steph 2026-11-20).
 
-:func:`flats.ingest.foundation_cap.checked` runs last in ``_screen_lot_once``,
-after the sewer: RED only when every method open to the lot fails the cap,
+:func:`flats.ingest.foundation_cap.checked` runs last, once, in ``screen_lot``
+(:func:`flats.ingest.quadfit.foundation_checked`), after every search: RED only when every method open to the lot fails the cap,
 YELLOW where the best is within 2 in over, where the ground class is unread
 and B is over, or where the ground could not be read; a note within 2 in
 under. Never makes a lot GREEN. Room for the steps: test_stair_room.

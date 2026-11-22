@@ -1416,7 +1416,7 @@ types:
     approved_on: null
     raised_from: [FOUNDATION_STAIR_ROOM]
   FOUNDATION-STAIR-MOVED:
-    description: "The plan was stood again to leave the precast steps room (FOLLOWUPS 213), and on the new placement it reads better than the first placement did. Nothing becomes green that was not (Steph 2026-11-20, rulings.yaml 2026-11-20-stair-room-reserved), so it is held at the first placement's colour: yellow."
+    description: "The plan was stood again to leave the precast steps room (FOLLOWUPS 213), and on the new placement it reads a different colour than the first placement did. Where it reads better, nothing becomes green that was not (Steph 2026-11-20, rulings.yaml 2026-11-20-stair-room-reserved), so it is held at the first placement's colour: yellow. Where it reads worse (green to yellow), the new placement's colour stands and this flag names why."
     kind: categorical
     risk: possible
     severity: 3

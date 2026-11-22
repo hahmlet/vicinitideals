@@ -35,7 +35,7 @@ each door's precast unit, 4 ft wide and as deep as its risers need, is laid
 straight out from the wall where the building is drawn, and read against the
 drawn court's stalls (past the standoff off the wall), the drawn lane and the
 lot line (:func:`stair_room_of`). Where one lands on any of them,
-:func:`flats.ingest.quadfit._stair_room` stands the plan again with that much
+:func:`flats.ingest.quadfit.foundation_checked` stands the plan again with that much
 room kept (:class:`flats.designs.model.StairRoom`) and the whole screen runs
 on the new placement; where it still has no room after
 :data:`STAIR_PASSES` placements, or the plan with room kept is red, the lot
@@ -43,9 +43,10 @@ is RED with :data:`STAIR_ROOM_FLAG` naming the door, what it lands on and by
 how much (:func:`no_room`), the facts kept in the row's ``foundation_cap``.
 
 Only a drawn lot (a fit and a building ring) is read, and only a colour that
-is not RED already moves; nothing here makes a lot GREEN. Like
-:func:`flats.geom.sewer.checked`, it is the last step of a lot's screen,
-applied to ``screening`` and ``signed`` alike, and adds nothing twice.
+is not RED already moves; nothing here makes a lot GREEN. It is the last step
+of a lot's screen, worked once on the answer every search between readings
+kept (:func:`flats.ingest.quadfit.screen_lot`), never inside one, applied to
+``screening`` and ``signed`` alike, and adds nothing twice.
 
 The check is on wherever the run has elevation models (``terrain``); a run
 without them (the unit tests' screens) is unchanged.
@@ -82,8 +83,9 @@ CLOSE_FLAG = "FOUNDATION-CAP-CLOSE"
 STAIR_CHECK = "foundation_stair_room"
 STAIR_ROOM = "FOUNDATION_STAIR_ROOM"
 STAIR_ROOM_FLAG = "FOUNDATION-STAIR-ROOM"
-#: YELLOW: the plan stood again with room for the steps reads better than the
-#: first placement did, so it is held at the first one's colour.
+#: The plan stood again with room for the steps reads another colour than the
+#: first placement did: better, held at the first one's colour (YELLOW); worse,
+#: the new colour with this flag naming why.
 STAIR_MOVED = "FOUNDATION_STAIR_MOVED"
 STAIR_MOVED_FLAG = "FOUNDATION-STAIR-MOVED"
 REASONS: tuple[str, ...] = (
@@ -378,7 +380,7 @@ def checked(
 ) -> Any:
     """``s`` with the six-step cap applied and its steps' room read (see the
     module docstring); the room is acted on by
-    :func:`flats.ingest.quadfit._stair_room`."""
+    :func:`flats.ingest.quadfit.foundation_checked`."""
     if terrain is None or not s.drawing or not getattr(s.fit, "fits", False) or _ring_of(s.drawing) is None:
         return s
     side = getattr(s.facts, "entrance_side_fit", None) if s.facts is not None else None
@@ -481,10 +483,20 @@ def reconciled(first: Any, alt: Any) -> Any:
     * ``alt`` red on its own steps' room: it, with its own flag.
     * ``alt`` red for anything else: ``first`` RED on its steps' room (the plan
       that leaves them room does not pass), the other reasons named.
-    * Otherwise ``alt`` (its steps have room, or it would be red): never
-      better than ``first`` read -- a better colour is held at ``first``'s
-      with :data:`STAIR_MOVED_FLAG`, so nothing becomes GREEN that was not,
-      and a view red on the first placement stays as it read.
+    * Otherwise ``alt`` (its steps have room, or it would be red), and every
+      view whose colour differs from ``first``'s carries
+      :data:`STAIR_MOVED_FLAG` so the move is attributable: a better colour
+      is held at ``first``'s, so nothing becomes GREEN that was not; a worse
+      one reads as it is, the flag naming why (fd8 bound: 1,326 green ->
+      yellow re-placements named nothing). A view red on the first placement
+      stays as it read.
+
+    ``first`` is the answer every search kept, capped once
+    (:func:`flats.ingest.quadfit.foundation_checked`); ``alt`` is the whole
+    screen again with room kept, capped once -- never an answer some outer
+    search chose between after the cap had moved it (fd8 bound: a re-placed
+    reading red on the steps sent 11E25AA02800 to the narrow-lane search,
+    whose GREEN then stood).
     """
     if _red(alt.signed) or _red(alt.screening):
         if STAIR_ROOM in alt.signed.reasons or STAIR_ROOM in alt.screening.reasons:
@@ -499,11 +511,13 @@ def reconciled(first: Any, alt: Any) -> Any:
         # second placement never takes a red lot out of red.
         if _red(before):
             return before
-        if _rank(x) >= _rank(before) or any(f.code == STAIR_MOVED_FLAG for f in x.flags):
+        if _rank(x) == _rank(before) or any(f.code == STAIR_MOVED_FLAG for f in x.flags):
             return x
+        better = _rank(x) < _rank(before)
         words = (f"foundation: the plan was stood again to leave the steps room and reads {x.colour.value} "
-                 f"there; the first placement read {before.colour.value}, so it is held")
-        triage = Triage.yellow if x.triage is Triage.green else x.triage
+                 f"there; the first placement read {before.colour.value}"
+                 + (", so it is held" if better else ", so the new placement's colour stands"))
+        triage = Triage.yellow if better and x.triage is Triage.green else x.triage
         reasons = x.reasons if STAIR_MOVED in x.reasons else (*x.reasons, STAIR_MOVED)
         return dataclasses.replace(x, triage=triage, flags=(*x.flags, _flag(STAIR_MOVED_FLAG, STAIR_MOVED, words)),
                                    reasons=tuple(reasons))

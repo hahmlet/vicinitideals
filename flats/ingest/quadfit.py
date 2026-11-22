@@ -3496,6 +3496,11 @@ class Screened:
     #: decides it and by how much, which face takes the front doors and why.
     #: None where nothing is drawn or the run has no elevation models.
     foundation: dict[str, Any] | None = None
+    #: The reading of the lot the pass that answered was handed (the side-door
+    #: lot, the floored yard, the second drive reading ...): the six-step cap
+    #: is framed against its street lines (:func:`foundation_checked`). None
+    #: before :func:`_screen_lot_once` sets it.
+    screened_on: QuadfitLot | None = None
 
 
 def _room(s: Screened, fitter: Fitter) -> Room | None:
@@ -5961,7 +5966,34 @@ def screen_lot(
 
     Where a ruling lets the drive be narrower than the pod's lane and the
     lane missed, the whole of that is done once more with the narrow drive
-    (:func:`narrow_lane_checked`)."""
+    (:func:`narrow_lane_checked`).
+
+    Last, once, on the answer all of that kept: the six-step cap at the
+    doors and the room for their steps (:func:`foundation_checked`)."""
+    got = _screen_lot_plain(
+        lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+    return foundation_checked(
+        lot, designs, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+
+
+def _screen_lot_plain(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """:func:`screen_lot` before the foundation: both forms, the side-door
+    search and the narrow-lane search, every choice between readings made
+    without the six-step cap (:func:`foundation_checked`)."""
     got = _screen_lot_forms(
         lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
@@ -6156,7 +6188,7 @@ def side_door_checked(
         if missed is None:
             continue
         with doors_to_the_side():
-            (side,) = screen_lot(
+            (side,) = _screen_lot_plain(
                 side_doors(lot, missed), [design], rules=rules, policy=policy,
                 relief=relief, step_deg=step_deg, roads=roads, terrain=terrain,
             )
@@ -6812,71 +6844,91 @@ def _screen_lot_once(
         # Outside public sewer is RED; no data for the place is a flag only
         # (Steph 2026-11-10, rulings.yaml 2026-11-10-no-public-sewer-red).
         won = sewer.checked(won, lot.sewer)
-        # The six-step cap at the doors of the drawing kept (FD8; rulings.yaml
-        # 2026-11-20-foundation-six-step-cap-red / -near-cap-yellow): last, as
-        # the sewer, so no re-screen after it drops its bind.
-        won = foundation_cap.checked(
-            won, terrain=terrain, lot_geom=lot.lot_geom, classes=lot.foundation_classes, tlid=lot.tlid,
-            streets=lambda: (*_street_lines(lot), *_side_street_lines(lot)),
-        )
-        # Room for those steps (rulings.yaml 2026-11-20-stair-room-reserved /
-        # -stair-no-room-red-flag): stood again keeping it, else RED.
-        won = _stair_room(
-            won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads,
-            bound=bound, pool=pool, terrain=terrain, room=room,
-        )
-        # Records for the bound, last, on the colour that stands (rel11 G1):
-        # after the steps' room, so the marks read the placement that stands.
+        # Records for the bound, last, on the colour that stands (rel11 G1).
         won = marks_checked(won, lot)
+        # The reading this pass was handed, for the six-step cap, which is
+        # not worked here: this pass is the inner step of every search that
+        # chooses between readings (the side doors, the narrow lane, the
+        # forms, the drive and easement readings, the bound), and the cap
+        # is worked once, on the answer they keep (:func:`foundation_checked`).
+        won = dataclasses.replace(won, screened_on=lot)
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
 
 
-def _stair_room(
-    won: Screened,
+def _capped(s: Screened, terrain: Any) -> Screened:
+    """``s`` with the six-step cap worked at the doors of its drawing
+    (:func:`flats.ingest.foundation_cap.checked`), framed against the street
+    lines of the reading it was screened on."""
+    here = s.screened_on or s.lot
+    return foundation_cap.checked(
+        s, terrain=terrain, lot_geom=here.lot_geom, classes=here.foundation_classes, tlid=here.tlid,
+        streets=lambda: (*_street_lines(here), *_side_street_lines(here)),
+    )
+
+
+def foundation_checked(
     lot: QuadfitLot,
+    designs: Sequence[Design],
+    got: list[Screened],
     *,
     rules: RuleSet,
     policy: SlackPolicy,
     relief: ReliefPolicy,
-    step_deg: float,
-    roads: Any,
-    bound: bool,
-    pool: dict[Any, dict[Any, Fitter]] | None,
-    terrain: Any,
-    room: bool,
-) -> Screened:
-    """``won`` once its doors' precast steps have room (FOLLOWUPS 213; Steph
-    2026-11-20, rulings.yaml 2026-11-20-stair-room-reserved and
-    2026-11-20-stair-no-room-red-flag).
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """``got`` -- :func:`screen_lot`'s answers before the foundation -- with
+    the six-step cap at the doors and the room for their steps
+    (FOLLOWUPS 213; Steph 2026-11-20, rulings.yaml
+    2026-11-20-foundation-six-step-cap-red, -near-cap-yellow,
+    2026-11-20-stair-room-reserved and 2026-11-20-stair-no-room-red-flag).
 
-    Where a drawn unit lands on the court's stalls, the lane or past the lot
-    line (:func:`flats.ingest.foundation_cap.stair_room_of`), the lot is
-    screened again, the whole way, with the plan keeping that much room
-    (:meth:`flats.designs.model.Design.reserving`: the standoff off the rear
-    wall raised, a strip beside the building before its lane, the long faces
-    kept that far inside the lot), so the fit, the drawing, the flatter
-    search, the door-face rule and every check after them stand on the
-    placement that leaves the steps room. The new placement's steps are
-    measured again there and, where they still land, the room widened, up to
-    :data:`flats.ingest.foundation_cap.STAIR_PASSES` placements. No room at
-    the end: RED with the flag naming the door
+    Worked once, on the answer every search kept (fd8 bound: worked inside
+    :func:`_screen_lot_once`, the cap turned a side-door or narrow-lane
+    reading red, the search then kept the street-facing miss, and the lot
+    went red on ``fit_ft`` with no foundation reason), so the cap never
+    chooses which plan the screen keeps.
+
+    The cap first (:func:`_capped`). Where a drawn unit lands on the
+    court's stalls, the lane or past the lot line
+    (:func:`flats.ingest.foundation_cap.stair_room_of`), the lot is
+    screened again, the whole way (:func:`_screen_lot_plain`), with the plan
+    keeping that much room (:meth:`flats.designs.model.Design.reserving`:
+    the standoff off the rear wall raised, a strip beside the building
+    before its lane, the long faces kept that far inside the lot), and the
+    cap worked on the new placement; where its steps still land, the room is
+    widened, up to :data:`flats.ingest.foundation_cap.STAIR_PASSES`
+    placements. No room at the end: RED with the flag naming the door
     (:func:`flats.ingest.foundation_cap.no_room`). A lot already red is left
-    alone; nothing becomes GREEN that was not
-    (:func:`flats.ingest.foundation_cap.reconciled`).
+    alone. A placement that reads another colour than the first carries
+    FOUNDATION-STAIR-MOVED either way: a better one held at the first's
+    colour, a worse one as it reads (:func:`flats.ingest.foundation_cap.
+    reconciled`).
     """
-    if not foundation_cap.stair_hits(won):
-        return won
-    if won.signed.colour is flag_plan.Colour.red and won.screening.colour is flag_plan.Colour.red:
-        return won
-    kept = foundation_cap.next_room(won)
-    if kept is None:
-        return foundation_cap.no_room(won)
-    (alt,) = _screen_lot_once(
-        lot, [won.design.reserving(kept)], rules=rules, policy=policy, relief=relief,
-        step_deg=step_deg, roads=roads, bound=bound, pool=pool, terrain=terrain, room=room,
-    )
-    return foundation_cap.reconciled(won, alt)
+    if terrain is None:
+        return got
+    out: list[Screened] = []
+    for design, s in zip(designs, got):
+        first = _capped(s, terrain)
+        cur = first
+        while foundation_cap.stair_hits(cur) and not (
+            cur.signed.colour is flag_plan.Colour.red and cur.screening.colour is flag_plan.Colour.red
+        ):
+            kept = foundation_cap.next_room(cur)
+            if kept is None:
+                cur = foundation_cap.no_room(cur)
+                break
+            (alt,) = _screen_lot_plain(
+                lot, [design.reserving(kept)], rules=rules, policy=policy, relief=relief,
+                step_deg=step_deg, roads=roads, terrain=terrain,
+            )
+            cur = _capped(alt, terrain)
+            if cur.signed.colour is flag_plan.Colour.red or cur.screening.colour is flag_plan.Colour.red:
+                break
+        out.append(first if cur is first else foundation_cap.reconciled(first, cur))
+    return out
 
 
 class _Eased:

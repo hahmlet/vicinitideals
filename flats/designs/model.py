@@ -293,7 +293,7 @@ class StairRoom(BaseModel):
     placement keeps a strip between each door face and the drawn court or
     lane as deep as that face's precast steps need, and keeps every stair
     inside the lot. Never in a catalog: the screen's stair-room pass
-    (:func:`flats.ingest.quadfit._stair_room`) sets it on a lot whose first
+    (:func:`flats.ingest.quadfit.foundation_checked`) sets it on a lot whose first
     placement left the steps no room and stands the plan again with it, so
     the fit, the drawing and every check after them see the strip. One depth
     per kind, the worst door's run (uniform, not per door: the cautious side).
