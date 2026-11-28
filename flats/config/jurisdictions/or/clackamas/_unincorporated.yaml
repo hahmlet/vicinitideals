@@ -3075,6 +3075,27 @@ zones:
       setback) is the only footnote on any PMD cell and is ruled in the
       footnote file as another application path, the same treatment the R
       zones give the identical sentence in Table 315-2.
+    # TABLE 1009-1, MINIMUM LANDSCAPED AREA (FOLLOWUPS 222). Table 1001-1
+    # ticks 1009 Landscaping for quadplexes in "all other zoning districts"
+    # (zdo.1001.txt#L31-L32,L109,L117-L120), and 1009.02(A) makes the table
+    # "the minimum percentage of the area of the subject property that shall
+    # be landscaped". The screen holds it against the lot less the building
+    # and its pavement (screen.py `leftover`). Credits NOT taken, so the
+    # held share is the larger: roof gardens, courtyards and indoor
+    # recreation areas may make up 20 percent of the minimum in PMD, MR-1,
+    # MR-2 and HDR (1009.02(A)(8), L74); green roofs 25 percent (L66). The
+    # minimum is figured on the area left after public dedications
+    # (1009.02(A)(1), L41); the screen reads the gross lot, the same thing
+    # where nothing is dedicated (the R-2.5 density note makes the same
+    # assumption). Recreation areas required by 1009.08(A) count toward this
+    # share (1009.02(A)(2), L62), so the two may overlap and are checked
+    # each against the same leftover, not summed.
+    min_landscaped_pct:
+      value: 25
+      cite: Clackamas ZDO 1009.02(A) and Table 1009-1, row "HDR, MR-1, MR-2, MRR, PMD, VA, VTH", "25 percent"
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L37,L39,L47,L49,L55"
   MR1:
     flat_roof_outdoor_use_max_stories:
       # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
@@ -3346,6 +3367,31 @@ zones:
       planned unit development path. Note 14 was `unmeasured` and capped the
       side setback until 2026-09-22; it is now the variant at that field,
       answered per lot by the zone s4 read across each lot line.
+    # Table 1009-1 (see PMD for what is and is not credited). The row's "20
+    # percent for townhouses in the MR-1 and MR-2 Districts" is not taken:
+    # the pod is a quadplex in this district (no unit_lots variant on
+    # quadplex_allowed here), and 25 is the larger.
+    min_landscaped_pct:
+      value: 25
+      cite: Clackamas ZDO 1009.02(A) and Table 1009-1, row "HDR, MR-1, MR-2, MRR, PMD, VA, VTH", "25 percent except 20 percent for townhouses in the MR-1 and MR-2 Districts"
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L37,L39,L47,L49,L55"
+    # 1009.08(A): "An outdoor recreational area shall be provided in
+    # developments of duplexes, triplexes, quadplexes, or multifamily
+    # dwellings in the MR-1, MR-2, and HDR Districts", 200 square feet a
+    # unit for studio to two-bedroom units, 300 for three or more bedrooms.
+    # 300 is held: pod80x25.yaml#L77 says its 20 ft homes "put two bedrooms
+    # side by side", which places two bedrooms but does not state the
+    # count, so the larger requirement stands. 1,200 square feet for four;
+    # it counts toward the landscaped share (1009.02(A)(2), L62), and on any
+    # lot over 4,800 square feet the 25 percent asks more.
+    open_space_min_sqft:
+      per_dwelling: 300
+      cite: Clackamas ZDO 1009.08(A)(1), outdoor recreational area in the MR-1, MR-2 and HDR Districts, 300 square feet per dwelling unit with three or more bedrooms
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L270,L272,L274"
   MR2:
     flat_roof_outdoor_use_max_stories:
       # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
@@ -3576,6 +3622,19 @@ zones:
       of this block), maximum front setback ("See Subsections 1005.02(E) and
       (H)" -- read 2026-09-09 and now carried as `orientation_constraint:
       axis_required`) and minimum density ("See Section 1012").
+    # Table 1009-1 and 1009.08(A), as MR-1 (see there and PMD).
+    min_landscaped_pct:
+      value: 25
+      cite: Clackamas ZDO 1009.02(A) and Table 1009-1, row "HDR, MR-1, MR-2, MRR, PMD, VA, VTH", "25 percent except 20 percent for townhouses in the MR-1 and MR-2 Districts"
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L37,L39,L47,L49,L55"
+    open_space_min_sqft:
+      per_dwelling: 300
+      cite: Clackamas ZDO 1009.08(A)(1), outdoor recreational area in the MR-1, MR-2 and HDR Districts, 300 square feet per dwelling unit with three or more bedrooms
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L270,L272,L274"
   VA:
     entrance_faces_street:
       value: unclear
@@ -3775,6 +3834,14 @@ zones:
       url: https://www.clackamas.us/planning/zdo1009
       retrieved: '2026-11-05'
       quote: "or/clackamas/_unincorporated/zdo.1009.txt#L112,L162,L164,L166"
+    # Table 1009-1 (see PMD). 1009.08(A) does not name VA, so no
+    # recreation area here.
+    min_landscaped_pct:
+      value: 25
+      cite: Clackamas ZDO 1009.02(A) and Table 1009-1, row "HDR, MR-1, MR-2, MRR, PMD, VA, VTH", "25 percent"
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L37,L39,L47,L49,L55"
   HDR:
     flat_roof_outdoor_use_max_stories:
       # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
@@ -3993,6 +4060,21 @@ zones:
       nothing. The (L) standards are "not subject to modification pursuant
       to Section 904" (L170). Density (1,742 sq ft of district land area a
       unit) is not applied, OAR 660-046-0220(2)(b).
+    # Table 1009-1 and 1009.08(A), as MR-1 (see there and PMD). SHD, RCHDR
+    # and, through their like: chains, RTL, CC, C-3, OC, RCC and RCO take
+    # what is stated here unless they state their own.
+    min_landscaped_pct:
+      value: 25
+      cite: Clackamas ZDO 1009.02(A) and Table 1009-1, row "HDR, MR-1, MR-2, MRR, PMD, VA, VTH", "25 percent"
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L37,L39,L47,L49,L55"
+    open_space_min_sqft:
+      per_dwelling: 300
+      cite: Clackamas ZDO 1009.08(A)(1), outdoor recreational area in the MR-1, MR-2 and HDR Districts, 300 square feet per dwelling unit with three or more bedrooms
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L270,L272,L274"
   SHD:
     flat_roof_outdoor_use_max_stories:
       # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
@@ -4091,6 +4173,30 @@ zones:
       (FOLLOWUPS 61); was a zone_rulings entry, unencodable on the bearing.
       Density (726 sq ft of district land area a unit) is not applied,
       OAR 660-046-0220(2)(b).
+    # Table 1009-1 states SHD its own row, 40 percent, over HDR's 25. In SHD
+    # the share may be met with shared outdoor surface areas -- walkways,
+    # patios, roof gardens among them -- and up to 25 percent of it with
+    # private outdoor space (1009.02(A)(9), L76-L78); none of that is
+    # credited, so the held share is the larger.
+    min_landscaped_pct:
+      value: 40
+      cite: Clackamas ZDO 1009.02(A) and Table 1009-1, row "SHD", "40 percent"
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L37,L39,L47,L49,L58"
+    # 1009.08(A)'s outdoor recreational area names MR-1, MR-2, HDR and SCMU
+    # only; SHD and RCHDR owe 1009.08(B) instead -- at least one recreational
+    # facility (a pool, an exercise room, a 400 square foot greenhouse, 3,000
+    # square feet of hard play area ...) for the first 60 units (L286-L306).
+    # That is a building or a court the pod does not include, held as an open
+    # question (FOLLOWUPS 222 hand-off), not encoded; the zone is YELLOW on
+    # review_discretion whatever it answers.
+    open_space_min_sqft:
+      exempt: true
+      cite: Clackamas ZDO 1009.08(A), outdoor recreational area required in the MR-1, MR-2 and HDR Districts and in SCMU; SHD and RCHDR are under 1009.08(B) instead
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L270,L272,L286"
   RCHDR:
     flat_roof_outdoor_use_max_stories:
       # Roof sweep, Clackamas (clackamas-roof lane, 2026-11-11, FOLLOWUPS
@@ -4218,6 +4324,22 @@ zones:
       neighbour fact they turn on is per line and not declared here
       (stricter than the code where the neighbour is HDR, SHD, RCHDR or
       not residential). Density is "Not Applicable".
+    # Table 1009-1 states RCHDR its own row, 20 percent, under HDR's 25;
+    # 1009.02(A)(9)'s shared-outdoor credits are not taken (see SHD). RCC and
+    # RCO carry this through like: RCHDR.
+    min_landscaped_pct:
+      value: 20
+      cite: Clackamas ZDO 1009.02(A) and Table 1009-1, row "OA, OC, RCHDR", "20 percent"
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L37,L39,L47,L49,L54"
+    # Not 1009.08(A)'s district (see SHD); 1009.08(B) is open, not encoded.
+    open_space_min_sqft:
+      exempt: true
+      cite: Clackamas ZDO 1009.08(A), outdoor recreational area required in the MR-1, MR-2 and HDR Districts and in SCMU; SHD and RCHDR are under 1009.08(B) instead
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L270,L272,L286"
   # ------------------------------------------------------------------
   # The rural half of the county, read 2026-09-08 from ZDO Section 316.
   #
@@ -4990,6 +5112,20 @@ zones:
       floor area per use ("None"), minimum floor area ratio ("None"). The
       1005.09(D) driveway cap of 24 feet is tighter than the layer default of
       32 and is not applied here.
+    # Table 1009-1, SCMU row: 15 percent "for developments of triplexes,
+    # quadplexes, or multifamily dwellings". 1009.08(A) asks SCMU for the
+    # outdoor recreational area too, but (A)(1)(b) lets it shrink "to the
+    # minimum extent necessary" where, with 1005.09(L), 1009.03 and 1009.04,
+    # it would landscape more than 15 percent of the lot (L278), and it
+    # counts toward this share (L62). So it never asks for ground beyond the
+    # 15 percent held here, and is not encoded separately (it would charge a
+    # small lot 1,200 square feet the code itself relieves).
+    min_landscaped_pct:
+      value: 15
+      cite: Clackamas ZDO 1009.02(A) and Table 1009-1, row "SCMU", "15 percent for developments of triplexes, quadplexes, or multifamily dwellings"
+      url: https://www.clackamas.us/planning/zdo1009
+      retrieved: '2026-11-05'
+      quote: "or/clackamas/_unincorporated/zdo.1009.txt#L37,L39,L47,L49,L52"
   PMU1:
     cite_default:
       cite: Clackamas ZDO 510.05 and Tables 510-1, 510-2 and 510-3 (Planned Mixed Use District, site PMU1)
