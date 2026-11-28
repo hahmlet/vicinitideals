@@ -398,3 +398,48 @@ def test_unknown_paving_certifies_no_cap_but_a_building_over_it_fails() -> None:
     assert loose.triage is Triage.unknown
     # 2,016 of building alone is 33.6 percent: over 30 whatever is paved.
     assert check(tight, "impervious_pct").verdict is Verdict.fails
+
+
+# --- a share stated ON TOP OF the area is checked as their sum -----------
+#
+# FOLLOWUPS 222 (2026-11-28). Beaverton Table 60.05.60.2 S8 asks 15 percent
+# of the gross site in the Cooper Mountain Community Plan area, "met in
+# addition to the standards of Section 60.05.60.2.S4 through S6"
+# (60.05/60.05.60.txt#L298-L299), S4 being the square-foot bands. Checked
+# apart, a lot holding either but not both would pass.
+
+
+def test_apart_the_lot_clears_both_and_stacked_it_does_not() -> None:
+    # 15 percent of 6,000 is 900; 900 + 1,000 = 1,900 against 1,860 left.
+    apart = run(rules(open_space_min_pct=15, open_space_min_sqft=1000), relief=NO_RELIEF)
+    stacked = run(
+        rules(open_space_min_pct=15, open_space_min_sqft=1000, open_space_pct_in_addition=True),
+        relief=NO_RELIEF,
+    )
+
+    assert apart.triage is Triage.green
+    got = check(stacked, "open_space_sqft")
+    assert got.threshold == pytest.approx(1000 + 0.15 * LOT.lot_sqft)
+    assert got.verdict is Verdict.fails
+    assert stacked.triage is Triage.red
+    assert stacked.head == "open_space_sqft"
+
+
+def test_the_stacking_flag_without_a_share_adds_nothing() -> None:
+    result = run(rules(open_space_min_sqft=1000, open_space_pct_in_addition=True))
+    assert check(result, "open_space_sqft").threshold == 1000.0
+
+
+def test_cooper_mountain_rm_carries_s8_on_top_of_s4() -> None:
+    from flats.rules.loader import load_rules
+
+    layer = load_rules()["or/washington/beaverton"]
+    zone = layer.zones["CM-RM"].values
+    assert zone["open_space_min_pct"].value == 15
+    assert zone["open_space_pct_in_addition"].value is True
+    assert "S8" in zone["open_space_min_pct"].prov.cite
+    # The other Cooper Mountain zones take 60.05.25, not Table 60.05.60.2,
+    # whose applicability names only RMA, RMB, RMC and CM-RM
+    # (60.05/60.05.60.txt#L6): no stacking there.
+    for other in ("CM-MR", "CM-HDR"):
+        assert "open_space_pct_in_addition" not in layer.zones[other].values

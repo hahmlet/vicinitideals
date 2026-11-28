@@ -2566,10 +2566,11 @@ def _checks(
     # question from the amount answered here, and `_outdoor_shape` asks it.
     bound_sqft = lot.lot_sqft - design.ground_sqft
 
-    def leftover(name: str, field: str, *, share: bool) -> None:
+    def leftover(name: str, field: str, *, share: bool, plus: float = 0.0) -> None:
         threshold = rules.get(field)
         if threshold is None:
             return
+        threshold = float(threshold) + plus
         room = bound_sqft if pavement is None else bound_sqft - pavement
         result = policy.evaluate(
             name,
@@ -2597,7 +2598,7 @@ def _checks(
     # ledger carried it in `SILENTLY_UNREAD` from the day that set was
     # written. A per-dwelling figure arrives multiplied out by the loader, so
     # the threshold is what the four homes owe together.
-    leftover("open_space_sqft", "open_space_min_sqft", share=False)
+    leftover("open_space_sqft", "open_space_min_sqft", share=False, plus=_stacked_share(rules, lot))
 
     # The same ground from the other side: a cap on buildings AND paving
     # together (King City Table 16.114-4, "Maximum coverage of buildings and
@@ -2726,6 +2727,24 @@ def _checks(
         unmeasured.add(STREET_DIRECTION)
 
     return out, unchecked, unmeasured
+
+
+def _stacked_share(rules: ZoneResolution, lot: LotFacts) -> float:
+    """Square feet the open-space SHARE adds to the open-space AREA, or 0.
+
+    Beaverton Table 60.05.60.2 S8 (FOLLOWUPS 222): 15 percent of the gross
+    site in the Cooper Mountain Community Plan area, "met in addition to the
+    standards of Section 60.05.60.2.S4 through S6" -- S4 being the
+    square-foot bands. Where ``open_space_pct_in_addition`` is stated the
+    area check asks for the two together; checked apart, a lot holding
+    either but not both would pass. Silent: the share is its own floor.
+    """
+    if rules.get("open_space_pct_in_addition") is not True:
+        return 0.0
+    pct = rules.get("open_space_min_pct")
+    if pct is None:
+        return 0.0
+    return float(pct) / 100.0 * lot.lot_sqft
 
 
 def _min_far_cannot_fit(checks: Sequence[CheckResult], lot: LotFacts, design: Design) -> bool:

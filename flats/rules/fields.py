@@ -1794,6 +1794,19 @@ _F: tuple[FieldDef, ...] = (
         False,
     ),
     FieldDef(
+        "open_space_pct_in_addition",
+        "bool",
+        "True where the code asks the `open_space_min_pct` share ON TOP OF "
+        "the `open_space_min_sqft` area rather than beside it: Beaverton "
+        "Table 60.05.60.2 S8, 15 percent of the gross site in the Cooper "
+        "Mountain Community Plan area, \"met in addition to the standards of "
+        "Section 60.05.60.2.S4 through S6\" (S4 being the square-foot "
+        "bands). The area check then asks for the two summed. Silent: the "
+        "two are separate floors and each is checked alone.",
+        None,
+        label="open space share added to the area",
+    ),
+    FieldDef(
         "open_space_min_dimension_ft",
         "length_ft",
         "The side of a square that must fit entirely inside the required "
@@ -2520,6 +2533,9 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_island_sqft_per_space",
         "open_space_min_pct",
         "open_space_min_sqft",
+        # Stated only where a code stacks the share on the area (Beaverton
+        # S8); silence means the two are separate floors.
+        "open_space_pct_in_addition",
         # The shape beside the amount. Stated only where the amount is, and
         # only by the codes that state one (Portland's single-dwelling table,
         # Milwaukie's private open space); a zone silent on it is silent.
