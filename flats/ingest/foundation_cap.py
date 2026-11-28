@@ -343,14 +343,16 @@ def entrance_of(
 ) -> dict[str, Any] | None:
     """The main entrance's distance from grade on the drawn building
     (:func:`entrance_grade.entrance_facts`), on the floor of the lowest
-    method that clears the cap (the best where none does) -- and, where the
+    method that clears the cap (of any open method where none does) -- and, where the
     ground class is unread (:data:`support.NOT_SORTED`), on the other open
     methods' floors too: ground that may need them."""
     if placed.ground is None:
         return None
     rule, exempt, per_home = entrance
     top = m.high_z + m.lump_ft
-    pool = c.clear or (c.best,)
+    # Where nothing clears the cap, the lowest floor any open method gives:
+    # the entrance is never read off a floor the lot need not have.
+    pool = c.clear or tuple(c.open_methods) or (c.best,)
     low = min(pool, key=lambda name: methods[name].floor_above_high_in)
     floors = [(caps.SHORT.get(low, low), top + methods[low].floor_above_high_in / 12.0)]
     if group == support.NOT_SORTED:
