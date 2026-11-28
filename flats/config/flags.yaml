@@ -2103,7 +2103,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-AT-STREET-END:
-    description: "Whether the lot lies at the end of a street (Gresham: a Minor Access Street's end has its own setbacks)"
+    description: "Whether the lot lies at the end of a street (Gresham: a Minor Access Street's end has its own setbacks; Hillsboro: frontage on a street end that is not a cul-de-sac does not count)"
     kind: categorical
     risk: possible
     severity: 5

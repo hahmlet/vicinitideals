@@ -274,7 +274,10 @@ _C: tuple[ConditionDef, ...] = (
         "note does not reach it. Never answered True: a street ending near "
         "the lot does not say the lot is at that end, nor that the street is "
         "a Minor Access Street. Unknown everywhere else, where the lot is "
-        "GREEN only if it clears at both answers.",
+        "GREEN only if it clears at both answers. Hillsboro 12.50.110 D.4 "
+        "gives property abutting a street end not in a cul-de-sac no lot "
+        "frontage; every Hillsboro frontage minimum is qualified by this "
+        "fact, so a lot near an end is held out of GREEN.",
         evidence="quadfit s1 public street centrelines (RLIS TYPE not alley, private road, unnamed drive or unimproved): no end point within flats.geom.street_end.REACH_FT of the taxlot",
         assume=None,
     ),

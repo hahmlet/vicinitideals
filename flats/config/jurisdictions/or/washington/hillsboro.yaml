@@ -320,6 +320,22 @@ defaults:
   # 12.50.110 D.1 sends "lot frontage" there: the front line, never the
   # streets added together. A corner lot has two front lot lines here, so
   # its shortest street passes it and only its longest is a question.
+  #
+  # STUB STREET ENDS (FOLLOWUPS 222). 12.50.110 D.4 (L35): "Property abutting
+  # the end of a public or private street not ending in a cul-de-sac, or
+  # which may be subject to future extension, shall not be considered as
+  # having lot frontage." Every numeric min_frontage_ft below is therefore
+  # qualified_by at_street_end (flats.geom.street_end): False where no
+  # street ends within 200 ft of the taxlot, which lifts the qualifier and
+  # leaves the printed minimum; unknown near an end, never True, so such a
+  # lot is held out of GREEN rather than credited with frontage that may lie
+  # on the end. Which lot line is "the end" is drawn nowhere, so a lot near
+  # an end that also has a through-street frontage is held too (REVIEW,
+  # never RED). The cul-de-sac exception is not read off the fact: a bulb's
+  # centreline also ends, so a lot on a bulb is held the same way (the safe
+  # side). "Subject to future extension" is unmeasurable and rides on the
+  # same unknown. The two zones with no frontage minimum (UC-MU, UC-AC)
+  # owe nothing D.4 could take away.
   min_frontage_line:
     value: front
     cite: Hillsboro CDC 12.01.500, Frontage ("The length of the front lot line"); 12.50.110 D.1
@@ -761,6 +777,10 @@ zones:
     min_frontage_ft:
       value: 12
       cite: Hillsboro CDC Table 12.21.150-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.21/12.21.150.txt#L4,L19,L28"
       variants:
         - value: 25
@@ -874,6 +894,10 @@ zones:
     min_frontage_ft:
       value: 12
       cite: Hillsboro CDC Table 12.21.250-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.21/12.21.250.txt#L4,L16,L25"
       variants:
         - value: 25
@@ -1016,6 +1040,10 @@ zones:
     min_frontage_ft:
       value: 12
       cite: Hillsboro CDC Table 12.21.350-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.21/12.21.350.txt#L4,L16,L25"
       variants:
         - value: 25
@@ -1137,6 +1165,10 @@ zones:
     min_frontage_ft:
       value: 12
       cite: Hillsboro CDC Table 12.21.450-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.21/12.21.450.txt#L4,L21,L30"
       variants:
         - value: 25
@@ -1262,6 +1294,10 @@ zones:
     min_frontage_ft:
       value: 12
       cite: Hillsboro CDC Table 12.21.550-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.21/12.21.550.txt#L4,L20,L29"
       variants:
         - value: 25
@@ -1458,6 +1494,10 @@ zones:
     min_frontage_ft:
       value: 30
       cite: Hillsboro CDC Table 12.21.650-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.21/12.21.650.txt#L24,L27,L35"
     setback_front_ft:
       value: 10
@@ -1582,6 +1622,10 @@ zones:
     min_frontage_ft:
       value: 50
       cite: Hillsboro CDC Table 12.21.750-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.21/12.21.750.txt#L21,L29,L39"
     setback_front_ft:
       value: 5
@@ -1758,6 +1802,10 @@ zones:
     min_frontage_ft:
       value: 22
       cite: Hillsboro CDC Table 12.21.850-1, Minimum Lot Dimensions, frontage same as lot width
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.21/12.21.850.txt#L15,L33,L38-L39,L42"
       variants:
         - value: 25
@@ -1960,6 +2008,10 @@ zones:
     min_frontage_ft:
       value: 12
       cite: Hillsboro CDC Table 12.22.150-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.22/12.22.150.txt#L4,L21,L29"
       variants:
         - value: 25
@@ -2163,6 +2215,10 @@ zones:
     min_frontage_ft:
       value: 25
       cite: Hillsboro CDC Table 12.22.250-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.22/12.22.250.txt#L4,L16,L25"
     setback_front_ft:
       value: 15
@@ -2374,6 +2430,10 @@ zones:
     min_frontage_ft:
       value: 25
       cite: Hillsboro CDC Table 12.22.350-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.22/12.22.350.txt#L4,L16,L25"
     setback_front_ft:
       value: 10
@@ -2586,6 +2646,10 @@ zones:
     min_frontage_ft:
       value: 22
       cite: Hillsboro CDC Table 12.22.460-1, Minimum Lot Dimensions, frontage (residential with front-yard garage access)
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.22/12.22.460.txt#L13,L30,L43,L50"
       variants:
         - value: 25
@@ -2769,6 +2833,10 @@ zones:
       # row is meant is a doubt.
       value: 22
       cite: Hillsboro CDC Table 12.22.560-1, Minimum Lot Dimensions, frontage (residential with rear-yard garage access)
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.22/12.22.560.txt#L15,L23,L38,L43"
       variants:
         - value: 25
@@ -3186,6 +3254,10 @@ zones:
     min_frontage_ft:
       value: 25
       cite: Hillsboro CDC Table 12.23.560-1, Minimum Lot Dimensions, frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.23/12.23.560.txt#L4,L16,L19"
     setback_front_ft:
       value: 0
@@ -3352,6 +3424,10 @@ zones:
     min_frontage_ft:
       value: 18
       cite: Hillsboro CDC Table 12.24.160-1, Minimum Lot Dimensions, lot frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.24/12.24.160.txt#L20,L41,L44"
       variants:
         - value: 25
@@ -3509,6 +3585,10 @@ zones:
     min_frontage_ft:
       value: 18
       cite: Hillsboro CDC Table 12.24.260-1, Minimum Lot Dimensions, lot frontage
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.24/12.24.260.txt#L4,L25,L28"
       variants:
         - value: 25
@@ -4108,6 +4188,10 @@ zones:
     min_frontage_ft:
       value: 18
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Lot Dimensions, frontage, quadplex
+      qualified_by:
+        fact: at_street_end
+        cite: Hillsboro CDC 12.50.110 D.4, property abutting the end of a public or private street not ending in a cul-de-sac, or which may be subject to future extension, has no lot frontage there
+        quote: "or/washington/hillsboro/12.50/12.50.110.txt#L35"
       quote: "or/washington/hillsboro/12.24/12.24.560.txt#L4,L15,L25,L30-L31"
       # No flag-lot variant: 12.40.160 B lets flag lots be created only in
       # standard and light-rail zones (12.40.160.txt#L7-L8,L10), and a UC zone

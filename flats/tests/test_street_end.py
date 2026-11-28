@@ -187,3 +187,84 @@ def test_a_point_near_the_end_is_not_far() -> None:
     # The lot sits across the bulb from the end point: inside the reach.
     lot = Point(500, 300).buffer(REACH_FT - 1).difference(Point(500, 300).buffer(REACH_FT - 20))
     assert observed_street_end(end_distances([lot], [(500, 300)])[0]) == {}
+
+
+# --- Hillsboro 12.50.110 D.4: no lot frontage on a stub street end (FOLLOWUPS 222)
+
+HILLSBORO = "or/washington/hillsboro"
+D4 = "or/washington/hillsboro/12.50/12.50.110.txt#L35"
+
+
+def test_hillsboros_d4_is_the_quoted_line() -> None:
+    from flats.provenance.store import ProvenanceStore
+
+    text = ProvenanceStore().quote(D4)
+    assert text.startswith("4. Property abutting the end of a public or private street")
+    assert "not ending in a cul-de-sac" in text
+    assert "shall not be considered as having lot frontage" in text
+
+
+def test_every_hillsboro_frontage_minimum_is_qualified_by_the_street_end() -> None:
+    from flats.rules.loader import load_rules
+
+    layer = load_rules()[HILLSBORO]
+    held, free = [], []
+    for zone, z in layer.zones.items():
+        v = z.values.get("min_frontage_ft")
+        if v is None:
+            continue
+        if v.exempt:
+            assert v.qualified_by is None, zone
+            free.append(zone)
+            continue
+        assert v.qualified_by == STREET_END_FACT, zone
+        assert v.qualified_quote == D4, zone
+        assert "12.50.110 D.4" in v.qualified_cite, zone
+        held.append(zone)
+    assert len(held) == 17, held
+    assert sorted(free) == ["UC-AC", "UC-MU"]
+
+
+@pytest.mark.parametrize("zone", ["R-7", "SCR-MD", "MU-N", "UC-RM"])
+def test_hillsboro_holds_a_lot_near_a_street_end_open_and_lifts_it_far_away(corpus, zone: str) -> None:
+    pod = ("multi_story", "attached_wall")
+    res = corpus.resolve(HILLSBORO, zone, pod, lot={"lot_sqft": 10_000})
+    # The printed minimum stands; the fact moves it with no number, so a lot
+    # near an end (unknown) cannot be certified on it, and True never lifts.
+    assert res.get("min_frontage_ft") in (12, 18, 22, 25)
+    assert STREET_END_FACT in res.unencoded
+    assert STREET_END_FACT in res.levers
+
+
+def test_a_hillsboro_lot_near_a_street_end_is_not_green() -> None:
+    from flats.designs.model import load_catalog
+    from flats.encode.load import load_trusted
+    from flats.ingest.quadfit import lot_from_row, screen_lot
+    from flats.score import flags as flag_plan
+    from flats.score import relief, slack
+    from flats.score.flags import fact_code
+    from flats.tests.test_utility_easement import lot_row
+
+    rules = load_trusted(strict=False).rules
+    policy, rel = slack.load_policy(), relief.load_policy()
+    flag = fact_code(STREET_END_FACT)
+
+    def screened(end_ft: float):
+        row = lot_row(TLID="1N231AA00100", jurisdiction="hillsboro", zone="R-7", street_end_ft=end_ft)
+        lot = lot_from_row(row, rules.layers)
+        (s,) = screen_lot(
+            lot, [load_catalog().latest("pod56x36")], rules=rules, policy=policy, relief=rel, step_deg=30.0
+        )
+        return lot, s
+
+    far_lot, far = screened(REACH_FT * 2)
+    assert far_lot.observed[STREET_END_FACT] is False
+    assert flag not in {f.code for f in far.signed.flags}
+    near_lot, near = screened(40.0)
+    assert STREET_END_FACT not in near_lot.observed
+    # Near an end the flag stays at a severity that holds the lot out of
+    # GREEN: the bound cannot lower it, the qualifier stating no number.
+    reg, line = flag_plan.registry(), flag_plan.colour_rules().yellow_at_severity
+    held = [f for f in near.signed.flags if f.code == flag]
+    assert held and all(flag_plan.severity_of(f, reg) >= line for f in held)
+    assert near.signed.colour is not flag_plan.Colour.green
