@@ -168,6 +168,7 @@ _LABELS: dict[str, str] = {
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
     "parking_front_yard_max_pct": "max. vehicle share of front yard",
+    "driveway_street_setback_barred": "no driveway through the setback facing a residential zone",
     "parking_rear_yard_max_pct": "max. vehicle share of rear setback",
     "parking_side_street_yard_max_pct": "max. vehicle share of a corner's street-side yard",
     "parking_maneuvering_max_width_ft": "max. maneuvering-area width",
@@ -1418,6 +1419,18 @@ _F: tuple[FieldDef, ...] = (
         True,
     ),
     FieldDef(
+        "driveway_street_setback_barred",
+        "bool",
+        "True where the code bars vehicle access through the street setback "
+        "that faces a residential zone across the street, unless that street "
+        "is the site's only frontage: Portland 33.130.215.B.1.b in CM2, CM3, "
+        "CE and CX (\"Vehicle access is not allowed through the setback "
+        "unless the local service street facing the residential zone is the "
+        "only frontage for the site\"). Which street the drive crosses is not "
+        "drawn, so a lot with two or more streets, not every one read clear "
+        "across, is held (FOLLOWUPS 222).",
+    ),
+    FieldDef(
         "parking_front_prohibited",
         "bool",
         "True where the code bans PARKING between the primary building and "
@@ -2493,6 +2506,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "building_frontage_band_ft",
         "parking_front_yard_max_pct",
         "parking_side_street_yard_max_pct",
+        "driveway_street_setback_barred",
         "parking_front_prohibited",
         "parking_front_share_allowed",
         "parking_alley_access_required",

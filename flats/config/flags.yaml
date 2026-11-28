@@ -737,6 +737,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-DRIVE-SETBACK-STREET:
+    description: "The code bars a driveway through the street setback that faces a residential zone across the street unless that street is the lot's only frontage; this lot has more than one street (or its streets were not measured), not every one is read clear across, and which street the drive crosses is not drawn"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Draw the driveway on a street line read clear across the street, or show the facing street is the only frontage (PCC 33.130.215.B.1.b; FOLLOWUPS 222)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-LOT-OF-RECORD:
     description: "The lot misses a lot standard the code lifts for an existing lot only on a condition the data does not hold: when the lot was created, who has owned the land beside it, or whether the lift reaches an area stated per dwelling"
     kind: categorical

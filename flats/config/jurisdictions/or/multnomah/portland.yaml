@@ -1161,15 +1161,26 @@ readings:
     fingerprint: a837063c306e7b64
   "33.110.txt#33.110.260":
     queue: nofield
-    outcome: other_stage
+    outcome: design
     note: >-
-      Lots that predate the standards: "remnants, or lots of record that are less than 32 feet
-      wide in the R20 through R2.5 zones" is part of 33.110.260's treatment of substandard and
-      remnant parcels, which decides what may be built on a lot the code would not create today.
-      That is a question about the lot's history, answered from a deed and a plat, not from
-      geometry -- and the screening inventory holds parcels as they are, not as they were
-      recorded. Where it resolves it LOOSENS, because the section exists to let something be built
-      on a lot that fails the minimums. Nothing here tightens the pod's fit on a conforming lot.
+      Re-read 2026-11-28 (FOLLOWUPS 222); the earlier note here read this as a lot-history rule,
+      and it is not. 33.110.260.B applies by WIDTH: "lots, adjusted lots, lot remnants, lots of
+      record, and combinations ... that are less than 32 feet wide in the R20 through R2.5
+      zones" (33.110.txt#L1288-L1290) -- every kind of lot, so a lot under 32 ft takes it
+      whatever its history; only planned-development lots are exempt. Its three standards, each
+      checked against the pod. (C.1) FAR: the R2.5 FAR for ATTACHED HOUSES in R5 -- the pod is a
+      fourplex on one lot, not attached houses (#L1293-L1294). (C.2) Height: "1.5 times the
+      width of the structure", width being "the length of the street-facing facade", attached
+      houses exempt and the fourplex not (#L1295-L1299). Every pod's narrowest face is 25 ft
+      (flats/config/pods: 80x25, 80x30, 56x36), so the cap is never under 37.5 ft, above the
+      tallest pod (26 ft) and above Table 110-4's own R20-R2.5 heights: it cannot bind and is
+      not encoded. (C.3.b) "Sixty percent of the area between the front lot line and the front
+      building line must be landscaped", up to one third of that for pedestrians or recreation
+      (#L1311-L1314): what is left for the drive is 40 percent of that area -- the same bound
+      33.266.120.C.1.b already holds every Portland zone to (`parking_front_yard_max_pct` 40 in
+      defaults, checked on the drawn drive across the front yard), so it moves nothing. (C.3.a)
+      a three-gallon shrub per 3 ft of street-facing foundation, and the ground cover, are
+      planting design, not modelled.
     fingerprint: 5350a5424c3bb64f
   "33.110.txt#33.110.265":
     queue: nofield
@@ -6014,6 +6025,24 @@ zones:
       # width leaves the line on the 5.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L587,L609,L795-L796"
+    driveway_street_setback_barred:
+      # 33.130.215.B.1.b(1) and (2), the same sentence in both: "Vehicle
+      # access is not allowed through the setback unless the local service
+      # street facing the residential zone is the only frontage for the
+      # site." The setback is the across-the-street one above (5 or 10 ft
+      # from a street lot line facing an RF-RM2 or RMP zone), and B.1.b
+      # reaches every commercial zone but CR and CM1 (#L20), so this zone.
+      # Which street line the pod's drive crosses is not drawn, so the
+      # screen holds (never passes, never fails) a lot whose drive meets a
+      # street when it has two or more streets and not every street line
+      # was read clear across (flats.score.screen.drive_setback_held). One
+      # street and no corner is the exception's own case; an alley-fed
+      # court crosses no street setback. The TSP class and the 100 ft
+      # transit-street exception are not read -- every street local, the
+      # tight side, as for the setback itself. FOLLOWUPS 222.
+      value: true
+      cite: PCC 33.130.215.B.1.b(1)-(2), vehicle access through the setback facing an RF-RM2 or RMP zone across a local service street
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L19-L20,L23,L28"
     setback_front_max_facade_pct:
       # Half the ground-level street-facing facade must stand within the
       # maximum, not the whole of it (33.130.215.C.1; FOLLOWUPS 147).
@@ -6173,7 +6202,7 @@ zones:
       # encoded -- the overlay is not held here.
       sqft_per_unit: 1450
       quote: "or/multnomah/portland/33.130/33.130.210.txt#L65,L71-L73"
-    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. The same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (33.130.215.txt#L23,L28); the screen does not say which street line the driveway crosses, so driveway_street_setback_barred holds a lot with two or more streets not all read clear across (FOLLOWUPS 222). (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
     min_far:
       # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
       # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
@@ -6393,6 +6422,24 @@ zones:
       # width leaves the line on the 5.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L587,L609,L795-L796"
+    driveway_street_setback_barred:
+      # 33.130.215.B.1.b(1) and (2), the same sentence in both: "Vehicle
+      # access is not allowed through the setback unless the local service
+      # street facing the residential zone is the only frontage for the
+      # site." The setback is the across-the-street one above (5 or 10 ft
+      # from a street lot line facing an RF-RM2 or RMP zone), and B.1.b
+      # reaches every commercial zone but CR and CM1 (#L20), so this zone.
+      # Which street line the pod's drive crosses is not drawn, so the
+      # screen holds (never passes, never fails) a lot whose drive meets a
+      # street when it has two or more streets and not every street line
+      # was read clear across (flats.score.screen.drive_setback_held). One
+      # street and no corner is the exception's own case; an alley-fed
+      # court crosses no street setback. The TSP class and the 100 ft
+      # transit-street exception are not read -- every street local, the
+      # tight side, as for the setback itself. FOLLOWUPS 222.
+      value: true
+      cite: PCC 33.130.215.B.1.b(1)-(2), vehicle access through the setback facing an RF-RM2 or RMP zone across a local service street
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L19-L20,L23,L28"
     setback_front_max_facade_pct:
       # Half the ground-level street-facing facade must stand within the
       # maximum, not the whole of it (33.130.215.C.1; FOLLOWUPS 147).
@@ -6552,7 +6599,7 @@ zones:
       # encoded -- the overlay is not held here.
       sqft_per_unit: 1000
       quote: "or/multnomah/portland/33.130/33.130.210.txt#L65,L71-L73"
-    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. The same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (33.130.215.txt#L23,L28); the screen does not say which street line the driveway crosses, so driveway_street_setback_barred holds a lot with two or more streets not all read clear across (FOLLOWUPS 222). (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
     min_far:
       # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
       # minimum FAR for new development is shown on Map 526-3 and Map 521-3,
@@ -6755,6 +6802,24 @@ zones:
       # width leaves the line on the 5.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L587,L609,L795-L796"
+    driveway_street_setback_barred:
+      # 33.130.215.B.1.b(1) and (2), the same sentence in both: "Vehicle
+      # access is not allowed through the setback unless the local service
+      # street facing the residential zone is the only frontage for the
+      # site." The setback is the across-the-street one above (5 or 10 ft
+      # from a street lot line facing an RF-RM2 or RMP zone), and B.1.b
+      # reaches every commercial zone but CR and CM1 (#L20), so this zone.
+      # Which street line the pod's drive crosses is not drawn, so the
+      # screen holds (never passes, never fails) a lot whose drive meets a
+      # street when it has two or more streets and not every street line
+      # was read clear across (flats.score.screen.drive_setback_held). One
+      # street and no corner is the exception's own case; an alley-fed
+      # court crosses no street setback. The TSP class and the 100 ft
+      # transit-street exception are not read -- every street local, the
+      # tight side, as for the setback itself. FOLLOWUPS 222.
+      value: true
+      cite: PCC 33.130.215.B.1.b(1)-(2), vehicle access through the setback facing an RF-RM2 or RMP zone across a local service street
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L19-L20,L23,L28"
     setback_front_max_facade_pct:
       # Half the ground-level street-facing facade must stand within the
       # maximum, not the whole of it (33.130.215.C.1; FOLLOWUPS 147).
@@ -6895,7 +6960,7 @@ zones:
       value: entrance_only
       quote: "or/multnomah/portland/33.130/33.130.250.txt#L19-L23"
       via: "or/multnomah/portland/33.130/33.130.250.txt#L10-L11"
-    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. The same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (33.130.215.txt#L23,L28); the screen does not say which street line the driveway crosses, so driveway_street_setback_barred holds a lot with two or more streets not all read clear across (FOLLOWUPS 222). (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
   CX:
     entrance_faces_street:
       value: required
@@ -7039,6 +7104,24 @@ zones:
       # width leaves the line on the 5.
       value: 0
       quote: "or/multnomah/portland/33.130.txt#L587,L609,L795-L796"
+    driveway_street_setback_barred:
+      # 33.130.215.B.1.b(1) and (2), the same sentence in both: "Vehicle
+      # access is not allowed through the setback unless the local service
+      # street facing the residential zone is the only frontage for the
+      # site." The setback is the across-the-street one above (5 or 10 ft
+      # from a street lot line facing an RF-RM2 or RMP zone), and B.1.b
+      # reaches every commercial zone but CR and CM1 (#L20), so this zone.
+      # Which street line the pod's drive crosses is not drawn, so the
+      # screen holds (never passes, never fails) a lot whose drive meets a
+      # street when it has two or more streets and not every street line
+      # was read clear across (flats.score.screen.drive_setback_held). One
+      # street and no corner is the exception's own case; an alley-fed
+      # court crosses no street setback. The TSP class and the 100 ft
+      # transit-street exception are not read -- every street local, the
+      # tight side, as for the setback itself. FOLLOWUPS 222.
+      value: true
+      cite: PCC 33.130.215.B.1.b(1)-(2), vehicle access through the setback facing an RF-RM2 or RMP zone across a local service street
+      quote: "or/multnomah/portland/33.130/33.130.215.txt#L19-L20,L23,L28"
     setback_front_max_facade_pct:
       # Half the ground-level street-facing facade must stand within the
       # maximum, not the whole of it (33.130.215.C.1; FOLLOWUPS 147).
@@ -7154,7 +7237,7 @@ zones:
       value: entrance_only
       quote: "or/multnomah/portland/33.130/33.130.250.txt#L19-L23"
       via: "or/multnomah/portland/33.130/33.130.250.txt#L10-L11"
-    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. Refused as well: the same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (#L843-L845), and the screen does not yet say which street line the driveway crosses. (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
+    notes: 'Commercial/mixed use. Household Living is a plain Y in Table 130-1 and 33.130.200 states there is no required minimum lot size for development, so the two standards that most often decide a small lot do not exist here. What binds instead is the shape: a maximum front setback of 10 ft puts the building at the street, and side and rear setbacks turn on the zoning of the lot next door rather than on anything in this parcel''s record. NOT ENCODED, on purpose. (1) The step-down heights in Table 130-2 (#L628-L635) drop the ceiling to 35 or 45 ft near lower-scale residential zones. Both clear a 26 ft pod, so encoding a fact nobody measures would cost a lookup and move no verdict. (2) The 5/10 ft street setback across a local service street from an RF-RM2 or RMP zone (33.130.215.B.1.b) is held per line on its tight side: the 5 ft row (a building entirely in residential use) is the street number on every street line, and the plain none row (setback_street_across_nonresidential_ft) goes back only to a line off the corridor whose five rays across the street all found a Portland zone off the RF-RM2/RMP list. Held back, because each relaxes and needs data this screen lacks: the street''s Transportation System Plan class (only a Local Service Traffic Street triggers the rule, 33.910; RLIS TYPE is Metro''s regional class, not the TSP''s) and the exception on or within 100 ft of a transit street. The same paragraph bars vehicle access through that setback unless the facing street is the site''s only frontage (33.130.215.txt#L23,L28); the screen does not say which street line the driveway crosses, so driveway_street_setback_barred holds a lot with two or more streets not all read clear across (FOLLOWUPS 222). (3) Bonus FAR and bonus height (Table 130-3) are earned, not given. (4) The garage standards in 33.130.250.D are stated relative to the dwelling''s own street-facing wall rather than to a lot line, so they are a massing rule this field set cannot hold. (5) Maximum building length of 200 ft (33.130.222.B) is far above anything a four-unit pod reaches.'
     min_far:
       # PCC 33.526.220.C (Gateway) and 33.521.220.C (East Corridor): the
       # minimum FAR for new development is shown on Map 526-3 and Map 521-3,

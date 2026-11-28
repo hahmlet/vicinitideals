@@ -2434,6 +2434,9 @@ def lot_from_row(
         # Every street's line, for a building share of each street's
         # frontage (FOLLOWUPS 109).
         street_lines_ft=street_lines_ft(edges),
+        # No street line faces an RF-RM2/RMP zone: Portland's bar on a drive
+        # through that setback reaches none (33.130.215.B.1.b, FOLLOWUPS 222).
+        streets_across_clear=streets_across_clear(edges),
         # The same streets each measured only to where the rounded corner
         # begins: Gresham's corner frontage, "from the corner radius end
         # point to the property corner" (FOLLOWUPS 175).
@@ -9166,6 +9169,19 @@ def street_lines_ft(edges: LotEdges | None) -> tuple[float, ...]:
     if edges is None:
         return ()
     return tuple(sum(e.length_ft for e in chain) for chain in street_chains(edges))
+
+
+def streets_across_clear(edges: LotEdges | None) -> bool:
+    """True where the lot has a street and every edge of every street chain
+    is ``across_clear`` (:func:`_across_clear`): no street line faces a zone
+    the layer names for its across-the-street setback. False where nothing
+    measured the edges, there is no street, or any line is not surely clear
+    -- the side that keeps Portland's bar on a drive through that setback.
+    :attr:`flats.score.screen.LotFacts.streets_across_clear`."""
+    if edges is None:
+        return False
+    chains = street_chains(edges)
+    return bool(chains) and all(edge.across_clear for chain in chains for edge in chain)
 
 
 def private_drive_lines_ft(edges: LotEdges | None) -> tuple[float, ...]:

@@ -31,7 +31,7 @@ from flats.rules.resolver import Resolved, ZoneResolution  # noqa: E402
 from flats.rules.resolver import Verdict as RuleVerdict  # noqa: E402
 from flats.score.paper import court_across, drive_at_street, side_court  # noqa: E402
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier as GeometryTier  # noqa: E402
-from flats.score.screen import CHECK_FIELD, LotFacts, _driveway_cap_frontages, screen  # noqa: E402
+from flats.score.screen import CHECK_FIELD, LotFacts, Triage, _driveway_cap_frontages, screen  # noqa: E402
 from flats.score.slack import SlackPolicy, Verdict  # noqa: E402
 
 pytestmark = pytest.mark.unit
@@ -516,3 +516,54 @@ def test_an_unmeasured_street_leaves_the_side_share_unchecked() -> None:
     got, result = side(None)
     assert got is None
     assert "side_street_yard_vehicle_share" in result.unchecked
+
+
+# --- no drive through the setback facing a residential zone (FOLLOWUPS 222) ---
+#
+# Portland 33.130.215.B.1.b: "Vehicle access is not allowed through the
+# setback unless the local service street facing the residential zone is the
+# only frontage for the site." Which street the drive crosses is not drawn,
+# so a lot with two streets, not both read clear across, is held.
+
+BARRED = "drive_street_setback"
+
+
+def barred(*, field: bool = True, corner: bool = True, lines: tuple[float, ...] = (100.0, 80.0),
+           clear: bool = False):
+    zone = rules(driveway_street_setback_barred=True if field else None)
+    lane = court_across(DESIGN, zone, corner=corner).lane_ft
+    return screen(
+        zone,
+        LotFacts(lot_sqft=12000, frontage_ft=sum(lines), lot_width_ft=100.0, corner=corner,
+                 street_lines_ft=lines, streets_across_clear=clear),
+        DESIGN, fit(lane), policy=POLICY,
+    )
+
+
+def test_the_setback_bar_is_a_check_that_names_its_field() -> None:
+    assert CHECK_FIELD[BARRED] == "driveway_street_setback_barred"
+
+
+def test_a_corner_lot_the_bar_reaches_is_held_and_never_green() -> None:
+    assert drive_at_street(DESIGN, rules(driveway_street_setback_barred=True), corner=True)
+    free = barred(field=False)
+    assert BARRED not in free.unchecked
+    assert not any(f.code == "MEASURE-DRIVE-SETBACK-STREET" for f in free.flags)
+    held = barred()
+    assert BARRED in held.unchecked
+    assert not [c for c in held.checks if c.check == BARRED]
+    assert any(f.code == "MEASURE-DRIVE-SETBACK-STREET" for f in held.flags)
+    assert held.triage is not Triage.green
+
+
+def test_one_street_is_the_only_frontage_and_is_not_held() -> None:
+    assert BARRED not in barred(corner=False, lines=(100.0,)).unchecked
+
+
+def test_a_through_lot_or_unmeasured_streets_are_held() -> None:
+    assert BARRED in barred(corner=False, lines=(100.0, 100.0)).unchecked
+    assert BARRED in barred(corner=False, lines=()).unchecked
+
+
+def test_every_street_read_clear_across_lifts_the_bar() -> None:
+    assert BARRED not in barred(clear=True).unchecked

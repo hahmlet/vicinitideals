@@ -265,3 +265,43 @@ def test_a_real_corner_gives_back_the_woodstock_line_and_keeps_five_on_50th(
     # So does a lot whose rays the corpus is not handed.
     blind = lot_from_row(_fixture_row(fx), corridors=[cm])
     assert not any(e.across_clear for e in blind.edges.edges)
+
+
+# -- no drive through that setback (33.130.215.B.1.b, FOLLOWUPS 222) -----------
+
+BAR = "driveway_street_setback_barred"
+
+
+@pytest.mark.parametrize("zone", ["CM2", "CM3", "CE", "CX"])
+def test_the_four_zones_bar_a_drive_through_the_setback(corpus: dict, zone: str) -> None:
+    assert corpus[PDX].zones[zone].values[BAR].value is True
+
+
+@pytest.mark.parametrize("zone", ["CR", "CM1"])
+def test_cr_and_cm1_state_no_bar(corpus: dict, zone: str) -> None:
+    assert BAR not in corpus[PDX].zones[zone].values
+
+
+def test_the_real_corner_with_rm2_across_50th_keeps_the_bar(corpus: dict) -> None:
+    from flats.ingest.quadfit import streets_across_clear
+
+    fx = json.loads(FIXTURE.read_text())
+    lot = lot_from_row(_fixture_row(fx), layers=corpus)
+    assert any(e.across_clear for e in lot.edges.edges)
+    assert streets_across_clear(lot.edges) is False
+    assert lot.facts.streets_across_clear is False
+
+
+def test_streets_across_clear_needs_every_street_line_clear() -> None:
+    from flats.geom.edges import LotEdges, Tier
+    from flats.ingest.quadfit import streets_across_clear
+
+    def lot(*clear: bool) -> LotEdges:
+        ring = tuple(
+            Edge(0, 0, 1, 0, 50.0, 90.0, EdgeClass.front, across_clear=c) for c in clear
+        ) + (Edge(0, 0, 1, 0, 50.0, 270.0, EdgeClass.rear),)
+        return LotEdges(Tier.clean, ring, (90.0,), 50.0 * len(clear), 1.0)
+
+    assert streets_across_clear(None) is False
+    assert streets_across_clear(lot(True, True)) is True
+    assert streets_across_clear(lot(True, False)) is False

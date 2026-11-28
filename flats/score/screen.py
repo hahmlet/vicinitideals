@@ -771,6 +771,7 @@ CHECK_FIELD: dict[str, str] = {
     "wall_opening_gap_ft": "wall_opening_min_ft",
     "front_yard_vehicle_share": "parking_front_yard_max_pct",
     "side_street_yard_vehicle_share": "parking_side_street_yard_max_pct",
+    "drive_street_setback": "driveway_street_setback_barred",
     "min_lot_width_ft": "min_lot_width_ft",
     "min_average_lot_width_ft": "min_average_lot_width_ft",
     "min_lot_depth_ft": "min_lot_depth_ft",
@@ -887,6 +888,42 @@ COURT_UNDRIVEN = "court_undriven"
 #: ``FACT_UNOBSERVED``: a question, never a red on a corner piece the drive
 #: need not cross, and never a pass.
 DRIVE_STREET = "drive_street"
+
+#: A drive that may cross a street setback the code bars vehicle access
+#: through (Portland 33.130.215.B.1.b, FOLLOWUPS 222): the setback facing an
+#: RF-RM2/RMP zone across the street, unless that street is the site's only
+#: frontage. Which street line the drive crosses is not drawn, so a lot with
+#: more than one street, not every one read clear across, is held
+#: (:func:`drive_setback_held`). Joins ``_checks``'s ``unmeasured``, so it
+#: reports as ``FACT_UNOBSERVED``: a question, never a pass, never a red.
+DRIVE_SETBACK_STREET = "drive_setback_street"
+#: The check a held lot carries in ``unchecked``, and the zone field it reads.
+DRIVE_SETBACK_CHECK = "drive_street_setback"
+DRIVE_SETBACK_FIELD = "driveway_street_setback_barred"
+
+
+def drive_setback_held(rules: "ZoneResolution", lot: "LotFacts", drive_ft: float | None) -> bool:
+    """Whether the pod's drive may cross a street setback the code bars
+    vehicle access through, and the screen cannot say it does not
+    (:data:`DRIVE_SETBACK_STREET`). PCC 33.130.215.B.1.b: "Vehicle access is
+    not allowed through the setback unless the local service street facing
+    the residential zone is the only frontage for the site"
+    (or/multnomah/portland/33.130/33.130.215.txt#L23,L28).
+
+    Clear where the zone states no bar; where the drive meets no street
+    (alley-fed, or none drawn); where the lot has exactly one street and is
+    no corner, so that street is the only frontage and the exception holds;
+    and where every street line was read clear across the street, so no line
+    carries the setback. Anything else -- two or more streets, or streets
+    nobody measured -- is held. The street's class and the transit-street
+    exception are not read: every street is local, the tight side."""
+    if rules.get(DRIVE_SETBACK_FIELD) is not True:
+        return False
+    if not drive_ft:
+        return False
+    if lot.streets_across_clear:
+        return False
+    return not (len(lot.street_lines_ft) == 1 and not lot.corner)
 
 #: A minimum street frontage the lot clears on a lenient reading and not on
 #: the strictest (FOLLOWUPS 175, :func:`frontage_readings`): its streets added
@@ -1166,6 +1203,13 @@ class LotFacts:
     #: order: what a building share of each street's frontage is read
     #: against (FOLLOWUPS 109). Empty where nothing measured the streets.
     street_lines_ft: tuple[float, ...] = ()
+    #: Every one of the lot's street lines read clear across the street
+    #: (:attr:`flats.geom.edges.Edge.across_clear` on every edge of every
+    #: street, :func:`flats.ingest.quadfit.streets_across_clear`): no line
+    #: faces an RF-RM2/RMP zone, so Portland's bar on a drive through that
+    #: setback (:data:`DRIVE_SETBACK_STREET`) reaches none. False where
+    #: nothing read it, which keeps the bar.
+    streets_across_clear: bool = False
     #: The same streets in the same order, each measured only to where the
     #: rounded corner it shares with another street begins
     #: (:func:`flats.fit.frontage.street_lines_to_curve_ft`): a corner-lot
@@ -2200,6 +2244,13 @@ def _checks(
                 front_share / 100.0 * lot.lot_width_ft,
                 is_maximum=True,
             )
+    # A drive through a street setback the code bars it from (Portland
+    # 33.130.215.B.1.b, FOLLOWUPS 222): held, never passed or failed.
+    if drive_setback_held(
+        rules, lot, drive_at_street(design, rules, lot.alley, corner=lot.corner, beside=beside)
+    ):
+        unchecked.append(DRIVE_SETBACK_CHECK)
+        unmeasured.add(DRIVE_SETBACK_STREET)
     # The same share in a corner lot's street-side yard (Portland
     # 33.266.120.C.1.b, 20 percent "between the side street lot line and the
     # side street building line"). The strip's depth cancels as the front's
@@ -5108,6 +5159,7 @@ _MEASURED_FLAG: dict[str, str] = {
     SITE_GRADE: "MEASURE-SITE-GRADE",
     COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
     DRIVE_STREET: "MEASURE-DRIVE-STREET",
+    DRIVE_SETBACK_STREET: "MEASURE-DRIVE-SETBACK-STREET",
     LOT_OF_RECORD_CONDITION: "MEASURE-LOT-OF-RECORD",
     BUILDING_FRONTAGE: "MEASURE-BUILDING-FRONTAGE",
     FRONTAGE_STREET: "MEASURE-FRONTAGE-STREET",

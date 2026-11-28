@@ -33,6 +33,10 @@ pytestmark = pytest.mark.unit
 PORTLAND = "or/multnomah/portland"
 FIELD = "parking_lot_line_buffer_ft"
 FACT = "abuts_nonresidential_zone"
+#: 33.130.215.B.1.b's bar on a drive through the setback facing a residential
+#: zone (FOLLOWUPS 222). This corner's streets were never read across, so the
+#: bar holds it; the controls below lift it to isolate the strip.
+BAR = "driveway_street_setback_barred"
 COMMERCIAL = ("CR", "CM1", "CM2", "CM3", "CE", "CX")
 TLID = "1S1E26AB  -01200"
 
@@ -171,7 +175,7 @@ def test_the_corner_lot_backing_onto_rm1_is_not_green(trusted) -> None:
     assert s.signed.colour is not flag_plan.Colour.green
     # The control: the same lot with the planted strip lifted is the GREEN
     # the live map showed, so the strip is what moves it.
-    assert _screen(lot, trusted, without=(FIELD,)).signed.colour is flag_plan.Colour.green
+    assert _screen(lot, trusted, without=(FIELD, BAR)).signed.colour is flag_plan.Colour.green
 
 
 def test_an_unread_rear_line_keeps_the_strip(trusted) -> None:
@@ -186,7 +190,13 @@ def test_an_unread_rear_line_keeps_the_strip(trusted) -> None:
 def test_the_same_lot_among_commercial_lots_owes_no_strip(trusted) -> None:
     from flats.score import flags as flag_plan
 
-    s = _screen(_corner("CM2", trusted.layers), trusted)
+    lot = _corner("CM2", trusted.layers)
+    s = _screen(lot, trusted, without=(BAR,))
     assert s.lot.observed.get(FACT) is True
     assert not s.rules.get(FIELD)
     assert s.signed.colour is flag_plan.Colour.green
+    # With the bar in force the same corner is held: two streets, neither read
+    # clear across, and which one the drive crosses is not drawn.
+    held = _screen(lot, trusted)
+    assert "drive_street_setback" in held.signed.unchecked
+    assert held.signed.colour is not flag_plan.Colour.green
