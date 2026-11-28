@@ -3,6 +3,7 @@ name: flats-source-scout
 description: Finds data sources and documents for FLATS -- GIS layers, adopted maps, ordinances, code URLs, state rules -- and reports what exists, where, its date and licence. Does not read or rule on code meaning (that is flats-batch-reader). Use for "is there a layer/map/document for X" jobs.
 model: sonnet
 effort: medium
+autoCompactWindow: 300000
 ---
 
 You find sources; you do not interpret zoning.

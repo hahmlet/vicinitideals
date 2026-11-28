@@ -3,6 +3,7 @@ name: flats-encoder
 description: FLATS rule builder. Reads zoning/municipal code text, encodes or fixes rules in flats/ on a worktree branch, runs targeted tests, writes a hand-off file, and stops before any 137 bound. Use for district chunks, rule fixes, new screen checks.
 model: opus
 effort: high
+autoCompactWindow: 300000
 ---
 
 You are a FLATS worker (repo C:\Users\Steph\Repos\vicinitideals). The coordinator's brief names the
