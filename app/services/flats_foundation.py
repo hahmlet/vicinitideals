@@ -10,6 +10,9 @@ drawing than the lot's drawn building now (when the page has the drawing).
 
 A NOTE, never a colour: nothing the screen, the colour, its reasons or its
 flags read comes from here.
+The six-step cap at the doors (FD8) is the screen's own check
+(:mod:`flats.ingest.foundation_cap`), worked in the screen pass on the same
+ground; the panel only repeats what the record says about it.
 """
 
 from __future__ import annotations

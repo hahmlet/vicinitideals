@@ -1,6 +1,6 @@
 # 216. Court turns for the deeper stair-room courts (fd8 F3)
 
-[Claude] [Steph: count a deeper court as passing when the standard court passes?] [scan: YES -- toward green]
+[Claude] [Steph: ANSWERED 11-27 yes] [scan: YES -- toward green]
 
 Opened 2026-11-22 from the fd8b move read (`../vicinitideals-worktrees/fd8b-moves.findings.md` F3) and fd8-fix2
 (`../vicinitideals-worktrees/fd8-fix2.result.md` "F3 -- stopped").
@@ -14,4 +14,4 @@ Opened 2026-11-22 from the fd8b move read (`../vicinitideals-worktrees/fd8b-move
 - Options: (1) full independent search of all 135 shapes -- many hours, still lattice-unreliable; (2) carry the car's
   measured path from the standard court onto the deeper court (a longer straight drive cannot be harder), checking each
   step; (3) align the search lattice to the standard court.
-- Pending: Steph's ruling on (2). Ships after the 213 release; its lots are a subset of the fd8 re-bound scope.
+- Steph 2026-11-27 chose (2): rulings.yaml 2026-11-27-deeper-court-passes. Building on flats/deeper-court (off foundation-fd8). Ships after the 213 release; its lots are a subset of the fd8 re-bound scope.

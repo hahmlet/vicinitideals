@@ -3816,6 +3816,86 @@
     the move read. Built on flats/gap-fixes (FOLLOWUPS 205); not live until
     released.
   source: Steph 2026-11-18 (chat), ../vicinitideals-worktrees/gap-fixes.handoff.md
+- id: 2026-11-20-foundation-six-step-cap-red
+  kind: ruling
+  date: 2026-11-20
+  scope: {}
+  question: >-
+    The foundation model prices outside steps at every door. Where the ground
+    needs a tall stair, should the lot stay as it is, or fail?
+  ruling: >-
+    A cap of six steps at a door. A site that needs more would need levelling
+    and a retaining wall, which is not modelled, so that lot is red (Steph to
+    the foundation agent, Factory-Sim FD8 v3 section 1 item 3). Read per
+    method: a foundation method with any door over six precast unit risers is
+    not used on the lot; the lot is RED only when every method open to it
+    fails.
+  effect: >-
+    New screen reason: RED where no foundation method fits the cap, on lots
+    with a drawn building. About 5,991 of 44,211 drawn lots on the old door
+    positions (330 green, 5,661 yellow); re-counted on the real doors before
+    release. FOLLOWUPS 213.
+  source: Steph 2026-11-20 via ../Factory-Sim/docs/research/FD8-reply-to-flats-foundation-run.md (v3, b134fd9), confirmed in chat 2026-11-20
+- id: 2026-11-20-foundation-near-cap-yellow
+  kind: ruling
+  date: 2026-11-20
+  scope: {}
+  question: >-
+    Ground heights are good to an inch or two at a door. When a lot misses the
+    six-step cap by 2 in or less, red or yellow?
+  ruling: '"Yellow (Recommended)"'
+  effect: >-
+    A lot whose best method misses the cap by 2 in or less is YELLOW with a
+    flag naming the door, never GREEN and not RED on this ground. FOLLOWUPS 213.
+  source: Steph 2026-11-20 (chat)
+- id: 2026-11-20-front-doors-face-parking
+  kind: ruling
+  date: 2026-11-20
+  scope: {}
+  question: >-
+    On lots where the building stands end-on to the street, neither long face
+    faces the street. Which face takes the front doors (the front and back
+    doors sit in different places, so it decides the step count)?
+  ruling: >-
+    "I feel like the doors would go towards the side with the parking, or save
+    that, the side with more lot space in front of it."
+  effect: >-
+    Where the city requires the main entrance to face the street, the front
+    doors face the street as placed. Elsewhere the front doors go on the long
+    face toward the drawn parking; with no parking drawn, on the face with more
+    open lot in front of it. Replaces the foundation model's front-face guess.
+    FOLLOWUPS 213.
+  source: Steph 2026-11-20 (chat)
+- id: 2026-11-20-stair-room-reserved
+  kind: ruling
+  date: 2026-11-20
+  scope: {}
+  question: >-
+    The parking court and drive lane are drawn flush to the building wall, so
+    the precast steps at the doors on that face land on the parking; about
+    6,000 lots also have steps that run past the lot line. How should the steps
+    be handled?
+  ruling: '"Leave room (Recommended)"'
+  effect: >-
+    Placement keeps a strip between each door face and the drawn court or lane
+    as deep as that face's precast steps need, and keeps every stair inside the
+    lot. Some lots stop fitting. FOLLOWUPS 213.
+  source: Steph 2026-11-20 (chat)
+- id: 2026-11-20-stair-no-room-red-flag
+  kind: ruling
+  date: 2026-11-20
+  scope: {}
+  question: >-
+    After placement tries to leave room for the steps, what colour is a lot
+    where the steps still hit the parking or run off the lot?
+  ruling: >-
+    "Red with a flag so that if we change parking in the future or steps or the
+    orientation of the front doors, we can bring them back"
+  effect: >-
+    RED, with a flag naming the door and what it hits (court, lane or lot line)
+    and by how much, so the lot can be found and re-screened if the parking
+    layout, the step design or the front-door orientation changes. FOLLOWUPS 213.
+  source: Steph 2026-11-20 (chat)
 - id: 2026-11-19-fire-engine-on-a-wide-main-road
   kind: ruling
   date: 2026-11-19
@@ -3947,3 +4027,27 @@
     flats/rel11-firenear; not live until released.
   source: Steph 2026-11-21 (chat)
   encoded_in: [flats/score/screen.py, flats/ingest/quadfit.py, flats/config/flags.yaml]
+- id: 2026-11-27-deeper-court-passes
+  kind: ruling
+  date: 2026-11-27
+  scope: {}
+  question: >-
+    The stair-room re-placement (rulings 2026-11-20-stair-room-reserved) sets
+    the rear court a few feet further back from the building, so the drive
+    into the same court is longer and straight. The turning search holds no
+    measured entry for those deeper courts and its own answers there depend
+    on its lattice (FOLLOWUPS 216). If a car turns and parks in the standard
+    court, does the deeper court count as passing?
+  ruling: >-
+    "Yes, count it (Recommended)": a longer straight drive into the same
+    court cannot make parking harder, so the deeper court passes where the
+    standard court's measured turn passes, the car's path carried onto the
+    deeper court and checked step by step.
+  effect: >-
+    A court whose only difference from a measured court_turns entry is a
+    deeper building-to-court standoff takes that entry's answer, the measured
+    path carried along the extra straight drive and checked; a court with no
+    measured standard entry stays MEASURE-COURT-TURNS as before. Never a
+    pass the standard court does not have. FOLLOWUPS 216; not live until
+    released.
+  source: Steph 2026-11-27 (chat)

@@ -404,6 +404,72 @@ class _Court:
     overlap_ft: float = 0.0
     beside_band_ft: float = 0.0
     beside_len_ft: float = 0.0
+    #: The stair strip kept between the building and a beside court
+    #: (:attr:`flats.designs.model.StairRoom.flank_ft`).
+    flank_ft: float = 0.0
+
+
+#: Feet a kept stair strip may cross the lot line by and still count as on
+#: the lot: the drawing's own rounding (:data:`SIMPLIFY_FT` is coarser).
+STAIR_TOL_FT = 0.05
+
+
+@dataclass(frozen=True, slots=True)
+class StairLot:
+    """Room kept for the precast steps on the lot (FOLLOWUPS 213; Steph
+    2026-11-20, rulings.yaml 2026-11-20-stair-room-reserved): a strip
+    ``depth_ft`` deep along each long face of the building has to stand on
+    ``lot`` (EPSG:2913 ft). Uniform along the face -- the worst door's run,
+    not a notch per door: the cautious side."""
+
+    lot: BaseGeometry
+    depth_ft: float
+
+
+def _lot_local(stairs: StairLot | None, grid: Grid) -> BaseGeometry | None:
+    if stairs is None or stairs.depth_ft <= 0 or stairs.lot is None or stairs.lot.is_empty:
+        return None
+    got = affinity.rotate(stairs.lot, -grid.angle_deg, origin=grid.origin)
+    shapely.prepare(got)
+    return got
+
+
+def _stairs_bad(
+    bx0: np.ndarray,
+    by0: np.ndarray,
+    bx1: np.ndarray,
+    by1: np.ndarray,
+    *,
+    lot: BaseGeometry | None,
+    depth_ft: float,
+) -> np.ndarray:
+    """Which buildings (boxes in the grid's frame) leave a long face's stair
+    strip off the lot (:class:`StairLot`)."""
+    bx0, by0, bx1, by1 = (np.atleast_1d(np.asarray(v, dtype=float)) for v in (bx0, by0, bx1, by1))
+    if lot is None:
+        return np.zeros(len(bx0), dtype=bool)
+    d = max(0.0, depth_ft - STAIR_TOL_FT)
+    if float(np.mean(bx1 - bx0)) >= float(np.mean(by1 - by0)):
+        strips = (shapely.box(bx0, by0 - d, bx1, by0), shapely.box(bx0, by1, bx1, by1 + d))
+    else:
+        strips = (shapely.box(bx0 - d, by0, bx0, by1), shapely.box(bx1, by0, bx1 + d, by1))
+    return ~(shapely.covers(lot, strips[0]) & shapely.covers(lot, strips[1]))
+
+
+def stairs_off_lot(building: BaseGeometry, stairs: StairLot) -> bool:
+    """Whether a drawn ``building`` leaves a long face's stair strip off the
+    lot, read as :func:`_place` reads a window."""
+    ring = np.asarray(building.exterior.coords)[:-1, :2]
+    if len(ring) < 4:
+        return True
+    edges = [(ring[i], ring[(i + 1) % len(ring)]) for i in range(len(ring))]
+    a, b = max(edges, key=lambda e: float(np.hypot(*(e[1] - e[0]))))
+    angle = math.degrees(math.atan2(float(b[1] - a[1]), float(b[0] - a[0])))
+    origin = (float(ring[0][0]), float(ring[0][1]))
+    local = affinity.rotate(building, -angle, origin=origin)
+    lot = affinity.rotate(stairs.lot, -angle, origin=origin)
+    x0, y0, x1, y1 = local.bounds
+    return bool(_stairs_bad(x0, y0, x1, y1, lot=lot, depth_ft=stairs.depth_ft)[0])
 
 
 def _court_boxes(
@@ -423,7 +489,7 @@ def _court_boxes(
     sign = 1.0 if low else -1.0
     bx0 = wx0 if left else wx0 + court.across_ft - across_b
     if court.beside_band_ft > 0:
-        lx0 = bx0 + across_b if left else bx0 - court.beside_band_ft
+        lx0 = bx0 + across_b + court.flank_ft if left else bx0 - court.beside_band_ft - court.flank_ft
         a, b = 0.0, court.beside_len_ft
         cx0, cx1 = lx0, lx0 + court.beside_band_ft
     elif court.depth_ft > 0:
@@ -729,6 +795,7 @@ def _place(
     yard_moves: bool = True,
     stretch: AlleyStretch | None = None,
     groups: Sequence[np.ndarray] = (),
+    stairs: StairLot | None = None,
 ) -> _Placed | None:
     """The window of this size, and the way round, that puts the building
     nearest the street.
@@ -754,7 +821,9 @@ def _place(
     and the caller reads it (:func:`court_between`). ``stretch`` likewise: a
     window whose court a partial rear alley feeds but that does not stand it
     against the covered stretch (:class:`AlleyStretch`) is taken only where
-    no other way stands the plan. ``yard_moves`` False
+    no other way stands the plan. ``stairs`` likewise: a window whose
+    building leaves a long face's stair strip off the lot (:class:`StairLot`)
+    is taken only where no other way stands the plan. ``yard_moves`` False
     takes a clear window only as near the street as the nearest at all --
     the same window turned round, the court on the building's other flank:
     a court whose way in the drawing does not place (beside the building, fed
@@ -763,6 +832,9 @@ def _place(
     yard = tuple(yard)
     bests: list[tuple[float, float, float, _Placed]] = []
     fallbacks: list[tuple[float, float, float, _Placed]] = []
+    # Windows that keep the steps' room whatever their court does: where the
+    # plan may stand back from the street to keep it (FOLLOWUPS 213 fd8-fix2).
+    roomy: list[tuple[float, float, float, _Placed]] = []
     for grid in grids:
         if fitter is not None:
             masks = fitter.court_masks(grid, d_cells, w_cells, over_ft)
@@ -785,6 +857,7 @@ def _place(
         gpts = [_local(g, grid) for g in groups]
         yard_local = _lines_local(yard, grid) if court is not None else np.empty((0, 4))
         segs = _lines_local(stretch.lines, grid) if stretch is not None else np.empty((0, 4))
+        stair_lot = _lot_local(stairs, grid)
         res = grid.res
         wx0 = grid.minx + hits[:, 1] * res
         wy0 = grid.miny + hits[:, 0] * res
@@ -801,15 +874,22 @@ def _place(
                 bx0, bx1 = (wx0, wx0 + across_b) if left else (wx1 - across_b, wx1)
                 building = np.where(way, _box_distance(bx0, by0, bx1, by1, pts), np.inf)
                 spread = _spread(bx0, by0, bx1, by1, gpts)
+                stair_bad = _stairs_bad(
+                    bx0, by0, bx1, by1, lot=stair_lot,
+                    depth_ft=stairs.depth_ft if stairs is not None else 0.0,
+                )
                 bad = _yard_bad(
                     wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b,
                     court=court, yard=yard_local,
                 ) | _stretch_bad(
                     wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b,
                     court=court, stretch=stretch, segs=segs,
-                )
-                for clear in (True, False):
-                    ranked = np.where(bad, np.inf, building) if clear else building
+                ) | stair_bad
+                kinds = [(bests, bad), (fallbacks, None)]
+                if stair_lot is not None:
+                    kinds.append((roomy, stair_bad))
+                for into, skip in kinds:
+                    ranked = building if skip is None else np.where(skip, np.inf, building)
                     ranked = _near_tie(ranked, res)
                     i = int(np.lexsort((-court_ft, spread, ranked))[0])
                     if not math.isfinite(float(ranked[i])):
@@ -817,10 +897,15 @@ def _place(
                     key = (float(building[i]), float(spread[i]), -float(court_ft[i]))
                     hit = hits[i]
                     got = (*key, _Placed(grid, int(hit[0]), int(hit[1]), d_cells, low, left))
-                    (bests if clear else fallbacks).append(got)
+                    into.append(got)
     cell = max((g.res for g in grids), default=0.0)
     best = _pick_near(bests, cell)
-    fallback = _pick_near(fallbacks, cell)
+    # The nearest window at all -- or, where the steps' room is kept, the
+    # nearest that keeps it: the steps stand on the building, so standing it
+    # back to keep their room is a real move even where the court's drive is
+    # not drawn (fd8b move read F1: 1N1E23BB  -19300 kept a window the steps
+    # ran off the lot from while thousands kept them on it).
+    fallback = _pick_near(roomy, cell) or _pick_near(fallbacks, cell)
     if (
         # A court the partial alley feeds is reached from the alley: moving
         # the plan back toward it is how it reaches the stretch.
@@ -860,6 +945,7 @@ def _options(
     yard: Iterable[tuple[float, float, float, float]] = (),
     stretch: AlleyStretch | None = None,
     groups: Sequence[np.ndarray] = (),
+    stairs: StairLot | None = None,
 ) -> list[_Placed]:
     """Every way the window can stand on the lot with the building toward
     the street and the court behind it, thinned to a lattice
@@ -877,7 +963,9 @@ def _options(
     flatter and front-maximum searches choose among keep the parking out of
     the front yard (Steph 2026-11-08). With ``stretch``, nor is a window
     whose court the partial rear alley feeds standing anywhere but against
-    its covered stretch (:class:`AlleyStretch`).
+    its covered stretch (:class:`AlleyStretch`). With ``stairs``, nor is a
+    window whose building leaves a long face's stair strip off the lot
+    (:class:`StairLot`).
     """
     out: list[_Placed] = []
     yard = tuple(yard)
@@ -889,6 +977,8 @@ def _options(
         masks = fitter.court_masks(grid, d_cells, w_cells, over_ft)
         yard_local = _lines_local(yard, grid) if spec is not None else np.empty((0, 4))
         segs = _lines_local(stretch.lines, grid) if stretch is not None else np.empty((0, 4))
+        stair_lot = _lot_local(stairs, grid)
+        stair_ft = stairs.depth_ft if stairs is not None else 0.0
         if masks is None:
             continue
         hits = np.argwhere(masks[0] | masks[1])
@@ -923,7 +1013,7 @@ def _options(
                 ) & ~_stretch_bad(
                     wx0, wy0, wy1, low=low, left=left, across_b=across_b, deep_b=deep_b,
                     court=spec, stretch=stretch, segs=segs,
-                )
+                ) & ~_stairs_bad(bx0, by0, bx1, by1, lot=stair_lot, depth_ft=stair_ft)
                 if max_front_ft is not None:
                     ok &= building <= max_front_ft
                 for i in np.nonzero(ok)[0]:
@@ -960,6 +1050,7 @@ def _options(
                             across_b=across_b, deep_b=deep_b, court=spec, stretch=stretch,
                             segs=segs,
                         )
+                        & ~_stairs_bad(bx0, by0, bx1, by1, lot=stair_lot, depth_ft=stair_ft)
                     )
                     candidates = np.nonzero(valid)[0]
                     if not len(candidates):
@@ -1008,6 +1099,8 @@ def draw(
     stretch: AlleyStretch | None = None,
     column_across_ft: float = 0.0,
     alley_lines: Iterable[tuple[float, float, float, float]] = (),
+    flank_gap_ft: float = 0.0,
+    stair_lot: StairLot | None = None,
 ) -> Drawing | None:
     """The fit drawn: room, building, lane and court, in world coordinates.
 
@@ -1068,6 +1161,13 @@ def draw(
     building but only this wide, against the room's side nearer
     ``alley_lines`` (the side alley's lot lines). Without ``alley_lines``,
     or where the column is as wide as the room, the court spans the room.
+
+    ``flank_gap_ft`` and ``stair_lot`` keep room for the precast steps
+    (FOLLOWUPS 213; :class:`flats.designs.model.StairRoom`): a clear strip
+    that wide between the building and its lane or beside court (the fit's
+    room is already that much wider), and a window whose long faces' stair
+    strips stand on the lot wherever one does (:class:`StairLot`), as the
+    yards are kept (a listing holds only those).
     """
     if fit.across_ft is None or fit.angle_deg is None:
         return None
@@ -1102,6 +1202,7 @@ def draw(
             overlap_ft=court_overlap_ft,
             beside_band_ft=beside_band_ft,
             beside_len_ft=beside_len_ft,
+            flank_ft=flank_gap_ft,
         )
         if yard or stretch is not None
         else None
@@ -1117,6 +1218,7 @@ def draw(
                 yard=yard,
                 stretch=stretch,
                 groups=groups,
+                stairs=stair_lot,
             )
         )
         return None
@@ -1139,6 +1241,7 @@ def draw(
         yard_moves=yard_moves,
         stretch=stretch,
         groups=groups,
+        stairs=stair_lot,
     )
     tight = False
     if placed is None and short_ft > 0:
@@ -1159,6 +1262,7 @@ def draw(
                 yard_moves=yard_moves,
                 stretch=stretch,
                 groups=groups,
+                stairs=stair_lot,
             )
             tight = placed is not None
     fits = placed is not None
@@ -1189,7 +1293,8 @@ def draw(
     # The building's side of the room, and the lane beyond it.
     flank = beside_band_ft if beside_band_ft > 0 else lane_ft
     bx0 = x0 if placed.left else x0 + across - across_b
-    lx0 = bx0 + across_b if placed.left else bx0 - flank
+    # The stair strip kept between them (FOLLOWUPS 213) is the room's own.
+    lx0 = bx0 + across_b + flank_gap_ft if placed.left else bx0 - flank - flank_gap_ft
 
     def band(a: float, b: float, left: float, right: float) -> BaseGeometry:
         y1, y2 = face + sign * a, face + sign * b

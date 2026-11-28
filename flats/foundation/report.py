@@ -11,7 +11,11 @@ re-measuring", with the settings that changed, and no figure.
 Money is a string of dollars and cents (``"12345.67"``), never a float.
 
 **Never a colour.** Nothing here is read by the screen, the colour, its reasons
-or its flags; the block says so (``never_a_colour``).
+or its flags; the block says so (``never_a_colour``). The six-step cap at the
+doors (FD8, Steph 2026-11-20) is the screen's own check
+(:mod:`flats.ingest.foundation_cap`), worked on the same ground in the same
+frame (:mod:`flats.foundation.place`); this block shows it beside the prices
+(``cap``) so the page names the door and by how much.
 """
 
 from __future__ import annotations
@@ -45,7 +49,11 @@ NOTE = (
     "Sizes are code minimums and the costs are estimates; an engineer's design will replace both. "
     "Prices are guide-level, for comparing one lot with another, not a budget."
 )
-NOT_A_CHECK = "Not a screen check: this never changes the lot's colour, its reasons or its flags."
+NOT_A_CHECK = (
+    "Not a screen check: the costs here never change the lot's colour, its reasons or its flags. "
+    "The six-step cap at the doors is the screen's own check, worked on the same ground."
+)
+PRECAST_WORDS = "Precast steps are priced with installation and railings; delivery is not included."
 
 _CENT = Decimal("0.01")
 
@@ -132,6 +140,12 @@ def _method(name: str, r: model.MethodResult) -> dict[str, Any]:
         f"Steps at the 8 doors: {r.risers_least} to {r.risers_most} (fewest to most), "
         f"{r.risers_total} in all; {guards}."
     )
+    not_used = ""
+    if r.over_cap:
+        not_used = next(w for c, w in zip(r.flags, r.flag_words, strict=True) if c == model.OVER_CAP)
+    elif r.stop is not None:
+        not_used = r.stop
+    cost_words = span(r.cost.low, r.cost.high) if r.usable else "not used here"
     return {
         "method": name,
         "name": plain,
@@ -149,10 +163,14 @@ def _method(name: str, r: model.MethodResult) -> dict[str, Any]:
         "floor_words": floor_words,
         "wall_words": wall_words,
         "steps_words": steps_words,
-        "cost_low": money(r.cost.low),
-        "cost_high": money(r.cost.high),
-        "cost_words": span(r.cost.low, r.cost.high),
-        "cost_lines": _cost_lines(r.cost),
+        "usable": r.usable,
+        "over_cap": r.over_cap,
+        "stop": r.stop,
+        "not_used_words": not_used,
+        "cost_low": money(r.cost.low) if r.usable else None,
+        "cost_high": money(r.cost.high) if r.usable else None,
+        "cost_words": cost_words,
+        "cost_lines": _cost_lines(r.cost) if r.usable else [],
         "doors": [
             {
                 "face": d.face,
@@ -164,6 +182,11 @@ def _method(name: str, r: model.MethodResult) -> dict[str, Any]:
                 "guard": d.guard,
                 "handrail": d.handrail,
                 "rail_ft": round(d.rail_ft, 2),
+                "units": d.units,
+                "rail_sides": d.rail_sides,
+                "over_cap": d.over_cap,
+                "cap_height_in": None if d.cap_height_in is None else round(d.cap_height_in, 2),
+                "name": model.door_name(d, r.doors),
             }
             for d in r.doors
         ],
@@ -217,10 +240,23 @@ def _item(i: classify.Item) -> dict[str, Any]:
 
 
 def _old(res: lots.LotResult) -> dict[str, Any]:
+    """Old buildings under the pod as two scenarios (FD8 2c, Steph): no basement
+    (the totals) and has basement (the totals plus the conditional cost), each
+    for every method still open, beside the likelihood of a basement. The
+    likelihood-weighted figure is never shown as a cost."""
     old = res.infill
-    methods = [m for m, on in (("B", "B" in res.applicable), ("A", "A dry" in res.applicable)) if on]
+    open_as = {"B": "B", "A": "A dry"}
+    methods = [m for m in ("B", "A") if open_as[m] in res.applicable and res.methods[open_as[m]].usable]
     if_basement = {m: {"low": money(old.total(m, "low")), "high": money(old.total(m, "high"))} for m in methods}
-    weighted = {m: {"low": money(old.weighted(m, "low")), "high": money(old.weighted(m, "high"))} for m in methods}
+    base = {m: res.methods[open_as[m]].cost for m in methods}
+    scenarios = {
+        "no_basement": {m: {"low": money(base[m].low), "high": money(base[m].high)} for m in methods},
+        "has_basement": {
+            m: {"low": money(base[m].low + old.total(m, "low")), "high": money(base[m].high + old.total(m, "high"))}
+            for m in methods
+        },
+        "likelihood": old.basement_share,
+    }
     out: dict[str, Any] = {
         "in_total": False,
         "held": old.held,
@@ -234,7 +270,7 @@ def _old(res: lots.LotResult) -> dict[str, Any]:
         "basement_share": old.basement_share,
         "backfill_ft": round(old.backfill_ft, 2),
         "if_basement": if_basement,
-        "weighted": weighted,
+        "scenarios": scenarios,
         "buildings": [
             {
                 "bldg_id": bc.bldg_id,
@@ -265,13 +301,18 @@ def _old(res: lots.LotResult) -> dict[str, Any]:
             parts = ", ".join(f"{name[m]} {span(old.total(m, 'low'), old.total(m, 'high'))} more" for m in methods)
             out["if_basement_words"] = f"If a mapped building here had a basement: {parts}. Not in the cost ranges above."
             year = f"built {old.year_built}" if old.year_built else "whose year built is not held"
-            parts = ", ".join(f"{name[m]} {span(old.weighted(m, 'low'), old.weighted(m, 'high'))}" for m in methods)
-            out["weighted_words"] = (
-                f"Weighted by how often a house {year} had a basement ({old.basement_share:.0%}): {parts}. "
-                f"Also not in the cost ranges above."
+            none = ", ".join(f"{name[m]} {span(base[m].low, base[m].high)}" for m in methods)
+            has = ", ".join(
+                f"{name[m]} {span(base[m].low + old.total(m, 'low'), base[m].high + old.total(m, 'high'))}" for m in methods
             )
-        else:
+            out["scenario_words"] = (
+                f"Two cases: with no basement, {none}; with a basement, {has}. "
+                f"A house {year} had a basement about {old.basement_share:.0%} of the time."
+            )
+        elif res.group == support.PILES:
             out["if_basement_words"] = "The basement figure is not priced for screw piles."
+        else:
+            out["if_basement_words"] = "No method is open here, so no basement case is priced."
     return out
 
 
@@ -358,5 +399,8 @@ def describe(
         easy=[_item(i) for i in res.easy],
         flags=[{"code": c, "words": w} for c, w in zip(res.flags, res.flag_words, strict=True)],
         old_buildings=_old(res),
+        cap=res.cap.facts() if res.cap is not None else None,
+        notes=list(res.notes),
+        precast_words=PRECAST_WORDS if s.steps_rule == "precast" else "",
     )
     return out

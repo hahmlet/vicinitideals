@@ -3467,7 +3467,7 @@ def seats(
             )
             ask = (
                 max(
-                    side + across.lane_ft - lane_overlap,
+                    side + across.lane_ft - lane_overlap + design.flank_reserve_ft,
                     court_width - court_overlap,
                 ),
                 deep + behind[n],
@@ -3503,7 +3503,7 @@ def seats(
                     rules, across.lane_ft, corner=corner
                 )
                 if not fitter.holds(
-                    side + across.lane_ft - lane_overlap,
+                    side + across.lane_ft - lane_overlap + design.flank_reserve_ft,
                     along,
                     over_ft=run,
                     orientation=orientation,
@@ -3521,7 +3521,7 @@ def seats(
             )
             overlap = side_yard_court_overlap_ft(rules, row.band_ft, corner=corner)
             if math.isinf(extra) or not fitter.holds(
-                side + row.band_ft - overlap,
+                side + row.band_ft - overlap + design.flank_reserve_ft,
                 deep + extra,
                 angles=street_deg,
                 over_ft=_beside_over(
@@ -3568,18 +3568,18 @@ def _searched_narrower_than(
             return True
         asked = side + got.band_ft - side_yard_court_overlap_ft(
             rules, got.band_ft, corner=corner
-        )
+        ) + design.flank_reserve_ft
     elif fit.column:
         asked = side + across.lane_ft - side_yard_lane_overlap_ft(
             rules, across.lane_ft, corner=corner
-        )
+        ) + design.flank_reserve_ft
     else:
         lane_overlap = side_yard_lane_overlap_ft(rules, across.lane_ft, corner=corner)
         court_overlap = side_yard_court_overlap_ft(
             rules, across.width_ft, lane_ft=across.lane_ft, corner=corner
         )
         asked = max(
-            side + across.lane_ft - lane_overlap,
+            side + across.lane_ft - lane_overlap + design.flank_reserve_ft,
             across.width_ft - court_overlap,
         )
     searched = side if fit.across_ft is None else fit.across_ft
@@ -3913,7 +3913,7 @@ def fit_for(
         got = fitter.fit_beside(
             design.footprint.width_ft,
             design.footprint.depth_ft,
-            band_ft=court.band_ft - overlap,
+            band_ft=court.band_ft - overlap + design.flank_reserve_ft,
             beyond=lambda deep: _beside_beyond(
                 court, deep, rules, carved_rear_ft, lot_width_ft=lot_width_ft
             ),

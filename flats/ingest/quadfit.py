@@ -76,6 +76,7 @@ from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import (
     COURT_BETWEEN_TOL_FT,
     AlleyStretch,
+    StairLot,
     court_on_stretch,
     draw,
     stretch_window,
@@ -199,6 +200,7 @@ from flats.geom.durham_apron import (
 from flats.geom import driveway_lot_line, driveway_spacing
 from flats.geom.flag_lot import observed_flag_lot
 from flats.geom import sewer
+from flats.ingest import foundation_cap
 from flats.ingest.flatter import (
     DRIVE_TOL_FT,
     _angles as _flatter_angles,
@@ -1334,6 +1336,10 @@ class QuadfitLot:
     #: Whether the lot lies outside public sewer service (Steph 2026-11-10,
     #: :mod:`flats.geom.sewer`); None where nothing read it.
     sewer: sewer.Reading | None = None
+    #: The lot's ground classes for the six-step cap (``ground_class``,
+    #: ``alt_ground_class``; :func:`flats.ingest.foundation_cap.with_classes`);
+    #: None where the run gave none -- unread, the conservative case.
+    foundation_classes: tuple[str | None, str | None] | None = None
     #: The lot's code's clear-vision areas (``Layer.clear_vision``,
     #: FOLLOWUPS 161; :mod:`flats.geom.sight_triangle`); None where no layer
     #: was in hand or the layer declares none -- nothing is then checked.
@@ -2504,6 +2510,7 @@ def lot_from_row(
         drawn_edges=drawn_edges(row, layers, observed),
         pdx_overlays=pdx.decode(row.get(pdx.ROW_KEY)),
         sewer=sewer.reading_of(row),
+        foundation_classes=foundation_cap.classes_of(row),
         clear_vision=_clear_vision(row, layers),
         road_jogs=_count_json(row.get("road_jogs_json")),
     )
@@ -3484,6 +3491,16 @@ class Screened:
     #: works (:func:`forms_record`, Steph 2026-10-15). None for a design
     #: that has only one form.
     forms: dict[str, Any] | None = None
+    #: The six-step cap at the doors on the drawing (FD8, Steph 2026-11-20;
+    #: :func:`flats.ingest.foundation_cap.checked`): its state, the door that
+    #: decides it and by how much, which face takes the front doors and why.
+    #: None where nothing is drawn or the run has no elevation models.
+    foundation: dict[str, Any] | None = None
+    #: The reading of the lot the pass that answered was handed (the side-door
+    #: lot, the floored yard, the second drive reading ...): the six-step cap
+    #: is framed against its street lines (:func:`foundation_checked`). None
+    #: before :func:`_screen_lot_once` sets it.
+    screened_on: QuadfitLot | None = None
 
 
 def _room(s: Screened, fitter: Fitter) -> Room | None:
@@ -5949,7 +5966,34 @@ def screen_lot(
 
     Where a ruling lets the drive be narrower than the pod's lane and the
     lane missed, the whole of that is done once more with the narrow drive
-    (:func:`narrow_lane_checked`)."""
+    (:func:`narrow_lane_checked`).
+
+    Last, once, on the answer all of that kept: the six-step cap at the
+    doors and the room for their steps (:func:`foundation_checked`)."""
+    got = _screen_lot_plain(
+        lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+    return foundation_checked(
+        lot, designs, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+
+
+def _screen_lot_plain(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """:func:`screen_lot` before the foundation: both forms, the side-door
+    search and the narrow-lane search, every choice between readings made
+    without the six-step cap (:func:`foundation_checked`)."""
     got = _screen_lot_forms(
         lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
@@ -6144,7 +6188,7 @@ def side_door_checked(
         if missed is None:
             continue
         with doors_to_the_side():
-            (side,) = screen_lot(
+            (side,) = _screen_lot_plain(
                 side_doors(lot, missed), [design], rules=rules, policy=policy,
                 relief=relief, step_deg=step_deg, roads=roads, terrain=terrain,
             )
@@ -6802,7 +6846,88 @@ def _screen_lot_once(
         won = sewer.checked(won, lot.sewer)
         # Records for the bound, last, on the colour that stands (rel11 G1).
         won = marks_checked(won, lot)
+        # The reading this pass was handed, for the six-step cap, which is
+        # not worked here: this pass is the inner step of every search that
+        # chooses between readings (the side doors, the narrow lane, the
+        # forms, the drive and easement readings, the bound), and the cap
+        # is worked once, on the answer they keep (:func:`foundation_checked`).
+        won = dataclasses.replace(won, screened_on=lot)
         out.append(_rank_unknown(won) if ask_rank else won)
+    return out
+
+
+def _capped(s: Screened, terrain: Any) -> Screened:
+    """``s`` with the six-step cap worked at the doors of its drawing
+    (:func:`flats.ingest.foundation_cap.checked`), framed against the street
+    lines of the reading it was screened on."""
+    here = s.screened_on or s.lot
+    return foundation_cap.checked(
+        s, terrain=terrain, lot_geom=here.lot_geom, classes=here.foundation_classes, tlid=here.tlid,
+        streets=lambda: (*_street_lines(here), *_side_street_lines(here)),
+    )
+
+
+def foundation_checked(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    got: list[Screened],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """``got`` -- :func:`screen_lot`'s answers before the foundation -- with
+    the six-step cap at the doors and the room for their steps
+    (FOLLOWUPS 213; Steph 2026-11-20, rulings.yaml
+    2026-11-20-foundation-six-step-cap-red, -near-cap-yellow,
+    2026-11-20-stair-room-reserved and 2026-11-20-stair-no-room-red-flag).
+
+    Worked once, on the answer every search kept (fd8 bound: worked inside
+    :func:`_screen_lot_once`, the cap turned a side-door or narrow-lane
+    reading red, the search then kept the street-facing miss, and the lot
+    went red on ``fit_ft`` with no foundation reason), so the cap never
+    chooses which plan the screen keeps.
+
+    The cap first (:func:`_capped`). Where a drawn unit lands on the
+    court's stalls, the lane or past the lot line
+    (:func:`flats.ingest.foundation_cap.stair_room_of`), the lot is
+    screened again, the whole way (:func:`_screen_lot_plain`), with the plan
+    keeping that much room (:meth:`flats.designs.model.Design.reserving`:
+    the standoff off the rear wall raised, a strip beside the building
+    before its lane, the long faces kept that far inside the lot), and the
+    cap worked on the new placement; where its steps still land, the room is
+    widened, up to :data:`flats.ingest.foundation_cap.STAIR_PASSES`
+    placements. No room at the end: RED with the flag naming the door
+    (:func:`flats.ingest.foundation_cap.no_room`). A lot already red is left
+    alone. A placement that reads another colour than the first carries
+    FOUNDATION-STAIR-MOVED either way: a better one held at the first's
+    colour, a worse one as it reads (:func:`flats.ingest.foundation_cap.
+    reconciled`).
+    """
+    if terrain is None:
+        return got
+    out: list[Screened] = []
+    for design, s in zip(designs, got):
+        first = _capped(s, terrain)
+        cur = first
+        while foundation_cap.stair_hits(cur) and not (
+            cur.signed.colour is flag_plan.Colour.red and cur.screening.colour is flag_plan.Colour.red
+        ):
+            kept = foundation_cap.next_room(cur)
+            if kept is None:
+                cur = foundation_cap.no_room(cur)
+                break
+            (alt,) = _screen_lot_plain(
+                lot, [design.reserving(kept)], rules=rules, policy=policy, relief=relief,
+                step_deg=step_deg, roads=roads, terrain=terrain,
+            )
+            cur = _capped(alt, terrain)
+            if cur.signed.colour is flag_plan.Colour.red or cur.screening.colour is flag_plan.Colour.red:
+                break
+        out.append(first if cur is first else foundation_cap.reconciled(first, cur))
     return out
 
 
@@ -8862,6 +8987,7 @@ def _beside_drawn(
         side_streets=_side_street_lines(here),
         beside_band_ft=beside.band_ft,
         beside_len_ft=beside.length_ft,
+        flank_gap_ft=design.flank_reserve_ft,
     )
 
 
@@ -9014,6 +9140,7 @@ def _court_drawn(
         paved_across_ft=None if fit.column else max(across.width_ft, across.lane_ft),
         gap_ft=gap,
         side_drive=side_drive,
+        flank_gap_ft=design.flank_reserve_ft,
         **_column_draw(design, got, alley, fit, here),
     )
 
@@ -9376,6 +9503,8 @@ def drawing_for(
             include_frontmost=include_frontmost,
             yard=yard,
             yard_moves=False,
+            flank_gap_ft=s.design.flank_reserve_ft,
+            stair_lot=stair_lot_of(s),
         )
         return None if got is None else got.to_json(s.envelope.geom if s.envelope else None)
     if s.fit.column:
@@ -9424,11 +9553,24 @@ def drawing_for(
         yard=yard,
         yard_moves=_lane_in_from_street(s),
         stretch=stretch,
+        flank_gap_ft=s.design.flank_reserve_ft,
+        stair_lot=stair_lot_of(s),
         **_column_draw(s.design, s.rules, alley, s.fit, s.lot),
     )
     if got is None:
         return None
     return got.to_json(s.envelope.geom if s.envelope else None)
+
+
+def stair_lot_of(s: Screened) -> StairLot | None:
+    """The room kept on the lot for the precast steps at ``s``'s doors
+    (:attr:`flats.designs.model.StairRoom.lot_ft`), or None where none is
+    kept -- every first placement (FOLLOWUPS 213)."""
+    room = s.design.stairs
+    lot = s.lot.lot_geom
+    if room is None or room.lot_ft <= 0 or lot is None or lot.is_empty:
+        return None
+    return StairLot(lot, room.lot_ft)
 
 
 #: A stall band's standing in the choice of front: Steph's ruling of
@@ -9630,6 +9772,8 @@ def row_for(s: Screened) -> dict[str, Any]:
         # Both forms' answers and which works (Steph 2026-10-15); None for
         # a design with one form.
         "forms": json.dumps(s.forms, separators=(",", ":")) if s.forms is not None else None,
+        # The six-step cap at the doors (FD8): the colour's own facts.
+        "foundation_cap": json.dumps(s.foundation, separators=(",", ":")) if s.foundation is not None else None,
     }
 
 
@@ -10048,9 +10192,14 @@ def run(
     cache: Path | None = None,
     plats: Path | None = None,
     fabric: Path | None = None,
+    foundation_classes: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
+
+    ``foundation_classes`` is each lot's ground classes for the six-step cap
+    (:func:`flats.ingest.foundation_cap.with_classes`; the foundation measure
+    run's ``status.parquet`` serves); a lot it does not hold is unread.
 
     Parts are written as they finish (``parts/NNNNN.parquet``) and
     concatenated at the end, so a run that dies at hour three keeps its
@@ -10202,6 +10351,9 @@ def run(
         f"{sewered[sewer.STREET_MAIN]:,} with another provider's main in the street (yellow), "
         f"{sewered[sewer.UNMEASURED]:,} unmeasured (flag), {sewered[sewer.SERVED]:,} served"
     )
+    classed_ground = foundation_cap.with_classes(rows, foundation_classes)
+    log(f"bridge: six-step cap: ground classes read on {classed_ground:,} of {len(rows):,} lots"
+        + ("" if foundation_classes is not None else " (no --foundation-classes: every class unread)"))
     placed = historic_lists.write_report(rows, out)
     log(
         f"bridge: historic lists: {placed['on_lot']:,} listings on a lot of this run, "
@@ -10239,7 +10391,8 @@ def run(
             cache,
             batch.run_key(
                 step_deg=step_deg,
-                inputs={"sources": sources, "roads": roads, "dem": dem, "curbs": curbs, "fabric": fabric},
+                inputs={"sources": sources, "roads": roads, "dem": dem, "curbs": curbs, "fabric": fabric,
+                        "foundation_classes": foundation_classes},
                 law=law,
             ),
         )
@@ -10283,6 +10436,7 @@ def run(
         "dem": str(dem),
         "curbs": str(curbs) if curbs is not None else None,
         "fabric": str(fabric),
+        "foundation_classes": str(foundation_classes) if foundation_classes is not None else None,
         "institutional": str(institutional),
         "institutional_skipped": skipped,
         "law_on": on.isoformat(),
@@ -10377,6 +10531,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         "re-launch resumes (default: bridge_cache beside --out)",
     )
     ap.add_argument("--no-cache", action="store_true", help="screen every lot afresh and keep no answers")
+    ap.add_argument(
+        "--foundation-classes",
+        type=Path,
+        help="ground classes per lot for the six-step cap (parquet/CSV: tlid, ground_class, alt_ground_class; "
+        "the foundation measure run's status.parquet); without it every class is unread (FD8)",
+    )
     args = ap.parse_args(argv)
     args.tlid = [*args.tlid, *(_read_tlids(args.tlid_file) if args.tlid_file else [])]
     args.tlid_file = None
@@ -10410,6 +10570,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         institutional=args.institutional,
         cache=cache,
         fabric=args.fabric,
+        foundation_classes=args.foundation_classes,
     )
     return 0
 

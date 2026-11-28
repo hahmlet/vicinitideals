@@ -23,7 +23,13 @@ What is kept (FD6 section 2 and more, for cheap analysis later):
   the pod over a building that stands today, front-face turn;
 * per wall line (seven): length, the drop at every station (one per foot), and its
   largest, smallest and mean, and the drop area;
-* per door (eight): the drop at the door;
+* per door (eight, the front doors on the face the door-face rule names; FD8
+  2b): the drop at the door, the drop on a line straight out from it at every
+  ``station_ft`` to the grid margin (where the stair lands, FD8 2d), and the
+  lowest ground in the guard box (``guard_box_out_ft`` out, ``guard_box_side_ft``
+  either side; FD8 2d);
+* the steepest ground within the grid over any ``steep_run_ft`` (FD8 2d, the
+  slope-setback flag);
 * under the slab (1 ft cells): fill volume, deepest fill, area with fill over each
   of ``fill_bands_in`` (12, 24, 48 in);
 * old buildings (FD6 section 5.8, :mod:`flats.foundation.oldbuild`): for each
@@ -51,7 +57,8 @@ GEOMETRIC: tuple[str, ...] = (
     "length_ft",
     "width_ft",
     "party_x_ft",
-    "door_x_ft",
+    "door_x_front_ft",
+    "door_x_back_ft",
     "station_ft",
     "high_point_along_ft",
     "high_point_across_ft",
@@ -60,6 +67,10 @@ GEOMETRIC: tuple[str, ...] = (
     "fill_bands_in",
     "grow_ft",
     "corner_within_ft",
+    "grid_margin_ft",
+    "guard_box_out_ft",
+    "guard_box_side_ft",
+    "steep_run_ft",
 )
 
 
@@ -110,8 +121,20 @@ def stations(line: WallLine, step_ft: float) -> list[tuple[float, float, float]]
 
 
 def door_points(s: Settings) -> list[tuple[str, float, float]]:
-    """The eight doors, front then back, left to right."""
-    return [(face, x, y) for face, y in (("front", 0.0), ("back", s.width_ft)) for x in s.door_x_ft]
+    """The eight doors: the four front doors (on y = 0) then the four back
+    doors (on y = width), each left to right. y = 0 is the face the door-face
+    rule gave the front doors; the caller turns the frame so that it is
+    (:func:`flats.foundation.doors.choose`)."""
+    return [
+        *(("front", x, 0.0) for x in s.door_x_front_ft),
+        *(("back", x, s.width_ft) for x in s.door_x_back_ft),
+    ]
+
+
+def out_steps(s: Settings) -> int:
+    """How many stations a door's out-line holds: one every ``station_ft`` to
+    the grid margin (FD8 2d)."""
+    return max(1, round(s.grid_margin_ft / s.station_ft))
 
 
 @dataclass(frozen=True, slots=True)
@@ -138,6 +161,25 @@ class DoorMeasure:
     face: str
     x_ft: float
     drop_in: float
+    #: Drop (in) below the high point on the line straight out from the door,
+    #: at 1, 2, ... stations of ``station_ft`` (the wall itself is ``drop_in``).
+    #: Empty on a record measured before FD8.
+    out_drops_in: tuple[float, ...] = ()
+    #: Largest drop (the lowest ground) in the guard box out from the door;
+    #: None on a record measured before FD8.
+    box_drop_in: float | None = None
+
+    def drop_at(self, out_in: float, station_ft: float) -> float:
+        """The drop ``out_in`` inches out from the wall, straight-line between
+        stations; beyond the last station the last drop is held."""
+        if not self.out_drops_in or out_in <= 0:
+            return self.drop_in
+        pts = (self.drop_in, *self.out_drops_in)
+        u = out_in / 12 / station_ft
+        if u >= len(pts) - 1:
+            return pts[-1]
+        i = math.floor(u)
+        return pts[i] + (pts[i + 1] - pts[i]) * (u - i)
 
 
 @dataclass(frozen=True, slots=True)
@@ -227,13 +269,31 @@ class Measured:
     #: False means "not held", not "no old building".
     old_buildings_held: bool = False
     old_buildings: tuple[OldBuilding, ...] = ()
+    #: Steepest ground (rise over run) within the grid over any ``steep_run_ft``,
+    #: along or across the building (FD8 2d); None where not measured.
+    steep_slope_max: float | None = None
+    #: Which long face took the front doors: "street" (the face nearer the
+    #: street lot lines) or "away" (the other one), and the rule that chose it
+    #: (:mod:`flats.foundation.doors`); None on a lot-file row or a test lot.
+    door_face: str | None = None
+    door_face_rule: str | None = None
 
     def line(self, name: str) -> LineMeasure:
         return next(ln for ln in self.lines if ln.name == name)
 
 
 #: The lot-file fields a record keeps but does not measure.
-INPUT_FIELDS = ("relief_input_ft", "ground_class", "alt_ground_class", "frost_register_in", "bldg_overlap_share", "front_face_turn_deg", "year_built")
+INPUT_FIELDS = (
+    "relief_input_ft",
+    "ground_class",
+    "alt_ground_class",
+    "frost_register_in",
+    "bldg_overlap_share",
+    "front_face_turn_deg",
+    "year_built",
+    "door_face",
+    "door_face_rule",
+)
 
 
 def with_inputs(m: Measured, inputs: Mapping[str, object]) -> Measured:
@@ -243,6 +303,8 @@ def with_inputs(m: Measured, inputs: Mapping[str, object]) -> Measured:
         "ground_class": _str,
         "alt_ground_class": _str,
         "year_built": _year,
+        "door_face": _str,
+        "door_face_rule": _str,
     }
     changes = {k: conv.get(k, _opt)(v) for k, v in inputs.items() if k in INPUT_FIELDS}
     unknown = set(inputs) - set(INPUT_FIELDS)
@@ -264,6 +326,43 @@ def _fall(ground: Ground, s: Settings) -> tuple[float, float]:
     along = sum(ground(0.0, y) - ground(s.length_ft, y) for y in ys) / len(ys)
     across = sum(ground(x, 0.0) - ground(x, s.width_ft) for x in xs) / len(xs)
     return along, across
+
+
+def _door(ground: Ground, top: float, face: str, x: float, y: float, s: Settings) -> DoorMeasure:
+    """One door: its drop, its out-line (FD8 2d) and its guard box's lowest ground."""
+    out = -1.0 if y <= 0 else 1.0
+    step = s.station_ft
+    line = tuple((top - ground(x, y + out * i * step)) * 12 for i in range(1, out_steps(s) + 1))
+    nb = max(1, round(s.guard_box_out_ft / step))
+    ns = max(1, round(s.guard_box_side_ft / step))
+    box = max(
+        (top - ground(x + j * step, y + out * i * step)) * 12
+        for i in range(nb + 1)
+        for j in range(-ns, ns + 1)
+    )
+    return DoorMeasure(face, x, (top - ground(x, y)) * 12, line, box)
+
+
+def steepest(ground: Ground, s: Settings) -> float:
+    """Steepest ground within the grid (the footprint plus ``grid_margin_ft``)
+    over any run of ``steep_run_ft`` along or across the building (FD8 2d)."""
+    import numpy as np
+
+    from flats.foundation.ground import CellGrid, grid_centres
+
+    _x0, _y0, xs, ys = grid_centres(s)
+    if isinstance(ground, CellGrid) and len(ground.z) == len(ys) and len(ground.z[0]) == len(xs):
+        z = np.asarray(ground.z, dtype=float)
+    else:
+        z = np.array([[ground(x, y) for x in xs] for y in ys], dtype=float)
+    k = max(1, round(s.steep_run_ft / s.grid_step_ft))
+    run = k * s.grid_step_ft
+    best = 0.0
+    if z.shape[1] > k:
+        best = max(best, float(np.abs(z[:, k:] - z[:, :-k]).max()) / run)
+    if z.shape[0] > k:
+        best = max(best, float(np.abs(z[k:, :] - z[:-k, :]).max()) / run)
+    return best
 
 
 def measure(
@@ -297,7 +396,7 @@ def measure(
                 drop_area_ftin=sum(d * seg for (_, _, seg), d in zip(pts, drops, strict=True)),
             )
         )
-    doors = tuple(DoorMeasure(face, x, (top - ground(x, y)) * 12) for face, x, y in door_points(s))
+    doors = tuple(_door(ground, top, face, x, y, s) for face, x, y in door_points(s))
     nx = max(1, round(s.length_ft / s.fill_cell_ft))
     ny = max(1, round(s.width_ft / s.fill_cell_ft))
     cell_area = (s.length_ft / nx) * (s.width_ft / ny)
@@ -340,6 +439,9 @@ def measure(
         front_face_turn_deg=_opt(inputs.get("front_face_turn_deg")),
         geometry=geometry_of(s),
         year_built=_year(inputs.get("year_built")),
+        steep_slope_max=steepest(ground, s),
+        door_face=_str(inputs.get("door_face")),
+        door_face_rule=_str(inputs.get("door_face_rule")),
     )
 
 

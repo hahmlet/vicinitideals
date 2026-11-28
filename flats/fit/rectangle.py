@@ -671,7 +671,10 @@ class Fitter:
             design.footprint.depth_ft,
             allow_flip=not axis_required,
             placement=placement,
-            lane_ft=design.parking.lane_width_ft if lane_ft is None else lane_ft,
+            # A strip kept for the steps between the building and its lane
+            # (:attr:`flats.designs.model.StairRoom.flank_ft`) widens the room.
+            lane_ft=(design.parking.lane_width_ft if lane_ft is None else lane_ft)
+            + design.flank_reserve_ft,
             court_width_ft=design.court_width_ft if court_width_ft is None else court_width_ft,
             over_ft=over_ft,
         )

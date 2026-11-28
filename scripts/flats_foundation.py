@@ -89,7 +89,9 @@ sys.path.insert(0, str(REPO))
 from flats.foundation import lot as lots_mod  # noqa: E402
 from flats.foundation import measure, rows, settings  # noqa: E402
 from flats.foundation import ground as grounds  # noqa: E402
+from flats.foundation import doors  # noqa: E402
 from flats.foundation.frame import SIX_UV, Frame, frame  # noqa: E402
+from flats.foundation.place import place  # noqa: E402
 
 PART = 1000
 
@@ -519,6 +521,8 @@ STATUS_FIELDS = (
     "front_face_turn_deg", "old_buildings_held", "old_buildings_n", "drawing_hash", "error",
 )
 POP_COLS = ("TLID", "colour", "layer_id", "jurisdiction", "drawing")
+#: Read where the assign output has it: the screen's six-step cap facts (FD8).
+POP_OPTIONAL = ("foundation_cap",)
 
 
 def _rss_mb() -> int:
@@ -544,8 +548,10 @@ def population(assign: Path, colours: set[str], out: Path, batch: int = 20000) -
 
     recs: list[dict[str, Any]] = []
     n: Counter[str] = Counter()
-    for b in pq.ParquetFile(assign).iter_batches(batch_size=batch, columns=list(POP_COLS)):
-        cols = {name: b.column(name).to_pylist() for name in POP_COLS}
+    pf = pq.ParquetFile(assign)
+    want = [*POP_COLS, *(c for c in POP_OPTIONAL if c in pf.schema_arrow.names)]
+    for b in pf.iter_batches(batch_size=batch, columns=want):
+        cols = {name: b.column(name).to_pylist() for name in want}
         for i, tlid in enumerate(cols["TLID"]):
             colour = cols["colour"][i]
             if colour not in colours:
@@ -557,8 +563,13 @@ def population(assign: Path, colours: set[str], out: Path, batch: int = 20000) -
                 continue
             county = county_of(cols["layer_id"][i])
             n[f"{colour} {county}"] += 1
+            drawn = json.loads(d) or {}
+            cap = json.loads(cols["foundation_cap"][i] or "null") if "foundation_cap" in cols else None
             recs.append({"TLID": tlid, "county": county, "colour": colour, "layer_id": cols["layer_id"][i],
                          "jurisdiction": cols["jurisdiction"][i], "ring": json.dumps(ring),
+                         "court": json.dumps(drawn.get("court")), "lane": json.dumps(drawn.get("lane")),
+                         # the screen's own door face (FD8), where the run's assign output holds it
+                         "door_face_rule": (cap or {}).get("door_face_rule"),
                          "drawing_hash": record.ring_hash(ring)})
     seen = Counter(r["TLID"] for r in recs)
     dup = sorted(t for t, k in seen.items() if k > 1)
@@ -929,13 +940,30 @@ def _status(p: Mapping[str, Any], **kw: Any) -> dict[str, Any]:
     return st
 
 
+_RULESETS: dict[int, Any] = {}
+
+
+def _zone_rules(layers: Any, layer_id: str, zone: str | None) -> Any:
+    """The zone's resolved standards (for ``entrance_faces_street``), or None."""
+    from flats.rules.resolver import RuleSet
+
+    if not zone:
+        return None
+    rs = _RULESETS.get(id(layers))
+    if rs is None:
+        rs = _RULESETS[id(layers)] = RuleSet(layers)
+    try:
+        return rs.resolve(layer_id, zone)
+    except Exception:  # noqa: BLE001 -- an unresolved zone keeps the street-side rule
+        return None
+
+
 def measure_lot(p: Mapping[str, Any], row: Mapping[str, Any] | None, src: Sources, dem: Any, layers: Any, s: Any,
                 grid: tuple[Any, Any], *, drawing: str, run: str, measured_at: str
                 ) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     """One drawn lot: its measured record (None when it cannot be measured) and
     its status row. The ground grid is the 1 m model's, else (blank cells, or
-    no 1 m tile) the 10 m model's."""
-    import numpy as np
+    no 1 m tile) the 10 m model's (:func:`flats.foundation.place.place`)."""
     import shapely
 
     from flats.foundation import inputs as fin
@@ -948,23 +976,18 @@ def measure_lot(p: Mapping[str, Any], row: Mapping[str, Any] | None, src: Source
         return None, _status(p, error="LookupError: lot row not in s4")
     ql = quadfit.lot_from_row(dict(row), layers)
     streets = tuple(dict.fromkeys(quadfit._street_lines(ql) + quadfit._side_street_lines(ql)))
-    fr = frame(ring, streets)
-    gx, gy = grid
-    pts = fr.world(gx.ravel(), gy.ravel(), s.length_ft, s.width_ft, s.box_ft)
-    z = None
-    src_name = cell = None
-    for coarse in (False, True):
-        z_of, src_name, cell = dem.z_reader(ring, coarse=coarse)
-        if z_of is None:
-            continue
-        z = np.asarray(z_of(pts), dtype=float).reshape(gy.shape)
-        if np.isfinite(z).all():
-            break
-        z = None
-    if z is None:
-        return None, _status(p, error="LookupError: no elevation model covers the whole grid")
-    g = grounds.cell_grid(z.tolist(), s, cell, f"{src_name} grid")
-    m = measure.measure(g, s, tlid=tlid, county=county)
+    # Which face takes the front doors (FD8, Steph 2026-11-20): the screen's
+    # answer where the assign output holds it, else worked here the same way.
+    rule = p.get("door_face_rule")
+    if rule:
+        required = rule == doors.REQUIRED
+    else:
+        required = doors.entrance_required(_zone_rules(layers, layer_id, ql.zone))
+    placed = place(ring, streets, dem, s, required=required, court=json.loads(p.get("court") or "null"),
+                   lane=json.loads(p.get("lane") or "null"), lot=ql.lot_geom, tlid=tlid, county=county, grid=grid)
+    if placed.measured is None:
+        return None, _status(p, error=placed.error)
+    m, fr = placed.measured, placed.street_frame
     fp = shapely.Polygon(ring)
     soil = src.soil(fp)
     haz = src.hazards(fp, layer_id)
@@ -973,7 +996,7 @@ def measure_lot(p: Mapping[str, Any], row: Mapping[str, Any] | None, src: Source
                                   year=src.years.get((str(county), tlid)), turn_deg=turn)
     m = measure.with_inputs(m, ins)
     held = src.held.get(tlid, False)
-    m = measure.with_old_buildings(m, held, src.old_buildings(fr, s))
+    m = measure.with_old_buildings(m, held, src.old_buildings(placed.frame, s))
     doc = record.document(m, drawing=drawing, measured_at=measured_at, run=run, ring=ring)
     st = _status(p, **facts)
     st.update(ground_source=m.ground_source, cell_m=m.cell_m, ground_class=ins["ground_class"],

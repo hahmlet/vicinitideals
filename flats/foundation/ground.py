@@ -75,7 +75,13 @@ def plane(settings: Settings, fall_along_ft: float, fall_across_ft: float, base_
 
 @dataclass(frozen=True)
 class SixReadings(Ground):
-    """The six readings as a surface, with the lump allowance."""
+    """The six readings as a surface, with the lump allowance.
+
+    The readings sit on the corners and mid-points of the drawn (finished)
+    box, ``placed_length_ft`` x ``placed_width_ft``; x and y are on the model's
+    footprint (the framing), centred in it (FD6 reference model key issue 2,
+    FD8). Without a placed size the readings sit on the footprint itself.
+    """
 
     front_left: float
     front_mid: float
@@ -88,17 +94,22 @@ class SixReadings(Ground):
     lump_ft: float = 0.0
     cell_m: float | None = None
     source: str = "six readings"
+    placed_length_ft: float | None = None
+    placed_width_ft: float | None = None
 
     def _edge(self, x: float, left: float, mid: float, right: float) -> float:
-        half = self.length_ft / 2
+        half = (self.placed_length_ft or self.length_ft) / 2
         if x <= half:
             return left + (mid - left) * x / half
         return mid + (right - mid) * (x - half) / half
 
     def __call__(self, x: float, y: float) -> float:
-        front = self._edge(x, self.front_left, self.front_mid, self.front_right)
-        back = self._edge(x, self.back_left, self.back_mid, self.back_right)
-        return front + (back - front) * y / self.width_ft
+        pl = self.placed_length_ft or self.length_ft
+        pw = self.placed_width_ft or self.width_ft
+        u, v = x + (pl - self.length_ft) / 2, y + (pw - self.width_ft) / 2
+        front = self._edge(u, self.front_left, self.front_mid, self.front_right)
+        back = self._edge(u, self.back_left, self.back_mid, self.back_right)
+        return front + (back - front) * v / pw
 
     @property
     def readings(self) -> tuple[float, ...]:
@@ -121,7 +132,8 @@ def six_readings(
     lump = 0.0
     if relief_ft is not None:
         lump = max(0.0, relief_ft - (max(z) - min(z))) * settings.lump_share
-    return SixReadings(*z, settings.length_ft, settings.width_ft, lump_ft=lump, cell_m=cell_m)
+    return SixReadings(*z, settings.length_ft, settings.width_ft, lump_ft=lump, cell_m=cell_m,
+                       placed_length_ft=settings.finished_length_ft, placed_width_ft=settings.finished_width_ft)
 
 
 @dataclass(frozen=True)

@@ -1340,6 +1340,96 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [SEWER_STREET_MAIN]
+  FOUNDATION-NEAR-CAP:
+    description: "Every foundation method open to the lot needs more than six precast steps at a door of the drawn building, but the best method's worst door is over the 51.5 in cap by 2 in or less. Ground heights from the elevation model are good to an inch or two, so the lot is not red on this ground. Steph 2026-11-20 (rulings.yaml 2026-11-20-foundation-near-cap-yellow): yellow with this flag naming the door, never green."
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Survey the ground at the named door; a door more than six steps up on every method makes the lot red, one within six clears it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FOUNDATION_NEAR_CAP]
+  FOUNDATION-CLASS-UNREAD:
+    description: "The lot's ground-support class (from the soil survey) is not read or not sorted. A clears the six-step cap at every door but B does not, and soft or swelling ground would leave only B on piles, which would then fail the cap. FD8 / FOLLOWUPS 213: unread is the conservative case, so yellow, never green."
+    kind: categorical
+    risk: possible
+    severity: 3
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Read the lot's soil class (the foundation measure run's ground classes, or a geotechnical look); ordinary ground clears it, soft or swelling ground makes it red"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FOUNDATION_CLASS_UNREAD]
+  FOUNDATION-UNMEASURED:
+    description: "The six-step cap could not be worked on this lot: the elevation models do not cover the drawn building, or its ground could not be read. Unmeasured is the conservative case (FD8, Steph 2026-11-20), so yellow, never green."
+    kind: categorical
+    risk: possible
+    severity: 3
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Acquire elevation data over the lot, or survey the ground at the doors, and re-run the foundation check"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FOUNDATION_UNMEASURED]
+  FOUNDATION-CAP-CLOSE:
+    description: "The best foundation method clears the six-step cap at every door, but its worst door is within 2 in under the 51.5 in cap (FD8 2a). A note only: below the yellow line, so the colour does not move."
+    kind: categorical
+    risk: possible
+    severity: 1
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Survey the ground at the named door before design; an inch or two higher would put it over the cap"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FOUNDATION_CAP_CLOSE]
+  FOUNDATION-STAIR-ROOM:
+    description: "No placement found leaves the precast steps at a door room: the unit, 4 ft wide and as deep as its risers need, lands on the drawn parking court's stalls, on the drive lane, or past the lot line, even with the plan stood again keeping that much room (FOLLOWUPS 213). Steph 2026-11-20 (rulings.yaml 2026-11-20-stair-room-reserved, 2026-11-20-stair-no-room-red-flag): red, with this flag naming the door, what it lands on and by how much, so the lot can be found and screened again if the parking layout, the steps or the front-door orientation change."
+    kind: categorical
+    risk: likely
+    severity: 5
+    absorbs: null
+    resolution: document_review
+    scope: per_lot
+    key: [lot]
+    path: "Screen the lot again when the parking layout, the step design (side-entry units, steps turned along the wall) or the front-door orientation changes; the foundation_cap facts name each door"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FOUNDATION_STAIR_ROOM]
+  FOUNDATION-STAIR-MOVED:
+    description: "The plan was stood again to leave the precast steps room (FOLLOWUPS 213), and on the new placement it reads a different colour than the first placement did. Where it reads better, nothing becomes green that was not (Steph 2026-11-20, rulings.yaml 2026-11-20-stair-room-reserved), so it is held at the first placement's colour: yellow. Where it reads worse (green to yellow), the new placement's colour stands and this flag names why. Where it reads the same colour (yellow) but for a different reason, this flag says the plan moved and names what each placement was held on."
+    kind: categorical
+    risk: possible
+    severity: 3
+    absorbs: null
+    resolution: document_review
+    scope: per_lot
+    key: [lot]
+    path: "Read the two placements on the lot page; the second leaves the steps room, and what held the first back may not apply to it"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FOUNDATION_STAIR_MOVED]
   HISTORIC-LISTING-UNSETTLED:
     description: "The lot appears on a city's, county's or the state's historic list, but whether that protects a building here is not settled: the state may only have surveyed it, the city's list or the code that says what a listing does is not held, the listing is an object rather than a building, or the address only nearly fixes the lot (FOLLOWUPS 87, flats/config/historic/protection.yaml). A protected building would make the lot red under Steph's 2026-10-14 ruling, so it does not stay green on the doubt."
     kind: categorical

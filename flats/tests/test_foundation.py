@@ -19,7 +19,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from flats.tests.foundation_key import KEY_DIMS, key_settings
+from flats.tests.foundation_key import BEFORE_FD8, KEY_DIMS, PER_RISER, key_settings
 from flats import foundation
 from flats.foundation import cost as costing
 from flats.foundation import ground as grounds
@@ -215,9 +215,10 @@ def test_every_setting_and_price_loads_with_a_label() -> None:
     assert len(S.sources) == len(names) + len(settings.PRICES)
 
 
-def test_recalled_code_rules_stay_labelled_recalled() -> None:
-    assert S.sources["doors.guard_over_in"].startswith("[code, recalled, R312]")
-    assert S.sources["doors.handrail_risers"].startswith("[code, recalled, R311.7.8]")
+def test_code_rules_carry_the_sections_fd8_read() -> None:
+    # FD8 2e: the 2023 ORSC sections were read, so the "recalled" labels go
+    assert S.sources["doors.guard_over_in"].startswith("[code R312.1.1, 2023 ORSC]")
+    assert S.sources["doors.handrail_risers"].startswith("[code R311.7.8, 2023 ORSC]")
 
 
 def test_the_shipped_building_is_the_framing_inside_the_finished_faces() -> None:
@@ -225,14 +226,18 @@ def test_the_shipped_building_is_the_framing_inside_the_finished_faces() -> None
     assert (PROD.finished_length_ft, PROD.finished_width_ft) == (80, 25)
     assert PROD.length_ft * 12 == pytest.approx(956.75) and PROD.width_ft * 12 == pytest.approx(296.9375)
     assert [x * 12 for x in PROD.party_x_ft] == pytest.approx([238.875, 478.375, 717.875])
-    assert [x * 80 / PROD.length_ft for x in PROD.door_x_ft] == pytest.approx([10, 30, 50, 70])
+    # FD8 2a: the real doors, 83.75 / 394 / 562.75 / 873 in front, 30 / 447.75 / 509 / 926.75 in back
+    assert [x * 12 for x in PROD.door_x_front_ft] == pytest.approx([83.75, 394.0, 562.75, 873.0])
+    assert [x * 12 for x in PROD.door_x_back_ft] == pytest.approx([30.0, 447.75, 509.0, 926.75])
     assert PROD.fixed_length_ft == PROD.length_ft
-    # every other setting is the same as on the answer key's dimensions
-    assert PROD.replace(**{k: getattr(S, k) for k in KEY_DIMS}) == S
+    # every other setting is the same as the answer key's, bar FLATS's settings before FD8
+    key = {k: getattr(S, k) for k in (*KEY_DIMS, *BEFORE_FD8)}
+    assert PROD.replace(prices={**PROD.prices, **PER_RISER}, **key) == S
 
 
 def test_section_4_values_as_the_spec_gives_them() -> None:
-    assert (S.length_ft, S.width_ft, S.party_x_ft, S.door_x_ft) == (80, 25, (20, 40, 60), (10, 30, 50, 70))
+    assert (S.length_ft, S.width_ft, S.party_x_ft) == (80, 25, (20, 40, 60))
+    assert S.door_x_front_ft == S.door_x_back_ft == (10, 30, 50, 70)
     assert (S.clear_in, S.floor_depth_in, S.embed_in, S.footing_t_in) == (18, 14.75, 18, 7)
     assert (S.footing_w_long_in, S.footing_w_end_in, S.footing_w_party_in) == (18, 12, 14)
     assert (S.stem_outside_in, S.stem_party_in, S.plain_wall_max_in, S.engineered_stem_in) == (8, 10, 96, 10)
@@ -266,9 +271,9 @@ def _doc() -> dict:
         (lambda d: d["doors"].update(stray={"value": 1, "source": "x"}), "unknown settings"),
         (lambda d: d["prices"]["pile"].pop("source"), "needs source"),
         (lambda d: d["prices"]["pile"].update(low=2000), "above high"),
-        (lambda d: d["prices"].pop("rail_ft"), "missing"),
+        (lambda d: d["prices"].pop("precast_rail_1"), "missing"),
         (lambda d: d["raised"]["clear_in"].update(value="18 in"), "must be a number"),
-        (lambda d: d["building"]["door_x_ft"].update(value=[]), "non-empty list"),
+        (lambda d: d["building"]["door_x_front_ft"].update(value=[]), "non-empty list"),
         (lambda d: d.update(extra_section={}), "unknown sections"),
     ],
 )
@@ -623,7 +628,7 @@ def test_b_line_results_hold_every_station() -> None:
     assert b.average_wall_in == pytest.approx(
         sum(w * ln.length_ft / len(ln.walls_in) for ln in b.lines for w in ln.walls_in) / 285.0
     )
-    assert b.simplifications == model.B_SIMPLIFICATIONS
+    assert b.simplifications == (model.SLOPED_FOOTING, *model.B_SIMPLIFICATIONS)  # S: stepped_footing off
 
 
 def test_b_over_8_ft_takes_the_thicker_wall_and_a_fourth_bar() -> None:
@@ -663,9 +668,11 @@ def test_ground_support_groups_as_fd4_bin_of(row: dict, group: str) -> None:
 
 
 def test_b_plus_p_drops_the_footing_and_adds_34_piles() -> None:
+    # FD6 5.7 as built: the wall itself unchanged (FD8's 10 in stem and four bars off)
+    s = S.replace(piles_stem_in=0.0, piles_level_bars_min=0)
     for along, across in TEST.values():
         g = _plane(along, across)
-        b, bp = model.raised(g, S), model.raised(g, S, piles=True)
+        b, bp = model.raised(g, s), model.raised(g, s, piles=True)
         footing_ft3 = sum(
             {"long": S.footing_w_long_in, "end": S.footing_w_end_in, "party": S.footing_w_party_in}[ln.kind]
             * S.footing_t_in
@@ -677,8 +684,19 @@ def test_b_plus_p_drops_the_footing_and_adds_34_piles() -> None:
         assert bp.piles == 34 and b.piles == 0
         piles = bp.cost.line("screw piles")
         assert (piles.low, piles.high) == (Decimal(34 * 550), Decimal(34 * 950))
-        assert bp.tallest_wall_in == b.tallest_wall_in and _counts(bp) == _counts(b)
+        assert bp.tallest_wall_in == b.tallest_wall_in
+        assert (bp.risers_total, bp.guards) == (b.risers_total, b.guards)
+        assert set(bp.flags) - set(b.flags) == {model.PILES_ENGINEERED}
         assert bp.method == "B+P"
+
+
+def test_b_plus_p_walls_take_fd8s_10_in_stem_and_four_bars() -> None:
+    # FD8 2d: a wall on piles is 10 in thick with at least four level bars, and flagged engineered
+    for along, across in TEST.values():
+        bp = model.raised(_plane(along, across), S, piles=True)
+        assert all(ln.thickness_in >= 10 and ln.level_bars >= 4 for ln in bp.lines)
+        assert model.PILES_ENGINEERED in bp.flags
+        assert model.PILES_ENGINEERED not in model.raised(_plane(along, across), S).flags
 
 
 def test_each_group_is_compared_on_its_own_methods() -> None:

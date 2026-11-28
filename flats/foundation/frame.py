@@ -40,6 +40,13 @@ class Frame:
     short_ft: float
     front_known: bool
 
+    def turned(self) -> Frame:
+        """The same rectangle seen from the other long side: its back face
+        becomes the front (where the front doors are; FD8, Steph 2026-11-20).
+        Left and right are as seen from that side."""
+        return Frame(fl=self.br, fr=self.bl, bl=self.fr, br=self.fl, long_ft=self.long_ft,
+                     short_ft=self.short_ft, front_known=self.front_known)
+
     def at(self, u: Any, v: Any) -> Any:
         """Points at ``u`` (0 left .. 1 right) and ``v`` (0 front .. 1 back)."""
         import numpy as np
