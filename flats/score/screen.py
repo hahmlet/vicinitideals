@@ -924,6 +924,10 @@ CORNER_HOME_LOT = "corner_home_lot"
 #: distance may be taken from. Both join ``_checks``'s ``unmeasured``, so
 #: they report as ``FACT_UNOBSERVED``: a question, never a pass.
 FRONT_MAX = "front_setback_max_ft"
+#: ``setback_front_max_streets`` for a maximum held only on a transit street
+#: or in a Pedestrian District, read off the city's maps per street
+#: (:attr:`LotFacts.front_max_reach`; Portland Table 120-4, 33.120.220.C.1).
+TRANSIT_OR_DISTRICT = "transit_or_district"
 FRONT_MAX_DRAWN = "front_max_drawn"
 FRONT_MAX_STREET = "front_max_street"
 
@@ -1241,6 +1245,17 @@ class LotFacts:
     #: bridge), and the check goes unrun.
     front_max_streets: tuple[tuple[bool, float, float, float], ...] | None = None
     front_max_tried: bool = False
+    #: Which of ``front_max_streets`` a maximum the code holds only on a
+    #: transit street or in a Pedestrian District may reach
+    #: (``setback_front_max_streets: transit_or_district``, Portland Table
+    #: 120-4; :func:`flats.geom.pdx_transit.front_max_reach`), one per street
+    #: in the same order; None where the city's maps do not read the lot, and
+    #: every street is held. ``front_max_reach_hidden``: a lot line nothing
+    #: calls a street line has a transit or unclassified segment abreast of
+    #: it, a street the maximum may reach and nothing measured -- held out
+    #: of GREEN.
+    front_max_reach: tuple[bool, ...] | None = None
+    front_max_reach_hidden: bool = False
     #: The drawn building's nearest distance from each side lot line, one per
     #: unbroken run of side-class lot line, in the order the lot ring meets
     #: them (:func:`flats.ingest.quadfit.side_max_gaps`). Measured by the
@@ -4419,8 +4434,10 @@ def front_max_owed(
     front; several fronts are ``unheld``); ``one`` street at the
     applicant's choice; ``corner_every``, both streets of a corner lot and,
     on any other lot, streets the code picks by a class nothing here holds
-    (Portland 33.130.215.C.2.c). Absent, nothing says which, and the lot is
-    ``unheld``."""
+    (Portland 33.130.215.C.2.c); ``transit_or_district``, the streets
+    :attr:`LotFacts.front_max_reach` marks (``none`` where it marks none: the
+    maximum does not reach the lot). Absent, nothing says which, and the lot
+    is ``unheld``."""
     streets = lot.front_max_streets
     if not streets:
         return None
@@ -4440,6 +4457,17 @@ def front_max_owed(
         if len(fronts) == 1:
             return "every", fronts
         return "unheld", fronts or streets
+    if which == TRANSIT_OR_DISTRICT:
+        # Portland 33.120.220.C.1 (FOLLOWUPS 205 item 1): the streets the
+        # city's transit map or a Pedestrian District holds; none, and the
+        # maximum does not reach the lot. Never failed
+        # (:func:`_front_max_conditional`), so which of several is the
+        # applicant's to pick never turns a pass into a fail.
+        reach = lot.front_max_reach
+        if reach is None or len(reach) != len(streets):
+            return "unheld", streets
+        owed = tuple(s for s, r in zip(streets, reach, strict=True) if r)
+        return ("every", owed) if owed else ("none", ())
     # ``conditional`` is read below (:func:`_front_max_conditional`); on this
     # question it is unset's answer.
     return "unheld", streets
@@ -4461,7 +4489,7 @@ def _front_max_conditional(rules: ZoneResolution) -> bool:
     (:data:`FRONT_MAX_LIFTED_BY`). A building within it passes on any reading;
     one beyond it may owe nothing more, so it is held out of GREEN and never
     failed."""
-    if rules.get("setback_front_max_streets") == "conditional":
+    if rules.get("setback_front_max_streets") in ("conditional", TRANSIT_OR_DISTRICT):
         return True
     value = rules.values.get("setback_front_max_ft")
     return value is not None and bool(FRONT_MAX_LIFTED_BY & set(value.unencoded))
@@ -4508,13 +4536,26 @@ def _front_max(
     cap = _pct(rules, "setback_front_max_ft")
     if cap is None or _pct(rules, "building_frontage_min_pct") is not None:
         return
+    transit = rules.get("setback_front_max_streets") == TRANSIT_OR_DISTRICT
+    if transit and lot.front_max_reach_hidden:
+        # A lot line nothing calls a street line may be a transit street
+        # nothing measured (:func:`flats.geom.pdx_transit.front_max_reach`).
+        unchecked.append(FRONT_MAX)
+        unmeasured.add(FRONT_MAX_STREET)
+        return
     owed = front_max_owed(rules, lot)
     if owed is None:
+        if transit and lot.front_max_reach and not any(lot.front_max_reach):
+            # Nothing drawn, but the maximum reaches none of the streets.
+            return
         unchecked.append(FRONT_MAX)
         if lot.front_max_tried:
             unmeasured.add(FRONT_MAX_DRAWN)
         return
     how, streets = owed
+    if how == "none":
+        # The maximum reaches none of the lot's streets.
+        return
     share = _pct(rules, "setback_front_max_facade_pct")
     strict_part = 1.0 if share is None else share / 100.0
     lenient_part = 0.0 if share is None else share / 100.0

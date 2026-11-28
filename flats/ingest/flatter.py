@@ -130,9 +130,16 @@ def _lane_in_from_street(s: Any) -> bool:
 def _max_front_ft(s: Any, street: tuple[tuple[float, float, float, float], ...]) -> float | None:
     """How far from the front lines the building may stand: the stated
     maximum front setback, or where the plan already stands further, that."""
+    from flats.ingest import quadfit as q
+
     stated = s.rules.get("setback_front_max_ft")
     here = _ring(s.drawing, "building")
     if stated is None or here is None or not street:
+        return None
+    reach, hidden = q.front_max_reach(s)
+    if reach is not None and not any(reach) and not hidden:
+        # A maximum held only on a transit street or in a Pedestrian District
+        # that reaches none of this lot's streets (FOLLOWUPS 205 item 1).
         return None
     try:
         cap = float(stated)

@@ -7469,14 +7469,41 @@ def front_max_corner(s: Screened) -> bool:
     return edges is not None and _front_max_reading(edges)[1]
 
 
+def front_max_reach(s: Screened) -> tuple[tuple[bool, ...] | None, bool]:
+    """Which of the streets :func:`front_max_streets` measures a maximum held
+    only on a transit street or in a Pedestrian District reaches, and
+    whether a lot line nothing calls a street line may be such a street
+    (:attr:`LotFacts.front_max_reach`, FOLLOWUPS 205;
+    :func:`flats.geom.pdx_transit.front_max_reach`). ``(None, False)`` where
+    the zone does not read it that way or the city's maps do not reach the
+    lot: every street is then held."""
+    from flats.geom import pdx_transit
+    from flats.score.screen import TRANSIT_OR_DISTRICT
+
+    if s.rules.get("setback_front_max_streets") != TRANSIT_OR_DISTRICT:
+        return None, False
+    tm = pdx.transit_map(getattr(s.lot, "jurisdiction", None))
+    edges = _front_max_edges(s)
+    if tm is None or edges is None:
+        return None, False
+    if s.envelope is not None and s.envelope.source == "flats":
+        edges = dedicated(edges, s.rules, s.lot.zone)
+    return pdx_transit.front_max_reach(
+        tm, pdx_transit.load_districts(), getattr(s.lot, "lot_geom", None), _front_max_chains(edges), edges
+    )
+
+
 def _front_max_screened(s: Screened, *, policy: SlackPolicy, relief: ReliefPolicy) -> Screened:
     """``s`` re-screened on its drawing's distance from the street."""
     assert s.facts is not None
+    reach, hidden = front_max_reach(s)
     facts = dataclasses.replace(
         s.facts,
         front_max_streets=front_max_streets(s),
         front_max_tried=True,
         front_max_corner=front_max_corner(s),
+        front_max_reach=reach,
+        front_max_reach_hidden=hidden,
     )
     result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
     shadow = _if_signed(

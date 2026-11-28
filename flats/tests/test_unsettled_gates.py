@@ -232,9 +232,13 @@ def test_portland_ci1_homes_take_rm1s_setbacks(
     for field in ("setback_front_ft", "setback_side_ft", "setback_rear_ft"):
         assert values[field].prov.quote == rm1[field].prov.quote, field
         assert "33.120.206" in values[field].prov.quote, field
-    # RM1 states no maximum front setback either, so Table 150-2 note [5] --
-    # no minimum setback where a maximum applies -- still never fires here.
-    assert "setback_front_max_ft" not in values
+    # RM1's own Table 120-4 maximum comes with the rest of RM1's standards
+    # (2026-11-27, FOLLOWUPS 205 item 1): held only on a transit street or in
+    # a Pedestrian District, beside RM1's 10 ft minimum. Table 150-2 note [5]
+    # -- no minimum setback where a maximum applies -- is a note to CI1's own
+    # table, which a home does not take, so the minimum stays.
+    assert values["setback_front_max_ft"].value == rm1["setback_front_max_ft"].value == 20
+    assert values["setback_front_max_streets"].value == "transit_or_district"
 
 
 def test_portland_ci1_keeps_rm1s_lot_minimum(rules: RuleSet) -> None:

@@ -113,13 +113,15 @@ def test_rm4_takes_the_tighter_half_of_both_its_split_cells(rules: RuleSet) -> N
 
 
 @pytest.mark.parametrize("zone", ["RM1", "RM2", "RM3", "RM4", "RX"])
-def test_no_maximum_front_setback_is_asserted(rules: RuleSet, zone: str) -> None:
+def test_the_maximum_front_setback_reaches_only_transit_streets_and_districts(rules: RuleSet, zone: str) -> None:
     """Table 120-4 states one, but 33.120.220.C.1 applies it only on a transit
-    street or in a Pedestrian District. A base value carries no condition, so
-    encoding it would push every building in the zone toward the street on the
-    strength of a standard most sites never see. Absent, and said so in the
-    notes, beats present and wrong."""
-    assert "setback_front_max_ft" not in rules.resolve(PDX, zone).values
+    street or in a Pedestrian District. A bare base value would push every
+    building in the zone toward the street, so it is held only on the streets
+    those maps reach (``transit_or_district``; FOLLOWUPS 205 item 1,
+    flats/tests/test_front_max_transit.py)."""
+    got = rules.resolve(PDX, zone)
+    assert got.get("setback_front_max_streets") == "transit_or_district"
+    assert got.get("setback_front_max_ft") == (20 if zone in ("RM1", "RM2", "RM3") else 10)
 
 
 def test_rx_states_a_frontage_and_no_lot_area(rules: RuleSet) -> None:
