@@ -29,7 +29,9 @@
    project_dependabot_cleanup_2026_07: keep the mcp<2 pin unless fastapi-mcp supports 2.x;
    `uv sync --all-extras`; the image installs from uv.lock). Worker bumps on a branch and
    runs the full suite; the coordinator runs ci_local, deploys, checks smoke. Close stale
-   dependabot PR #4. Standing order every month: security pass first, then the code-change
+   dependabot PR #4. Steph 2026-11-27: this month the security pass has NO cap of its own, only the credit;
+   it outranks tiers 2/3 for the money (a capped-out worker is continued, tier 3 waits).
+   Standing order every month: security pass first, then the code-change
    check (now tier 1b), then tier 2, then tier 3.
 
    How it runs (no build needed -- speed): headless Claude Code workers on Steph's PC,

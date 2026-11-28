@@ -45,8 +45,9 @@ full re-screen lands. (Index lines carry a shortened tag; the item file has
 the full one.)
 
 ## 1. Claude -- priority
-217. [Claude] [scan: NO] **Spend the monthly API credit ($200) in tiers, never over** -- DEADLINE ~11-30; key in, LIVE 11-27: t1 security patches running, t1b code-change read DONE (-> 218), t2 completeness queue (9 places) running; t3 dev + last-$20 green checks next. [file](followups/217-api-credit-tiers.md)
+217. [Claude] [scan: NO] **Spend the monthly API credit ($200) in tiers, never over** -- DEADLINE ~11-30; key in, LIVE 11-27: t1 security patches running, t1b code-change read DONE (-> 218), t2 completeness DONE 9 places $31 (-> 222); t3 dev jobs from 222 next, last ~$20 green checks. [file](followups/217-api-credit-tiers.md)
 218. [Claude] [scan: maybe] **Code changes from the 11-27 sweep: Wilsonville amended (lines shift, Village path looser), Gladstone moved to eCode360, OAR/ORS footer-only** -- refresh/repoint + re-point Gladstone URLs. [file](followups/218-code-changes-2026-11.md)
+222. [Claude] [Steph: 6 questions] [scan: YES] **"Do we have everything?" 9-place check (11-27)** -- 7 likely false-GREEN gaps in held text (Milwaukie vegetation, Clackamas 1009 landscaping, Gresham FAR, Oregon City Thimble Creek, Hillsboro stub ends, West Linn 38.030, Beaverton Cooper Mtn) -> t3 build jobs; questions + fetch list in file. [file](followups/222-completeness-2026-11.md)
 
 213. [Claude] [Steph: entrance-side red?] [scan: done] **Foundation reply FD8: six-step cap, stair room, real doors** -- LIVE run 134 (2026-11-28, 677621dc); only Steph's entrance-side red-vs-yellow question open. [file](followups/213-foundation-fd8-six-step-cap.md)
 214. [Claude] [scan: YES -- toward red] **Precast steps in a front or side setback: read and encode each city's projection allowances** -- opened 11-21; Steph 11-27: steps allowed where the code is silent, porch/deck allowances count; building on flats/step-setbacks. [file](followups/214-step-setback-projections.md)
