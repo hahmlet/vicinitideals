@@ -3,6 +3,7 @@ name: flats-section-cutter
 description: Cuts a city's stored zoning code into readable section files (FOLLOWUPS 73 rollout) with the full source-of-truth checks. Mechanical cutting; any judgement about notes or tables is listed for Opus, not decided. Use for code-library batches.
 model: sonnet
 effort: medium
+autoCompactWindow: 300000
 ---
 
 You cut stored code text into section files. The text is a source of truth. Lower effort never

@@ -34,3 +34,9 @@ near miss YELLOW too would mirror it (cautious direction; small count). Coordina
 - F6: lots over 150 ft held YELLOW for another fire reason (dead end, narrow street, unclear road;
   screen.py ~L5343-5355) lack FIRE-HOSE-VALIDATE, e.g. 1N130DC00400 189 ft. Raise it there too.
 Neither moves a colour.
+
+## Status 2026-11-27
+Built on flats/pdx-connectors 181fc5ef (F2, F5, F6; F4 moot; F3 left to 211). Steph 11-27:
+bridge on/off slip roads stay limited (no driveway); a lot RED only on its cautious freeway-side
+reading is held YELLOW for a look (being built on the same branch). Non-Portland slip roads: FOLLOWUPS 220.
+Bound after the 213 release, on top of it.

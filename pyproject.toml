@@ -85,7 +85,9 @@ flats = [
     "pyyaml>=6",
     # Oregon codifiers publish zoning chapters as PDF, not HTML — Portland's
     # Title 33 included. Reading the source means reading PDFs.
-    "pypdf>=6.16.1",
+    # <6.20: flats/provenance/pdf_hold.py patches extraction source lines that 6.20.1 removed;
+    # lifting the cap needs a corpus re-extract + compare first (FOLLOWUPS 224).
+    "pypdf>=6.16.1,<6.20",
     # The acquire stage reads Metro RLIS shapefile members straight out of the
     # quarterly ZIP; pure Python, no GDAL.
     "pyshp>=2.3",
