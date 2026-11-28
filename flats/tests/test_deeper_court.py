@@ -150,6 +150,12 @@ def _backed_in(court: Court) -> list[Pose]:
 # -- the ledger --------------------------------------------------------------
 
 
+@pytest.fixture(autouse=True)
+def _ledger_restored(monkeypatch: pytest.MonkeyPatch) -> None:
+    """``carry_main`` reloads the module's ledger: put the real one back."""
+    monkeypatch.setattr(turns, "_LEDGER", turns._LEDGER)
+
+
 def test_a_deeper_court_passes_on_a_passing_standard_entry(monkeypatch: pytest.MonkeyPatch) -> None:
     """A carried row offers the standard row's fixes that carried, least
     paving first, as a searched row does."""
