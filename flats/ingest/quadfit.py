@@ -192,6 +192,14 @@ from flats.geom.one_street import one_street_column
 from flats.geom.roll import NO_DWELLING_FACT, no_existing_dwelling, owner_hold
 from flats.geom.roll import load_rules as load_roll_rules
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
+from flats.geom.stub_end import ROW_KEY as STUB_ENDS_KEY
+from flats.geom.stub_end import (
+    STREET_END_FRONTAGE_FACT,
+    decode_rays,
+    observed_street_end_frontage,
+    street_lines_off_end_ft,
+    stub_end_column,
+)
 from flats.geom.durham_apron import (
     DURHAM_APRON_MIN_CLEARANCE_FT,
     load_street_network,
@@ -453,6 +461,9 @@ OBSERVABLE: tuple[str, ...] = (
     *CUL_DE_SAC_FACTS,
     # Only ever False, and only where no street ends near the lot.
     STREET_END_FACT,
+    # Only ever False: no end near, a cul-de-sac, or every street line read
+    # against the ends (Hillsboro 12.50.110 D.4, flats.geom.stub_end).
+    STREET_END_FRONTAGE_FACT,
     # True within 200 ft of a street the code names, False beyond.
     NAMED_STREET_FACT,
     # Gladstone's lots only: True touching Portland Avenue, False off it.
@@ -2390,6 +2401,12 @@ def lot_from_row(
     lot_wkb = row.get("lot_wkb")
     lot_geom = shapely.from_wkb(lot_wkb) if lot_wkb else None
     edges = lot_edges(row, lot_geom, corridors, layers)
+    off_end = stub_frontage_of(row, edges)
+    observed.update(
+        observed_street_end_frontage(
+            _finite(row.get("street_end_ft")), _is_true(row.get("fronts_cul_de_sac")), off_end
+        )
+    )
     raw_edges = json.loads(row.get("edges_json") or "[]")
     s4_alley = (
         observed_alley(raw_edges, json.loads(row.get("front_bearings_json") or "[]"))
@@ -2438,6 +2455,9 @@ def lot_from_row(
         # begins: Gresham's corner frontage, "from the corner radius end
         # point to the property corner" (FOLLOWUPS 175).
         street_lines_curve_end_ft=street_lines_to_curve_ft(edges) if edges is not None else (),
+        # The same streets less the lines that abut a street end
+        # (Hillsboro 12.50.110 D.4, flats.geom.stub_end).
+        street_lines_off_end_ft=off_end,
         # Each of those streets' class rank, on the same chains in the same
         # order: which is the primary street of a corner lot (GDC 3.0100).
         street_line_ranks=street_line_ranks(edges),
@@ -3112,6 +3132,9 @@ def iter_rows(
     if streets is not None:
         frame = frame.assign(
             street_end_ft=street_end_column(frame, streets),
+            # The street ends near each lot, with the way each street runs
+            # into its end: Hillsboro 12.50.110 D.4, line by line.
+            stub_ends_json=stub_end_column(frame, streets),
             named_street_ft=named_street_column(frame, streets),
             avenue_ft=avenue_column(frame, streets),
             one_street=one_street_column(frame, streets),
@@ -9166,6 +9189,24 @@ def street_lines_ft(edges: LotEdges | None) -> tuple[float, ...]:
     if edges is None:
         return ()
     return tuple(sum(e.length_ft for e in chain) for chain in street_chains(edges))
+
+
+def stub_frontage_of(
+    row: Mapping[str, Any], edges: LotEdges | None
+) -> tuple[tuple[float, float], ...] | None:
+    """The lot's streets less their lines that abut a street end, as
+    :func:`flats.geom.stub_end.street_lines_off_end_ft` reads them from the
+    row's ``stub_ends_json`` (:func:`iter_rows`) and s4's ``fronts_cul_de_sac``.
+    None where the lot has no edges or the ends were not measured.
+    :attr:`flats.score.screen.LotFacts.street_lines_off_end_ft`."""
+    if edges is None:
+        return None
+    return street_lines_off_end_ft(
+        edges.edges,
+        street_chains(edges),
+        decode_rays(row.get(STUB_ENDS_KEY)),
+        cul_de_sac=_is_true(row.get("fronts_cul_de_sac")),
+    )
 
 
 def private_drive_lines_ft(edges: LotEdges | None) -> tuple[float, ...]:

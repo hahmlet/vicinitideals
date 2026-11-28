@@ -2103,7 +2103,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-AT-STREET-END:
-    description: "Whether the lot lies at the end of a street (Gresham: a Minor Access Street's end has its own setbacks; Hillsboro: frontage on a street end that is not a cul-de-sac does not count)"
+    description: "Whether the lot lies at the end of a street (Gresham: a Minor Access Street's end has its own setbacks)"
     kind: categorical
     risk: possible
     severity: 5
@@ -2112,6 +2112,21 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "Street centrelines: answered 'no' where no street ends within 200 ft; near an end, the street's class and the lot's place at its end"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-STREET-END-FRONTAGE-UNREAD:
+    description: "Whether any street line of the lot abuts the end of a street, read line by line (Hillsboro 12.50.110 D.4: frontage on a street end that is not a cul-de-sac does not count)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Street centrelines' end points and directions read against the lot's street lines (flats.geom.stub_end); answered where no street ends within 200 ft, on a cul-de-sac, or where the lines were read"
     priority: later
     status: pending
     approved_by: null

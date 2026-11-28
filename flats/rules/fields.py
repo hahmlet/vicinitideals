@@ -121,6 +121,7 @@ _LABELS: dict[str, str] = {
     "min_frontage_ft": "min. frontage",
     "min_frontage_one_street": "min. frontage is on one street",
     "min_frontage_line": "which line the min. frontage is on",
+    "min_frontage_street_end": "no frontage on a street end",
     "min_landscaped_pct": "min. landscaping %",
     "min_lot_depth_ft": "min. lot depth",
     "min_average_lot_width_ft": "min. average lot width",
@@ -628,6 +629,20 @@ _F: tuple[FieldDef, ...] = (
         "(`LotFacts.street_lines_curve_end_ft`).",
         None,
         choices=("front", "radius_end"),
+    ),
+    FieldDef(
+        "min_frontage_street_end",
+        "enum",
+        "Whether a lot line abutting the end of a street counts as frontage. "
+        "`excluded`: it does not (Hillsboro 12.50.110 D.4, \"Property "
+        "abutting the end of a public or private street not ending in a "
+        "cul-de-sac ... shall not be considered as having lot frontage\"), so "
+        "the screen reads the frontage minimum over the lot's streets less "
+        "their end lines (`LotFacts.street_lines_off_end_ft`, "
+        "`flats.geom.stub_end`): a lot left with none has no frontage. "
+        "Unstated: every street line counts.",
+        None,
+        choices=("excluded",),
     ),
     FieldDef(
         "min_lot_depth_ft",
@@ -2502,6 +2517,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_rear_yard_max_pct",
         "min_frontage_one_street",
         "min_frontage_line",
+        "min_frontage_street_end",
         "parking_covered_required",
         "solar_shade_limit",
         "alley_improved_required",

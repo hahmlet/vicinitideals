@@ -170,9 +170,14 @@ def test_the_rows_carry_each_lots_distance_to_a_street_end(tmp_path: Path) -> No
     assert got["far"]["street_end_ft"] > REACH_FT
     assert STREET_END_FACT not in observed_facts(got["end"])
     assert observed_facts(got["far"])[STREET_END_FACT] is False
+    # The same pass writes the ends near each lot, with the way each street
+    # runs into its end (Hillsboro D.4, flats.geom.stub_end).
+    assert json.loads(got["end"]["stub_ends_json"]) == [[500.0, 300.0, 0.0, 1.0, True]]
+    assert got["far"]["stub_ends_json"] == "[]"
     # Without the street file nothing is measured, and nothing is answered.
     plain = {r["TLID"]: r for r in iter_rows(s4, s5o)}
     assert "street_end_ft" not in plain["far"]
+    assert "stub_ends_json" not in plain["far"]
 
 
 def test_a_street_file_without_rlis_type_measures_nothing(tmp_path: Path) -> None:
@@ -193,6 +198,9 @@ def test_a_point_near_the_end_is_not_far() -> None:
 
 HILLSBORO = "or/washington/hillsboro"
 D4 = "or/washington/hillsboro/12.50/12.50.110.txt#L35"
+# Since t3-hillsboro-stub2 the qualifier is the line-by-line fact
+# (flats.geom.stub_end), not at_street_end; see test_stub_end.py.
+D4_FACT = "street_end_frontage_unread"
 
 
 def test_hillsboros_d4_is_the_quoted_line() -> None:
@@ -217,7 +225,7 @@ def test_every_hillsboro_frontage_minimum_is_qualified_by_the_street_end() -> No
             assert v.qualified_by is None, zone
             free.append(zone)
             continue
-        assert v.qualified_by == STREET_END_FACT, zone
+        assert v.qualified_by == D4_FACT, zone
         assert v.qualified_quote == D4, zone
         assert "12.50.110 D.4" in v.qualified_cite, zone
         held.append(zone)
@@ -232,8 +240,8 @@ def test_hillsboro_holds_a_lot_near_a_street_end_open_and_lifts_it_far_away(corp
     # The printed minimum stands; the fact moves it with no number, so a lot
     # near an end (unknown) cannot be certified on it, and True never lifts.
     assert res.get("min_frontage_ft") in (12, 18, 22, 25)
-    assert STREET_END_FACT in res.unencoded
-    assert STREET_END_FACT in res.levers
+    assert D4_FACT in res.unencoded
+    assert D4_FACT in res.levers
 
 
 def test_a_hillsboro_lot_near_a_street_end_is_not_green() -> None:
@@ -247,7 +255,7 @@ def test_a_hillsboro_lot_near_a_street_end_is_not_green() -> None:
 
     rules = load_trusted(strict=False).rules
     policy, rel = slack.load_policy(), relief.load_policy()
-    flag = fact_code(STREET_END_FACT)
+    flag = fact_code(D4_FACT)
 
     def screened(end_ft: float):
         row = lot_row(TLID="1N231AA00100", jurisdiction="hillsboro", zone="R-7", street_end_ft=end_ft)
@@ -258,10 +266,12 @@ def test_a_hillsboro_lot_near_a_street_end_is_not_green() -> None:
         return lot, s
 
     far_lot, far = screened(REACH_FT * 2)
-    assert far_lot.observed[STREET_END_FACT] is False
+    assert far_lot.observed[D4_FACT] is False
     assert flag not in {f.code for f in far.signed.flags}
+    # Near an end with the ends not read line by line (no stub_ends_json on
+    # the row): unmeasured, so the hold of 7ea92302 stands.
     near_lot, near = screened(40.0)
-    assert STREET_END_FACT not in near_lot.observed
+    assert D4_FACT not in near_lot.observed
     # Near an end the flag stays at a severity that holds the lot out of
     # GREEN: the bound cannot lower it, the qualifier stating no number.
     reg, line = flag_plan.registry(), flag_plan.colour_rules().yellow_at_severity

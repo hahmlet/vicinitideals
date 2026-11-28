@@ -275,10 +275,24 @@ _C: tuple[ConditionDef, ...] = (
         "the lot does not say the lot is at that end, nor that the street is "
         "a Minor Access Street. Unknown everywhere else, where the lot is "
         "GREEN only if it clears at both answers. Hillsboro 12.50.110 D.4 "
-        "gives property abutting a street end not in a cul-de-sac no lot "
-        "frontage; every Hillsboro frontage minimum is qualified by this "
-        "fact, so a lot near an end is held out of GREEN.",
+        "reads the line-by-line fact street_end_frontage_unread instead.",
         evidence="quadfit s1 public street centrelines (RLIS TYPE not alley, private road, unnamed drive or unimproved): no end point within flats.geom.street_end.REACH_FT of the taxlot",
+        assume=None,
+    ),
+    ConditionDef(
+        "street_end_frontage_unread",
+        "site_fact",
+        "Some street line of the lot may abut the end of a street, and the "
+        "ends were not read line by line. Hillsboro 12.50.110 D.4: property "
+        "abutting the end of a street not ending in a cul-de-sac has no lot "
+        "frontage there, so each Hillsboro frontage minimum is qualified by "
+        "this fact and read over the streets less their end lines "
+        "(min_frontage_street_end: excluded). Answered False where no street "
+        "ends within flats.geom.street_end.REACH_FT, on a cul-de-sac bulb, "
+        "or where every street line was read against the ends "
+        "(flats.geom.stub_end); never True, so a lot near an end that was "
+        "not read is held out of GREEN.",
+        evidence="quadfit s1 street centrelines' end points and the direction each street runs into them, read against s4's street lot lines (flats.geom.stub_end.street_lines_off_end_ft)",
         assume=None,
     ),
     ConditionDef(

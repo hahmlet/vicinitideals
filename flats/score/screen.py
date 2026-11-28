@@ -898,6 +898,12 @@ DRIVE_STREET = "drive_street"
 #: pass, and never a red while some reading clears it.
 FRONTAGE_LINE = "min_frontage_line"
 
+#: The rule field that takes the lines abutting a street end out of the
+#: frontage (Hillsboro 12.50.110 D.4, :func:`_frontage_off_street_ends`). A
+#: lot that clears only where an unknown end line counts is held the same
+#: way, under :data:`FRONTAGE_LINE`.
+FRONTAGE_STREET_END = "min_frontage_street_end"
+
 #: Which home lots of a townhouse plat on a corner parcel are corner lots,
 #: where the zone states one townhouse-lot number for a corner lot and
 #: another for an interior lot (Gresham Table 4.0130 E.1/E.2 and G.1/G.2,
@@ -1173,6 +1179,12 @@ class LotFacts:
     #: to the property corner" (Gresham, ``min_frontage_line: radius_end``).
     #: Empty where nothing measured the streets.
     street_lines_curve_end_ft: tuple[float, ...] = ()
+    #: The same streets in the same order, each as ``(strict_ft, lenient_ft)``
+    #: without the lines that abut the end of a street
+    #: (:func:`flats.geom.stub_end.street_lines_off_end_ft`): Hillsboro
+    #: 12.50.110 D.4, ``min_frontage_street_end: excluded``. None where the
+    #: street ends were not read against the lines.
+    street_lines_off_end_ft: tuple[tuple[float, float], ...] | None = None
     #: Each of those streets' class rank off the city's TSP map, on the same
     #: chains in the same order (:func:`flats.ingest.quadfit.street_line_ranks`;
     #: 0 the lowest, an order within one city's map). None on a street whose
@@ -1746,7 +1758,16 @@ def frontage_readings(rules: ZoneResolution, lot: LotFacts) -> tuple[float | Non
       the curve ends were not taken.
     * unstated -- one street or all of them; the code does not say: the
       shortest street strict, the summed frontage lenient.
+
+    Where the code gives no frontage on the end of a street
+    (``min_frontage_street_end: excluded``, Hillsboro 12.50.110 D.4) and the
+    ends were read against the lines, each reading is taken over the
+    streets less their end lines (:func:`_frontage_off_street_ends`).
     """
+    if rules.get(FRONTAGE_STREET_END) == "excluded" and lot.street_lines_off_end_ft is not None:
+        off = _frontage_off_street_ends(rules, lot)
+        if off is not None:
+            return off
     streets = [float(x) for x in lot.street_lines_ft if x and x > 0]
     if rules.get("min_frontage_one_street") is True:
         most = max(streets) if streets else None
@@ -1768,6 +1789,41 @@ def frontage_readings(rules: ZoneResolution, lot: LotFacts) -> tuple[float | Non
             return least, least
         return least, most
     return least, max(most, lot.frontage_ft)
+
+
+def _frontage_off_street_ends(
+    rules: ZoneResolution, lot: LotFacts
+) -> tuple[float | None, float | None] | None:
+    """:func:`frontage_readings` over the lot's streets less the lines that
+    abut the end of a street (Hillsboro 12.50.110 D.4, "shall not be
+    considered as having lot frontage";
+    :attr:`LotFacts.street_lines_off_end_ft`): the strict reading without
+    the sure and the unknown end lines, the lenient one without the sure
+    ones only. A lot left with no street line has no frontage (0 ft) on
+    that reading. None where no line abuts an end (read as before); both
+    None where the readings do not line up with the streets (unchecked)."""
+    off = lot.street_lines_off_end_ft or ()
+    lines = lot.street_lines_ft
+    if len(off) != len(lines):
+        return None, None
+    if all(abs(s - x) < 1e-6 and abs(n - x) < 1e-6 for (s, n), x in zip(off, lines)):
+        return None
+
+    def reading(lengths: list[float], pick: int) -> float | None:
+        kept = [x for x in lengths if x > 0]
+        if not kept:
+            return 0.0
+        sub = dataclasses.replace(
+            lot,
+            street_lines_ft=tuple(kept),
+            street_lines_curve_end_ft=(),
+            frontage_ft=sum(kept),
+            corner=lot.corner and len(kept) > 1,
+            street_lines_off_end_ft=None,
+        )
+        return frontage_readings(rules, sub)[pick]
+
+    return reading([s for s, _ in off], 0), reading([n for _, n in off], 1)
 
 
 def _checks(
