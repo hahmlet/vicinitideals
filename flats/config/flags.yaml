@@ -252,7 +252,7 @@ types:
     resolution: per_lot_review
     scope: per_lot
     key: [lot]
-    path: "A person looks at the named side: the lot was screened with the line as a street line and without it and the worse answer kept (coordinator's stricter default 2026-11-19, pending Steph; Portland's own freeways are settled by PCC 33.910.030)"
+    path: "A person looks at the named side: the lot was screened with the line as a street line and without it and the worse answer kept (coordinator's stricter default 2026-11-19, pending Steph; Portland's own freeways are settled by PCC 33.910.030); a lot RED on one reading only is shown on the other, held YELLOW for this look (Steph 2026-11-27)"
     priority: later
     status: pending
     approved_by: null

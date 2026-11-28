@@ -111,17 +111,44 @@ def beside(kind: str = "freeway", **over: object) -> dict[str, object]:
 # --- what the code says ----------------------------------------------------------
 
 
+#: The layers whose code was read on slip roads (FOLLOWUPS 215 F2, 220), and
+#: words their definition of street holds.
+SLIP_ROAD_STREETS = {
+    PORTLAND: "A right-of-way that is intended for motor vehicle",
+    "or/clackamas/_unincorporated": "provides for travel between places by vehicles",
+    "or/clackamas/milwaukie": "the entire width between right-of-way lines for vehicular",
+    "or/multnomah/_unincorporated": "provides travel between places by means of vehicles",
+}
+
+
+def _held(store: Path, pointer: str) -> str:
+    """The text a store pointer (``path#Lnn`` or ``path#Lnn-Lmm``) points at,
+    its lines joined and its spacing folded."""
+    doc, _, span = pointer.partition("#L")
+    first, _, last = span.partition("-L")
+    lines = (store / doc).read_text(encoding="utf-8").split(chr(10))
+    return " ".join(" ".join(lines[int(first) - 1 : int(last or first)]).split())
+
+
 def test_portland_says_a_freeway_is_not_a_street_and_no_other_layer_is_ruled(corpus) -> None:
-    """``freeways.says`` is held verbatim by the line ``quote`` points at."""
+    """``freeways.says`` is held verbatim by the line ``quote`` points at;
+    only Portland reads its freeways, and the layers whose code was read on
+    slip roads hold their ``connectors_says`` verbatim too."""
     store = Path(__file__).resolve().parents[1] / "provenance" / "docs"
     ruled = {k: v.freeways for k, v in corpus.layers.items() if v.freeways is not None}
-    assert set(ruled) == {PORTLAND}
+    assert set(ruled) == set(SLIP_ROAD_STREETS)
+    assert {k for k, r in ruled.items() if r.street is not None} == {PORTLAND}
     r = ruled[PORTLAND]
     assert r.street is False
-    doc, _, line = r.quote.partition("#L")
-    held = (store / doc).read_text(encoding="utf-8").split("\n")[int(line) - 1]
-    assert " ".join(r.says.split()) in " ".join(held.split())
+    assert " ".join(r.says.split()) in _held(store, r.quote)
     assert "interstate freeways and the Sunset Highway including their ramps" in r.says
+    # FOLLOWUPS 215 F2 / 220: each definition's own words take in a slip
+    # road of the street grid.
+    for layer, words in SLIP_ROAD_STREETS.items():
+        r = ruled[layer]
+        assert r.connectors_street is True and r.connectors_quote and r.connectors_says
+        assert " ".join(r.connectors_says.split()) in _held(store, r.connectors_quote), layer
+        assert words in r.connectors_says, layer
 
 
 def test_the_loader_refuses_a_freeway_ruling_without_its_quote() -> None:
@@ -133,6 +160,22 @@ def test_the_loader_refuses_a_freeway_ruling_without_its_quote() -> None:
         assert _parse_freeways({**base, **bad}, where="t", problems=problems) is None
         assert problems
     assert _parse_freeways(None, where="t", problems=[]) is None
+    assert _parse_freeways(base, where="t", problems=[]).connectors_street is False
+    linked = {**base, "connectors_street": True, "connectors_quote": "or/x/y.txt#L2", "connectors_says": "w"}
+    got = _parse_freeways(linked, where="t", problems=[])
+    assert got is not None and got.connectors_street and got.connectors_quote == "or/x/y.txt#L2"
+    for bad in ({"connectors_street": "yes"}, {"connectors_quote": "or/x/y.txt"}, {"connectors_says": " "}):
+        problems = []
+        assert _parse_freeways({**linked, **bad}, where="t", problems=problems) is None
+        assert problems
+    # A layer read only on its slip roads (FOLLOWUPS 220): no freeway reading.
+    only = {k: v for k, v in linked.items() if k not in ("street", "quote", "says")}
+    got = _parse_freeways(only, where="t", problems=[])
+    assert got is not None and got.street is None and got.quote is None and got.connectors_street
+    for bad in ({"connectors_street": False}, {"says": "w"}, {"street": None, "quote": "or/x/y.txt#L1"}):
+        problems = []
+        assert _parse_freeways({**only, **bad}, where="t", problems=problems) is None, bad
+        assert problems
 
 
 # --- which reading ---------------------------------------------------------------
@@ -156,11 +199,67 @@ def test_the_reading_follows_the_code_and_the_kind_of_way(corpus) -> None:
     assert limited_reading(both, layers)[0] == "mixed"
 
 
+def test_a_slip_road_is_a_street_in_portland_and_held_elsewhere(corpus) -> None:
+    """FOLLOWUPS 215 F2: s4's ``connector`` (RLIS 1321/1421/1471/1521) is a
+    street in Portland -- 33.910.030's "right-of-way that is intended for
+    motor vehicle ... travel", which leaves out only the interstates' and
+    the Sunset's ramps -- so the lot is read as s4 read it. Outside
+    Portland it is screened both ways like any ramp."""
+    layers = corpus.layers
+    assert limited_reading(beside("connector"), layers) == (None, "")
+    assert limited_reading(beside("connector", jurisdiction="hillsboro", zone="MR-2"), layers) == (
+        "worse", "the east line (100 ft) faces a ramp or limited-access road",
+    )
+    assert limited_reading(beside("connector"), None)[0] == "worse"
+    # With a private drive's line: the slip road's is no reason to hold it.
+    drive = beside(street_kind_json=json.dumps(["drive", "connector", None, None]))
+    assert limited_reading(drive, layers) == (None, "")
+    # Beside a freeway line: s4's reading without the marked lines drops the
+    # slip road's too, so it is not the code's reading -- both ways, held,
+    # and only the freeway's line is named.
+    both = beside(street_kind_json=json.dumps(["connector", "freeway", None, None]))
+    how, side = limited_reading(both, layers)
+    assert how == "worse" and side == "the east line (100 ft) faces a freeway or its ramp"
+    assert limited_reading(beside("freeway"), layers)[0] == "replace"
+
+
+def test_three_more_codes_call_a_slip_road_a_street_and_three_stay_held(corpus) -> None:
+    """FOLLOWUPS 220 (slip-road-readings.md): Clackamas County (ZDO 202
+    Road), Milwaukie (Street) and Multnomah County (39.2000 Road) take a
+    slip road of the street grid in; Tigard, Beaverton and Washington
+    County's definitions are unclear and stay held. A freeway line in the
+    three is screened both ways (their freeways were not read), never
+    read away."""
+    layers = corpus.layers
+    for juris in ("clackamas_unincorporated", "milwaukie", "multnomah_unincorporated"):
+        assert limited_reading(beside("connector", jurisdiction=juris), layers) == (None, ""), juris
+        assert limited_reading(beside("freeway", jurisdiction=juris), layers)[0] == "worse", juris
+        assert limited_reading(beside("limited", jurisdiction=juris), layers)[0] == "worse", juris
+    for juris in ("tigard", "beaverton", "washington_unincorporated"):
+        assert limited_reading(beside("connector", jurisdiction=juris), layers)[0] == "worse", juris
+
+
+def test_a_portland_lot_on_a_slip_road_is_the_lot_s4_read(corpus, policies) -> None:
+    """One reading, s4's: the slip road's line a street line (a corner),
+    no second reading, no ACCESS-LIMITED-WAY -- the answer the lot gets
+    with the line read as any street."""
+    lot = lot_from_row(beside("connector"), corpus.layers)
+    assert lot.second is None and not lot.limited_replaced and not lot.facts.limited_way
+    assert lot.facts.corner
+    kw = dict(rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    (got,) = screen_lot(lot, [pod()], **kw)
+    street = lot_from_row(beside(street_kind_json=json.dumps(["street", "street", None, None])), corpus.layers)
+    (want,) = screen_lot(street, [pod()], **kw)
+    assert _shown(got) == _shown(want)
+    assert got.signed.reasons == want.signed.reasons
+    assert STREET_LINE_LIMITED_WAY not in got.signed.reasons
+
+
 def test_the_side_is_named_even_where_the_kinds_do_not_match_the_lines() -> None:
     odd = beside(street_kind_json=json.dumps(["street", "rail"]))
     assert limited_way_side(odd) == "a street line faces a street on the far side of a railroad"
     assert limited_reading(odd, None)[0] == "worse"
-    assert set(LIMITED_STREET_KINDS) == {"freeway", "limited", "rail"}
+    assert set(LIMITED_STREET_KINDS) == {"connector", "freeway", "limited", "rail"}
 
 
 def test_in_portland_the_lot_is_read_without_its_freeway_line(corpus, policies) -> None:
@@ -272,7 +371,9 @@ def test_the_hillsboro_lot_behind_the_railroad_is_never_green(corpus, policies) 
         assert s.signed.colour is not Colour.green
         assert STREET_LINE_LIMITED_WAY in s.signed.reasons
         (flag,) = [f for f in s.signed.flags if f.code == FLAG]
-        assert flag.source == side
+        # A reading RED on one side of the line only says so after the side
+        # (rulings.yaml 2026-11-27-freeway-line-red-only-yellow).
+        assert flag.source.startswith(side)
     assert lot.second is not None  # without the drive's line: both readings screened
 
 
@@ -308,3 +409,83 @@ def test_the_flag_alone_holds_a_lot_yellow() -> None:
     entry = load_registry()[FLAG]
     assert entry.severity >= colour_rules().yellow_at_severity
     assert list(entry.raised_from) == [STREET_LINE_LIMITED_WAY]
+
+
+def _read(colour_of: str, *, side: str = "", flags: tuple[str, ...] = ()) -> object:
+    """One reading of a limited-way lot, as :func:`_worse` reads it: RED on
+    a ``fit_ft`` bind, YELLOW on a held flag, else GREEN. ``side`` is the
+    line the reading without the freeway-side line names (its
+    ``facts.limited_way``); empty on the reading s4 wrote."""
+    from types import SimpleNamespace
+
+    from flats.score import flags as flag_plan
+    from flats.score.screen import Screening
+
+    @dataclasses.dataclass(frozen=True)
+    class Read:
+        screening: Screening
+        signed: Screening
+        lot: object
+        envelope: object = None
+
+    binds = (flag_plan.Bind("fit_ft", 70.0, 80.0, 10.0),) if colour_of == "red" else ()
+    codes = flags + (("MEASURE-FRONT-MAX-STREET",) if colour_of == "yellow" else ())
+    got = tuple(
+        flag_plan.Flag(c, flag_plan.LOT, STREET_LINE_LIMITED_WAY if c == "ACCESS-LIMITED-WAY" else "X")
+        for c in codes
+    )
+    s = Screening(triage=Triage.unknown, flags=got, binds=binds)
+    return Read(screening=s, signed=s, lot=SimpleNamespace(facts=SimpleNamespace(limited_way=side)))
+
+
+SIDE = "the north line (111 ft) faces a ramp or limited-access road"
+
+
+def test_a_lot_red_only_on_one_reading_of_its_freeway_side_line_is_held_yellow() -> None:
+    """Steph 2026-11-27 (rulings.yaml 2026-11-27-freeway-line-red-only-yellow,
+    "Yellow for a look"): the map cannot tell the line, so a RED on one
+    reading alone is shown on the other reading, YELLOW, naming the miss."""
+    from flats.ingest.quadfit import LINE_RED_ONLY_RULING, _worse
+
+    # The reading without the line misses; the reading s4 wrote does not.
+    as_s4 = _read("yellow")
+    without = _read("red", side=SIDE, flags=("ACCESS-LIMITED-WAY",))
+    got = _worse(as_s4, without)
+    assert got.signed.colour is got.screening.colour is Colour.yellow
+    (held,) = [f for f in got.signed.flags if f.code == "ACCESS-LIMITED-WAY"]
+    assert SIDE in held.source and "fit_ft" in held.source and LINE_RED_ONLY_RULING in held.source
+    assert STREET_LINE_LIMITED_WAY in got.signed.reasons
+    # The other way round: the reading s4 wrote misses, the one without the
+    # line holds YELLOW on its own flag, which now names the miss.
+    got = _worse(_read("red"), _read("yellow", side=SIDE, flags=("ACCESS-LIMITED-WAY",)))
+    assert got.signed.colour is Colour.yellow
+    assert [f.code for f in got.signed.flags].count("ACCESS-LIMITED-WAY") == 1
+    assert "fit_ft" in next(f.source for f in got.signed.flags if f.code == "ACCESS-LIMITED-WAY")
+
+
+def test_a_lot_red_on_both_readings_stays_red() -> None:
+    """RED on another check that holds either way the line is read: RED."""
+    from flats.ingest.quadfit import _worse
+
+    as_s4 = _read("red")
+    without = _read("red", side=SIDE, flags=("ACCESS-LIMITED-WAY",))
+    assert _worse(as_s4, without).signed.colour is Colour.red
+
+
+def test_a_green_other_reading_is_held_yellow_never_green() -> None:
+    from flats.ingest.quadfit import _worse
+
+    clear = _read("green")
+    assert clear.signed.colour is Colour.green
+    got = _worse(clear, _read("red", side=SIDE, flags=("ACCESS-LIMITED-WAY",)))
+    assert got.signed.colour is got.screening.colour is Colour.yellow
+    assert any(f.code == "ACCESS-LIMITED-WAY" for f in got.signed.flags)
+
+
+def test_a_private_drive_lot_red_on_one_reading_stays_red() -> None:
+    """The hold is the freeway-side line's alone: a lot read with and
+    without a private drive (no ``limited_way``) keeps its worse answer."""
+    from flats.ingest.quadfit import _worse
+
+    red = _read("red")
+    assert _worse(_read("green"), red) is red

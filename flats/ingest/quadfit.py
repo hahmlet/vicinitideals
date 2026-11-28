@@ -2164,10 +2164,14 @@ def drive_reading(
 
 #: s4's ``street_kind_json`` values for a street edge whose way gives a lot
 #: no frontage, driveway or fire standing (``s4_edges.LIMITED_KINDS``):
-#: ``freeway`` -- an interstate, the Sunset or one of their ramps;
-#: ``limited`` -- any other freeway-class road and the ramp of any road;
-#: ``rail`` -- a street the line reaches only across a railroad.
-LIMITED_STREET_KINDS: frozenset[str] = frozenset({"freeway", "limited", "rail"})
+#: ``connector`` -- a slip road of the ordinary street grid (RLIS
+#: 1321/1421/1471/1521), a street where the code's definition takes it in
+#: (``freeways.connectors_street``; FOLLOWUPS 215, 220) and read as ``limited``
+#: everywhere else; ``freeway`` -- an interstate, the Sunset or one of
+#: their ramps; ``limited`` -- any other freeway-class road and the ramp of
+#: any other road; ``rail`` -- a street the line reaches only across a
+#: railroad.
+LIMITED_STREET_KINDS: frozenset[str] = frozenset({"connector", "freeway", "limited", "rail"})
 #: The key of s4's reading without those lines in ``sans_drive_json``.
 LIMITED_KEY = "limited"
 
@@ -2176,18 +2180,23 @@ _COMPASS = (
 )
 _LIMITED_WORDS = {
     "freeway": "a freeway or its ramp",
+    # The words ``limited`` had for these lines before s4 told them apart.
+    "connector": "a ramp or limited-access road",
     "limited": "a ramp or limited-access road",
     "rail": "a street on the far side of a railroad",
 }
 
 
-def limited_way_side(row: Mapping[str, Any]) -> str:
+def limited_way_side(row: Mapping[str, Any], streets: frozenset[str] = frozenset()) -> str:
     """Which street lines of the row s4 marked with `LIMITED_STREET_KINDS`,
     in words a person can find on the map: the side of the lot, the line's
-    length and what it faces. Never empty where a line is so marked."""
+    length and what it faces. Never empty where a line is so marked.
+    ``streets`` names kinds the lot's code calls a street (``connector``
+    where ``freeways.connectors_street``): those lines are not named."""
     raw = json.loads(row.get("edges_json") or "[]")
     kinds = _street_kinds(row) or []
-    marked = [k for k in kinds if k in LIMITED_STREET_KINDS]
+    held = LIMITED_STREET_KINDS - streets
+    marked = [k for k in kinds if k in held]
     if not marked:
         return ""
     parts: list[str] = []
@@ -2201,7 +2210,7 @@ def limited_way_side(row: Mapping[str, Any]) -> str:
         )
         out = 1.0 if turn > 0 else -1.0
         for e, k in zip(raw, kinds):
-            if k not in LIMITED_STREET_KINDS:
+            if k not in held:
                 continue
             x1, y1, x2, y2 = (float(v) for v in e[:4])
             bearing = math.degrees(math.atan2(out * (y2 - y1), -out * (x2 - x1))) % 360
@@ -2231,9 +2240,18 @@ def limited_reading(
       setback) AND without the lines (no frontage, driveway or fire
       standing off them), the worse answer kept, and held YELLOW
       (:data:`~flats.score.screen.STREET_LINE_LIMITED_WAY`): never GREEN.
+      RED on one reading alone is held YELLOW too (:func:`_worse`).
     * ``mixed`` -- the lot also has a street line only a private drive
       makes: s4 wrote no reading without both, so the lot is held as s4
       read it and its street is unconfirmed.
+
+    A ``connector`` line (a slip road of the street grid) is an ordinary
+    street line where the code says so (``freeways.connectors_street``:
+    Portland 33.910.030, FOLLOWUPS 215 F2; Clackamas County ZDO 202,
+    Milwaukie 19.200, Multnomah County 39.2000, FOLLOWUPS 220): it is not marked, and a lot with
+    no other such line is read as s4 read it, ``(None, "")``. With a freeway
+    line beside it the lot is ``worse``, not ``replace``: s4's reading
+    without the marked lines drops the slip road's line too.
 
     A ``replace`` or ``worse`` lot with no street left without the lines
     (or no reading written) is held as s4 read it: nobody can say it
@@ -2245,12 +2263,16 @@ def limited_reading(
     marked = {k for k in kinds if k in LIMITED_STREET_KINDS}
     if not marked:
         return None, ""
-    side = limited_way_side(row)
-    if any(k in DRIVE_STREET_KINDS for k in kinds):
-        return "mixed", side
     home = _home_layer(row, layers) if layers is not None else None
     ruling = home.freeways if home is not None else None
-    if ruling is not None and not ruling.street and marked == {"freeway"}:
+    streets = frozenset({"connector"}) if ruling is not None and ruling.connectors_street else frozenset()
+    marked -= streets
+    if not marked:
+        return None, ""
+    side = limited_way_side(row, streets)
+    if any(k in DRIVE_STREET_KINDS for k in kinds):
+        return "mixed", side
+    if ruling is not None and ruling.street is False and marked == {"freeway"} and not streets & set(kinds):
         return "replace", side
     return "worse", side
 
@@ -5518,6 +5540,12 @@ def _worse(first: Screened, second: Screened) -> Screened:
     reading fitted on s5o's envelope was not computed at all -- s5o cut
     that envelope with the drive as a street -- and makes the first a
     question.
+
+    On a lot with a freeway-side line the map cannot tell
+    (:func:`limited_reading`, ``worse``), a RED on one reading alone is not
+    kept: the other reading is shown, held YELLOW with ACCESS-LIMITED-WAY
+    naming the miss (:func:`_line_held`; Steph 2026-11-27). RED on both
+    stays RED.
     """
     if second.envelope is not None and second.envelope.source == "quadfit":
         return dataclasses.replace(
@@ -5525,9 +5553,109 @@ def _worse(first: Screened, second: Screened) -> Screened:
             screening=_street_unconfirmed(first.screening),
             signed=_street_unconfirmed(first.signed),
         )
-    if _shown(second) > _shown(first):
-        return second
-    return first
+    kept, other = (second, first) if _shown(second) > _shown(first) else (first, second)
+    side = getattr(getattr(getattr(second, "lot", None), "facts", None), "limited_way", "")
+    if (
+        side
+        and kept.signed.colour is flag_plan.Colour.red
+        and other.signed.colour is not flag_plan.Colour.red
+    ):
+        # RED only on one reading of a freeway-side line the map cannot tell
+        # (Steph 2026-11-27, rulings.yaml 2026-11-27-freeway-line-red-only-
+        # yellow: "Yellow for a look"): the other reading is shown, held
+        # YELLOW and naming the miss. Never GREEN.
+        held = _line_held(other, kept, side)
+        if held is not None:
+            return held
+    if _COLOUR[kept.signed.colour] == _COLOUR[other.signed.colour]:
+        # The colour rests on both readings: one that holds it only by a
+        # measurement tolerance, or by the hose's 5 ft allowance, says so on
+        # the shown row too (FOLLOWUPS 215 F5, 1S1E16CD  -03400). A note on a
+        # tie: the colour does not move.
+        kept = _tolerance_carried(kept, other)
+    return kept
+
+
+#: The ruling a lot RED on only one reading of its freeway-side line is held
+#: YELLOW under (:func:`_line_held`).
+LINE_RED_ONLY_RULING = "2026-11-27-freeway-line-red-only-yellow"
+
+
+def _line_held(shown: Screened, red: Screened, side: str) -> Screened | None:
+    """``shown`` (the reading of a limited-way lot that is not RED) held
+    YELLOW for a look at the line: ACCESS-LIMITED-WAY on its screening and
+    signed answer alike, its source naming the line and the checks the
+    other reading misses. None where the held answer would not be YELLOW
+    on both, so the caller keeps the RED: this never makes a GREEN."""
+    missed = ", ".join(sorted({b.check for b in red.signed.binds})) or "a check"
+    note = (
+        f"{side}; RED on the other reading of that line (misses {missed}), "
+        f"held YELLOW for a look (rulings.yaml {LINE_RED_ONLY_RULING})"
+    )
+
+    def hold(x: Screening) -> Screening:
+        flags = tuple(
+            dataclasses.replace(f, source=note) if f.code == "ACCESS-LIMITED-WAY" else f
+            for f in x.flags
+        )
+        if not any(f.code == "ACCESS-LIMITED-WAY" for f in flags):
+            flags = (
+                *flags,
+                flag_plan.Flag(
+                    "ACCESS-LIMITED-WAY", flag_plan.LOT, STREET_LINE_LIMITED_WAY, source=note
+                ),
+            )
+        reasons = x.reasons if STREET_LINE_LIMITED_WAY in x.reasons else (
+            *x.reasons, STREET_LINE_LIMITED_WAY
+        )
+        triage = x.triage if _WORSE[x.triage] >= _WORSE[Triage.unknown] else Triage.unknown
+        return dataclasses.replace(x, flags=flags, reasons=reasons, triage=triage)
+
+    screening, signed = hold(shown.screening), hold(shown.signed)
+    if signed.colour is not flag_plan.Colour.yellow or screening.colour is flag_plan.Colour.green:
+        return None
+    return dataclasses.replace(shown, screening=screening, signed=signed)
+
+
+#: The flag a reading carries where a check clears or misses by less than
+#: its measurement tolerance.
+MEASURE_TOLERANCE = "MEASURE-TOLERANCE"
+
+#: The notes one reading's colour may rest on that a tie carries onto the
+#: shown row (:func:`_tolerance_carried`): a check held only by its
+#: measurement tolerance, and a hose route past the code's 150 ft that
+#: passes on the 5 ft allowance (rulings.yaml 2026-11-21-fire-hose-five-ft).
+_CARRIED_ON_A_TIE = frozenset({MEASURE_TOLERANCE, "FIRE-HOSE-VALIDATE"})
+
+
+def _tolerance_carried(kept: Screened, other: Screened) -> Screened:
+    """``kept`` with every flag of ``other`` in :data:`_CARRIED_ON_A_TIE` it
+    lacks (by code and key), on the screening and the signed answer alike, its source
+    saying it came from the lot's other reading. Where carrying one would
+    move that answer's colour, that answer is left as it was."""
+
+    def add(x: Screening, y: Screening) -> Screening:
+        have = {(f.code, f.key) for f in getattr(x, "flags", ())}
+        extra = tuple(
+            dataclasses.replace(
+                f,
+                source="; ".join(
+                    p for p in (f.source, "on the lot's other reading of its street lines") if p
+                ),
+            )
+            for f in getattr(y, "flags", ())
+            if f.code in _CARRIED_ON_A_TIE and (f.code, f.key) not in have
+        )
+        if not extra:
+            return x
+        got = dataclasses.replace(x, flags=(*x.flags, *extra))
+        # A note only: never one that would move this answer's colour.
+        return got if got.colour == x.colour else x
+
+    screening, signed = add(kept.screening, other.screening), add(kept.signed, other.signed)
+    if screening is kept.screening and signed is kept.signed:
+        return kept
+    return dataclasses.replace(kept, screening=screening, signed=signed)
 
 
 def _better(first: Screened, second: Screened) -> Screened:
@@ -8387,10 +8515,17 @@ def _wide_road_read(
         return out
 
     def read(
-        across: float | None = None, gap: float | None = None, on: bool = False, unclear: bool = False
+        across: float | None = None,
+        gap: float | None = None,
+        on: bool = False,
+        unclear: bool = False,
+        unclear_ft: float | None = None,
     ) -> Screened:
-        was = (facts.fire_route_wide_ft, facts.fire_wide_gap_ft, facts.fire_on_state_road, facts.fire_road_unclear)
-        if (across, gap, on, unclear) == was:
+        was = (
+            facts.fire_route_wide_ft, facts.fire_wide_gap_ft, facts.fire_on_state_road,
+            facts.fire_road_unclear, facts.fire_route_unclear_ft,
+        )
+        if (across, gap, on, unclear, unclear_ft) == was:
             return out
         new = dataclasses.replace(
             facts,
@@ -8398,6 +8533,7 @@ def _wide_road_read(
             fire_wide_gap_ft=gap,
             fire_on_state_road=on,
             fire_road_unclear=unclear,
+            fire_route_unclear_ft=unclear_ft,
         )
         result = screen(out.rules, new, out.design, out.fit, policy=policy, relief=relief, config=out.config)
         shadow = _if_signed(
@@ -8547,8 +8683,10 @@ def _wide_road_read(
     across = route(reading(clear, split_lines, note)) if clear else None
     if within(across):
         return read(across=across, gap=note.get("gap"), on=bool(note.get("state")))
-    if split_lines and within(route(reading(murky, []))):
-        return read(unclear=True)
+    if split_lines:
+        murky_ft = route(reading(murky, []))
+        if within(murky_ft):
+            return read(unclear=True, unclear_ft=murky_ft)
     return read()
 
 

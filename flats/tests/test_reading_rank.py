@@ -97,3 +97,59 @@ def test_the_colour_outranks_every_triage() -> None:
     ]
     assert sorted(order, key=_shown) == order
     assert sorted(reversed(order), key=_front_rank) == order
+
+
+def test_a_tie_carries_the_other_readings_tolerance_onto_the_shown_row() -> None:
+    """FOLLOWUPS 215 F5, 1S1E16CD  -03400: the lot is YELLOW on both
+    readings, and one of them holds YELLOW (not RED) only by a measurement
+    tolerance. The shown reading says so too; the colour does not move.
+    Where the shown reading is worse in colour, nothing is carried."""
+    import dataclasses
+
+    from flats.score import flags as flag_plan
+    from flats.score.screen import Screening
+
+    @dataclasses.dataclass(frozen=True)
+    class Read:
+        screening: Screening
+        signed: Screening
+        envelope: object = None
+
+    def read(*codes: str, triage: Triage = Triage.unknown) -> Read:
+        got = tuple(
+            flag_plan.Flag(c, flag_plan.LOT + "|front_setback_max_ft", "TOLERATED") for c in codes
+        )
+        s = Screening(triage=triage, flags=got)
+        return Read(screening=s, signed=s)
+
+    shown = read("MEASURE-FRONT-MAX-STREET")
+    tolerated = read("MEASURE-TOLERANCE")
+    assert shown.signed.colour is tolerated.signed.colour is Colour.yellow
+    for pair in ((shown, tolerated), (tolerated, shown)):
+        got = _worse(*pair)
+        codes = [f.code for f in got.signed.flags]
+        assert codes.count("MEASURE-TOLERANCE") == 1
+        assert got.signed.colour is Colour.yellow
+    got = _worse(shown, tolerated)
+    (carried,) = [f for f in got.signed.flags if f.code == "MEASURE-TOLERANCE"]
+    assert "other reading" in carried.source
+    assert [f.code for f in got.screening.flags].count("MEASURE-TOLERANCE") == 1
+    # A worse colour kept (a GREEN reading beside a YELLOW one): the other's
+    # tolerance decided nothing, and nothing is carried.
+    clear = read(triage=Triage.green)
+    assert clear.signed.colour is Colour.green
+    assert _worse(clear, tolerated) is tolerated
+    assert _worse(tolerated, clear) is tolerated
+    # The owner's choice (``_better``) carries nothing.
+    assert _better(shown, tolerated) is shown
+    # The lot today (trace on 137, 2026-11-27): its other reading's hose
+    # route passes on the 5 ft allowance, and that note is carried too.
+    hosed = read("FIRE-HOSE-VALIDATE", "MEASURE-FRONT-MAX-STREET")
+    assert hosed.signed.colour is Colour.yellow
+    got = _worse(shown, hosed)
+    assert [f.code for f in got.signed.flags].count("FIRE-HOSE-VALIDATE") == 1
+    assert got.signed.colour is Colour.yellow
+    # Any other flag of the other reading stays on its own row.
+    other = read("DENSITY-MIN", "MEASURE-FRONT-MAX-STREET")
+    assert other.signed.colour is Colour.yellow
+    assert "DENSITY-MIN" not in [f.code for f in _worse(shown, other).signed.flags]

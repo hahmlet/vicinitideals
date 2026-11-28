@@ -731,6 +731,18 @@ def test_a_street_nearer_than_the_freeway_keeps_the_line_a_street_line():
     beyond = np.array([LineString([(-300, 230), (600, 230)])], dtype=object)
     assert _open_way_kind(*args, STRtree(wg), wg, rail_tree=STRtree(beyond), rail_geoms=beyond) == "street"
 
+    # A slip road of the street grid nearer than the street: the line is the
+    # connector's (FOLLOWUPS 215 F2); one with a freeway beside it on the
+    # same rays is neither, ``limited``.
+    for kind, want in (("connector", "connector"), ("limited", "limited")):
+        wg = np.array([farmington, sw_160th, near], dtype=object)
+        kinds = np.array([None, None, kind], dtype=object)
+        assert _open_way_kind(*args, STRtree(wg), wg, way_limited=kinds) == want
+    nearer = LineString([(-300, 140), (600, 140)])
+    wg = np.array([farmington, sw_160th, near, nearer], dtype=object)
+    kinds = np.array([None, None, "freeway", "connector"], dtype=object)
+    assert _open_way_kind(*args, STRtree(wg), wg, way_limited=kinds) == "connector"
+
 
 def test_which_rlis_segments_are_freeways_and_ramps():
     """RLIS STREETS TYPE 1110 is a freeway, 1120-1123 its ramps; Portland's
@@ -751,6 +763,31 @@ def test_which_rlis_segments_are_freeways_and_ramps():
     assert limited_kind(1200, "HWY", "TUALATIN VALLEY") is None
     assert limited_kind(1500, "ST", "TAYLOR") is None
     assert limited_kind(1121) == "freeway" and limited_kind(1321) == "limited"
+
+
+def test_a_slip_road_of_the_street_grid_is_a_connector():
+    """RLIS 1321/1421/1471/1521 are slip roads into or out of an arterial,
+    a tertiary or a residential street (Metro's Streets metadata), no
+    freeway's ramp: ``connector``, which FLATS reads by each place's code
+    (FOLLOWUPS 215 F2: Portland's 33.910.030 leaves them streets). Named for
+    a freeway or a bridge, unnamed, or a highway's ramp: still ``limited``."""
+    from s4_edges import _stricter, limited_kind
+
+    assert limited_kind(1321, "RAMP", "FOSTER RD-WOODSTOCK BLVD") == "connector"
+    assert limited_kind(1321, "RAMP", "82ND AVE-FOSTER RD") == "connector"
+    assert limited_kind(1471, "RAMP", "COLUMBIA WAY-COLUMBIA BLVD") == "connector"
+    assert limited_kind(1521, "RAMP", "121ST PL-122ND AVE") == "connector"
+    assert limited_kind(1421, "RAMP", "FREMONT ST-WILLIAMS AVE") == "connector"
+    assert limited_kind(1421, "RAMP", "MORRISON BRG-BELMONT ST") == "limited"
+    assert limited_kind(1521, "RAMP", "13TH AVE-I405 FWY") == "limited"
+    assert limited_kind(1521, "RAMP", "SUNSET HWY-CANYON RD") == "limited"
+    assert limited_kind(1521, "RAMP", None) == "limited"
+    assert limited_kind(1222, "RAMP", "MCLOUGHLIN BLVD-POWELL BLVD") == "limited"
+    assert limited_kind(1321, "WAY", "COLUMBIA WAY") is None
+    assert _stricter("connector", "freeway") == "limited" == _stricter("freeway", "connector")
+    assert _stricter("connector", None) == "connector"
+    assert _stricter("connector", "rail") == "rail"
+    assert _stricter("limited", "connector") == "limited"
 
 
 def test_only_a_surface_railroad_is_read_from_the_osm_extract(tmp_path):

@@ -211,17 +211,46 @@ FREEWAY_TYPE = 1110
 INTERSTATE_NAMES = frozenset({"I5", "I84", "I205", "I405", "SUNSET", "FREMONT", "MARQUAM"})
 #: TYPE 1120-1123: a freeway's ramps (FTYPE ``RAMP`` on 1,259 of 1,264).
 FREEWAY_RAMP_TYPES = frozenset({1120, 1121, 1122, 1123})
+#: TYPE 1221-1223: the ramps of a highway (1200). Metro's Streets metadata
+#: (Metro Data Resource Center, metadata date 2018-10-23, the TYPE domain):
+#: "On ramp or slip road linkage used to enter a 1200 (highway)", and the
+#: exit and on/off forms. The OSM wiki's copy of the older table reads 1221
+#: "Local street to freeway/highway on ramp": a ramp of either, so the
+#: file cannot say it is no interstate ramp. Always ``limited``.
+HIGHWAY_RAMP_TYPES = frozenset({1221, 1222, 1223})
+#: TYPE 1321, 1421, 1471, 1521: slip roads of the ordinary street grid, the
+#: same metadata: 1321 "Primary arterial linkage. Ramp/slip road used to
+#: enter or exit a 1300 (primary arterial)"; 1421 "Arterial ramp or slip
+#: road linkage used to enter or exit a 1400 (arterial)"; 1471 "Tertiary
+#: ramp or slip road linkage used to enter or exit a 1450 (tertiary
+#: street)"; 1521 "Ramp or slip road used to enter or exit a residential
+#: street". No freeway's ramp is typed so (those are 1120-1123). Read
+#: ``connector`` (`limited_kind`): FLATS decides by each place's code
+#: whether one is a street (Portland 33.910.030 excludes only the
+#: interstates and the Sunset and their ramps; FOLLOWUPS 215 F2).
+CONNECTOR_TYPES = frozenset({1321, 1421, 1471, 1521})
 #: The ramps of highways, arterials, collectors and local streets (FTYPE
 #: ``RAMP``): bridge approaches, slip ramps. A segment of these types the
 #: file calls ST, WAY or BLVD is an ordinary street and stays one.
-OTHER_RAMP_TYPES = frozenset({1221, 1222, 1223, 1321, 1421, 1471, 1521})
+OTHER_RAMP_TYPES = HIGHWAY_RAMP_TYPES | CONNECTOR_TYPES
+#: Words of a `CONNECTOR_TYPES` segment's name (RLIS names a ramp for the two
+#: roads it joins, "FOSTER RD-WOODSTOCK BLVD") that keep it ``limited``: a
+#: freeway's name (an interstate's, "FWY", the Sunset Highway's), which the
+#: TYPE says it is not and the name says it touches; or a bridge ("BRG":
+#: MORRISON BRG-BELMONT ST), whose approach may stand in the air above the
+#: lot line, and no file here says which.
+CONNECTOR_HELD_WORDS = frozenset({"I5", "I84", "I205", "I405", "FWY", "BRG"})
 #: `street_kinds` values for a street edge whose only way is one nobody can
 #: drive onto from a lot, or reach across (`_open_way_kind`, release 10
-#: move read 2026-11-19): ``freeway`` -- an interstate, the Sunset, or a
-#: freeway ramp; ``limited`` -- another freeway (HWY 217, the US 30 stub) or
-#: any other ramp; ``rail`` -- a railroad lies between the line and its
-#: street. Listed weakest reading first: where two apply the later is kept.
-LIMITED_KINDS = ("freeway", "limited", "rail")
+#: move read 2026-11-19): ``connector`` -- a slip road of the ordinary grid
+#: (`CONNECTOR_TYPES`), a street wherever the code's own word for street
+#: takes it in (FLATS reads it as ``limited`` elsewhere); ``freeway`` -- an
+#: interstate, the Sunset, or a freeway ramp; ``limited`` -- another freeway
+#: (HWY 217, the US 30 stub), a highway's ramp, a slip road named for a
+#: freeway or a bridge; ``rail`` -- a railroad lies between the line and its
+#: street. Listed weakest reading first: where two apply the later is kept,
+#: and a ``connector`` with a ``freeway`` is ``limited`` (`_stricter`).
+LIMITED_KINDS = ("connector", "freeway", "limited", "rail")
 #: The FLATS acquire key of the OpenStreetMap extract that carries the
 #: railways (`flats/config/pipeline.yaml` osm_land_use), and so the raw
 #: file's name. Only ``railway=rail`` outside a tunnel is a barrier: light
@@ -563,25 +592,39 @@ def limited_kind(type_code: int, ftype: object = None, name: object = None) -> s
     """Which of `LIMITED_KINDS` one RLIS STREETS segment is, or None for a
     way a lot can front: ``freeway`` -- an interstate or the Sunset (TYPE
     1110 under one of `INTERSTATE_NAMES`) or a freeway ramp (1120-1123,
-    FTYPE ``RAMP``); ``limited`` -- any other 1110 or 1120-1123 segment, and
-    the ramp of any other road. ``ftype`` None is a file without the
+    FTYPE ``RAMP``); ``connector`` -- a slip road of the ordinary grid
+    (`CONNECTOR_TYPES`, FTYPE ``RAMP``) whose name holds none of
+    `CONNECTOR_HELD_WORDS`; ``limited`` -- any other 1110 or 1120-1123
+    segment, a highway's ramp, and a slip road named for a freeway or a
+    bridge or not named at all. ``ftype`` None is a file without the
     column: the ramp types are then ramps whatever they are called.
     """
     ftype = None if ftype is None or ftype != ftype else str(ftype).strip().upper()
+    named = "" if name is None or name != name else str(name).strip().upper()
     if type_code == FREEWAY_TYPE:
-        named = "" if name is None or name != name else str(name).strip().upper()
         return "freeway" if named in INTERSTATE_NAMES else "limited"
     if type_code in FREEWAY_RAMP_TYPES:
         return "freeway" if ftype in (None, "RAMP") else "limited"
     if type_code in OTHER_RAMP_TYPES:
-        return "limited" if ftype in (None, "RAMP") else None
+        if ftype not in (None, "RAMP"):
+            return None
+        if type_code not in CONNECTOR_TYPES or not named:
+            return "limited"
+        words = set(named.replace("-", " ").split())
+        if words & CONNECTOR_HELD_WORDS or {"SUNSET", "HWY"} <= words:
+            return "limited"
+        return "connector"
     return None
 
 
 def _stricter(a: str | None, b: str | None) -> str | None:
-    """The later of two `LIMITED_KINDS` (None is no kind at all)."""
+    """The later of two `LIMITED_KINDS` (None is no kind at all). A slip
+    road and a freeway together are neither: ``limited``, the reading
+    screened both ways everywhere."""
     if a is None or b is None:
         return a if b is None else b
+    if {a, b} == {"connector", "freeway"}:
+        return "limited"
     return a if LIMITED_KINDS.index(a) >= LIMITED_KINDS.index(b) else b
 
 

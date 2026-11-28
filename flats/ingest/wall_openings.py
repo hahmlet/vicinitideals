@@ -286,6 +286,7 @@ def stood_elsewhere(
             fire_wide_gap_ft=None,
             fire_on_state_road=False,
             fire_road_unclear=False,
+            fire_route_unclear_ft=None,
             site_grade_pct=None,
             site_grade_source=None,
             site_grade_tried=False,

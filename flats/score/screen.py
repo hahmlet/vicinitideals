@@ -1312,6 +1312,10 @@ class LotFacts:
     #: other carriageway, a frontage road): not told from a freeway, so the
     #: lot is held YELLOW with FIRE-ROAD-UNCLEAR, never cleared on it.
     fire_road_unclear: bool = False
+    #: The route that reading reaches on, where the code's own reading
+    #: misses (FIRE-HOSE-VALIDATE names it past 150 ft, FOLLOWUPS 215 F6);
+    #: None where the code's reading reaches or nothing was measured.
+    fire_route_unclear_ft: float | None = None
     #: The lot's street lines are one street that bends, read as one front
     #: where its code states no corner test (:data:`CORNER_READ_AS_BEND`,
     #: :func:`flats.ingest.quadfit.read_as_bend`). Set by the bridge.
@@ -5351,6 +5355,45 @@ def _account(
                     f"hose route {c.observed:.1f} ft against the code's {code:g} ft (OFC 503.1.1)"
                     f" and the {FIRE_HOSE_ALLOWANCE_FT:g} ft allowed for the cautious hose start"
                     f" (Steph 2026-11-21): {'inside' if c.verdict is Verdict.passes else 'past'} it"
+                ),
+            )
+    # A lot held YELLOW for another fire reason -- the long dead end, the
+    # narrow street, the road not told from a freeway -- made no fire check,
+    # and its routes past 150 ft are as much to validate (FOLLOWUPS 215 F6).
+    # The note names the held reading's route and the code reading's; it
+    # never moves the colour.
+    held = {
+        FIRE_DEAD_END: lot.fire_route_freed_ft,
+        FIRE_NARROW_STREET: lot.fire_route_row_ft,
+        FIRE_ROAD_UNCLEAR: lot.fire_route_unclear_ft
+        if lot.fire_route_unclear_ft is not None
+        else lot.fire_route_ft,
+    }
+    why = next((k for k in held if k in unmeasured), None)
+    if fire_code is not None and why is not None:
+        code = float(fire_code)
+        on_held, on_code = held[why], lot.fire_route_ft
+        longest = max((v for v in (on_held, on_code) if v is not None), default=None)
+        if longest is not None and longest > code:
+            words = {
+                FIRE_DEAD_END: "the long dead end driven",
+                FIRE_NARROW_STREET: "the narrow street driven",
+                FIRE_ROAD_UNCLEAR: "the engine on the road not told from a freeway",
+            }[why]
+            parts = []
+            if on_held is not None and on_held != on_code:
+                parts.append(f"hose route {on_held:.1f} ft with {words} (held YELLOW)")
+            if on_code is not None:
+                parts.append(f"{on_code:.1f} ft on the code's reading")
+            flag(
+                "FIRE-HOSE-VALIDATE",
+                FIRE_HOSE_VALIDATE,
+                bounds=(code, float(longest)),
+                source=(
+                    "; ".join(parts)
+                    + f", against the code's {code:g} ft (OFC 503.1.1) and the"
+                    f" {FIRE_HOSE_ALLOWANCE_FT:g} ft allowed for the cautious hose start"
+                    " (Steph 2026-11-21)"
                 ),
             )
     curb_route = lot.fire_route_curb_ft
