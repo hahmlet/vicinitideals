@@ -443,14 +443,16 @@ def _same(a: Pose, b: Pose) -> bool:
     )
 
 
-def carried_in(path: Sequence[Pose], deeper: Court, i: int, dy: float, nose: float) -> bool:
-    """Whether ``path`` (an arrival found on the standard court, ``dy``
-    shallower) carries onto ``deeper``: the car drives straight up the lane
+def carried_in(path: Sequence[Pose], standard: Court, deeper: Court, i: int, nose: float) -> bool:
+    """Whether ``path`` (an arrival found on ``standard``) carries onto
+    ``deeper``, the same court ``dy`` deeper (:func:`deeper_by`): the car drives straight up the lane
     from the deeper court's street end the extra ``dy``, then the path moved
     ``dy`` into the lot, every pose on the deeper court's ground, and ends
     parked in the deeper court's stall ``i``. The lead-in is forward, the
     direction every arrival's first move takes (:data:`DRIVE_IN`,
     :data:`BACK_IN`), so no move is added."""
+    if (dy := deeper_by(standard, deeper)) is None:
+        return False
     start = deeper.street_end()
     lead = _straight(start, dy)
     moved = _moved(path, dy)
@@ -461,15 +463,17 @@ def carried_in(path: Sequence[Pose], deeper: Court, i: int, dy: float, nose: flo
 
 
 def carried_out(
-    path: Sequence[Pose], deeper: Court, i: int, dy: float, *, nose_out: bool = False
+    path: Sequence[Pose], standard: Court, deeper: Court, i: int, *, nose_out: bool = False
 ) -> bool:
-    """Whether ``path`` (a departure found on the standard court, ``dy``
-    shallower) carries onto ``deeper``: it starts parked in the deeper
+    """Whether ``path`` (a departure found on ``standard``) carries onto
+    ``deeper``, the same court ``dy`` deeper (:func:`deeper_by`): it starts parked in the deeper
     court's stall ``i``, runs moved ``dy`` into the lot, then the car keeps
     driving forward as it was heading until it is up the lane
     (:meth:`Court.gone`), every pose on the deeper court's ground. The
     run-out is forward, the direction every departure's last move takes
     (:data:`THREE_POINT`, :data:`DRIVE_OUT`), so no move is added."""
+    if (dy := deeper_by(standard, deeper)) is None:
+        return False
     moved = _moved(path, dy)
     if not _same(moved[0], parked_pose(deeper.stall(i), nose_out=nose_out)):
         return False
@@ -529,21 +533,21 @@ def usable_deeper(standard: Court, deepers: Sequence[Court], i: int) -> list[boo
     path or a path did not carry: never a pass the standard court does not
     have."""
     out = [False] * len(deepers)
-    dys = [deeper_by(standard, d) for d in deepers]
+    carries = [deeper_by(standard, d) is not None for d in deepers]
     for arrive_phases, leave_phases, nose_out in WAYS:
-        todo = [j for j, dy in enumerate(dys) if dy is not None and not out[j]]
+        todo = [j for j, ok in enumerate(carries) if ok and not out[j]]
         if not todo:
             break
         came = arrival(standard, i, arrive_phases, nose_out=nose_out)
         if came is None:
             continue
         nose = parked_pose(standard.stall(i), nose_out=nose_out).heading
-        todo = [j for j in todo if carried_in(came, deepers[j], i, dys[j], nose)]  # type: ignore[arg-type]
+        todo = [j for j in todo if carried_in(came, standard, deepers[j], i, nose)]
         if not todo:
             continue
         went = departure(standard, i, leave_phases, nose_out=nose_out)
         if went is None:
             continue
         for j in todo:
-            out[j] = carried_out(went, deepers[j], i, dys[j], nose_out=nose_out)  # type: ignore[arg-type]
+            out[j] = carried_out(went, standard, deepers[j], i, nose_out=nose_out)
     return out
