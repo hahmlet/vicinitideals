@@ -919,6 +919,12 @@ definitions:
 # makes it a street, as this one does).
 private_drives:
   street: true
+  # Not for the doors (coordinator 2026-11-28, FOLLOWUPS 64 round 5, fg5 #22):
+  # the code defines no Street (note below), and s4 reads as a private drive
+  # an unbuilt, zero-value tract a drive centreline crosses, which no record
+  # proves a private street. Where the code makes the front doors face a
+  # street, they face a street s4 found a public way on.
+  doors: false
   quote: "or/washington/_unincorporated/302/302-7.txt#L49"
   says: "Minimum frontage on a public or private street"
   cite: "CDC 302-7.1 E (and 303-307 E); CDC 106-93, 106-113.1, 106-183, 501-8.1"

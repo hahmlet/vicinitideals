@@ -1449,6 +1449,12 @@ def lot_edges(
     kinds = _street_kinds(row) or []
     if len(kinds) != len(raw):
         kinds = [None] * len(raw)
+    # Whether a front door may face a line only a private drive makes
+    # (:attr:`Edge.door_street`): where the lot's code counts the drive the
+    # lot abuts as a street for it; never one on other land or through the
+    # lot; and not where no code was read.
+    home = _home_layer(row, layers) if layers is not None else None
+    drives_face = home is not None and home.private_drives is not None and home.private_drives.faces_doors
     edges: list[Edge] = []
     for (x1, y1, x2, y2, letter), stretch, off_line, scenic_line, clear_line, rank, kind, faces in zip(
         raw, cover, off, scenic, clear, ranks, kinds, facing, strict=True
@@ -1484,6 +1490,11 @@ def lot_edges(
                 ),
                 across_zones=faces if letter == STREET_CLASS else None,
                 public_road=letter == STREET_CLASS and kind == "street",
+                door_street=not (
+                    letter == STREET_CLASS
+                    and kind in DRIVE_STREET_KINDS
+                    and (kind in DOUBTFUL_STREET_KINDS or not drives_face)
+                ),
             )
         )
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -2820,35 +2831,68 @@ DOOR_STREET_REACH_FT = 20.0
 DOOR_DRAWN_SLACK_DEG = 2.0
 
 
+def _door_streets(edges: "LotEdges") -> tuple[Edge, ...]:
+    """The street lot lines a front door may face: front or a corner's side
+    street, never an alley, never a line only a private drive makes where
+    the code does not count it (:attr:`Edge.door_street`)."""
+    return tuple(
+        e
+        for e in edges.edges
+        if e.cls in (EdgeClass.front, EdgeClass.street_side) and not e.alley and e.door_street
+    )
+
+
+def _direction_ft(bearing: float, lines: Sequence[Edge]) -> float:
+    """How much of ``lines`` runs within :data:`BEARING_CLUSTER_TOL_DEG` of
+    ``bearing``: the street line behind one street direction."""
+    return sum(e.length_ft for e in lines if bearing_delta(e.bearing_deg, bearing) <= BEARING_CLUSTER_TOL_DEG)
+
+
+def street_directions(lot: "QuadfitLot", edges: "LotEdges | None" = None) -> tuple[float, ...]:
+    """``lot``'s front bearings that a front door may face: each with at
+    least :data:`DOOR_LINE_MIN_FT` of door street line running its way
+    (:func:`_door_streets`, :func:`_direction_ft`). s4 clusters the frontage
+    by length, but a lone short piece far off the rest -- a 2 ft jog where
+    two plats meet, an 8 ft corner stub -- starts its own cluster, and a
+    door turned 80 degrees off the street passed facing it (FOLLOWUPS 64
+    round 5, fg5 #35: 1S201DD04000). A frontage bowed into pieces none 20 ft
+    long keeps its direction: the pieces add up (1S123AB00100). Where s4
+    traced no edges the front bearings stand as read."""
+    edges = lot.edges if edges is None else edges
+    if edges is None:
+        return tuple(float(b) for b in lot.front_bearings)
+    lines = _door_streets(edges)
+    return tuple(float(b) for b in lot.front_bearings if _direction_ft(float(b), lines) >= DOOR_LINE_MIN_FT)
+
+
 def door_bearings(lot: "QuadfitLot", edges: "LotEdges | None" = None) -> tuple[float, ...]:
     """The directions of the streets ``lot`` abuts, the ones its doors may
     face where the code makes them face a street
-    (:func:`flats.score.paper.door_limit`): its front bearings, and every
-    street lot line -- front or a corner's side street, never an alley --
-    at least :data:`DOOR_LINE_MIN_FT` long (rel4 move-read finding 2)."""
+    (:func:`flats.score.paper.door_limit`): its front bearings with a street
+    line behind them (:func:`street_directions`), and every street lot line
+    a door may face (:func:`_door_streets`) at least
+    :data:`DOOR_LINE_MIN_FT` long (rel4 move-read finding 2)."""
     edges = lot.edges if edges is None else edges
-    out = [float(b) for b in lot.front_bearings]
+    out = list(street_directions(lot, edges))
     if edges is not None:
-        for e in edges.edges:
-            if (
-                e.cls in (EdgeClass.front, EdgeClass.street_side)
-                and not e.alley
-                and e.length_ft >= DOOR_LINE_MIN_FT
-                and all(bearing_delta(e.bearing_deg, b) > 1e-6 for b in out)
-            ):
+        for e in _door_streets(edges):
+            if e.length_ft >= DOOR_LINE_MIN_FT and all(bearing_delta(e.bearing_deg, b) > 1e-6 for b in out):
                 out.append(float(e.bearing_deg))
     return tuple(out)
 
 
 def _door_lines(lot: "QuadfitLot") -> tuple[tuple[float, float, float, float], ...]:
-    """The street lot lines the doors may face, as drawn: every front and
-    side-street line not on an alley (:func:`door_bearings`)."""
+    """The street lot lines the doors may face, as drawn: every door street
+    line (:func:`_door_streets`) whose direction has
+    :data:`DOOR_LINE_MIN_FT` of such line behind it (:func:`_direction_ft`)
+    -- so a wall is credited only against the stretch of street it faces,
+    never a short stub of a line the rest of which is a drive or a side
+    lot line (FOLLOWUPS 64 round 5, fg5 #22)."""
     if lot.edges is None:
         return ()
+    lines = _door_streets(lot.edges)
     return tuple(
-        (e.x1, e.y1, e.x2, e.y2)
-        for e in lot.edges.edges
-        if e.cls in (EdgeClass.front, EdgeClass.street_side) and not e.alley
+        (e.x1, e.y1, e.x2, e.y2) for e in lines if _direction_ft(e.bearing_deg, lines) >= DOOR_LINE_MIN_FT
     )
 
 
@@ -2926,10 +2970,14 @@ def drawn_door_turned(s: "Screened", drawing: Mapping[str, Any] | None = None) -
         return not _doors_face_a_street(ring, s.design.footprint.width_ft, lines, limit)
     if not entrance_unsettled(s.rules, s.design):
         return False
-    bearings = s.lot.front_bearings
     drawing = s.drawing if drawing is None else drawing
-    if not bearings or not drawing or not drawing.get("fits"):
+    if not s.lot.front_bearings or not drawing or not drawing.get("fits"):
         return False
+    # A front bearing with no street line behind it is no street the door
+    # faces (:func:`street_directions`); a lot left with none stands turned.
+    bearings = street_directions(s.lot)
+    if not bearings:
+        return True
     ring = drawing.get("building")
     if not ring or len(ring) < 4:
         return False

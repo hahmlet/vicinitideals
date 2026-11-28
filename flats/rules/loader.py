@@ -2021,7 +2021,7 @@ def _parse_private_drives(
     if not isinstance(raw, dict):
         problems.append(f"{at}: expected street, quote, says and note")
         return None
-    extra = set(raw) - {"street", "access_choice", "quote", "says", "cite", "note"}
+    extra = set(raw) - {"street", "access_choice", "doors", "quote", "says", "cite", "note"}
     if extra:
         problems.append(f"{at}: unexpected {', '.join(sorted(str(e) for e in extra))}")
         return None
@@ -2043,9 +2043,13 @@ def _parse_private_drives(
     if not isinstance(choice, bool) or (choice and not street):
         problems.append(f"{at}.access_choice: true or false, and only with street: true")
         return None
+    doors = raw.get("doors")
+    if doors is not None and (not isinstance(doors, bool) or (doors and not street)):
+        problems.append(f"{at}.doors: true or false, and true only with street: true")
+        return None
     cite = raw.get("cite")
     return PrivateDriveRuling(
-        street=street, access_choice=choice, quote=quote.strip(), says=says.strip(),
+        street=street, access_choice=choice, doors=doors, quote=quote.strip(), says=says.strip(),
         cite=None if cite is None else str(cite), note=note.strip(),
     )
 

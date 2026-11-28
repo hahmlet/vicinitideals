@@ -444,10 +444,21 @@ class PrivateDriveRuling(BaseModel):
 
     street: bool
     access_choice: bool = False
+    #: Whether a front door may face the private drive where the code makes
+    #: the doors face a street. None -- the default -- follows ``street``;
+    #: ``false`` (only with ``street: true``) where the code counts a private
+    #: street for the lot lines but s4's drive may be an unproven tract
+    #: (Washington County, FOLLOWUPS 64 round 5).
+    doors: bool | None = None
     quote: str
     says: str
     cite: str | None = None
     note: str | None = None
+
+    @property
+    def faces_doors(self) -> bool:
+        """A door may face a private drive the lot abuts."""
+        return self.street if self.doors is None else self.doors
 
 
 class FreewayRuling(BaseModel):

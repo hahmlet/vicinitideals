@@ -203,6 +203,15 @@ class Edge:
     #: north one (:mod:`flats.geom.bearing`). False -- the default, and the
     #: answer wherever nothing read the way -- relieves nothing.
     public_road: bool = False
+    #: A street line the doors may face where the code makes them face a
+    #: street (:func:`flats.ingest.quadfit.door_bearings`). False on a line
+    #: s4 read as a street only because a private road or drive runs by it
+    #: (``street_kind_json`` ``drive``, ``drive_on_lot``, ``drive_off_lot``),
+    #: unless the lot's code counts a private drive the lot abuts as a
+    #: street a door may face (:attr:`flats.rules.model.PrivateDriveRuling.
+    #: faces_doors`; FOLLOWUPS 64 round 5, fg5 #22). True -- the default, and
+    #: the answer on every line s4 recorded no kind for -- as before.
+    door_street: bool = True
 
 
 @dataclass(frozen=True, slots=True)
