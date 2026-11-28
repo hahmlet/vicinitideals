@@ -42,7 +42,8 @@ MODEL = "claude-opus-5-5"
 ALLOWED = [
     "Read", "Grep", "Glob", "Edit", "Write",
     "Bash(uv run pytest:*)", "Bash(uv run ruff:*)", "Bash(uv run python -m flats.:*)",
-    "Bash(uv run python scripts/:*)",
+    "Bash(uv run python scripts/:*)", "Bash(uv lock:*)", "Bash(uv sync:*)", "Bash(uv tree:*)",
+    "Bash(uv pip list:*)",
     "Bash(git status:*)", "Bash(git diff:*)", "Bash(git log:*)", "Bash(git show:*)",
     "Bash(git add:*)", "Bash(git commit:*)", "Bash(git grep:*)",
     "Bash(grep:*)", "Bash(rg:*)", "Bash(ls:*)", "Bash(wc:*)", "Bash(head:*)", "Bash(sed -n:*)",
