@@ -1159,6 +1159,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_PLAN_ON_CARVE]
+  LEVEE-REVIEW-ZONE:
+    description: "The drawn building stands within the drainage districts' 100 ft levee review area along a Columbia River or Columbia Slough levee (Portland Maps PPD_Flood_and_Natural_Resources/13, measured from the levee toe), or no fitting building was drawn on a lot that area reaches: the district (MCDD, now the Urban Flood Safety and Water Quality District) must review development there, and its rules were not read (Steph 2026-11-28, rulings.yaml 2026-11-28-levee-review-zone-yellow)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot]
+    path: "Ask the drainage district what its levee review asks of a building this close to the levee, or draw the building more than 100 ft from the levee toe"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_LEVEE_REVIEW]
   MEASURE-STREET-THROUGH-LOT:
     description: "A street centre line (not an alley or a private drive) runs through the lot within 50 ft of the drawn building, driveway lane or parking court: the lot may be cut by a road it does not own, and the plan may stand on its right-of-way (rel11 move read G2, Clackamas 21E11AB01100: WALTER through the lot, 25.8 ft from the court)"
     kind: categorical

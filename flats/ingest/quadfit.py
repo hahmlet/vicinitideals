@@ -268,6 +268,7 @@ from flats.score.screen import (
     CLOSER_LOOK_DRIVEWAY_SIDEWALK,
     CLOSER_LOOK_PLAN_OFF_LOT,
     CLOSER_LOOK_PLAN_ON_CARVE,
+    CLOSER_LOOK_LEVEE_REVIEW,
     CLOSER_LOOK_STREET_THROUGH_LOT,
     DEDICATION_JOG_READ,
     DRIVEWAY_LOT_LINE,
@@ -5038,6 +5039,67 @@ def plan_on_carve_checked(s: Screened, lot: QuadfitLot) -> Screened:
     return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
 
 
+def levee_review_checked(s: Screened, lot: QuadfitLot, area: Any = None) -> Screened:
+    """``s`` held out of GREEN where its drawn building stands inside the
+    drainage districts' 100 ft levee review area (Steph 2026-11-28,
+    rulings.yaml ``2026-11-28-levee-review-zone-yellow``: "Yellow for a
+    look").
+
+    The Columbia River and Columbia Slough levees are run by the drainage
+    districts (MCDD and its three sister districts, now the Urban Flood
+    Safety and Water Quality District), whose own rules -- not the city's
+    code -- review development within 100 ft of a levee, and those rules
+    could not be read (pdx-flood-left, 2026-11-28). So a building drawn in
+    that area is a closer look: YELLOW with LEVEE-REVIEW-ZONE, never RED and
+    never moved toward GREEN; a lot already YELLOW or RED keeps its colour
+    and the flag rides along. ``area`` is the buffer
+    (:data:`LEVEE_REVIEW_FILE` when None). A lot the area does not reach
+    (less the usual 0.5 ft rim, :func:`flats.geom.drawn.touches_area`) is
+    not asked. On a lot it reaches, a missing or non-fitting drawing is
+    held too: nothing showed the building clear of it (unmeasured = the
+    conservative answer)."""
+    geom = lot.lot_geom
+    if geom is None or geom.is_empty:
+        return s
+    if area is None:
+        area = load_area(LEVEE_REVIEW_FILE)
+    if not touches_area(geom, area):
+        return s
+    from shapely.geometry import Polygon
+
+    plan = s.drawing
+    ring = plan.get("building") if plan and plan.get("fits") else None
+    if ring and len(ring) >= 4:
+        shape = Polygon(ring)
+        if not shape.is_valid:
+            shape = shape.buffer(0)
+        if not shape.intersects(area):
+            return s
+        inside = shape.intersection(area).area
+        where = f"the drawn building stands {inside:,.0f} sq ft inside it"
+    else:
+        where = "no fitting building drawn on a lot it reaches"
+    flag = flag_plan.Flag(
+        LEVEE_REVIEW,
+        flag_plan.LOT,
+        CLOSER_LOOK_LEVEE_REVIEW,
+        source=(
+            "within the drainage districts' 100 ft levee review area (Portland Maps "
+            f"PPD_Flood_and_Natural_Resources/13): {where}"
+        ),
+    )
+
+    def ask(x: Screening) -> Screening:
+        reasons = x.reasons if CLOSER_LOOK_LEVEE_REVIEW in x.reasons else (*x.reasons, CLOSER_LOOK_LEVEE_REVIEW)
+        triage = Triage.yellow if x.triage is Triage.green else x.triage
+        flags = x.flags
+        if not any(f.code == flag.code for f in flags):
+            flags = (*flags, flag)
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
 def _front_drives(s: Screened, lot: QuadfitLot, plan: Mapping[str, Any]) -> tuple[Any, ...]:
     """The drive runs ``plan`` needs from a street to its parking, on the lot
     (:func:`flats.fit.front_drive.corridors`): the lot's own lines extend a
@@ -5755,6 +5817,11 @@ PLAN_ON_CARVE = "MEASURE-PLAN-ON-CARVE"
 PLAN_ON_CARVE_FT = 0.5
 #: Carved ground under the plan smaller than this is rounding, square feet.
 PLAN_ON_CARVE_MIN_SQFT = 1.0
+LEVEE_REVIEW = "LEVEE-REVIEW-ZONE"
+#: The drainage districts' 100 ft levee buffer (Portland Maps
+#: PPD_Flood_and_Natural_Resources/13, under ``flats/config/areas``; the file
+#: says how it was fetched and that its 100 ft runs from the levee toe).
+LEVEE_REVIEW_FILE = "or/multnomah/levee-review-100ft.geojson"
 
 
 def _bounded(
@@ -6993,6 +7060,8 @@ def _screen_lot_once(
         won = drawn_edge_checked(won, lot)
         won = plan_on_lot_checked(won, lot)
         won = plan_on_carve_checked(won, lot)
+        # The drainage districts' levee review area (Steph 2026-11-28).
+        won = levee_review_checked(won, lot)
         # A street drawn through the lot, near the plan (rel11 G2).
         won = street_through_checked(won, lot, _WORKER.get("through_streets"))
         won = drive_touch_checked(won)

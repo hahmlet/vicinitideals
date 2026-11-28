@@ -4141,3 +4141,33 @@
     released.
   source: Steph 2026-11-27 (chat)
   encoded_in: [flats/config/step_projections.yaml, flats/rules/step_projections.py, flats/ingest/foundation_cap.py, flats/ingest/quadfit.py]
+- id: 2026-11-28-levee-review-zone-yellow
+  kind: ruling
+  date: 2026-11-28
+  scope:
+    county: multnomah
+  question: >-
+    The drainage districts that run the Columbia River and Columbia Slough
+    levees (MCDD and its sister districts, now the Urban Flood Safety and
+    Water Quality District) review development within 100 ft of a levee
+    under their own rules, which are not in the city code and could not be
+    read (pdx-flood-left: two Bridgeton greens, 1N1E03AD  -02200 and
+    1N1E03AD  -02600, have the pod within 100 ft of the PEN2 Columbia River
+    levee). Should a lot whose building lands within 100 ft of the levee be
+    YELLOW?
+  ruling: >-
+    Steph chose "Yellow for a look".
+  effect: >-
+    flats/ingest/quadfit.py levee_review_checked: a lot whose drawn building
+    stands inside the districts' published 100 ft levee buffer (Portland Maps
+    PPD_Flood_and_Natural_Resources/13, stored as
+    flats/config/areas/or/multnomah/levee-review-100ft.geojson; its 100 ft
+    runs from the levee toe), or a lot that buffer reaches with no fitting
+    building drawn, is held YELLOW with LEVEE-REVIEW-ZONE
+    (CLOSER_LOOK_LEVEE_REVIEW). Never RED, never moved toward GREEN; a YELLOW
+    or RED keeps its colour and the flag rides along. The buffer covers every
+    levee of the four districts (the Columbia River levees, the Columbia
+    Slough levees and the cross levees), in every jurisdiction it reaches.
+    Not live until released.
+  source: Steph 2026-11-28 (chat, via the coordinator)
+  encoded_in: [flats/ingest/quadfit.py, flats/score/screen.py, flats/config/flags.yaml, flats/config/areas/or/multnomah/levee-review-100ft.geojson]

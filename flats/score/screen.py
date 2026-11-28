@@ -303,6 +303,13 @@ CLOSER_LOOK_PLAN_OFF_LOT = "CLOSER_LOOK_PLAN_OFF_LOT"
 #: ``side_yard_court_overlap_ft``) were measured against no carve. Never
 #: GREEN on that drawing.
 CLOSER_LOOK_PLAN_ON_CARVE = "CLOSER_LOOK_PLAN_ON_CARVE"
+#: The drawn building (or, with no fitting drawing, the lot) stands inside
+#: the drainage districts' 100 ft levee review area along the Columbia
+#: River and Columbia Slough levees (:func:`flats.ingest.quadfit.levee_review_checked`),
+#: where the district must review development and its rules were not read.
+#: A closer look, never RED (Steph 2026-11-28, rulings.yaml
+#: 2026-11-28-levee-review-zone-yellow).
+CLOSER_LOOK_LEVEE_REVIEW = "CLOSER_LOOK_LEVEE_REVIEW"
 #: A street centreline that is no alley or private drive runs through the
 #: lot within reach of the drawn building, lane or court
 #: (:func:`flats.ingest.quadfit.street_through_checked`, rel11 move read G2:
@@ -5702,6 +5709,7 @@ __all__ = [
     "CLOSER_LOOK_DISTRICT_EDGE",
     "CLOSER_LOOK_PLAN_OFF_LOT",
     "CLOSER_LOOK_PLAN_ON_CARVE",
+    "CLOSER_LOOK_LEVEE_REVIEW",
     "CLOSER_LOOK_STREET_THROUGH_LOT",
     "EDGE_SAG_READ",
     "DEDICATION_JOG_READ",
