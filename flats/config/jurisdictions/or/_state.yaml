@@ -175,7 +175,7 @@ code:
   title: OAR 660-047 Oregon Homes, proposed rules, interim version 5 (2026-09-22, DRAFT)
 # The Oregon Fire Code is ICC text and not served whole anywhere public. The
 # Metro Code Committee's Applications Guide -- the region's fire districts'
-# own reading of OFC 2022 for site plans, published by Clackamas Fire and
+# own reading of the OFC for site plans, published by Clackamas Fire and
 # used by Gresham, TVF&R and the rest -- prints 503.1.1's distance as a
 # requirement, which is what `fire_access_max_ft` cites (FOLLOWUPS 28).
 # EDITION NOTE (read 2026-10-16): OFC 2022 is no longer the current code. OAR
@@ -183,8 +183,33 @@ code:
 # OFC was valid for new-construction plan review only until 2026-03-31.
 # https://secure.sos.state.or.us/oard/viewSingleRule.action?ruleVrsnRsn=327787
 # https://www.oregon.gov/osfm/fire-service-partners/pages/oregon-fire-code.aspx
-# Whether 2025 OFC 503.1.1 still reads 150 ft is NOT verified (ICC's reader
-# returned 403); the cites below remain the 2022 guide until that is checked.
+# 2025 EDITION (FOLLOWUPS 212, read 2026-11-27): Clackamas Fire's guide has a
+# 2025-code edition (revised 2025-12-02), stored below and cited by every fire
+# value now. Each figure the screen uses was compared line by line with the
+# 2022 edition and with the 2025 OFC itself (the agent's reference copy of
+# Chapter 5 and Appendix D, data/flats/books/building-codes/ofc-2025/, a
+# reference only): 150 ft route and turnaround (503.1.1), 150 ft dead end (503.2.5),
+# 20 ft width (503.2.1), 28/48 ft turning radius (the guide's; 2025 OFC
+# 503.2.4 and D103.3 leave the radius to the fire code official), and D103.4's
+# 120 ft hammerhead / 60 ft "Y" / 96 ft cul-de-sac -- none changed.
+# Tualatin Valley Fire & Rescue's own 2025-code guide for houses and
+# townhouses (version 2026-07-13) prints the same 150, 20, 150 and 28/48 ft.
+# It also prints a 200 ft driveway allowance, which "applies ONLY to a
+# driveway serving (1) single-family dwelling" (or/tvfr.2025.residential-
+# guide.txt#L139-L158): never the pod's four homes, so 150 ft stands for them.
+- id: ofc.2025.applications-guide
+  url: https://clackamasfire.com/wp-content/uploads/2026/03/Oregon-Fire-Code-Application-Guide-OFC-2025.pdf
+  title: Oregon Fire Code Application Guide, based on the 2025 OFC (Clackamas Fire, revised 2025-12-02)
+  extraction: plain
+- id: tvfr.2025.residential-guide
+  url: https://www.tvfr.com/DocumentCenter/View/1438
+  title: New Construction Fire Code Applications Guide for One- and Two-Family Dwellings and Townhouses (Tualatin Valley Fire & Rescue, 2025 OFC, version 2026-07-13)
+  extraction: plain
+  # Read for its fire access pages (L121-L232); most of the rest is diagrams
+  # and policy memos, which is why the fetcher's code-text test calls it thin.
+  allow_thin: true
+# The 2022-code edition, superseded by the one above. Kept: rulings dated
+# before 2026-11-27 (rulings.yaml) quote its lines as the text they were made on.
 - id: ofc.2022.applications-guide
   url: https://clackamasfire.com/wp-content/uploads/2023/08/Oregon-Fire-Code-Applications-Guide-2022.pdf
   title: Oregon Fire Code Applications Guide, based on the 2022 OFC (Clackamas Fire, revised 2023-06-21)
@@ -373,11 +398,11 @@ defaults:
   fire_access_max_ft:
     value: 150
     preempts: always
-    cite: "OFC 2022 503.1.1 (Oregon Fire Code Applications Guide, Clackamas Fire, rev. 2023-06-21)"
-    url: "https://clackamasfire.com/wp-content/uploads/2023/08/Oregon-Fire-Code-Applications-Guide-2022.pdf"
-    retrieved: 2026-10-01
+    cite: "OFC 2025 503.1.1 (Oregon Fire Code Application Guide, Clackamas Fire, rev. 2025-12-02)"
+    url: "https://clackamasfire.com/wp-content/uploads/2026/03/Oregon-Fire-Code-Application-Guide-OFC-2025.pdf"
+    retrieved: 2026-11-27
     status: draft
-    quote: "or/ofc.2022.applications-guide.txt#L132-L134"
+    quote: "or/ofc.2025.applications-guide.txt#L135-L137"
   # The building code's no-openings line (FOLLOWUPS 183, 186): R302.1 sends
   # every exterior wall to Table R302.1, whose "Openings in walls" row is "Not
   # allowed" under 3 feet of fire separation distance and "Unlimited" at 3
@@ -589,7 +614,7 @@ crossrefs:
     outcome: other_path
     note: >-
       The 150-foot route rule, screened as fire_access_max_ft. The guide quotes
-      its operative sentence (L132-L134); what the code adds is its
+      its operative sentence (L135-L137); what the code adds is its
       exceptions, and each one only relieves -- Exception 1 lets a sprinklered
       building go farther, which Steph ruled not to assume (2026-10-01), and
       the two-dwelling exception does not reach a four-unit building.
@@ -600,7 +625,7 @@ crossrefs:
       builds a fire road on a lot: a lot the street cannot reach is RED. It
       reads the street the same way (FOLLOWUPS 168, flats.fit.fire_roads):
       past 150 feet into a dead end whose right-of-way has no room to turn
-      the truck (no bulb, no hammerhead's room; L134, L137-L139), the truck
+      the truck (no bulb, no hammerhead's room; L137-L138, L140-L142), the truck
       stays 150 feet from the intersection and the hose walks the rest --
       or the length a city's adopted amendment states (Portland PCC
       31.30.010.B, 300 feet; flats/config/fire_roads.yaml). A lot the hose
@@ -615,7 +640,7 @@ crossrefs:
       than half a minimum road (flats.fit.fire.HALF_ROAD_FT), and a street
       less than 20 feet between its private lots is no road the truck can
       stand on: the hose walks it from where the truck can (FOLLOWUPS 168,
-      flats.fit.fire_roads; L167-L171). One under 22 feet (the 20 feet, a
+      flats.fit.fire_roads; L171-L175). One under 22 feet (the 20 feet, a
       0.5 ft curb and a 0.5 ft strip behind it each side; fire_roads.yaml
       narrow_row) with no paved width recorded holds a lot it alone reaches
       YELLOW with FIRE-NARROW-STREET (Steph 2026-11-10, rulings.yaml
@@ -671,3 +696,62 @@ crossrefs:
   "918":
     outcome: procedure
     note: OSSC form for an emergency responder radio system in a large building.
+# FOLLOWUPS 212 (2026-11-27): sections first named by the 2025-code guides
+# (or/ofc.2025.applications-guide.txt, or/tvfr.2025.residential-guide.txt).
+  "503.2":
+    outcome: other_path
+    note: "Bridges and elevated surfaces on a fire road on the site -- the screen builds none."
+  "503.2.2":
+    outcome: other_path
+    note: "TVF&R turnouts on a road under 20 ft and over 400 ft long -- a fire road on the site -- the screen builds none."
+  "503.2.3":
+    outcome: other_path
+    note: "Surface and load capacity of a fire road on the site -- the screen builds none."
+  "503.2.7":
+    outcome: other_path
+    note: "TVF&R's 15% road grade, for a fire road on the site -- the screen builds none."
+  "503.2.8":
+    outcome: other_path
+    note: "Turnaround and intersection grade (5%) on a fire road on the site -- the screen builds none."
+  "503.4.1":
+    outcome: other_path
+    note: "Traffic calming devices on a fire road on the site -- the screen builds none."
+  "503.6":
+    outcome: other_path
+    note: "Gates across a fire road on the site -- the screen builds none."
+  "103.6.1":
+    outcome: other_path
+    note: "D103.6.1-2, no-parking signs on a fire road on the site -- the screen builds none."
+  "505.1":
+    outcome: procedure
+    note: "Address numbers on the building, sized and placed to be read from the street -- no siting rule."
+  "506":
+    outcome: procedure
+    note: "Key boxes for fire crews (TVF&R policy memo) -- hardware on the building, no siting rule."
+  "506.1":
+    outcome: procedure
+    note: "Where a key box is mounted on the building -- hardware, no siting rule."
+  "507.5.5":
+    outcome: procedure
+    note: "A 3 ft clear space round a hydrant -- upkeep, not siting."
+  "507.5.6":
+    outcome: other_path
+    note: "Bollards round a hydrant a vehicle could hit -- a hydrant the screen does not place."
+  "3307.1":
+    outcome: procedure
+    note: "Fire access in place during construction."
+  "3313.1":
+    outcome: procedure
+    note: "Water supply in place before combustible construction."
+  "19":
+    outcome: procedure
+    note: "OFC Chapter 19, named with 901.4.1 and 901.7 in the fire-watch paragraph: a watch kept while a system is out of service."
+  "508":
+    outcome: other_building
+    note: "Fire command center: high-rise buildings and F-1/S-1 over 500,000 sf."
+  "508.1.1":
+    outcome: other_building
+    note: "Fire command center: high-rise buildings and F-1/S-1 over 500,000 sf."
+  "508.1.7":
+    outcome: other_building
+    note: "Fire command center: high-rise buildings and F-1/S-1 over 500,000 sf."

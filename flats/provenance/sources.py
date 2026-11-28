@@ -98,9 +98,16 @@ OFFICIAL: frozenset[str] = frozenset(
         "cityofrivergrove.org",
         # Clackamas Fire District #1, a special district and the fire code
         # official across most of Clackamas County. Its Applications Guide is
-        # the issuing fire marshal's own statement of what OFC 2022 requires
-        # of a site plan (FOLLOWUPS 28).
+        # the issuing fire marshal's own statement of what the OFC requires
+        # of a site plan (FOLLOWUPS 28; the 2025-code edition since
+        # FOLLOWUPS 212).
         "clackamasfire.com",
+        # Tualatin Valley Fire & Rescue, a rural fire protection district and
+        # the fire code official across most of Washington County and the
+        # Clackamas cities it serves (West Linn, Wilsonville, Tualatin). Its
+        # guide for houses and townhouses is its own statement of what the
+        # 2025 OFC requires of them (FOLLOWUPS 212).
+        "tvfr.com",
         # Canby Fire District, the fire code official for Canby. Its own host
         # on the shared special-district platform (the platform as a whole is
         # many districts, so only this host is named). Its Conditions of
