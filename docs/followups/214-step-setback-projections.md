@@ -27,3 +27,10 @@ cities not yet read; Portland 33.110/120 projections section to be read.
 3. Bound, move read (each lost GREEN read), release.
 
 Decision pending: none; queue after the 213 release.
+
+## Steph rulings 2026-11-27 (chat)
+- Where a code is SILENT on steps (no steps, stairs, porches or decks named as projections), the steps
+  ARE allowed in the setback ("Allowed in setback"; replaces the conservative default in step 2 above).
+  A section not stored is not silent: fetch and read it.
+- A porch/deck/landing allowance counts for the steps ("Yes, count it as a porch").
+- Building on flats/step-setbacks (encoder a83bcadc); rulings go in rulings.yaml on that branch.

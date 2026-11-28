@@ -17,3 +17,7 @@ parking-only reds), try the alternate arrangements the city rules allow (court b
 the other stall band within Steph's "4 is enough" ruling) and count how many would pass with every check. If the
 count is large, scope the builder; if small, close this. Turning stays on measured courts (216's method), never an
 unmeasured pass.
+
+## Status 2026-11-27
+Steph: "No, continue on your path" -- not now; current lanes first. Parked; re-offer only when the
+current lanes (213-218) are shipped.
