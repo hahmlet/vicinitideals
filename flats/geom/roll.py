@@ -81,6 +81,12 @@ class Tier:
     #: words (LLC, church, bank) no public body's name carries.
     owner_patterns: Mapping[str, tuple[re.Pattern[str], ...]] = field(default_factory=dict, compare=False)
     not_owner: re.Pattern[str] | None = None
+    #: ``public_owner``: parcel number -> owner of record's name, off the list.
+    owner_names: Mapping[str, str] = field(default_factory=dict, compare=False)
+    #: ``public_owner`` ``campus``: the owner names that are a public school
+    #: body's, and per jurisdiction the zones that are campus zones.
+    campus_owners: tuple[re.Pattern[str], ...] = ()
+    campus_zones: Mapping[str, frozenset[str]] = field(default_factory=dict, compare=False)
 
 
 @dataclass(frozen=True)
@@ -96,11 +102,22 @@ class RollRules:
 
 
 @functools.lru_cache(maxsize=8)
-def _owner_list(path: Path) -> dict[str, str]:
-    """``parcel number -> group`` off a public-owner list (``tlid,group,owner``).
-    Parcel numbers hold spaces: a row is read whole, never split on them."""
+def _owner_rows(path: Path) -> tuple[tuple[str, str, str], ...]:
+    """``(parcel number, group, owner)`` off a public-owner list
+    (``tlid,group,owner``). Parcel numbers hold spaces: a row is read whole,
+    never split on them."""
     with path.open(encoding="utf-8", newline="") as fh:
-        return {row["tlid"].rstrip(): row["group"] for row in csv.DictReader(fh)}
+        return tuple((row["tlid"].rstrip(), row["group"], row["owner"]) for row in csv.DictReader(fh))
+
+
+def _owner_list(path: Path) -> dict[str, str]:
+    """``parcel number -> group`` off a public-owner list."""
+    return {tlid: group for tlid, group, _owner in _owner_rows(path)}
+
+
+def _owner_names(path: Path) -> dict[str, str]:
+    """``parcel number -> owner of record`` off a public-owner list."""
+    return {tlid: owner for tlid, _group, owner in _owner_rows(path)}
 
 
 def owner_group(owner: Any, tier: Tier) -> str | None:
@@ -157,6 +174,9 @@ def load_rules(path: Path = CONFIG) -> RollRules:
             owners=_owner_list(path.parent / body["list"]) if body.get("list") else {},
             owner_patterns={g: tuple(re.compile(p) for p in ps) for g, ps in (body.get("owners") or {}).items()},
             not_owner=re.compile(body["not_owners"]) if body.get("not_owners") else None,
+            owner_names=_owner_names(path.parent / body["list"]) if body.get("list") else {},
+            campus_owners=tuple(re.compile(p) for p in ((body.get("campus") or {}).get("owners") or ())),
+            campus_zones={j: frozenset(zs) for j, zs in ((body.get("campus") or {}).get("zones") or {}).items()},
         )
         for key, body in (doc.get("tiers") or {}).items()
     )
@@ -189,10 +209,48 @@ def taxed(row: Mapping[str, Any]) -> bool:
     return n is not None and n > 0
 
 
-def improved(row: Mapping[str, Any]) -> bool:
-    """The roll shows a building: a building value or a building area
-    above 0 (either: Multnomah holds one without the other)."""
-    return any(n is not None and n > 0 for n in (_number(row.get("BLDGVAL")), _number(row.get("BLDGSQFT"))))
+#: The row key that carries the footprint map's area on the lot (sq ft, the
+#: occupancy build's ``footprint_sqft``, :mod:`flats.ingest.occupancy`).
+#: Absent or None: the footprint map was not read for this lot.
+FOOTPRINT_FIELD = "footprint_sqft"
+#: What a lot the footprint map was not read for answers to "is it built?"
+#: (:func:`improved`): ``sqft`` -- the roll's building area alone, the
+#: conservative answer for a final reading (a public lot is red unless the
+#: roll measures a building); ``value`` -- a building value or area, the
+#: test as it stood before 2026-11-28, for a pre-filter that must not leave
+#: out of the scan a lot a later reading with the map would keep.
+UNMAPPED = ("sqft", "value")
+
+
+def footprint(row: Mapping[str, Any]) -> float | None:
+    """The footprint map's building area on the lot, or None when the map
+    was not read for it."""
+    return _number(row.get(FOOTPRINT_FIELD))
+
+
+def improved(row: Mapping[str, Any], unmapped: str = "sqft") -> bool:
+    """The roll shows a building.
+
+    A building VALUE alone is not a building (FOLLOWUPS 64 round 5, fg5 #40:
+    the University of Oregon's lot 1N1E13BD -09900 carries $8,220 of
+    improvements, no building area and no footprint -- paving, a fence -- and
+    was screened as built). Built means the roll MEASURES a building (a
+    building area above 0), or the footprint map draws one where the roll
+    values one (both). A footprint the roll gives no value is the map's
+    alone and leaves the lot bare, as before: the test only ever finds more
+    land bare, never less. Where the footprint map was not read for the lot,
+    ``unmapped`` answers (:data:`UNMAPPED`).
+    """
+    if unmapped not in UNMAPPED:
+        raise ValueError(f"unmapped: {unmapped!r} is not one of {UNMAPPED}")
+    value, area = _number(row.get("BLDGVAL")), _number(row.get("BLDGSQFT"))
+    if area is not None and area > 0:
+        return True
+    valued = value is not None and value > 0
+    drawn = footprint(row)
+    if drawn is None:
+        return valued and unmapped == "value"
+    return valued and drawn > 0
 
 
 def vacant_class(code: str) -> bool:
@@ -261,34 +319,70 @@ def built_lots(rows: Iterable[Mapping[str, Any]], rules: RollRules) -> dict[tupl
     return found
 
 
-def _public_owner(row: Mapping[str, Any], tier: Tier, groups: frozenset[str]) -> str | None:
+def _campus(row: Mapping[str, Any], tier: Tier, tlid: str) -> str | None:
+    """The roll's account of a lot a public school body (a school district,
+    a community college, a public university) owns in a campus or
+    institutional zone, or None. Such land is school land whatever stands on
+    it and whatever the roll taxes: Steph RULED 2026-10-06 (rulings.yaml
+    2026-10-06-institutional-land-red) that "lots with institutional uses;
+    hospitals, schools ..." are red "for any reason", and a public school
+    body's land in the zone the city drew for its campus is a school's lot.
+    The map reading (flats/config/institutional.yaml) misses a lot the
+    campus outline stops short of (fg5 #40: 12 ft short)."""
+    zones = tier.campus_zones.get(str(row.get("jurisdiction") or ""))
+    zone = str(row.get("zone") or "").strip()
+    if not zones or zone not in zones:
+        return None
+    owner = tier.owner_names.get(tlid, "")
+    if not any(p.search(owner) for p in tier.campus_owners):
+        return None
+    return f"{row.get('county')} owner of record ({owner}, a public school body), on land zoned {zone}, a campus zone"
+
+
+def _public_owner(row: Mapping[str, Any], tier: Tier, groups: frozenset[str], unmapped: str = "sqft") -> str | None:
     """The roll's account of a lot one of ``groups`` owns bare and untaxed
-    (no assessed value; a vacant class, or no building on the roll), or None."""
+    (no assessed value; a vacant class, or no building on the roll by
+    :func:`improved`, whose ``unmapped`` this is), or a public school body
+    owns in a campus zone (:func:`_campus`), or None."""
     county = str(row.get("county") or "")
     code = _code(row)
     tlid = str(row.get("tlid") or row.get("TLID") or "").rstrip()
     group = tier.owners.get(tlid) if county in tier.counties else None
-    if group not in groups or taxed(row) or not (vacant_class(code) or not improved(row)):
+    if group not in groups:
+        return None
+    if group == "government" and (why := _campus(row, tier, tlid)) is not None:
+        return why
+    if taxed(row) or not (vacant_class(code) or not improved(row, unmapped)):
         return None
     who = OWNER_GROUPS.get(str(group), "a public body")
     bare = f"vacant class {code}" if vacant_class(code) else "no building on the roll"
     return f"{county} owner of record ({who}), with no assessed value and {bare}"
 
 
-def owner_hold(row: Mapping[str, Any], rules: RollRules) -> str | None:
+def owner_hold(row: Mapping[str, Any], rules: RollRules, unmapped: str = "value") -> str | None:
     """The roll's account of a lot a HELD owner group (a housing authority)
     owns bare and untaxed, or None. Such a lot is not RED and not left out of
     the scan: the screen holds it YELLOW (Steph 2026-11-18, rulings.yaml
     2026-11-18-housing-authority-land-yellow). ``row`` carries county, tlid,
     PROP_CODE, BLDGVAL, BLDGSQFT and ASSESSVAL; a value it lacks is neither
-    taxed nor built, so the hold stands."""
+    taxed nor built, so the hold stands. The bridge reads the hold without
+    the footprint map, so a lot the map was not read for is built by value
+    or area (``unmapped="value"``, the test as it stood): on run 134 no
+    housing-authority lot with a building value, no building area and no
+    footprint was screened, so the stricter answer would have moved none."""
     for tier in rules.tiers:
         if tier.enabled and tier.key == "public_owner" and tier.held:
-            return _public_owner(row, tier, tier.held)
+            return _public_owner(row, tier, tier.held, unmapped)
     return None
 
 
-def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str], list[tuple[str, Any]]] | None = None) -> dict[str, Any] | None:
+def read(
+    row: Mapping[str, Any],
+    rules: RollRules,
+    built: Mapping[tuple[str, str], list[tuple[str, Any]]] | None = None,
+    *,
+    unmapped: str = "sqft",
+) -> dict[str, Any] | None:
     """The reading for one lot -- ``category``, ``share`` (always 1: the roll
     names the whole parcel), ``source``, ``name`` -- or ``None``.
 
@@ -296,6 +390,10 @@ def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str
     ASSESSVAL, site_address and YEARBUILT, as the normalized lot table does.
     ``built`` is :func:`built_lots` over the whole table; without it, or
     without the lot's own geometry, a lot with no address is never spared.
+    ``footprint_sqft`` (:data:`FOOTPRINT_FIELD`) is the footprint map's area
+    on the lot, and ``unmapped`` answers where it is missing
+    (:func:`improved`); ``jurisdiction`` and ``zone`` place a public school
+    body's campus land (:func:`_campus`).
     """
     county = str(row.get("county") or "")
     code = _code(row)
@@ -313,7 +411,7 @@ def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str
                 meaning = EXEMPT_MEANING.get(code[1], "public")
                 return hit(tier.key, f"{county} roll code {code} ({meaning})")
         elif tier.key == "public_owner":
-            if (why := _public_owner(row, tier, tier.groups)) is not None:
+            if (why := _public_owner(row, tier, tier.groups, unmapped)) is not None:
                 return hit(tier.key, why)
         elif tier.key == "tract":
             if zero and tract_number(tlid):

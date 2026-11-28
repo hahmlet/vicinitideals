@@ -78,6 +78,8 @@ ROLL_COLUMNS = (
     "county", "tlid", "PROP_CODE", "LANDVAL", "BLDGVAL", "TOTALVAL", "ASSESSVAL", "site_address", "YEARBUILT", "wkb",
     # condo_common (FOLLOWUPS 201): the intake's mark and the building size.
     "BLDGSQFT", "condo_reason",
+    # public_owner's campus land (2026-11-28): the lot's city and zone.
+    "jurisdiction", "zone",
 )
 
 
@@ -101,7 +103,11 @@ def measure_roll(lots: Any, taken: set[tuple[str, str]] | None = None) -> Any:
         key = (str(rec["county"]), str(rec["tlid"]).rstrip())
         if key in taken:
             continue
-        got = roll_read(rec, rules, built)
+        # A pre-filter: what it holds the bridge leaves out of the scan, so a
+        # lot the footprint map was not read for is built by value or area
+        # (flats/geom/roll.py improved, unmapped="value"). The assign stage
+        # reads the roll again with the map and finds the rest.
+        got = roll_read(rec, rules, built, unmapped="value")
         if got is not None:
             rows.append({"county": key[0], "TLID": key[1], **got})
     return pd.DataFrame(rows, columns=list(COLUMNS[:-1]))

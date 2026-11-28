@@ -240,3 +240,18 @@ def test_a_proof_never_overreaches() -> None:
         assert pod_proof({"area_sqft": 9000.0}, "sliver_area", d.key, catalog) is None
         assert pod_proof({"area_sqft": None}, "unknown", d.key, catalog) is None
     assert pod_proof(small, None, "no-such-design@1", catalog) is None
+
+
+def test_an_occupancy_build_is_read_and_recorded(world: dict[str, Path]) -> None:
+    """FOLLOWUPS 64 round 5: the footprints tell the roll's public-owner tier
+    whether public land is built; the run records which build it read."""
+    occ = world["out"].parent / "occupancy.csv.gz"
+    with gzip.open(occ, "wt", encoding="utf-8", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["county", "tlid", "footprint_sqft"])
+        w.writerow(["multnomah", MEASURED, "1200.0"])
+    meta = assign(world["normalized"], world["bridge"], world["out"], quadfit_dir=world["quadfit"], occupancy=occ)
+    assert meta["occupancy"] == str(occ)
+    assert MEASURED in set(pd.read_parquet(world["out"] / "lots.parquet")["TLID"])
+    meta = assign(world["normalized"], world["bridge"], world["out"], quadfit_dir=world["quadfit"])
+    assert meta["occupancy"] is None

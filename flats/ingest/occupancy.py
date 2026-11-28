@@ -4,7 +4,10 @@ FOLLOWUPS 125. A LABEL, never a colour: the standing ruling
 ``2026-10-14-existing-buildings-stay-green`` (flats/config/rulings.yaml) keeps
 the map answering "does the pod fit", not "is it buyable". Nothing in the
 screen, the fit or the score reads this module; the Lots page filters on it and
-the lot page says it, and that is all.
+the lot page says it. One reading beside: the assign stage reads the build's
+footprint areas (:func:`read_footprints`) to tell whether PUBLIC land is bare
+(flats/geom/roll.py ``improved``, FOLLOWUPS 64 round 5), never whether a
+private lot's house counts.
 
 Two sources, read side by side and never merged into one answer:
 
@@ -274,3 +277,32 @@ OCCUPANCY_COLUMNS = (
     "year_built",
     "roll_building_sqft",
 )
+#: The build's file name inside its output directory.
+OCCUPANCY_FILE = "occupancy.csv.gz"
+
+
+def read_footprints(path: Any) -> dict[tuple[str, str], float]:
+    """``(county, tlid) -> footprint_sqft`` off an occupancy build
+    (``occupancy.csv.gz``, or the directory that holds it). A lot the build
+    holds no number for is left out: its footprint is unread, not 0.
+
+    The one place outside the Lots page this module's output is read: the
+    public-owner tier's "is it built?" (flats/geom/roll.py improved,
+    FOLLOWUPS 64 round 5). It decides whether public land is bare, never
+    whether a private lot's house counts (the standing ruling
+    2026-10-14-existing-buildings-stay-green is untouched).
+    """
+    import csv
+    import gzip
+    from pathlib import Path
+
+    p = Path(path)
+    if p.is_dir():
+        p = p / OCCUPANCY_FILE
+    found: dict[tuple[str, str], float] = {}
+    with gzip.open(p, "rt", encoding="utf-8", newline="") as fh:
+        for row in csv.DictReader(fh):
+            n = _number(row.get("footprint_sqft"))
+            if n is not None:
+                found[(str(row["county"]), str(row["tlid"]).rstrip())] = n
+    return found

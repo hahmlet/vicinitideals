@@ -139,9 +139,9 @@ def test_a_bare_untaxed_lot_a_public_body_owns_is_red() -> None:
 
 def test_a_public_lot_with_a_building_stays_screened() -> None:
     """Washington's improved x1 codes stay screened (ruled 2026-10-09); so
-    does a Multnomah public lot the roll shows built -- by value or by area,
-    for Multnomah holds one without the other."""
-    assert tier(BLDGVAL=9_081_720.0, TOTALVAL=9_815_500.0) is None
+    does a Multnomah public lot the roll shows built -- by its building area,
+    or by a building value where the footprint map draws a building."""
+    assert tier(BLDGVAL=9_081_720.0, TOTALVAL=9_815_500.0, footprint_sqft=52_922.2) is None
     assert tier(BLDGSQFT=42_309.0) is None
     assert tier(BLDGVAL=729_960.0, BLDGSQFT=2_050.0) is None
 
@@ -151,7 +151,7 @@ def test_a_vacant_class_is_bare_whatever_small_value_stands_on_it() -> None:
     # building value of $10,000.
     assert tier(tlid="1S1E11DC  -00700", PROP_CODE="700", BLDGVAL=10_000.0) == "public_owner"
     assert tier(PROP_CODE="100", BLDGVAL=72_280.0) == "public_owner"
-    assert tier(PROP_CODE="701", BLDGVAL=72_280.0) is None
+    assert tier(PROP_CODE="701", BLDGVAL=72_280.0, footprint_sqft=1_800.0) is None
 
 
 def test_a_public_lot_the_roll_shows_taxed_stays_screened() -> None:
@@ -263,10 +263,10 @@ HOUSING_BARE = [
 ]
 #: Public-owned, GREEN on run 128, and built: they stay screened.
 BUILT = [
-    ("1S3E07AC  -03600", "211", 729_960.0, 2_050.0),  # Centennial School District
-    ("1S1E06CB  -02700", "211", 9_081_720.0, 0.0),
-    ("1S2E07BA  -08500", "701", 10_000.0, 42_309.0),
-    ("1N1E08AC  -07000", "711", 2_704_790.0, 48_612.0),
+    ("1S3E07AC  -03600", "211", 729_960.0, 2_050.0, None),  # Centennial School District
+    ("1S1E06CB  -02700", "211", 9_081_720.0, 0.0, 52_922.2),
+    ("1S2E07BA  -08500", "701", 10_000.0, 42_309.0, None),
+    ("1N1E08AC  -07000", "711", 2_704_790.0, 48_612.0, None),
 ]
 
 
@@ -282,7 +282,102 @@ def test_the_bare_housing_authority_lots_that_were_green_are_held(tlid: str, cod
     assert held is not None and "a housing authority" in held
 
 
-@pytest.mark.parametrize("tlid,code,bldg,sqft", BUILT)
-def test_the_built_public_lots_stay_screened(tlid: str, code: str, bldg: float, sqft: float) -> None:
+@pytest.mark.parametrize("tlid,code,bldg,sqft,drawn", BUILT)
+def test_the_built_public_lots_stay_screened(tlid: str, code: str, bldg: float, sqft: float, drawn: float | None) -> None:
     assert roll.load_rules().tier("public_owner").owners.get(tlid) is not None
-    assert tier(tlid=tlid, PROP_CODE=code, BLDGVAL=bldg, BLDGSQFT=sqft) is None
+    assert tier(tlid=tlid, PROP_CODE=code, BLDGVAL=bldg, BLDGSQFT=sqft, footprint_sqft=drawn) is None
+
+
+# --- a building value alone (FOLLOWUPS 64 round 5, fg5 #40) --------------------
+
+#: The University of Oregon's lot in the Old Town campus: $8,220 of
+#: improvements, no building area on the roll, no footprint on the map (the
+#: occupancy build of 2026-10-01 holds 0.0). GREEN on run 134.
+UO_LOT = "1N1E13BD  -09900"
+
+
+def test_a_building_value_with_no_building_area_or_footprint_is_bare() -> None:
+    assert tier(tlid=UO_LOT, BLDGVAL=8_220.0, footprint_sqft=0.0) == "public_owner"
+
+
+def test_a_building_value_where_the_map_was_not_read_is_bare_for_the_final_reading() -> None:
+    assert tier(tlid=UO_LOT, BLDGVAL=8_220.0) == "public_owner"
+
+
+def test_the_pre_filter_keeps_a_valued_lot_the_map_was_not_read_for() -> None:
+    row = lot(tlid=UO_LOT, BLDGVAL=8_220.0, jurisdiction="or/multnomah/portland", zone="R5")
+    assert roll.read(row, roll.load_rules(), unmapped="value") is None
+    assert roll.improved(row, unmapped="value")
+    assert not roll.improved(row)
+
+
+def test_a_footprint_the_roll_gives_no_value_leaves_the_lot_bare() -> None:
+    assert tier(BLDGVAL=0.0, footprint_sqft=1_200.0) == "public_owner"
+
+
+def test_a_building_area_is_built_whatever_the_map_says() -> None:
+    assert tier(BLDGSQFT=2_050.0, footprint_sqft=0.0) is None
+
+
+def test_an_unknown_unmapped_mode_is_refused() -> None:
+    with pytest.raises(ValueError):
+        roll.improved(lot(), unmapped="guess")
+
+
+def test_the_housing_hold_reads_value_where_the_map_was_not_read() -> None:
+    row = lot(tlid=HOUSING_LOT, BLDGVAL=50_000.0)
+    assert roll.owner_hold(row, roll.load_rules()) is None
+    assert roll.owner_hold({**row, "footprint_sqft": 0.0}, roll.load_rules()) is not None
+
+
+# --- a public school body's campus land ------------------------------------------
+
+
+def campus(**kw: Any) -> str | None:
+    return tier(tlid=UO_LOT, jurisdiction="or/multnomah/portland", **kw)
+
+
+def test_a_public_universitys_lot_in_a_campus_zone_is_red_built_or_taxed() -> None:
+    got = roll.read(lot(tlid=UO_LOT, jurisdiction="or/multnomah/portland", zone="CI1",
+                        BLDGVAL=9_000_000.0, BLDGSQFT=40_000.0, ASSESSVAL=100_000.0), roll.load_rules())
+    assert got is not None and got["category"] == "roll_public_owner"
+    assert "UNIVERSITY OF OREGON, a public school body" in got["source"]
+    assert "zoned CI1, a campus zone" in got["source"]
+
+
+@pytest.mark.parametrize("zone", ["CI2", "IR"])
+def test_every_portland_campus_zone_counts(zone: str) -> None:
+    assert campus(zone=zone, BLDGSQFT=40_000.0) == "public_owner"
+
+
+def test_a_public_universitys_built_lot_outside_a_campus_zone_stays_screened() -> None:
+    assert campus(zone="RM1", BLDGSQFT=40_000.0) is None
+
+
+def test_a_campus_zone_elsewhere_is_not_portlands() -> None:
+    assert tier(tlid=UO_LOT, jurisdiction="or/multnomah/gresham", zone="CI1", BLDGSQFT=40_000.0) is None
+
+
+def test_a_school_districts_lot_in_a_campus_zone_is_red() -> None:
+    # 1S3E07AC -03600: Centennial School District, built (BUILT above).
+    centennial = "1S3E07AC  -03600"
+    assert roll.load_rules().tier("public_owner").owner_names[centennial].startswith("CENTENNIAL")
+    assert tier(tlid=centennial, jurisdiction="or/multnomah/portland", zone="CI2", BLDGSQFT=2_050.0) == "public_owner"
+    assert tier(tlid=centennial, jurisdiction="or/multnomah/portland", zone="R5", BLDGSQFT=2_050.0) is None
+
+
+def test_a_city_lot_in_a_campus_zone_is_not_school_land() -> None:
+    assert tier(jurisdiction="or/multnomah/portland", zone="CI1", BLDGSQFT=40_000.0) is None
+
+
+def test_the_campus_owners_name_only_public_school_bodies() -> None:
+    t = roll.load_rules().tier("public_owner")
+    def school(name: str) -> bool:
+        return any(p.search(name) for p in t.campus_owners)
+    for name in ("UNIVERSITY OF OREGON", "PORTLAND STATE UNIVERSITY", "SCHOOL DISTRICT NO 1", "SCHOOL DIST NO 3",
+                 "CENTENNIAL UNIFIED SCHOOL DISTRICT ", "MT HOOD COMMUNITY COLLEGE", "PORTLAND PUBLIC SCHOOLS",
+                 "OREGON HEALTH & SCIENCE UNIVERSITY", "OREGON STATE UNIVERSITY"):
+        assert school(name), name
+    for name in ("PORTLAND CITY OF", "MULTNOMAH COUNTY", "METRO", "UNIVERSITY OF PORTLAND", "REED COLLEGE",
+                 "LEWIS & CLARK COLLEGE", "PORTLAND WATER BUREAU", "OREGON STATE OF(DEPT OF"):
+        assert not school(name), name

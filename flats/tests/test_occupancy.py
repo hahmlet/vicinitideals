@@ -122,3 +122,29 @@ def test_nothing_that_screens_reads_the_label() -> None:
         if importing.search(path.read_text(encoding="utf-8", errors="replace"))
     ]
     assert offenders == []
+
+
+def _write_occupancy(path: Path, rows: list[tuple[str, str, str]]) -> None:
+    import csv
+    import gzip
+
+    with gzip.open(path, "wt", encoding="utf-8", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["county", "tlid", "footprint_sqft", "label"])
+        for county, tlid, sqft in rows:
+            w.writerow([county, tlid, sqft, "vacant"])
+
+
+def test_read_footprints_keys_county_and_parcel_and_skips_the_unread(tmp_path: Path) -> None:
+    """The public-owner tier's "is it built?" (FOLLOWUPS 64 round 5): a
+    footprint of 0 is read, a blank is not."""
+    from flats.ingest.occupancy import OCCUPANCY_FILE, read_footprints
+
+    _write_occupancy(tmp_path / OCCUPANCY_FILE, [
+        ("multnomah", "1N1E13BD  -09900  ", "0.0"),
+        ("multnomah", "1S1E06CB  -02700", "52922.2"),
+        ("clackamas", "21E14BA00100", ""),
+    ])
+    got = read_footprints(tmp_path / OCCUPANCY_FILE)
+    assert got == {("multnomah", "1N1E13BD  -09900"): 0.0, ("multnomah", "1S1E06CB  -02700"): 52922.2}
+    assert read_footprints(tmp_path) == got

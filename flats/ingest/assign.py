@@ -35,7 +35,10 @@ for each lot it cannot colour, why:
   by roll code, a tract or common parcel, open space, a parcel valued at $0
   -- Steph 2026-10-09, FOLLOWUPS 59, "All red") is RED with ``COUNTY_ROLL_RED``
   on the same terms: read here from the lot table, whatever the reading file
-  holds, so the colour never depends on it. Churches and charities stay;
+  holds, so the colour never depends on it. Churches and charities stay.
+  Whether public land is bare reads the footprint map beside the roll
+  (``occupancy``, the occupancy build; FOLLOWUPS 64 round 5): without it the
+  roll's building area alone says built, the conservative answer;
 * a lot with no gate that quadfit still did not measure gets ``NOT_MEASURED``
   plus the step of quadfit's structural filter that dropped it
   (``s3_dropped.csv``: ``sliver_area``, ``too_narrow_20ft``,
@@ -483,6 +486,7 @@ def assign(
     log: Callable[[str], None] | None = None,
     use_gate: Callable[[str, str], UseGate | None] | None = None,
     institutional: Path | None = None,
+    occupancy: Path | None = None,
 ) -> dict[str, Any]:
     """Join the bridge run to the normalized lot table; returns ``meta.json``'s content.
 
@@ -493,6 +497,11 @@ def assign(
     ``institutional`` (or ``meta.json``'s, the file the bridge left out of
     the scan) is :mod:`flats.ingest.institutional`'s reading; every lot it
     holds under a TLID it holds whole is answered RED.
+    ``occupancy`` is an occupancy build (scripts/flats_lot_occupancy.py
+    build: ``occupancy.csv.gz`` or its directory): its footprint areas tell
+    the roll's public-owner tier whether public land is built
+    (:func:`flats.geom.roll.improved`). Without it, a public lot is built
+    only where the roll measures a building area.
     """
     import pandas as pd
 
@@ -538,6 +547,16 @@ def assign(
     inst = {k: v for k, v in by_lot(institutional).items() if v.get("whole_tlid")}
     # The county roll is read here, from the lot table, whatever the file holds.
     roll_rules_ = roll_rules()
+    if occupancy is not None:
+        from flats.geom.roll import FOOTPRINT_FIELD
+        from flats.ingest.occupancy import read_footprints
+
+        drawn = read_footprints(occupancy)
+        for row in lot_rows:
+            row[FOOTPRINT_FIELD] = drawn.get((str(row.get("county")), str(row["tlid"]).rstrip()))
+        say(f"footprints: {len(drawn):,} lots read off {occupancy}")
+    else:
+        say("footprints: none given -- public land is built only where the roll measures a building area")
     built = built_lots(lot_rows, roll_rules_)
     roll_hits: dict[tuple[str, str], dict[str, Any]] = {}
     for row in lot_rows:
@@ -641,6 +660,7 @@ def assign(
         "normalized": str(normalized.resolve()),
         "quadfit_dir": str(quadfit_dir.resolve()) if quadfit_dir else None,
         "institutional": str(institutional) if institutional is not None else None,
+        "occupancy": str(occupancy) if occupancy is not None else None,
         "new_zones": summary.get("new_zones", {}),
         "ruled_zones": summary.get("ruled_zones", {}),
         "funnel": summary.get("funnel", []),
@@ -734,6 +754,12 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="flats.ingest.institutional's reading (default: the one the bridge's meta.json names)",
     )
+    ap.add_argument(
+        "--occupancy",
+        type=Path,
+        default=None,
+        help="an occupancy build (occupancy.csv.gz or its directory), whose footprints tell whether public land is built",
+    )
     args = ap.parse_args(argv)
     meta = assign(
         args.normalized,
@@ -744,6 +770,7 @@ def main(argv: list[str] | None = None) -> int:
         log=lambda m: print(m, flush=True),
         use_gate=load_use_gate(args.bridge),
         institutional=args.institutional,
+        occupancy=args.occupancy,
     )
     print()
     for line in describe(meta):

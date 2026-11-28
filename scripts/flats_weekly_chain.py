@@ -47,6 +47,7 @@ lock (it waits on itself)::
         --dem-from data/quadfit_demw/raw --snapshot-date 2026-10-01 \\
         --transit-reuse data/flats/transit/2026-10-01/distances.parquet \\
         --audit-against /root/bridge_spliced_<tag in use> \\
+        --occupancy /root/occ_build/occupancy_<date>/occupancy.csv.gz \\
         --status-to root@<vm114>:/root/weekly137/status.txt --app-host root@<vm114> \\
       > /root/weekly_chain.log 2>&1 < /dev/null &
 
@@ -130,6 +131,9 @@ class Chain:
     python: str = sys.executable
     #: the spliced bridge in use, which this full re-screen replaces (FOLLOWUPS 124)
     audit_against: Path | None = None
+    #: an occupancy build, whose footprints tell assign whether public land is
+    #: built (FOLLOWUPS 64 round 5; flats/geom/roll.py improved)
+    occupancy: Path | None = None
 
     @property
     def sources(self) -> Path:
@@ -179,9 +183,10 @@ class Chain:
                     *self.bridge_args], {}
         if step == "assign":
             date = ["--snapshot-date", self.snapshot_date] if self.snapshot_date else []
+            occ = ["--occupancy", str(self.occupancy)] if self.occupancy else []
             return [py, "-m", "flats.ingest.assign", "--normalized", str(self.flats("normalized")),
                     "--bridge", str(self.bridge), "--quadfit-dir", str(q),
-                    "--out", str(self.work / f"assign_{self.tag}"), *date], {}
+                    "--out", str(self.work / f"assign_{self.tag}"), *date, *occ], {}
         if step == "export":
             return [py, "scripts/flats_load_bridge.py", "export", "--run-dir", str(self.work / f"assign_{self.tag}"),
                     "--out", str(self.work / f"bundle_{self.tag}")], {}
@@ -731,6 +736,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--audit-against", type=Path, required=True,
                     help="the spliced bridge in use, which this run replaces: the audit step splits every move "
                     "into in scope and out of scope (runbook §4c)")
+    ap.add_argument("--occupancy", type=Path, required=True,
+                    help="an occupancy build (occupancy.csv.gz): its footprints tell assign whether public land is "
+                    "built; without them a public lot with a building value but no building area reads bare")
     ap.add_argument("--state", type=Path, help="done markers, logs, status (default: <work>/weekly_<tag>)")
     ap.add_argument("--from", dest="start_from", choices=STEPS, help="run this step and every later one again")
     ap.add_argument("--tries", type=int, default=3)
@@ -748,7 +756,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     tag = args.tag or f"{args.snapshot}_weekly"
     chain = Chain(args.snapshot, tag, args.data.resolve(), args.work.resolve(), args.root.resolve(),
                   args.dem_from.resolve(), args.transit_reuse, args.snapshot_date, args.chunk_size,
-                  tuple(args.bridge_arg), audit_against=args.audit_against.resolve())
+                  tuple(args.bridge_arg), audit_against=args.audit_against.resolve(),
+                  occupancy=args.occupancy.resolve())
     state = args.state or chain.work / f"weekly_{tag}"
     status = Status(state / "status.txt", chain, args.sha, args.status_every, args.status_to)
 
@@ -764,6 +773,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         say(f"note: {note}")
     if args.transit_reuse and not args.transit_reuse.is_file():
         problems.append(f"--transit-reuse {args.transit_reuse}: no such file")
+    if chain.occupancy is not None and not chain.occupancy.exists():
+        problems.append(f"--occupancy {chain.occupancy}: no such file")
     if not (chain.audit_against / "lots.parquet").is_file():
         problems.append(f"--audit-against {chain.audit_against}: no lots.parquet -- not a bridge directory")
     problems += disk_problems([("the data tree", chain.data, args.min_free_gb), ("--work", chain.work, args.min_free_gb)])

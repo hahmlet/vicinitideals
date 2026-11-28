@@ -50,8 +50,15 @@ tiers:
     # from the region's public taxlot layer by the `owners` patterns below --
     # AND the roll shows the lot not taxed (no assessed value above 0) AND
     # bare: the assessor's class is a vacant one (ending 00: 100, 700, 800)
-    # or the roll shows no building (no building value or building area
-    # above 0). That is Washington's
+    # or no building stands there. A building VALUE alone is not a building
+    # (2026-11-28, FOLLOWUPS 64 round 5 fg5 #40: the University of Oregon's
+    # 1N1E13BD -09900, $8,220 of improvements, no building area, no
+    # footprint, was screened as built and came out GREEN): built is a
+    # building area above 0 on the roll, or a footprint on the footprint map
+    # (flats/ingest/occupancy.py) where the roll values a building
+    # (flats/geom/roll.py improved). Where the footprint map was not read,
+    # the final reading (assign) takes the roll's building area alone.
+    # That is Washington's
     # vacant exempt code (940 city, 950 county ...): its improved x1 codes
     # "carry values, buildings and addresses and stay screened" (ruled
     # 2026-10-09), so a public lot with a building stays screened here too,
@@ -76,6 +83,32 @@ tiers:
     # governments' -- bare and untaxed. `red`: public land, as the
     # governments below. `screened`: like any private lot.
     housing_authority: yellow
+    # A public school body's land in a campus zone is school land outright,
+    # built or bare, taxed or not (2026-11-28, FOLLOWUPS 64 round 5 fg5
+    # #40). Steph RULED 2026-10-06 (rulings.yaml
+    # 2026-10-06-institutional-land-red): "Lots with institutional uses;
+    # hospitals, schools ... should just be flagged red and flagged out of
+    # scans for any reason." The map reading (institutional.yaml, the school
+    # category at 50% cover) misses a lot the campus outline stops short of:
+    # OpenStreetMap's "University of Oregon - Portland" stops 12 ft from
+    # 1N1E13BD -09900. Owners: the public school bodies of the government
+    # list (a school district, Portland Public Schools, a community college,
+    # a public university); private colleges and church schools are on no
+    # list and stay with the map reading. Zones: Portland's Campus
+    # Institutional zones (PCC 33.150, CI1 and CI2) and Institutional
+    # Residential (33.120 IR). No other Multnomah city prints a campus zone
+    # (Gresham's PUB-PV refuses homes by use already).
+    campus:
+      owners:
+        - '\bSCHOOL DIST'
+        - '^PORTLAND PUBLIC SCHOOLS'
+        - '\bCOMMUNITY COLLEGE'
+        - '^OREGON STATE UNIVERSITY'
+        - '^OREGON HEALTH & SCIENCE UNIVERSITY'
+        - '^UNIVERSITY OF OREGON'
+        - '^PORTLAND STATE UNIVERSITY'
+      zones:
+        or/multnomah/portland: [CI1, CI2, IR]
     # Owner-of-record names, upper case, as the assessor abbreviates them
     # (35 characters). Anchored: "CHEVRON USA INC" and "SUSAN ..." are not
     # the United States.
