@@ -476,6 +476,15 @@ def no_room(s: Any, *, tried: str | None = None) -> Any:
 
 _RANK = {"green": 0, "yellow": 1, "red": 2}
 
+#: What a first placement may be held on that is its own doors' foundation
+#: reading -- the steps' heights, the ground class they need, whether they
+#: were measured at all -- and so is measured again, at the new doors, on the
+#: placement that keeps the steps' room (FOLLOWUPS 221 F-B).
+PLACEMENT_HELD = frozenset({
+    NEAR_REASON, NEAR_FLAG, CLASS_UNREAD_REASON, CLASS_UNREAD_FLAG, UNMEASURED_REASON, UNMEASURED_FLAG,
+    CLOSE_REASON, CLOSE_FLAG,
+})
+
 
 def _rank(x: Any) -> int:
     return _RANK[x.colour.value]
@@ -504,6 +513,12 @@ def reconciled(first: Any, alt: Any) -> Any:
       yellow re-placements named nothing). A view of the same colour held on
       something else (:func:`_held_on`) carries it too, unless GREEN (fd8b
       move read F2). A view red on the first placement stays as it read.
+      A GREEN whose first placement was held only on that placement's own
+      foundation reading (:data:`PLACEMENT_HELD`: its doors near the cap,
+      their ground class unread, or unmeasured) reads GREEN unflagged: the
+      cap was worked again at the new doors and they are clear, so nothing
+      the first colour stood on is left (FOLLOWUPS 221 F-B: 1S2E04BA  -15800
+      and three more first YELLOW on FOUNDATION-NEAR-CAP or -CLASS-UNREAD).
 
     ``first`` is the answer every search kept, capped once
     (:func:`flats.ingest.quadfit.foundation_checked`); ``alt`` is the whole
@@ -533,6 +548,8 @@ def reconciled(first: Any, alt: Any) -> Any:
         if same and (x.colour is flag_plan.Colour.green or _held_on(x) == _held_on(before)):
             return x
         better = _rank(x) < _rank(before)
+        if better and x.colour is flag_plan.Colour.green and _held_on(before) - _held_on(x) <= PLACEMENT_HELD:
+            return x
         if same:
             # fd8b move read F2: 8 lots first yellow on the cap (NEAR-CAP,
             # CLASS-UNREAD) read yellow after the move on something else

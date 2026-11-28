@@ -186,6 +186,43 @@ def test_no_window_with_room_still_draws_the_nearest() -> None:
     assert stairs_off_lot(got.building, StairLot(lot, 200.0))
 
 
+def test_a_corner_plan_keeping_its_steps_stands_back_from_both_streets() -> None:
+    """FOLLOWUPS 221 F-A (fd8c move read, 1S2E16CB  -04300, Portland CM3):
+    on a corner, the plan stood back to keep its steps' room was ranked by
+    its distance to the NEAREST street point, so it slid along one street
+    and 43 ft away from the other, past the 10 ft maximum front setback.
+    Here a corner clip (a lot line, not a street) keeps the north steps'
+    strip off the corner: every stair-clear window stands A ft from the
+    north street and B ft from the east one with A >= 4 and A + B >= 10.
+    Nearest-point ranking took A = 10, B = 0; the farthest street the plan
+    faces is least at A = B = 5."""
+    w, h = 100.0, 131.6
+    lot = shapely.Polygon([(0, 0), (w, 0), (w, h - 6.0), (w - 6.0, h), (0, h)])
+    north, east = (0.0, h, w - 6.0, h), (w, 0.0, w, h - 6.0)
+    fitter = Fitter(lot, angles=(0.0,))
+    fit = fitter.fit(80.0, 30.0, allow_flip=False, placement=False, lane_ft=12.0)
+
+    def drawn(stairs):
+        return draw(fitter, fit, width_ft=80.0, depth_ft=30.0, lane_ft=12.0, court_depth_ft=43.0,
+                    court_beyond_ft=0.0, street=(north, east),
+                    stair_lot=None if stairs is None else StairLot(lot, stairs))
+
+    def gaps(got):
+        b = got.building.bounds
+        return h - b[3], w - b[2]
+
+    # The first placement keeps no room: it stands against a street, as before.
+    first = drawn(None)
+    assert first is not None and first.fits
+    assert min(gaps(first)) == pytest.approx(0.0, abs=0.6)
+    kept = drawn(4.0)
+    assert kept is not None and kept.fits
+    assert not stairs_off_lot(kept.building, StairLot(lot, 4.0))
+    a, b = gaps(kept)
+    assert a >= 4.0 - 0.06 and a + b >= 10.0 - 0.6
+    assert max(a, b) <= 5.0 + 1.0  # was A = 10 ft, B = 0
+
+
 # --- the answer -----------------------------------------------------------------
 
 
@@ -350,6 +387,36 @@ def test_a_better_re_placement_is_held_with_the_flag(green, monkeypatch) -> None
     assert len(seen) == 1
     for x in (out.signed, out.screening):
         assert x.colour is Colour.yellow and fc.STAIR_MOVED in x.reasons
+        assert any(f.code == fc.STAIR_MOVED_FLAG and "held" in f.source for f in x.flags)
+
+
+@pytest.mark.parametrize("code", [fc.NEAR_FLAG, fc.CLASS_UNREAD_FLAG, fc.UNMEASURED_FLAG])
+def test_a_first_held_only_on_its_own_doors_reads_the_new_green(green, monkeypatch, code) -> None:
+    """FOLLOWUPS 221 F-B (1S2E04BA  -15800, 1S2E09BA  -08500, 1S1E12CA  -03600
+    first YELLOW on FOUNDATION-NEAR-CAP; 1N1E35DC  -04200 on
+    FOUNDATION-CLASS-UNREAD): the first placement was held only on its own
+    doors' foundation reading, and the cap, worked again at the new doors,
+    is clear. Nothing the first colour stood on is left: GREEN, unflagged."""
+    from flats.score.flags import Colour
+
+    out, _ = _loop(monkeypatch, _yellow(green, code), lambda d: green)
+    for x in (out.signed, out.screening):
+        assert x.colour is Colour.green
+        assert fc.STAIR_MOVED not in x.reasons
+        assert not any(f.code == fc.STAIR_MOVED_FLAG for f in x.flags)
+    assert out.foundation["stair_room"]["state"] == "moved"
+
+
+def test_a_first_held_on_its_doors_and_more_is_still_held(green, monkeypatch) -> None:
+    """F-B's release reaches only the first placement's own foundation
+    reading: held on anything else as well (its court's turns), the new
+    GREEN is held YELLOW, as before."""
+    from flats.score.flags import Colour
+
+    first = _yellow(_yellow(green, fc.NEAR_FLAG))
+    out, _ = _loop(monkeypatch, first, lambda d: green)
+    for x in (out.signed, out.screening):
+        assert x.colour is Colour.yellow
         assert any(f.code == fc.STAIR_MOVED_FLAG and "held" in f.source for f in x.flags)
 
 
