@@ -130,8 +130,12 @@ def test_a_bowed_frontage_keeps_the_direction_its_pieces_add_up_to() -> None:
     assert _near(street_directions(lot), 94.23)
     # 52.7 degrees: one 17 ft piece, nothing else within 20 degrees.
     assert not _near(street_directions(lot), 52.72)
+    # The pieces running its way stay door lines; the lone 17 ft piece at
+    # 52.7 degrees, and the 14.6 ft one at 127 degrees, have no direction
+    # behind them.
     lines = _door_lines(lot)
-    assert len(lines) == 5 and all(min(abs(x1 - x2), abs(y1 - y2)) < 40 for x1, y1, x2, y2 in lines)
+    got = sorted(round(((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5) for x1, y1, x2, y2 in lines)
+    assert got == [15, 15, 18, 38]
 
 
 def test_door_line_minimum_is_twenty_feet() -> None:
@@ -153,17 +157,18 @@ def test_a_tract_drive_is_no_door_street_in_washington_county() -> None:
     drive = lot.edges.edges[2]
     assert drive.length_ft > 100 and not drive.door_street
     assert drive.public_road is False
-    # North: 8 ft of street stub, the drive no door street: no direction.
-    assert street_directions(lot) == (176.82,)
+    # North (176.8 degrees): 8 ft of street stub, the drive no door street:
+    # no direction. West (87.9 degrees): 90 ft of public street.
+    assert street_directions(lot) == (87.93,)
     got = door_bearings(lot)
-    assert _near(got, 176.82) and not _near(got, 87.93)
+    assert _near(got, 87.93) and not _near(got, 176.82)
     assert len(_door_lines(lot)) == 1
 
 
 def test_a_drive_the_code_counts_is_a_door_street() -> None:
     lot = _lot(TRACT, _layers(_ruling(True)))
     assert lot.edges.edges[2].door_street
-    assert _near(door_bearings(lot), 87.93)
+    assert _near(door_bearings(lot), 176.82) and _near(door_bearings(lot), 87.93)
     assert len(_door_lines(lot)) == 3
 
 
@@ -171,7 +176,7 @@ def test_a_drive_the_code_counts_is_a_door_street() -> None:
 def test_a_drive_no_code_counts_is_no_door_street(layers: dict[str, Any] | None) -> None:
     lot = _lot(TRACT, layers)
     assert not lot.edges.edges[2].door_street
-    assert not _near(door_bearings(lot), 87.93)
+    assert not _near(door_bearings(lot), 176.82)
 
 
 def test_a_drive_on_other_land_is_never_a_door_street() -> None:
