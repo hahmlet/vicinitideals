@@ -334,10 +334,11 @@ def main() -> int:
     feats = []
     for c in comps:
         # holes filled (dry islands inside flood ground are read as flood ground) and the outline
-        # grown 2 ft before a 1.5 ft simplify, so the file stays small and never shrinks the area
+        # grown 4 ft before a 3.5 ft simplify (the 2 m stair-steps go), so the file stays small and
+        # never shrinks the area
         cf = stransform(to_ft.transform, c)
         cf = shapely.union_all(shapely.polygons(shapely.get_exterior_ring(shapely.get_parts(cf))))
-        cf = cf.buffer(2.0).simplify(1.5)
+        cf = cf.buffer(4.0).simplify(3.5)
         if cf.is_empty:
             continue
         hit = stree.query(cf.buffer(cell * FT_PER_M * 2))
@@ -350,7 +351,7 @@ def main() -> int:
                 "BFE_FT_MAX": round(float(SB[hit].max()), 2) if len(hit) else None,
                 "AREA_SQFT": round(cf.area), "REACHES_BAND_EDGE": bool(not outer.contains(c)),
             },
-            "geometry": mapping(shapely.set_precision(cf, 0.5)),
+            "geometry": mapping(shapely.set_precision(cf, 1.0)),
         })
     doc = {
         "type": "FeatureCollection",
@@ -366,7 +367,7 @@ def main() -> int:
             "ground": "USGS 1 m lidar DEM (lowest of each 2 x 2 m block), 10 m DEM where no lidar",
             "tolerance_ft": {"lidar": args.tol_ft, "coarse": args.tol_coarse_ft},
             "band_ft": args.band_ft, "cell_m": cell, "stats": stats,
-            "edge": f"each feature's EDGE_FT {args.edge_ft} is one 2 m grid cell: the traced edge is good to a cell; outlines are grown 2 ft and holes filled before a 1.5 ft simplify",
+            "edge": f"each feature's EDGE_FT {args.edge_ft} is one 2 m grid cell: the traced edge is good to a cell; outlines are grown 4 ft and holes filled before a 3.5 ft simplify, on a 1 ft grid",
         },
         "features": feats,
     }
