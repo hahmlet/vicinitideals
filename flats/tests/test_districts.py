@@ -710,6 +710,18 @@ RULINGS: dict[str, dict[str, str]] = {
         ),
     },
     "or/multnomah/portland": {
+        # 2026-11-28 (pdx-flood-left): PCC 24.50 stored whole.
+        "FIA": (
+            "not-a-zone: the Federal Insurance Administration, defined at "
+            "PCC 24.50.030 N (24.50.txt#L57), whose flood study maps the "
+            "special flood hazard area."
+        ),
+        "PICM": (
+            "not-a-zone: Pre-Implementation Compliance Measures, PCC "
+            "24.50.030 II (24.50.txt#L99); its riparian buffer zone lies "
+            "within the special flood hazard area, which the screen already "
+            "flags."
+        ),
         "IC": (
             "not-a-zone: the Institutional Campus comprehensive plan "
             "designation named at PZC 33.150.010; the campus institutional "

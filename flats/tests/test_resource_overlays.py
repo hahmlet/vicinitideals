@@ -887,7 +887,7 @@ def test_steph_s_rulings_of_2026_11_18_stand_behind_the_clackamas_carves(quadfit
     assert slide in said and space in said
     # the open space is no quadfit overlay: the bridge reads it off the lot's shape
     assert not any("open_space" in key for key in quadfit_specs if key.startswith("clackamas"))
-    assert {t.key: t.red_ruling for t in TRACED} == {"clackamas_open_space": space}
+    assert {t.key: t.red_ruling for t in TRACED} == {"clackamas_open_space": space, "pdx_flood_edge": ""}
     import flats.score.screen as screened
 
     assert space in Path(screened.__file__).read_text(encoding="utf-8")
@@ -895,3 +895,78 @@ def test_steph_s_rulings_of_2026_11_18_stand_behind_the_clackamas_carves(quadfit
         Path(__file__).resolve().parents[1] / "config" / "jurisdictions" / "or" / "clackamas" / "_unincorporated.yaml"
     ).read_text(encoding="utf-8")
     assert slide in notes and flood in notes and space in notes
+
+
+PDX_EDGE = "or/multnomah/portland/flood-edge-24-50-050.geojson"
+
+
+def test_portland_s_flood_edge_is_traced_off_the_ground_and_says_how() -> None:
+    """PCC 24.50.050 extends FEMA's mapped flood area over ground at or below
+    the base flood elevation (FOLLOWUPS 202, pdx-flood-left). No layer
+    carries the extension, so it is traced off the lidar ground and FEMA's
+    BFEs; the file states how and how far off its edge can be."""
+    import json
+
+    from shapely.geometry import shape
+
+    from flats.rules.loader import AREAS_ROOT
+
+    [area] = [t for t in TRACED if t.key == "pdx_flood_edge"]
+    assert area.jurisdiction == "portland" and area.file == PDX_EDGE
+    assert area.red_ruling == ""  # a closer look, as FEMA's own fringe is (2026-10-06)
+    assert "24.50.050" in area.cite and "2026-10-06-fema-fringe-stays-yellow" in area.cite
+    assert AREAS[area.key] is area and area.key not in BY_KEY
+    doc = json.loads((AREAS_ROOT / PDX_EDGE).read_text(encoding="utf-8"))
+    assert "EPSG::2913" in doc["crs"]["properties"]["name"] and not doc.get("drawn")
+    src = doc["source"]
+    assert {"rule", "quote", "says", "traced", "mapped_area", "bfe", "ground", "tolerance_ft", "edge"} <= set(src)
+    said = " ".join(ProvenanceStore().quote(src["quote"]).split())
+    assert src["says"] in said
+    assert "When a structure is partially located in a flood hazard area, the entire structure is subject" in said
+    assert src["tolerance_ft"]["lidar"] == 0.65
+    feats = doc["features"]
+    assert feats and src["stats"]["low"] > 0 and src["stats"]["none"] == 0  # every band cell had ground
+    assert {f["properties"]["EDGE_FT"] for f in feats} == {7.0}
+    assert {f["properties"]["HOW"] for f in feats} == {"dem_trace"}
+    for f in feats[:200]:
+        g = shape(f["geometry"])
+        assert g.is_valid and not g.is_empty
+
+
+def test_a_portland_lot_on_the_traced_flood_edge_is_a_closer_look() -> None:
+    """A Portland lot the traced flood edge reaches, by any amount, is YELLOW
+    (ruling 2026-10-06-fema-fringe-stays-yellow, the same closer look as the
+    mapped fringe); never RED from this rule. Another city's lot, a lot
+    clear of it, or a lot with no shape: nothing."""
+    import json
+
+    import shapely
+    from shapely.geometry import box, shape
+
+    from flats.ingest.quadfit import lot_from_row, open_space_on, traced_permits_on
+    from flats.rules.loader import AREAS_ROOT
+
+    feats = json.loads((AREAS_ROOT / PDX_EDGE).read_text(encoding="utf-8"))["features"]
+    big = shape(max(feats, key=lambda f: f["properties"]["AREA_SQFT"])["geometry"])
+    spot = big.representative_point()
+    key = ("pdx_flood_edge",)
+
+    def lot(x0: float, y0: float, **over: object) -> dict[str, object]:
+        over.setdefault("jurisdiction", "portland")
+        return row(lot_wkb=shapely.to_wkb(box(x0, y0, x0 + 50, y0 + 100)), **over)
+
+    on = lot(spot.x - 25, spot.y - 50)
+    assert traced_permits_on(on) == key and open_space_on(on) == ()
+    assert traced_permits_on(lot(spot.x - 25, spot.y - 50, jurisdiction="gresham")) == ()
+    assert traced_permits_on(row(jurisdiction="portland")) == ()  # no shape, nothing measured
+    # far from any of it: a lot in the West Hills 1,000 ft above any flood elevation
+    allf = shapely.union_all([shape(f["geometry"]) for f in feats])
+    far = lot(7_620_000, 690_000)
+    assert allf.distance(shapely.from_wkb(far["lot_wkb"])) > 100
+    assert traced_permits_on(far) == ()
+    facts = lot_from_row(on).facts
+    assert facts.resource_permits == key and facts.open_space == ()
+    got = run(lot=replace(LOT, resource_permits=facts.resource_permits))
+    assert got.triage is Triage.yellow and got.colour is flag_plan.Colour.yellow
+    assert got.reasons == (CLOSER_LOOK_RESOURCE,)
+    assert "FEMA" in AREAS["pdx_flood_edge"].words and "survey" in AREAS["pdx_flood_edge"].words

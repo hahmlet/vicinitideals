@@ -459,6 +459,35 @@ TRACED: tuple[Traced, ...] = (
         file="or/clackamas/_unincorporated/zdo-map-4-06-open-space.geojson",
         red_ruling="2026-11-18-clackamas-open-space-red",
     ),
+    # Portland's flood edge (FOLLOWUPS 202, pdx-flood-left 2026-11-28). PCC
+    # 24.50.050 (or/multnomah/portland/24.50.txt#L155): "When topographic
+    # data shows ground surface elevations at the boundary of the special
+    # flood hazard area as shown on the FIRM are at or below the base flood
+    # elevation, the boundary of the special flood hazard area will be
+    # extended until it intercepts the elevation contour equal to the base
+    # flood elevation." FEMA's line is a floor: ground beside it that is at or
+    # below the flood elevation is flood area too, and "When a structure is
+    # partially located in a flood hazard area, the entire structure is
+    # subject to the requirements" (same line). quadfit measures only FEMA's
+    # line (fema_sfha), so scripts/flats_trace_flood_edge.py traces the
+    # extension off the lidar ground and FEMA's BFEs; the file says how. The
+    # same closer look as fema_sfha (ruling 2026-10-06-fema-fringe-stays-yellow):
+    # a lot it touches is YELLOW, never RED.
+    Traced(
+        "pdx_flood_edge",
+        "ground on this lot is at or below FEMA's 100-year flood elevation and runs, at that "
+        "level, from the edge of FEMA's mapped flood area, so Portland's flood rule carries the "
+        "flood area onto the lot though FEMA's map stops short of it; a survey settles where "
+        "the line falls",
+        "PCC 24.50.050 (where ground at the boundary of the special flood hazard area shown on "
+        "the FIRM is at or below the base flood elevation, the boundary is extended until it "
+        "intercepts the base flood elevation contour; a structure partly in a flood hazard "
+        "area is wholly subject to the requirements); 24.50.060 (flood hazard reduction: "
+        "lowest floor, fill and compensating excavation); ruling "
+        "2026-10-06-fema-fringe-stays-yellow",
+        jurisdiction="portland",
+        file="or/multnomah/portland/flood-edge-24-50-050.geojson",
+    ),
 )
 
 #: Every area a RESOURCE-PERMIT flag can name, measured or traced.
