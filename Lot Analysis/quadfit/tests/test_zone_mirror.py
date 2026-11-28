@@ -1110,14 +1110,17 @@ UNEXPRESSIBLE: dict[str, int] = {
     # (ZDO 1005.09(H)(1), (K)(1)); +2 FOLLOWUPS 112 (flats/pagecheck-findings), Gresham
     # DCC and DTM hold Table 4.1130's maximum front.
     # 107 -> 108 on 2026-11-10 (rel7 assembly): flats/drift-wash (FOLLOWUPS 166): Cornelius GMU re-read from Ord. 2026-06.
-    "setback_front_max_ft": 108,
+    # 108 -> 114 on 2026-11-28 (rel12): flats/rm-max-front (FOLLOWUPS 205 item 1): Portland RM1-RM4, RX and CI1 hold Table 120-4's transit-street maximum front.
+    "setback_front_max_ft": 114,
     #: FOLLOWUPS 147 (2026-11-08): which streets a maximum front holds (named
     #: streets, every street, the front) and the share of the facade it binds --
     #: qualifiers of `setback_front_max_ft`, which this pipeline already cannot place.
     # 34 -> 36 on 2026-11-09 (pagecheck-findings): Gresham DCC and DTM hold Table
     # 4.1130's maximum front.
-    "setback_front_max_streets": 36,
-    "setback_front_max_facade_pct": 10,
+    # 36 -> 42 and 10 -> 16 on 2026-11-28 (rel12): flats/rm-max-front (FOLLOWUPS 205 item 1):
+    # Portland RM1-RM4, RX and CI1 (transit streets or a Pedestrian District; 50% of the facade).
+    "setback_front_max_streets": 42,
+    "setback_front_max_facade_pct": 16,
     #: FOLLOWUPS 131: Tualatin CO prints no base density (Table 50-2); its 25 is
     #: a Block 1 variant now, so CO leaves the count.
     "max_density_du_per_acre": 63,
