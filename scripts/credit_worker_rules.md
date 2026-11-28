@@ -15,6 +15,9 @@ You are a headless worker paid from a fixed monthly API credit. The coordinator
   with path#line evidence; do not decide it.
 - **Evidence for every claim**: `path#Lnn` into the repo, or the exact quote. "The
   code says nothing about X" needs a whole-document grep, shown.
+- **Tests: never `-n auto`, at most `-n 4`** (`uv run pytest flats/tests -q -n 4`). Other
+  sessions share this PC's memory; full-width runs have crashed it. If your run is
+  interrupted, re-run once at `-n 4`; do not widen it.
 - **End with one report** (your final message is saved as the deliverable): what you
   found, each item with evidence, what you did not get to, and anything the
   coordinator must check. Plain, short, no padding.
