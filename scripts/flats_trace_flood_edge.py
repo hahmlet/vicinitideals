@@ -23,12 +23,13 @@ How (all choices lean toward more of the lot being in the flood area):
 * ground is the USGS 1 m lidar DEMs given (first wins), taken to a 2 m grid
   by the LOWEST of each 2 x 2 block; where none covers a cell, the 10 m DEM,
   bilinear, with a wider tolerance; a cell no DEM covers is taken as low;
-* a cell is flood ground when its ground is at or below the BFE of the
-  nearest boundary sample plus the tolerance (``--tol-ft`` for lidar: USGS
-  QL2 lidar is good to 10 cm RMSE, 19.6 cm at 95 percent);
-* only flood ground connected to the mapped area is kept (the 24.50.050
-  extension runs outward from the boundary; ground behind higher ground, a
-  levee for one, is not reached).
+* the extension runs outward from the mapped line, as 24.50.050 says: a
+  cell beside the mapped area starts at the BFE of the nearest boundary
+  sample if its ground is at or below that BFE plus the tolerance
+  (``--tol-ft`` for lidar: USGS QL2 lidar is good to 10 cm RMSE, 19.6 cm at
+  95 percent), and the water then spreads cell to cell at the highest level
+  that reaches it while the ground stays at or below it -- so ground behind
+  higher ground, a levee for one, is not reached.
 
 Run on the scan host where quadfit's raw layers live; light (nice 19).
 """
@@ -228,61 +229,87 @@ def main() -> int:
     low_at_line = int((pg[ok] <= SB).sum())
     log("samples with boundary ground at or below BFE", low_at_line)
 
-    # windows over the band, UTM 2 m grid aligned to whole windows
+    # windows over the band, UTM 2 m grid aligned to whole windows; each is filled with a margin
+    # wider than the band, so flood ground entering it from a neighbour's mapped area is reached
     cell, n = args.cell_m, 1024
+    marg = int(math.ceil(args.band_ft / FT_PER_M / cell)) + 40
+    N = n + 2 * marg
     band_u = stransform(to_utm.transform, band)
+    U_u = stransform(to_utm.transform, U)
     shapely.prepare(band_u)
+    shapely.prepare(U_u)
     bx0, by0, bx1, by1 = band_u.bounds
     gx0 = math.floor(bx0 / (cell * n)) * cell * n
     gy1 = math.ceil(by1 / (cell * n)) * cell * n
-    polys, stats = [], {"cells": 0, "lidar": 0, "coarse": 0, "none": 0, "low": 0}
+    polys, stats = [], {"cells": 0, "lidar": 0, "coarse": 0, "none": 0, "seeds": 0, "low": 0}
     diffs: list[np.ndarray] = []
     nx = math.ceil((bx1 - gx0) / (cell * n))
     ny = math.ceil((gy1 - by0) / (cell * n))
+
+    def nbr_max(a: np.ndarray) -> np.ndarray:
+        """The highest of each cell's eight neighbours."""
+        p = np.pad(a, 1, constant_values=-np.inf)
+        out = np.full(a.shape, -np.inf, dtype=a.dtype)
+        for dy in (0, 1, 2):
+            for dx in (0, 1, 2):
+                if dy == 1 and dx == 1:
+                    continue
+                np.maximum(out, p[dy:dy + a.shape[0], dx:dx + a.shape[1]], out=out)
+        return out
+
     for iy in range(ny):
         for ix in range(nx):
             wx0, wy1 = gx0 + ix * cell * n, gy1 - iy * cell * n
             wbox = shapely.box(wx0, wy1 - cell * n, wx0 + cell * n, wy1)
             if not band_u.intersects(wbox):
                 continue
-            part = band_u.intersection(wbox)
-            tr = from_origin(wx0, wy1, cell, cell)
-            inb = rfeatures.rasterize([part], out_shape=(n, n), transform=tr, all_touched=True, dtype=np.uint8).astype(bool)
-            if not inb.any():
+            ex0, ey1 = wx0 - marg * cell, wy1 + marg * cell
+            ebox = shapely.box(ex0, ey1 - cell * N, ex0 + cell * N, ey1)
+            tr = from_origin(ex0, ey1, cell, cell)
+            inb = rfeatures.rasterize([band_u.intersection(ebox)], out_shape=(N, N), transform=tr, all_touched=True, dtype=np.uint8).astype(bool)
+            sfp = U_u.intersection(ebox)
+            if sfp.is_empty or not inb.any():
                 continue
-            g, lvl = gr.window(wx0, wy1, n, cell)
-            stats["cells"] += int(inb.sum())
-            stats["lidar"] += int((inb & (lvl == 1)).sum())
-            stats["coarse"] += int((inb & (lvl == 2)).sum())
-            stats["none"] += int((inb & (lvl == 0)).sum())
-            # local samples bound the BFE any cell here can take
-            near_s = stree.query(stransform(to_ft.transform, wbox).buffer(args.band_ft + 50))
-            if len(near_s) == 0:
-                continue
-            hi = float(np.nanmax(SB[near_s]))
-            tol = np.where(lvl == 2, args.tol_coarse_ft, args.tol_ft)
-            cand_m = inb & (np.isnan(g) | (g <= hi + tol))
-            rr, cc = np.nonzero(cand_m)
+            sfm = rfeatures.rasterize([sfp], out_shape=(N, N), transform=tr, dtype=np.uint8).astype(bool)
+            inb &= ~sfm
+            g, lvl = gr.window(ex0, ey1, N, cell)
+            core = (slice(marg, marg + n), slice(marg, marg + n))
+            ci = inb[core]
+            stats["cells"] += int(ci.sum())
+            stats["lidar"] += int((ci & (lvl[core] == 1)).sum())
+            stats["coarse"] += int((ci & (lvl[core] == 2)).sum())
+            stats["none"] += int((ci & (lvl[core] == 0)).sum())
+            tol = np.where(lvl == 2, args.tol_coarse_ft, args.tol_ft).astype(np.float32)
+            ground = np.where(np.isnan(g), -np.inf, g).astype(np.float32)  # no DEM: taken as low
+            # seeds: band cells beside the mapped area, at the BFE of the nearest boundary sample
+            adj = inb & (nbr_max(sfm.astype(np.float32)) > 0)
+            rr, cc = np.nonzero(adj)
             if len(rr) == 0:
                 continue
-            cx, cy = wx0 + (cc + 0.5) * cell, wy1 - (rr + 0.5) * cell
-            fx, fy = to_ft.transform(cx, cy)
-            # query_nearest returns ties too; keep the highest BFE per cell
+            fx, fy = to_ft.transform(ex0 + (cc + 0.5) * cell, ey1 - (rr + 0.5) * cell)
             best = np.full(len(rr), -np.inf)
-            qi = stree.query_nearest(shapely.points(fx, fy))
+            qi = stree.query_nearest(shapely.points(fx, fy))  # ties too: keep the highest BFE
             np.maximum.at(best, qi[0], SB[qi[1]])
-            gv = g[rr, cc]
-            low = np.isnan(gv) | (gv <= best + tol[rr, cc])
-            m = np.zeros((n, n), dtype=bool)
-            m[rr[low], cc[low]] = True
+            level = np.full((N, N), -np.inf, dtype=np.float32)
+            ok_seed = ground[rr, cc] <= best + tol[rr, cc]
+            level[rr[ok_seed], cc[ok_seed]] = best[ok_seed]
+            stats["seeds"] += int(ok_seed.sum())
+            # the water spreads outward at its own level while the ground stays at or below it
+            for _ in range(4 * N):
+                cand = nbr_max(level)
+                grow = inb & (cand > level + 0.01) & (ground <= cand + tol)
+                if not grow.any():
+                    break
+                level[grow] = cand[grow]
+            m = (level > -np.inf)[core]
             stats["low"] += int(m.sum())
-            both = inb & (lvl == 1)
+            both = ci & (lvl[core] == 1)
             if both.any() and gr.coarse is not None and ix % 3 == 0:
                 c = np.full((n, n), np.nan, dtype=np.float32)
-                reproject(rasterio.band(gr.coarse, 1), c, dst_transform=tr, dst_crs="EPSG:26910", resampling=Resampling.bilinear, dst_nodata=np.nan)
-                d = (c * FT_PER_M - g)[both]
+                reproject(rasterio.band(gr.coarse, 1), c, dst_transform=from_origin(wx0, wy1, cell, cell), dst_crs="EPSG:26910", resampling=Resampling.bilinear, dst_nodata=np.nan)
+                d = (c * FT_PER_M - g[core])[both]
                 diffs.append(d[~np.isnan(d)][:: max(1, d.size // 2000)])
-            for geom, _ in rfeatures.shapes(m.astype(np.uint8), mask=m, transform=tr, connectivity=8):
+            for geom, _ in rfeatures.shapes(m.astype(np.uint8), mask=m, transform=from_origin(wx0, wy1, cell, cell), connectivity=8):
                 polys.append(shape(geom))
         log("row", iy + 1, "of", ny, "polys", len(polys))
     log("stats", stats)
@@ -290,12 +317,8 @@ def main() -> int:
         d = np.abs(np.concatenate(diffs))
         log("coarse minus lidar |diff| ft p50/p90/p95/p99", [round(float(np.percentile(d, q)), 2) for q in (50, 90, 95, 99)])
 
-    low_u = shapely.union_all(polys)
-    U_u = stransform(to_utm.transform, U)
-    touch = U_u.buffer(cell * 1.5)
-    shapely.prepare(touch)
-    comps = [c for c in shapely.get_parts(low_u) if touch.intersects(c)]
-    log("components", len(shapely.get_parts(low_u)), "kept", len(comps))
+    comps = list(shapely.get_parts(shapely.union_all(polys)))
+    log("components", len(comps))
     outer = stransform(to_utm.transform, U.buffer(args.band_ft - 20).intersection(city))
     feats = []
     for c in comps:
