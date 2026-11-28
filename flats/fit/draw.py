@@ -222,6 +222,19 @@ def _spread(
     return out
 
 
+def _farthest(
+    x0: np.ndarray, y0: np.ndarray, x1: np.ndarray, y1: np.ndarray,
+    groups: Sequence[np.ndarray],
+) -> np.ndarray:
+    """The boxes' distance to the street direction (:func:`_street_groups`)
+    each stands farthest from: on a corner, the street a maximum front
+    setback held to both streets misses on first (FOLLOWUPS 221)."""
+    out = np.zeros(len(x0))
+    for g in groups:
+        out = np.maximum(out, _box_distance(x0, y0, x1, y1, g))
+    return out
+
+
 #: Largest box-by-point array :func:`_box_distance` builds at once (about
 #: 16 MB of float64 per temporary).
 BOX_DISTANCE_BLOCK_CELLS = 2_000_000
@@ -806,7 +819,12 @@ def _place(
     direction in ``groups`` (:func:`_street_groups`: a corner building in
     the corner), then the court's distance from them the other way -- the
     parking stands behind, not in front. Without front lines, the
-    first window, street at its low end.
+    first window, street at its low end. With ``stairs`` on a lot of two
+    street directions or more, "nearest" is the window's distance to the
+    street it stands farthest from (:func:`_farthest`, FOLLOWUPS 221): a
+    corner plan stood back to keep its steps' room stands back from the
+    corner, where it used to slide along one street and away from the
+    other past the maximum front setback (1S2E16CB  -04300, fd8c F-A).
 
     ``over_ft`` is how far the court runs past the window's far end; with
     the ``fitter`` that holds the court's ground, a window and a way round
@@ -874,6 +892,12 @@ def _place(
                 bx0, bx1 = (wx0, wx0 + across_b) if left else (wx1 - across_b, wx1)
                 building = np.where(way, _box_distance(bx0, by0, bx1, by1, pts), np.inf)
                 spread = _spread(bx0, by0, bx1, by1, gpts)
+                if stairs is not None and len(gpts) >= 2:
+                    # Room kept for the steps (FOLLOWUPS 221, fd8c F-A): the
+                    # plan stands back from a corner's streets, and the one
+                    # it stands farthest from is the one a maximum front
+                    # setback misses on -- not a slide along the nearest.
+                    building = np.where(way, _farthest(bx0, by0, bx1, by1, gpts), np.inf)
                 stair_bad = _stairs_bad(
                     bx0, by0, bx1, by1, lot=stair_lot,
                     depth_ft=stairs.depth_ft if stairs is not None else 0.0,
