@@ -4979,7 +4979,11 @@ def plan_on_carve_checked(s: Screened, lot: QuadfitLot) -> Screened:
     asked. Unlike :func:`plan_on_lot_checked`, a missing or non-fitting
     drawing on a carved GREEN is not passed: nothing showed where the plan
     stands, so nothing showed it clear (unmeasured = the conservative
-    answer)."""
+    answer). The drive from the street to the parking is measured too
+    (FOLLOWUPS 206, :func:`_front_drives`): the drawing stops the lane at the
+    building's street face, so the run across the front yard (or a side
+    yard, where the court is fed from the side) is drawn here, out to the
+    street line, and held as the drawn parts are."""
     carve = lot.carve
     if carve is None or carve.is_empty:
         return s
@@ -5003,6 +5007,15 @@ def plan_on_carve_checked(s: Screened, lot: QuadfitLot) -> Screened:
             under = shape.intersection(inner).area
             if under > PLAN_ON_CARVE_MIN_SQFT:
                 on.append(f"{name} {under:,.0f} sq ft")
+        if not inner.is_empty:
+            # The drive from the street to the parking, which the drawing
+            # does not draw (FOLLOWUPS 206): out to the street line.
+            under = max(
+                (d.intersection(inner).area for d in _front_drives(s, lot, plan)),
+                default=0.0,
+            )
+            if under > PLAN_ON_CARVE_MIN_SQFT:
+                on.append(f"drive {under:,.0f} sq ft")
     if not on:
         return s
     flag = flag_plan.Flag(
@@ -5021,6 +5034,24 @@ def plan_on_carve_checked(s: Screened, lot: QuadfitLot) -> Screened:
         return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
 
     return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
+def _front_drives(s: Screened, lot: QuadfitLot, plan: Mapping[str, Any]) -> tuple[Any, ...]:
+    """The drive runs ``plan`` needs from a street to its parking, on the lot
+    (:func:`flats.fit.front_drive.corridors`): the lot's own lines extend a
+    lot polygon that stops short of the street line, and the street lines,
+    alleys and any private road are where a car may come in."""
+    from flats.fit.front_drive import corridors
+
+    edges = getattr(s, "street_edges", None) or lot.edges
+    lines = () if edges is None else tuple((e.x1, e.y1, e.x2, e.y2) for e in edges.edges)
+    streets = () if edges is None else tuple(
+        (e.x1, e.y1, e.x2, e.y2)
+        for e in edges.edges
+        if e.alley or e.cls in (EdgeClass.front, EdgeClass.street_side)
+    )
+    streets = streets + tuple(lot.access)
+    return corridors(plan, lot.lot_geom, angle_deg=s.fit.angle_deg, lines=lines, streets=streets)
 
 
 STREET_THROUGH = "MEASURE-STREET-THROUGH-LOT"
