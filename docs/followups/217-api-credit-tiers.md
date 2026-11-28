@@ -64,3 +64,10 @@
    - Deny Write/Edit outside the worktree and to .git/, scripts/, conftest.py.
    - Best: run workers in a container or VM with egress to api.anthropic.com only.
    Not done this month: 2 days left, and only repo-internal briefs remain.
+   **Monthly cost estimate (from Nov actuals):**
+   - Security ~$5-10 (Nov $7.82 cleared a 4-month backlog).
+   - Code-change check ~$5 (Nov $2.77, but ~90 documents hit 429 and went unread).
+   - Green check ~$7-15 (30-60 lots).
+   - Critical total ~$20-30. Tier 2, rotating 3-5 places, ~$10-20.
+   - That leaves ~$150 a month for build jobs, which actually cost $3-6 each against a $15
+     cap.
