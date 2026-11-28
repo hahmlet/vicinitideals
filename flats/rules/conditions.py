@@ -1823,7 +1823,8 @@ _C: tuple[ConditionDef, ...] = (
         "Central City, Marquam Hill), walls set parallel to Sandy Boulevard, "
         "the Powell Boulevard sound wall, South Auditorium's landscaped "
         "street edge, or Hayden Island's commercial height step and floor "
-        "area rules. The lot stays in review. Assumed unknown: it "
+        "area rules; or York's required non-residential floor area on EX "
+        "sites (33.597.135), the district held whole. The lot stays in review. Assumed unknown: it "
         "decides the colour.",
         evidence=(
             "the plan district lot tracing in "
