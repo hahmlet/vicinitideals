@@ -27,9 +27,11 @@ How (all choices lean toward more of the lot being in the flood area):
   cell beside the mapped area starts at the BFE of the nearest boundary
   sample if its ground is at or below that BFE plus the tolerance
   (``--tol-ft`` for lidar: USGS QL2 lidar is good to 10 cm RMSE, 19.6 cm at
-  95 percent), and the water then spreads cell to cell at the highest level
-  that reaches it while the ground stays at or below it -- so ground behind
-  higher ground, a levee for one, is not reached.
+  95 percent), and the water then spreads cell to cell, at the level that
+  reaches it but never above the cell's own BFE (the nearest sample's),
+  while the ground stays at or below it -- so ground behind higher ground, a
+  levee for one, is not reached, and a creek's upstream BFE does not run
+  down its valley.
 
 Run on the scan host where quadfit's raw layers live; light (nice 19).
 """
@@ -281,26 +283,35 @@ def main() -> int:
             stats["none"] += int((ci & (lvl[core] == 0)).sum())
             tol = np.where(lvl == 2, args.tol_coarse_ft, args.tol_ft).astype(np.float32)
             ground = np.where(np.isnan(g), -np.inf, g).astype(np.float32)  # no DEM: taken as low
-            # seeds: band cells beside the mapped area, at the BFE of the nearest boundary sample
-            adj = inb & (nbr_max(sfm.astype(np.float32)) > 0)
-            rr, cc = np.nonzero(adj)
+            # each cell's own BFE is the nearest boundary sample's (the highest, on a tie); only
+            # cells whose ground could be under some BFE nearby are asked
+            near_s = stree.query(stransform(to_ft.transform, ebox).buffer(args.band_ft + 50))
+            if len(near_s) == 0:
+                continue
+            hi = float(np.max(SB[near_s]))
+            cand_m = inb & (ground <= hi + tol)
+            rr, cc = np.nonzero(cand_m)
             if len(rr) == 0:
                 continue
             fx, fy = to_ft.transform(ex0 + (cc + 0.5) * cell, ey1 - (rr + 0.5) * cell)
             best = np.full(len(rr), -np.inf)
-            qi = stree.query_nearest(shapely.points(fx, fy))  # ties too: keep the highest BFE
+            qi = stree.query_nearest(shapely.points(fx, fy))
             np.maximum.at(best, qi[0], SB[qi[1]])
-            level = np.full((N, N), -np.inf, dtype=np.float32)
-            ok_seed = ground[rr, cc] <= best + tol[rr, cc]
-            level[rr[ok_seed], cc[ok_seed]] = best[ok_seed]
-            stats["seeds"] += int(ok_seed.sum())
-            # the water spreads outward at its own level while the ground stays at or below it
+            own = np.full((N, N), -np.inf, dtype=np.float32)
+            own[rr, cc] = best
+            # seeds: cells beside the mapped area whose ground is at or below their BFE
+            adj = cand_m & (nbr_max(sfm.astype(np.float32)) > 0) & (ground <= own + tol)
+            level = np.where(adj, own, -np.inf).astype(np.float32)
+            stats["seeds"] += int(adj.sum())
+            # the water spreads outward, never above the BFE where it arrives, while the ground
+            # stays at or below that: water from a low mapped area does not climb to a higher one's
+            # BFE, nor a creek's upper BFE run down its valley
             for _ in range(4 * N):
-                cand = nbr_max(level)
-                grow = inb & (cand > level + 0.01) & (ground <= cand + tol)
+                reach = np.minimum(nbr_max(level), own)
+                grow = cand_m & (reach > level + 0.01) & (ground <= reach + tol)
                 if not grow.any():
                     break
-                level[grow] = cand[grow]
+                level[grow] = reach[grow]
             m = (level > -np.inf)[core]
             stats["low"] += int(m.sum())
             both = ci & (lvl[core] == 1)
