@@ -43,6 +43,22 @@ searching would stall a county run for hours): it is :data:`UNSEARCHED`, the
 court is left unchecked, and the lot cannot be green on it. ``--shapes``
 adds the shapes a bridge run met (its ``turn_shapes.txt``) to the ledger.
 
+**A deeper standoff is carried, not searched** (FOLLOWUPS 216; Steph
+2026-11-27, rulings.yaml ``2026-11-27-deeper-court-passes``). The stair-room
+re-placement (:meth:`flats.designs.model.Design.reserving`) raises the
+standoff behind the rear wall, which is the same court with a longer straight
+lane, and the search's own answers on it depend on how its lattice falls
+(passes at 6.25 ft, none at 5.33 ft on the same court). So ``--carry`` takes
+each such shape from the searched row it deepens (:func:`measured`): every
+fix that row offers is driven on the standard court again, its paths kept,
+and each path carried onto the deeper court and tested pose by pose
+(:func:`flats.fit.turning.usable_deeper`). A fix that carries for every stall
+is the deeper court's; one that does not is not offered. The rows are the
+ledger's ``carried`` list. A shape with no searched standard row, a standard
+row no fix saves, or no fix that carried is not carried at all: it stays
+:data:`UNSEARCHED`, never a pass the standard court does not have and never
+an "unusable" the car was not asked about.
+
 **Which way a "no" errs.** A path the search finds is real; a path it misses
 may exist between its lattice cells. Every question is put four ways
 (:data:`flats.fit.turning.SEARCHES`) before a "no" counts, and a "no" that
@@ -62,9 +78,13 @@ import json
 from pathlib import Path
 from typing import NamedTuple
 
-from flats.fit.turning import TURN_FT, Court, usable
+from flats.fit.turning import TURN_FT, Court, usable, usable_deeper
 
 LEDGER = Path(__file__).resolve().parents[1] / "config" / "court_turns.json"
+CARRY_RULE = (
+    "Steph 2026-11-27 (rulings.yaml 2026-11-27-deeper-court-passes): a deeper standoff passes "
+    "where the standard court's measured paths, carried and checked pose by pose, pass"
+)
 
 #: The longest dead-end extension asked for.
 MAX_DEAD_END_FT = 24
@@ -181,19 +201,28 @@ def mixed_wanted(held: dict[str, object]) -> list[int]:
     return list(range(1, int(aisle)))
 
 
-def _load() -> dict[str, dict[str, float | None]]:
+def _data() -> dict[str, object]:
     if not LEDGER.exists():
         return {}
     data = json.loads(LEDGER.read_text(encoding="utf-8"))
-    if data.get("turn_ft") != TURN_FT:
-        return {}
-    return {
+    return data if data.get("turn_ft") == TURN_FT else {}
+
+
+def _load() -> dict[str, dict[str, object]]:
+    data = _data()
+    held: dict[str, dict[str, object]] = {
         row["shape"]: {
             **{lever: row[lever] for lever in LEVERS if lever in row},
             **({"mixed": dict(row["mixed"])} if "mixed" in row else {}),
         }
-        for row in data["shapes"]
+        for row in data.get("shapes", [])  # type: ignore[union-attr]
     }
+    for row in data.get("carried", []):  # type: ignore[union-attr]
+        # A searched row of the same key wins: it was asked directly.
+        held.setdefault(
+            row["shape"], {"carried": [list(f) for f in row["fixes"]], "from": row["from"]}
+        )
+    return held
 
 
 _LEDGER = _load()
@@ -218,12 +247,26 @@ def fixes(shape: Shape) -> tuple[Fix, ...] | Unsearched:
     held = _LEDGER.get(shape.key)
     if held is None:
         return UNSEARCHED
+    if "carried" in held:
+        # A deeper standoff carried from its standard court (the module
+        # docstring): the fixes whose paths carried. None carried is not
+        # "unusable" -- the car was never asked here -- so it is unsearched.
+        found = [Fix(*f) for f in held["carried"]]  # type: ignore[union-attr]
+        if not found:
+            return UNSEARCHED
+        if AS_DRAWN in found:
+            return (AS_DRAWN,)
+        return _least_first(shape, found)
     if any(held.get(lever) == 0.0 for lever in LEVERS):
         return (AS_DRAWN,)
     found = [Fix(**{lever: held[lever]}) for lever in LEVERS if held.get(lever) is not None]
     for aisle, dead in dict(held.get("mixed") or {}).items():
         if dead is not None:
             found.append(Fix(aisle_ft=float(aisle), dead_end_ft=dead))
+    return _least_first(shape, found)
+
+
+def _least_first(shape: Shape, found: list[Fix]) -> tuple[Fix, ...]:
     # A fix that asks at least as much of every lever as another is never
     # the one a lot holds when the other is not.
     kept = {
@@ -232,6 +275,45 @@ def fixes(shape: Shape) -> tuple[Fix, ...] | Unsearched:
         if not any(g != f and all(a <= b for a, b in zip(g, f)) for g in found)
     }
     return tuple(sorted(kept, key=lambda fix: (paving(shape, fix), fix)))
+
+
+def measured(shape: Shape) -> Shape | None:
+    """The searched ledger shape ``shape`` is a deeper standoff of, or None:
+    the same court in every field but ``gap_ft``, shallower there, searched
+    (not itself carried) and saved by at least one fix -- the deepest such.
+    A standard court no fix saves gives a deeper one nothing to carry."""
+    best: Shape | None = None
+    for key, held in _LEDGER.items():
+        if "carried" in held:
+            continue
+        other = parse(key)
+        if other[:5] != shape[:5] or not other.gap_ft < shape.gap_ft:
+            continue
+        found = fixes(other)
+        if isinstance(found, Unsearched) or not found:
+            continue
+        if best is None or other.gap_ft > best.gap_ft:
+            best = other
+    return best
+
+
+def carry(standard: Shape, deeper: list[Shape], fix: Fix) -> list[bool]:
+    """For each of ``deeper``, whether ``fix`` lets the car use every stall
+    by the standard court's own paths, carried (the module docstring). The
+    far end's stalls first, as :func:`every_stall`."""
+    court = standard.court(fix)
+    alive = list(range(len(deeper)))
+    for i in reversed(range(standard.stalls)):
+        ok = usable_deeper(court, [deeper[j].court(fix) for j in alive], i)
+        alive = [j for j, k in zip(alive, ok) if k]
+        if not alive:
+            break
+    return [j in alive for j in range(len(deeper))]
+
+
+def _carried(task: tuple[Shape, list[Shape], Fix]) -> tuple[Shape, list[Shape], Fix, list[bool]]:
+    standard, deeper, fix = task
+    return standard, deeper, fix, carry(standard, deeper, fix)
 
 
 def parse(key: str) -> Shape:
@@ -283,7 +365,9 @@ def _solved(
     return shape, lever, aisle, solve(shape, lever)
 
 
-def _write(rows: list[dict[str, object]]) -> None:
+def _write(rows: list[dict[str, object]], carried: list[dict[str, object]] | None = None) -> None:
+    if carried is None:
+        carried = list(_data().get("carried", []))  # type: ignore[call-overload]
     LEDGER.write_text(
         json.dumps(
             {
@@ -292,6 +376,8 @@ def _write(rows: list[dict[str, object]]) -> None:
                 "fields": list(Shape._fields),
                 "levers": list(LEVERS),
                 "shapes": rows,
+                "carry_rule": CARRY_RULE,
+                "carried": carried,
             },
             indent=1,
         )
@@ -311,7 +397,21 @@ def main(argv: list[str] | None = None) -> int:
         default=[],
         help="a file of shape keys, one a line (a bridge run's turn_shapes.txt), searched too",
     )
+    parser.add_argument(
+        "--carry",
+        type=Path,
+        action="append",
+        default=[],
+        help="a file of deeper-standoff shape keys, carried from their standard rows, not searched",
+    )
+    parser.add_argument("--carry-only", action="store_true", help="carry, search nothing")
     args = parser.parse_args(argv)
+    wanted: set[Shape] = set()
+    for path in args.carry:
+        wanted |= {parse(line.strip()) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()}
+    if args.carry_only:
+        carry_main(wanted, list(_data().get("shapes", [])), args.processes)  # type: ignore[call-overload]
+        return 0
     from multiprocessing import Pool
 
     found = set(corpus_shapes())
@@ -362,7 +462,74 @@ def main(argv: list[str] | None = None) -> int:
     blocked = [r["shape"] for r in rows() if all(r.get(lever) is None for lever in LEVERS)]
     fixed = sum(1 for r in rows() if r.get("dead_end_ft"))
     print(f"{len(rows())} shapes; needing a fix {fixed}; unusable {blocked}")
+    carry_main(wanted, rows(), args.processes, fresh=args.fresh)
     return 0
+
+
+def carry_main(
+    wanted: set[Shape], rows: list[dict[str, object]], processes: int, *, fresh: bool = False
+) -> list[dict[str, object]]:
+    """Carry ``wanted`` (and every row already carried) from their standard
+    rows into the ledger's ``carried`` list. A row already carried is kept
+    while it still carries from the same standard row and that row still
+    offers every fix it took; else it is carried again."""
+    global _LEDGER
+    before = {} if fresh else {row["shape"]: row for row in _data().get("carried", [])}  # type: ignore[union-attr]
+    # The file holds the rows as just searched (a searched key wins over a
+    # carried one, and a carried row is never a standard).
+    _LEDGER = _load()
+    searched = {str(r["shape"]) for r in rows}
+    kept: dict[str, dict[str, object]] = {}
+    for key, row in before.items():
+        std = parse(str(row["from"]))
+        offered = fixes(std)
+        if key in searched or isinstance(offered, Unsearched) or measured(parse(key)) != std:
+            continue
+        if all(Fix(*f) in offered for f in row["fixes"]):  # type: ignore[union-attr]
+            kept[key] = row
+    _write(rows, sorted(kept.values(), key=lambda r: str(r["shape"])))
+    groups: dict[Shape, list[Shape]] = {}
+    for shape in sorted(wanted | {parse(k) for k in before}):
+        if shape.key in kept or shape.key in searched:
+            continue
+        if (std := measured(shape)) is not None:
+            groups.setdefault(std, []).append(shape)
+        else:
+            print(shape.key, "no searched standard row a fix saves: not carried (unsearched)", flush=True)
+    offered_by = {std: fixes(std) for std in groups}
+    todo = [(std, deeper, fix) for std, deeper in sorted(groups.items()) for fix in offered_by[std]]  # type: ignore[union-attr]
+    took: dict[str, list[list[float]]] = {d.key: [] for ds in groups.values() for d in ds}
+    failed: dict[str, list[list[float]]] = {d.key: [] for ds in groups.values() for d in ds}
+    left = {std: len(offered_by[std]) for std in groups}  # type: ignore[arg-type]
+
+    def out() -> list[dict[str, object]]:
+        return sorted(kept.values(), key=lambda r: str(r["shape"]))
+
+    from contextlib import nullcontext
+    from multiprocessing import Pool
+
+    with Pool(processes) if processes > 1 else nullcontext() as pool:
+        answers = pool.imap_unordered(_carried, todo) if pool is not None else map(_carried, todo)
+        # Written as each standard row's fixes are all carried: a row is never
+        # half carried (a fix too few could charge a costlier one).
+        for std, deeper, fix, ok in answers:
+            for d, k in zip(deeper, ok):
+                (took if k else failed)[d.key].append(list(fix))
+                print(d.key, "from", std.key, list(fix), "carried" if k else "DID NOT CARRY", flush=True)
+            left[std] -= 1
+            if not left[std]:
+                for d in deeper:
+                    kept[d.key] = {
+                        "shape": d.key,
+                        "from": std.key,
+                        "fixes": sorted(took[d.key]),
+                        "not_carried": sorted(failed[d.key]),
+                    }
+                _write(rows, out())
+    _write(rows, out())
+    _LEDGER = _load()
+    print(f"{len(out())} carried; {sum(1 for r in out() if not r['fixes'])} with no fix that carried")
+    return out()
 
 
 if __name__ == "__main__":

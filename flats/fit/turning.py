@@ -149,6 +149,47 @@ def drive(
     found 2026-10-02 on West Linn's 24 ft lane).
     ``fine`` halves the step and the closed set's cells -- the second look
     a "no" gets before anything rests on it."""
+    return bool(
+        _search(ground, start, arrived, phases, turn_ft=turn_ft, toward=toward,
+                max_poses=max_poses, fine=fine, greed=greed, keep=False)
+    )
+
+
+def route(
+    ground: BaseGeometry,
+    start: Pose,
+    arrived: Callable[[Pose], bool],
+    phases: Sequence[int],
+    *,
+    turn_ft: float = TURN_FT,
+    toward: tuple[float, float] | None = None,
+    max_poses: int = 3_000_000,
+    fine: bool = False,
+    greed: float = 3.0,
+) -> list[Pose] | None:
+    """The path :func:`drive` finds, or None where it finds none: ``start``,
+    then every pose the search tested along each arc it took, in order --
+    the last one ``arrived`` accepted. The same search, the same order, the
+    same answer; it only remembers the way it came (FOLLOWUPS 216, so a
+    measured path can be carried onto a deeper court and tested again)."""
+    found = _search(ground, start, arrived, phases, turn_ft=turn_ft, toward=toward,
+                    max_poses=max_poses, fine=fine, greed=greed, keep=True)
+    return found if isinstance(found, list) else None
+
+
+def _search(
+    ground: BaseGeometry,
+    start: Pose,
+    arrived: Callable[[Pose], bool],
+    phases: Sequence[int],
+    *,
+    turn_ft: float,
+    toward: tuple[float, float] | None,
+    max_poses: int,
+    fine: bool,
+    greed: float,
+    keep: bool,
+) -> bool | list[Pose]:
     shapely.prepare(ground)
     step_ft, cell_ft, cell_rad = (STEP_FT, CELL_FT, CELL_RAD)
     if fine:
@@ -160,16 +201,27 @@ def drive(
     def h(x: float, y: float) -> float:
         return 0.0 if toward is None else greed * math.hypot(x - toward[0], y - toward[1])
 
-    frontier = [(h(start.x, start.y), 0.0, start.x, start.y, start.heading, 0)]
+    # Kept only when asked: each expanded pose's parent and the arc that
+    # reached it, appended after the six fields the search orders on (a
+    # tie past them is the same pose, so the order and answer are unchanged).
+    trail: list[tuple[int, float, float, float, float, float]] = []
+    frontier: list[tuple] = [(h(start.x, start.y), 0.0, start.x, start.y, start.heading, 0)]
+    if keep:
+        frontier = [frontier[0] + (-1, 0.0, 0.0)]
     seen: set[tuple[int, int, int, int]] = set()
     while frontier and len(seen) < max_poses:
-        _, cost, x, y, t, phase = heapq.heappop(frontier)
+        item = heapq.heappop(frontier)
+        _, cost, x, y, t, phase = item[:6]
         key = (round(x / cell_ft), round(y / cell_ft), round(t / cell_rad) % turns, phase)
         if key in seen:
             continue
         seen.add(key)
+        me = -1
+        if keep:
+            trail.append((item[6], item[7], item[8], x, y, t))
+            me = len(trail) - 1
         if phase == len(phases) - 1 and arrived(Pose(x, y, t)):
-            return True
+            return _walk(trail, me, start) if keep else True
         moves = [(phases[phase] * step_ft, kk, phase) for kk in kappas]
         if phase + 1 < len(phases):
             moves += [(phases[phase + 1] * step_ft, kk, phase + 1) for kk in kappas]
@@ -177,12 +229,28 @@ def drive(
         poses = np.array([p for arc in arcs for p in arc])
         clear = shapely.contains(ground, bodies(poses[:, 0], poses[:, 1], poses[:, 2]))
         clear = clear.reshape(len(moves), SAMPLES).all(axis=1)
-        for ok, arc, (_, kk, nphase) in zip(clear, arcs, moves):
+        for ok, arc, (d, kk, nphase) in zip(clear, arcs, moves):
             if ok:
                 nx, ny, nt = arc[-1]
                 step = cost + step_ft + (0.3 if kk else 0.0) + (3.0 if nphase != phase else 0.0)
-                heapq.heappush(frontier, (step + h(nx, ny), step, nx, ny, nt, nphase))
+                pushed = (step + h(nx, ny), step, nx, ny, nt, nphase)
+                heapq.heappush(frontier, pushed + (me, d, kk) if keep else pushed)
     return False
+
+
+def _walk(trail: list[tuple[int, float, float, float, float, float]], end: int, start: Pose) -> list[Pose]:
+    """The poses from ``start`` to ``trail[end]``: every arc re-drawn from
+    its parent's pose exactly as the search drew and tested it."""
+    chain = []
+    while end > 0:
+        chain.append(end)
+        end = trail[end][0]
+    out = [start]
+    for i in reversed(chain):
+        parent, d, kk = trail[i][:3]
+        _, _, _, px, py, pt = trail[parent]
+        out.extend(Pose(*p) for p in _arc(px, py, pt, kk, d))
+    return out
 
 
 #: The four ways the search is run. Each is incomplete differently -- a
@@ -312,3 +380,170 @@ def usable(court: Court, i: int, **kw: object) -> bool:
     return arrives(court, i, BACK_IN, nose_out=True, **kw) and leaves(
         court, i, DRIVE_OUT, nose_out=True, **kw
     )
+
+
+# -- A deeper court, by the standard court's measured path (FOLLOWUPS 216) --
+#
+# Steph 2026-11-27 (rulings.yaml ``2026-11-27-deeper-court-passes``): the
+# stair-room re-placement sets the court further back off the rear wall, and
+# the search's own answers on that court depend on its lattice. A court whose
+# only difference is the deeper standoff is the same court with the lane run
+# on straight: every piece of it stands ``dy`` further into the lot, and the
+# lane reaches back to the same street end. So the path the car was SEEN to
+# drive on the standard court, moved ``dy`` into the lot, lies on the deeper
+# court's ground; the car only drives the extra lane straight first (coming
+# in) or last (going out). That is what is checked here, pose by pose against
+# the deeper court's own ground -- never assumed.
+
+#: The spacing the carried straight drive is tested at: the search's own
+#: spacing between tested poses.
+CARRY_STEP_FT = STEP_FT / SAMPLES
+
+
+def deeper_by(standard: Court, deeper: Court) -> float | None:
+    """How much deeper ``deeper``'s standoff is than ``standard``'s, where that
+    is the only difference between them; None otherwise."""
+    if deeper.gap_ft <= standard.gap_ft:
+        return None
+    if Court(**{**_fields(deeper), "gap_ft": standard.gap_ft}) != standard:
+        return None
+    return deeper.gap_ft - standard.gap_ft
+
+
+def _fields(court: Court) -> dict[str, float]:
+    return {f: getattr(court, f) for f in Court.__dataclass_fields__}
+
+
+def _straight(start: Pose, length_ft: float) -> list[Pose]:
+    """Poses along a straight forward drive of ``length_ft`` from ``start``
+    (``start`` excluded, the far end included)."""
+    n = max(1, math.ceil(length_ft / CARRY_STEP_FT - 1e-9))
+    c, s = math.cos(start.heading), math.sin(start.heading)
+    return [
+        Pose(start.x + c * length_ft * j / n, start.y + s * length_ft * j / n, start.heading)
+        for j in range(1, n + 1)
+    ]
+
+
+def _on(ground: BaseGeometry, poses: Sequence[Pose]) -> bool:
+    shapely.prepare(ground)
+    xs = np.array([p.x for p in poses])
+    ys = np.array([p.y for p in poses])
+    ts = np.array([p.heading for p in poses])
+    return bool(shapely.contains(ground, bodies(xs, ys, ts)).all())
+
+
+def _moved(path: Sequence[Pose], dy: float) -> list[Pose]:
+    return [Pose(p.x, p.y + dy, p.heading) for p in path]
+
+
+def _same(a: Pose, b: Pose) -> bool:
+    return math.isclose(a.x, b.x, abs_tol=1e-6) and math.isclose(a.y, b.y, abs_tol=1e-6) and (
+        math.isclose(a.heading, b.heading, abs_tol=1e-9)
+    )
+
+
+def carried_in(path: Sequence[Pose], deeper: Court, i: int, dy: float, nose: float) -> bool:
+    """Whether ``path`` (an arrival found on the standard court, ``dy``
+    shallower) carries onto ``deeper``: the car drives straight up the lane
+    from the deeper court's street end the extra ``dy``, then the path moved
+    ``dy`` into the lot, every pose on the deeper court's ground, and ends
+    parked in the deeper court's stall ``i``. The lead-in is forward, the
+    direction every arrival's first move takes (:data:`DRIVE_IN`,
+    :data:`BACK_IN`), so no move is added."""
+    start = deeper.street_end()
+    lead = _straight(start, dy)
+    moved = _moved(path, dy)
+    if not _same(lead[-1], moved[0]):
+        return False
+    poses = [start, *lead, *moved[1:]]
+    return _on(deeper.ground(i), poses) and parked_in(deeper.stall(i), nose)(moved[-1])
+
+
+def carried_out(
+    path: Sequence[Pose], deeper: Court, i: int, dy: float, *, nose_out: bool = False
+) -> bool:
+    """Whether ``path`` (a departure found on the standard court, ``dy``
+    shallower) carries onto ``deeper``: it starts parked in the deeper
+    court's stall ``i``, runs moved ``dy`` into the lot, then the car keeps
+    driving forward as it was heading until it is up the lane
+    (:meth:`Court.gone`), every pose on the deeper court's ground. The
+    run-out is forward, the direction every departure's last move takes
+    (:data:`THREE_POINT`, :data:`DRIVE_OUT`), so no move is added."""
+    moved = _moved(path, dy)
+    if not _same(moved[0], parked_pose(deeper.stall(i), nose_out=nose_out)):
+        return False
+    end = moved[-1]
+    tail: list[Pose] = []
+    if not deeper.gone(end):
+        # Forward at the path's last heading (within 10 degrees of straight
+        # up the lane) until past the line ``gone`` draws, plus one step.
+        down = -math.sin(end.heading)
+        if down <= 0:
+            return False
+        need = (end.y - (-deeper.lane_len_ft + 25.0)) / down + CARRY_STEP_FT
+        tail = _straight(end, need)
+        if not deeper.gone(tail[-1]):
+            return False
+    return _on(deeper.ground(i), [*moved, *tail])
+
+
+#: The two ways a stall is used (:func:`usable`): arrive, leave, backed in.
+WAYS: tuple[tuple[Sequence[int], Sequence[int], bool], ...] = (
+    (DRIVE_IN, THREE_POINT, False),
+    (BACK_IN, DRIVE_OUT, True),
+)
+
+
+def arrival(court: Court, i: int, phases: Sequence[int], *, nose_out: bool = False) -> list[Pose] | None:
+    """The path :func:`arrives` finds, the first of :data:`SEARCHES` to find one."""
+    stall = court.stall(i)
+    goal = parked_pose(stall, nose_out=nose_out)
+    for fine, greed in SEARCHES:
+        found = route(
+            court.ground(i), court.street_end(), parked_in(stall, goal.heading), phases,
+            toward=(goal.x, goal.y), fine=fine, greed=greed,
+        )
+        if found is not None:
+            return found
+    return None
+
+
+def departure(court: Court, i: int, phases: Sequence[int], *, nose_out: bool = False) -> list[Pose] | None:
+    """The path :func:`leaves` finds, the first of :data:`SEARCHES` to find one."""
+    toward = (court.lane_ft / 2, -court.lane_len_ft + 10.0)
+    start = parked_pose(court.stall(i), nose_out=nose_out)
+    for fine, greed in SEARCHES:
+        found = route(court.ground(i), start, court.gone, phases, toward=toward, fine=fine, greed=greed)
+        if found is not None:
+            return found
+    return None
+
+
+def usable_deeper(standard: Court, deepers: Sequence[Court], i: int) -> list[bool]:
+    """For each court of ``deepers``, whether stall ``i`` is usable there by
+    the paths the car was seen to drive on ``standard`` (:func:`usable`'s two
+    ways, each trip's path carried by :func:`carried_in` and
+    :func:`carried_out`). False for a court that differs from ``standard`` in
+    anything but a deeper standoff, and wherever the standard court gave no
+    path or a path did not carry: never a pass the standard court does not
+    have."""
+    out = [False] * len(deepers)
+    dys = [deeper_by(standard, d) for d in deepers]
+    for arrive_phases, leave_phases, nose_out in WAYS:
+        todo = [j for j, dy in enumerate(dys) if dy is not None and not out[j]]
+        if not todo:
+            break
+        came = arrival(standard, i, arrive_phases, nose_out=nose_out)
+        if came is None:
+            continue
+        nose = parked_pose(standard.stall(i), nose_out=nose_out).heading
+        todo = [j for j in todo if carried_in(came, deepers[j], i, dys[j], nose)]  # type: ignore[arg-type]
+        if not todo:
+            continue
+        went = departure(standard, i, leave_phases, nose_out=nose_out)
+        if went is None:
+            continue
+        for j in todo:
+            out[j] = carried_out(went, deepers[j], i, dys[j], nose_out=nose_out)  # type: ignore[arg-type]
+    return out
