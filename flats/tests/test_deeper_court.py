@@ -101,6 +101,25 @@ def test_a_carried_path_off_the_deeper_court_s_ground_is_not_carried() -> None:
     assert not carried_in(off, OVER, deeper, 0, math.pi / 2)
 
 
+def test_a_departure_angled_near_the_lane_s_edge_steers_up_the_lane() -> None:
+    """The run-out up the extra lane: where driving straight on at the last
+    heading would graze the lane's edge, the car steers forward up the lane
+    (found on the deeper court's ground). Seen 2026-11-27 on
+    4|8.5|18|20|12 (+1 ft aisle, 15 ft dead end): a backed-in car leaves
+    stall 3 at 7 degrees, 0.8 ft off the lane's middle."""
+    standard = Court(stalls=1, lane_ft=12.0)
+    deeper = Court(stalls=1, lane_ft=12.0, gap_ft=9.0)
+    # Straight out of the stall, then a last pose angled 9 degrees toward
+    # the lane's edge, just past the line ``gone`` draws.
+    end = Pose(5.8, -11.2, -math.pi / 2 - math.radians(9.0))
+    path = [*straight_out(standard)[:-1], end]
+    assert standard.gone(end)
+    moved = Pose(end.x, end.y + 4.0, end.heading)
+    assert turning._on(deeper.ground(0), [moved]) and not deeper.gone(moved)
+    assert not turning._on(deeper.ground(0), turning._straight(moved, 4.6)), "straight on grazes the edge"
+    assert carried_out(path, standard, deeper, 0, nose_out=True)
+
+
 def test_usable_deeper_takes_the_way_whose_paths_carry(monkeypatch: pytest.MonkeyPatch) -> None:
     """The car's two ways, as :func:`turning.usable`: here the nose-in way
     finds no path, so the backed-in way's paths are carried."""

@@ -398,6 +398,9 @@ def usable(court: Court, i: int, **kw: object) -> bool:
 #: The spacing the carried straight drive is tested at: the search's own
 #: spacing between tested poses.
 CARRY_STEP_FT = STEP_FT / SAMPLES
+#: The most poses the forward run-out up the lane is searched over: a few
+#: feet of lane, forward only.
+TAIL_POSES = 200_000
 
 
 def deeper_by(standard: Court, deeper: Court) -> float | None:
@@ -477,19 +480,25 @@ def carried_out(
     moved = _moved(path, dy)
     if not _same(moved[0], parked_pose(deeper.stall(i), nose_out=nose_out)):
         return False
+    ground = deeper.ground(i)
     end = moved[-1]
-    tail: list[Pose] = []
-    if not deeper.gone(end):
-        # Forward at the path's last heading (within 10 degrees of straight
-        # up the lane) until past the line ``gone`` draws, plus one step.
-        down = -math.sin(end.heading)
-        if down <= 0:
-            return False
-        need = (end.y - (-deeper.lane_len_ft + 25.0)) / down + CARRY_STEP_FT
-        tail = _straight(end, need)
-        if not deeper.gone(tail[-1]):
-            return False
-    return _on(deeper.ground(i), [*moved, *tail])
+    if deeper.gone(end):
+        return _on(ground, moved)
+    if not _on(ground, moved):
+        return False
+    # Forward at the path's last heading (within 10 degrees of straight up
+    # the lane) until past the line ``gone`` draws, plus one step.
+    down = -math.sin(end.heading)
+    if down > 0:
+        tail = _straight(end, (end.y - (-deeper.lane_len_ft + 25.0)) / down + CARRY_STEP_FT)
+        if deeper.gone(tail[-1]) and _on(ground, tail):
+            return True
+    # Angled near the lane's edge, the straight run grazes it: the car keeps
+    # driving forward up the lane, steering as the search steers, found on
+    # the deeper court's own ground (a path found is a real one) -- still
+    # the last, forward move, so no move is added.
+    return route(ground, end, deeper.gone, (1,), toward=(deeper.lane_ft / 2, -deeper.lane_len_ft + 10.0),
+                 max_poses=TAIL_POSES) is not None
 
 
 #: The two ways a stall is used (:func:`usable`): arrive, leave, backed in.
