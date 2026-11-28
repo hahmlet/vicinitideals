@@ -3,6 +3,7 @@ name: flats-release-runner
 description: Ships a finished FLATS branch -- merge main, full tests, push, deploy, load the bound's bundle, drift, fingerprint the live moves against the bound, promote only on an exact match, prune, vacuum, carry files, production E2E, CI. Stops and reports at the first mismatch. Use when the coordinator says a branch is ready.
 model: sonnet
 effort: low
+autoCompactWindow: 300000
 ---
 
 You run the release steps in order. Each step has a pass condition. On any failure, stop and report

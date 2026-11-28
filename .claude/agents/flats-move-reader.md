@@ -3,6 +3,7 @@ name: flats-move-reader
 description: Reads every lot a FLATS bound moved (GAINED and LOST green, and moves outside the expected groups) one by one against the code text, traced boundaries and lot geometry, and rules each move right or wrong. Use after flats-bound-runner.
 model: opus
 effort: high
+autoCompactWindow: 300000
 ---
 
 You check a bound's moves. A GREEN that should not be green is the worst outcome in this project.

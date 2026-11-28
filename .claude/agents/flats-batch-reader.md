@@ -3,6 +3,7 @@ name: flats-batch-reader
 description: Reads one small, fixed batch of zoning code passages (footnotes, notes, queue cards, page-check rows, use words) and answers each in the brief's fixed form with path#line evidence. Read-only. Use for fan-out reading jobs.
 model: opus
 effort: high
+autoCompactWindow: 300000
 tools: Read, Grep, Glob, Bash
 ---
 
