@@ -1,6 +1,6 @@
 """Trace Portland's flood-hazard edge rule (PCC 24.50.050) off the ground.
 
-PCC 24.50.050 (stored at data/flats/books/flood/portland/24.50.txt#L100):
+PCC 24.50.050 (flats/provenance/docs/or/multnomah/portland/24.50.txt#L155):
 "When topographic data shows ground surface elevations at the boundary of
 the special flood hazard area as shown on the FIRM are at or below the base
 flood elevation, the boundary of the special flood hazard area will be
@@ -359,7 +359,7 @@ def main() -> int:
         "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:EPSG::2913"}},
         "source": {
             "rule": "PCC 24.50.050 flood hazard area edge extension",
-            "quote": "or/multnomah/portland/24.50.txt#L100",
+            "quote": "or/multnomah/portland/24.50.txt#L155",
             "says": "the boundary of the special flood hazard area will be extended until it intercepts the elevation contour equal to the base flood elevation",
             "traced": f"{date.today().isoformat()} by scripts/flats_trace_flood_edge.py",
             "mapped_area": f"FEMA NFHL special flood hazard area as quadfit holds it ({Path(args.sfha).name}, {len(geoms)} features near Portland)",
