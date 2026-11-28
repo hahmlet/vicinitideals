@@ -200,6 +200,16 @@ code:
   start: "ACCESSORY STRUCTURES, ARCHITECTURAL FEATURES AND DECKS*"
   end: "ACCESSORY DWELLING UNITS"
   extraction: plain
+# Chapter 16.60 Yard Requirements, read 2026-11-27 for FOLLOWUPS 214
+# (precast steps in required yards; flats/config/step_projections.yaml). The
+# chapter's own contents print its first section's heading first.
+- id: "sdc.16.60.yards"
+  url: https://api.municode.com/PublicationPdfDownload/3865
+  title: "SZCDC Chapter 16.60 - Yard Requirements"
+  start: "16.60.010 Through Lots"
+  end: "Chapter 16.62"
+  extraction: plain
+  allow_thin: true
 - id: "sdc.16.58.vision-clearance"
   url: https://api.municode.com/PublicationPdfDownload/3865
   title: "SZCDC Chapter 16.58 - Vision Clearance and Fence Standards"

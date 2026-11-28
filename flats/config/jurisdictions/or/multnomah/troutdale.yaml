@@ -513,6 +513,18 @@ code:
   # endpoint returns the adopted PDF.
   # TDC 1.020 is the Development Code's definitions, in Chapter 1. Same
   # publication as the other two slices, cut to the introductory provisions.
+  # TDC 5.020, Exceptions to Yard Requirements: what may project into a
+  # required yard. Read 2026-11-27 for FOLLOWUPS 214 (precast steps;
+  # flats/config/step_projections.yaml). The chapter's contents list the
+  # heading with one space; the section itself prints two.
+  - id: "5.020.yard-exceptions"
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    title: "TDC 5.020 Exceptions to Yard Requirements"
+    start: "5.020  Exceptions to Yard Requirements."
+    end: "5.030  Vertical Projections."
+    extraction: plain
+    # One section, so the thinness guard would read it as a landing page.
+    allow_thin: true
   - id: "1.020.definitions"
     url: https://api.municode.com/PublicationPdfDownload/1813
     title: "TDC 1.020 - Definitions (Chapter 1, Introductory Provisions)"

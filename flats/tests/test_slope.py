@@ -565,7 +565,12 @@ def test_steep_ground_on_the_coarse_map_alone_does_not_eliminate_the_lot(
     assert not any(c.check == STEEP_GROUND for c in s.screening.checks)
     assert CLOSER_LOOK_STEEP_COARSE in s.signed.reasons
     assert any(f.code == "SLOPE-STEEP-COARSE" for f in s.signed.flags)
-    assert not s.signed.binds and s.signed.colour is flag_plan.Colour.yellow
+    # 2026-11-27 (FOLLOWUPS 214): the hillside puts six risers at the front
+    # doors, and Portland RM1 lets steps over 2-1/2 ft only 20 percent into
+    # the front setback (33.120, flats/config/step_projections.yaml): the
+    # lot is red on the steps' room, never on the steep ground.
+    assert all(b.check == "foundation_stair_room" for b in s.signed.binds)
+    assert s.signed.colour is (flag_plan.Colour.red if s.signed.binds else flag_plan.Colour.yellow)
     # The whole lot was searched: the envelope is the lot's without the cut.
     whole = envelope_for(dataclasses.replace(lot, steep=None), s.rules)
     assert s.envelope.sqft == pytest.approx(whole.sqft)

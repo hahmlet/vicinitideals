@@ -1711,6 +1711,24 @@ code:
   start: "39.4778  AREA AFFECTED"
   end: "39.4818  PURPOSE"
   extraction: plain
+# FOLLOWUPS 214 (2026-11-27): the MR-4 and UF-20 general provisions, read for
+# what they let steps, stairs, porches and decks project into a required yard
+# (flats/config/step_projections.yaml rows mult-39.4910.E and mult-uf20-silent).
+# Plain text from the HTML chapter; its headings carry the section sign.
+- id: "39.urban-mdr-general"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4900-39.4965 Urban Medium Density Residential General Provisions
+  start: "§ 39.4900 AREA AFFECTED."
+  end: "§ 39.4968"
+  extraction: plain
+  allow_thin: true
+- id: "39.urban-future-general"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4740-39.4745 Urban Future General Provisions
+  start: "§ 39.4740 PURPOSES."
+  end: "§ 39.4748 UF-20 ZONE."
+  extraction: plain
+  allow_thin: true
 - id: "39.lr-5"
   url: https://multco.us/file/chapter_39_-_zoning_code/download
   title: MCC 39.4818-39.4830 Urban Low Density Residential - 5 (LR-5)
