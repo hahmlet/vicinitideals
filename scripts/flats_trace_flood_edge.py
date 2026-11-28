@@ -16,8 +16,8 @@ How (all choices lean toward more of the lot being in the flood area):
 * the band searched is the ground within ``--band-ft`` of the mapped special
   flood hazard area, inside Portland (zoning union, grown 300 ft);
 * the mapped boundary is sampled every ``--step-ft``.  Each sample's base
-  flood elevation is the zone's static BFE (AH), else the highest of the
-  three nearest FEMA BFE lines within 2,000 ft (NFHL layer 16, fetched live,
+  flood elevation is the zone's static BFE (AH), else the higher of the
+  two nearest FEMA BFE lines within 2,000 ft (NFHL layer 16, fetched live,
   NAVD88 feet) -- the upper of the lines either side of it -- else, where FEMA
   gives none (Zone A, AO), the ground at the boundary itself;
 * ground is the USGS 1 m lidar DEMs given (first wins), taken to a 2 m grid
@@ -146,6 +146,7 @@ def main() -> int:
     ap.add_argument("--tol-coarse-ft", type=float, default=3.0)
     ap.add_argument("--cell-m", type=float, default=2.0)
     ap.add_argument("--edge-ft", type=float, default=7.0)
+    ap.add_argument("--samples", help="also write the boundary samples here (.npz)")
     args = ap.parse_args()
     work = Path(args.work)
     work.mkdir(parents=True, exist_ok=True)
@@ -190,14 +191,14 @@ def main() -> int:
     static = np.array([float(props[i].get("STATIC_BFE") or NO_BFE) for i in which])
     bfe = np.where(static > NO_BFE, static, np.nan)
     how = np.where(static > NO_BFE, "static", "").astype(object)
-    # three nearest BFE lines within 2,000 ft, highest of them
+    # two nearest BFE lines within 2,000 ft (the pair either side), higher of them
     cand = ltree.query(P, predicate="dwithin", distance=2000.0)
     dist = shapely.distance(P[cand[0]], lgeo[cand[1]])
     order = np.lexsort((dist, cand[0]))
     pi, li = cand[0][order], cand[1][order]
     first = np.r_[True, pi[1:] != pi[:-1]]
     rank = np.arange(len(pi)) - np.maximum.accumulate(np.where(first, np.arange(len(pi)), 0))
-    keep = rank < 3
+    keep = rank < 2
     top = np.full(len(P), np.nan)
     np.fmax.at(top, pi[keep], lelev[li[keep]])
     use = np.isnan(bfe) & ~np.isnan(top) & (zone != "A") & (zone != "AO")
@@ -221,6 +222,8 @@ def main() -> int:
     ok = ~np.isnan(bfe)
     log("samples by method", {k: int((how[ok] == k).sum()) for k in ("static", "lines", "boundary ground")}, "unmeasured", int((~ok).sum()))
     S, SB = P[ok], bfe[ok]
+    if args.samples:
+        np.savez(args.samples, x=shapely.get_x(S), y=shapely.get_y(S), bfe=SB, ground=pg[ok], how=how[ok].astype(str), zone=zone[ok].astype(str))
     stree = shapely.STRtree(S)
     low_at_line = int((pg[ok] <= SB).sum())
     log("samples with boundary ground at or below BFE", low_at_line)
@@ -301,10 +304,11 @@ def main() -> int:
             continue
         hit = stree.query(cf.buffer(cell * FT_PER_M * 2))
         zones = sorted({str(zone[ok][i]) for i in hit}) if len(hit) else []
+        methods = sorted({str(how[ok][i]) for i in hit}) if len(hit) else []
         feats.append({
             "type": "Feature",
             "properties": {
-                "EDGE_FT": args.edge_ft, "HOW": "dem_trace", "ZONES": ",".join(zones),
+                "EDGE_FT": args.edge_ft, "HOW": "dem_trace", "ZONES": ",".join(zones), "BFE_FROM": ",".join(methods),
                 "BFE_FT_MAX": round(float(SB[hit].max()), 2) if len(hit) else None,
                 "AREA_SQFT": round(cf.area), "REACHES_BAND_EDGE": bool(not outer.contains(c)),
             },
