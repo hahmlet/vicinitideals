@@ -17,6 +17,10 @@
    build workers started before that (milwaukie-vegetation, clack-1009,
    gresham-far-buffer, worktrees credit-*); the other four are HELD
    (data/flats/credit/HOLD).
+   11-28: the three FINISHED, unmerged, local branches, HANDOFF.md in each worktree:
+   flats/credit-milwaukie-vegetation ffc40693, flats/credit-clack-1009 ddc27b7b,
+   flats/credit-gresham-far-buffer 24d74e92 (its 3 gate failures came on a memory-starved
+   run -- re-run). Held jobs have empty worktrees, no commits.
 
    **Likely false GREEN, text held -> tier-3 build jobs (item 217):**
    - Milwaukie R-MD/R-HD minimum vegetation 15-30% (Table 19.301.4 row 5, 19.302.4) +
