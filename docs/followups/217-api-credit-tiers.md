@@ -50,3 +50,17 @@
    each leaves HANDOFF.md in its worktree; the coordinator reviews, merges and bounds them
    as ONE package. Green check (3 x $7): 30 live greens, seed 68, round-5 lots excluded,
    reports dumped read-only from 114 to data/flats/credit/greens/.
+   11-28: t1 security SHIPPED -- 0fc9e926 + abd9367b (soupsieve 4.1.3, pypdf capped <6.20 ->
+   item 224), ci_local green on 138, deployed, smoke PASS. Open alerts went 123 -> 18, all
+   pypdf. PR #4 closed. t3 three branches finished, handed to the FLATS Primary Development
+   Agent (item 222). Workers now test at -n 4 at most (13af421d).
+   **BEFORE NEXT MONTH -- worker isolation (security review 11-28, MEDIUM):** the allowlist
+   lets a worker Write a file and then run it (`uv run python scripts/`, `uv run pytest`,
+   git hooks via `git commit`), as Steph's Windows user with HOME inherited. A worker
+   steered by hostile text in a fetched document could therefore run code on this PC. Fix
+   options, cheapest first:
+   - HOME/USERPROFILE set to an empty temp directory.
+   - `git -c core.hooksPath=` on commits.
+   - Deny Write/Edit outside the worktree and to .git/, scripts/, conftest.py.
+   - Best: run workers in a container or VM with egress to api.anthropic.com only.
+   Not done this month: 2 days left, and only repo-internal briefs remain.

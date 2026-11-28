@@ -1,4 +1,4 @@
-# 224. pypdf held at 6.19 by the extraction hold -- 15 Dependabot alerts stay open until the corpus is re-extracted
+# 224. pypdf held at 6.19 by the extraction hold -- 18 Dependabot alerts stay open until the corpus is re-extracted
 
 224. [Claude] [scan: maybe -- only if re-extracted text differs]
    The 2026-11-28 security pass (item 217 tier 1) cleared every open alert it could. pypdf
@@ -7,7 +7,7 @@
      corpus was read under by rewriting three exact pypdf source lines. 6.20.1 removed the
      line in `recurse_to_target_op`, so the hold raises (#L84) and every PDF extraction fails.
      test_fetch and test_provenance_mend failed under 6.21.4.
-   - **What stays open:** 15 pypdf alerts (high/medium/low) with first fixes from 6.20.0 to
+   - **What stays open:** 18 pypdf alerts (GitHub count after the 11-28 push) (high/medium/low) with first fixes from 6.20.0 to
      6.21.4. Real exposure is small: pypdf reads only city/county code PDFs we fetch
      ourselves, and it runs in the FLATS provenance tools, not on user uploads.
    - **To lift the cap** (pdf_hold.py#L26-L29 says so):
