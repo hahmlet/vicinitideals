@@ -431,6 +431,16 @@ code:
   - id: "210.320"
     url: https://woodvillage.municipal.codes/WVDC/210.320
     title: "WVDC 210.320 - Development Standards (LR)"
+  # The LR and MR setback exceptions, read 2026-11-27 for FOLLOWUPS 214
+  # (precast steps in required yards; flats/config/step_projections.yaml).
+  - id: "210.330"
+    url: https://woodvillage.municipal.codes/WVDC/210.330
+    title: "WVDC 210.330 - Setback Exceptions (LR)"
+    allow_thin: true
+  - id: "220.330"
+    url: https://woodvillage.municipal.codes/WVDC/220.330
+    title: "WVDC 220.330 - Setback Exceptions (MR)"
+    allow_thin: true
   - id: "210.375"
     url: https://woodvillage.municipal.codes/WVDC/210.375
     title: "WVDC 210.375 - Middle Housing Design Standards (LR)"

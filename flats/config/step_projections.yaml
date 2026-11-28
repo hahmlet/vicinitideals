@@ -1,0 +1,622 @@
+# Precast steps in a required yard (FOLLOWUPS 214; flats/rules/step_projections.py).
+#
+# The stair-room build (FOLLOWUPS 213; rulings 2026-11-20-stair-room-reserved
+# and 2026-11-20-stair-no-room-red-flag) keeps every door's precast unit on the
+# lot and off the court and lane. This file says how far into each REQUIRED
+# yard a city lets those steps stand. A city, zone or yard not listed here lets
+# them stand in none of it: the unit is kept out of the setback. That is the
+# answer for a place whose projections section is not stored, a judgement left
+# open, and a yard a code that names the steps leaves out.
+#
+# Read 2026-11-27 from the stored text, every encoded jurisdiction (the
+# hand-off ../vicinitideals-worktrees/step-setbacks.handoff.md holds the
+# per-city table, the searches behind every "none", and what is left out as a
+# judgement for Steph). Steph 2026-11-27 (rulings.yaml):
+#   - 2026-11-27-steps-count-as-porch: an UNCOVERED porch, deck, patio,
+#     terrace, landing or "similar feature" a code lets into a yard counts for
+#     the steps (kind: porch). A roofed or covered porch does not.
+#   - 2026-11-27-steps-allowed-where-silent: a code that names none of steps,
+#     stairs, stoops, porches or decks as a projection lets the steps into the
+#     whole setback (kind: silent, every yard entire), on the whole-document
+#     search the row's comment names. A section not stored is not silence.
+# Every row that holds for a unit is a permission of its own: the most generous
+# stands (flats/rules/step_projections.py Kept.yard_ft). Where a code names the
+# steps and also a general feature (Gresham 9.0901.A.1 against A.2, Troutdale
+# 5.020.B.1 against B.2), only the steps' own sentence is encoded: the
+# specific governs, the cautious side.
+#
+# Each row:
+#   zones:    the zone codes it reaches ("all" = every zone of the city)
+#   up_to / over: the unit's height band, as printed. A unit is k risers of
+#             the precast riser (flats/config/foundation.yaml doors.riser_in).
+#   measured: "surface" where the code measures the stair's surface; else the
+#             unit is read twice -- at its platform, and, where it carries a
+#             railing (doors.handrail_risers and up), as taller than any
+#             figure (the railing's top is not on the vendor page) -- and the
+#             tighter answer stands.
+#   yards:    front / street_side / side / rear -> {into, from_line}, as
+#             printed. into: "entire" or a length or "N percent of the depth
+#             of the setback"; from_line: the least distance left to the lot
+#             line. A yard not named takes no steps. Each figure must appear in
+#             the cited text (flats/tests/test_step_projections.py).
+#   kind:     steps (the default) / porch / silent, as above.
+#   cite:     the stored text, path under flats/provenance/docs#Lnn.
+#   quote:    the deciding words, verbatim (whitespace aside).
+#
+# The steps never enter a utility easement the screen assumes
+# (flats/config/easements.yaml) nor a sidewalk easement: the street yards are
+# floored at both after the allowance.
+
+jurisdictions:
+  or/multnomah/portland:
+    - id: pdx-33.110-low
+      zones: [RF, R20, R10, R7, R5, R2.5]
+      up_to: "2-1/2 feet"
+      yards:
+        front: {into: entire}
+        street_side: {into: entire}
+        side: {into: entire}
+        rear: {into: entire}
+      cite: "or/multnomah/portland/33.110.txt#L628-L629,L635"
+      quote:
+        - "The following minor features of a building may extend into the entire required building setbacks:"
+        - "Decks, stairs and ramps that are no more than 2-1/2 feet above the ground."
+    - id: pdx-33.110-high
+      zones: [RF, R20, R10, R7, R5, R2.5]
+      over: "2-1/2 feet"
+      yards:
+        front: {into: "20 percent of the depth of the setback", from_line: "three feet"}
+        street_side: {into: "20 percent of the depth of the setback", from_line: "three feet"}
+        side: {into: "20 percent of the depth of the setback", from_line: "three feet"}
+        rear: {into: "20 percent of the depth of the setback", from_line: "three feet"}
+      cite: "or/multnomah/portland/33.110.txt#L610-L612,L616-L617,L635"
+      quote:
+        - "may extend into a required building setback up to 20 percent of the depth of the setback. However, the feature must be at least three feet from a lot line:"
+        - "Decks, stairways, wheelchair ramps and uncovered balconies that do not meet the standards of Paragraph C.3"
+        - "no more than 2-1/2 feet above the ground"
+    - id: pdx-33.120-low
+      zones: [RM1, RM2, RM3, RM4, RX, RMP]
+      up_to: "2-1/2 feet"
+      yards:
+        front: {into: entire}
+        street_side: {into: entire}
+        side: {into: entire}
+        rear: {into: entire}
+      cite: "or/multnomah/portland/33.120.txt#L1215,L1227-L1228"
+      quote:
+        - "The following minor features may extend into entire required building setbacks:"
+        - "Attached decks, stairs, and ramps that are no more than 2-1/2 feet above the ground."
+    - id: pdx-33.120-high
+      zones: [RM1, RM2, RM3, RM4, RX, RMP]
+      over: "2-1/2 feet"
+      yards:
+        front: {into: "20 percent of the depth of the setback", from_line: "3 feet"}
+        street_side: {into: "20 percent of the depth of the setback", from_line: "3 feet"}
+      cite: "or/multnomah/portland/33.120.txt#L1193-L1196,L1200-L1201,L1227-L1228"
+      quote:
+        - "may extend into a required building setback up to 20 percent of the depth of the setback, except as indicated. However, the feature must be at least 3 feet from a lot line"
+        - "Decks, stairways, and uncovered balconies that do not meet the standard for Paragraph D.4, but only along a street lot line"
+        - "no more than 2-1/2 feet above the ground"
+    # 33.130's 5 ft is owed only on a line abutting an RF - RM4 or RMP zoned
+    # lot; it is kept here on every line (no line's neighbour is read).
+    - id: pdx-33.130-low
+      zones: [CR, CM1, CM2, CM3, CE, CX]
+      up_to: "2-1/2 feet"
+      measured: surface
+      yards:
+        front: {into: entire, from_line: "5 feet"}
+        street_side: {into: entire, from_line: "5 feet"}
+        side: {into: entire, from_line: "5 feet"}
+        rear: {into: entire, from_line: "5 feet"}
+      cite: "or/multnomah/portland/33.130.txt#L882-L886"
+      quote:
+        - "are allowed to fully extend into required building setbacks, but may not extend closer than 5 feet to a lot line abutting an RF – RM4 or RMP zoned lot."
+        - "Uncovered decks, stairways, and wheelchair ramps with surfaces that are no more than 2-1/2 feet above the ground;"
+    - id: pdx-33.130-high
+      zones: [CR, CM1, CM2, CM3, CE, CX]
+      over: "2-1/2 feet"
+      measured: surface
+      yards:
+        front: {into: "20 percent of the depth of the setback", from_line: "5 feet"}
+        street_side: {into: "20 percent of the depth of the setback", from_line: "5 feet"}
+        side: {into: "20 percent of the depth of the setback", from_line: "5 feet"}
+        rear: {into: "20 percent of the depth of the setback", from_line: "5 feet"}
+      cite: "or/multnomah/portland/33.130.txt#L863-L866,L869-L870,L885-L886"
+      quote:
+        - "may extend into a required building setback up to 20 percent of the depth of the setback. However, except for building eaves and stormwater planters, they may not extend closer than 5 feet to a lot line abutting an RF – RM4 or RMP zoned lot."
+        - "Stairways and wheelchair ramps that do not meet the standard of Subparagraph B.3.b below"
+        - "no more than 2-1/2 feet above the ground"
+
+  # The Portland pockets: PCC 33.110 as Multnomah County applies it.
+  or/multnomah/_unincorporated:
+    - id: mult-33.110-low
+      zones: [RF, R20, R10, R7, R5]
+      up_to: "2-1/2 feet"
+      yards:
+        front: {into: entire}
+        street_side: {into: entire}
+        side: {into: entire}
+        rear: {into: entire}
+      cite: "or/multnomah/_unincorporated/33.110.txt#L628-L629,L635"
+      quote:
+        - "The following minor features of a building may extend into the entire required building setbacks:"
+        - "Decks, stairs and ramps that are no more than 2-1/2 feet above the ground."
+    - id: mult-33.110-high
+      zones: [RF, R20, R10, R7, R5]
+      over: "2-1/2 feet"
+      yards:
+        front: {into: "20 percent of the depth of the setback", from_line: "three feet"}
+        street_side: {into: "20 percent of the depth of the setback", from_line: "three feet"}
+        side: {into: "20 percent of the depth of the setback", from_line: "three feet"}
+        rear: {into: "20 percent of the depth of the setback", from_line: "three feet"}
+      cite: "or/multnomah/_unincorporated/33.110.txt#L610-L612,L616-L617,L635"
+      quote:
+        - "may extend into a required building setback up to 20 percent of the depth of the setback. However, the feature must be at least three feet from a lot line:"
+        - "Decks, stairways, wheelchair ramps and uncovered balconies that do not meet the standards of Paragraph C.3"
+        - "no more than 2-1/2 feet above the ground"
+
+  # CDC 418-1.2 names stairways over 30 in only; a unit at or under 30 in
+  # takes nothing here (a question for Steph, in the hand-off). Zones: those
+  # whose yards are "horizontally unobstructed except as provided in Section
+  # 418" (302-7 .. 309-6, 340-9 .. 350-6).
+    - id: mult-39.4782.D
+      kind: porch
+      zones: [LR10, LR7, LR5]
+      up_to: "30 inches"
+      yards:
+        front: {into: "30 inches"}
+        rear: {into: "four feet"}
+      cite: "or/multnomah/_unincorporated/39.urban-ldr-general.txt#L1-L4,L61-L66"
+      quote:
+        - "Open porches or balconies, not more than 30 inches in height and not covered by a roof or canopy, may extend or project into a required rear yard not more than four feet and such porches may extend into a required front yard not more than 30 inches."
+    - id: mult-39.4910.E
+      kind: porch
+      zones: [MR4]
+      up_to: "30 inches"
+      yards:
+        front: {into: "30 inches"}
+        rear: {into: "four feet"}
+      cite: "or/multnomah/_unincorporated/39.urban-mdr-general.txt#L1-L4,L75-L80"
+      quote:
+        - "MCC 39.4900 through MCC 39.4965 shall apply to those lands designated MR-4 on the Multnomah County Zoning Map."
+        - "Open porches or balconies, not more than 30 inches in height and not covered by a roof or canopy, may extend or project into a required rear yard not more than four feet, and such porches may extend into a required front yard not more than 30 inches."
+    # UF-20: its general provisions (39.4740-39.4746) name no projection, and
+    # the whole of Chapter 39 (fetched 2026-11-27, plain) names steps, stairs,
+    # stoops, landings, uncovered porches or decks as a projection only in
+    # 39.4769 (C), 39.4782 (D) and 39.4910 (E), none reaching UF-20.
+    - id: mult-uf20-silent
+      kind: silent
+      zones: [UF20]
+      yards:
+        front: {into: entire}
+        street_side: {into: entire}
+        side: {into: entire}
+        rear: {into: entire}
+      cite: "or/multnomah/_unincorporated/39.urban-future-general.txt#L27-L29"
+      quote:
+        - "EXCEPTIONS TO DIMENSIONAL REQUIREMENTS."
+  or/washington/_unincorporated:
+    - id: wash-418-1.2
+      zones: [R-5, R-6, R-9, R-15, R-24, R-25+, FD-20, FD-10, EFU, AF-20, AF-10, AF-5, RR-5]
+      over: "30 inches"
+      yards:
+        front: {into: "30 inches"}
+        rear: {into: "4 feet"}
+      cite: "or/washington/_unincorporated/418/418-1.txt#L2,L6"
+      quote:
+        - "Required yards shall be horizontally unobstructed except as follows:"
+        - "Open balconies and unenclosed stairways more than 30 inches in height and not covered by a roof or canopy, may extend or project into a required rear yard not more than 4 feet and may extend into a required front yard not more than 30 inches."
+
+  # BDC 60.50.15.1.B, no distance stated: the whole front and rear yard. The
+  # utility easement it keeps them out of is Steph's 10 ft street yard
+  # (easements.yaml), applied after.
+  or/washington/beaverton:
+    - id: bvtn-60.50.15.1.B
+      zones: all
+      yards:
+        front: {into: entire}
+        rear: {into: entire}
+      cite: "or/washington/beaverton/60.50/60.50.15.txt#L4,L8"
+      quote:
+        - "The following structures may project into required yards, but may not project into a utility easement without an encroachment permit"
+        - "Unroofed landings and stairs may project into required front and rear yards only."
+
+  # CDC 12.50.130.A: no setback reaches a structure or portion of one at or
+  # under 24 in. A unit with a railing has a portion above that.
+  or/washington/hillsboro:
+    - id: hbo-12.50.130.A
+      zones: all
+      up_to: "24 inches"
+      yards:
+        front: {into: entire}
+        street_side: {into: entire}
+        side: {into: entire}
+        rear: {into: entire}
+      cite: "or/washington/hillsboro/12.50/12.50.130.txt#L7"
+      quote:
+        - "Minimum and maximum setback standards apply to all structures and portions of structures more than 24 inches above grade."
+
+  # CMC 18.150.010(E), read only in A-2, whose setbacks apply "Except as
+  # provided in CMC § 18.150.010" (18.35/18.35.050.txt#L49). R-7, R-10 and CR
+  # point to it for accessory structures only: not encoded (hand-off).
+  or/washington/cornelius:
+    - id: corn-18.150.010.E-low
+      zones: [A-2, A2]
+      up_to: "30 inches"
+      yards:
+        side: {from_line: "three-foot"}
+        rear: {from_line: "three-foot"}
+      cite: "or/washington/cornelius/18.150/18.150.010.txt#L50,L54,L58,L62-L63"
+      quote:
+        - "Decks, porches and steps may be constructed within a residential yard setback area; provided, that the intruding portion meets all of the following requirements:"
+        - "The finished floor and/or step does not exceed 30 inches in height above existing grade; and"
+        - "Any fixed bench, railing, or other attachment does not exceed 40 inches in height above the existing grade; and"
+        - "Maintains a minimum three-foot setback in the side and rear yard."
+        - "All front yard and/or corner lot setbacks must be met as required by the specific zoning district."
+    - id: corn-18.150.010.E-high
+      zones: [A-2, A2]
+      over: "30 inches"
+      yards:
+        side: {into: "24 inches"}
+        rear: {into: "24 inches"}
+      cite: "or/washington/cornelius/18.150/18.150.010.txt#L54,L67"
+      quote:
+        - "does not exceed 30 inches in height above existing grade"
+        - "All other uncovered decks, porches and steps shall not project more than 24 inches into a required rear or side yard setback."
+
+  # TDC 18.210.030.B.6 reaches residential development in the residential
+  # and commercial zones (18.210.010). MU-CBD and TMU (plan districts that
+  # govern in a conflict) and MUC (Washington Square's list) are left out.
+  or/washington/tigard:
+    - id: tig-18.210.030.B.6
+      # MUC: 18.670 sends residential development to Part 18.200
+      # (tdc.18.670 wsrc#L634-L638); MU-CBD: 18.650 applies in addition and
+      # names no stairs (read 2026-11-27).
+      zones: [RES-A, RES-B, RES-C, RES-D, RES-E, COM, MUE, MUR, MUC, MU-CBD]
+      yards:
+        front: {into: entire}
+        rear: {into: entire}
+      cite: "or/washington/tigard/18.210/18.210.030.txt#L44"
+      quote:
+        - "Unroofed landings or stairs may project into a required front or rear setback."
+
+  # MMC 19.501.2.B, a "by right" exception (19.500.supplementary.txt#L15).
+  # "Side yard" and "street side yard" are defined apart (19.200
+  # definitions L987-L992): the street side yard takes nothing here.
+    - id: tig-18.210.030.B.5
+      kind: porch
+      zones: [RES-A, RES-B, RES-C, RES-D, RES-E, COM, MUE, MUR, MUC, MU-CBD]
+      up_to: "3 feet"
+      yards:
+        side: {into: entire, from_line: "3 feet"}
+      cite: "or/washington/tigard/tdc.18.210.residential-general.txt#L79"
+      quote:
+        - "Unroofed porches, decks, or balconies 3 feet or less in height may project into a required rear or side setback provided the projection does not reduce the width of any setback to less than 3 feet."
+    # TMU: 18.660 applies "in lieu of other provisions" and its projection
+    # list names eaves, cornices, bay windows, balconies, weather protection
+    # and signs only (L993-L1011); "porch or stoop" appears only as an
+    # entrance angle (L981). Searched: rg -i over every stored Tigard file.
+    - id: tig-tmu-silent
+      kind: silent
+      zones: [TMU]
+      yards:
+        front: {into: entire}
+        street_side: {into: entire}
+        side: {into: entire}
+        rear: {into: entire}
+      cite: "or/washington/tigard/tdc.18.660.triangle.txt#L132,L993"
+      quote:
+        - "The standards and procedures in this chapter apply in lieu of other provisions in this title"
+        - "Building projections. Building projections are allowed as follows:"
+  or/clackamas/milwaukie:
+    - id: mil-19.501.2.B
+      zones: all
+      yards:
+        front: {into: "36 in"}
+        side: {into: "24 in"}
+        rear: {into: "36 in"}
+      cite: "or/clackamas/milwaukie/19.500.supplementary.txt#L15,L71"
+      quote:
+        - "\"By right\" exceptions require no special review or approval by the City to implement."
+        - "Architectural features such as cornices, eaves, canopies, sunshades, gutters, steps, unroofed landings, and flues may project up to 24 in into a required side yard or 36 in into a required front or rear yard."
+
+  # SDC Table 17.74.20, reached from the residential zones' "Projections into
+  # Required Setbacks ... See Chapter 17.74" (17.34.30 L15, 17.36.30 L19,
+  # 17.38.30 L17, 17.40.30 L16). The table's "Side Yard" is not read onto an
+  # exterior side yard (defined apart, 17.10.30 L1016).
+  or/clackamas/sandy:
+    - id: sandy-17.74.20
+      zones: [SFR, R-1, R-2, R-3, R1, R2, R3]
+      yards:
+        front: {into: "5 ft."}
+        side: {into: "2½ ft."}
+        rear: {into: "5 ft."}
+      cite: "or/clackamas/sandy/17.74/17.74.20.txt#L6,L10,L17"
+      quote:
+        - "The following building features may project into a required yard setback by no more than the amount specified below:"
+        - "Fire Escapes, Landings (unroofed) and Stairs 5 ft. 2½ ft. 5 ft."
+  or/multnomah/gresham:
+    # 9.0901.A.1 lets "stairs" into front, side or rear yards; A.2 limits
+    # "unroofed landings and stairs" to front and rear yards only. The
+    # specific sentence is encoded: the side yard stays whole.
+    - id: gre-9.0901.A.2
+      zones: all
+      yards:
+        front: {into: entire}
+        rear: {into: entire}
+      cite: "or/multnomah/gresham/9.0900.projections.txt#L12,L15"
+      quote:
+        - "Projections into Required Yards. The following objects and structures may project into the required yard:"
+        - "Unroofed landings and stairs may project into required front and rear yards only,"
+  or/multnomah/troutdale:
+    # 5.020.B.1 lets decks under 24 inches into side yards 2½ ft; B.2 names
+    # the stairs and gives them front and rear only. B.2 is encoded.
+    - id: trd-5.020.B.2
+      zones: all
+      yards:
+        front: {into: "five (5) feet"}
+        rear: {into: "five (5) feet"}
+      cite: "or/multnomah/troutdale/5.020.yard-exceptions.txt#L7-L8,L18-L19"
+      quote:
+        - "Except for accessory structures, the following may project into required yards, as listed below:"
+        - "Unroofed landings and stairs may project into required front and rear yard setbacks no more than five (5) feet."
+  or/multnomah/fairview:
+    # The front is left out: "subject to the front yard setback provisions in
+    # subsection A" (cautious). VC and VMU name no projection, but 19.150
+    # points to a "Setbacks and Configuration" section not stored: not silent.
+    - id: fv-19.30.030.C
+      kind: porch
+      zones: [R-6, R-7.5, R-10, RM, RM/TOZ, R/SFLD]
+      up_to: "36 inches"
+      measured: surface
+      yards:
+        street_side: {into: "five feet"}
+        side: {into: "five feet"}
+        rear: {into: "five feet"}
+      cite: "or/multnomah/fairview/19.30.txt#L496"
+      quote:
+        - "Decks and similar structures not exceeding 36 inches in height (attached railings not included) may encroach into setbacks by no more than five feet, subject to the front yard setback provisions in subsection A of this section."
+    - id: fv-19.65.040.D
+      kind: porch
+      zones: [TCC]
+      yards:
+        front: {into: "four feet"}
+        street_side: {into: "four feet"}
+        side: {into: "four feet"}
+        rear: {into: "four feet"}
+      cite: "or/multnomah/fairview/19.65.txt#L386"
+      quote:
+        - "Eaves, chimneys, bay windows, overhangs, cornices, awnings, canopies, porches, decks, pergolas, and similar architectural features may encroach into setbacks by no more than four feet"
+    - id: fv-19.70.030.A.4.a
+      kind: porch
+      zones: [CC]
+      yards:
+        front: {into: "four feet"}
+        street_side: {into: "four feet"}
+        side: {into: "four feet"}
+        rear: {into: "four feet"}
+      cite: "or/multnomah/fairview/19.70.txt#L164"
+      quote:
+        - "Eaves, chimneys, bay windows, overhangs, cornices, awnings, canopies, porches, decks, pergolas, and similar architectural features may encroach into setbacks by no more than four feet"
+  or/washington/durham:
+    # The 20 ft corner setback is not named: the street side stays whole.
+    - id: dur-3.1.6
+      kind: porch
+      zones: [SDR, MDR, MDDO]
+      yards:
+        front: {into: "5 feet"}
+        side: {into: "5 feet"}
+        rear: {into: "5 feet"}
+      cite: "or/washington/durham/ddc.3.site-design.txt#L27-L29"
+      quote:
+        - "Residential structures may include projections into the setbacks required by this Section 3.1 in the form of balconies, chimneys, porches, roof cornices and similar structural features up to 5 feet in front-, side- and rear setbacks."
+  or/washington/king-city:
+    - id: kc-16.80.060.B.2
+      kind: porch
+      zones: [R-9, R-12, R-15, R-24, SF, AT, NMU, LC, CF, ROS]
+      up_to: "thirty-six inches"
+      yards:
+        front: {into: "thirty-six inches", from_line: "three feet"}
+        street_side: {into: "thirty-six inches", from_line: "three feet"}
+        side: {into: "thirty-six inches", from_line: "three feet"}
+        rear: {into: "thirty-six inches", from_line: "three feet"}
+      cite: "or/washington/king-city/kcc.16.80.general.txt#L137-L142"
+      quote:
+        - "Open porches, decks or balconies not more than thirty-six inches in height and not covered by a roof or canopy, may extend or project a maxi- mum of thirty-six inches into a required yard area provided the yard area is not reduced to less than three feet."
+    # Kingston Terrace takes 16.80 too (kingston-terrace#L56-L59); its front
+    # is left to the stairs' own sentence (16.114.060.C.6.a), cautious.
+    - id: kc-16.80.060.B.2-kt
+      kind: porch
+      zones: [KTTC, KTBB, KTC, KTRC]
+      up_to: "thirty-six inches"
+      yards:
+        street_side: {into: "thirty-six inches", from_line: "three feet"}
+        side: {into: "thirty-six inches", from_line: "three feet"}
+        rear: {into: "thirty-six inches", from_line: "three feet"}
+      cite: "or/washington/king-city/kcc.16.80.general.txt#L137-L142"
+      quote:
+        - "Open porches, decks or balconies not more than thirty-six inches in height and not covered by a roof or canopy, may extend or project a maxi- mum of thirty-six inches into a required yard area provided the yard area is not reduced to less than three feet."
+    - id: kc-16.114.060.C.6.a
+      zones: [KTTC, KTBB, KTC, KTRC]
+      over: "eighteen inches"
+      up_to: "eight feet"
+      yards:
+        front: {into: entire, from_line: "four feet"}
+      cite: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L565-L568,L572-L574"
+      quote:
+        - "A vertical transition shall be an uncovered flight of stairs that leads to the front door or front porch of the dwelling. The stairs shall rise at least eighteen inches, and not more than eight feet,"
+        - "from grade. The flight of stairs may encroach into the required front yard, and the bottom step shall be at least four feet from the front lot line."
+  or/washington/sherwood:
+    # 16.60.030.A lets "open stairways" into a yard "when so placed as not to
+    # obstruct light and ventilation": a condition nothing measures, left
+    # out (cautious). The deck sentence is encoded.
+    - id: sher-16.50.060.A
+      kind: porch
+      zones: all
+      up_to: "30 inches"
+      yards:
+        rear: {into: entire, from_line: "five feet"}
+      cite: "or/washington/sherwood/sdc.16.50.accessory-structures.txt#L72-L76"
+      quote:
+        - "Uncovered decks which are no more than 30 inches above grade may project into the required rear yard, but shall not be closer than five feet from the property line."
+        - "Decks shall not be allowed in the required front or side yard setbacks."
+  or/clackamas/_unincorporated:
+    # 903.01 leaves out HDR, RCHDR, SHD, BP, LI and GI. Every road lot line is
+    # a front lot line (zdo.202 definitions#L285), so the street side reads
+    # as a front.
+    - id: zdo-903.06
+      kind: porch
+      zones: [R-2.5, R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-5/7, VR-4/5, PMD, MR-1, MR-2, VA, RA-1, RA-2, RRFF-5, FF-10, FU-10, EFU, TBR, AG/F, NC, C-2, RCC, RTL, CC, C-3, PMU1, PMU2, PMU3, SCMU, OA, RCO, VCS, RC, RI]
+      up_to: "30 inches"
+      yards:
+        front: {from_line: "10 feet"}
+        street_side: {from_line: "10 feet"}
+        side: {from_line: "three feet"}
+        rear: {from_line: "10 feet"}
+      cite: "or/clackamas/_unincorporated/zdo.903.txt#L3,L47-L51"
+      quote:
+        - "Section 903 applies in all zoning districts except that only the minimum setback exemptions for bus shelters apply in the BP, GI, HDR, LI, RCHDR, and SHD Districts."
+        - "the minimum setbacks for a deck, patio, porch, terrace, or underground structure are 10 feet from front and rear lot lines and three feet from side lot lines, provided:"
+        - "The structure shall not be covered; and"
+        - "The structure shall not extend more than 30 inches above finished grade."
+    - id: zdo-315-3-note14
+      kind: porch
+      zones: [VR-5/7, VR-4/5]
+      yards:
+        front: {into: "four feet"}
+        street_side: {into: "four feet"}
+      cite: "or/clackamas/_unincorporated/zdo.315.txt#L1312,L1369-L1373,L1508"
+      quote:
+        - "[14] A porch or patio, whether covered or not, may extend a maximum of four feet into the minimum front yard depth."
+    - id: zdo-315-4-note7
+      kind: porch
+      zones: [VA]
+      yards:
+        front: {into: "six feet"}
+        street_side: {into: "six feet"}
+      cite: "or/clackamas/_unincorporated/zdo.315.txt#L1538,L1572,L1577,L1633"
+      quote:
+        - "[7] Awnings, porches, and bays may extend a maximum of six feet into the minimum setback."
+  or/clackamas/canby:
+    - id: canby-16.04.550
+      kind: porch
+      zones: all
+      up_to: "30 inches"
+      yards:
+        front: {into: entire}
+        street_side: {into: entire}
+        side: {into: entire}
+        rear: {into: entire}
+      cite: "or/clackamas/canby/cmc.16.04.550.txt#L3"
+      quote: "Decks 30 inches or less above grade are exempt from setback standards."
+  or/clackamas/oregon-city:
+    - id: oc-17.54.030C
+      kind: porch
+      zones: all
+      up_to: "thirty inches"
+      yards:
+        front: {into: entire}
+        street_side: {into: entire}
+        side: {into: entire}
+        rear: {into: entire}
+      cite: "or/clackamas/oregon-city/17.zoning.txt#L15608,L15614-L15615"
+      quote:
+        - "than thirty inches from grade are exempt from setback"
+  or/clackamas/wilsonville:
+    # Headed for yards "adjoining a street"; the interior side lot line the
+    # sentence names is left out (cautious).
+    - id: wil-4.180-B2
+      kind: porch
+      zones: all
+      up_to: "two and one-half feet"
+      yards:
+        front: {from_line: "ten feet"}
+        street_side: {from_line: "ten feet"}
+      cite: "or/clackamas/wilsonville/4.planning.txt#L15934,L15943,L15945-L15947"
+      quote:
+        - "B. Into any required yard, adjoining a street or tract with a private drive:"
+        - "2. An uncovered porch, terrace, or patio extending no more than two and one-half feet"
+        - "within ten feet of a front lot line or of an exterior side lot line."
+    # Villebois Table V-1 note 5 (row houses); note 4 lets stairs to the
+    # Public Way for other building types (cautious: not read here).
+    - id: wil-villebois-V1-note5
+      kind: porch
+      zones: [V]
+      yards:
+        front: {from_line: "8 ft."}
+      cite: "or/clackamas/wilsonville/4.planning.txt#L4984,L5006,L5021-L5023,L5030-L5031"
+      quote:
+        - "Porches, stoops, decks, canopies, balconies, bay windows, chimneys, awnings, and other building projections may encroach to within 8 ft. of the Public Way."
+  or/clackamas/tualatin:
+    - id: tua-40.310
+      kind: porch
+      zones: [RL]
+      yards:
+        front: {into: "three feet"}
+        side: {into: "two feet"}
+        rear: {into: "three feet"}
+      cite: "or/clackamas/tualatin/40-41.residential.txt#L275-L278"
+      quote:
+        - "The following architectural features may project into a required front or rear yard setback area not"
+        - "more than three feet, and into a required side yard not more than two feet: cornices, eaves, canopies,"
+        - "decks, sun-shades, gutters, chimneys, flues, belt courses, leaders, sills, pilasters, lintels, ornamen-"
+    - id: tua-41.310
+      kind: porch
+      zones: [RML]
+      yards:
+        front: {into: "three feet"}
+        side: {into: "two feet"}
+        rear: {into: "three feet"}
+      cite: "or/clackamas/tualatin/40-41.residential.txt#L592-L595"
+      quote:
+        - "The following architectural features may project into a required front or rear yard setback area not"
+        - "more than three feet, and into a required side yard not more than two feet: cornices, eaves, canopies,"
+        - "decks, sun-shades, gutters, chimneys, flues, belt courses, leaders, sills, pilasters, lintels, ornamen-"
+    - id: tua-42.310
+      kind: porch
+      zones: [RMH]
+      yards:
+        front: {into: "three feet"}
+        side: {into: "two feet"}
+        rear: {into: "three feet"}
+      cite: "or/clackamas/tualatin/42.rmh.txt#L215-L218"
+      quote:
+        - "The following architectural features may project into a required front or rear yard setback area not"
+        - "more than three feet, and into a required side yard not more than two feet: cornices, eaves, canopies,"
+        - "decks, sun-shades, gutters, chimneys, flues, belt courses, leaders, sills, pilasters, lintels, ornamen-"
+    - id: tua-43.310
+      kind: porch
+      zones: [RH]
+      yards:
+        front: {into: "three feet"}
+        side: {into: "two feet"}
+        rear: {into: "three feet"}
+      cite: "or/clackamas/tualatin/43.rh.txt#L217-L220"
+      quote:
+        - "The following architectural features may project into a required front or rear yard setback area not"
+        - "more than three feet, and into a required side yard not more than two feet: cornices, eaves, canopies,"
+        - "decks, sun-shades, gutters, chimneys, flues, belt courses, leaders, sills, pilasters, lintels, ornamen-"
+    - id: tua-44.310
+      kind: porch
+      zones: [RH/HR]
+      yards:
+        front: {into: "three feet"}
+        side: {into: "two feet"}
+        rear: {into: "three feet"}
+      cite: "or/clackamas/tualatin/44.rh-hr.txt#L217-L220"
+      quote:
+        - "The following architectural features may project into a required front or rear yard setback area not"
+        - "more than three feet, and into a required side yard not more than two feet: cornices, eaves, canopies,"
+        - "decks, sun-shades, gutters, chimneys, flues, belt courses, leaders, sills, pilasters, lintels, ornamen-"
+    - id: tua-49.310
+      kind: porch
+      zones: [IN]
+      yards:
+        front: {into: "three feet"}
+        side: {into: "two feet"}
+        rear: {into: "three feet"}
+      cite: "or/clackamas/tualatin/49.in.txt#L114-L117"
+      quote:
+        - "The following architectural features may project into a required front or rear yard setback area not"
+        - "more than three feet, and into a required side yard not more than two feet: cornices, eaves, canopies,"
+        - "decks, sun-shades, gutters, chimneys, flues, belt courses, leaders, sills, pilasters, lintels, ornamen-"

@@ -4095,3 +4095,49 @@
     touched.
   source: Steph 2026-11-27 (chat, via the coordinator)
   encoded_in: [flats/ingest/quadfit.py, flats/config/flags.yaml]
+- id: 2026-11-27-steps-allowed-where-silent
+  kind: ruling
+  date: 2026-11-27
+  scope: {}
+  question: >-
+    The stair-room check (rulings 2026-11-20-stair-room-reserved) now asks
+    whether each door's precast steps may stand in a required front, side or
+    rear yard. Where a city's or zone's code says nothing about steps,
+    stairs, stoops, porches or decks projecting into a yard, are the steps
+    allowed in the setback, or must they stay out of it?
+  ruling: >-
+    "Allowed in setback": where the code is silent on steps, stairs, stoops,
+    porches and decks as projections, the steps may stand in the yard.
+  effect: >-
+    A silent place is encoded explicitly as a `kind: silent` row in
+    flats/config/step_projections.yaml with every yard `entire`, citing the
+    projections section read (or, where none exists, the whole-document
+    search). A place whose projections section is not stored is NOT silent:
+    it keeps the whole setback until the section is fetched and read. Where a
+    code names steps for some yards and not others, the unnamed yard keeps
+    the whole setback (an encoder judgement, listed). FOLLOWUPS 214; not live
+    until released.
+  source: Steph 2026-11-27 (chat)
+  encoded_in: [flats/config/step_projections.yaml, flats/rules/step_projections.py, flats/ingest/foundation_cap.py, flats/ingest/quadfit.py]
+- id: 2026-11-27-steps-count-as-porch
+  kind: ruling
+  date: 2026-11-27
+  scope: {}
+  question: >-
+    Many codes let an uncovered porch, deck, patio, landing or "similar
+    feature" project into a yard but do not name steps. Does the precast
+    step unit count under that allowance?
+  ruling: >-
+    "Yes, count it as a porch": the uncovered porch, deck, patio, landing or
+    similar-feature allowance counts for the steps, at its printed distance
+    and under its printed height limit.
+  effect: >-
+    Each such allowance is a `kind: porch` row in
+    flats/config/step_projections.yaml holding the printed figure and height
+    limit. A unit that carries a handrail reads as taller than any height
+    limit unless the row measures to the walking surface; covered or roofed
+    porch rows do not apply. Within one reading the most generous holding
+    row stands; across readings the tightest. FOLLOWUPS 214; not live until
+    released.
+  source: Steph 2026-11-27 (chat)
+  encoded_in: [flats/config/step_projections.yaml, flats/rules/step_projections.py, flats/ingest/foundation_cap.py, flats/ingest/quadfit.py]

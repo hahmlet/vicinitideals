@@ -201,6 +201,8 @@ from flats.geom import driveway_lot_line, driveway_spacing
 from flats.geom.flag_lot import observed_flag_lot
 from flats.geom import sewer
 from flats.ingest import foundation_cap
+from flats.foundation import settings as foundation_settings
+from flats.rules import step_projections
 from flats.ingest.flatter import (
     DRIVE_TOL_FT,
     _angles as _flatter_angles,
@@ -7020,9 +7022,12 @@ def _capped(s: Screened, terrain: Any) -> Screened:
     (:func:`flats.ingest.foundation_cap.checked`), framed against the street
     lines of the reading it was screened on."""
     here = s.screened_on or s.lot
+    yards = stair_yards_of(s, here)
     return foundation_cap.checked(
         s, terrain=terrain, lot_geom=here.lot_geom, classes=here.foundation_classes, tlid=here.tlid,
         streets=lambda: (*_street_lines(here), *_side_street_lines(here)),
+        yards=None if yards is None else yards.ground, yards_key=None if yards is None else yards.key,
+        yard_rule=None if yards is None else yards.rule,
     )
 
 
@@ -9758,14 +9763,103 @@ def drawing_for(
     return got.to_json(s.envelope.geom if s.envelope else None)
 
 
+#: The most risers a unit is read at for the yards it keeps: above it a
+#: count falls back to the ground with no projection (key 0, the cautious side).
+STAIR_YARD_RISERS = 12
+
+
+@dataclasses.dataclass(frozen=True, slots=True)
+class StairYards:
+    """The ground a precast unit of each riser count may stand on
+    (:func:`stair_yards_of`): key 0 the lot cut by every setback whole."""
+
+    ground: Mapping[int, Any]
+    key: Any
+    rule: str
+
+
+def _stair_setbacks(s: Screened, here: QuadfitLot, risers: Iterable[int]) -> tuple[Setbacks, tuple[str, ...]] | None:
+    """The setbacks a unit of every count in ``risers`` keeps
+    (:func:`flats.rules.step_projections.setbacks_kept`), and the rows read;
+    None where the envelope was not cut from the resolved setbacks."""
+    env = s.envelope
+    if env is None or env.setbacks is None:
+        return None
+    fs = foundation_settings.load()
+    k = step_projections.kept(
+        s.rules.jurisdiction, s.rules.zone, risers, riser_in=fs.riser_in, handrail_risers=fs.handrail_risers,
+    )
+    got = step_projections.setbacks_kept(
+        env.setbacks, k, sidewalk_ft=here.sidewalk_easement_ft, easement_ft=here.facts.easement_street_ft,
+    )
+    strip = lot_line_buffer_ft(s.rules)
+    if strip > 0:
+        # The planted strip the envelope's sides stand off stays whole.
+        got = dataclasses.replace(
+            got,
+            side_ft=max(got.side_ft, strip),
+            alley_side_ft=None if got.alley_side_ft is None else max(got.alley_side_ft, strip),
+        )
+    return got, k.rows
+
+
+def _stair_ground(s: Screened, here: QuadfitLot, setbacks: Setbacks) -> Any:
+    return buildable(here.lot_geom, dedicated(here.edges, s.rules, here.zone), setbacks, min_part_sqft=0.0)
+
+
+def stair_yards_of(s: Screened, here: QuadfitLot | None = None) -> StairYards | None:
+    """Where in the required yards ``s``'s precast steps may stand
+    (FOLLOWUPS 214): for each riser count, the lot cut by the setbacks the
+    city lets steps that tall keep (:mod:`flats.rules.step_projections`). A
+    city with no row keeps every setback whole: the steps stand off every
+    lot line as far as the building must. Where the envelope is quadfit's
+    (no resolved setbacks) every count stands on that envelope. None where
+    nothing was cut."""
+    here = here or s.screened_on or s.lot
+    env = s.envelope
+    if env is None:
+        return None
+    if env.setbacks is None or here.lot_geom is None or here.edges is None:
+        if env.geom is None:
+            return None
+        return StairYards({0: env.geom}, ("quadfit", env.geom.wkb), "none (quadfit envelope)")
+    cut: dict[str, Any] = {}
+    ground: dict[int, Any] = {}
+    names: list[str] = []
+    for n in range(STAIR_YARD_RISERS + 1):
+        got = _stair_setbacks(s, here, [n] if n else [])
+        if got is None:
+            return None
+        sb, rows = got
+        names.extend(rows)
+        key = repr(sb)
+        if key not in cut:
+            cut[key] = _stair_ground(s, here, sb)
+        ground[n] = cut[key]
+    rule = ", ".join(dict.fromkeys(names)) or "none"
+    return StairYards(ground, (s.rules.jurisdiction, s.rules.zone, tuple(sorted(cut))), rule)
+
+
 def stair_lot_of(s: Screened) -> StairLot | None:
     """The room kept on the lot for the precast steps at ``s``'s doors
     (:attr:`flats.designs.model.StairRoom.lot_ft`), or None where none is
-    kept -- every first placement (FOLLOWUPS 213)."""
+    kept -- every first placement (FOLLOWUPS 213). Where a unit landed in a
+    required yard (:attr:`flats.designs.model.StairRoom.yard_risers`), the
+    strips stand on the ground the setbacks leave steps of every count up to
+    that one (FOLLOWUPS 214; :func:`stair_yards_of`), not the lot line."""
     room = s.design.stairs
     lot = s.lot.lot_geom
     if room is None or room.lot_ft <= 0 or lot is None or lot.is_empty:
         return None
+    if room.yard_risers > 0:
+        here = s.screened_on or s.lot
+        env = s.envelope
+        if env is not None and env.setbacks is not None and here.lot_geom is not None and here.edges is not None:
+            got = _stair_setbacks(s, here, range(1, room.yard_risers + 1))
+            if got is not None:
+                return StairLot(_stair_ground(s, here, got[0]), room.lot_ft)
+        elif env is not None and env.geom is not None:
+            return StairLot(env.geom, room.lot_ft)
     return StairLot(lot, room.lot_ft)
 
 

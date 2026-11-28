@@ -310,6 +310,11 @@ class StairRoom(BaseModel):
     #: Each long face stands at least this far inside the lot, where a window
     #: allows (:func:`flats.fit.draw.draw` ``stair_lot``).
     lot_ft: float = Field(default=0.0, ge=0)
+    #: The most risers of a unit that landed in a required yard (FOLLOWUPS
+    #: 214): the long faces' ``lot_ft`` is then kept inside the ground the
+    #: setbacks leave steps that tall (:func:`flats.ingest.quadfit.stair_lot_of`),
+    #: not the lot line. 0 keeps the lot line only.
+    yard_risers: int = Field(default=0, ge=0)
     #: Placements tried with room kept, the first included.
     passes: int = Field(default=0, ge=0)
 

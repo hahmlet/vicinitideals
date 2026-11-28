@@ -573,9 +573,12 @@ def test_a_reference_says_which_standard_it_is_standing_beside(
     # Was 7.0221 until Gresham was cut into sections (FOLLOWUPS 73, batch 5):
     # the rear-setback citation it stood beside spans two sections, so it
     # stays on the proof copy and 7/7.0410.txt holds no value near it.
-    beside = rows["9.0901"]
-    assert beside.fields == ("setback_rear_ft",)
-    assert beside.slack_fields == ("setback_rear_ft",)
+    # Was 9.0901 until 2026-11-27, when Section 9.0900 was fetched and read for
+    # the precast steps (FOLLOWUPS 214) and stopped dangling. 10.0200 is the
+    # same shape: "See Section 10.0200" printed beside the front setback.
+    beside = rows["10.0200"]
+    assert beside.fields == ("setback_front_max_ft",)
+    assert beside.slack_fields == ("setback_front_max_ft",)
 
 
 def test_a_use_permission_is_not_a_distance(layers: dict[str, Layer]) -> None:

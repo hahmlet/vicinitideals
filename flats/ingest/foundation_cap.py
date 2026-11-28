@@ -33,8 +33,10 @@ Room for the steps (Steph 2026-11-20, rulings.yaml
 ``2026-11-20-stair-room-reserved`` and ``2026-11-20-stair-no-room-red-flag``):
 each door's precast unit, 4 ft wide and as deep as its risers need, is laid
 straight out from the wall where the building is drawn, and read against the
-drawn court's stalls (past the standoff off the wall), the drawn lane and the
-lot line (:func:`stair_room_of`). Where one lands on any of them,
+drawn court's stalls (past the standoff off the wall), the drawn lane, the
+lot line and a required yard further than the code lets steps project into it
+(FOLLOWUPS 214; :mod:`flats.rules.step_projections`) (:func:`stair_room_of`).
+Where one lands on any of them,
 :func:`flats.ingest.quadfit.foundation_checked` stands the plan again with that much
 room kept (:class:`flats.designs.model.StairRoom`) and the whole screen runs
 on the new placement; where it still has no room after
@@ -113,8 +115,13 @@ STAIR_TOL_FT = 0.05
 #: platform", and every row after it).
 UNIT_WIDTH_FT = 4.0
 #: What a stair lands on, as the flag says it, and the room kept for it.
-COURT, LANE, LOT_LINE = "court", "lane", "lot line"
-_KEEP = {COURT: "court_ft", LANE: "flank_ft", LOT_LINE: "lot_ft"}
+COURT, LANE, LOT_LINE, YARD = "court", "lane", "lot line", "yard"
+#: A yard is kept as the lot line is: the long faces stand that far inside the
+#: ground the steps may use (:func:`flats.ingest.quadfit.stair_lot_of`).
+_KEEP = {COURT: "court_ft", LANE: "flank_ft", LOT_LINE: "lot_ft", YARD: "lot_ft"}
+#: The room's other key: the most risers of a unit that landed in a yard, so
+#: the next placement keeps the yards a unit that tall needs.
+YARD_RISERS = "yard_risers"
 
 #: The bridge row's column: this lot x design's cap facts, JSON.
 ROW_COLUMN = "foundation_cap"
@@ -202,6 +209,7 @@ def _poly(ring: Any) -> Any:
 
 def stair_room_of(
     fr: Any, r: model.MethodResult, s: Any, *, lot: Any, court: Any, lane: Any, standoff_ft: float, beside: bool,
+    yards: Mapping[int, Any] | None = None,
 ) -> dict[str, Any]:
     """Where each door's precast unit lands on the drawing (FOLLOWUPS 213).
 
@@ -212,13 +220,22 @@ def stair_room_of(
     (``standoff_ft``; a court beside the building has none, its stalls are
     against the flank), onto the drawn lane, or past the lot line. ``need``
     is the room to keep on the next placement, the worst unit's run for
-    each kind it lands on."""
+    each kind it lands on.
+
+    ``yards`` is the ground a unit of each riser count may stand on: the lot
+    cut by the setbacks its steps keep (FOLLOWUPS 214;
+    :func:`flats.ingest.quadfit.stair_yards_of`); key 0 is the ground with no
+    projection at all, read for a count the map does not hold. A unit on the
+    lot but off its ground lands in a yard (:data:`YARD`). None reads no
+    yard."""
     import shapely
 
     paving = [(COURT, _poly(court), 0.0 if beside else standoff_ft), (LANE, _poly(lane), 0.0)]
     grown = lot.buffer(STAIR_TOL_FT) if lot is not None and not lot.is_empty else None
     hits: list[dict[str, Any]] = []
     need = {k: 0.0 for k in _KEEP.values()}
+    yard_risers = 0
+    grown_yards: dict[int, Any] = {}
     half = UNIT_WIDTH_FT / 2
     for d in r.doors:
         if not d.units:
@@ -248,10 +265,25 @@ def stair_room_of(
             off = max(float(shapely.Point(tuple(p)).distance(lot)) for p in foot)
             got.append((LOT_LINE, max(off, STAIR_TOL_FT)))
             need["lot_ft"] = max(need["lot_ft"], run_ft)
+        elif yards is not None:
+            ground = yards.get(int(d.units), yards.get(0))
+            if ground is not None:
+                if id(ground) not in grown_yards:
+                    grown_yards[id(ground)] = ground if ground.is_empty else ground.buffer(STAIR_TOL_FT)
+                if not grown_yards[id(ground)].covers(box):
+                    # How far the unit's furthest corner stands off the ground.
+                    off = run_ft if ground.is_empty else max(
+                        float(shapely.Point(tuple(p)).distance(ground)) for p in (*wall, *foot))
+                    got.append((YARD, max(off, STAIR_TOL_FT)))
+                    need["lot_ft"] = max(need["lot_ft"], run_ft)
+                    yard_risers = max(yard_risers, int(d.units))
         for kind, by in got:
             hits.append({"door": name, "risers": int(d.units), "run_ft": round(run_ft, 2), "hits": kind,
                          "by_ft": round(by, 2)})
-    return {"hits": hits, "need": {k: round(v, 2) for k, v in need.items()}, "standoff_ft": standoff_ft}
+    out: dict[str, Any] = {k: round(v, 2) for k, v in need.items()}
+    if yard_risers:
+        out[YARD_RISERS] = yard_risers
+    return {"hits": hits, "need": out, "standoff_ft": standoff_ft}
 
 
 def _terrain_key(terrain: Any) -> Any:
@@ -274,17 +306,22 @@ def facts_for(
     county: str | None = None,
     standoff_ft: float = 0.0,
     beside: bool = False,
+    yards: Mapping[int, Any] | None = None,
+    yards_key: Any = None,
+    yard_rule: str | None = None,
 ) -> dict[str, Any] | None:
     """The cap on one drawn building, as plain facts; None where nothing is drawn.
     ``standoff_ft`` is the clear ground the drawn court keeps off the rear
-    wall and ``beside`` a court drawn beside the building
+    wall and ``beside`` a court drawn beside the building; ``yards`` the
+    ground the steps may use by riser count, ``yards_key`` what it was cut
+    with (the cache key) and ``yard_rule`` the rows read, for the facts
     (:func:`stair_room_of`)."""
     ring = _ring_of(drawing)
     if ring is None or terrain is None:
         return None
     court, lane = (drawing or {}).get("court"), (drawing or {}).get("lane")
     key = (tlid, json.dumps(ring), required, json.dumps(court), json.dumps(lane), classes, tuple(streets),
-           round(standoff_ft, 3), beside, None if lot is None else lot.wkb, _terrain_key(terrain))
+           round(standoff_ft, 3), beside, None if lot is None else lot.wkb, _terrain_key(terrain), yards_key)
     if key in _CACHE:
         return _CACHE[key]
     s = foundation_settings.load()
@@ -304,7 +341,9 @@ def facts_for(
             methods[name] = model.slab(m, s) if name.startswith("A") else model.raised(m, s, piles=name == "B+P")
         c = caps.cap_of(methods, group, s)
         room = stair_room_of(placed.frame, methods[c.best], s, lot=lot, court=court, lane=lane,
-                             standoff_ft=standoff_ft, beside=beside)
+                             standoff_ft=standoff_ft, beside=beside, yards=yards)
+        if yards is not None:
+            room["yard_rule"] = yard_rule or "none"
         facts = {**base, **c.facts(), "stair_room": room}
     if len(_CACHE) >= _CACHE_MAX:
         _CACHE.clear()
@@ -377,10 +416,14 @@ def checked(
     classes: tuple[str | None, str | None] | None,
     tlid: str | None = None,
     county: str | None = None,
+    yards: Mapping[int, Any] | None = None,
+    yards_key: Any = None,
+    yard_rule: str | None = None,
 ) -> Any:
     """``s`` with the six-step cap applied and its steps' room read (see the
     module docstring); the room is acted on by
-    :func:`flats.ingest.quadfit.foundation_checked`."""
+    :func:`flats.ingest.quadfit.foundation_checked`. ``yards`` and the two
+    after it are :func:`facts_for`'s."""
     if terrain is None or not s.drawing or not getattr(s.fit, "fits", False) or _ring_of(s.drawing) is None:
         return s
     side = getattr(s.facts, "entrance_side_fit", None) if s.facts is not None else None
@@ -388,6 +431,7 @@ def checked(
         s.drawing, terrain=terrain, streets=tuple(dict.fromkeys(streets())), lot=lot_geom,
         required=door_face.entrance_required(s.rules, side), classes=classes, tlid=tlid, county=county,
         standoff_ft=standoff_of(s), beside=bool(getattr(s.fit, "beside", False)),
+        yards=yards, yards_key=yards_key, yard_rule=yard_rule,
     )
     if facts is None:
         return s
@@ -425,17 +469,19 @@ def next_room(s: Any) -> StairRoom | None:
     if cur.passes >= STAIR_PASSES:
         return None
     need = s.foundation["stair_room"]["need"]
-    widened = {k: max(getattr(cur, k), float(need.get(k) or 0.0)) for k in _KEEP.values()}
-    if all(widened[k] <= getattr(cur, k) + STAIR_TOL_FT for k in widened):
+    widened = {k: max(getattr(cur, k), float(need.get(k) or 0.0)) for k in dict.fromkeys(_KEEP.values())}
+    risers = max(cur.yard_risers, int(need.get(YARD_RISERS) or 0))
+    if all(widened[k] <= getattr(cur, k) + STAIR_TOL_FT for k in widened) and risers <= cur.yard_risers:
         return None
-    return StairRoom(**widened, passes=cur.passes + 1)
+    return StairRoom(**widened, yard_risers=risers, passes=cur.passes + 1)
 
 
 def _hit_words(hits: Sequence[Mapping[str, Any]]) -> str:
     said = []
     for h in hits:
         where = {COURT: "onto the drawn parking court's stalls", LANE: "onto the drawn drive lane",
-                 LOT_LINE: "past the lot line"}[h["hits"]]
+                 LOT_LINE: "past the lot line",
+                 YARD: "in a required yard, past what the code lets steps project"}[h["hits"]]
         said.append(f"{h['door']}'s {h['risers']}-riser unit runs {h['run_ft']:.1f} ft out and lands "
                     f"{h['by_ft']:.1f} ft {where}")
     return "; ".join(said)
@@ -453,7 +499,8 @@ def no_room(s: Any, *, tried: str | None = None) -> Any:
     words = "foundation: no room for the steps -- " + _hit_words(hits)
     if kept is not None:
         words += (f" (placed {kept.passes + 1} times keeping up to {kept.court_ft:.1f} ft behind, "
-                  f"{kept.flank_ft:.1f} ft beside and {kept.lot_ft:.1f} ft inside the lot)")
+                  f"{kept.flank_ft:.1f} ft beside and {kept.lot_ft:.1f} ft inside the lot"
+                  + (" and its yards" if kept.yard_risers else "") + ")")
     if tried:
         words += f"; {tried}"
     worst = max(float(h["by_ft"]) for h in hits)
