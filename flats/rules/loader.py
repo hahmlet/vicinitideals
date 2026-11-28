@@ -2060,6 +2060,9 @@ def _parse_freeways(raw: object, *, where: str, problems: list[str]) -> FreewayR
           cite: PCC 33.910.030 (Street)
           note: >-
             ...
+          connectors_street: true      # optional, FOLLOWUPS 215 F2
+          connectors_quote: "...#L1010"
+          connectors_says: "A right-of-way that is intended for motor vehicle"
 
     The shape of ``private_drives`` (:func:`_parse_private_drives`) without
     its ``access_choice``. Absent: the code is silent.
@@ -2070,13 +2073,27 @@ def _parse_freeways(raw: object, *, where: str, problems: list[str]) -> FreewayR
     if not isinstance(raw, dict):
         problems.append(f"{at}: expected street, quote, says and note")
         return None
-    extra = set(raw) - {"street", "quote", "says", "cite", "note"}
+    extra = set(raw) - {
+        "street", "quote", "says", "cite", "note",
+        "connectors_street", "connectors_quote", "connectors_says",
+    }
     if extra:
         problems.append(f"{at}: unexpected {', '.join(sorted(str(e) for e in extra))}")
         return None
     street = raw.get("street")
     if not isinstance(street, bool):
         problems.append(f"{at}.street: true or false")
+        return None
+    connectors = raw.get("connectors_street", False)
+    c_quote, c_says = raw.get("connectors_quote"), raw.get("connectors_says")
+    if not isinstance(connectors, bool):
+        problems.append(f"{at}.connectors_street: true or false")
+        return None
+    if connectors and (not isinstance(c_quote, str) or "#L" not in c_quote):
+        problems.append(f"{at}.connectors_quote: a store pointer, path#Lnn")
+        return None
+    if connectors and (not isinstance(c_says, str) or not c_says.strip()):
+        problems.append(f"{at}.connectors_says: the words the quoted line holds")
         return None
     quote, says, note = raw.get("quote"), raw.get("says"), raw.get("note")
     if not isinstance(quote, str) or "#L" not in quote:
@@ -2092,6 +2109,9 @@ def _parse_freeways(raw: object, *, where: str, problems: list[str]) -> FreewayR
     return FreewayRuling(
         street=street, quote=quote.strip(), says=says.strip(),
         cite=None if cite is None else str(cite), note=note.strip(),
+        connectors_street=connectors,
+        connectors_quote=c_quote.strip() if isinstance(c_quote, str) else None,
+        connectors_says=c_says.strip() if isinstance(c_says, str) else None,
     )
 
 

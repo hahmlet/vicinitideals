@@ -467,6 +467,14 @@ class FreewayRuling(BaseModel):
     ``quote`` points at the line (``path#Lnn``) and ``says`` is words that
     line holds verbatim, checked against the store; ``note`` is the
     argument. Declared per layer and never inherited.
+
+    ``connectors_street`` -- whether a slip road of the ordinary street
+    grid (s4 ``connector``: RLIS 1321/1421/1471/1521, a ramp into or out of
+    an arterial, a tertiary or a residential street) is a street here, in
+    the code's own definition of street (``connectors_quote`` /
+    ``connectors_says``, held to the store as ``quote`` is). True: a line on
+    one is an ordinary street line, read as s4 read it (FOLLOWUPS 215 F2).
+    False, the default: screened both ways like any ramp.
     """
 
     model_config = ConfigDict(frozen=True)
@@ -476,6 +484,9 @@ class FreewayRuling(BaseModel):
     says: str
     cite: str | None = None
     note: str | None = None
+    connectors_street: bool = False
+    connectors_quote: str | None = None
+    connectors_says: str | None = None
 
 
 #: How a clear-vision area's legs are measured (FOLLOWUPS 161). ``lot_line``

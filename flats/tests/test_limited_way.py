@@ -122,6 +122,13 @@ def test_portland_says_a_freeway_is_not_a_street_and_no_other_layer_is_ruled(cor
     held = (store / doc).read_text(encoding="utf-8").split("\n")[int(line) - 1]
     assert " ".join(r.says.split()) in " ".join(held.split())
     assert "interstate freeways and the Sunset Highway including their ramps" in r.says
+    # FOLLOWUPS 215 F2: the definition's own first sentence takes in a slip
+    # road of the street grid.
+    assert r.connectors_street is True and r.connectors_quote and r.connectors_says
+    doc, _, line = r.connectors_quote.partition("#L")
+    held = (store / doc).read_text(encoding="utf-8").split("\n")[int(line) - 1]
+    assert " ".join(r.connectors_says.split()) in " ".join(held.split())
+    assert "A right-of-way that is intended for motor vehicle" in r.connectors_says
 
 
 def test_the_loader_refuses_a_freeway_ruling_without_its_quote() -> None:
@@ -133,6 +140,14 @@ def test_the_loader_refuses_a_freeway_ruling_without_its_quote() -> None:
         assert _parse_freeways({**base, **bad}, where="t", problems=problems) is None
         assert problems
     assert _parse_freeways(None, where="t", problems=[]) is None
+    assert _parse_freeways(base, where="t", problems=[]).connectors_street is False
+    linked = {**base, "connectors_street": True, "connectors_quote": "or/x/y.txt#L2", "connectors_says": "w"}
+    got = _parse_freeways(linked, where="t", problems=[])
+    assert got is not None and got.connectors_street and got.connectors_quote == "or/x/y.txt#L2"
+    for bad in ({"connectors_street": "yes"}, {"connectors_quote": "or/x/y.txt"}, {"connectors_says": " "}):
+        problems = []
+        assert _parse_freeways({**linked, **bad}, where="t", problems=problems) is None
+        assert problems
 
 
 # --- which reading ---------------------------------------------------------------
@@ -156,11 +171,51 @@ def test_the_reading_follows_the_code_and_the_kind_of_way(corpus) -> None:
     assert limited_reading(both, layers)[0] == "mixed"
 
 
+def test_a_slip_road_is_a_street_in_portland_and_held_elsewhere(corpus) -> None:
+    """FOLLOWUPS 215 F2: s4's ``connector`` (RLIS 1321/1421/1471/1521) is a
+    street in Portland -- 33.910.030's "right-of-way that is intended for
+    motor vehicle ... travel", which leaves out only the interstates' and
+    the Sunset's ramps -- so the lot is read as s4 read it. Outside
+    Portland it is screened both ways like any ramp."""
+    layers = corpus.layers
+    assert limited_reading(beside("connector"), layers) == (None, "")
+    assert limited_reading(beside("connector", jurisdiction="hillsboro", zone="MR-2"), layers) == (
+        "worse", "the east line (100 ft) faces a ramp or limited-access road",
+    )
+    assert limited_reading(beside("connector"), None)[0] == "worse"
+    # With a private drive's line: the slip road's is no reason to hold it.
+    drive = beside(street_kind_json=json.dumps(["drive", "connector", None, None]))
+    assert limited_reading(drive, layers) == (None, "")
+    # Beside a freeway line: s4's reading without the marked lines drops the
+    # slip road's too, so it is not the code's reading -- both ways, held,
+    # and only the freeway's line is named.
+    both = beside(street_kind_json=json.dumps(["connector", "freeway", None, None]))
+    how, side = limited_reading(both, layers)
+    assert how == "worse" and side == "the east line (100 ft) faces a freeway or its ramp"
+    assert limited_reading(beside("freeway"), layers)[0] == "replace"
+
+
+def test_a_portland_lot_on_a_slip_road_is_the_lot_s4_read(corpus, policies) -> None:
+    """One reading, s4's: the slip road's line a street line (a corner),
+    no second reading, no ACCESS-LIMITED-WAY -- the answer the lot gets
+    with the line read as any street."""
+    lot = lot_from_row(beside("connector"), corpus.layers)
+    assert lot.second is None and not lot.limited_replaced and not lot.facts.limited_way
+    assert lot.facts.corner
+    kw = dict(rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    (got,) = screen_lot(lot, [pod()], **kw)
+    street = lot_from_row(beside(street_kind_json=json.dumps(["street", "street", None, None])), corpus.layers)
+    (want,) = screen_lot(street, [pod()], **kw)
+    assert _shown(got) == _shown(want)
+    assert got.signed.reasons == want.signed.reasons
+    assert STREET_LINE_LIMITED_WAY not in got.signed.reasons
+
+
 def test_the_side_is_named_even_where_the_kinds_do_not_match_the_lines() -> None:
     odd = beside(street_kind_json=json.dumps(["street", "rail"]))
     assert limited_way_side(odd) == "a street line faces a street on the far side of a railroad"
     assert limited_reading(odd, None)[0] == "worse"
-    assert set(LIMITED_STREET_KINDS) == {"freeway", "limited", "rail"}
+    assert set(LIMITED_STREET_KINDS) == {"connector", "freeway", "limited", "rail"}
 
 
 def test_in_portland_the_lot_is_read_without_its_freeway_line(corpus, policies) -> None:

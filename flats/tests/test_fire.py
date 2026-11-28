@@ -314,6 +314,46 @@ def test_a_route_past_155_ft_is_red_and_still_noted() -> None:
     assert result.colour is Colour.red
 
 
+
+@pytest.mark.parametrize(
+    "held, over, code",
+    [
+        ("FIRE-DEAD-END", {"fire_route_freed_ft": 152.0}, None),
+        ("FIRE-NARROW-STREET", {"fire_route_row_ft": 153.0}, None),
+        ("FIRE-ROAD-UNCLEAR", {"fire_road_unclear": True, "fire_route_unclear_ft": 154.0}, None),
+        # The code's reading reaches and the road beside it is unclear.
+        ("FIRE-ROAD-UNCLEAR", {"fire_road_unclear": True}, 151.0),
+    ],
+)
+def test_a_lot_held_for_another_fire_reason_is_noted_past_150_ft(held, over, code) -> None:
+    """FOLLOWUPS 215 F6 (holds-fire move read: 1N130DC00400 at 189 ft, held
+    by FIRE-DEAD-END, carried no note): a lot held YELLOW by the long dead
+    end, the narrow street or the unclear road makes no fire check, and its
+    route past 150 ft is noted all the same -- the held reading's and the
+    code's. The colour does not move."""
+    from flats.score.flags import Colour
+
+    route = 189.0 if code is None else code
+    lot = facts(fire_route_ft=route, fire_route_tried=True, **over)
+    result = run(lot)
+    assert check(result, "fire_access_ft") is None
+    assert held in _codes(result)
+    (note,) = _validate(result)
+    assert note.bounds == pytest.approx((150.0, route))
+    assert f"{route:.1f} ft on the code's reading" in note.source
+    held_ft = next((v for v in over.values() if isinstance(v, float)), None)
+    if held_ft is not None:
+        assert f"hose route {held_ft:.1f} ft" in note.source and "held YELLOW" in note.source
+    # The note is below the yellow line: the hold, not the note, makes it YELLOW.
+    assert result.colour is Colour.yellow
+
+
+def test_a_held_lot_inside_150_ft_on_every_reading_has_no_note() -> None:
+    result = run(facts(fire_route_ft=150.0, fire_route_tried=True, fire_road_unclear=True))
+    assert "FIRE-ROAD-UNCLEAR" in _codes(result)
+    assert not _validate(result)
+
+
 def test_the_code_figure_stays_as_printed_and_the_note_is_below_the_line() -> None:
     from flats.score.flags import registry
     from flats.score.screen import FIRE_HOSE_ALLOWANCE_FT, fire_reach_ft
