@@ -2940,7 +2940,8 @@ def street_directions(lot: "QuadfitLot", edges: "LotEdges | None" = None) -> tup
         return got
     # A lot whose whole street frontage is short (a flag lot's pole end) has
     # no other street its doors could face: the short line is its street,
-    # no jog off another (coordinator 2026-11-28, fg5 Q2).
+    # no jog off another. A judgement (fg5 worker 2026-11-28, after the
+    # coordinator's Q2 call that only a jog is dropped); run 134 read it so.
     return tuple(float(b) for b in lot.front_bearings if _direction_ft(float(b), lines) > 0.0)
 
 
