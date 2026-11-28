@@ -475,13 +475,19 @@ class FreewayRuling(BaseModel):
     ``connectors_says``, held to the store as ``quote`` is). True: a line on
     one is an ordinary street line, read as s4 read it (FOLLOWUPS 215 F2).
     False, the default: screened both ways like any ramp.
+
+    ``street`` None -- the layer declares only the slip roads (FOLLOWUPS
+    220: Clackamas County, Milwaukie, Multnomah County): its code was read
+    on what a street is, not on freeways, and a freeway line there is
+    screened both ways as on a silent layer. Only ``street is False`` reads
+    a lot without its freeway line.
     """
 
     model_config = ConfigDict(frozen=True)
 
-    street: bool
-    quote: str
-    says: str
+    street: bool | None = None
+    quote: str | None = None
+    says: str | None = None
     cite: str | None = None
     note: str | None = None
     connectors_street: bool = False

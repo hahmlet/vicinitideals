@@ -2064,6 +2064,9 @@ def _parse_freeways(raw: object, *, where: str, problems: list[str]) -> FreewayR
           connectors_quote: "...#L1010"
           connectors_says: "A right-of-way that is intended for motor vehicle"
 
+    A layer read only on its slip roads leaves out ``street``, ``quote`` and
+    ``says`` (FOLLOWUPS 220): its freeway lines stay screened both ways.
+
     The shape of ``private_drives`` (:func:`_parse_private_drives`) without
     its ``access_choice``. Absent: the code is silent.
     """
@@ -2081,10 +2084,16 @@ def _parse_freeways(raw: object, *, where: str, problems: list[str]) -> FreewayR
         problems.append(f"{at}: unexpected {', '.join(sorted(str(e) for e in extra))}")
         return None
     street = raw.get("street")
-    if not isinstance(street, bool):
+    connectors = raw.get("connectors_street", False)
+    # A layer read only on its slip roads declares no freeway reading
+    # (FOLLOWUPS 220): street, quote and says go together or not at all.
+    freeway_read = street is not None or "quote" in raw or "says" in raw
+    if freeway_read and not isinstance(street, bool):
         problems.append(f"{at}.street: true or false")
         return None
-    connectors = raw.get("connectors_street", False)
+    if not freeway_read and connectors is not True:
+        problems.append(f"{at}: street (true or false), or connectors_street: true")
+        return None
     c_quote, c_says = raw.get("connectors_quote"), raw.get("connectors_says")
     if not isinstance(connectors, bool):
         problems.append(f"{at}.connectors_street: true or false")
@@ -2096,10 +2105,10 @@ def _parse_freeways(raw: object, *, where: str, problems: list[str]) -> FreewayR
         problems.append(f"{at}.connectors_says: the words the quoted line holds")
         return None
     quote, says, note = raw.get("quote"), raw.get("says"), raw.get("note")
-    if not isinstance(quote, str) or "#L" not in quote:
+    if freeway_read and (not isinstance(quote, str) or "#L" not in quote):
         problems.append(f"{at}.quote: a store pointer, path#Lnn")
         return None
-    if not isinstance(says, str) or not says.strip():
+    if freeway_read and (not isinstance(says, str) or not says.strip()):
         problems.append(f"{at}.says: the words the quoted line holds")
         return None
     if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
@@ -2107,7 +2116,9 @@ def _parse_freeways(raw: object, *, where: str, problems: list[str]) -> FreewayR
         return None
     cite = raw.get("cite")
     return FreewayRuling(
-        street=street, quote=quote.strip(), says=says.strip(),
+        street=street,
+        quote=quote.strip() if isinstance(quote, str) else None,
+        says=says.strip() if isinstance(says, str) else None,
         cite=None if cite is None else str(cite), note=note.strip(),
         connectors_street=connectors,
         connectors_quote=c_quote.strip() if isinstance(c_quote, str) else None,

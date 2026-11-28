@@ -111,24 +111,44 @@ def beside(kind: str = "freeway", **over: object) -> dict[str, object]:
 # --- what the code says ----------------------------------------------------------
 
 
+#: The layers whose code was read on slip roads (FOLLOWUPS 215 F2, 220), and
+#: words their definition of street holds.
+SLIP_ROAD_STREETS = {
+    PORTLAND: "A right-of-way that is intended for motor vehicle",
+    "or/clackamas/_unincorporated": "provides for travel between places by vehicles",
+    "or/clackamas/milwaukie": "the entire width between right-of-way lines for vehicular",
+    "or/multnomah/_unincorporated": "provides travel between places by means of vehicles",
+}
+
+
+def _held(store: Path, pointer: str) -> str:
+    """The text a store pointer (``path#Lnn`` or ``path#Lnn-Lmm``) points at,
+    its lines joined and its spacing folded."""
+    doc, _, span = pointer.partition("#L")
+    first, _, last = span.partition("-L")
+    lines = (store / doc).read_text(encoding="utf-8").split(chr(10))
+    return " ".join(" ".join(lines[int(first) - 1 : int(last or first)]).split())
+
+
 def test_portland_says_a_freeway_is_not_a_street_and_no_other_layer_is_ruled(corpus) -> None:
-    """``freeways.says`` is held verbatim by the line ``quote`` points at."""
+    """``freeways.says`` is held verbatim by the line ``quote`` points at;
+    only Portland reads its freeways, and the layers whose code was read on
+    slip roads hold their ``connectors_says`` verbatim too."""
     store = Path(__file__).resolve().parents[1] / "provenance" / "docs"
     ruled = {k: v.freeways for k, v in corpus.layers.items() if v.freeways is not None}
-    assert set(ruled) == {PORTLAND}
+    assert set(ruled) == set(SLIP_ROAD_STREETS)
+    assert {k for k, r in ruled.items() if r.street is not None} == {PORTLAND}
     r = ruled[PORTLAND]
     assert r.street is False
-    doc, _, line = r.quote.partition("#L")
-    held = (store / doc).read_text(encoding="utf-8").split("\n")[int(line) - 1]
-    assert " ".join(r.says.split()) in " ".join(held.split())
+    assert " ".join(r.says.split()) in _held(store, r.quote)
     assert "interstate freeways and the Sunset Highway including their ramps" in r.says
-    # FOLLOWUPS 215 F2: the definition's own first sentence takes in a slip
+    # FOLLOWUPS 215 F2 / 220: each definition's own words take in a slip
     # road of the street grid.
-    assert r.connectors_street is True and r.connectors_quote and r.connectors_says
-    doc, _, line = r.connectors_quote.partition("#L")
-    held = (store / doc).read_text(encoding="utf-8").split("\n")[int(line) - 1]
-    assert " ".join(r.connectors_says.split()) in " ".join(held.split())
-    assert "A right-of-way that is intended for motor vehicle" in r.connectors_says
+    for layer, words in SLIP_ROAD_STREETS.items():
+        r = ruled[layer]
+        assert r.connectors_street is True and r.connectors_quote and r.connectors_says
+        assert " ".join(r.connectors_says.split()) in _held(store, r.connectors_quote), layer
+        assert words in r.connectors_says, layer
 
 
 def test_the_loader_refuses_a_freeway_ruling_without_its_quote() -> None:
@@ -147,6 +167,14 @@ def test_the_loader_refuses_a_freeway_ruling_without_its_quote() -> None:
     for bad in ({"connectors_street": "yes"}, {"connectors_quote": "or/x/y.txt"}, {"connectors_says": " "}):
         problems = []
         assert _parse_freeways({**linked, **bad}, where="t", problems=problems) is None
+        assert problems
+    # A layer read only on its slip roads (FOLLOWUPS 220): no freeway reading.
+    only = {k: v for k, v in linked.items() if k not in ("street", "quote", "says")}
+    got = _parse_freeways(only, where="t", problems=[])
+    assert got is not None and got.street is None and got.quote is None and got.connectors_street
+    for bad in ({"connectors_street": False}, {"says": "w"}, {"street": None, "quote": "or/x/y.txt#L1"}):
+        problems = []
+        assert _parse_freeways({**only, **bad}, where="t", problems=problems) is None, bad
         assert problems
 
 
@@ -193,6 +221,22 @@ def test_a_slip_road_is_a_street_in_portland_and_held_elsewhere(corpus) -> None:
     how, side = limited_reading(both, layers)
     assert how == "worse" and side == "the east line (100 ft) faces a freeway or its ramp"
     assert limited_reading(beside("freeway"), layers)[0] == "replace"
+
+
+def test_three_more_codes_call_a_slip_road_a_street_and_three_stay_held(corpus) -> None:
+    """FOLLOWUPS 220 (slip-road-readings.md): Clackamas County (ZDO 202
+    Road), Milwaukie (Street) and Multnomah County (39.2000 Road) take a
+    slip road of the street grid in; Tigard, Beaverton and Washington
+    County's definitions are unclear and stay held. A freeway line in the
+    three is screened both ways (their freeways were not read), never
+    read away."""
+    layers = corpus.layers
+    for juris in ("clackamas_unincorporated", "milwaukie", "multnomah_unincorporated"):
+        assert limited_reading(beside("connector", jurisdiction=juris), layers) == (None, ""), juris
+        assert limited_reading(beside("freeway", jurisdiction=juris), layers)[0] == "worse", juris
+        assert limited_reading(beside("limited", jurisdiction=juris), layers)[0] == "worse", juris
+    for juris in ("tigard", "beaverton", "washington_unincorporated"):
+        assert limited_reading(beside("connector", jurisdiction=juris), layers)[0] == "worse", juris
 
 
 def test_a_portland_lot_on_a_slip_road_is_the_lot_s4_read(corpus, policies) -> None:

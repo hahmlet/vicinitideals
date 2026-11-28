@@ -2160,7 +2160,7 @@ def drive_reading(
 #: no frontage, driveway or fire standing (``s4_edges.LIMITED_KINDS``):
 #: ``connector`` -- a slip road of the ordinary street grid (RLIS
 #: 1321/1421/1471/1521), a street where the code's definition takes it in
-#: (``freeways.connectors_street``, Portland) and read as ``limited``
+#: (``freeways.connectors_street``; FOLLOWUPS 215, 220) and read as ``limited``
 #: everywhere else; ``freeway`` -- an interstate, the Sunset or one of
 #: their ramps; ``limited`` -- any other freeway-class road and the ramp of
 #: any other road; ``rail`` -- a street the line reaches only across a
@@ -2240,8 +2240,9 @@ def limited_reading(
       read it and its street is unconfirmed.
 
     A ``connector`` line (a slip road of the street grid) is an ordinary
-    street line where the code says so (``freeways.connectors_street``,
-    Portland 33.910.030, FOLLOWUPS 215 F2): it is not marked, and a lot with
+    street line where the code says so (``freeways.connectors_street``:
+    Portland 33.910.030, FOLLOWUPS 215 F2; Clackamas County ZDO 202,
+    Milwaukie 19.200, Multnomah County 39.2000, FOLLOWUPS 220): it is not marked, and a lot with
     no other such line is read as s4 read it, ``(None, "")``. With a freeway
     line beside it the lot is ``worse``, not ``replace``: s4's reading
     without the marked lines drops the slip road's line too.
@@ -2265,7 +2266,7 @@ def limited_reading(
     side = limited_way_side(row, streets)
     if any(k in DRIVE_STREET_KINDS for k in kinds):
         return "mixed", side
-    if ruling is not None and not ruling.street and marked == {"freeway"} and not streets & set(kinds):
+    if ruling is not None and ruling.street is False and marked == {"freeway"} and not streets & set(kinds):
         return "replace", side
     return "worse", side
 

@@ -5822,6 +5822,31 @@ zone_rulings:
       which Milwaukie's layer holds; the assessor's roll still calls the
       lots unincorporated.
 
+# Whether a slip road of the street grid is a street here (FOLLOWUPS 220,
+# 2026-11-27, ../slip-road-readings.md).
+freeways:
+  cite: "ZDO 202 (Definitions: Road; Street = Road, #L583)"
+  note: >-
+    ZDO 202 defines ROAD as any public or private way that provides ingress
+    to or egress from lots "or that provides for travel between places by
+    vehicles", and makes "street" and "highway" synonymous with it: a slip
+    road joining two ordinary roads is a road, so its line is a street lot
+    line. Trap: ZDO's own "Connector" road class (roadway.220.txt#L38) is a
+    county functional class, not the RLIS connector type read here.
+    s4 marks a line ``connector`` where its only way is RLIS TYPE 1321, 1421,
+    1471 or 1521, which Metro's Streets metadata (Metro Data Resource Center,
+    2018-10-23) defines as the ramp or slip road "used to enter or exit" a
+    primary arterial, an arterial, a tertiary street and a residential street
+    -- no freeway's ramp (RLIS 1120-1123). A slip road RLIS names for a freeway
+    or a bridge stays limited (s4 CONNECTOR_HELD_WORDS; bridge slip roads by
+    Steph 2026-11-27, rulings.yaml 2026-11-27-bridge-slip-road-limited), as do
+    a highway's ramp (1221-1223) and a line with a freeway on the same rays.
+    The code was not read on freeways: no street/quote/says is declared, and a
+    freeway line here is screened both ways and held, as on a silent layer.
+  connectors_street: true
+  connectors_quote: "or/clackamas/_unincorporated/zdo.202.definitions.txt#L469"
+  connectors_says: "ROAD: A public or private way created to provide ingress to, or egress from, one or more lots, parcels, areas or tracts of land, or that provides for travel between places by vehicles"
+
 # Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
 clear_vision:
   corner:

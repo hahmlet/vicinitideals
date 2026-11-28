@@ -5393,6 +5393,31 @@ drawn_areas:
       line cuts is unanswered and held, and only a lot at most a tenth inside
       is answered out. Pleasant Valley's chapter is not in this corpus at all.
 
+# Whether a slip road of the street grid is a street here (FOLLOWUPS 220,
+# 2026-11-27, ../slip-road-readings.md).
+freeways:
+  cite: "MCC 39.2000 (Definitions: Road)"
+  note: >-
+    Multnomah County defines Road as the entire right-of-way of any public or
+    private way that provides ingress to or egress from property by vehicles
+    "or provides travel between places by means of vehicles", including
+    streets and highways: a slip road joining two ordinary roads is a road,
+    so its line is a street lot line. A lot screened under Title 33 takes
+    Portland's answer, which is the same.
+    s4 marks a line ``connector`` where its only way is RLIS TYPE 1321, 1421,
+    1471 or 1521, which Metro's Streets metadata (Metro Data Resource Center,
+    2018-10-23) defines as the ramp or slip road "used to enter or exit" a
+    primary arterial, an arterial, a tertiary street and a residential street
+    -- no freeway's ramp (RLIS 1120-1123). A slip road RLIS names for a freeway
+    or a bridge stays limited (s4 CONNECTOR_HELD_WORDS; bridge slip roads by
+    Steph 2026-11-27, rulings.yaml 2026-11-27-bridge-slip-road-limited), as do
+    a highway's ramp (1221-1223) and a line with a freeway on the same rays.
+    The code was not read on freeways: no street/quote/says is declared, and a
+    freeway line here is screened both ways and held, as on a silent layer.
+  connectors_street: true
+  connectors_quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L1085-L1089"
+  connectors_says: "Road – The entire right-of-way of any public or private way that provides ingress to, or egress from property by vehicles or other means, or provides travel between places by means of vehicles"
+
 # Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
 clear_vision:
   corner:
