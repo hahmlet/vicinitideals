@@ -250,7 +250,10 @@ def _stem(word: str) -> str:
     """Crude singular. Codes headline "Corner Lots" and define "Corner Lot"."""
     if len(word) > 3 and word.endswith("ies"):
         return word[:-3] + "y"
-    if len(word) > 3 and word.endswith("es") and word[-3] in "sxz":
+    # "Classes", "boxes": the -es is the plural. "Townhouses": the e is the
+    # word's own, and stripping it filed Washington County's 106-211 under
+    # "townhous", which no card asks for (FOLLOWUPS 222).
+    if len(word) > 3 and (word.endswith("sses") or (word.endswith("es") and word[-3] in "xz")):
         return word[:-2]
     return word[:-1] if len(word) > 3 and word.endswith("s") else word
 
@@ -840,19 +843,62 @@ def _says(
     """
     bags = forms(term)
     seqs = _seqs(term)
+    our_seq = seqs[0]
+    #: Exact entries in the code's order, except that one whose heading is a
+    #: spelling of the word and whose parenthetical names it in our own words
+    #: goes first. Washington County files 106-101 "Height", measured from
+    #: mean sea level, and then 106-101.1 "Height (Maximum Building Height)",
+    #: the one its height limits use; in code order the card for *building
+    #: height* led with the first (FOLLOWUPS 222). Asking for both halves is
+    #: what keeps a qualifier out: Fairview's "Ridge line (building)" names a
+    #: roof, not a building.
+    first: list[Definition] = []
     exact: list[Definition] = []
     near: list[Definition] = []
     seen: set[str] = set()
     for bag, stems, found in entries:
         if found.cite in seen:
             continue
-        if bag in bags:
+        head, inner = _parts(found.term)
+        names = [bag, *(_bag(n) for n in _alternatives(head, inner))]
+        if inner and _bag(head) in bags and any(_contains(_seq(s), our_seq) for s in inner):
+            seen.add(found.cite)
+            first.append(found)
+        elif any(n in bags for n in names):
             seen.add(found.cite)
             exact.append(found)
         elif any(_contains(stems, s) for s in seqs):
             seen.add(found.cite)
             near.append(found)
-    return exact, near
+    return first + exact, near
+
+
+#: A parenthetical in a glossary heading.
+_PAREN = re.compile(r"\(([^()]*)\)")
+_OR = re.compile(r"^\s*or\s+", re.I)
+
+
+def _parts(term: str) -> tuple[str, list[str]]:
+    """A heading's words outside its parentheses, and what is inside them."""
+    inside = _PAREN.findall(term)
+    return (_PAREN.sub(" ", term) if inside else term), inside
+
+
+def _alternatives(head: str, inner: Sequence[str]) -> list[str]:
+    """Names a heading gives its entry by saying "or" in a parenthetical.
+
+    "106-211 Townhouses (or attached dwelling units on separate lots)": the
+    code naming one thing twice, so both the head and the alternative are
+    the entry's names. Only on "or". Without it a parenthetical is as often
+    a qualifier ("Ridge line (building)", "Open space (common/private)") as
+    a second name, and telling those apart is a rule about English.
+    """
+    alts = [_OR.sub("", s) for s in inner if _OR.match(s)]
+    return [head, *alts] if alts else []
+
+
+def _seq(text: str) -> tuple[str, ...]:
+    return tuple(_stem(w) for w in _norm(text).split() if w)
 
 
 def _lots_on(

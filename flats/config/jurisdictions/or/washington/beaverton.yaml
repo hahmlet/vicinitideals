@@ -2120,6 +2120,12 @@ zones:
       cite: "Beaverton BDC Table 20.10.15, C.1 Lot Dimensions - Minimum Width"
       quote: "or/washington/beaverton/20.10/20.10.15.txt#L7,L10-L11,L20"
     min_lot_depth_ft:
+      # The word it is measured on, quoted whole as stored (bdc.90.definitions.txt#L1416):
+      # "Lot, Depth. The perpendicular distance measured from the mid-point of the
+      # opposite, usually the rear, lot line." The city's own text ends there -- the
+      # front-line half ("from the mid-point of the front lot line to ...") is not
+      # in it; a worker checked the stored chapter against the city's (FOLLOWUPS 222).
+      # It is not a truncation of ours, and nothing here supplies the missing half.
       value: 100
       cite: "Beaverton BDC Table 20.10.15, C.2 Lot Dimensions - Minimum Depth"
       quote: "or/washington/beaverton/20.10/20.10.15.txt#L7,L10-L11,L21"

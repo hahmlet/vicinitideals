@@ -1089,3 +1089,28 @@ def test_a_layers_reference_test_is_built_once_per_store(tmp_path, monkeypatch) 
     W.refresh("or/test/town")
     W._opens(layer)
     assert built == ["or/test/town", "or/test/town"]
+
+
+def test_washington_county_cards_quote_the_right_106_entries() -> None:
+    """FOLLOWUPS 222. 106-211 and 106-143 were unread, so *townhouse* and
+    *multifamily* read silent; *building height* led with 106-101, measured
+    from mean sea level, over 106-101.1, the building-height entry."""
+    by = {c.term: c for c in cards(load_rules()["or/washington/_unincorporated"])}
+    lead = {t: (by[t].standing, by[t].exact, by[t].says[0].cite.rsplit("#", 1)[-1])
+            for t in ("townhouse", "multifamily", "building height", "street")}
+    assert lead["townhouse"] == ("defined", True, "L1104")
+    assert lead["multifamily"] == ("defined", False, "L782")
+    assert lead["building height"] == ("defined", True, "L594")
+    # The county defines no "street"; the card says so rather than calling
+    # 106-201 Street Plug the word's own entry.
+    assert lead["street"][:2] == ("defined", False)
+
+
+def test_a_parenthetical_names_an_entry_only_on_or() -> None:
+    assert W._stem("townhouses") == "townhouse" and W._stem("classes") == "class"
+    make = lambda term: (W._bag(term), W._seq(term), Definition(term=term, text="x", cite=term, doc="d", line=1))  # noqa: E731
+    # A qualifier is not a second name: near at most, never the word's own.
+    exact, near = W._says("building", [make("Ridge line (building)")])
+    assert exact == [] and [d.term for d in near] == ["Ridge line (building)"]
+    exact, _ = W._says("townhouse", [make("Townhouses (or attached dwelling units on separate lots)")])
+    assert [d.term for d in exact] == ["Townhouses (or attached dwelling units on separate lots)"]

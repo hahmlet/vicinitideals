@@ -477,9 +477,11 @@ definitions:
 #   line on all other types of uses" -- every use but a single- or two-family house, so the pod
 #   (#L33). That second triangle sits beside the pod's own driveway: the building must stand where
 #   its depth behind the street line plus its offset from the drive centreline is at least 30 ft.
-#   Nothing in FLATS models a vision triangle (the corpus-wide gap, FOLLOWUPS 105 round 4 open
-#   list), so this is NOT ENCODED and recorded as a possible false GREEN on lots whose front
-#   setback plus the drive's half-width is under 30 ft.
+#   SINCE ENCODED (FOLLOWUPS 161, flats/geom/sight_triangle.py): the `clear_vision:` block at the
+#   foot of this file holds both triangles -- the 42.040 corner (legs 30 ft from the lot lines) and
+#   the 42.050 drive (base 30 ft each way, apex at the front setback line). The drive's apex takes
+#   the single-family reading, not the "30 feet back" one above, under ruling
+#   2026-11-09-west-linn-pod-single-family; see that block's notes.
 # - Chapter 28, Willamette and Tualatin River Protection (28.river-protection.txt). An overlay on
 #   the city's zoning map: the Willamette Greenway, 200 ft from the Tualatin's low water mark and its
 #   100-year floodplain (28.030.A, #L67-L75), none of it held. Where a lot is inside it and holds a
@@ -2748,9 +2750,9 @@ private_drives:
     "Street. A public or private right-of-way whose primary function is to carry
     vehicular traffic or provide vehicular access to abutting property", naming
     "drive" among the facilities that are streets; "Private street. An accessway
-    which is under private ownership" (L780). Front lot line (L626), exterior
-    side lot line (L638) and corner lot (L177) read "street" other than an
-    alley.
+    which is under private ownership" (L1100). Front lot line (L878-L882),
+    exterior side lot line (L896) and corner lot (L221) read "street" other
+    than an alley.
 
 # Clear-vision areas at corners and drives (FOLLOWUPS 161; flats/geom/sight_triangle.py).
 clear_vision:

@@ -104,6 +104,14 @@ jurisdictions:
     # circumstances, as described in 430-84.3 B (4)". The circumstance that
     # reaches a one-driveway pod is B(4)(c)(ii): a lot with more than one
     # street frontage, every one a collector or an arterial.
+    # The townhouse twin, 430-84.4 B(5)(b)(i) (cdc.430-84.middle-housing.txt
+    # #L389-L392), prints "spacing standards of 501-8.2 B". 501-8.2 B is
+    # "Adequate Level of Arterial and Collector Roads" (cdc.501.public-
+    # facilities.txt#L639) and sets no spacing; the spacing standards are
+    # 501-8.5 B, Roadway Access (#L897-L902), which 501-8.5 itself points at
+    # townhouses through 430-84.4 B(5) (#L876-L878) and which the quadplex
+    # sentence prints (430-84.middle-housing.txt#L235-L237). Read as 501-8.5 B.
+    # Nothing below encodes the townhouse sentence; this is the citation only.
     applies:
       cite: CDC 501-8.5, for Middle Housing access spacing applies only to Triplexes, Quadplexes and Townhouses in the circumstances of 430-84.3 B(4); 430-84.3 B(4)(c)(ii), a Quadplex on a lot with more than one street frontage, frontages only on collector and/or arterial roads, meets the access spacing of 501-8.5 B
       quote: or/washington/_unincorporated/cdc.501.public-facilities.txt#L876-L878

@@ -1813,7 +1813,8 @@ zones:
       cite: Hillsboro CDC Table 12.21.850-1, Maximum Setbacks, side yard
       quote: "or/washington/hillsboro/12.21/12.21.850.txt#L57,L73,L79"
     setback_front_max_ft:
-      # NOT ENCODED: the front-yard averaging of 12.61.700.E, a relief.
+      # NOT ENCODED: the front-yard averaging of 12.61.700.D, Average Setback
+      # Conformance (12.61.700.txt#L9-L11), a relief.
       value: 25
       cite: Hillsboro CDC Table 12.21.850-1, Maximum Setbacks, front yard
       quote: "or/washington/hillsboro/12.21/12.21.850.txt#L57,L73-L74"

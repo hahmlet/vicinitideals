@@ -112,7 +112,7 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   resolution this screen works at.
 
 
-  READ AND NOT ENCODED: 9.0200, Clear Vision Area. Eleven mentions, and the development standards of
+  READ, AND SINCE ENCODED IN clear_vision: 9.0200, Clear Vision Area. Eleven mentions, and the development standards of
   Downtown, Civic Neighborhood and Corridor each carry the line "Comply with Section 9.0200 - Clear
   Vision Area." Fetched and read 2026-08-26. The whole section is two paragraphs and neither states a
   dimension. 9.0201 requires a triangular clear vision area on each corner at the intersection of two
@@ -154,14 +154,12 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   (or/multnomah/gresham/7/7.0420.txt#L136)
 
 
-  Still not encoded, and now for a better reason than absence. There is no clear-vision field, and the
-  shape is not a setback: a triangle cut across a corner is not an inset from a line, and writing 40
-  into a corner setback would take a diagonal off the whole street side. The corner limb also needs the
-  corner data this screen does not have -- 9.0201 joins fourteen other cities corner definitions waiting
-  on the same computation. The driveway limb is inert for this pod rather than unmeasured: 20 feet from
-  the back of curb reaches about the front setback line, and the rear-court typology parks four cars
-  behind the building, so the two triangles at the cut contain front yard. A city that let front-yard
-  parking in at 7.0420(B)(5)(c) takes some of it back here, and this screen never used it.
+  SINCE ENCODED (FOLLOWUPS 161). The shape is still not a setback -- a triangle cut across a corner is
+  not an inset from a line -- so it is not written into one; the `clear_vision:` block at the foot of
+  this file holds it, and flats/geom/sight_triangle.py draws it. Corner: 40 ft legs along the back of
+  the curb (Table 6.04), with structures, parked vehicles, driveways and off-street parking all barred
+  from the triangle; alleys 25 ft. Driveway: 20 ft, edge of the drive by back of curb, for detached and
+  middle housing sites. Both on ruling 2026-11-09-curb-position-middle-way.
   (or/multnomah/gresham/pws.6.03-6.04.txt#L67-L119)
 
 

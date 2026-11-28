@@ -415,6 +415,38 @@ def _words(term: str) -> tuple[str, ...]:
     return tuple(sorted(_key(term).split()))
 
 
+#: A numbered heading that qualifies its term in parentheses before the full
+#: stop: "106-211 Townhouses (or attached dwelling units on separate lots).
+#: Dwelling units that ...". ENTRY caps a term at seven words, so the
+#: qualifier pushed both of Washington County's middle-housing use words --
+#: 106-211 Townhouses and 106-143 Multi-Dwelling Structure -- out of its
+#: glossary, and the word cards for *townhouse* and *multifamily* read the
+#: county as silent on them (FOLLOWUPS 222). Only behind a section number, so
+#: a parenthesis in prose never opens an entry; the qualifier may wrap onto
+#: the next line, as 106-143's does.
+QUALIFIED = re.compile(
+    rf"^{_SECTION}\s+"
+    r"(?P<term>[A-Z][A-Za-z0-9'’/\-]*(?:\s+[A-Za-z0-9'’/\-]+){0,4}\s+\([^()]{3,90}\))"
+    r"\s*\.\s+(?P<body>\S.*)$"
+)
+_NUMBERED = re.compile(rf"^{_SECTION}\s")
+
+
+def _qualified(lines: Sequence[str], i: int) -> tuple[re.Match[str] | None, int]:
+    """A QUALIFIED heading at line ``i``, and the last line it used."""
+    first = lines[i].strip()
+    if "(" not in first or not _NUMBERED.match(first):
+        return None, i
+    found = QUALIFIED.match(first)
+    if found is not None:
+        return found, i
+    if first.count("(") > first.count(")") and i + 1 < len(lines):
+        found = QUALIFIED.match(_collapse(first + " " + lines[i + 1].strip()))
+        if found is not None:
+            return found, i + 1
+    return None, i
+
+
 def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]:
     lines = [_PADDED_HYPHEN.sub("-", line) for line in text.splitlines()]
     out: list[Entry] = []
@@ -470,6 +502,27 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
                         nested=nested,
                     )
                 )
+                continue
+        qualified, last = _qualified(lines, i)
+        if qualified is not None:
+            body = _collapse(qualified.group("body"))
+            whole = _whole(lines, last + 1, body)
+            if (
+                len(whole) >= MIN_BODY
+                and not NOT_A_DEFINITION.match(body)
+                and not APPARATUS.match(body)
+            ):
+                out.append(
+                    Entry(
+                        layer=layer,
+                        doc=doc,
+                        line=i + 1 + offset,
+                        term=_collapse(qualified.group("term")),
+                        text=whole,
+                        nested=nested,
+                    )
+                )
+                spoken_for.update(range(i + 1, last + 1))
                 continue
         stacked = _stacked(stripped)
         if stacked is None or not MIN_TERM <= len(stacked.group("term")) <= MAX_TERM:

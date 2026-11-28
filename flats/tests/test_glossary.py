@@ -731,3 +731,27 @@ def test_a_chapter_cut_into_sections_is_read_as_one_chapter(corpus: list[Chapter
     # and one is read across its sections, each entry quoted where it stands
     # (Fairview 19.13); a chapter declared at a span is read in its proof copy
     assert any(len({e.doc for e in c.entries}) > 1 for c in held)
+
+
+def test_a_numbered_heading_with_a_long_qualifier_is_an_entry() -> None:
+    """FOLLOWUPS 222: Washington County's 106-211 and 106-143 qualify their
+    terms in parentheses past ENTRY's seven words, and 106-143's qualifier
+    wraps onto the next line. Both went unread."""
+    text = "\n".join(
+        [
+            "106-143 Multi-Dwelling Structure (or multi-dwelling attached units, not on individual",
+            "lots). Five or more attached primary dwelling units that share a common",
+            "floor/ceiling with one or more units.",
+            "106-211 Townhouses (or attached dwelling units on separate lots). Dwelling units",
+            "that are part of a row of two or more attached primary dwelling units.",
+        ]
+    )
+    got = read(text)
+    assert [(e.term, e.line) for e in got] == [
+        ("Multi-Dwelling Structure (or multi-dwelling attached units, not on individual lots)", 1),
+        ("Townhouses (or attached dwelling units on separate lots)", 4),
+    ]
+    assert got[0].text.startswith("Five or more attached") and got[0].text.endswith("units.")
+    # Never without a section number: a parenthesis in prose opens nothing.
+    assert read("Townhouses (or attached dwelling units on separate lots). Dwelling units "
+                "that are part of a row of two or more attached units.") == []
