@@ -45,6 +45,7 @@ full re-screen lands. (Index lines carry a shortened tag; the item file has
 the full one.)
 
 ## 1. Claude -- priority
+217. [Claude] [Steph: API key + tier picks] [scan: NO] **Spend the monthly API credit ($200) in three tiers, never over** -- DEADLINE ~11-30; tiers picked 11-27 (code-change check / completeness / API-billed dev work, last $20 green checks); free sweep running; waiting on the key. [file](followups/217-api-credit-tiers.md)
 
 213. [Claude] [Steph: entrance-side red?] [scan: YES -- toward red] **Foundation reply FD8: adopt the precast steps, code fixes and real doors; RED where no foundation fits the six-step cap** -- opened 11-20; BUILT a78c1ade on flats/foundation-fd8 with step room + FD9; fd8 bound 11-22 NOT CLEAN (20 gained green, 7,275 moves unattributed: the cap check and the stair re-placement move lots they do not name) -- fixed 1e091d35 + c1a0830c (F1 false stair-room reds, F2 naming); fd8b read clean of false GREEN; scoped re-bound of 26,980 lots next. [file](followups/213-foundation-fd8-six-step-cap.md)
 214. [Claude] [scan: YES -- toward red] **Precast steps in a front or side setback: read and encode each city's projection allowances** -- opened 11-21, after the 213 release. [file](followups/214-step-setback-projections.md)
