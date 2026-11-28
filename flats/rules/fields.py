@@ -1731,7 +1731,7 @@ _F: tuple[FieldDef, ...] = (
         "length_ft",
         "How far a fire apparatus road may stand from the farthest part of "
         "the building's first-storey walls, measured by an approved route "
-        "around the outside of the building (OFC 2022 503.1.1, 150 ft). A "
+        "around the outside of the building (OFC 2025 503.1.1, 150 ft). A "
         "fire code number, not a zoning one: no zoning adjustment relieves "
         "it (:data:`flats.score.relief.NO_ZONING_RELIEF`), and sprinklers "
         "relax it only at the fire code official's discretion, which the "

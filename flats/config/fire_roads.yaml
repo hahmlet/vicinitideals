@@ -11,11 +11,14 @@
 #   no local length found.
 # - Tualatin Valley Fire & Rescue (Beaverton, Tigard, Tualatin, Sherwood, West
 #   Linn, Wilsonville, unincorporated Washington County): its guide prints
-#   150 ft (OFC 503.2.5, D103.1); no local length found.
+#   150 ft (OFC 503.2.5, D103.1); no local length found. Its 2025-code guide
+#   for houses and townhouses, stored as or/tvfr.2025.residential-guide.txt,
+#   prints the same 150 ft (#L226-L227; FOLLOWUPS 212, 2026-11-27).
 # - Hillsboro Fire: HMC 11.28.010 amends the OFC; the city's access page says
 #   150 ft (page refused automated reads, 403). Same as the state's.
 # - Clackamas Fire: the guide stored as or/ofc.2022.applications-guide.txt,
-#   150 ft.
+#   150 ft; its 2025-code edition, or/ofc.2025.applications-guide.txt, the
+#   same 150 ft (FOLLOWUPS 212, 2026-11-27), and the default below cites it.
 # - Canby Fire District (below): its "Conditions of Construction" (rev 10.28)
 #   prints 300 ft (citing OFC 503.2.5, D103.4) as the district's "local
 #   interpretations and practices" -- not an adopted amendment, but Steph
@@ -28,8 +31,8 @@
 dead_end_ft:
   default:
     value: 150
-    cite: "OFC 2022 503.2.5 (Oregon Fire Code Applications Guide, Clackamas Fire, rev. 2023-06-21)"
-    quote: "or/ofc.2022.applications-guide.txt#L137-L139"
+    cite: "OFC 2025 503.2.5 (Oregon Fire Code Application Guide, Clackamas Fire, rev. 2025-12-02)"
+    quote: "or/ofc.2025.applications-guide.txt#L140-L142"
   or/multnomah/portland:
     value: 300
     cite: "Portland City Code 31.30.010.B"
@@ -71,8 +74,8 @@ long_dead_end: yellow
 narrow_row:
   clear_ft:
     value: 20
-    cite: "OFC 2022 503.2.1 (Oregon Fire Code Applications Guide, Clackamas Fire, rev. 2023-06-21)"
-    quote: "or/ofc.2022.applications-guide.txt#L167-L169"
+    cite: "OFC 2025 503.2.1 (Oregon Fire Code Application Guide, Clackamas Fire, rev. 2025-12-02)"
+    quote: "or/ofc.2025.applications-guide.txt#L171-L173"
   curb_ft:
     value: 0.5
     cite: "Oregon City Municipal Code 16.12, street design standards table notes"

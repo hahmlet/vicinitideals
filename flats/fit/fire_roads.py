@@ -6,9 +6,9 @@ one. Two kinds of street are not, by the fire code's own words:
 
 * a street too narrow for the truck. "Fire apparatus access roads shall have
   an unobstructed driving surface width of not less than 20 feet" (OFC
-  503.2.1, ``or/ofc.2022.applications-guide.txt#L167-L169``; the 12-foot
+  503.2.1, ``or/ofc.2025.applications-guide.txt#L171-L173``; the 12-foot
   surface the note allows for three dwellings or fewer still needs 20 feet
-  unobstructed, L170-L171). The width measured here is the gap in the taxlot
+  unobstructed, L174-L175). The width measured here is the gap in the taxlot
   fabric between the PRIVATE lots either side of the centreline -- the
   right-of-way, which is a CEILING on the driving surface, never the surface
   itself. A gap under :data:`MIN_WIDTH_FT` proves the street too narrow; a
@@ -16,10 +16,10 @@ one. Two kinds of street are not, by the fire code's own words:
   the reading it had (Steph's brief, 2026-11-09).
 * a dead end longer than 150 feet with no turnaround. "Dead end fire
   apparatus access roads more than 150 feet in length shall be provided
-  with an approved turnaround" (OFC 503.2.5, L137-L139), and "An approved
+  with an approved turnaround" (OFC 503.2.5, L140-L142), and "An approved
   turnaround is required if the remaining distance to an approved
   intersecting roadway, as measured along the fire apparatus access road, is
-  greater than 150 feet" (OFC 503.1.1, L134). So without one the truck goes
+  greater than 150 feet" (OFC 503.1.1, L137-L138). So without one the truck goes
   no farther than :data:`DEAD_END_FT` from the last intersection. A
   turnaround is taken as absent only where the right-of-way at the end
   CANNOT hold one (:func:`_room_to_turn`); a dead end the fabric does not
@@ -81,18 +81,23 @@ from shapely.ops import substring
 CONFIG = Path(__file__).resolve().parents[1] / "config" / "fire_roads.yaml"
 
 #: OFC 503.2.1: the narrowest unobstructed width of a fire apparatus road
-#: (``or/ofc.2022.applications-guide.txt#L167-L169``).
+#: (``or/ofc.2025.applications-guide.txt#L171-L173``).
 MIN_WIDTH_FT = 20.0
 #: OFC 503.2.5 and 503.1.1: the farthest a truck may go from an intersecting
-#: road with no turnaround (L134, L137-L139).
+#: road with no turnaround (L137-L138, L140-L142).
 DEAD_END_FT = 150.0
 #: OFC 503.2.4 / D103.3: the outside turning radius of a 20-foot road
-#: (L198-L199). A dead end whose right-of-way leaves less clear room than
-#: this round its end, and no room for a hammerhead either
-#: (:data:`HAMMER_ARM_FT`), cannot hold a turnaround.
+#: (L204-L205; the 2025 OFC's own 503.2.4 and D103.3 leave the radius to
+#: the fire code official, and this guide is that official's). A dead end
+#: whose right-of-way leaves less clear room than this round its end, and no
+#: room for a hammerhead either (:data:`HAMMER_ARM_FT`), cannot hold a
+#: turnaround.
 TURN_RADIUS_FT = 48.0
 #: Half a hammerhead's cross-bar: D103.4's 120-foot hammerhead is 60 feet
-#: either side of the road, and its alternative 60 feet to one side. Clear
+#: either side of the road, and its alternative 60 feet to one side. The 2025
+#: OFC's Table D103.4 prints the same "120-foot Hammerhead, 60-foot "Y" or
+#: 96-foot diameter cul-de-sac" for a 151-500 ft dead end (read 2026-11-27 in
+#: the agent's reference copy, not stored: FOLLOWUPS 212). Clear
 #: right-of-way this far to either side, square to the road near its end, is
 #: room for one.
 HAMMER_ARM_FT = 60.0
@@ -358,7 +363,7 @@ def _room_to_turn(
     street's own half-width :data:`HALF_BACK_FT` back by :data:`BULB_FT` or
     more, a cul-de-sac built to the city's own street standard, which
     "supersede[s] and prevail[s] over" the fire code's (ORS 368.039(1),
-    ``or/ofc.2022.applications-guide.txt#L13-L16``) -- or room for a
+    ``or/ofc.2025.applications-guide.txt#L16-L19``) -- or room for a
     hammerhead's arm (:data:`HAMMER_ARM_FT`) to either side near the end.
     The room round a point and the half-width are read on the centreline
     and again across the right-of-way (:func:`_room_across`), so a bulb

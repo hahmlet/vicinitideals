@@ -1,0 +1,628 @@
+New Construction Fire Code Applications Guide for
+One- and Two-Family Dwellings and Townhouses
+
+This guide is intended to provide assistance in the application of the fire code
+in all areas served by Tualatin Valley Fire & Rescue.
+
+Command & Business
+Operations Center
+11945 SW 70th Avenue
+Tigard, OR 97223
+Phone: (503) 649-8577
+
+South Operation Center
+Fire & Life Safety Division
+8445 SW Elligsen Road
+Wilsonville, OR 97070
+Phone: (503) 259-1550
+
+Version: 7-13-2026
+
+2
+
+AUTHORITY AND SCOPE
+
+AUTHORITY: Tualatin Valley Fire & Rescue is a Rural Fire Protection District that has adopted and enforces
+the Oregon Fire Code under the authority granted in ORS 478.910, et. seq. (See TVF&R Ordinance #2020 -01).
+The current District Fire Code is the 2025 Oregon Fire Code (based on the 2024 International Fire Code
+published by the International Code Council).
+
+Tualatin Valley Fire & Rescue has prepared this guide to provide information on TVF&R specific policies,
+interpretations, and determinations related to compliance with the District Fire Code. This guide does not create
+or replace code provisions. The reader is cautioned that the guidance detailed in this guide may or may not apply
+to their specific situation, and that Tualatin Valley Fire & Rescue retains final authority to determine compliance.
+
+SCOPE:
+
+This guide applies to new structures built and permitted under the Oregon Residential Specialty Code
+(ORSC).
+
+Additions to existing one- and two-family dwellings permitted under the ORSC are not subject to new
+TVFR review.
+
+See the TVF&R New Construction Fire Code Applications Guide for Commercial and Multi-Family
+Development for structures constructed under the Oregon Structural Specialty Code (OSSC).
+
+LOCAL DEVELOPMENT CODES
+Check the local city or county development code to determine public roadway standards.
+
+HELPFUL LINKS:
+2025 Oregon Fire Code
+
+2023 Oregon Residential Specialty Code
+
+3
+
+4
+Table of Contents
+Fire Apparatus Access ................................ ................................ ................................ ........................... 5-9
+Access Road Distance from Buildings and Facilities .......................................................................................... 5
+Single Family Dwelling Unit Exception ................................................................................................................ 5
+Flag Lot & Shared Driveways .............................................................................................................................. 6
+Exception for Automatic Sprinkler Protection ...................................................................................................... 6
+Width and Vertical Clearance .............................................................................................................................. 6
+Individual One- and Two-Family Dwellings ......................................................................................................... 6
+Detached Garages .............................................................................................................................................. 7
+Accessory Dwelling Units .................................................................................................................................... 7
+Agricultural/Equine Exempt Structures ................................................................................................................ 7
+Forest Dwellings .................................................................................................................................................. 7
+One- and Two-Family Residential Developments ............................................................................................... 7
+Multiple Access Roads Separation ...................................................................................................................... 7
+Premises Identification ........................................................................................................................................ 7
+Access During Construction ................................................................................................................................ 7
+Uniform Alternate Construction Standard ............................................................................................................ 7
+Dead End Roads and Turnarounds ..................................................................................................................... 7
+Turning Radius .................................................................................................................................................... 8
+Turnouts ............................................................................................................................................................... 8
+Access Road Grade............................................................................................................................................. 8
+Aerial Apparatus Operating Grades .................................................................................................................... 8
+Angle of Approach/Grade for Turnarounds ......................................................................................................... 8
+Angle of Approach/Grade for Intersections ......................................................................................................... 8
+Fire Apparatus Access Roads with Fire Hydrants ............................................................................................... 8
+Aerial Fire Apparatus Roads ............................................................................................................................... 8
+Aerial Apparatus Operations ............................................................................................................................... 8
+Surface and Load Capacities .............................................................................................................................. 8
+Bridges ................................................................................................................................................................. 9
+Gates ................................................................................................................................................................... 9
+Traffic Calming Devices ....................................................................................................................................... 9
+No Parking ........................................................................................................................................................... 9
+No Parking Signs ............................................................................................................................................... 10
+Painted Curbs .................................................................................................................................................... 10
+Building Access and Fire Service Features ................................ ................................ ........................... 10
+Knox Box ........................................................................................................................................................... 10
+Firefighting Water Supplies ................................ ................................ ................................ .................... 10
+Individual One- and Two-Family Dwellings ....................................................................................................... 10
+Rural One- and Two-Family Dwellings .............................................................................................................. 10
+Detached Garages ............................................................................................................................................ 10
+Accessory Dwelling Units .................................................................................................................................. 10
+Agricultural/Equine Exempt Structures .............................................................................................................. 10
+Accessory Structures ......................................................................................................................................... 10
+Fire Flow Water Availability ............................................................................................................................... 10
+5
+
+Water Supply During Construction in Municipal Areas...................................................................................... 10
+Fire Hydrants ................................ ................................ ................................ ................................ ........... 11
+Fire Hydrant Number and Distribution ............................................................................................................... 11
+Fire Hydrant Placement ..................................................................................................................................... 11
+Fire Hydrant Distance from an Access Road .................................................................................................... 11
+Fire Hydrants – One- and Two-Family Dwellings and Accessory Structures .................................................... 11
+Private Fire Hydrant Identification ..................................................................................................................... 11
+Reflective Hydrant Markers ............................................................................................................................... 12
+Physical Protection ............................................................................................................................................ 12
+Clear Space around Fire Hydrants .................................................................................................................... 12
+Appendix ................................ ................................ ................................ ................................ ............. 12-18
+Appendix A Key Boxes – Policy ........................................................................................................................ 13
+Appendix B Agricultural Building and Equine Facility Exemption – Policy ........................................................ 14
+Appendix C No Parking Fire Lane Curb Detail – Policy .................................................................................... 15
+Appendix D Mountable Curb Detail – Policy ................................................................................................ 16-17
+Appendix E Fire Department Access Box for Override Switch on Powered Access Gates – Policy ................ 18
+
+6
+Fire Apparatus Access
+
+FIRE APPARATUS ACCESS ROAD
+DISTANCE FROM BUILDINGS AND
+FACILITIES: Access
+roads shall be within 150’ of all portions of the
+exterior wall of the first story of the building as
+measured by an approved route around the
+exterior of the building or facility. An approved
+turnaround is required if the remaining
+distance to an approved intersecting roadway,
+as measured along the fire apparatus access
+road, is greater than 150’. (OFC 503.1.1)
+
+Access roads are not required to be modified for buildings that undergo a change in occupancy, change
+in use, or conversion from agricultural or equine exempt to non-exempt unless there is a change to the
+structure’s square footage or building footprint. (OFC 503.1.1)
+
+Single Family Dwelling Unit Exception: On a private driveway that serves only (1) single-family dwelling
+unit, a driveway may be up to 200’ to the nearest point on the house. See attached diagram:
+
+The 200’ allowance is primarily for determining if any portion of a driveway needs to be reviewed or
+comply with TVF&R standards.  If the nearest portion of a house is less than 200’ from the approved
+road, then there is no need for TVF&R to review the driveway. TVF&R requirements (width, grade,
+support, etc.) will not apply to driveways less than 200’ to nearest portion of house per the following
+diagram:
+
+If the driveway exceeds 200’, then the 200’ allowance is used to determine which portion of the driveway
+needs to comply. It inherently also means that a turn-around would be required. This is similar to the 150’ rule,
+
+7
+except the 150’ rule requires measurement to the furthest portion of the house around an accessible route
+which often is not known at time of land use, or is built on a slope which we don’t know what an accessible
+path is until landscaping is completed.  The 200’ allowance provides an easier measurement to the nearest
+portion of the house.  The following diagram clarifies:
+
+This exception applies ONLY to a driveway serving (1) single-family dwelling. It does not apply to shared driveways
+serving more than (1) single-family dwelling.
+
+FLAG LOTS & SHARED DRIVEWAYS: Driveways serving more than (1) one- or two-family dwelling units (not including
+ADUs) shall comply with all fire code access requirements, including 150-feet to all portions of exterior walls of the first
+story. OFC 503.1.1, Appendix
+
+Exception: A shared driveway serving no more than (2) one- or two-family dwelling units may be reduced to 12-feet in width
+per OFC 503.1.1 Exception 1.3). All other access requirements shall apply, including turning radius, grade, turnarounds, etc.
+
+FIRE APPARATUS ACCESS ROA D EXCEPTION FOR AUTOMATIC SPRINKLER PROTECTION: When buildings are
+completely protected with an approved automatic fire sprinkler system, the requirements for fire apparatus access may be
+modified as approved by the  Fire Marshal. (OFC 503.1.1)  Note: If fire sprinklers are installed and the system will be
+
+8
+supported by a municipal water supply, please contact the local water purveyor for information about water meter
+sizing.
+FIRE APPARATUS ACCESS ROAD WIDTH AND VERTICAL CLEARANCE : Fire apparatus access roads shall
+have an unobstructed driving surface width of not less than 20’ (26’ adjacent to fire hydrants (OFC D103.1)) and an
+unobstructed vertical clearance of not less than 13’ 6”. (OFC 503.2.1 & D103.1)
+Exception: Driveways and shared driveways serving not more than (2) one- or two-family dwelling units (not
+including ADUs) may be reduced to no less than 12’ wide approved driving surface.
+
+DETACHED GARAGES: Detached garages (U occupancies) and similar structures installed in accordance with local
+building code and land use requirements are not required to have firefighting access when located on the same parcel
+as a one- or two-family dwelling.
+
+ACCESSORY DWELLING UNIT (ADU): An Accessory Dwelling Unit (ADU) installed in accordance with local building
+code and land use requirements is not required to have firefighting access when located on the same parcel as a one-
+or two-family dwelling.
+
+FIRE APPARATUS ACCESS ROADS FOR AGRICULTURAL/EQUINE EXEMPT STRUCTURES:  Agricultural
+buildings and equine facilities, as defined in ORS 455.315, shall be exempt from the fire apparatus access
+requirements contained in Tualatin Valley Fire & Rescue’s adopted fire prevention ordinance. (See Appendix B)
+
+FIRE APPARATUS ACCESS ROADS FOR FOREST DWELLINGS: Approved Forest Dwelling Permit Applications
+(where the County Zoning and Development tests are completed and approved, and where the structure meets all
+County forest dwelling fire siting, fire retardant roof, and spark arrestor requirements) will be allo wed up to 20%
+maximum grade. Access roads greater than 20% shall be considered on a case -by-case basis. Forest Dwelling access
+roads shall be an all-weather surface capable of supporting imposed loads of not less than 37,000 pounds gross
+vehicle weight and be no less than 12’ minimum width. All other access requirements, including turn- arounds shall be
+determined based upon heavy brush unit response capability to the individual property.
+
+ADDITIONAL ACCESS ROADS – ONE- AND TWO-FAMILY RESIDENTIAL DEVELOPMENTS: Developments of
+one- and two-family dwellings, where the number of dwelling units exceeds 30, shall be provided with separate and
+approved fire apparatus access roads and shall meet the requirements of Section D10 7.1. Exception: Where there are
+more than 30 dwelling units on a single public or private fire apparatus access road and all dwelling units are equipped
+throughout with an approved automatic sprinkler system in accordance with section 903.3.1.1, 903.3.1.2, or
+903.3.1.3 of the Oregon Fire Code, access from two directions shall not be required. (OFC D107.1)
+
+MULTIPLE ACCESS ROADS SEPARATION : Where two access roads are required, they shall be placed a distance
+apart equal to not less than one half of the length of the maximum overall diagonal dimension of the area to be served (as
+identified by the Fire Marshal), measured in a straight line between accesses. (OFC D104.3)
+
+PREMISES IDENTIFICATION: New and existing buildings shall have approved address numbers; building numbers or
+approved building identification placed in a position that is plainly legible and visible from the street or road fronting th e
+property, including monument signs. These numbers shall contrast with their background. Numbers shall be a
+
+9
+minimum of 4 inches high with a minimum stroke width of 1/2 inch. (OFC 505.1)
+
+ACCESS DURING CONSTRUCTION: Approved fire apparatus access roadways shall be installed and operational
+prior to any combustible construction or storage of combustible materials on the site. Temporary address signage shall
+also be provided during construction. (OFC 3307.1)
+
+UNIFORM ALTERNATE CONSTRUCTION STANDARD (UACS): When fire access or firefighting water-supply
+requirements cannot be met, a project may be eligible to use the UACS for one- and two-family dwellings. See OFC
+D108.1.
+
+DEAD END ROADS AND TURNAROUNDS: Dead end fire apparatus access roads in excess of 150’ in length shall be
+provided with an approved turnaround. Diagrams of approved turnarounds are shown below: (OFC 503.2.5 & D103. 4)
+
+TURNING RADIUS: The inside turning radius and outside turning radius shall not be less than 28 ’ and 48’
+respectively, measured from the same center point. (OFC 503.2.4 & D103.3)
+
+TURNOUTS: Where access roads are less than 20’ and exceed 400’ in length, turnouts 10’ wide and 30’ long may be
+required and will be determined on a case by case basis. (OFC 503.2.2)
+
+ACCESS ROAD GRADE:  Fire apparatus access roadway grades shall not exceed 15%, OFC 503.2.7 & D103.2.
+AERIAL APPARATUS OPERATING GRADES: Portions of aerial apparatus roads that will be used for aerial
+operations shall be as flat as possible. Front to rear and side to side maximum slope shall not exceed 10% OFC
+503.2.7.
+
+ANGLE OF APPROACH/GRADE FOR TURNAROUNDS: Turnarounds shall be as flat as possible and have a
+maximum of 5% grade.(OFC 503.2.8 & D103.2)
+
+ANGLE OF APPROACH/GRADE FOR INTERSECTIONS: Intersections shall be level (maximum 5%). (OFC 503.2.8)
+FIRE APPARATUS ACCESS ROADS WITH FIRE HYDRANTS: Where a fire hydrant is located on a fire apparatus
+access road, the minimum road width shall be 26” and shall extend 20” before and after the point of the hydrant. (OFC
+D103.1)
+
+AERIAL FIRE APPARATUS ROADS: Buildings with a vertical distance between the grade plane and the highest roof
+surface that exceeds 30 feet in height shall be provided with a fire apparatus access road constructed for use by aerial
+apparatus with an unobstructed driving surface width of not less than 26 feet. For the purposes of this section, the
+
+10
+highest roof surface shall be determined by measurement to the eave of a pitched roof, the intersection of the roof to the
+exterior wall, or the top of the parapet walls, whichever is greater. Any portion of the building may be used for this
+measurement, provided that it is accessible to firefighters and is capable of supporting ground ladder placement. (OFC
+D105.1, D105.2)
+AERIAL APPARATUS OPERATIONS: At least one of the required aerial access routes shall be located within a
+minimum of 15 feet and a maximum of 30 feet from the building, and shall be positioned parallel to one entire side of
+the building. The side of the building on which the aerial access road is positioned shall be approved by the Fire
+Marshal. Overhead utility and power lines shall not be located over the aerial access road or between the aerial
+access road and the building. (D105.3, D105.4)
+SURFACE AND LOAD CAPACITIES: Fire apparatus access roads shall be of an all-weather surface that is easily
+distinguishable from the surrounding area and is capable of supporting not less than 12,500 pounds point load
+(wheel load) and 75,000 pounds live load (gross vehicle weight). Documentation from a registered engineer that the
+final construction is in accordance with approved plans or the requirements of the Fire Code may be requested.
+(OFC 503.2.3)
+
+BRIDGES: Private bridges shall be designed and constructed in accordance with the State of Oregon Department of
+Transportation and American Association of State Highway and Transportation Officials Standards Standard
+Specification for Highway Bridges (HB17). A building permit shall be obtained for the construction of the bridge if required
+by the building official of the jurisdiction where the bridge is to be built. The design engineer shall prepare a special
+inspection and structural observation program for approval by the building official. The design engineer shall give, in
+writing; final approval of the bridge to the fire district after construction is completed. Maintenance of the bridge shall b e
+the responsibility of the party or parties that use the bridge for access to their property. The fire district may at any time,
+for due cause, ask that a registered engineer inspect the bridge for structural stability and soundness at the expense of
+the property owner(s) the bridge serves. Vehicle load limits shall be posted at both entrances to bridges when required
+by the Fire Marshal. Where elevated surfaces designed for emergency vehicle use are adjacent to surfaces which are
+not designed for such use, approved barriers, approved signs or both shall be instal led and maintained when required by
+the Fire Marshal. Where elevated surfaces designed for emergency vehicle use are adjacent to surfaces which are not
+designed for such use, approved barriers, approved signs or both shall be installed and maintained when required by the
+Fire Marshal. (OFC 503.2.
+
+GATES: Gates securing fire apparatus roads shall comply with (OFC D103.5, and 503.6) When access gate(s) needs to
+be locked an expendable long shank padlock which can be cut with a bolt cutter shall be installed. A Knox padlock is not
+required. Also see fire department emergency access/ powered gate policy pg18.
+
+TRAFFIC CALMING DEVICES: Shall be prohibited on fire access routes unless approved by the Fire Marshal. (OFC
+503.4.1) Traffic calming measures linked here: http://www.tvfr.com/DocumentCenter/View/1578
+
+NO PARKING: Parking on emergency access roads shall be as follows (OFC D103.6.1-2):
+1. 20-26’ road width – no parking on either side of roadway
+2. 26-32' road width – parking is allowed on one side
+3. Greater than 32’ road width – parking is not restricted
+
+Note: For specific widths and parking allowances, contact the local municipality.
+
+Parking prohibited on either side: Parking prohibited on one side only:
+11
+
+Parking permitted on both sides:
+
+NO PARKING SIGNS: Where fire apparatus roadways are not of sufficient width to accommodate parked vehicles
+and 20’ of unobstructed driving surface, “No Parking” signs shall be installed on one or both sides of the roadway and
+in turnarounds as needed.
+Signs shall read “NO PARKING - FIRE LANE” and shall be installed with a clear space above grade level of 7 ’. Signs
+shall be 12 inches wide by 18 inches high and shall have red letters on a white reflective background. (OFC D103.6)
+
+PAINTED CURBS: Where required, fire apparatus access roadway curbs shall be painted red (or as approved) and
+marked “NO PARKING FIRE LANE” at 25 ’ intervals. Lettering shall have a stroke of not less than one inch wide by
+six inches high. Lettering shall be white on red background (or as approved). (OFC 503.3)
+
+Building Access and Fire Service Features
+
+KNOX BOX: A Knox Box, padlock, or Knox key switch for gate access may be required. See appendix A for further
+information and detail on required installations. To order contact TVF&R for assistance and instructions regarding
+installation and placement. (OFC 506.1)
+Firefighting Water Supplies
+
+12
+INDIVIDUAL ONE- AND TWO-FAMILY DWELLINGS: The minimum available fire flow for one and two-family
+dwellings served by a fixed and reliable (municipal) water supply shall be 1,000 gallons per minute. If the structure(s)
+is (are) 3,600 sq ft or larger, the required fire flow shall be determined according to OFC Appendix B. (OFC B105. 1)
+
+RURAL ONE- AND TWO- FAMILY DWELLINGS: Rural one- or two-family dwellings, where there is no fixed and
+reliable water supply and where there is approved access shall not be required to provide a firefighting water supply.
+(OFC B103.1)
+
+AGRICULTURAL/EQUINE EXEMPT STRUCTURES: Agricultural buildings, agricultural grading, equine facilities and
+dog training facilities as defined in ORS 455.315, shall be exempt from the firefighting water supply requirements
+contained in Tualatin Valley Fire & Rescue’s adopted fire prevention ordinance. (See Appendix B)
+
+DETACHED GARAGES: Detached garages (U occupancies) and similar structures installed in accordance with local
+building code and land use requirements are not required to have a water supply when located on the same parcel
+as a one- or two-family dwelling (OFC B103.1).
+
+ACCESSORY DWELLING UNIT (ADU): An Accessory Dwelling Unit (ADU) installed in accordance with local
+building code and land use requirements is not required to have firefighting water supplies when located on the same
+parcel as a one- or two-family dwelling (OFC B103.1).
+
+FIRE FLOW WATER AVAILABILITY: Applicants shall provide documentation of a fire hydrant flow test or flow test
+modeling of water availability from the local water purveyor if the project includes a new structure or increase in the
+floor area of an existing structure. Tests shall be conducted from a fire hydrant within 400’ for commercial projects, or
+600’ for residential development. Flow tests will be accepted if they were performed within 5 years as long as no
+adverse modifications have been made to the supply system. Water availability information may not be required to be
+submitted for every project. (OFC Appendix B)
+
+WATER SUPPLY DURING CONSTRUCTION IN MUNICIPAL AREAS:  In areas with fixed and reliable water supply,
+approved firefighting water supplies shall be installed and operational prior to any combustible construction or storage
+of combustible materials on the site. (OFC 3313.1)
+
+Fire Hydrants
+
+FIRE HYDRANT NUMBER AND DISTRIBUTION: The minimum number and distribution of fire hydrants available to a
+building shall not be less than that listed in Table C 102.1. (OFC Appendix C)
+
+TABLE C102.1
+NUMBER AND DISTRIBUTION OF FIRE HYDRANTSh
+
+FIRE-FLOW REQUIREMENT
+(gpm)
+
+MINIMUM NUMBER
+OF HYDRANTS
+AVERAGE SPACING
+BETWEEN HYDRANTSa, b, c
+(feet)
+MAXIMUM DISTANCE FROM
+ANY POINT ON STREET OR ROAD
+FRONTAGE TO A HYDRANTd
+1,750 or less 1 500 250
+1751-2,250 2 450 225
+2,251-2,750 3 450 225
+2,751-3,250 3 400 225
+3,251-4,000 4 350 210
+4,001-5,000 5 300 180
+5,001-5,500 6 300 180
+5,501-6,000 6 250 150
+6,001-7,000 7 250 150
+7,001 or more 8 or moree 200 120
+Table Footnotes:
+For SI: 1 foot = 304.8 mm, 1 gallon per minute = 3.785 L/m.
+a. Reduce by 100 feet for dead-end streets or roads.
+b. Where streets are provided with median dividers which can be crossed by firefighters pulling hose lines, or where arterial streets are
+provided with four or more traffic lanes and have a traffic count of more than 30,000 vehicles per day, hydrant spacing shall average 500 feet on
+each side of the street and be arranged on an alternating basis up to a fire-flow requirement of 7,000 gallons per minute and 400 feet for
+higher fire-flow requirements.
+13
+c. Where new water mains are extended along streets where hydrants are not needed for protection of structures or similar fire problems, fire
+hydrants shall be provided at spacing not to exceed 1,000 feet to provide for transportation hazards.
+d. Reduce by 50 feet for dead-end streets or roads.
+e. One hydrant for each 1,000 gallons per minute or fraction thereof.
+f. A 50-percent spacing increase shall be permitted where the building is equipped throughout with an approved automatic sprinkler system
+in accordance with Section 903.3.1.1 of the International Fire Code.
+g. A 25-percent spacing increase shall be permitted where the building is equipped throughout with an approved automatic sprinkler system in
+accordance with Section 903.3.1.2 or 903.3.1.3 of the International Fire Code or Section P2904 of the International Residential Code.
+h. The fire code official is authorized to modify the location, number and distribution of fire hydrants based on site -specific constraints and hazards.
+
+FIRE HYDRANT(S) PLACEMENT: (OFC 507 and Appendix C)
+• Existing hydrants in the area may be used to meet the required number of hydrants as approved. Hydrants
+that are up to 600’ away from the nearest point of a subject building that is protected with fire sprinklers may
+contribute to the required number of hydrants. (OFC 507.5.1)
+• Hydrants that are separated from the subject building by railroad tracks shall not contribute to the required
+number of hydrants unless approved by the Fire Marshal.
+• Hydrants that are separated from the subject building by divided highways or freeways shall not contribute to
+the required number of hydrants. Heavily traveled collector streets may be considered when approved by the
+Fire Marshal.
+• Hydrants that are accessible only by a bridge shall be acceptable to contribute to the required number  of
+hydrants only if approved by the Fire Marshal.
+
+FIRE HYDRANT DISTANCE FROM AN ACCESS ROAD: Fire hydrants shall be located not more than 15’ from an
+approved fire apparatus access roadway unless approved by the Fire Marshal. (OFC C102.1 h)
+
+FIRE HYDRANTS – ONE- AND TWO-FAMILY DWELLINGS AND ACCESSORY STRUCTURES: Where a portion of
+a structure is more than 600’ from a hydrant on a fire apparatus access road, as measured in an approved
+route around the exterior of the structure(s), on-site fire hydrants and mains shall be provided. (OFC 507.5.1)
+
+PRIVATE FIRE HYDRANT IDENTIFICATION: Private fire hydrants shall be painted red in color. Exception: Private
+fire hydrants within the City of Tualatin shall be yellow in color. (OFC 507)
+
+REFLECTIVE HYDRANT MARKERS: Fire hydrant locations shall be identified by the installation of blue reflective
+markers. They shall be located adjacent and to the side of the center line of the access roadway that the fire hydrant
+is located on. In the case that there is no center line, then assume a center line and place the reflectors accordingly.
+(OFC 507)
+
+PHYSICAL PROTECTION: Where fire hydrants are subject to impact by a motor vehicle, guard posts, bollards or
+other approved means of protection shall be provided. (OFC 507.5.6 & OFC 312)
+
+CLEAR SPACE AROUND FIRE HYDRANTS: A 3 foot clear space shall be provided around the circumference of fire
+hydrants. (OFC 507.5.5)
+
+Appendix
+
+Appendix A – Key Boxes
+
+Appendix B – Agricultural Building and Equine Facility Exemption
+
+ Appendix C – No Parking Fire Lane Curb Detail
+
+ Appendix D – Mountable Curb Detail
+
+ Appendix E – Fire Department Access Box for Override Switch on Powered Access Gates
+
+14
+
+New Construction Fire Code Application Guide
+Appendix A
+
+KEY BOXES
+
+DATE: June 1, 2010 (Reviewed: 3/16/23)
+
+PURPOSE: To define the requirements for installation of key boxes.
+
+SCOPE: This policy shall apply to all areas served by Tualatin Valley Fire & Rescue.
+
+CODE REFERENCES: 2025 OFC Section 506
+
+POLICY: Key Boxes
+
+Tualatin Valley Fire & Rescue requires key boxes on buildings that meet certain parameters. When key
+boxes are required by this policy, Knox brand key boxes shall be used.
+
+Required Installation - Key boxes shall be installed on buildings and structures when:
+✓ An elevator is installed. ✓ Equipped with an automatic fire extinguishing system.
+✓ Equipped with a fire alarm system. ✓ Access is restricted due to security arrangements.
+
+EXCEPTION: Buildings and structures open and supervised twenty-four hours a day, seven days a week or
+constantly attended.
+
+Installation Details - Key boxes shall be installed in an approved location; normally adjacent to primary
+entrance. The bottom of the key box shall not be more than 6’ above the walking surface unless
+approved by the Chief or authorized representative. See exception below.
+
+EXCEPTION: In multi-tenant buildings (each with their own outside entrance) the key box shall be
+located at the door that will best and most easily gain access to automatic sprinkler system controls
+alarm system controls, etc.
+
+Contents - Key boxes typically may contain the following keys and critical information necessary to gain
+access:
+✓ Building or structure keys ✓ Gate key
+✓ Alarm systems keys and instructions ✓ Elevator door key
+✓ Elevator recall key ✓ Automatic fire extinguishing system control valve keys
+✓ Emergency personnel contact numbers ✓ Hazardous materials safety data sheets
+✓ Multiple sets of keys when required
+
+Required Labeling - All keys shall be labeled as to their use, i.e., main entrance, alarm control panel,
+sprinkler room door, etc.
+
+Key Box Size - The size of the key box shall be sufficient to contain all necessary keys and/or
+equipment.
+
+15
+
+New Construction Fire Code Application Guide
+Appendix B
+
+AGRICULTURAL BUILDING, EQUINE FACILITY AND DOG TRAINING FACILITY
+EXEMPTION
+
+DATE: February 23, 2026 (Reviewed: 2/23/26)
+
+PURPOSE: To define the requirements for fire apparatus access and firefighting water supplies related
+to the exemption of agricultural buildings, agricultural grading, equine facilities, and dog
+training facilities.
+
+SCOPE: This policy shall apply to all areas served by Tualatin Valley Fire & Rescue.
+
+CODE REFERENCES: Oregon Revised Statute (ORS) 455.315
+
+POLICY: Exemption of Agricultural Buildings, Agricultural Grading, Equine Facilities and Dog
+Training Facilities.
+
+For the purpose of this policy, fire apparatus access and firefighting water supplies for agricultural buildings,
+equine facilities, and dog training facilities, as defined in ORS 455.315, shall be regulated as follows:
+
+1. Exemption:
+Agricultural buildings and equine facilities, as defined in ORS 455.315, are exempt from the fire
+apparatus access and firefighting water-supply requirements contained within Tualatin Valley Fire &
+Rescue’s adopted fire prevention ordinance.
+2. Fire Sprinkler Systems Encouraged:
+It is the policy of Tualatin Valley Fire & Rescue to encourage the installation of fire sprinkler systems in
+agricultural buildings, equine facilities, and dog training facilities.
+3. Access and Water Supply Encouraged:
+It is the policy of Tualatin Valley Fire & Rescue to encourage the installation of fire apparatus access
+roadways and firefighting water supplies serving these facilities.
+
+16
+
+New Construction Fire Code Application Guide
+Appendix C
+
+NO PARKING FIRE LANE CURB DETAIL
+
+DATE: April 10, 2020                                                                          (Reviewed: 3/16/23)
+
+PURPOSE: To define the requirements of marking fire lane curbing.
+
+SCOPE: This policy shall apply to all areas served by Tualatin Valley Fire & Rescue.
+
+CODE REFERENCES: 2025 OFC Chapter 5, Section 503.3
+
+POLICY: No Parking Fire Lane Curb Detail
+
+The OFC does not provide guidance with regards to the color or marking style of fire lane curbing. The policy
+of Tualatin Valley Fire & Rescue is as follows:
+
+• Curb paint shall be red for the entire length of the fire lane.
+• “NO PARKING FIRE LANE” shall be stenciled with a 3 ½ inch minimum height block in white lettering
+with a minimum of ½ inch stroke width.
+• The markings shall be spaced at 25’ intervals.
+
+17
+
+New Construction Fire Code Application Guide
+Appendix D
+
+MOUNTABLE CURB DETAIL
+
+DATE: April 10, 2020                                                                           (Reviewed: 3/16/23)
+
+PURPOSE: To define the requirements of a mountable curb for fire access.
+
+SCOPE: This policy shall apply to all areas served by Tualatin Valley Fire & Rescue.
+
+CODE REFERENCES: 2025 OFC Chapter 5, Section 503.2.8
+
+POLICY: Mountable Curb Detail
+
+The OFC does not provide guidance with regards to the use of mountable curbs for fire access roads.
+Mountable curbs will be approved on a case by case basis. Where a local jurisdiction has a design detail that
+meets or exceeds this detail the detail of the local jurisdiction shall apply. The policy of Tualatin Valley Fire &
+Rescue is as follows:
+
+NOTES:
+
+1. Expansion joints shall be provided at each point of tangency of the curb material. Joints shall be pre-
+molded, non-extruding, with a minimum thickness of ½ inch.
+
+2. Contraction joints shall be a minimum of 2” deep, spaced a maximum of 15’ apart, and match PCC
+
+18
+street slab joints.
+
+3. Base rock 1 ½” minus, compacted to 95% AASHTO T-180, shall be to subgrade of street structure or 4”
+in depth, whichever is greater, extending 1’ behind curb.
+
+4. Slope of gutter shall not exceed 5% at sidewalk ramp.
+
+5. Gutter thickness shall match the pavement thickness, where thickness exceeds six inches.
+
+6. The height of the standard curb shall match the pavement thickness plus the curb exposure when
+greater than 16”.
+
+19
+
+New Construction Fire Code Application Guide
+Appendix E
+
+Fire Department Emergency Access on Powered Gates
+
+DATE: Update 4/17/2024
+
+PURPOSE: To identify the requirements for fire department access box for override switch on powered
+access gates.
+
+SCOPE: This policy shall apply to all areas served by Tualatin Valley Fire & Rescue.
+
+CODE REFERENCES: 503.6 OFC 2025
+
+POLICY: Fire Department Access for powered gates.
+
+Power operated gates that obstruct required firefighting access shall be equipped with an approved means
+of emergency operation as required per OFC 503.6 and the following language:
+
+SECURITY GATE OVERRIDE DEVICE REQUIREMENTS
+The override device shall consist of the following:
+
+1. FIRE DEPARTMENT OPERATION: The fire department shall be able to open the gate during an
+emergency. A manual switch or Knox-key mechanism for operating the gate shall be protected with a
+weatherproof enclosure box.  The enclosure shall be secured with either a long-shanked padlock that can
+be cut with bolt cutters, or with Knox Padlock. The design shall be approved by TVF&R prior to installation.
+
+2. PLACEMENT OF FIRE DEPARTMENT ACCESS BOX
+The fire department box shall be installed on a support pillar or post adjacent to the gate. The box must be
+visible from approach and marked “FIRE DEPARTMENT” or similar.
+
+3. GATE OPERATION
+When the fire department switch is activated, the gate/gates shall fully open without delay.
