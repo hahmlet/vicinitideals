@@ -202,11 +202,12 @@ def portland():
     return _green("1N1E22CC  -99999", "R5", "portland", {"pdx_flag_lot": False, "in_floodplain": False})
 
 
-def _checked(s, rise: float):
+def _checked(s, rise: float, classes=("FIRM", None)):
     import shapely
 
     return fc.checked(s, terrain=_Plane(rise), streets=lambda: STREET, lot_geom=shapely.box(0, 0, 300, 300),
-                      classes=("B", None), tlid=s.lot.tlid)
+                      classes=classes, tlid=s.lot.tlid)
+
 
 
 def test_portland_flat_ground_carries_the_measure_and_stays_green(portland) -> None:
@@ -219,43 +220,65 @@ def test_portland_flat_ground_carries_the_measure_and_stays_green(portland) -> N
     assert out.signed.colour is Colour.green
 
 
-def test_portland_ground_rising_from_the_street_reads_red_past_four_feet(portland) -> None:
-    """Somewhere between level and the six-step cap the floor passes 4 ft at
-    the street wall: there the lot is RED on the entrance, not the cap."""
+def test_ground_rising_from_the_street_stays_under_four_feet_before_the_cap(portland) -> None:
+    """On ordinary ground rising from the street the six-step cap, tested at
+    the foot of the steps out from the wall, binds before the entrance does
+    at the wall's corners: the measure rises with the ground and stays
+    within 4 ft while the cap still passes."""
+    last = -1.0
+    for rise in (0.02, 0.04, 0.05):
+        fc._CACHE.clear()
+        out = _checked(portland, rise)
+        ent = out.foundation["entrance"]
+        assert out.foundation["state"] in ("fits", "close_under_cap")
+        assert ent["state"] == eg.FITS and ent["height_in"] > last
+        last = ent["height_in"]
+
+
+def _lower(monkeypatch, max_in: float) -> None:
+    """The 4 ft limit set to ``max_in`` on the real measure, so the drawn
+    building on a gentle plane reaches it before the cap."""
+    real = fc.entrance_for
+
+    def lowered(s):
+        got = real(s)
+        return None if got is None else (dataclasses.replace(got[0], max_in=max_in), got[1], got[2])
+
+    monkeypatch.setattr(fc, "entrance_for", lowered)
+
+
+@pytest.mark.parametrize(("rise", "want"), [(0.04, eg.FITS), (0.043, eg.HELD), (0.05, eg.OVER)])
+def test_over_the_limit_is_red_and_within_the_error_yellow(portland, monkeypatch, rise, want) -> None:
     from flats.score.flags import Colour
 
-    seen = {}
-    for rise in np.arange(0.08, 0.20, 0.005):
-        fc._CACHE.clear()
-        out = _checked(portland, float(rise))
-        if out.foundation.get("state") == "over_cap":
-            break
-        seen[out.foundation["entrance"]["state"]] = out
-    over = seen[eg.OVER]
-    assert over.signed.colour is Colour.red and fc.ENTRANCE_GRADE in over.signed.reasons
-    bind = next(b for b in over.signed.binds if b.check == fc.ENTRANCE_CHECK)
-    assert bind.threshold == 48.0 and "33.110.230.txt#L33-L34" in bind.source
-    held = seen[eg.HELD]
-    assert held.signed.colour is Colour.yellow
-    assert [f.code for f in held.signed.flags] == [fc.ENTRANCE_HELD_FLAG]
-    # Run again over its own answer: nothing added twice.
-    again = fc._apply(over.signed, over.foundation)
-    assert again.binds == over.signed.binds and again.reasons == over.signed.reasons
+    _lower(monkeypatch, 30.0)
+    out = _checked(portland, rise)
+    ent = out.foundation["entrance"]
+    assert ent["state"] == want, ent
+    colour = {eg.FITS: Colour.green, eg.HELD: Colour.yellow, eg.OVER: Colour.red}[want]
+    assert out.signed.colour is colour and out.screening.colour is colour
+    if want == eg.OVER:
+        assert fc.ENTRANCE_GRADE in out.signed.reasons
+        bind = next(b for b in out.signed.binds if b.check == fc.ENTRANCE_CHECK)
+        assert bind.threshold == 30.0 and "33.110.230.txt#L33-L34" in bind.source
+        assert ent["slope_pct"] is not None and ent["slope_pct"] < 18
+        again = fc._apply(out.signed, out.foundation)
+        assert again.binds == out.signed.binds and again.reasons == out.signed.reasons
+    if want == eg.HELD:
+        assert [f.code for f in out.signed.flags] == [fc.ENTRANCE_HELD_FLAG]
+        assert fc.ENTRANCE_HELD in out.signed.reasons
 
 
-def test_an_unread_flag_lot_holds_yellow_never_red() -> None:
+def test_an_unread_flag_lot_holds_yellow_never_red(monkeypatch) -> None:
     from flats.score.flags import Colour
 
     s = _green("1N1E22CC  -99998", "R5", "portland", {"in_floodplain": False})
     s = dataclasses.replace(s, lot=dataclasses.replace(s.lot, observed={
         k: v for k, v in s.lot.observed.items() if k != "pdx_flag_lot"}))
-    for rise in np.arange(0.08, 0.20, 0.005):
-        fc._CACHE.clear()
-        out = _checked(s, float(rise))
-        if out.foundation.get("state") == "over_cap":
-            break
-        assert out.foundation["entrance"]["state"] != eg.OVER
-        assert out.signed.colour is not Colour.green or out.foundation["entrance"]["state"] == eg.FITS
+    _lower(monkeypatch, 30.0)
+    out = _checked(s, 0.05)
+    assert out.foundation["entrance"]["state"] == eg.HELD
+    assert out.signed.colour is Colour.yellow and fc.ENTRANCE_GRADE not in out.signed.reasons
 
 
 def test_a_zone_with_no_grade_limit_is_not_measured() -> None:
