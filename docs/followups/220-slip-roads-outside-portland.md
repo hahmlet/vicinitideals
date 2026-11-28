@@ -14,3 +14,8 @@ cross-references), and encode the city as Portland is where the definition cover
 Bridge on/off slip roads stay limited everywhere (Steph 2026-11-27).
 Then bound (s4 rebuild of street_kind_json only, as 215's recipe), move read, release.
 Start after 215 ships.
+
+## Readings done 2026-11-27 (../vicinitideals-worktrees/slip-road-readings.md)
+YES: clackamas_unincorporated (8), milwaukie (5), multnomah_unincorporated (1). UNCLEAR, stay limited:
+tigard (12), beaverton (15), washington_unincorporated (15; needs ORS 801 definitions fetched).
+Next: encode the three YES places like Portland on top of flats/pdx-connectors once 215's encoder is done.
