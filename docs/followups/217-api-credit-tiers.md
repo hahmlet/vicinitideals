@@ -42,4 +42,11 @@
    gitignored data/flats/credit/ledger.jsonl, one row per worker with its reported cost;
    a worker is not launched if spent + its budget > $190. Steph also sets a $200 limit in
    the console. Last launch ~12 h before expiry.
-   Waiting on: Steph creates the API key in the account holding the credit and pastes it.
+   Status 11-27 night: key in (~/.anthropic-credit-key, this PC only). t1 security worker
+   running (worktree security-deps). t1b done -> 218 ($2.77). t2 done -> 222 ($31.0).
+   t3 build queue (data/flats/credit/run-t3.sh, $15 cap each, 3 at a time, worktrees
+   ../vicinitideals-worktrees/credit-*): milwaukie-vegetation, clack-1009,
+   gresham-far-buffer, oregon-city-thimble, hillsboro-stub, west-linn-38030, beaverton-cm;
+   each leaves HANDOFF.md in its worktree; the coordinator reviews, merges and bounds them
+   as ONE package. Green check (3 x $7): 30 live greens, seed 68, round-5 lots excluded,
+   reports dumped read-only from 114 to data/flats/credit/greens/.
