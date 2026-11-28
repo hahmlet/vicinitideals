@@ -142,3 +142,14 @@ def test_a_tie_carries_the_other_readings_tolerance_onto_the_shown_row() -> None
     assert _worse(tolerated, clear) is tolerated
     # The owner's choice (``_better``) carries nothing.
     assert _better(shown, tolerated) is shown
+    # The lot today (trace on 137, 2026-11-27): its other reading's hose
+    # route passes on the 5 ft allowance, and that note is carried too.
+    hosed = read("FIRE-HOSE-VALIDATE", "MEASURE-FRONT-MAX-STREET")
+    assert hosed.signed.colour is Colour.yellow
+    got = _worse(shown, hosed)
+    assert [f.code for f in got.signed.flags].count("FIRE-HOSE-VALIDATE") == 1
+    assert got.signed.colour is Colour.yellow
+    # Any other flag of the other reading stays on its own row.
+    other = read("DENSITY-MIN", "MEASURE-FRONT-MAX-STREET")
+    assert other.signed.colour is Colour.yellow
+    assert "DENSITY-MIN" not in [f.code for f in _worse(shown, other).signed.flags]

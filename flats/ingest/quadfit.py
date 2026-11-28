@@ -5531,8 +5531,9 @@ def _worse(first: Screened, second: Screened) -> Screened:
     kept, other = (second, first) if _shown(second) > _shown(first) else (first, second)
     if _COLOUR[kept.signed.colour] == _COLOUR[other.signed.colour]:
         # The colour rests on both readings: one that holds it only by a
-        # measurement tolerance says so on the shown row too (FOLLOWUPS 215
-        # F5, 1S1E16CD  -03400). A note on a tie: the colour does not move.
+        # measurement tolerance, or by the hose's 5 ft allowance, says so on
+        # the shown row too (FOLLOWUPS 215 F5, 1S1E16CD  -03400). A note on a
+        # tie: the colour does not move.
         kept = _tolerance_carried(kept, other)
     return kept
 
@@ -5541,10 +5542,16 @@ def _worse(first: Screened, second: Screened) -> Screened:
 #: its measurement tolerance.
 MEASURE_TOLERANCE = "MEASURE-TOLERANCE"
 
+#: The notes one reading's colour may rest on that a tie carries onto the
+#: shown row (:func:`_tolerance_carried`): a check held only by its
+#: measurement tolerance, and a hose route past the code's 150 ft that
+#: passes on the 5 ft allowance (rulings.yaml 2026-11-21-fire-hose-five-ft).
+_CARRIED_ON_A_TIE = frozenset({MEASURE_TOLERANCE, "FIRE-HOSE-VALIDATE"})
+
 
 def _tolerance_carried(kept: Screened, other: Screened) -> Screened:
-    """``kept`` with every MEASURE-TOLERANCE flag of ``other`` it lacks (by
-    flag key), on the screening and the signed answer alike, its source
+    """``kept`` with every flag of ``other`` in :data:`_CARRIED_ON_A_TIE` it
+    lacks (by code and key), on the screening and the signed answer alike, its source
     saying it came from the lot's other reading. Where carrying one would
     move that answer's colour, that answer is left as it was."""
 
@@ -5558,7 +5565,7 @@ def _tolerance_carried(kept: Screened, other: Screened) -> Screened:
                 ),
             )
             for f in getattr(y, "flags", ())
-            if f.code == MEASURE_TOLERANCE and (f.code, f.key) not in have
+            if f.code in _CARRIED_ON_A_TIE and (f.code, f.key) not in have
         )
         if not extra:
             return x
