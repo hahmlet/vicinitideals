@@ -97,7 +97,16 @@ def unmoved(monkeypatch):
     monkeypatch.setattr(quadfit, "flatter_checked", lambda s, *a, **k: s)
 
 
+def off_transit(monkeypatch) -> None:
+    """The test lot (RM1, at real Portland coordinates) read as off every
+    transit street and Pedestrian District: RM1's Table 120-4 maximum
+    (FOLLOWUPS 205 item 1) would otherwise cap the search at 20 ft from the
+    street, and these tests are about the slope, not the maximum."""
+    monkeypatch.setattr(quadfit, "front_max_reach", lambda s: ((False,), False))
+
+
 def test_the_plan_moves_to_level_ground_behind_the_hill(tmp_path, corpus, policies, monkeypatch) -> None:
+    off_transit(monkeypatch)
     # 2026-11-20 (FD8): the six-step cap at the doors is the screen's own
     # check now, and the moved plan's front wall still stands on the 10% rise
     # (its front door 59.5 in above the ground, over the 51.5 in cap), so it
@@ -137,6 +146,7 @@ def test_a_lot_that_is_level_behind_nowhere_is_left_where_it_stood(tmp_path, cor
 def test_a_spot_the_hose_cannot_reach_is_not_taken(tmp_path, corpus, policies, monkeypatch) -> None:
     """Level ground only far back: the hose route to a building stood there is
     over 150 ft, so the plan stays where it was."""
+    off_transit(monkeypatch)
     deep = lambda x, y: np.where(y < 62.0, (62.0 - y) * -0.10, 0.0)  # noqa: E731
     t = terrain(tmp_path, deep)
     with monkeypatch.context() as m:

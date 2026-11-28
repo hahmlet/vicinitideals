@@ -350,5 +350,7 @@ def test_ci1_is_no_longer_decided_at_the_use_gate(
     assert got.borrowed_from == ("RM1",)
     assert got.values["max_far"].value == 1.0
     assert got.values["min_lot_sqft"].value == 4000
-    # RM1 states no maximum front setback either, so note [5] still never fires.
-    assert "setback_front_max_ft" not in got.values
+    # RM1's Table 120-4 maximum comes with RM1 (2026-11-27, FOLLOWUPS 205
+    # item 1); note [5] is Table 150-2's, which a home does not take.
+    assert got.values["setback_front_max_streets"].value == "transit_or_district"
+    assert got.values["setback_front_ft"].value == 10

@@ -546,10 +546,17 @@ _F: tuple[FieldDef, ...] = (
         "passes, and one beyond it is held out of GREEN, never failed "
         "(Portland Table 150-2, transit streets and "
         "Pedestrian Districts). "
+        "`transit_or_district`: the same condition read off the city's own "
+        "maps (Portland Table 120-4 and 33.120.220.C.1, FOLLOWUPS 205): the "
+        "streets on the Transportation System Plan's transit map, or every "
+        "street of a lot in or touching a Pedestrian District; a lot whose "
+        "every street the map reads clear, outside every district, owes no "
+        "maximum. A building beyond it on a street it reaches is held out of "
+        "GREEN, never failed, and a lot off the maps is read as `conditional`. "
         "Absent, nothing says which: the screen passes a building within the "
         "maximum of every street, fails one beyond it on every street, and "
         "holds the rest out of GREEN.",
-        choices=("every", "front", "one", "corner_every", "conditional"),
+        choices=("every", "front", "one", "corner_every", "conditional", "transit_or_district"),
     ),
     FieldDef(
         "setback_front_max_facade_pct",

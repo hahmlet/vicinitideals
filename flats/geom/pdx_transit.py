@@ -49,6 +49,16 @@ section bars), or the lot where nothing is drawn: clear where it lies beyond
 a street can sit from its centreline (``CORRIDOR_REACH_FT``) -- and within,
 short of that, wherever a street line of the lot reads TRANSIT.
 
+**The multi-dwelling maximum setback** (Table 120-4, "Transit Street or
+Pedestrian District", PCC 33.120.220.C.1; FOLLOWUPS 205 item 1) reaches a
+street of the lot on this map or, for a site in a Pedestrian District, every
+street (:func:`front_max_reach`). The districts are the plan's own polygons,
+:data:`PEDESTRIAN` (43, fetched 2026-11-27). A lot inside or touching one owes
+the maximum on every street; a lot clear of every district owes it on each
+street the map does not read CLEAR. A lot line the edges do not call a street
+line with a segment of either file abreast of it (``hidden``) may be a transit
+street nothing measured: the screen then holds the lot out of GREEN.
+
 **Only Portland.** The map is the city's plan; the unincorporated pockets the
 city's zoning answers (:data:`flats.geom.pdx_overlays.ANSWERS`) and a lot off
 the map's extent are not read (:func:`read` gives None), and every street
@@ -70,6 +80,9 @@ from flats.rules.loader import AREAS_ROOT
 #: The held layer, under ``flats/config/areas``.
 TRACED = "or/multnomah/portland/transit-streets.geojson"
 UNCLASSIFIED = "or/multnomah/portland/transit-streets-unclassified.geojson"
+#: The plan's Pedestrian Districts (Portland Maps
+#: ``Public/Transportation_System_Plan/MapServer/16``), under ``flats/config/areas``.
+PEDESTRIAN = "or/multnomah/portland/pedestrian-districts.geojson"
 #: The map's source, said on the flags.
 SOURCE = "the city's Transportation System Plan transit classification map (Portland Maps, fetched 2026-10-22)"
 
@@ -234,6 +247,63 @@ def load(traced: str = TRACED, unclassified: str = UNCLASSIFIED) -> TransitMap:
     )
 
 
+@dataclass(frozen=True)
+class Districts:
+    """The plan's Pedestrian Districts: each one's name and shape."""
+
+    names: tuple[str, ...]
+    shapes: tuple[Any, ...]
+
+    def touching(self, geom: Any) -> tuple[str, ...]:
+        """The districts ``geom`` lies in or touches, by name."""
+        return tuple(n for n, g in zip(self.names, self.shapes, strict=True) if g.intersects(geom))
+
+
+@lru_cache(maxsize=None)
+def load_districts(file: str = PEDESTRIAN) -> Districts:
+    """The held district file (under ``flats/config/areas``)."""
+    from shapely.geometry import shape
+
+    data = json.loads((AREAS_ROOT / file).read_text(encoding="utf-8"))
+    feats = [f for f in data["features"] if f.get("geometry")]
+    return Districts(
+        tuple(str(f["properties"].get("PedDistrictName") or "") for f in feats),
+        tuple(shape(f["geometry"]) for f in feats),
+    )
+
+
+def front_max_reach(
+    tm: TransitMap | None,
+    districts: Districts | None,
+    lot: Any,
+    chains: Sequence[Sequence[Any]],
+    edges: Any,
+) -> tuple[tuple[bool, ...] | None, bool]:
+    """Which of the lot's streets (``chains``, each a run of
+    :class:`flats.geom.edges.Edge`, in the order the maximum front setback
+    measures them) Table 120-4's multi-dwelling maximum may reach, and
+    whether a lot line nothing calls a street line may be a transit street
+    (``hidden``).
+
+    PCC 33.120.220.C.1: the maximum applies "on a transit street or in a
+    Pedestrian District"; outside a district it is met on the transit
+    street frontages (C.1.b), inside one on all street frontages (C.1.c).
+    A lot in or touching a district reaches every street; any other lot
+    the streets the map does not read CLEAR (a MAYBE street may be one).
+    ``(None, False)`` where the maps do not reach the lot: nothing here
+    says which street, and every one is held."""
+    if tm is None or districts is None or lot is None or lot.is_empty or not tm.covers(lot):
+        return None, False
+    in_chain = {id(e) for chain in chains for e in chain}
+    others = [e for e in getattr(edges, "edges", ()) or () if id(e) not in in_chain]
+    hidden = any(
+        not e.alley and tm.line(e, street=False)[0] != CLEAR for e in others
+    )
+    if districts.touching(lot):
+        return tuple(True for _ in chains), hidden
+    return tuple(any(tm.line(e)[0] != CLEAR for e in chain) for chain in chains), hidden
+
+
 def read(tm: TransitMap | None, lot: Any, edges: Any, building: Any | None = None) -> Frontage | None:
     """The map's reading for one lot (EPSG:2913) and its edges; None where
     the map does not reach it (no map, no lot, off its extent): every street
@@ -275,13 +345,17 @@ __all__ = [
     "CLEAR",
     "CLEAR_FT",
     "CROSS_DEG",
+    "Districts",
     "Frontage",
     "MAYBE",
+    "PEDESTRIAN",
     "SERVES",
     "TRANSIT",
     "TRACED",
     "TransitMap",
     "UNCLASSIFIED",
+    "front_max_reach",
     "load",
+    "load_districts",
     "read",
 ]
