@@ -41,12 +41,15 @@ MODEL = "claude-opus-5-5"
 # worker cannot push, ssh, deploy or reach the network beyond the model API.
 ALLOWED = [
     "Read", "Grep", "Glob", "Edit", "Write",
-    "Bash(uv run pytest:*)", "Bash(uv run ruff:*)", "Bash(uv run python -m flats.:*)",
+    "Bash(uv run pytest:*)", "Bash(uv run ruff:*)", "Bash(uv run python -m flats.provenance.fetch:*)", "Bash(uv run python -m flats.encode.crossrefs:*)",
+    "Bash(uv run python -m flats.encode.uncited:*)", "Bash(uv run python -m flats.encode.definitions:*)",
+    "Bash(uv run python -m flats.encode.glossary:*)", "Bash(uv run python -m flats.encode.words:*)",
     "Bash(uv run python scripts/:*)", "Bash(uv lock:*)", "Bash(uv sync:*)", "Bash(uv tree:*)",
     "Bash(uv pip list:*)",
     "Bash(git status:*)", "Bash(git diff:*)", "Bash(git log:*)", "Bash(git show:*)",
     "Bash(git add:*)", "Bash(git commit:*)", "Bash(git grep:*)",
     "Bash(grep:*)", "Bash(rg:*)", "Bash(ls:*)", "Bash(wc:*)", "Bash(head:*)", "Bash(sed -n:*)",
+    "Bash(diff:*)", "Bash(mkdir:*)",
 ]
 # Only what a Windows process needs to start; no tokens, keys or agent sockets inherited.
 ENV_KEEP = ("PATH", "PATHEXT", "SYSTEMROOT", "SYSTEMDRIVE", "COMSPEC", "WINDIR", "TEMP", "TMP",
