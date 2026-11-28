@@ -418,7 +418,10 @@ pytestmark = pytest.mark.unit
 # +2 flats/gladstone-fixes (FOLLOWUPS 204 / 205): the two 2026-11-18 Gladstone reading blocks (17.58, 17.50).
 # The 2026-08 narrative above that ZDO 845.01(3) "stays unencoded" is history: it is held since
 # flats/clackamas-fixes (quadfit clackamas_fmd carve, ruling 2026-11-18-clackamas-flood-ban-red).
-EXPECTED = {"notes": 163, "comments": 302, "tests": 18}
+EXPECTED = {"notes": 162, "comments": 302, "tests": 18}
+# 163 -> 162 notes on 2026-11-28 (FOLLOWUPS 222, Thimble Creek): Oregon City's header
+# note no longer calls the R-5 concept-plan standards (17.10.070) "not encoded" -- the
+# southern perimeter setback is held on the drawn area oregon_city_thimble_creek.
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no

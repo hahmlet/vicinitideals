@@ -1534,6 +1534,25 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "oregon_city_thimble_creek",
+        "site_fact",
+        "The parcel is inside Oregon City's Thimble Creek (formerly "
+        "Beavercreek Road) Concept Plan area. In MUC-2 there, every "
+        "residential use but live/work is held to upper stories over a "
+        "ground floor of non-residential use (OCMC 17.29.080.E), which an "
+        "all-residential pod cannot be. In R-5 there, a lot within twenty "
+        "feet of the area's southern boundary sets every primary structure "
+        "forty feet back from that boundary (17.10.070.C.3), a distance "
+        "nothing here measures. Assumed unknown, because the answer decides "
+        "the colour and the zones do not carry it.",
+        evidence=(
+            "Oregon City's own Thimble Creek / Beavercreek Road Concept Plan "
+            "boundary -- held as Oregon City's drawn_areas, from the city's "
+            "LandUseAndPlanning MapServer layer 43"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "south_hillsboro_plan_district",
         "site_fact",
         "The Hillsboro lot lies inside the South Hillsboro Plan District, "
@@ -2171,6 +2190,7 @@ DRAWN_CONDITIONS: tuple[str, ...] = (
     "oregon_city_historic_overlay",
     "oregon_city_park_place",
     "oregon_city_south_end",
+    "oregon_city_thimble_creek",
     "pdx_east_corridor_min_far_half",
     "pdx_east_corridor_min_far_one",
     "pdx_eastern_pattern_area",

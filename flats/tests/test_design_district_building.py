@@ -152,6 +152,9 @@ def corpus() -> dict:
 
 def test_oregon_city_declares_the_three_areas(corpus) -> None:
     declared = {a.condition: a for a in corpus[OC].drawn_areas.values()}
+    # Thimble Creek (FOLLOWUPS 222) is asked of R-5 and MUC-2 only and is
+    # tested in test_oregon_city_thimble_creek.py.
+    declared.pop("oregon_city_thimble_creek")
     assert {c: a.file for c, a in declared.items()} == AREAS
     assert {"R-10", "R-8", "R-5"} <= set(declared["oregon_city_park_place"].zones)
     assert {"R-10", "R-8"} <= set(declared["oregon_city_south_end"].zones)

@@ -71,6 +71,7 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
         "oregon_city_historic_overlay",
         "oregon_city_park_place",
         "oregon_city_south_end",
+        "oregon_city_thimble_creek",
         # Portland plan districts part 1: Johnson Creek Basin (33.537) and
         # Laurelhurst/Eastmoreland (33.540) (FOLLOWUPS 109, 2026-11-01), and
         # part 2 batch A: Glendoveer (33.530) and the one hold for the rules nothing measures

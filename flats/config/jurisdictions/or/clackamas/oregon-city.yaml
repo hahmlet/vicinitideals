@@ -9,8 +9,9 @@ notes: 'Ported from quadfit rules.yaml, then re-read value by value against Titl
   (3) max_height_ft 35 is encoded for all five zones; it was in the notes and in no field. Relief the
   tables state and this file does not encode: the porch exceptions to the front setback, the 10 ft rear
   for an ADU or cottage cluster, the 0 ft attached side for townhouses, the 25 ft height for a cottage
-  cluster unit, and coverage +5% with an ADU. OCMC 17.16.155 adds standards inside the Thimble Creek
-  Concept Plan Area of R-5 that supersede the zone; they are geographic and not encoded. UNPORTED: orientation_constraint=''entrance_only''.
+  cluster unit, and coverage +5% with an ADU. OCMC 17.10.070 adds standards inside the Thimble Creek
+  Concept Plan Area of R-5 that supersede the zone; its southern perimeter setback is held on the
+  drawn area oregon_city_thimble_creek (see R-5 setback_rear_ft). UNPORTED: orientation_constraint=''entrance_only''.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
   provenance. open_space_min_pct 75 is dropped from all five zones: it quoted OCMC 17.16''s cottage cluster
   courtyard rule, which caps IMPERVIOUS cover at seventy-five percent of a COURTYARD belonging to a housing
@@ -1723,8 +1724,25 @@ zones:
       value: 5
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4333"
     setback_rear_ft:
+      # FOLLOWUPS 222 item 1. OCMC 17.10.070 governs all development in R-5
+      # inside the Thimble Creek Concept Plan Area and supersedes the zone
+      # (A, B). Its southern perimeter transition (C) reaches a lot "within
+      # twenty feet of the southern boundary" between Beavercreek Road and
+      # the eastern-most point of Tax Lot 00316, and C.3 sets "all primary
+      # structures ... a minimum of forty feet from the southern boundary".
+      # The 40 ft runs from the area's edge, not from a lot line, and nothing
+      # here measures a lot's distance to one edge of a drawn area, so the
+      # whole area is held: any R-5 lot inside it stays out of GREEN, named.
+      # Held on the rear yard because that is where a lot backing onto the
+      # boundary meets it; the hold is on the lot, not on that one line.
+      # C.1 (residential uses only) and C.2 (7,000 sq ft for a quadplex,
+      # 1,500 for a townhouse) restate what this block already carries.
       value: 20
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4340"
+      qualified_by:
+        fact: oregon_city_thimble_creek
+        cite: OCMC 17.10.070.C.3, Thimble Creek southern perimeter transition, primary structures forty feet from the southern boundary where any portion of the lot is within twenty feet of it; 17.10.070.A and B, applies to all R-5 development in the area and supersedes the zone
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L4403-L4416,L4427-L4430"
     setback_street_side_ft:
       value: 7
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4338"
@@ -2181,8 +2199,9 @@ zones:
       is dismissed there: it can only relax, and relaxes a standard nothing
       reads. 17.12.060
       (Thimble Creek Concept Plan Area) supersedes this district inside one
-      geographic area and is not encoded, the same treatment 17.16.155 already
-      gets for R-5. The affordable-housing density bonus of 17.12.050.C reaches
+      geographic area and is not encoded (it adds live/work and master-plan
+      commercial uses and a sustainability density bonus, L4660-L4738, and
+      nothing in it tightens the pod). The affordable-housing density bonus of 17.12.050.C reaches
       only projects of five or more units and cannot help a fourplex.
   R-3.5:
     section: ["17.10.", "17.16."]
@@ -2664,6 +2683,16 @@ zones:
           cite: OCMC 17.48.050 (greenway permit for all developments), 17.48.080 (considerations) and 17.48.100 (compatibility review)
           quote: "or/clackamas/oregon-city/17.zoning.txt#L11763-L11766,L11845-L11848,L11890-L11897"
           via: "or/clackamas/oregon-city/17.zoning.txt#L11755-L11761"
+        # FOLLOWUPS 222 item 2. Inside the Thimble Creek Concept Plan Area
+        # 17.29.080 supersedes the MUC-2 standards (A, B), and E limits "All
+        # residential uses, except live/work units" to "upper stories only",
+        # proposed only with non-residential uses on the ground floor. The
+        # pod is residential top to bottom, so the use is closed there.
+        - value: false
+          when: [oregon_city_thimble_creek]
+          cite: OCMC 17.29.080.E, Thimble Creek MUC-2, residential uses limited to upper stories over a non-residential ground floor
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L7254-L7257"
+          via: "or/clackamas/oregon-city/17.zoning.txt#L7200-L7208"
     min_lot_sqft:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7144-L7145"
@@ -3473,6 +3502,29 @@ drawn_areas:
       roofline) reaches the pod there. It states no roof pitch. The
       residential zones are listed because the chapter reaches residences
       whatever their zone.
+  thimble_creek_concept_plan:
+    condition: oregon_city_thimble_creek
+    zones: [R-5, MUC-2]
+    file: or/clackamas/oregon-city/thimble-creek-beavercreek-concept-plan.geojson
+    source: >-
+      City of Oregon City GIS, LandUseAndPlanning_PUBLIC MapServer layer 43,
+      the Beavercreek Road (Thimble Creek) Concept Plan boundary, queried in
+      EPSG:2913 and saved unchanged by the design-districts chunk 2 ingest on
+      2026-10-22 (docs/flats/ingest_c2_2026-10-22.md).
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L3427-L3431,L4403-L4407,L7200-L7204"
+    cite: OCMC 17.04.1277, 17.10.070.A and 17.29.080.A
+    note: >-
+      The Beavercreek Road Concept Plan "was renamed the Thimble Creek
+      Concept Plan in 2020" (17.04.1277), so the city's layer under the old
+      name is the area the code means. 17.10.070 reaches "all development in
+      the R-5 district" there and 17.29.080 "all development in the MUC-2
+      district" there; each supersedes its zone. In MUC-2 the fact closes the
+      use (17.29.080.E, residential upper stories only); in R-5 it holds the
+      lot out of GREEN for the southern perimeter setback (17.10.070.C.3),
+      which runs from one edge of this area and is not measured. The NC, R-2
+      and CI sections for the same area (17.24.050, 17.12.060, 17.37.060) are
+      not asked here: NC and CI are already closed to the pod, and 17.12.060 only
+      adds uses and a density bonus.
   historic_overlay:
     condition: oregon_city_historic_overlay
     zones: [R-10, R-8, R-6, R-3.5, R-2, MUC-1, MUD]

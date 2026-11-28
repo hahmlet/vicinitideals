@@ -3339,6 +3339,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-OREGON-CITY-THIMBLE-CREEK:
+    description: "Whether the lot lies inside the Oregon City Thimble Creek (Beavercreek Road) Concept Plan area; in R-5 there, whether it is within twenty feet of the area's southern boundary, which sets primary structures forty feet back from it (OCMC 17.10.070.C.3)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The city's concept plan boundary layer (flats/config/areas/or/clackamas/oregon-city/thimble-creek-beavercreek-concept-plan.geojson); for an R-5 lot inside it, measure the distance to the southern boundary between Beavercreek Road and the eastern-most point of Tax Lot 00316 on Clackamas County Map #32E15A (17.10.070.C): beyond twenty feet the base setbacks stand; within it, every primary structure stands forty feet from that line"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
 
   # --- lots the bridge never measured (flats.ingest.assign) ------------
   # One per gate the normalize stage closes (flats.ingest.normalize.GATES)
