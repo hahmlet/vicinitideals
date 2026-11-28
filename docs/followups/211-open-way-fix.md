@@ -1,108 +1,13 @@
-# 211 -- Freeway, ramp and railroad sides counted as street sides (false GREEN in the wide-road lane)
+# 211 -- Freeway, ramp and railroad sides: what is still open
 
-Found 2026-11-19 by the second-pass move read of the rel10 scoped re-bound
-(`../vicinitideals-worktrees/rel10d-moves.findings.md`). Nothing false is live: the wide-road lane
-never shipped. **rel10 does not ship on its own; live goes run 128 -> rel11 directly.**
+Shipped in rel11 (run 131, ee8baaba) 2026-11-21. Nothing false was ever live. A freeway or ramp is not a street in Portland (PCC 33.910.030); elsewhere the lot is screened both ways, worse kept, YELLOW with a flag; rail likewise; road-widening strip measured across wide right-of-way; fire access from a wide road or state highway counts for green (Steph 11-19, Q53/Q54), freeway-only lot yellow (Q55). Fire hose also passes to 155 ft (11-21). Findings ../vicinitideals-worktrees/rel10d-moves.findings.md; hand-off open-way-fix.handoff.md in the same folder.
 
-## What was wrong
+Open (Steph, none blocking; cautious answers built; see ../vicinitideals-worktrees/QUESTIONS-FOR-STEPH-scratch.md):
+1. Q52 (asked 11-19): outside Portland, does a lot side backing onto a freeway or ramp count as a street side? Built: no credit for frontage, access or fire, stricter setback reading, closer-look flag.
+2. Q56 (not asked): a road-widening strip that still cannot be measured: worst case (red where it bites, built) or yellow?
+3. Q57 (not asked, low): an engine on the near side of a divided main road (two carriageways or a frontage road) is kept YELLOW under FIRE-ROAD-UNCLEAR; 2 lots, both red for another reason.
 
-The wide-road lane (rel10) lets a lot line count as a street side when the street's centre line is
-further away than the old 50 ft test. It also counted:
-
-- a freeway or its ramp (`1S1E31BB  -16100` Portland RM1 at the I-5/Barbur ramp; `1S2E04AC  -09600`
-  Portland R2.5 at an I-205 ramp) -- 2 false GREEN;
-- a street on the far side of a railroad (`1S205CD03601` Hillsboro MR-2, rail before TV Hwy) -- 1 false GREEN;
-- plus 21 wrong losses (16 false yellow of the same two kinds, 5 false red from a 60 ft reach limit on
-  the road-widening strip) and 75 yellow-to-red on fire access (the plan was re-placed to face the
-  new wide-road side, where no engine was allowed to stand).
-
-## The fix
-
-Branch `flats/open-way-fix` (from `flats/rel11` d4803423), head 8d10998a, **fast-forwarded into
-`flats/rel11` 2026-11-20** (full FLATS suite 8,743 passed). Hand-off:
-`../vicinitideals-worktrees/open-way-fix.handoff.md`; expected moves:
-`../vicinitideals-worktrees/open-way-fix.expected_moves.tsv`. Steph's three 2026-11-19 fire rulings
-(below) are built in and in the rulings register on the branch. About 24 lots are expected to gain
-GREEN on the wide-road ruling (ceiling about 80 with measured curbs), each read one by one.
-
-- Portland: a freeway or ramp is not a street (PCC 33.910.030, quoted in the city's rule file). The
-  lot is screened as if that line were an ordinary side or rear line.
-- Everywhere else, and for rail and other limited roads: the lot is screened both ways, the worse
-  result kept, and it is held YELLOW with a flag naming the side. Never GREEN.
-- Road-widening strip: measured across a wide right-of-way instead of failing at 60 ft.
-- Fire: a route that misses only because no engine may stand on a wide road is YELLOW with a flag
-  where the hose would reach from the road's middle; RED where it would not. Never GREEN.
-- Engine standing on a state highway reached by a wide-road line: YELLOW with a flag (coordinator
-  default; two lots, Oregon City on Hwy 213 and Gladstone on McLoughlin).
-
-## Plan (coordinator, 2026-11-19)
-
-1. Full rel11 bound keeps running on 137 (`/root/rel11_bound/`, started 02:57Z 11-20, about 25 h).
-2. Merge `flats/open-way-fix` into `flats/rel11`.
-3. Scoped re-bound on top: s4 re-run in full (stop if any edge class, tier or frontage moves), then
-   the union in the hand-off's BOUND SCOPE (about 13,000 lots).
-4. Two move reads: rel10d -> rel11 (ten lanes) and rel11 -> rel11 + fix (this lane). Every gained
-   GREEN read one by one; Portland lots that come back GREEN each rest on PCC 33.910.030.
-5. Release run 128 -> rel11; then re-measure the foundation records (FOLLOWUPS 209).
-
-## Waiting on Steph (none blocking; the cautious answer is built)
-
-Logged as Q52 to Q56 in `../vicinitideals-worktrees/QUESTIONS-FOR-STEPH-scratch.md`:
-
-- Q52: outside Portland, does a side backing onto a freeway or ramp count as a street side?
-- Q53: may a fire engine stand on a state highway to serve the lot beside it?
-- Q54: may an engine standing on a wide main road (centre line 50 to 150 ft away) count for GREEN?
-- Q55: a lot whose only street side is a freeway: yellow (as built) or red?
-- Q56: a road-widening strip that still cannot be measured: worst case (as built) or yellow?
-- Q57 (not asked, low): an engine on the near side of a divided main road (two carriageways or a
-  frontage road) is kept YELLOW under FIRE-ROAD-UNCLEAR; 2 lots, both red for another reason.
-
-## What the fire code says (read 2026-11-19; Steph: "read for yourself on access")
-
-Oregon Fire Code 2025, Chapter 5 and Appendix D (held in `data/flats/books/building-codes/ofc-2025/`):
-
-- 503.1.1 is the whole rule: an **approved** fire apparatus access road within 150 ft of every
-  first-storey wall by an **approved** route. It names no kind of road that counts or does not.
-  Freeways, ramps, state highways, wide roads and railroads are not mentioned. The local fire
-  official decides.
-- The regional guide the local agencies share
-  (`flats/provenance/docs/or/ofc.2022.applications-guide.txt`, Clackamas Fire, used by Gresham and
-  TVF&R) is also silent on where an engine may stand, but for hydrants it says: one across
-  railroad tracks does not count unless approved (L333), one across a divided highway or freeway
-  does not count, heavily travelled collectors only as approved (L337). That is the closest
-  printed statement and it points the same way as the cautious answers built here.
-- Sprinklers: 503.1.1 exception 1.1 authorises the official to relax the rule. A discretion, so
-  Steph's 2026-10-01 ruling (RED, no sprinkler relief) stands on the text.
-
-Coordinator's calls on that reading (cautious; Steph may overrule):
-
-- Q53 state highway: **RULED by Steph 2026-11-19** on 14200 Conway Dr, Oregon City (Hwy 213 along
-  its side): "a 1 lane highway with generous margins. The fire chief makes the call, but I'd say
-  it's green". An engine on a state highway counts like any wide main road; the yellow hold is
-  removed (a low note stays). Freeways, ramps and rail unchanged.
-- Q54 wide main road: **RULED by Steph 2026-11-19: "wide main road, I'm good with green".** An
-  engine standing on a wide ordinary street counts and the lot may be GREEN. The hose starts where
-  the 2026-10-05 ruling puts it (10 ft out from the near curb, capped at the middle; unmeasured =
-  the middle). Being built on `flats/open-way-fix` with the ruling added to the register; rides
-  rel11. Not covered: freeway, ramp, rail, and a state highway across a wide right-of-way.
-  Now unblocked for after rel11: choosing the front after measuring fire; the placement retry on
-  lots over 3 acres.
-- Q55 freeway-only lot: **RULED by Steph 2026-11-19: yellow** (the parcel west of 11240 SW Barbur
-  Blvd "would probably need a fire access easement with the business"). A private street serves
-  as a fire access road as well as a public one (Steph; the code's definition agrees), so a lot
-  on a private street is not a freeway-only lot. Sized 2026-11-19: 58 lots where every street line faces only a freeway or ramp, none
-  green today (53 red, 5 yellow; `/root/open_way/freeway_only_lots.csv` on 137). Two kinds: homes
-  on a private street backing onto a freeway (225 NW Evensong Pl, Washington County) and leftover
-  strips by a ramp with no address (11240 W/ SW Barbur Blvd, Portland).
-
-Scout 2026-11-19: no local fire agency says more than the state code on which roads an engine
-may stand on (whole-document search of the Clackamas Fire, Tualatin Valley, Gresham, Portland and
-Canby guides; files and `sources.md` in `data/flats/books/fire-agencies/`). So these calls need no
-per-city rule. Newer guide editions were found: FOLLOWUPS 212.
-
-## Not done
-
-- No data says which state highways are access-controlled (Hwy 213 at Oregon City is; McLoughlin is
-  not). A state access-control layer would let the two be told apart: a scout job, after rel11.
-- Choosing the front after measuring fire, and letting the placement retry run on lots over 3 acres,
-  would rescue more of the 75; both can open GREEN, so they wait on Q54.
+Open (work):
+4. No data says which state highways are access-controlled (Hwy 213 at Oregon City is; McLoughlin is not). A state access-control layer would tell them apart: a scout job.
+5. Choosing the front after measuring fire, and letting the placement retry run on lots over 3 acres, would rescue more of the 75 yellow-to-red fire-access lots; both can open GREEN. Unblocked by the Q54 ruling.
+6. Newer fire guide editions: see item 212.
