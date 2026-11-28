@@ -67,12 +67,15 @@ def test_a_card_names_the_standards_it_stands_beside() -> None:
     # the rear-setback citation it stood beside spans two sections, so it
     # stays on the proof copy and 7/7.0410.txt holds no value near it. 9.0901
     # is the same shape: "See Section 9.0901(B)" beside the rear setback.
-    card = next(c for c in cards(load_rules()[GRESHAM]) if c.ref == "9.0901")
+    # 2026-11-27: 9.0900 was fetched and read for the precast steps
+    # (FOLLOWUPS 214), so 9.0901 stopped dangling; 10.0200, "See Section
+    # 10.0200" printed beside the front setback, is the same shape again.
+    card = next(c for c in cards(load_rules()[GRESHAM]) if c.ref == "10.0200")
 
-    assert card.fields == ("setback_rear_ft",)
+    assert card.fields == ("setback_front_max_ft",)
     assert card.lots > 20_000
-    assert card.binding == 1
-    assert any("See Section 9.0901(B)" in m.text for m in card.mentions)
+    assert card.binding == 2
+    assert any("See Section 10.0200" in m.text for m in card.mentions)
 
 
 def test_neighbours_group_by_figure_rather_than_repeating_per_zone() -> None:
