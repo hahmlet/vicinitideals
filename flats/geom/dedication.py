@@ -26,7 +26,11 @@ Seven codes in the screen's reach write the same idea two ways:
   System Plan, is wider than the current right-of-way width, required
   setbacks are measured from the ultimate right-of-way width" -- the TSP
   leaves the widths to Title 18, so half the widest right-of-way of Table
-  18.910.1 for the street's class (27 / 29 / 48 / 64 ft).
+  18.910.1 for the street's class (27 / 29 / 48 / 64 ft); West Linn CDC
+  38.030 C: "The minimum distance from the wall of any structure to the
+  centerline of an abutting street shall not be less than 25 feet plus the
+  yard required by the zone" (one distance for every street; 38.030 B's
+  wider TSP cross-sections are not held).
 
 Both come to the same line on the ground: the building stands the zone's
 yard back from a line the stated distance off the centre line, or the yard
@@ -149,6 +153,8 @@ LAYERS: tuple[str, ...] = (
     "or/washington/tigard",
     "or/clackamas/oregon-city",
     "or/clackamas/milwaukie",
+    # CDC 38.030 C, 25 ft to every street's centre line (FOLLOWUPS 222).
+    "or/clackamas/west-linn",
     "or/clackamas/_unincorporated",
 )
 

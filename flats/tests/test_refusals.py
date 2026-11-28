@@ -418,7 +418,10 @@ pytestmark = pytest.mark.unit
 # +2 flats/gladstone-fixes (FOLLOWUPS 204 / 205): the two 2026-11-18 Gladstone reading blocks (17.58, 17.50).
 # The 2026-08 narrative above that ZDO 845.01(3) "stays unencoded" is history: it is held since
 # flats/clackamas-fixes (quadfit clackamas_fmd carve, ruling 2026-11-18-clackamas-flood-ban-red).
-EXPECTED = {"notes": 163, "comments": 302, "tests": 18}
+# 302 -> 303 comments on 2026-11-28 (flats/credit-west-linn-38030, FOLLOWUPS 222): West Linn
+# CDC 38.030 C is encoded (25 ft to the centre line); 38.030 B's TSP Exhibits 6-9 widths are not
+# held, so B is NOT encoded.
+EXPECTED = {"notes": 163, "comments": 303, "tests": 18}
 # 164 -> 165 notes and 286 -> 287 comments on 2026-10-29 (chunk 5, Steph's go on Tualatin,
 # Gladstone, Troutdale; Canby's floor-area minimum): Canby C-1 and Tualatin CO each gain a note
 # recording their townhouse path / greenway reduction as not encoded, and Gladstone R-5's note no

@@ -768,6 +768,40 @@ defaults:
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
     retrieved: '2026-09-20'
     quote: "or/clackamas/west-linn/46/46.070.txt#L18"
+  # SETBACK FROM THE STREET CENTRE LINE (FOLLOWUPS 222). CDC 38.030 C: "The
+  # minimum distance from the wall of any structure to the centerline of an
+  # abutting street shall not be less than 25 feet plus the yard required by
+  # the zone. This provision shall not apply to existing rights-of-way whose
+  # required width is 50 feet or greater." (38.yards.txt#L27). Every zone
+  # chapter's dimensional section opens "Except as may be otherwise provided
+  # by the provisions of this code" (11/11.070.txt#L3) and lists Chapter 38
+  # among the standards that apply to all development (11/11.090.txt#L9, and
+  # the same line in 08 to 18). Read through flats/geom/dedication.py as an
+  # added setback, like Milwaukie 19.501.2.A: the lot keeps the zone's yard
+  # back from a line 25 ft off the centre line, or from the lot line where
+  # the street's half-width already reaches 25 ft.
+  #
+  # Held as one distance for every street. Applying it where C's exception
+  # holds is the safe side: a street whose required width is 50 ft or more
+  # and is already that wide has a half-width of 25 ft or more, so it takes
+  # nothing; one not yet that wide falls under 38.030 B instead (#L25: the
+  # zone's setback "plus one-half of the right-of-way width standard
+  # established in the 'constrained' version of the applicable cross-section
+  # in TSP Exhibits 6 through 9"). Those exhibits are NOT held, so B is not
+  # encoded: on a classified street whose constrained width exceeds 50 ft
+  # and whose existing right-of-way is narrower, the code asks more than the
+  # 25 ft held here. A private street takes nothing (the module's rule for
+  # every code), though 02.030 calls a private right-of-way a street
+  # (private_drives below) -- an open question, not decided here. The strip
+  # comes off the lot area its minimum and coverage are read on: 38.030 is a
+  # yard, but the street-improvement chapter (85) that would say otherwise
+  # is not held (ruling 2026-10-14-road-dedication).
+  row_to_centerline_other_ft:
+    value: 25
+    cite: West Linn CDC 38.030 C, minimum distance from the wall of any structure to the centerline of an abutting street 25 feet plus the yard required by the zone
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC38.html
+    retrieved: '2026-11-06'
+    quote: "or/clackamas/west-linn/38.yards.txt#L27"
   # PARKING AND VEHICLE ACCESS, read 2026-08-27 out of Chapters 46 and 48,
   # which every one of the nine zone chapters lists under "OTHER APPLICABLE
   # DEVELOPMENT STANDARDS -- The following standards apply to all development

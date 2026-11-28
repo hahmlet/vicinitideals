@@ -47,6 +47,7 @@ OREGON_CITY = "or/clackamas/oregon-city"
 MILWAUKIE = "or/clackamas/milwaukie"
 TIGARD = "or/washington/tigard"
 HILLSBORO = "or/washington/hillsboro"
+WEST_LINN = "or/clackamas/west-linn"
 # A lot in unincorporated Washington County near Bull Mountain.
 X0, Y0 = 7_620_000.0, 650_000.0
 FRONT = [X0, Y0, X0 + 50, Y0, "F"]
@@ -1192,7 +1193,7 @@ def test_every_layer_a_dedication_reaches_is_measured(layers) -> None:
         )
 
     stating = {lid for lid, layer in layers.items() if states(layer)}
-    assert stating == {WASHCO, SHERWOOD, KING_CITY, OREGON_CITY, MILWAUKIE, TIGARD, HILLSBORO}
+    assert stating == {WASHCO, SHERWOOD, KING_CITY, OREGON_CITY, MILWAUKIE, TIGARD, HILLSBORO, WEST_LINN}
     reached = set(stating)
     for lid, layer in layers.items():
         for ruling in layer.zone_rulings.values():
@@ -1256,7 +1257,14 @@ def test_milwaukie_lets_a_dedication_take_a_lot_below_its_minimum(rules) -> None
 
 @pytest.mark.parametrize(
     ("layer", "zone"),
-    [(OREGON_CITY, "R-10"), (SHERWOOD, "MDRL"), (TIGARD, "RES-A"), (KING_CITY, "R-9"), (HILLSBORO, "R-10")],
+    [
+        (OREGON_CITY, "R-10"),
+        (SHERWOOD, "MDRL"),
+        (TIGARD, "RES-A"),
+        (KING_CITY, "R-9"),
+        (HILLSBORO, "R-10"),
+        (WEST_LINN, "R-10"),
+    ],
 )
 def test_elsewhere_the_strip_comes_off_the_minimum_lot_area(rules, layer, zone) -> None:
     got = rules.resolve(layer, zone)
@@ -1609,3 +1617,29 @@ def test_an_openstreetmap_street_nearer_than_metros_brings_the_reading_in() -> N
         width = dedication.read_line(_hwy_line(2), cmap, lot=lot)[0]
         assert (width < plain - 5.0) is moves
         assert width <= plain
+
+
+# --- West Linn CDC 38.030 C (FOLLOWUPS 222) --------------------------------
+
+
+@pytest.mark.parametrize("zone", ["R-40", "R-10", "R-4.5", "R-2.1", "NC", "GC", "MU"])
+def test_west_linn_keeps_every_building_25_ft_off_the_street_centre_line(rules, zone) -> None:
+    """38.030 C: "not less than 25 feet plus the yard required by the zone"
+    from the centre line of any abutting street (38.yards.txt#L27): a line
+    on a 40 ft street gives up 5 ft, one on a 50 ft street nothing, an
+    unmeasured one the whole 25, any class the same, a private road nothing."""
+    assert strip(rules, WEST_LINN, zone, 20.0) == 5
+    assert strip(rules, WEST_LINN, zone, 25.0) == 0
+    assert strip(rules, WEST_LINN, zone, 30.0) == 0
+    assert strip(rules, WEST_LINN, zone, None) == 25
+    assert strip(rules, WEST_LINN, zone, 10.0, classes={"street_class_west_linn": "arterial"}) == 15
+    assert strip(rules, WEST_LINN, zone, 10.0, public=False) == 0
+
+
+def test_west_linn_strip_narrows_the_envelope(rules) -> None:
+    """The strip binds: a lot on a 30 ft right-of-way loses 10 ft of depth
+    off its front against the same lot on a 50 ft one."""
+    wide = envelope_for(lot_from_row(row(25.0, None)), rules.resolve(WEST_LINN, "R-4.5"))
+    narrow = envelope_for(lot_from_row(row(15.0, None)), rules.resolve(WEST_LINN, "R-4.5"))
+    assert narrow.sqft < wide.sqft
+    assert dedication.applies(WEST_LINN)
