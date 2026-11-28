@@ -665,7 +665,13 @@ def test_a_hillsboro_stretch_printed_with_an_offset_holds_the_whole_street(rules
     rule = dedication.rule_of(rules.resolve(HILLSBORO, "R-10"))
     label = "SE Elm St (SE 12th Ave west 225 feet)"
     assert label in rule.labels and dedication.stretch_of(label) is None
-    assert rule.required(["ELM ST"], {}, {label: False}) == 27
+    assert rule.required(["ELM ST"], {}, {label: None}) == 27
+    assert rule.required(["ELM ST"], {}, {}) == 27
+    # 2026-11-28 (rel12, FOLLOWUPS 205 item 5): the row is printed "SE", so a
+    # False now comes only from the quadrant reading -- the line is on another
+    # quadrant's Elm St (:func:`dedication._direction_reading`), off the row.
+    assert dedication.printed_direction(label) == "SE"
+    assert rule.required(["ELM ST"], {}, {label: False}) == 0
 
 
 # --- Tigard (18.210.030.A.1, Table 18.910.1) ------------------------------
@@ -1391,7 +1397,10 @@ def test_every_bracketed_row_reads_as_a_stretch(rules) -> None:
     # 18 of Milwaukie's 29 rows, King City's three "between" rows, and the
     # 33 of Hillsboro's 38 whose bracket reads as "A to B" or "east of A" (an
     # end the bridge cannot find, "city boundary", leaves the row holding).
-    assert len(got) == 54
+    # 54 -> 58 on 2026-11-28 (rel12, FOLLOWUPS 205 item 5): Hillsboro's four
+    # rows printed with a quadrant but no readable stretch (NW Brogden St, SE
+    # Elm St, SE Maple Ct, NE Birchwood Ln) are read for their quadrant.
+    assert len(got) == 58
     for zone, layer in (("R-MD", MILWAUKIE), ("KTTC", KING_CITY)):
         for label, _ in rules.resolve(layer, zone).get(dedication.NAMED_FIELD):
             if "(" in str(label):
@@ -1609,3 +1618,78 @@ def test_an_openstreetmap_street_nearer_than_metros_brings_the_reading_in() -> N
         width = dedication.read_line(_hwy_line(2), cmap, lot=lot)[0]
         assert (width < plain - 5.0) is moves
         assert width <= plain
+
+
+# --- a row printed with its quadrant (FOLLOWUPS 205 item 5, rel12) ----------
+#
+# Hillsboro Table 12.50.130-1 names "SE 10th Ave" (49 and 61 ft); NE and NW
+# 10th Ave are other streets of the same number, and the table charges them
+# nothing. A row printed with a compass word holds only on the street of that
+# direction -- where the map holds a street of that name and direction near
+# the lot. A print the map holds under no such direction (NW Brogden St: the
+# map has NE Brogden only) holds every direction, as before.
+
+HX, HY = 7_568_000.0, 688_000.0
+SE_TENTH = LineString([(HX, HY - 4000), (HX, HY - 100)])
+NE_TENTH = LineString([(HX, HY + 100), (HX, HY + 4000)])
+MAIN = LineString([(HX - 3000, HY), (HX + 3000, HY)])
+WALNUT = LineString([(HX - 500, HY - 2000), (HX + 500, HY - 2000)])
+OAK = LineString([(HX - 500, HY - 3500), (HX + 500, HY - 3500)])
+TENTH_ROWS = ("SE 10th Ave (SE Maple St to SE Walnut St)", "SE 10th Ave (SE Walnut St to SE Oak St)")
+
+
+def _hillsboro_readings(edge, streets, names, labels=TENTH_ROWS):
+    cmap = _cmap(list(streets), list(names), (1500,) * len(streets), layer=HILLSBORO)
+    (got,) = dedication.measure([edge], HILLSBORO, [cmap], stretches=labels)
+    return got[6], got[8]
+
+
+def test_printed_direction_reads_the_rows_compass_word() -> None:
+    assert dedication.printed_direction("SE 10th Ave (SE Walnut St to SE Oak St)") == "SE"
+    assert dedication.printed_direction("NW Brogden St") == "NW"
+    assert dedication.printed_direction("E Main St (east of 10th Ave)") == "E"
+    assert dedication.printed_direction("Brookwood Ave (NW and SW, LRT alignment south to UGB)") == ""
+    assert dedication.printed_direction("Firwood Street (55th Ave. to Stanley Ave.)") == ""
+
+
+def test_a_ne_tenth_avenue_line_is_off_the_se_tenth_rows(rules) -> None:
+    """The six false reds of FOLLOWUPS 205 item 5: NE 10th Ave lots charged
+    SE 10th's 61 ft."""
+    streets = (SE_TENTH, NE_TENTH, MAIN, WALNUT, OAK)
+    names = ("SE 10TH AVE", "NE 10TH AVE", "E MAIN ST", "SE WALNUT ST", "SE OAK ST")
+    got_names, on = _hillsboro_readings([HX + 30, HY + 1500, HX + 30, HY + 1550, "F"], streets, names)
+    assert got_names == ["10TH AVE"]
+    assert on == {label: False for label in TENTH_ROWS}
+    rule = dedication.rule_of(rules.resolve(HILLSBORO, "R-10"))
+    assert rule.required(["10TH AVE"], {}, on) == 0
+    # The SE 10th line itself keeps its row (its stretch read as before).
+    _, on_se = _hillsboro_readings([HX + 30, HY - 3000, HX + 30, HY - 2950, "F"], streets, names)
+    assert on_se[TENTH_ROWS[1]] is not False
+    assert rule.required(["10TH AVE"], {}, on_se) >= 49
+
+
+def test_a_line_where_the_quadrants_meet_holds_the_row() -> None:
+    streets = (SE_TENTH, NE_TENTH, MAIN)
+    names = ("SE 10TH AVE", "NE 10TH AVE", "E MAIN ST")
+    _, on = _hillsboro_readings([HX + 30, HY - 60, HX + 30, HY + 60, "F"], streets, names)
+    assert all(v is not False for v in on.values())
+
+
+def test_a_printed_quadrant_the_map_does_not_hold_keeps_the_row(rules) -> None:
+    """"NW Brogden St within city": the map holds only NE Brogden St, so the
+    print cannot tell the street apart, and the row holds as it did."""
+    brogden = LineString([(HX - 3000, HY), (HX + 3000, HY)])
+    _, on = _hillsboro_readings(
+        [HX, HY + 30, HX + 50, HY + 30, "F"], (brogden,), ("NE BROGDEN ST",), labels=("NW Brogden St",)
+    )
+    assert on.get("NW Brogden St") is None
+    rule = dedication.rule_of(rules.resolve(HILLSBORO, "R-10"))
+    assert rule.required(["BROGDEN ST"], {}, on) == 30
+
+
+def test_a_ne_line_beside_an_unprefixed_street_holds_the_row() -> None:
+    plain = LineString([(HX - 50, HY + 100), (HX - 50, HY + 4000)])
+    streets = (SE_TENTH, NE_TENTH, plain)
+    names = ("SE 10TH AVE", "NE 10TH AVE", "10TH AVE")
+    _, on = _hillsboro_readings([HX - 20, HY + 1500, HX - 20, HY + 1550, "F"], streets, names)
+    assert all(v is not False for v in on.values())

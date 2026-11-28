@@ -482,8 +482,13 @@ defaults:
   # an end with no direction ("to city boundary", "to end of road") keeps
   # its printed words, reads as no stretch, and so holds the whole street:
   # Brookwood Avenue is 49 feet everywhere, though it prints 37 south of the
-  # light rail. Directions are dropped from a street's name, so a row on SE
-  # 10th also holds NE 10th unless the line is read off the stretch.
+  # light rail. A row holds only on the quadrant it prints (2026-11-28,
+  # FOLLOWUPS 205 item 5): SE 10th is not NE or NW 10th, and E Main is not W
+  # Main (flats/geom/dedication.py _direction_reading). Where the map holds the
+  # printed quadrant on no street of that name nearby -- NW Brogden St, N
+  # Dennis Ave, NW Hyde St and NW Brookwood Ave, which Metro's centrelines
+  # name NE, SW/NW, NE and SE -- the row cannot be told apart by it and holds
+  # every quadrant, as before.
   # "NW Hyde St from NW 273rd Ave to NW 269th Ave (NE 28th Ave)" drops its
   # own bracket (the second name of 269th). A street line whose street
   # cannot be named takes the deepest row, 61 feet.

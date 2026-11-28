@@ -431,11 +431,63 @@ def _stretch_reading(stretch: Stretch, points: Sequence[Any], streets: Lines) ->
     return True if True in got else False
 
 
+#: The compass words a street name can start with.
+_COMPASS = frozenset({"N", "S", "E", "W", "NE", "NW", "SE", "SW"})
+
+#: How far from a lot line a centreline carrying a row's printed direction
+#: is looked for (three miles): a row whose printed direction no street of
+#: that name nearby carries cannot be told apart by it, and holds every
+#: direction as before (:func:`_direction_reading`).
+DIRECTION_REACH_FT = 15_840.0
+
+
+def printed_direction(label: object) -> str:
+    """The compass word a row's printed street name starts with ("SE" of
+    "SE 10th Ave (SE Walnut St to SE Oak St)"), or "" for none."""
+    head = re.sub(r"\([^)]*\)", " ", str(label or "")).upper().replace(".", " ").split()
+    return head[0] if len(head) > 1 and head[0] in _COMPASS else ""
+
+
+def _lead(name: object) -> str:
+    words = str(name or "").upper().replace(".", " ").split()
+    return words[0] if len(words) > 1 and words[0] in _COMPASS else ""
+
+
+def _direction_reading(direction: str, street: str, points: Sequence[Any], streets: Lines) -> bool | None:
+    """Whether a lot line (its sample ``points``) is on the row's street as
+    printed with its compass word ``direction`` (Hillsboro Table
+    12.50.130-1 names SE 10th Ave, not NE or NW 10th, FOLLOWUPS 205 item 5).
+
+    False -- off the row -- where every centreline of the name ``street``
+    beside the line carries a different compass word, and a centreline of
+    that name carrying ``direction`` runs within :data:`DIRECTION_REACH_FT`
+    (so the print names a street the map holds). True where one beside the
+    line carries it, or carries none. None where none of that name is beside
+    the line, or the printed direction is on no street of that name nearby:
+    the row then holds as it did (a code naming a street by an older
+    quadrant, as Hillsboro's NW Brogden St, N Dennis Ave, NW Hyde St and NW
+    Brookwood Ave, which the map holds only as NE, SW/NW, NE and SE)."""
+    beside: set[str] = set()
+    for p in points:
+        beside.update(_lead(streets.names[i]) for i in streets.near(p, FRONT_REACH_FT) if street_key(streets.names[i]) == street)
+    if not beside:
+        return None
+    if direction in beside or "" in beside:
+        return True
+    held = any(
+        _lead(streets.names[i]) == direction and street_key(streets.names[i]) == street
+        for i in streets.near(points[0], DIRECTION_REACH_FT)
+    )
+    return False if held else None
+
+
 def stretch_readings(
     edge: Sequence[Any], names: Sequence[str] | None, labels: Sequence[str], streets: Lines
 ) -> dict[str, bool | None]:
     """Each row ``label`` whose street the line may be on, read for whether
-    the line lies on the row's stretch (:func:`_stretch_reading`)."""
+    the line lies on the row's stretch (:func:`_stretch_reading`), and, for a
+    row printed with a compass word, on the street of that direction
+    (:func:`_direction_reading`): off either is off the row."""
     if not names or not labels:
         return {}
     got = _samples(edge)
@@ -445,7 +497,19 @@ def stretch_readings(
     out: dict[str, bool | None] = {}
     for label in labels:
         stretch = stretch_of(label)
-        if stretch is not None and stretch.street in names:
+        street = stretch.street if stretch is not None else street_key(label)
+        if street not in names:
+            continue
+        direction = printed_direction(label)
+        if direction:
+            facing = _direction_reading(direction, street, points, streets)
+            if facing is False:
+                out[label] = False
+                continue
+            if stretch is None:
+                out[label] = facing
+                continue
+        if stretch is not None:
             out[label] = _stretch_reading(stretch, points, streets)
     return out
 
@@ -1029,14 +1093,15 @@ class Rule:
         best: dict[str, float] = {}
         for i, (n, ft) in enumerate(self.named):
             label = self.labels[i] if i < len(self.labels) else ""
-            if on_stretch.get(label) is False and stretch_of(label) is not None:
+            if on_stretch.get(label) is False and (stretch_of(label) is not None or printed_direction(label)):
                 continue
             best[n] = max(ft, best.get(n, 0.0))
         return list(best.items())
 
     def stretch_labels(self) -> tuple[str, ...]:
-        """The printed labels of the rows limited to one stretch."""
-        return tuple(label for label in self.labels if stretch_of(label) is not None)
+        """The printed labels of the rows limited to one stretch, or to the
+        street of one compass direction (:func:`printed_direction`)."""
+        return tuple(label for label in self.labels if stretch_of(label) is not None or printed_direction(label))
 
 
 def rule_of(rules: "ZoneResolution") -> Rule | None:
@@ -1160,6 +1225,7 @@ __all__ = [
     "measure",
     "read_line",
     "rule_of",
+    "printed_direction",
     "street_key",
     "stretch_of",
     "stretch_readings",
