@@ -1340,6 +1340,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [SEWER_STREET_MAIN]
+  ENTRANCE-GRADE-HELD:
+    description: "Portland's main entrance must be within 4 ft of grade, the average ground at the outer corners of the street-facing wall (PCC 33.110.230.D, 33.120.231.D). On the floor the foundation stands the drawn building at, the entrance is over 4 ft, but by 2 in or less (ground heights from the elevation model are good to an inch or two), or the lot may be exempt -- a flag lot, an average slope of 20 percent or more from the street, or any part in the combined flood hazard area -- and that is not read. Coordinator 2026-11-28 (FOLLOWUPS 64 round 5, fg5 F3): yellow, never green."
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Survey the ground at the street wall's corners and read the exemptions; over 4 ft with none reaching the lot makes it red, within 4 ft or exempt clears it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ENTRANCE_GRADE_HELD]
   FOUNDATION-NEAR-CAP:
     description: "Every foundation method open to the lot needs more than six precast steps at a door of the drawn building, but the best method's worst door is over the 51.5 in cap by 2 in or less. Ground heights from the elevation model are good to an inch or two, so the lot is not red on this ground. Steph 2026-11-20 (rulings.yaml 2026-11-20-foundation-near-cap-yellow): yellow with this flag naming the door, never green."
     kind: categorical

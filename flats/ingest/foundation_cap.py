@@ -65,6 +65,7 @@ from flats.foundation import cap as caps
 from flats.foundation import doors as door_face
 from flats.foundation import measure, model, place, support
 from flats.foundation import settings as foundation_settings
+from flats.ingest import entrance_grade
 from flats.score import flags as flag_plan
 
 CHECK = "foundation_steps_cap"
@@ -88,12 +89,20 @@ STAIR_ROOM_FLAG = "FOUNDATION-STAIR-ROOM"
 #: the new colour with this flag naming why.
 STAIR_MOVED = "FOUNDATION_STAIR_MOVED"
 STAIR_MOVED_FLAG = "FOUNDATION-STAIR-MOVED"
+#: The main entrance more than 4 ft from grade (PCC 33.110.230.D,
+#: 33.120.231.D; :mod:`flats.ingest.entrance_grade`, fg5 F3): RED past the
+#: ground model's error with every exemption ruled out, else held YELLOW.
+ENTRANCE_CHECK = "entrance_grade"
+ENTRANCE_GRADE = "ENTRANCE_GRADE"
+ENTRANCE_HELD = "ENTRANCE_GRADE_HELD"
+ENTRANCE_HELD_FLAG = "ENTRANCE-GRADE-HELD"
+ENTRANCE_RULING = "coordinator 2026-11-28, FOLLOWUPS 64 round 5 (fg5 F3)"
 REASONS: tuple[str, ...] = (
     FOUNDATION_STEPS_CAP, NEAR_REASON, CLASS_UNREAD_REASON, UNMEASURED_REASON, CLOSE_REASON, STAIR_ROOM,
-    STAIR_MOVED,
+    STAIR_MOVED, ENTRANCE_GRADE, ENTRANCE_HELD,
 )
 #: The flags that hold a GREEN lot YELLOW, and the notes that do not.
-YELLOW_FLAGS = (NEAR_FLAG, CLASS_UNREAD_FLAG, UNMEASURED_FLAG, STAIR_MOVED_FLAG)
+YELLOW_FLAGS = (NEAR_FLAG, CLASS_UNREAD_FLAG, UNMEASURED_FLAG, STAIR_MOVED_FLAG, ENTRANCE_HELD_FLAG)
 NOTE_FLAGS = (CLOSE_FLAG,)
 #: Rides with the stair-room bind on a red lot.
 RED_FLAGS = (STAIR_ROOM_FLAG,)
@@ -274,17 +283,23 @@ def facts_for(
     county: str | None = None,
     standoff_ft: float = 0.0,
     beside: bool = False,
+    entrance: tuple[entrance_grade.Rule, str | None, bool] | None = None,
 ) -> dict[str, Any] | None:
     """The cap on one drawn building, as plain facts; None where nothing is drawn.
     ``standoff_ft`` is the clear ground the drawn court keeps off the rear
     wall and ``beside`` a court drawn beside the building
-    (:func:`stair_room_of`)."""
+    (:func:`stair_room_of`). ``entrance`` -- the zone's grade rule, the
+    lot's flag-lot and flood exemption (:func:`entrance_grade.exemption`)
+    and whether each home is its own structure (:func:`entrance_for`) --
+    measures the main entrance's distance from grade on the same floor
+    (``facts["entrance"]``, :func:`entrance_of`)."""
     ring = _ring_of(drawing)
     if ring is None or terrain is None:
         return None
     court, lane = (drawing or {}).get("court"), (drawing or {}).get("lane")
     key = (tlid, json.dumps(ring), required, json.dumps(court), json.dumps(lane), classes, tuple(streets),
-           round(standoff_ft, 3), beside, None if lot is None else lot.wkb, _terrain_key(terrain))
+           round(standoff_ft, 3), beside, None if lot is None else lot.wkb, _terrain_key(terrain),
+           None if entrance is None else (entrance[0].section, entrance[1], entrance[2]))
     if key in _CACHE:
         return _CACHE[key]
     s = foundation_settings.load()
@@ -306,10 +321,49 @@ def facts_for(
         room = stair_room_of(placed.frame, methods[c.best], s, lot=lot, court=court, lane=lane,
                              standoff_ft=standoff_ft, beside=beside)
         facts = {**base, **c.facts(), "stair_room": room}
+        if entrance is not None:
+            facts["entrance"] = entrance_of(placed, m, methods, c, group, s, entrance, terrain=terrain, lot=lot)
     if len(_CACHE) >= _CACHE_MAX:
         _CACHE.clear()
     _CACHE[key] = facts
     return facts
+
+
+def entrance_of(
+    placed: place.Placed,
+    m: Any,
+    methods: Mapping[str, model.MethodResult],
+    c: caps.Cap,
+    group: str,
+    s: Any,
+    entrance: tuple[entrance_grade.Rule, str | None, bool],
+    *,
+    terrain: Any,
+    lot: Any,
+) -> dict[str, Any] | None:
+    """The main entrance's distance from grade on the drawn building
+    (:func:`entrance_grade.entrance_facts`), on the floor of the lowest
+    method that clears the cap (the best where none does) -- and, where the
+    ground class is unread (:data:`support.NOT_SORTED`), on the other open
+    methods' floors too: ground that may need them."""
+    if placed.ground is None:
+        return None
+    rule, exempt, per_home = entrance
+    top = m.high_z + m.lump_ft
+    pool = c.clear or (c.best,)
+    low = min(pool, key=lambda name: methods[name].floor_above_high_in)
+    floors = [(caps.SHORT.get(low, low), top + methods[low].floor_above_high_in / 12.0)]
+    if group == support.NOT_SORTED:
+        floors += [(caps.SHORT.get(name, name), top + methods[name].floor_above_high_in / 12.0)
+                   for name in c.open_methods if name != low]
+    sf = placed.street_frame
+    toward = (sf.bl[0] - sf.fl[0], sf.bl[1] - sf.fl[1])
+    return entrance_grade.entrance_facts(
+        placed.ground, length_ft=s.length_ft, homes=s.homes, per_home=per_home,
+        facade_y=s.width_ft if placed.turned else 0.0, floors=floors, rule=rule,
+        near_in=s.near_cap_in + s.tolerance_in, exempt=exempt,
+        slope_of=lambda: entrance_grade.lot_slope_pct(dem_of(terrain), lot, toward),
+    )
 
 
 # --- the colour -------------------------------------------------------------------
@@ -320,6 +374,33 @@ def _flag(code: str, by: str, source: str) -> flag_plan.Flag:
 
 
 def _apply(x: Any, facts: Mapping[str, Any]) -> Any:
+    return _apply_entrance(_apply_cap(x, facts), facts.get("entrance"))
+
+
+def _apply_entrance(x: Any, ent: Mapping[str, Any] | None) -> Any:
+    """The main entrance's distance from grade on the view: RED on
+    :data:`ENTRANCE_GRADE` with its bind, or held YELLOW on
+    :data:`ENTRANCE_HELD_FLAG`."""
+    from flats.score.screen import Triage
+
+    if not ent or x.triage is Triage.red:
+        return x
+    source = f"{ent['words']} -- {ent['quote']}, {ENTRANCE_RULING}"
+    if ent.get("state") == entrance_grade.OVER:
+        if any(b.check == ENTRANCE_CHECK for b in x.binds):
+            return x
+        bind = flag_plan.Bind(ENTRANCE_CHECK, ent["height_in"], ent["limit_in"], ent["over_by_in"], source=source)
+        reasons = x.reasons if ENTRANCE_GRADE in x.reasons else (*x.reasons, ENTRANCE_GRADE)
+        return dataclasses.replace(x, triage=Triage.red, binds=(*x.binds, bind), reasons=tuple(reasons))
+    if ent.get("state") == entrance_grade.HELD and not any(f.code == ENTRANCE_HELD_FLAG for f in x.flags):
+        reasons = x.reasons if ENTRANCE_HELD in x.reasons else (*x.reasons, ENTRANCE_HELD)
+        triage = Triage.yellow if x.triage is Triage.green else x.triage
+        return dataclasses.replace(x, triage=triage, reasons=tuple(reasons),
+                                   flags=(*x.flags, _flag(ENTRANCE_HELD_FLAG, ENTRANCE_HELD, source)))
+    return x
+
+
+def _apply_cap(x: Any, facts: Mapping[str, Any]) -> Any:
     from flats.score.screen import Triage
 
     if x.triage is Triage.red:
@@ -368,6 +449,27 @@ def standoff_of(s: Any) -> float:
     return gap
 
 
+def entrance_for(s: Any) -> tuple[entrance_grade.Rule, str | None, bool] | None:
+    """What :func:`facts_for` needs to measure the main entrance's distance
+    from grade on ``s``, or None where the zone's entrance rule carries no
+    grade limit (:func:`entrance_grade.rule_for`): the rule, the flag-lot
+    and flood exemption read off the lot, and whether each home is its own
+    structure -- the townhouse form (a unit-lot design, or a zone that takes
+    the pod only as townhouses), each house with its own main entrance."""
+    from flats.designs.model import Plat
+    from flats.score.paper import townhouse_only
+
+    rules = getattr(s, "rules", None)
+    rule = entrance_grade.rule_for(rules) if rules is not None else None
+    if rule is None:
+        return None
+    observed = getattr(getattr(s, "lot", None), "observed", None) or {}
+    facts = getattr(s, "facts", None)
+    permits = tuple(getattr(facts, "resource_permits", ()) or ()) if facts is not None else ()
+    per_home = getattr(getattr(s, "design", None), "plat", None) is Plat.unit_lots or townhouse_only(rules)
+    return rule, entrance_grade.exemption(observed, permits), bool(per_home)
+
+
 def checked(
     s: Any,
     *,
@@ -387,7 +489,7 @@ def checked(
     facts = facts_for(
         s.drawing, terrain=terrain, streets=tuple(dict.fromkeys(streets())), lot=lot_geom,
         required=door_face.entrance_required(s.rules, side), classes=classes, tlid=tlid, county=county,
-        standoff_ft=standoff_of(s), beside=bool(getattr(s.fit, "beside", False)),
+        standoff_ft=standoff_of(s), beside=bool(getattr(s.fit, "beside", False)), entrance=entrance_for(s),
     )
     if facts is None:
         return s
@@ -563,6 +665,10 @@ __all__ = [
     "CHECK",
     "CLASS_UNREAD_FLAG",
     "CLOSE_FLAG",
+    "ENTRANCE_CHECK",
+    "ENTRANCE_GRADE",
+    "ENTRANCE_HELD",
+    "ENTRANCE_HELD_FLAG",
     "FOUNDATION_STEPS_CAP",
     "NEAR_FLAG",
     "REASONS",
@@ -575,6 +681,8 @@ __all__ = [
     "checked",
     "classes_of",
     "dem_of",
+    "entrance_for",
+    "entrance_of",
     "facts_for",
     "next_room",
     "no_room",

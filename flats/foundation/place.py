@@ -44,6 +44,10 @@ class Placed:
     measured: Measured | None
     #: Why nothing was measured ("no elevation model covers the whole grid").
     error: str | None = None
+    #: The ground measured on (``ground(x, y)`` ft in ``frame``'s model
+    #: coordinates), for the main entrance's distance from grade
+    #: (:mod:`flats.ingest.entrance_grade`). None where nothing was measured.
+    ground: Any = None
 
 
 def grid_xy(s: Settings) -> tuple[Any, Any]:
@@ -90,7 +94,7 @@ def place(
     g = grounds.cell_grid(z.tolist(), s, cell, f"{src_name} grid")
     m = measure.measure(g, s, tlid=tlid, county=county,
                         inputs={"door_face": door_face.AWAY if turned else door_face.STREET, "door_face_rule": rule})
-    return Placed(fr, street, turned, rule, m)
+    return Placed(fr, street, turned, rule, m, ground=g)
 
 
 __all__ = ["Placed", "grid_xy", "place"]

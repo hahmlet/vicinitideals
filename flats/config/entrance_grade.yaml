@@ -1,0 +1,57 @@
+# The main entrance within 4 feet of grade (FOLLOWUPS 64 round 5, fg5 F3,
+# 2026-11-28). Read by flats/ingest/entrance_grade.py and worked by the
+# screen's foundation pass (flats/ingest/foundation_cap.py), which holds the
+# floor level and the ground model the six-step cap already reads.
+#
+# A rule here applies to a lot where the zone's resolved
+# `entrance_faces_street` is `required` or `required_named` AND that value's
+# own quote is one of `applies_to` (a path prefix): the grade limit is a
+# subsection of the very section the entrance rule cites, and reaches the
+# same zones it does -- Portland's R10 to R2.5 (33.110.230.B.1), its
+# multi-dwelling zones (33.120.231.B.1; CI1 imports RM1 whole, 33.150.200),
+# and the Portland code Multnomah County applies in its urban pockets. The
+# commercial zones' main-entrance section (33.130.242) holds no grade limit
+# (whole-folder grep of the Portland store for "feet of grade", 2026-11-28:
+# 33.110 and 33.120 only).
+#
+# `max_ft` is the code's printed figure; the loader works it in inches.
+#
+# Exemptions, each the section's own, each read conservatively: a lot is RED
+# on the limit only where every exemption is ruled out; where one is not
+# read the lot is held YELLOW, never GREEN:
+#   * flag lots (B.4): the lot must read plainly not a flag lot
+#     (`pdx_flag_lot` observed false, flats/config/flag_lot.yaml);
+#   * an average slope of 20 percent or more up or down from the street (B.4):
+#     measured off the elevation model over the lot, within `slope_band_pct`;
+#   * any portion of the lot in the combined flood hazard area (B.6): the
+#     FEMA flood area and Portland's 1996 flood area both read clear.
+rules:
+  - section: "PCC 33.110.230.D"
+    max_ft: 4
+    quote: "or/multnomah/portland/33.110/33.110.230.txt#L33-L34"
+    says: "The main entrance that meets Subsection C must be within 4 feet of grade."
+    exemptions: "or/multnomah/portland/33.110/33.110.230.txt#L12,L14"
+    applies_to:
+      - "or/multnomah/portland/33.110/33.110.230.txt"
+  - section: "PCC 33.110.230.D (Multnomah County's urban pockets)"
+    max_ft: 4
+    quote: "or/multnomah/_unincorporated/33.110.txt#L800-L802"
+    says: "The main entrance that meets Subsection C must be within 4 feet of"
+    exemptions: "or/multnomah/_unincorporated/33.110.txt#L775-L776,L779-L780"
+    applies_to:
+      - "or/multnomah/_unincorporated/33.110.txt#L768"
+  - section: "PCC 33.120.231.D"
+    max_ft: 4
+    quote: "or/multnomah/portland/33.120/33.120.231.txt#L44-L45"
+    says: "For houses, attached houses, manufactured homes, duplexes, triplexes, and fourplexes, the main entrance that meets Paragraph C.1 must be within 4 feet of grade."
+    exemptions: "or/multnomah/portland/33.120/33.120.231.txt#L20,L22"
+    applies_to:
+      - "or/multnomah/portland/33.120/33.120.231.txt"
+# The slope exemption's measuring error: the lot's average slope from the
+# street is fitted to the elevation model's cells over the lot, good to a
+# point or two of grade on a 1 m model. Within this many points either side
+# of 20 percent the exemption is unread (YELLOW). A judgement (fg5 F3).
+slope_exempt_pct: 20
+slope_band_pct: 2
+# The flood areas whose touch exempts the lot (resource_overlays keys).
+flood_keys: [fema_sfha, pdx_flood_1996]
