@@ -290,11 +290,18 @@ def test_reconciled_never_makes_a_lot_greener(green) -> None:
     from flats.score.flags import Colour
     from flats.score.screen import Triage
 
-    yellow_flag = flag_plan.Flag(fc.NEAR_FLAG, flag_plan.LOT, fc.NEAR_REASON, source="x")
+    # Held on something the new placement does not measure again (its
+    # court's turns): a first held only on its own doors' foundation reading
+    # reads the new GREEN instead (FOLLOWUPS 221 F-B, tested below).
+    yellow_flag = flag_plan.Flag("MEASURE-COURT-TURNS", flag_plan.LOT, "COURT_TURNS", source="x")
     yellow = dataclasses.replace(green.signed, triage=Triage.yellow, flags=(yellow_flag,))
     first = _with_hits(dataclasses.replace(green, signed=yellow, screening=yellow))
     alt = dataclasses.replace(green, design=green.design.reserving(StairRoom(court_ft=6.25, passes=1)),
                               foundation={"state": "fits", "stair_room": {"hits": [], "need": NEED}})
+    near = flag_plan.Flag(fc.NEAR_FLAG, flag_plan.LOT, fc.NEAR_REASON, source="x")
+    on_doors = dataclasses.replace(green.signed, triage=Triage.yellow, flags=(near,))
+    released = fc.reconciled(_with_hits(dataclasses.replace(green, signed=on_doors, screening=on_doors)), alt)
+    assert released.signed.colour is Colour.green and fc.STAIR_MOVED not in released.signed.reasons
     out = fc.reconciled(first, alt)
     assert out.signed.colour is Colour.yellow and fc.STAIR_MOVED in out.signed.reasons
     assert out.foundation["stair_room"]["state"] == "moved"
