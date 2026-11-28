@@ -1687,11 +1687,6 @@ crossrefs:
     note: >-
       A split of 4.1252: the extraction breaks "Section 4.125 2" across a column gap (4.1252.txt,
       "Guidelines and standards in Section 4.125 2 shall apply"). 4.1252 is held in this layer.
-  "9.0100":
-    outcome: other_building
-    note: >-
-      Fences: "For purposes of Section 9.0100, walls are a type of fence" (3.0103). Fence and wall
-      standards bind the fence somebody builds, not the pod or its court.
   "7.0":
     outcome: misread
     note: >-
@@ -1801,6 +1796,51 @@ code:
     # 6.04), so the thinness guard reads it as a landing page and the corpus
     # watch re-refused it every sweep. Read 2026-08-26; unchanged 2026-11-09.
     allow_thin: true
+  # Buffering and Screening (FOLLOWUPS 222, 2026-11-27). Table 4.0130 row M and
+  # Table 4.0430 row M send "All other uses" -- the quadplex among them -- to
+  # this section, as do Pleasant Valley (4.1415) and Springwater (4.1535).
+  - id: "9.0100.buffering"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0100.pdf
+    title: "Section 9.0100 - Buffering and Screening"
+    # READ 2026-11-27, NOT ENCODED (no field fits; the open gap is real).
+    # Until 2026-11-27 the crossref ledger filed "9.0100" as other_building,
+    # "Fences", from one definition sentence (3.0103 "walls are a type of
+    # fence"). That was wrong: the section is Buffering and Screening and it
+    # reaches the quadplex. 9.0110(A) "Buffering and screening are required in
+    # accordance with the Buffer Matrix in Table 9.0111(A)" (#L24-L25). Table
+    # 9.0111(A)'s row "Single Detached Dwellings and Middle Housing" -- the
+    # quadplex's row -- reads "- A A A A A A A A" (#L224-L228): no buffer
+    # beside Single Detached / Middle Housing, standard A beside Multi-Family,
+    # Type A uses (schools, churches, parks, daycare, elderly housing,
+    # 9.0111(A)(1) #L204-L206), Commercial, Type B uses, Outdoor Commercial,
+    # Auto-Dependent Commercial, Industrial and Springwater Industrial. The
+    # ABUTTING USE column heads are rotated text that the stored layout
+    # extraction drops (the fetch warned); their order was read from a plain
+    # extraction of the same PDF, not committed. Table 9.0111(B) standard A:
+    # "10 ft." minimum buffer width, ground cover, no trees, shrubs or screen
+    # required (#L257-L264). 9.0110(C) keeps buildings out of a buffer (only
+    # plants, fences, stormwater, garden elements, utilities and walkways are
+    # allowed, #L26-L37), so in effect a 10 ft setback on that lot line --
+    # and on the parking court and drive lane, which are not on the allowed
+    # list.
+    # WHY NO FIELD FITS: the matrix keys on the neighbour's USE, not its zone.
+    # The abuts_*_zone facts read zoning; a church or school in LDR-5, or an
+    # apartment building in MDR-12 next door, is a use the zoning layer does
+    # not say. Vacant neighbours follow 9.0110(E): based on the most intense
+    # conforming use (#L43-L45), but an LDR-5/LDR-7/TLDR/TR dwelling next to
+    # vacant land allowing a more intensive use owes nothing -- the more
+    # intensive use provides the whole buffer (#L54-L56); 9.0110(E)(4) makes
+    # the new use provide it next to an existing use that never did
+    # (#L57-L59). Across a street the quadplex owes none (9.0110(F) puts
+    # cross-street buffers on industrial and large commercial uses only,
+    # #L60-L70).
+    # WHAT IT NEEDS: a site fact for "a non-street lot line abuts a use other
+    # than single detached or middle housing" (existing use, from assessor
+    # property class or building footprints, plus the vacant-lot rule), and a
+    # field that adds a 10 ft no-build strip on that line (side and rear).
+    # Until then lots in Gresham whose 5 ft side setback is the binding
+    # dimension can screen GREEN beside an apartment, school or shop where
+    # the code asks 10 ft. FOLLOWUPS 222.
   # Future Street Plans (FOLLOWUPS 105 round 5, 2026-11-13; fetched under the
   # standing download OK of 2026-11-09). Cited beside the flag-lot height limits
   # (4.0136) and by the Downtown, Civic and Rockwood design standards. Read in
@@ -2551,6 +2591,21 @@ zones:
           when: [at_street_end]
           cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street is 25 feet (townhouses, single detached dwellings and plexes)
           quote: "or/multnomah/gresham/4/4.0130.txt#L179"
+    max_far:
+      # Table 4.0130 row J, "Maximum Floor Area Ratio (See definition in
+      # Article 3)": the "Single Detached, Duplex, Triplex, Quadplex" row
+      # prints 1.0 in the LDR-5 column (first of seven: LDR-5, LDR-7, TR,
+      # TLDR, MDR-12, MDR-24, OFR -- header L9). Article 3 measures it on
+      # gross site area (3/3.0103.txt#L432-L434). The pod split onto unit
+      # lots is a townhouse, which row J files under "All other uses": NA.
+      # Encoded 2026-11-27 (FOLLOWUPS 222): lot_of_record_relief waives the
+      # minimum lot size, so this ratio can bind on a small existing taxlot.
+      value: 1.0
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9,L106-L109"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9,L106,L110"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be
@@ -2788,6 +2843,21 @@ zones:
           when: [at_street_end]
           cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street is 25 feet (townhouses, single detached dwellings and plexes)
           quote: "or/multnomah/gresham/4/4.0130.txt#L179"
+    max_far:
+      # Table 4.0130 row J, "Maximum Floor Area Ratio (See definition in
+      # Article 3)": the "Single Detached, Duplex, Triplex, Quadplex" row
+      # prints 0.7 in the LDR-7 column (second of seven: LDR-5, LDR-7, TR,
+      # TLDR, MDR-12, MDR-24, OFR -- header L9). Article 3 measures it on
+      # gross site area (3/3.0103.txt#L432-L434). The pod split onto unit
+      # lots is a townhouse, which row J files under "All other uses": NA.
+      # Encoded 2026-11-27 (FOLLOWUPS 222): lot_of_record_relief waives the
+      # minimum lot size, so this ratio can bind on a small existing taxlot.
+      value: 0.7
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9,L106-L109"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9,L106,L110"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be
@@ -2868,7 +2938,7 @@ zones:
           - "the flag pole portion of a flag lot"
           - "the portion of non-standard lots encumbered by an access easement"
     notes: >-
-      Low Density Residential 7. Minimum lot 7,000 sq ft and FAR 0.7, the tightest ratio in the city — still over 1,000 sq ft of building on a minimum lot, so it does not bind this pod.
+      Low Density Residential 7. Minimum lot 7,000 sq ft and FAR 0.7, the tightest ratio in the city. On a 7,000 sq ft lot that is 4,900 sq ft of floor, above the pod's 4,032, but lot_of_record_relief waives the minimum lot size for every existing taxlot, so on a lot under about 5,760 sq ft the ratio binds (max_far, encoded 2026-11-27).
 
 
       REAR ROOF HEIGHT LIMIT. Section 7.0420 applies its design standards to
@@ -3272,6 +3342,21 @@ zones:
           when: [at_street_end]
           cite: GDC Table 4.0131 note 5, the maximum setback from the end of a Minor Access Street is 25 feet (townhouses, single detached dwellings and plexes)
           quote: "or/multnomah/gresham/4/4.0130.txt#L179"
+    max_far:
+      # Table 4.0130 row J, "Maximum Floor Area Ratio (See definition in
+      # Article 3)": the "Single Detached, Duplex, Triplex, Quadplex" row
+      # prints 1.0 in the TR column (third of seven: LDR-5, LDR-7, TR,
+      # TLDR, MDR-12, MDR-24, OFR -- header L9). Article 3 measures it on
+      # gross site area (3/3.0103.txt#L432-L434). The pod split onto unit
+      # lots is a townhouse, which row J files under "All other uses": NA.
+      # Encoded 2026-11-27 (FOLLOWUPS 222): lot_of_record_relief waives the
+      # minimum lot size, so this ratio can bind on a small existing taxlot.
+      value: 1.0
+      quote: "or/multnomah/gresham/4/4.0130.txt#L9,L106-L109"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4/4.0130.txt#L9,L106,L110"
     lot_of_record_relief:
       # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
       # Lot of Record which is less than the required minimum lot size may be

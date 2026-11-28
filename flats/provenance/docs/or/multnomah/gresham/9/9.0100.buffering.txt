@@ -1,0 +1,356 @@
+SECTION 9.0100
+                                 BUFFERING AND SCREENING REQUIREMENTS
+
+General
+9.0101                                                                                                                                                                      Purpose
+
+Buffering and Screening Requirements
+9.0110                                                                                                                                                                      Buffering                                        and Screening Requirements
+9.0111                                                                                                                                                                     Buffer Matrix
+
+GENERAL
+
+9.0101                                       PURPOSE
+
+To reduce the impacts on adjacent conforming uses that are of a different type, buffering and screening will be
+required. The property owner is responsible for the establishment and maintenance of buffering vegetation
+and screening in accordance with the requirements of this section unless the abutting use has already
+provided buffering in compliance with the standards in this Article.
+
+BUFFERING AND SCREENING REQUIREMENTS
+
+9.0110                             BUFFERING AND SCREENING REQUIREMENTS
+
+A.                        Buffering and screening are required in accordance with the Buffer Matrix in Table 9.0111(A)         and the
+         standards in Table 9.0111(B).
+B.                          The following elements are allowed in a buffer:
+         1.                             Vertical elements such as plants, berms, fences, walls, screening, and landscaping materials;
+         2.                             Vegetated stormwater facilities;
+         3.                             Garden elements such as arbors, trellises, fountains, ponds, yard accessories and seating. Seating must
+                  be at least 5 feet from the abutting property line;
+         4.                             Underground, in-ground, and overhead utilities; and
+         5.                             Walkways connecting to the on-site pedestrian circulation system.
+C.                            The following elements are not allowed in a buffer:
+         1.                             Above-ground mechanical equipment such as for heating, ventilation, renewable energy systems and
+                  air conditioning;
+         2.                             Projections listed in Section 9.0901(A), unless listed in Section 9.0110(B)         ; and
+         3.                             Children’s play areas.
+D.                       Buffer trees may count toward yard and site tree requirements. They shall not count toward other
+         requirements such as driveway, primary internal drive, parking lot, and street tree requirements.
+
+                                                                                                                     [9.0100]-1
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+E.                              For purposes of this section, a vacant lot is a lot that is undeveloped or developed with a non-conforming
+       use. Where the abutting property is a vacant, the buffer and screening shall be based on the most intense
+       conforming use. Least to more intensive uses are as shown in sequence           in Table 9.0111(A).
+       1.                             When the proposed development occurs adjacent to a vacant lot one-half of the buffer and screening
+              shall be provided at the time of the proposed development. The one-half provided by the proposed
+              development shall at least include one-half of the required buffer width and one-half of required
+              buffer shrubs and trees and groundcover. A required fence or wall shall be provided by the more
+              intensive use at the time of its development. The balance of the buffer shall be provided at the time
+              the vacant lot is developed.
+       2.                             If the proposed development abuts a property in the LDR-5, LDR-7, TLDR or TR District, the entire
+              buffer shall be provided by the proposed development.
+       3.                             If the proposed development is an LDR-5, LDR-7, TLDR or TR District dwelling and abuts vacant land
+              that allows a more intensive use, the entire buffer shall be provided by the more intensive use at the
+              time of its development.
+       4.                             When a proposed development occurs adjacent to an existing use that has not provided a buffer and
+              screening in accordance with           this section, the proposed use shall provide the buffer and screening to
+              the conforming use of the adjacent property.
+F.                               Buffers are required across streets only when:
+       1.                             Industrial uses are adjacent to single detached dwelling, duplex, triplex, quadplex, townhouse, or
+              cottage cluster uses across streets that have a designated right of way in the Public Works Standards of
+              less than 100 feet. Screening required as part of Landscape Standards E or F requirements (as defined
+              in Table 9.0111(B)) shall be incorporated. On portions of the site facing the street, the required
+              landscaping shall be oriented toward the right of way.
+       2.                              Commercial or Type B (see S          ection 9.0111(A)(2)) uses greater than 10,000 square feet (either in one
+              building or an entire site, including both indoor and outdoor uses) adjacent to single detached
+              dwelling, duplex, triplex, quadplex, townhouse, or cottage cluster uses that are across streets with a
+              designated right of way in the Public Works Standards of 60 feet or less. In this case, screening
+              elements would not be required.
+G.                      The following materials shall be required within a buffer:
+       1.                             Trees.
+              a.                             Shade trees (or canopy trees) planted within a buffer shall be:
+                      i.                                         Capable of growing to a height of 25 feet or more at maturity;
+                      ii.                             Capable of growing to a spread of 25 feet or more at maturity when located in a buffer of 15
+                             feet or wider;
+                      iii.                  Capable of growing to a spread of 15 feet or more when located in a buffer of 15 feet or wider;
+                      iv.                   A height of 10 feet or more and a caliper of 2.5 inches or more at the time of planting; and
+                      v.                              Balled and burlapped or container stock.
+              b.                           Evergreen trees planted within a buffer shall be:
+                      i.                                         Capable of growing to a height of 25 feet or more at maturity;
+
+                                                                                             [9.0100]                                       -2
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                             ii.                             A height of 8 feet or more at the time of planting; and
+                             iii.                  Balled and burlapped or container stock.
+                   c.                                 Buffer trees shall be planted at the densities specified in Table 9.0111(B)         . For example, if the
+                             standard requires 1 tree per 30 linear feet, at least 1 tree shall be planted in each 30 linear feet.
+                             Buffer trees are not required to be planted in a straight line. See Figure 9.0110(F)        .
+                                                                            Figure 9.0110(     F ): Tree Placement in Buffer
+
+         2.                             Evergreen and Deciduous Shrubs. Evergreen and deciduous shrubs planted within a buffer shall be:
+                   a.                             A height of 24 inches or more from finished grade at planting, with the exception of dwarf shrubs,
+                             such as boxwood;
+                   b.                           1 gallon size or larger at planting;
+                   c.                                 Selected with consideration to which plants will thrive under selected trees and in shade or sun
+                             conditions; and
+                   d.                           Planted to obscure the lower portion of any required fence or wall.
+                   e.                             Hedges required for screening must be a minimum of 6 feet tall at the time of planting.
+         3.                             Ground Cover. Ground cover within a buffer shall be:
+                   a.                             Well rooted in either flats or a minimum of 1 gallon pots.
+                   b.                           Selected with consideration for which plants will thrive under selected trees and in shade or sun
+                             conditions.
+                   c.                                 Planted to cover the balance of the buffer area no  t covered by other buffer materials.
+         4.                             Fences and Walls. Required fences and walls shall be:
+                   a.                             Sight-obscuring to a height as required by Table 9.0111(B)         .
+                   b.                           Located on or adjacent to the property line.
+
+                                                                                                                           [9.0100]                                       -3
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+      5.                             Berms. Required berms shall:
+             a.                             Include undulating changes in berm height.
+             b.                           Have a slope of 33 percent (1 foot in vertical height for every 3 feet in horizontal distance) or less,
+                    except one side of a berm may be supported by a retaining wall.
+H.                       Maintenance. Compliance with the following criteria is required:
+      1.                             Inspections. A City representative will perform a final landscape inspection to ensure that the
+             landscape demonstrates equivalent compliance with the approved landscape plan upon completion of
+             the project and before issuance of a Temporary or Final Certificate of Occupancy following a request
+             from the developer.
+             The inspection time period is from March 1 to November 15. If an inspection is requested between
+             November 16 and the last day of February and the landscaping is not complete, or if the applicant
+             requests a Temporary Certificate of Occupancy to occupy one or more buildings on site prior to the
+             landscaping being completed, a financial guarantee is to be provided based on one hundred and ten
+             percent (110%) of the estimated cost of plant materials and buffer elements (such as walls and fences)
+             and labor for the total landscape plan as indicated in a landscape cost estimate. Beginning March 1,
+             the applicant has 180 days to complete the items or the City will cash in the amount being held and
+             finish the landscape job.
+      2.                             Establishment period. The establishment period for the plant material guarantee will begin at the Final
+             Certificate of Occupancy inspection approval to 2 years from that date. All plantings shall be properly
+             planted as to be in a healthy, growing condition at commencement of the establishment period. At the
+             end of the establishment period, any plantings that are 20 percent (20%) dead or greater shall be
+             replaced.
+      3.                             Maintenance of required planting by the owner shall be carried out so as to present a healthy, neat
+             and tidy appearance, free from refuse and debris.
+      4.                             To ensure proper maintenance and as a condition of Final Site Plan approval, the property owner shall
+             enter into and record with the City a Landscape Maintenance Agreement, or include such provisions as
+             part of the condominium master deed, each of which shall be approved by the City Attorney. Such
+             instrument shall identify the minimum plan of maintenance, the person or entity responsible for
+             maintenance, and shall provide the procedure, authority and finance for City cure of breaches by the
+             responsible entity. Such instrument shall also include: provisions that all unhealthy and dead material
+             shall be replaced within 1 year, or the next appropriate planting period, whichever occurs first; all
+             landscaped areas shall be provided with an operable irrigation system; tree stakes, guy wires and tree
+             wrap are to be removed after 1 winter season; and plantings shall be guaranteed for 2 years after the
+             Final Certificate of Occupancy inspection approval.
+      5.                             Responsibility and Certificates of Occupancy. The owner of the property subject to the requirements of
+             this Section shall be responsible for installing and maintaining landscaping per the approved final
+             landscape plan as specified in this Section. Where a person other than the owner occupies the
+             property, the occupant shall also be responsible for maintenance.
+I.                                        When the following situations exist, the buffering and screening may be reduced or eliminated, or
+      alternative means of providing the desired screening may be instituted.
+
+                                                                                     [9.0100]                                       -4
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+        1.                             Existing buffering and screening.                      If the subject parcel or abutting use has provided buffering and
+                screening in compliance with this section, the buffering and screening elements already provided (such
+                as trees, fences or walls in good condition, and plant material) may count toward the           required
+                buffering and screening requirements in Table 9.0111(B), so long as they are protected during
+                construction per the standards in Section 9.1031.
+        2.                             Existing Trees. The following standards apply to existing trees located within a buffer area used to
+                satisfy the requirements in Table 9.0111(B).
+                a.                             Existing trees shall be 2.5 inches or more in diameter breast height and meet the standards of
+                        Section 9.0110(G)(1) for eventual height and crown at maturity. Existing trees to be counted
+                        toward this requirement must be confirmed by a Certified Arborist to be healthy trees  .
+                b.                           Any existing tree that qualifies as a required buffer tree may satisfy buffer tree requirements for
+                        the dimension specified in Table 9.0111(B) or the entire length of its crown cover along the
+                        property line, whichever is larger. To determine buffer tree requirements along the entire property
+                        line, applicants may subtract the linear feet along the property line covered by the existing tree(s)
+                        and then determine how many trees are required for the remaining linear feet, as shown in Figure
+                        9.0110(H).
+                c.                                 If an existing tree used to satisfy buffer tree           requirements is subsequently removed, it shall be
+                        replaced according to the standards in Table 9.0111(B)           .
+                                                                Figure 9.0110(     H): Existing Trees in Buffer
+
+        3.                             Alternative Buffer Plan: In lieu of the buffer width and/or landscape and screening standards, the
+                owner or applicant, at their option, may prepare a detailed plan and specifications for landscaping and
+                screening, including plantings, fences, walls, walks, berms and other features designed to afford the
+                degree of desired buffering and screening. Such plans and specifications shall be submitted to the
+                Manager for review. The alternative plan shall comply with the following standards:
+
+                                                                                                     [9.0100]                                       -5
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                a.                             The alternative buffer plan shall                                              be prepared and stamped by a licensed Landscape Architect.
+                        When proposed within a buffer, plans for stormwater facilities may be designed by either a
+                        licensed Landscape Architect or a licensed Civil Engineer; and
+                b.                           If the alternative plan contains a buffer width narrower than required in Table 9.0111(B), the
+                        applicant must demonstrate that the buffer width requirements cannot be met because the
+                        applicant desires to protect important natural features (such as a significant or major tree,
+                        wetlands, habitat, trees on abutting properties) or because of constrained lot, site or physical
+                        conditions; and
+                c.                                 The alternative buffer shall meet the intent of the required buffer width, landscaping and
+                        screening standards by reducing impacts on adjacent uses.
+                        i.                                         Related to noise, the applicant shall demonstrate that the materials used, in combination with
+                                placement and height of the alternative fence or wall, will result in equivalent noise reduction
+                                (or equivalent performance) as the required screening per Table 9.0111(B)                            .
+                        ii.                             Applicants shall provide a letter from an acoustical consultant or engineer with findings
+                                demonstrating that the alternative fence or wall will meet the equivalency standard per
+                                Subsection (c)(i), above.
+        4.                             The conversion of hotel or motel to an emergency shelter or to affordable housing under Section
+                10.0420 does not require buffering and screening.
+
+9.0111                             BUFFER MATRIX
+
+A.                        Buffer Matrix (Table 9.0111(                         A) and (B)) Notes:
+        1.                             Type A uses are those noise sensitive uses typically subject to a Special Use Review and include: Elderly
+                Housing, Daycare Facilities, public library, Medical uses, public urban plazas, public neighborhood
+                parks, public community parks, public paths and          trails, Religious Institutions and Schools.
+                Notwithstanding Table 9.0111(A), no buffer is required for Elderly Housing when the abutting use is
+                also Elderly Housing.
+        2.                             Type B uses are those uses typically subject to a Special Use Review and are not included as a Type A
+                use. This includes: Commercial Parking, Major Event Entertainment, all Civic Uses except for libraries,
+                Community Services, golf courses, Basic Utilities, and Heliport Facilities.
+        3.                             Manufactured dwelling park buffer and screening standards are found in Section 7.0410                                                              of the
+                Community Development Code.
+        4.                             Alternative buffer and screening standards for public paths and trails are found in Section 8.0117         .
+
+                                                                                                    [9.0100]                                       -6
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+Table 9.0111(A): Buffer Matrix
+                                                                                                                                                                                                                                                                                                                                ABUTTING USE
+
+               PROPOSED
+                                        USE
+
+        Single
+        Detached
+        Dwellings                                                                                                                                   -                                                                       A                                                                                                                                                       A                                                                                                                                                               A                                                                                                                                                                    A                                                                                                                                                                           A                                                                                                                                                                           A                                                                                                                                                                           A                                                                                                                                                                           A
+        and Middle
+        Housing
+        Multi-Family                                                                                                                              B                                                                           -                                                             A                                                                  C                                                                   C                                                                      D                                                                     D                                                                       E                                                                       -
+        Type A Uses                                                                                                                               C                                                                         A                                                               B                                                                  C                                                                   C                                                                      D                                                                     D                                                                       E                                                                       -
+        Commercial                                                                                                                                C                                                                         C                                                               C                                                                    -                                                                   -                                                                      -                                                                      -                                                                      -                                                                     -
+        Type B Uses                                                                                                                               C                                                                         C                                                               C                                                                    -                                                                   -                                                                      -                                                                      -                                                                      -                                                                     -
+        Outdoor                                                                                                                                  D                                                                                                                                                                                   D                                                                                                                                                     D                                                                                                                                                                     -                                                                                                                                                                                 - - -                                                                                                                                                                                        -                                                                                                                                                                                        -
+        Commercial
+        Auto-
+        Dependent                                                                                                                                D                                                                                                                                                                                   D                                                                                                                                                     D                                                                                                                                                                     -                                                                                                                                                                                 -                                                                                                                                                                                        - - -                                                                                                                                                                                        -
+        Commercial
+        Industrial                                                                                                                                E                                                                         E                                                               E                                                                    -                                                                   -                                                                      -                                                                      -                                                                      -                                                                     -
+        Springwater                                                                                                                                F                                                                                                                                                                                          F                                                                                                                                                                -                                                                                                                                                                            -                                                                                                                                                                                 -                                                                                                                                                                                        -                                                                                                                                                                                        -                                                                                                                                                                                        - -
+        Industrial
+
+B.                          Buffer Width. Landscape and Screening Requirements (Table 9.0111(B) ). No tes:
+                          1.                             On lots where the height transition standard of Section 9.0600 applies and an application will result in
+                                                     structures within 35 feet of the property line that exceed 22 feet in height, the following standards
+                                                     apply:
+                                                     a.                             If the Buffer Width, Landscape and Screening Requirements provide more than one option, only
+                                                                                Option 1 shall be used.
+                                                     b.                           Alternative buffer plans that reduce buffer width shall not be permitted.
+
+                                                                                                                                                                                                                                                                                                                                                 [9.0100]-7
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+Table 9.0111(B): Buffer Width, Landscape, and Screening Requirements (See Figure 9.0111 for
+Buffer Illustrations)
+   LANDSCAPING                                                                            OPTION                  MIN.                                                                    SCREENING
+      STANDARD                                       INTENT                                     S               BUFFER                TREES                SHRUBS                    (continuous and
+                                                                                                                WIDTH                                                                  site obscuring)
+                A                     The A standard is                                  N/A                   10 ft.                None                None                     None
+          General                     applicable where
+     Landscaping,                     distance is the primary
+  Smallest Buffer                     means of buffering.
+           Width                      Ground cover is
+                                      required. Trees and
+                                      shrubs are encouraged
+                                      on a voluntary basis.
+                B                     The B standard is a                                Option                15 ft.                1 per               40 shrubs                Evergreen shrubs
+     High Screen,                     landscape treatment                                1                                           30                  per 100                  to form a
+       Moderate                       that provides physical                                                                         linear              linear ft.                                                                   continuous screen
+     Buffer Width                     separation and uses                                                                            ft.                 of                       a minimum of 6 ft.
+                                      screening to ensure                                                                                                landscape                high; or a
+                                      visual separation                                                                                                  d area                   minimum 6-ft.
+                                      between uses or                                                                                                                             fence or wall
+                                      development. Physical                              Option                10 ft.                1 per               40 shrubs                A minimum 8-foot
+                                      and visual separation is                           2                                           15                  per 100                  fence or masonry
+                                      required.                                                                                      linear              linear ft.               wall
+                                                                                                                                     ft.                 of
+                                                                                                                                                         landscape
+                                                                                                                                                         d area
+                C                     The C standard is a                                Option                20 ft.                1 per               50 shrubs                Multi-Family: a
+     High Screen,                     landscape treatment                                1                                           25                  per 100                  minimum 6 ft.
+     Large Buffer                     that provides more                                                                             linear              linear ft.               fence
+           Width                      physical separation                                                                            ft.                 of                       Other uses: A
+                                      than in the B landscape                                                                                            landscape                minimum 6 ft.
+                                      standard and uses                                                                                                  d area                   masonry wall.
+                                      enhanced screening to                              Option                15 ft.                1 per               50 shrubs                Multi-Family: a
+                                      visual separation.                                 2                                           15                  per 100                  minimum 6 ft.
+                                      Reduced noise                                                                                  linear              linear ft.               masonry wall
+                                      transmission is desired                                                                        ft.                 of                       Other uses: a
+                                      at the ground-floor                                                                                                landscape                minimum 8 ft.
+                                      level.                                                                                                             d area                   masonry wall
+
+                                                                                                   [9.0100]-8
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+   LANDSCAPING                                                                                      OPTION                     MIN.                                                                           SCREENING
+       STANDARD                                            INTENT                                          S                BUFFER                   TREES                  SHRUBS                        (continuous and
+                                                                                                                             WIDTH                                                                         site obscuring)
+                  D                       The D standard is a                                      N/A                     20 ft.                   1 per                 50 shrubs                   A minimum 8 ft.
+        High Wall,                        landscape treatment                                                                                       25                    per 100                     masonry wall
+      Large Buffer                        that provides more                                                                                        linear                linear ft.
+            Width                         physical separation                                                                                       ft.                   of
+                                          than in the B landscape                                                                                                         landscape
+                                          standard. Physical                                                                                                              d area
+                                          separation is important
+                                          because the uses
+                                          involved have more
+                                          outdoor and noise-
+                                          producing elements.
+                                          The D standard also
+                                          has enhanced
+                                          screening. Reduced
+                                          noise transmission is
+                                          desired at the ground-
+                                          floor level and is even
+                                          more important than in
+                                          the C standard because
+                                          of the potential for
+                                          noise-producing
+                                          activities.
+                  E                       The E standard is a                                      N/A                     30 ft.                   1 per                 60 shrubs                   A minimum 8-ft.
+    High Wall and                         landscape treatment                                                                                       15                    per 100                     masonry wall
+     Larger Buffer                        that provides enhanced                                                                                    linear                linear ft.
+            Width                         physical separation in                                                                                    ft.                   of
+                                          addition to that                                                                                                                landscape
+                                          provided by the C and                                                                                                           d area
+                                          D standards because of
+                                          the potential effects of
+                                          industrial uses. The E
+                                          standard requires
+                                          extensive visual
+                                          screening and
+                                          reduction of noise
+                                          transmission at the
+                                          ground level is
+                                          required.
+
+                                                                                                              [9.0100]-9
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+    LANDSCAPING                                                                                                         OPTION                            MIN.                                                                                           SCREENING
+        STANDARD                                                        INTENT                                                    S                   BUFFER                        TREES                       SHRUBS                             (continuous and
+                                                                                                                                                       WIDTH                                                                                         site obscuring)
+                      F                           The F standard is                                                     N/A                          40 ft.                       1 per                      90 shrubs                         A minimum 6-ft.
+     High Bern and                                intended to be used in                                                                                                          15                         per 100                           berm
+          Maximum                                 special instances where                                                                                                         linear                     linear ft.                        For berms less
+      Buffer Width                                the largest physical                                                                                                            ft.                        of                                than 8 ft.,
+                                                  separation is needed                                                                                                            (trees                     landscape                         evergreen shrubs,
+                                                  and the most extensive                                                                                                          may be                     d area                            evergreen trees, or
+                                                  screening of both visual                                                                                                        placed                     (shrubs                           a combination of
+                                                  impacts and reduction                                                                                                           on                         may be                            the two shall                                              be
+                                                  of noise transmission is                                                                                                        berm)                      placed on                         planted at or near
+                                                  needed to protect                                                                                                                                          berm)                             the top to ensure
+                                                  abutting sensitive uses.                                                                                                                                                                     the overall 8 ft.
+                                                                                                                                                                                                                                               screen height
+
+                                             Figure 9.0111: Buffer Width, Landscape and Screening Illustrations
+
+                                                                                                                                   [9.0100]-                                       10
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
