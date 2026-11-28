@@ -1114,7 +1114,9 @@ defaults:
   # share, which is Portland's shape and not the share-of-frontage every other
   # city in this corpus states, and it is the reason those are two fields.
   # The same subsection caps the street side yard at 30 percent -- a
-  # street-side standard this screen holds no field for.
+  # street-side standard this screen holds no field for. This 50 also carries
+  # R-MD's and R-HD's 40 percent front-yard vegetation (19.301.5.C,
+  # 19.302.5.D), which has no field: narrow it and that sentence goes unread.
   parking_front_yard_max_pct:
     value: 50
     cite: MMC 19.607.1.D, uncovered parking spaces and maneuvering areas as a share of the front yard area
@@ -1714,6 +1716,35 @@ zones:
         - value: 35
           band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
           quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L159"
+    min_landscaped_pct:
+      # Table 19.301.4 row C.5, "Minimum vegetation (percent of total lot
+      # area)": 15 / 25 / 25 / 30 across the four lot-size bands, banded the
+      # way row C.4's coverage cap directly above it is, so the base value is
+      # the 7,000-and-up column as there. Missed until the 2026-11-27
+      # completeness check (FOLLOWUPS 222). 19.504.5's mulch limit says what
+      # may cover the vegetated ground, not how much of it there is.
+      #
+      # NOT ENCODED: 19.301.5.C, "At least 40% of the front yard shall be
+      # vegetated" (19.301.5.txt#L48), has no field of its own. It is held by
+      # `parking_front_yard_max_pct` (50, 19.607.1.D) on the same front yard:
+      # the screen counts the ground off the building and off its pavement as
+      # plantable (the `min_landscaped_pct` leftover does the same), so a
+      # front yard at most half vehicle area is at least half vegetable, which
+      # clears 40. If that 50 is ever lifted off unit lots (19.607.1.txt#L61
+      # exempts townhouses from 19.607.1.D), this sentence needs its own field.
+      value: 30
+      cite: MMC Table 19.301.4 C.5
+      quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L163,L167"
+      variants:
+        - value: 15
+          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L163-L164"
+        - value: 25
+          band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L163,L165"
+        - value: 25
+          band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
+          quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L163,L166"
     max_height_ft:
       value: 35
       quote: "or/clackamas/milwaukie/19.301/19.301.4.txt#L139"
@@ -1899,6 +1930,20 @@ zones:
     max_coverage_pct:
       value: 50
       quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L41"
+    min_landscaped_pct:
+      # Table 19.302.4, "Minimum vegetation (percent of total lot area)": one
+      # column, 15. 19.302.5.E's extra 10 percent is owed only for the extra
+      # 10 ft of height it permits, which a pod inside 45 ft does not take.
+      #
+      # NOT ENCODED: 19.302.5.D's 40 percent front-yard vegetation
+      # (19.302.5.txt#L65) and 19.302.5.C's half-the-vegetation-usable-for-
+      # recreation (L59) have no field. The first is held by
+      # `parking_front_yard_max_pct` exactly as R-MD's 19.301.5.C is (see
+      # there); the second is a quality of the ground (no extreme topography
+      # or dense vegetation), which nothing measures.
+      value: 15
+      cite: MMC Table 19.302.4 B
+      quote: "or/clackamas/milwaukie/19.302/19.302.4.txt#L42"
     max_density_du_per_acre:
       # Table 19.302.4 caps R-HD at 32 du per acre, and note 2 is the same
       # sentence Table 19.301.4 prints: middle housing is exempt, townhouses
