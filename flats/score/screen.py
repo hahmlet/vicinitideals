@@ -303,6 +303,11 @@ CLOSER_LOOK_PLAN_OFF_LOT = "CLOSER_LOOK_PLAN_OFF_LOT"
 #: ``side_yard_court_overlap_ft``) were measured against no carve. Never
 #: GREEN on that drawing.
 CLOSER_LOOK_PLAN_ON_CARVE = "CLOSER_LOOK_PLAN_ON_CARVE"
+#: The drawn building, lane or court stands inside a buffer a code owes the
+#: neighbour's USE along a non-street lot line, or one it may owe where the
+#: neighbour was not read (:func:`flats.geom.lot_line_buffer.checked`;
+#: Gresham 9.0111(A), FOLLOWUPS 222). Never GREEN on that drawing.
+CLOSER_LOOK_LOT_LINE_BUFFER = "CLOSER_LOOK_LOT_LINE_BUFFER"
 #: A street centreline that is no alley or private drive runs through the
 #: lot within reach of the drawn building, lane or court
 #: (:func:`flats.ingest.quadfit.street_through_checked`, rel11 move read G2:
@@ -5618,6 +5623,7 @@ __all__ = [
     "CLOSER_LOOK_DISTRICT_EDGE",
     "CLOSER_LOOK_PLAN_OFF_LOT",
     "CLOSER_LOOK_PLAN_ON_CARVE",
+    "CLOSER_LOOK_LOT_LINE_BUFFER",
     "CLOSER_LOOK_STREET_THROUGH_LOT",
     "EDGE_SAG_READ",
     "DEDICATION_JOG_READ",

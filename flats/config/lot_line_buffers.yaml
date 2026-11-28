@@ -1,0 +1,78 @@
+# Buffers a code keeps along the lot lines that are not streets, owed by
+# the NEIGHBOUR'S USE rather than by this lot's zone (FOLLOWUPS 222; the
+# fg5 round-5 false-GREEN read, finding F1, Gresham 1N3E32DC -06100: the
+# drawn lane and court ~4-5 ft off a multi-family line owed 10 ft).
+#
+# Read by flats/geom/lot_line_buffer.py; the screen step is
+# flats.geom.lot_line_buffer.checked, which flats.ingest.quadfit runs on the
+# drawn plan after the fit. Stored as printed. A GREEN plan whose drawn
+# building, lane or court stands inside `width_ft` of a non-street line is
+# YELLOW with MEASURE-LOT-LINE-BUFFER unless that line is read, wholly, as
+# abutting only zones in `not_owed_beside` in the lot's own city. A line
+# nobody read (no neighbour record, a split-zone or unzoned neighbour,
+# another city, a code on no list) owes the buffer -- the conservative
+# answer. Never moves a lot toward GREEN and never makes one RED: another
+# placement may hold the plan clear, and the code's alternative buffer plan
+# (Gresham 9.0110(I)(3)) is a way out the screen cannot weigh.
+#
+# Keys: `zones` the lot's zones the check runs in (empty = every zone);
+# `width_ft` the buffer width as printed; `keeps_out` the drawn parts a
+# buffer may not hold; `not_owed_beside` the neighbour zones read as owing
+# no buffer; each with its quote into the stored code text.
+
+places:
+  or/multnomah/gresham:
+    # Every Gresham zone the pod screens in: the proposed use is a quadplex
+    # or townhouse, which Gresham defines as Middle Housing ("Middle
+    # Housing. Duplexes, Triplexes, Quadplexes, Townhouses, and Cottage
+    # Clusters.", 3/3.0103.txt#L644), so its row of the buffer matrix is the
+    # same in every district.
+    zones: []
+    # 9.0110(A): "Buffering and screening are required in accordance with
+    # the Buffer Matrix in Table 9.0111(A) and the standards in Table
+    # 9.0111(B)." (9/9.0100.buffering.txt#L24-L25). Table 9.0111(A), row
+    # "Single Detached Dwellings and Middle Housing", prints "- A A A A A A A
+    # A" (#L224-L228): nothing beside Single Detached / Middle Housing,
+    # standard A beside every other abutting use (Multi-Family, Type A uses,
+    # Commercial, Type B uses, Outdoor Commercial, Auto-Dependent
+    # Commercial, Industrial, Springwater Industrial -- the column heads are
+    # rotated text the stored extraction drops; their order is the row
+    # order, as the 2026-11-27 code-entry note in gresham.yaml records).
+    standard: A
+    standard_quote: "or/multnomah/gresham/9/9.0100.buffering.txt#L224-L228"
+    # Table 9.0111(B), standard A: "MIN. BUFFER WIDTH ... 10 ft."
+    width_ft: 10
+    quote: "or/multnomah/gresham/9/9.0100.buffering.txt#L254-L257"
+    says: "10 ft."
+    # 9.0110(B) lists what is allowed in a buffer -- plants, berms, fences,
+    # walls, vegetated stormwater, garden elements, utilities, walkways
+    # (#L26-L32) -- and 9.0110(C) bars even mechanical equipment and the
+    # 9.0901(A) projections (#L33-L37); ground cover is "Planted to cover
+    # the balance of the buffer area" (#L100-L104). No building, drive lane
+    # or parking court is on the allowed list.
+    keeps_out: [building, lane, court]
+    keeps_out_quote: "or/multnomah/gresham/9/9.0100.buffering.txt#L26-L37,L100-L104"
+    # Across a street the pod owes none: 9.0110(F) puts cross-street
+    # buffers on industrial and large commercial uses only (#L60-L70), so
+    # street lines are not measured. An alley line IS measured, against the
+    # zone s4 reads across the alley (whether an alley is a "street" for
+    # 9.0110(F) is not settled here; HANDOFF question).
+    across_street_quote: "or/multnomah/gresham/9/9.0100.buffering.txt#L60-L70"
+    # The zoning layer says zones, not uses. Table 4.0120 permits no
+    # Multi-family (row "Multi-family/Shared Housing Facility": NP), and no
+    # commercial or industrial use but daycare by special use, in LDR-5,
+    # LDR-7, TR or TLDR (header L12, L20, L26-L48), so a line wholly across
+    # those four is read as single detached or middle housing. JUDGEMENT,
+    # listed for Steph (HANDOFF): the same table lets churches, schools,
+    # parks, civic uses and daycares in by special use review (L32,
+    # L52-L57) and affordable housing under 10.1700 (L25, note 5 L81-L83);
+    # those are uses the zoning layer cannot see. TLDR's
+    # manufactured dwelling parks (L22) are not a column of the matrix
+    # (9.0111(A)(3), #L212-L213, sends their buffer to 7.0410, which the
+    # park provides). Every other zone -- MDR-12, MDR-24, OFR, the Pleasant
+    # Valley, Springwater, Downtown, corridor, commercial and industrial
+    # districts -- is read as owing the buffer: each permits a use the row
+    # buffers, or was not read here. Vacant neighbours (9.0110(E), #L43-L59)
+    # are not told apart: the full width is asked, never the half of E(1).
+    not_owed_beside: [LDR-5, LDR-7, TR, TLDR]
+    not_owed_quote: "or/multnomah/gresham/4/4.0120.txt#L12,L20,L26-L48"

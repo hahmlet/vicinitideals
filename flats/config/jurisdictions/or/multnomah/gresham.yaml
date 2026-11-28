@@ -1802,7 +1802,13 @@ code:
   - id: "9.0100.buffering"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0100.pdf
     title: "Section 9.0100 - Buffering and Screening"
-    # READ 2026-11-27, NOT ENCODED (no field fits; the open gap is real).
+    # ENCODED 2026-11-28 in flats/config/lot_line_buffers.yaml, checked on
+    # the drawn plan by flats/geom/lot_line_buffer.py: the drawn building,
+    # lane and court are held out of GREEN (MEASURE-LOT-LINE-BUFFER) inside
+    # 10 ft of any non-street line not read as wholly across LDR-5, LDR-7, TR
+    # or TLDR -- the neighbour's zone stands in for its use (a judgement put
+    # to Steph: special-use churches, schools, parks and daycares in those
+    # four zones are not seen). The 2026-11-27 reading follows.
     # Until 2026-11-27 the crossref ledger filed "9.0100" as other_building,
     # "Fences", from one definition sentence (3.0103 "walls are a type of
     # fence"). That was wrong: the section is Buffering and Screening and it
@@ -1823,7 +1829,7 @@ code:
     # allowed, #L26-L37), so in effect a 10 ft setback on that lot line --
     # and on the parking court and drive lane, which are not on the allowed
     # list.
-    # WHY NO FIELD FITS: the matrix keys on the neighbour's USE, not its zone.
+    # THE USE/ZONE GAP: the matrix keys on the neighbour's USE, not its zone.
     # The abuts_*_zone facts read zoning; a church or school in LDR-5, or an
     # apartment building in MDR-12 next door, is a use the zoning layer does
     # not say. Vacant neighbours follow 9.0110(E): based on the most intense
@@ -1834,13 +1840,11 @@ code:
     # (#L57-L59). Across a street the quadplex owes none (9.0110(F) puts
     # cross-street buffers on industrial and large commercial uses only,
     # #L60-L70).
-    # WHAT IT NEEDS: a site fact for "a non-street lot line abuts a use other
-    # than single detached or middle housing" (existing use, from assessor
-    # property class or building footprints, plus the vacant-lot rule), and a
-    # field that adds a 10 ft no-build strip on that line (side and rear).
-    # Until then lots in Gresham whose 5 ft side setback is the binding
-    # dimension can screen GREEN beside an apartment, school or shop where
-    # the code asks 10 ft. FOLLOWUPS 222.
+    # STILL OPEN: a per-line fact for the neighbour's existing use (assessor
+    # property class or footprints, plus the vacant-lot rule) would replace
+    # the zone stand-in in both directions: an LDR neighbour that is a
+    # church or school (now read as owing nothing), and an MDR-12 neighbour
+    # that is a house (now held). FOLLOWUPS 222.
   # Future Street Plans (FOLLOWUPS 105 round 5, 2026-11-13; fetched under the
   # standing download OK of 2026-11-09). Cited beside the flag-lot height limits
   # (4.0136) and by the Downtown, Civic and Rockwood design standards. Read in

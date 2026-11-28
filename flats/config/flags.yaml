@@ -1159,6 +1159,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_PLAN_ON_CARVE]
+  MEASURE-LOT-LINE-BUFFER:
+    description: "The drawn building, driveway lane or parking court stands inside a buffer the code owes the neighbour's use along a lot line that is not a street, or may owe where the neighbour was not read: Gresham Table 9.0111(A) owes a 10 ft standard-A buffer from middle housing beside any use but single detached or middle housing, and only plants, fences and walkways may stand in it (9.0100.buffering.txt#L24-L37,L224-L228,L257; FOLLOWUPS 222, fg5 round 5 F1). The neighbour's use is read from its zone (flats/config/lot_line_buffers.yaml)"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Draw the plan with the building, lane and court the buffer width off that line (another placement may hold them), confirm the neighbour's use is single detached or middle housing, or propose an alternative buffer plan (9.0110(I)(3))"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_LOT_LINE_BUFFER]
   MEASURE-STREET-THROUGH-LOT:
     description: "A street centre line (not an alley or a private drive) runs through the lot within 50 ft of the drawn building, driveway lane or parking court: the lot may be cut by a road it does not own, and the plan may stand on its right-of-way (rel11 move read G2, Clackamas 21E11AB01100: WALTER through the lot, 25.8 ft from the court)"
     kind: categorical

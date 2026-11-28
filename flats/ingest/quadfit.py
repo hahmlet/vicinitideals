@@ -156,6 +156,7 @@ from flats.geom.neighbour import (
 )
 from flats.geom.park import PARK_FACTS, observed_parks
 from flats.geom import historic_lists
+from flats.geom import lot_line_buffer
 from flats.geom import pdx_overlays as pdx
 from flats.geom import split_zone as split_zones
 from flats.geom.sidewalk import (
@@ -6832,6 +6833,7 @@ def _screen_lot_once(
         won = drawn_edge_checked(won, lot)
         won = plan_on_lot_checked(won, lot)
         won = plan_on_carve_checked(won, lot)
+        won = lot_line_buffer.checked(won, lot)
         # A street drawn through the lot, near the plan (rel11 G2).
         won = street_through_checked(won, lot, _WORKER.get("through_streets"))
         won = drive_touch_checked(won)
