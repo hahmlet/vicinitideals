@@ -3947,3 +3947,46 @@
     flats/rel11-firenear; not live until released.
   source: Steph 2026-11-21 (chat)
   encoded_in: [flats/score/screen.py, flats/ingest/quadfit.py, flats/config/flags.yaml]
+- id: 2026-11-27-bridge-slip-road-limited
+  kind: ruling
+  date: 2026-11-27
+  scope: {}
+  question: >-
+    A short slip road (Metro RLIS types 1321, 1421, 1471, 1521) between two
+    ordinary streets is read as a street where the code says so (Portland,
+    PCC 33.910.030, FOLLOWUPS 215 F2). One whose name carries a bridge
+    ("BRG") may climb to an elevated approach. Is a bridge on/off slip road
+    an ordinary street lot line a driveway may use?
+  ruling: >-
+    Asked whether bridge on/off slip roads should count as streets, Steph
+    answered: keep them as limited roads (no driveway).
+  effect: >-
+    quadfit s4 keeps a slip road whose name carries BRG (or a freeway word:
+    I5, I84, I205, I405, FWY, or SUNSET with HWY) as "limited", never
+    "connector" (Lot Analysis/quadfit/s4_edges.py CONNECTOR_HELD_WORDS), so
+    no driveway, frontage or fire engine comes off it and the lot is read
+    both ways and held (ACCESS-LIMITED-WAY). No change to the screen.
+  source: Steph 2026-11-27 (chat, via the coordinator)
+  encoded_in: ["Lot Analysis/quadfit/s4_edges.py"]
+- id: 2026-11-27-freeway-line-red-only-yellow
+  kind: ruling
+  date: 2026-11-27
+  scope: {}
+  question: >-
+    A lot with a freeway-side line the map cannot tell (a ramp, a freeway
+    where the code is silent, a street beyond a railroad) is screened with
+    the line as a street line and without it, and the worse answer kept.
+    Where the worse reading is RED and the other is not, is the lot RED, or
+    held YELLOW for a look?
+  ruling: >-
+    Steph chose "Yellow for a look".
+  effect: >-
+    flats/ingest/quadfit.py _worse: on a lot read both ways for its
+    freeway-side line (limited_reading "worse"), a RED on one reading alone
+    shows the other reading, held YELLOW with ACCESS-LIMITED-WAY naming the
+    line and the checks the RED reading misses (_line_held). Never GREEN:
+    where the held answer would not be YELLOW the RED is kept. RED on both
+    readings stays RED. Lots read with and without a private drive are not
+    touched.
+  source: Steph 2026-11-27 (chat, via the coordinator)
+  encoded_in: [flats/ingest/quadfit.py, flats/config/flags.yaml]

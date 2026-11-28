@@ -2234,6 +2234,7 @@ def limited_reading(
       setback) AND without the lines (no frontage, driveway or fire
       standing off them), the worse answer kept, and held YELLOW
       (:data:`~flats.score.screen.STREET_LINE_LIMITED_WAY`): never GREEN.
+      RED on one reading alone is held YELLOW too (:func:`_worse`).
     * ``mixed`` -- the lot also has a street line only a private drive
       makes: s4 wrote no reading without both, so the lot is held as s4
       read it and its street is unconfirmed.
@@ -5521,6 +5522,12 @@ def _worse(first: Screened, second: Screened) -> Screened:
     reading fitted on s5o's envelope was not computed at all -- s5o cut
     that envelope with the drive as a street -- and makes the first a
     question.
+
+    On a lot with a freeway-side line the map cannot tell
+    (:func:`limited_reading`, ``worse``), a RED on one reading alone is not
+    kept: the other reading is shown, held YELLOW with ACCESS-LIMITED-WAY
+    naming the miss (:func:`_line_held`; Steph 2026-11-27). RED on both
+    stays RED.
     """
     if second.envelope is not None and second.envelope.source == "quadfit":
         return dataclasses.replace(
@@ -5529,6 +5536,19 @@ def _worse(first: Screened, second: Screened) -> Screened:
             signed=_street_unconfirmed(first.signed),
         )
     kept, other = (second, first) if _shown(second) > _shown(first) else (first, second)
+    side = getattr(getattr(getattr(second, "lot", None), "facts", None), "limited_way", "")
+    if (
+        side
+        and kept.signed.colour is flag_plan.Colour.red
+        and other.signed.colour is not flag_plan.Colour.red
+    ):
+        # RED only on one reading of a freeway-side line the map cannot tell
+        # (Steph 2026-11-27, rulings.yaml 2026-11-27-freeway-line-red-only-
+        # yellow: "Yellow for a look"): the other reading is shown, held
+        # YELLOW and naming the miss. Never GREEN.
+        held = _line_held(other, kept, side)
+        if held is not None:
+            return held
     if _COLOUR[kept.signed.colour] == _COLOUR[other.signed.colour]:
         # The colour rests on both readings: one that holds it only by a
         # measurement tolerance, or by the hose's 5 ft allowance, says so on
@@ -5536,6 +5556,47 @@ def _worse(first: Screened, second: Screened) -> Screened:
         # tie: the colour does not move.
         kept = _tolerance_carried(kept, other)
     return kept
+
+
+#: The ruling a lot RED on only one reading of its freeway-side line is held
+#: YELLOW under (:func:`_line_held`).
+LINE_RED_ONLY_RULING = "2026-11-27-freeway-line-red-only-yellow"
+
+
+def _line_held(shown: Screened, red: Screened, side: str) -> Screened | None:
+    """``shown`` (the reading of a limited-way lot that is not RED) held
+    YELLOW for a look at the line: ACCESS-LIMITED-WAY on its screening and
+    signed answer alike, its source naming the line and the checks the
+    other reading misses. None where the held answer would not be YELLOW
+    on both, so the caller keeps the RED: this never makes a GREEN."""
+    missed = ", ".join(sorted({b.check for b in red.signed.binds})) or "a check"
+    note = (
+        f"{side}; RED on the other reading of that line (misses {missed}), "
+        f"held YELLOW for a look (rulings.yaml {LINE_RED_ONLY_RULING})"
+    )
+
+    def hold(x: Screening) -> Screening:
+        flags = tuple(
+            dataclasses.replace(f, source=note) if f.code == "ACCESS-LIMITED-WAY" else f
+            for f in x.flags
+        )
+        if not any(f.code == "ACCESS-LIMITED-WAY" for f in flags):
+            flags = (
+                *flags,
+                flag_plan.Flag(
+                    "ACCESS-LIMITED-WAY", flag_plan.LOT, STREET_LINE_LIMITED_WAY, source=note
+                ),
+            )
+        reasons = x.reasons if STREET_LINE_LIMITED_WAY in x.reasons else (
+            *x.reasons, STREET_LINE_LIMITED_WAY
+        )
+        triage = x.triage if _WORSE[x.triage] >= _WORSE[Triage.unknown] else Triage.unknown
+        return dataclasses.replace(x, flags=flags, reasons=reasons, triage=triage)
+
+    screening, signed = hold(shown.screening), hold(shown.signed)
+    if signed.colour is not flag_plan.Colour.yellow or screening.colour is flag_plan.Colour.green:
+        return None
+    return dataclasses.replace(shown, screening=screening, signed=signed)
 
 
 #: The flag a reading carries where a check clears or misses by less than

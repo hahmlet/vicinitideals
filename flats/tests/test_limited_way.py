@@ -327,7 +327,9 @@ def test_the_hillsboro_lot_behind_the_railroad_is_never_green(corpus, policies) 
         assert s.signed.colour is not Colour.green
         assert STREET_LINE_LIMITED_WAY in s.signed.reasons
         (flag,) = [f for f in s.signed.flags if f.code == FLAG]
-        assert flag.source == side
+        # A reading RED on one side of the line only says so after the side
+        # (rulings.yaml 2026-11-27-freeway-line-red-only-yellow).
+        assert flag.source.startswith(side)
     assert lot.second is not None  # without the drive's line: both readings screened
 
 
@@ -363,3 +365,83 @@ def test_the_flag_alone_holds_a_lot_yellow() -> None:
     entry = load_registry()[FLAG]
     assert entry.severity >= colour_rules().yellow_at_severity
     assert list(entry.raised_from) == [STREET_LINE_LIMITED_WAY]
+
+
+def _read(colour_of: str, *, side: str = "", flags: tuple[str, ...] = ()) -> object:
+    """One reading of a limited-way lot, as :func:`_worse` reads it: RED on
+    a ``fit_ft`` bind, YELLOW on a held flag, else GREEN. ``side`` is the
+    line the reading without the freeway-side line names (its
+    ``facts.limited_way``); empty on the reading s4 wrote."""
+    from types import SimpleNamespace
+
+    from flats.score import flags as flag_plan
+    from flats.score.screen import Screening
+
+    @dataclasses.dataclass(frozen=True)
+    class Read:
+        screening: Screening
+        signed: Screening
+        lot: object
+        envelope: object = None
+
+    binds = (flag_plan.Bind("fit_ft", 70.0, 80.0, 10.0),) if colour_of == "red" else ()
+    codes = flags + (("MEASURE-FRONT-MAX-STREET",) if colour_of == "yellow" else ())
+    got = tuple(
+        flag_plan.Flag(c, flag_plan.LOT, STREET_LINE_LIMITED_WAY if c == "ACCESS-LIMITED-WAY" else "X")
+        for c in codes
+    )
+    s = Screening(triage=Triage.unknown, flags=got, binds=binds)
+    return Read(screening=s, signed=s, lot=SimpleNamespace(facts=SimpleNamespace(limited_way=side)))
+
+
+SIDE = "the north line (111 ft) faces a ramp or limited-access road"
+
+
+def test_a_lot_red_only_on_one_reading_of_its_freeway_side_line_is_held_yellow() -> None:
+    """Steph 2026-11-27 (rulings.yaml 2026-11-27-freeway-line-red-only-yellow,
+    "Yellow for a look"): the map cannot tell the line, so a RED on one
+    reading alone is shown on the other reading, YELLOW, naming the miss."""
+    from flats.ingest.quadfit import LINE_RED_ONLY_RULING, _worse
+
+    # The reading without the line misses; the reading s4 wrote does not.
+    as_s4 = _read("yellow")
+    without = _read("red", side=SIDE, flags=("ACCESS-LIMITED-WAY",))
+    got = _worse(as_s4, without)
+    assert got.signed.colour is got.screening.colour is Colour.yellow
+    (held,) = [f for f in got.signed.flags if f.code == "ACCESS-LIMITED-WAY"]
+    assert SIDE in held.source and "fit_ft" in held.source and LINE_RED_ONLY_RULING in held.source
+    assert STREET_LINE_LIMITED_WAY in got.signed.reasons
+    # The other way round: the reading s4 wrote misses, the one without the
+    # line holds YELLOW on its own flag, which now names the miss.
+    got = _worse(_read("red"), _read("yellow", side=SIDE, flags=("ACCESS-LIMITED-WAY",)))
+    assert got.signed.colour is Colour.yellow
+    assert [f.code for f in got.signed.flags].count("ACCESS-LIMITED-WAY") == 1
+    assert "fit_ft" in next(f.source for f in got.signed.flags if f.code == "ACCESS-LIMITED-WAY")
+
+
+def test_a_lot_red_on_both_readings_stays_red() -> None:
+    """RED on another check that holds either way the line is read: RED."""
+    from flats.ingest.quadfit import _worse
+
+    as_s4 = _read("red")
+    without = _read("red", side=SIDE, flags=("ACCESS-LIMITED-WAY",))
+    assert _worse(as_s4, without).signed.colour is Colour.red
+
+
+def test_a_green_other_reading_is_held_yellow_never_green() -> None:
+    from flats.ingest.quadfit import _worse
+
+    clear = _read("green")
+    assert clear.signed.colour is Colour.green
+    got = _worse(clear, _read("red", side=SIDE, flags=("ACCESS-LIMITED-WAY",)))
+    assert got.signed.colour is got.screening.colour is Colour.yellow
+    assert any(f.code == "ACCESS-LIMITED-WAY" for f in got.signed.flags)
+
+
+def test_a_private_drive_lot_red_on_one_reading_stays_red() -> None:
+    """The hold is the freeway-side line's alone: a lot read with and
+    without a private drive (no ``limited_way``) keeps its worse answer."""
+    from flats.ingest.quadfit import _worse
+
+    red = _read("red")
+    assert _worse(_read("green"), red) is red
