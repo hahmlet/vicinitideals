@@ -37,7 +37,20 @@ OUT = CREDIT_DIR / "out"
 RULES = Path(__file__).with_name("credit_worker_rules.md")
 STOP_LINE_USD = 190.0
 MODEL = "claude-opus-5-5"
-BLOCKED = ["Bash(git push:*)", "Bash(ssh:*)", "Bash(scp:*)", "Bash(curl -X POST:*)"]
+# An allowlist, not a denylist: in print mode anything not listed is refused, so a
+# worker cannot push, ssh, deploy or reach the network beyond the model API.
+ALLOWED = [
+    "Read", "Grep", "Glob", "Edit", "Write",
+    "Bash(uv run pytest:*)", "Bash(uv run ruff:*)", "Bash(uv run python -m flats.:*)",
+    "Bash(uv run python scripts/:*)",
+    "Bash(git status:*)", "Bash(git diff:*)", "Bash(git log:*)", "Bash(git show:*)",
+    "Bash(git add:*)", "Bash(git commit:*)", "Bash(git grep:*)",
+    "Bash(grep:*)", "Bash(rg:*)", "Bash(ls:*)", "Bash(wc:*)", "Bash(head:*)", "Bash(sed -n:*)",
+]
+# Only what a Windows process needs to start; no tokens, keys or agent sockets inherited.
+ENV_KEEP = ("PATH", "PATHEXT", "SYSTEMROOT", "SYSTEMDRIVE", "COMSPEC", "WINDIR", "TEMP", "TMP",
+            "USERPROFILE", "HOME", "HOMEDRIVE", "HOMEPATH", "APPDATA", "LOCALAPPDATA",
+            "PROGRAMDATA", "PROGRAMFILES", "USERNAME", "UV_CACHE_DIR", "LANG")
 
 
 def _rows() -> list[dict]:
@@ -95,7 +108,7 @@ def run(name: str, tier: int, budget: float, brief: Path, cwd: Path) -> int:
     claude = shutil.which("claude")
     if not claude:
         sys.exit("claude CLI not on PATH")
-    env = {k: v for k, v in os.environ.items() if not k.startswith(("ANTHROPIC_", "CLAUDE_CODE_OAUTH"))}
+    env = {k: v for k, v in os.environ.items() if k.upper() in ENV_KEEP}
     env["ANTHROPIC_API_KEY"] = _key()
     run_id = uuid.uuid4().hex[:12]
     _append({"event": "start", "id": run_id, "name": name, "tier": tier, "budget_usd": budget,
@@ -105,9 +118,9 @@ def run(name: str, tier: int, budget: float, brief: Path, cwd: Path) -> int:
     system.write_text((ROOT / "CLAUDE.md").read_text(encoding="utf-8") + "\n\n"
                       + RULES.read_text(encoding="utf-8"), encoding="utf-8")
     cmd = [claude, "-p", "--bare", "--model", MODEL, "--max-budget-usd", str(budget),
-           "--output-format", "json", "--permission-mode", "bypassPermissions",
+           "--output-format", "json", "--permission-mode", "default",
            "--append-system-prompt-file", str(system),
-           "--disallowedTools", *BLOCKED]
+           "--allowedTools", *ALLOWED]
     started = time.time()
     proc = subprocess.run(cmd, input=brief.read_text(encoding="utf-8"), cwd=cwd, env=env,
                           capture_output=True, text=True, encoding="utf-8")
