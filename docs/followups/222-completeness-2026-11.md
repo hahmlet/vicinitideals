@@ -12,6 +12,12 @@
    standards with no section number, and standards in held-but-uncited text (West Linn
    38.030); glossary reads only the main definitions chapter.
 
+   OWNER (Steph 2026-11-27): the FLATS Primary Development Agent triages this list first
+   (already on the waitlist? partly done?) and either fixes or asks Steph. Three credit
+   build workers started before that (milwaukie-vegetation, clack-1009,
+   gresham-far-buffer, worktrees credit-*); the other four are HELD
+   (data/flats/credit/HOLD).
+
    **Likely false GREEN, text held -> tier-3 build jobs (item 217):**
    - Milwaukie R-MD/R-HD minimum vegetation 15-30% (Table 19.301.4 row 5, 19.302.4) +
      40% front yard (19.301.5.C) not encoded. -> t3-milwaukie-vegetation
