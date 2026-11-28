@@ -4027,3 +4027,28 @@
     flats/rel11-firenear; not live until released.
   source: Steph 2026-11-21 (chat)
   encoded_in: [flats/score/screen.py, flats/ingest/quadfit.py, flats/config/flags.yaml]
+- id: 2026-11-27-deeper-court-passes
+  kind: ruling
+  date: 2026-11-27
+  scope: {}
+  question: >-
+    The stair-room re-placement (rulings 2026-11-20-stair-room-reserved) sets
+    the rear court a few feet further back from the building, so the drive
+    into the same court is longer and straight. The turning search holds no
+    measured entry for those deeper courts and its own answers there depend
+    on its lattice (FOLLOWUPS 216). If a car turns and parks in the standard
+    court, does the deeper court count as passing?
+  ruling: >-
+    "Yes, count it (Recommended)": a longer straight drive into the same
+    court cannot make parking harder, so the deeper court passes where the
+    standard court's measured turn passes, the car's path carried onto the
+    deeper court and checked step by step.
+  effect: >-
+    A court whose only difference from a measured court_turns entry is a
+    deeper building-to-court standoff takes that entry's answer, the measured
+    path carried along the extra straight drive and checked; a court with no
+    measured standard entry stays MEASURE-COURT-TURNS as before. Never a
+    pass the standard court does not have. FOLLOWUPS 216; not live until
+    released.
+  source: Steph 2026-11-27 (chat)
+  encoded_in: []
