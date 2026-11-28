@@ -22,15 +22,15 @@
       quote; quote-backed wrongs read by Claude as a false-GREEN round). Declined for now:
       statewide scouting (item 55) as tier 3.
 
-   **Tier 3 job #1 (Steph 2026-11-27 "no one is doing security patches"):** clear the open
+   **TIER 1, ahead of everything (Steph 2026-11-27: "this should be tier 1 before everything else"; "no one is doing security patches"):** clear the open
    Dependabot alerts -- 123 on 11-27, all in uv.lock, ~12 packages (Pillow/pillow, pypdf,
    aiohttp, PyJWT, tornado, soupsieve, urllib3, mcp, certifi, multidict, Mako); 4 critical
    are Pillow, certifi, PyJWT. Last cleared 2026-07-29 (memory
    project_dependabot_cleanup_2026_07: keep the mcp<2 pin unless fastapi-mcp supports 2.x;
    `uv sync --all-extras`; the image installs from uv.lock). Worker bumps on a branch and
    runs the full suite; the coordinator runs ci_local, deploys, checks smoke. Close stale
-   dependabot PR #4. Proposed standing rule: every month, after the code-change check,
-   the security pass has the next claim on the credit.
+   dependabot PR #4. Standing order every month: security pass first, then the code-change
+   check (now tier 1b), then tier 2, then tier 3.
 
    How it runs (no build needed -- speed): headless Claude Code workers on Steph's PC,
    `claude -p --bare --model claude-opus-5-5 --max-budget-usd N --output-format json`, key
