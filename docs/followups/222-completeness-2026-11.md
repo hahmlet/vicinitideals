@@ -58,6 +58,15 @@
      Milwaukie 19.700 (no crossrefs row at all -- why?), Title 18, 16.32; West Linn
      Ch. 27/32, TSP Exhibits 6-9; Portland PCC 17.28.110, 33.400/405/410/440/465/475.
 
+   **Green check (217 last tier, $7.06): 30 live greens, run 134, seed 68, round-5 lots
+   excluded -- 23 RIGHT / 0 WRONG / 7 CAN'T TELL** (reports greens-g1..g3.md in the folder
+   above). Can't-tells: 5 Portland corners -> item 223 (court vs side-street building line);
+   Portland CM2/CE corners on the unencoded 33.130.215.B.1.b driveway-through-setback bar
+   (portland.yaml#L6176, #L6898); Oregon City R-2 rear setback for a quadplex
+   (oregon-city.yaml#L2043-L2048). Also: two FIT-TIGHT greens seat 0 stalls (1S102CD01000,
+   1S127BB00100) -- no parking required there, but check that "green with no stall drawn" is
+   intended; Portland visitability raised again (S question above).
+
    **Text bugs, low risk (fix with the next touch):** Washington words.py cards quote the
    wrong 106 entries (street, building height; townhouse/multifamily/grade shown silent);
    Beaverton lot-depth definition truncated (bdc.90#L1416); Hillsboro 12.61.700.E vs D

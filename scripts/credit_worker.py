@@ -105,6 +105,10 @@ def status() -> None:
 
 
 def run(name: str, tier: int, budget: float, brief: Path, cwd: Path) -> int:
+    hold = CREDIT_DIR / "HOLD"  # one worker name per line: refused until the line is removed
+    if hold.exists() and name in hold.read_text(encoding="utf-8").split():
+        print(f"HELD {name}: listed in {hold}")
+        return 4
     spent = committed()
     if spent + budget > STOP_LINE_USD:
         print(f"REFUSED {name}: committed ${spent:.2f} + budget ${budget:.2f} > ${STOP_LINE_USD:.2f}")
