@@ -231,6 +231,30 @@ def test_a_fix_the_ledger_does_not_offer_is_not_taken(monkeypatch: pytest.Monkey
     assert court_across(pod(), Rules(), fix=DEEPER).fix == DEAD_END
 
 
+def test_a_stair_room_pass_withholds_the_fixes_it_tried(monkeypatch: pytest.MonkeyPatch) -> None:
+    """FOLLOWUPS 225: a re-placement that took a fix and still left the
+    steps no room asks for the next one, in the ledger's order (Steph
+    2026-10-03, the dead end last); none left, the court cannot be used --
+    never AS_DRAWN passing on a court the car was not seen to use."""
+    from flats.designs.model import StairRoom
+
+    monkeypatch.setattr(paper, "fixes", offer(DEEPER, WIDER, DEAD_END))
+    assert court_across(pod(), Rules()).fix == DEEPER
+    kept = pod().reserving(StairRoom(court_ft=6.0, passes=1, fixes_tried=(tuple(DEEPER),)))
+    across = court_across(kept, Rules())
+    assert across.fixes == (WIDER, DEAD_END) and across.fix == WIDER and across.turns
+    # The fit's recorded fix, if withheld, is not charged.
+    assert court_across(kept, Rules(), fix=DEEPER).fix == WIDER
+    last = pod().reserving(StairRoom(passes=1, fixes_tried=(tuple(DEEPER), tuple(WIDER))))
+    assert court_across(last, Rules()).fix == DEAD_END
+    none = pod().reserving(StairRoom(passes=1, fixes_tried=(tuple(DEEPER), tuple(WIDER), tuple(DEAD_END))))
+    across = court_across(none, Rules())
+    assert across.turns is False and across.fixes == ()
+    # A court that needs no fix is untouched by what was tried.
+    monkeypatch.setattr(paper, "fixes", offer(AS_DRAWN))
+    assert court_across(none, Rules()).turns is True
+
+
 def test_a_court_no_fix_saves_says_so(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(paper, "fixes", offer())
     across = court_across(pod(), Rules())

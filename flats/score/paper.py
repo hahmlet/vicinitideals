@@ -1372,6 +1372,14 @@ def court_across(
                 turns = False
             else:
                 offered = tuple(f for f in found if f != AS_DRAWN)
+                tried = design.stairs.fixes_tried if design.stairs is not None else ()
+                if offered and tried:
+                    # FOLLOWUPS 225: a stair-room pass that took these and
+                    # still left the steps no room asks for the next fix, in
+                    # the ledger's order. None left: no fix the car was seen
+                    # to use remains, so the court cannot be used.
+                    offered = tuple(f for f in offered if tuple(f) not in set(map(tuple, tried)))
+                    turns = bool(offered)
                 if offered:
                     chosen = fix if fix is not None and fix in offered else offered[0]
     if lane and (walk := _number(rules, "driveway_walkway_ft")) is not None:

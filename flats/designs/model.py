@@ -312,6 +312,13 @@ class StairRoom(BaseModel):
     lot_ft: float = Field(default=0.0, ge=0)
     #: Placements tried with room kept, the first included.
     passes: int = Field(default=0, ge=0)
+    #: Court turn fixes (:class:`flats.score.turns.Fix` as aisle, stall,
+    #: dead end) this placement does not offer: ones an earlier stair-room
+    #: pass took and still left the steps no room (FOLLOWUPS 225). The court
+    #: is given the next fix the ledger offers, in its order (Steph
+    #: 2026-10-03, rulings.yaml ``2026-10-03-dead-end-last-resort``); none
+    #: left, the court reads unusable (:func:`flats.score.paper.court_across`).
+    fixes_tried: tuple[tuple[float, float, float], ...] = ()
 
 
 class DeliverySpec(BaseModel):

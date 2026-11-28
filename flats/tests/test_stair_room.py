@@ -396,6 +396,86 @@ def test_a_red_re_placement_is_red_on_the_steps(green, monkeypatch) -> None:
     assert out.design.stairs is None  # the first placement, red on its steps' room
 
 
+#: A deeper court's carried fixes, the ledger's order: the deeper aisle,
+#: then the dead end alone (dcourt move read, finding 1).
+AISLE, DEAD = (8.0, 0.0, 0.0), (0.0, 0.0, 16.0)
+
+
+def _fixes_loop(monkeypatch, green, first, passes_on, offered=(AISLE, DEAD)):
+    """``_loop`` with a court whose ledger offers ``offered``: the fit takes
+    the first fix not withheld; a placement on a fix in ``passes_on`` reads
+    ``green``, any other red on ``fire_access_ft`` (the plan with room kept
+    is red, so the steps have no room)."""
+    from types import SimpleNamespace as NS
+
+    from flats.ingest import quadfit
+    from flats.score import flags as flag_plan
+    from flats.score.screen import Triage
+
+    def left(design):
+        tried = design.stairs.fixes_tried if design.stairs is not None else ()
+        return tuple(f for f in offered if f not in tried)
+
+    monkeypatch.setattr(quadfit, "court_across", lambda design, *a, **kw: NS(fixes=left(design)))
+
+    def alt_of(design):
+        got = left(design)
+        fix = got[0] if got else None
+        fit = dataclasses.replace(green.fit, court_fix=fix, beside=False, column=False)
+        if fix in passes_on:
+            return dataclasses.replace(green, fit=fit)
+        bind = flag_plan.Bind("fire_access_ft", 150.0, 170.0, 20.0)
+        red = dataclasses.replace(green.signed, triage=Triage.red, binds=(bind,))
+        return dataclasses.replace(green, fit=fit, signed=red, screening=red)
+
+    return _loop(monkeypatch, first, alt_of)
+
+
+def test_a_stair_room_red_tries_the_dead_end_before_red(green, monkeypatch) -> None:
+    """FOLLOWUPS 225 (22E28BB00900 and 135 more in the dcourt bound): the
+    re-placement took the deeper aisle and read red, so the lot went RED on
+    its steps' room; the same court passes on the dead end alone. Steph
+    2026-10-03 makes the dead end the last resort -- tried, not skipped. The
+    lot is held at its first colour with FOUNDATION-STAIR-MOVED, never
+    greener."""
+    from flats.score.flags import Colour
+
+    out, seen = _fixes_loop(monkeypatch, green, _yellow(green), passes_on={DEAD})
+    assert [d.stairs.fixes_tried for d in seen] == [(), (AISLE,)]
+    assert seen[1].stairs.passes == 1  # the passes start again from the first room
+    assert out.fit.court_fix == DEAD
+    for x in (out.signed, out.screening):
+        assert x.colour is Colour.yellow and fc.STAIR_ROOM not in x.reasons
+        assert any(f.code == fc.STAIR_MOVED_FLAG and "held" in f.source for f in x.flags)
+    assert out.foundation["stair_room"]["fixes_tried"] == [list(AISLE)]
+
+
+def test_the_preferred_fix_is_kept_when_it_passes(green, monkeypatch) -> None:
+    """The dead end is the last resort: where the deeper aisle passes, it is
+    the one kept and nothing else is screened."""
+    out, seen = _fixes_loop(monkeypatch, green, _yellow(green), passes_on={AISLE, DEAD})
+    assert [d.stairs.fixes_tried for d in seen] == [()]
+    assert out.fit.court_fix == AISLE
+    assert "fixes_tried" not in out.foundation["stair_room"]
+
+
+def test_a_court_no_fix_passes_on_stays_red(green, monkeypatch) -> None:
+    """Every fix the ledger offers tried, in its order, and none leaves the
+    steps room: RED on the steps' room, as the first pass read it."""
+    from flats.score.flags import Colour
+
+    out, seen = _fixes_loop(monkeypatch, green, _yellow(green), passes_on=set())
+    assert [d.stairs.fixes_tried for d in seen] == [(), (AISLE,)]
+    for x in (out.signed, out.screening):
+        assert x.colour is Colour.red and fc.STAIR_ROOM in x.reasons
+    assert out.design.stairs is None  # the first placement, red on its steps' room
+    assert out.foundation["stair_room"]["fixes_tried"] == [list(AISLE)]
+    # A court the ledger offers one fix: nothing else to try.
+    one, seen = _fixes_loop(monkeypatch, green, _yellow(green), passes_on=set(), offered=(AISLE,))
+    assert len(seen) == 1 and fc.STAIR_ROOM in one.signed.reasons
+    assert "fixes_tried" not in one.foundation["stair_room"]
+
+
 def test_the_cap_is_never_worked_inside_a_search(green, monkeypatch) -> None:
     """fd8 bound, 11E25AA00301 / 1S112BD01300: the cap worked inside
     ``_screen_lot_once`` turned the side-door reading red, so

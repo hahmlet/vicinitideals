@@ -69,7 +69,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from flats.designs.model import Design, Plat
+from flats.designs.model import Design, Plat, StairRoom
 from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
@@ -6912,23 +6912,102 @@ def foundation_checked(
     out: list[Screened] = []
     for design, s in zip(designs, got):
         first = _capped(s, terrain)
-        cur = first
-        while foundation_cap.stair_hits(cur) and not (
-            cur.signed.colour is flag_plan.Colour.red and cur.screening.colour is flag_plan.Colour.red
-        ):
-            kept = foundation_cap.next_room(cur)
-            if kept is None:
-                cur = foundation_cap.no_room(cur)
-                break
-            (alt,) = _screen_lot_plain(
-                lot, [design.reserving(kept)], rules=rules, policy=policy, relief=relief,
-                step_deg=step_deg, roads=roads, terrain=terrain,
-            )
-            cur = _capped(alt, terrain)
-            if cur.signed.colour is flag_plan.Colour.red or cur.screening.colour is flag_plan.Colour.red:
-                break
-        out.append(first if cur is first else foundation_cap.reconciled(first, cur))
+
+        def placed(cur: Screened, kept: StairRoom | None) -> Screened:
+            while kept is not None or (foundation_cap.stair_hits(cur) and not (
+                cur.signed.colour is flag_plan.Colour.red and cur.screening.colour is flag_plan.Colour.red
+            )):
+                if kept is None:
+                    kept = foundation_cap.next_room(cur)
+                    if kept is None:
+                        return foundation_cap.no_room(cur)
+                (alt,) = _screen_lot_plain(
+                    lot, [design.reserving(kept)], rules=rules, policy=policy, relief=relief,
+                    step_deg=step_deg, roads=roads, terrain=terrain,
+                )
+                kept = None
+                cur = _capped(alt, terrain)
+                if cur.signed.colour is flag_plan.Colour.red or cur.screening.colour is flag_plan.Colour.red:
+                    break
+            return cur
+
+        cur = placed(first, None)
+        answer = first if cur is first else foundation_cap.reconciled(first, cur)
+        out.append(_other_stair_fixes(first, cur, answer, placed))
     return out
+
+
+#: Stair-room passes re-run on another court fix, at most, per lot: the
+#: ledger offers a few fixes per court (FOLLOWUPS 225).
+STAIR_FIX_TRIES = 6
+
+
+def _stair_red(x: Screened) -> bool:
+    """Whether ``x`` ends RED on its steps' room."""
+    return foundation_cap.STAIR_ROOM in x.signed.reasons or foundation_cap.STAIR_ROOM in x.screening.reasons
+
+
+def _fix_taken(s: Screened) -> Fix | None:
+    """The court turn fix ``s``'s re-placement took, where the ledger offers
+    its court another one after it; None where it took none (a court beside
+    the building, a column, a court that needs no fix) or none is left
+    (FOLLOWUPS 225)."""
+    if s.fit is None or s.fit.court_fix is None or s.fit.beside or s.fit.column or s.facts is None:
+        return None
+    taken = Fix(*s.fit.court_fix)
+    left = court_across(s.design, s.rules, s.facts.alley, corner=s.facts.corner).fixes
+    return taken if any(f != taken for f in left) else None
+
+
+def _other_stair_fixes(
+    first: Screened,
+    cur: Screened,
+    answer: Screened,
+    placed: Callable[[Screened, StairRoom | None], Screened],
+) -> Screened:
+    """``answer`` -- RED on its steps' room after the stair-room passes --
+    with the court's other turn fixes tried first (FOLLOWUPS 225).
+
+    The screen takes the first fix the lot holds, least paving first, and the
+    dead end near the last (Steph 2026-10-03, rulings.yaml
+    ``2026-10-03-dead-end-last-resort``: "the 13 foot dead end should be
+    almost a last-resort"). A last resort is still tried before the lot is
+    called RED: where the re-placement's court took a fix and the ledger
+    offers another, the stair-room passes run again from the first room
+    kept with that fix withheld (:attr:`flats.designs.model.StairRoom.
+    fixes_tried`), so the fit takes the next in the ledger's order. The
+    first answer not RED on its steps' room stands, through
+    :func:`flats.ingest.foundation_cap.reconciled` (a better colour held at
+    the first placement's, FOUNDATION-STAIR-MOVED); none, the first RED
+    stands. Every fix tried is one the ledger measured the car using on that
+    court, so nothing passes on a court nobody drove."""
+    if not _stair_red(answer) or cur is first:
+        return answer
+    tried: list[tuple[float, float, float]] = []
+    last = cur
+    for _ in range(STAIR_FIX_TRIES):
+        taken = _fix_taken(last)
+        if taken is None:
+            break
+        tried.append(tuple(taken))
+        start = foundation_cap.next_room(first)
+        if start is None:
+            break
+        last = placed(first, start.model_copy(update={"fixes_tried": tuple(tried)}))
+        got = foundation_cap.reconciled(first, last)
+        if not _stair_red(got):
+            return _fixes_noted(got, tried)
+    return _fixes_noted(answer, tried)
+
+
+def _fixes_noted(s: Screened, tried: Sequence[tuple[float, float, float]]) -> Screened:
+    """``s`` with the court fixes the stair-room passes withheld kept in its
+    ``foundation`` row (FOLLOWUPS 225), where any were."""
+    room = (s.foundation or {}).get("stair_room")
+    if not tried or room is None:
+        return s
+    room = {**room, "fixes_tried": [list(f) for f in tried]}
+    return dataclasses.replace(s, foundation={**s.foundation, "stair_room": room})
 
 
 class _Eased:
