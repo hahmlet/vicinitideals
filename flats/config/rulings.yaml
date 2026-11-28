@@ -4051,3 +4051,26 @@
     pass the standard court does not have. FOLLOWUPS 216; not live until
     released.
   source: Steph 2026-11-27 (chat)
+- id: 2026-11-28-private-drive-is-the-street-for-doors
+  kind: ruling
+  date: 2026-11-28
+  scope: {}
+  question: >-
+    Where the code makes the front doors face a street, and a lot's only way
+    in is a private drive or tract (no public street touches it), may the
+    doors face the drive, or does the lot fail for having no street to face?
+  ruling: >-
+    "Green. If the only paved surface approaching the home is a private
+    drive, that is the "street"".
+  effect: >-
+    Where no public street line touches the lot, each lot line s4 read as a
+    street because a private drive the lot abuts runs by it (street_kind
+    drive) is a street the doors may face, whatever the city's
+    private_drives ruling says of doors (flats/ingest/quadfit.py lot_edges,
+    Edge.door_street). Where a public street also touches the lot the doors
+    face the public street as before (fix 4 stands, 1S212AB00801). A drive
+    s4 doubts (drive_on_lot, drive_off_lot: through the lot or on other
+    land) is still no door street. FOLLOWUPS 64 round 5 (fg5 Q1); not live
+    until released.
+  source: Steph 2026-11-28 (chat, via coordinator)
+  encoded_in: [flats/ingest/quadfit.py, flats/geom/edges.py, flats/tests/test_door_streets.py]

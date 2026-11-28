@@ -11,13 +11,14 @@ wall held toward a street line (:func:`flats.ingest.quadfit._door_lines`).
   frontage steps was its own street direction, 39 degrees off the street,
   and a door 82 degrees off the street passed facing it. A street direction
   needs :data:`~flats.ingest.quadfit.DOOR_LINE_MIN_FT` of street line.
-* 1S123AB00100: a frontage bowed into short pieces keeps the direction its
-  pieces add up to.
+* 1S123AB00100: a frontage bowed into short pieces keeps every direction it
+  bends through; only a lone short piece is dropped (coordinator 2026-11-28).
 * fg5 #22, 1S212AB00801 (Washington County R-5): the north line is an 8 ft
   street stub, a 98 ft side line and 107 ft that only a private drive on a
   zero-value tract makes a street. The doors faced the north line. A door
   may face a drive only where the code counts it, and Washington County's
-  does not for this (coordinator 2026-11-28).
+  does not for this (coordinator 2026-11-28). Where no public street serves
+  the lot, though, the drive is its street for the doors (Steph 2026-11-28).
 """
 
 from __future__ import annotations
@@ -31,8 +32,11 @@ import pytest
 import yaml
 
 from flats.ingest.quadfit import (
+    CURVE_TURN_MAX_DEG,
     DOOR_LINE_MIN_FT,
+    _curved,
     _door_lines,
+    _door_streets,
     door_bearings,
     lot_edges,
     street_directions,
@@ -124,18 +128,65 @@ def test_a_two_foot_jog_is_no_street_direction() -> None:
     assert len(_door_lines(lot)) == 1
 
 
-def test_a_bowed_frontage_keeps_the_direction_its_pieces_add_up_to() -> None:
+def test_a_bowed_frontage_keeps_every_direction_it_bends_through() -> None:
     lot = _lot(BOWED, _layers(None))
+    # Five touching pieces of 14.6-18.1 ft, no joint turning more than 39
+    # degrees: one curved frontage 79 ft long (coordinator 2026-11-28, fg5 Q2).
+    assert CURVE_TURN_MAX_DEG == 45.0
+    assert len(_curved(_door_streets(lot.edges))) == 5
     # 94 degrees: pieces of 38, 18, 15 and 15 ft within 20 degrees of it.
-    assert _near(street_directions(lot), 94.23)
-    # 52.7 degrees: one 17 ft piece, nothing else within 20 degrees.
-    assert not _near(street_directions(lot), 52.72)
-    # The pieces running its way stay door lines; the lone 17 ft piece at
-    # 52.7 degrees, and the 14.6 ft one at 127 degrees, have no direction
-    # behind them.
+    # 52.7 degrees: one 17 ft piece, but a piece of the curve.
+    assert street_directions(lot) == (94.23, 52.72)
+    # Every piece of the frontage is a door line.
     lines = _door_lines(lot)
     got = sorted(round(((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5) for x1, y1, x2, y2 in lines)
-    assert got == [15, 15, 18, 38]
+    assert got == [15, 15, 15, 17, 18, 38]
+
+
+def test_a_lone_jog_is_no_curve() -> None:
+    # The 2 ft jog touches only the 64 ft line: no run of short pieces.
+    lot = _lot(JOG, _layers(None))
+    assert _curved(_door_streets(lot.edges)) == frozenset()
+
+
+def test_short_pieces_too_short_together_are_no_curve() -> None:
+    # Two touching stubs, 10 and 8.9 ft (18.9 ft in all), are no curved frontage.
+    row = {
+        "TLID": "T",
+        "jurisdiction": "washington_unincorporated",
+        "edges_json": json.dumps([
+            [0.0, 0.0, 100.0, 0.0, "R"],
+            [100.0, 0.0, 100.0, 100.0, "S"],
+            [100.0, 100.0, 16.0, 100.0, "F"],
+            [16.0, 100.0, 8.0, 106.0, "F"],
+            [8.0, 106.0, 0.0, 110.0, "F"],
+            [0.0, 110.0, 0.0, 0.0, "S"],
+        ]),
+        "front_bearings_json": "[90.0]",
+        "street_kind_json": json.dumps([None, None, "street", "street", "street", None]),
+    }
+    lot = _lot(row, _layers(None))
+    lines = _door_streets(lot.edges)
+    assert sorted(round(e.length_ft, 1) for e in lines if e.length_ft < 20) == [8.9, 10.0]
+    assert _curved(lines) == frozenset()
+    assert len(_door_lines(lot)) == 1
+
+
+def test_a_corner_is_no_curve() -> None:
+    # Two touching 15 ft pieces 90 degrees apart turn a corner, not a bend.
+    row = {
+        "TLID": "T",
+        "jurisdiction": "washington_unincorporated",
+        "edges_json": json.dumps([
+            [0.0, 0.0, 15.0, 0.0, "F"],
+            [15.0, 0.0, 15.0, 15.0, "F"],
+            [15.0, 15.0, 0.0, 0.0, "S"],
+        ]),
+        "front_bearings_json": "[90.0, 0.0]",
+        "street_kind_json": json.dumps(["street", "street", None]),
+    }
+    lot = _lot(row, _layers(None))
+    assert _curved(_door_streets(lot.edges)) == frozenset()
 
 
 def test_door_line_minimum_is_twenty_feet() -> None:
@@ -183,6 +234,43 @@ def test_a_drive_on_other_land_is_never_a_door_street() -> None:
     row = {**TRACT, "street_kind_json": json.dumps(["street", None, "drive_off_lot", None, None, "street"])}
     lot = _lot(row, _layers(_ruling(True)))
     assert not lot.edges.edges[2].door_street
+
+
+#: The tract lot with no public street: every street line a drive.
+DRIVE_ONLY = {**TRACT, "street_kind_json": json.dumps(["drive", None, "drive", None, None, "drive"])}
+
+
+@pytest.mark.parametrize("layers", [None, _layers(None), _layers(_ruling(False)), _layers(_ruling(True, doors=False))])
+def test_where_only_a_drive_serves_the_lot_the_drive_is_its_street_for_doors(
+    layers: dict[str, Any] | None,
+) -> None:
+    # Steph 2026-11-28 (rulings 2026-11-28-private-drive-is-the-street-for-doors):
+    # "If the only paved surface approaching the home is a private drive,
+    # that is the street", whatever the code says of private drives.
+    lot = _lot(DRIVE_ONLY, layers)
+    assert all(e.door_street for e in lot.edges.edges if e.cls.value in ("front", "street_side"))
+    assert _near(door_bearings(lot), 176.82) and _near(door_bearings(lot), 87.93)
+
+
+def test_a_public_street_on_the_lot_keeps_the_doors_on_it() -> None:
+    # 1S212AB00801: public street on the west and a stub on the north, so the
+    # Washington County drive is still no door street (fix 4 stands).
+    lot = _lot(TRACT, _layers(_ruling(True, doors=False)))
+    assert not lot.edges.edges[2].door_street
+
+
+def test_a_doubtful_drive_is_no_door_street_even_with_no_public_street() -> None:
+    row = {**TRACT, "street_kind_json": json.dumps(["drive_off_lot", None, "drive_on_lot", None, None, "drive_off_lot"])}
+    lot = _lot(row, None)
+    assert not any(e.door_street for e in lot.edges.edges if e.cls.value in ("front", "street_side"))
+
+
+def test_the_ruling_is_registered() -> None:
+    raw = yaml.safe_load((ROOT / "flats/config/rulings.yaml").read_text(encoding="utf-8"))
+    got = [r for r in raw if r.get("id") == "2026-11-28-private-drive-is-the-street-for-doors"]
+    assert len(got) == 1 and got[0]["kind"] == "ruling"
+    assert "only paved surface approaching the home" in got[0]["ruling"]
+    assert "flats/ingest/quadfit.py" in got[0]["encoded_in"]
 
 
 def test_a_line_with_no_kind_on_record_stays_a_door_street() -> None:

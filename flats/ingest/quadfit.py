@@ -1452,7 +1452,8 @@ def lot_edges(
     # Whether a front door may face a line only a private drive makes
     # (:attr:`Edge.door_street`): where the lot's code counts the drive the
     # lot abuts as a street for it; never one on other land or through the
-    # lot; and not where no code was read.
+    # lot; and not where no code was read -- unless no public street serves
+    # the lot (below).
     home = _home_layer(row, layers) if layers is not None else None
     drives_face = home is not None and home.private_drives is not None and home.private_drives.faces_doors
     edges: list[Edge] = []
@@ -1497,6 +1498,18 @@ def lot_edges(
                 ),
             )
         )
+    # Where no public street serves the lot, the private drive it abuts is
+    # its street for the doors (Steph 2026-11-28, rulings
+    # 2026-11-28-private-drive-is-the-street-for-doors). Only a drive the lot
+    # abuts (``drive``), never one s4 doubts (:data:`DOUBTFUL_STREET_KINDS`).
+    if not any(
+        letter == STREET_CLASS and kind not in DRIVE_STREET_KINDS
+        for (*_xy, letter), kind in zip(raw, kinds, strict=True)
+    ):
+        edges = [
+            dataclasses.replace(e, door_street=True) if kind == "drive" and not e.door_street else e
+            for e, kind in zip(edges, kinds, strict=True)
+        ]
     hull = geom.convex_hull.area if geom is not None else 0.0
     return LotEdges(
         tier=TIER.get(str(row.get("tier")), Tier.irregular),
@@ -2842,10 +2855,67 @@ def _door_streets(edges: "LotEdges") -> tuple[Edge, ...]:
     )
 
 
+#: The most two touching short door-street pieces may turn at their joint
+#: and still be one curved frontage (:func:`_curved`). A judgement
+#: (coordinator 2026-11-28, fg5 Q2): a street corner turns 60 degrees or
+#: more; the bowed frontage of 1S123AB00100 turns at most 39.
+CURVE_TURN_MAX_DEG = 45.0
+#: Two pieces touch where their ends lie this close (s4 rounds to 0.01 ft).
+_TOUCH_FT = 0.5
+
+
+def _touch(a: Edge, b: Edge) -> bool:
+    return any(
+        math.hypot(p[0] - q[0], p[1] - q[1]) <= _TOUCH_FT
+        for p in ((a.x1, a.y1), (a.x2, a.y2))
+        for q in ((b.x1, b.y1), (b.x2, b.y2))
+    )
+
+
+def _curved(lines: Sequence[Edge]) -> frozenset[int]:
+    """The indexes of ``lines`` that are pieces of a curved frontage: runs of
+    two or more touching pieces, each shorter than :data:`DOOR_LINE_MIN_FT`,
+    each joint turning no more than :data:`CURVE_TURN_MAX_DEG`, together at
+    least :data:`DOOR_LINE_MIN_FT` long. Each piece's own direction is a
+    street direction: the street bends past it. A lone short piece -- a jog
+    where two plats meet, a corner stub -- is no run (coordinator
+    2026-11-28, fg5 Q2: 1S123AB00100 against 1S201DD04000)."""
+    short = [i for i, e in enumerate(lines) if e.length_ft < DOOR_LINE_MIN_FT]
+    group = {i: i for i in short}
+
+    def root(i: int) -> int:
+        while group[i] != i:
+            group[i] = group[group[i]]
+            i = group[i]
+        return i
+
+    for n, i in enumerate(short):
+        for j in short[n + 1:]:
+            a, b = lines[i], lines[j]
+            if _touch(a, b) and bearing_delta(a.bearing_deg, b.bearing_deg) <= CURVE_TURN_MAX_DEG:
+                group[root(i)] = root(j)
+    runs: dict[int, list[int]] = {}
+    for i in short:
+        runs.setdefault(root(i), []).append(i)
+    return frozenset(
+        i
+        for run in runs.values()
+        if len(run) >= 2 and sum(lines[k].length_ft for k in run) >= DOOR_LINE_MIN_FT
+        for i in run
+    )
+
+
 def _direction_ft(bearing: float, lines: Sequence[Edge]) -> float:
     """How much of ``lines`` runs within :data:`BEARING_CLUSTER_TOL_DEG` of
-    ``bearing``: the street line behind one street direction."""
-    return sum(e.length_ft for e in lines if bearing_delta(e.bearing_deg, bearing) <= BEARING_CLUSTER_TOL_DEG)
+    ``bearing``: the street line behind one street direction. A direction
+    one piece of a curved frontage runs (:func:`_curved`) has the whole
+    run behind it."""
+    tol = BEARING_CLUSTER_TOL_DEG
+    got = sum(e.length_ft for e in lines if bearing_delta(e.bearing_deg, bearing) <= tol)
+    curve = _curved(lines)
+    if any(bearing_delta(lines[i].bearing_deg, bearing) <= tol for i in curve):
+        got = max(got, DOOR_LINE_MIN_FT)
+    return got
 
 
 def street_directions(lot: "QuadfitLot", edges: "LotEdges | None" = None) -> tuple[float, ...]:
@@ -2856,7 +2926,8 @@ def street_directions(lot: "QuadfitLot", edges: "LotEdges | None" = None) -> tup
     two plats meet, an 8 ft corner stub -- starts its own cluster, and a
     door turned 80 degrees off the street passed facing it (FOLLOWUPS 64
     round 5, fg5 #35: 1S201DD04000). A frontage bowed into pieces none 20 ft
-    long keeps its direction: the pieces add up (1S123AB00100). Where s4
+    long keeps every direction it bends through (:func:`_curved`,
+    1S123AB00100). Where s4
     traced no edges the front bearings stand as read."""
     edges = lot.edges if edges is None else edges
     if edges is None:
