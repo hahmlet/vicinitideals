@@ -1,6 +1,6 @@
 """The fire hose's route from the street to the farthest wall (FOLLOWUPS 28).
 
-OFC 2022 503.1.1 wants a fire apparatus road within 150 feet of every part of
+OFC 2025 503.1.1 wants a fire apparatus road within 150 feet of every part of
 the first storey's walls, "as measured by an approved route around the
 exterior of the building". Steph, 2026-10-01, on the lots past it: "Red" --
 no sprinkler relief is assumed, so the check is one no zoning relief reaches.

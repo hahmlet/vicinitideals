@@ -1,6 +1,6 @@
 """How far a fire hose walks from the street to the farthest wall (FOLLOWUPS 28).
 
-OFC 2022 503.1.1 wants the fire apparatus road "within 150 feet of all
+OFC 2025 503.1.1 wants the fire apparatus road "within 150 feet of all
 portions of the exterior wall of the first story of the building as measured
 by an approved route around the exterior of the building". On a lot whose
 street is the only such road, that is a distance from the street to the far
