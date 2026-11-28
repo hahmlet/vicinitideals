@@ -210,8 +210,7 @@ class Edge:
     #: unless the lot's code counts a private drive the lot abuts as a
     #: street a door may face (:attr:`flats.rules.model.PrivateDriveRuling.
     #: faces_doors`; FOLLOWUPS 64 round 5, fg5 #22), or no public street
-    #: line touches the lot and the drive is one it abuts (``drive``: Steph
-    #: 2026-11-28, "If the only paved surface approaching the home is a
+    #: line touches the lot (any drive kind: Steph 2026-11-28, "If the only paved surface approaching the home is a
     #: private drive, that is the street"). True -- the default, and
     #: the answer on every line s4 recorded no kind for -- as before.
     door_street: bool = True

@@ -230,7 +230,7 @@ def test_a_drive_no_code_counts_is_no_door_street(layers: dict[str, Any] | None)
     assert not _near(door_bearings(lot), 176.82)
 
 
-def test_a_drive_on_other_land_is_never_a_door_street() -> None:
+def test_a_drive_on_other_land_beside_a_public_street_is_no_door_street() -> None:
     row = {**TRACT, "street_kind_json": json.dumps(["street", None, "drive_off_lot", None, None, "street"])}
     lot = _lot(row, _layers(_ruling(True)))
     assert not lot.edges.edges[2].door_street
@@ -259,10 +259,35 @@ def test_a_public_street_on_the_lot_keeps_the_doors_on_it() -> None:
     assert not lot.edges.edges[2].door_street
 
 
-def test_a_doubtful_drive_is_no_door_street_even_with_no_public_street() -> None:
+def test_a_doubtful_drive_is_the_doors_street_where_no_public_street_serves_the_lot() -> None:
     row = {**TRACT, "street_kind_json": json.dumps(["drive_off_lot", None, "drive_on_lot", None, None, "drive_off_lot"])}
     lot = _lot(row, None)
-    assert not any(e.door_street for e in lot.edges.edges if e.cls.value in ("front", "street_side"))
+    assert all(e.door_street for e in lot.edges.edges if e.cls.value in ("front", "street_side"))
+
+
+def test_a_doubtful_drive_beside_a_public_street_is_no_door_street() -> None:
+    row = {**TRACT, "street_kind_json": json.dumps(["street", None, "drive_off_lot", None, None, "street"])}
+    lot = _lot(row, None)
+    assert not lot.edges.edges[2].door_street
+
+
+def test_a_frontage_short_all_along_is_still_the_street() -> None:
+    # A flag lot's 12 ft pole end is its only street line: no jog off another.
+    row = {
+        "TLID": "T",
+        "jurisdiction": "washington_unincorporated",
+        "edges_json": json.dumps([
+            [0.0, 0.0, 0.0, 12.0, "F"],
+            [0.0, 12.0, 100.0, 12.0, "S"],
+            [100.0, 12.0, 100.0, 0.0, "R"],
+            [100.0, 0.0, 0.0, 0.0, "S"],
+        ]),
+        "front_bearings_json": "[90.0]",
+        "street_kind_json": json.dumps(["street", None, None, None]),
+    }
+    lot = _lot(row, _layers(None))
+    assert street_directions(lot) == (90.0,)
+    assert len(_door_lines(lot)) == 1
 
 
 def test_the_ruling_is_registered() -> None:

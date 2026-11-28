@@ -1500,14 +1500,16 @@ def lot_edges(
         )
     # Where no public street serves the lot, the private drive it abuts is
     # its street for the doors (Steph 2026-11-28, rulings
-    # 2026-11-28-private-drive-is-the-street-for-doors). Only a drive the lot
-    # abuts (``drive``), never one s4 doubts (:data:`DOUBTFUL_STREET_KINDS`).
+    # 2026-11-28-private-drive-is-the-street-for-doors), the drive s4 doubts
+    # (:data:`DOUBTFUL_STREET_KINDS`) too: :func:`drive_reading` screens such
+    # a lot without those lines as well and keeps the worse, so the doubt
+    # still holds it out of GREEN (every such lot was yellow in run 134).
     if not any(
         letter == STREET_CLASS and kind not in DRIVE_STREET_KINDS
         for (*_xy, letter), kind in zip(raw, kinds, strict=True)
     ):
         edges = [
-            dataclasses.replace(e, door_street=True) if kind == "drive" and not e.door_street else e
+            dataclasses.replace(e, door_street=True) if kind in DRIVE_STREET_KINDS and not e.door_street else e
             for e, kind in zip(edges, kinds, strict=True)
         ]
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -2933,7 +2935,13 @@ def street_directions(lot: "QuadfitLot", edges: "LotEdges | None" = None) -> tup
     if edges is None:
         return tuple(float(b) for b in lot.front_bearings)
     lines = _door_streets(edges)
-    return tuple(float(b) for b in lot.front_bearings if _direction_ft(float(b), lines) >= DOOR_LINE_MIN_FT)
+    got = tuple(float(b) for b in lot.front_bearings if _direction_ft(float(b), lines) >= DOOR_LINE_MIN_FT)
+    if got or not lines:
+        return got
+    # A lot whose whole street frontage is short (a flag lot's pole end) has
+    # no other street its doors could face: the short line is its street,
+    # no jog off another (coordinator 2026-11-28, fg5 Q2).
+    return tuple(float(b) for b in lot.front_bearings if _direction_ft(float(b), lines) > 0.0)
 
 
 def door_bearings(lot: "QuadfitLot", edges: "LotEdges | None" = None) -> tuple[float, ...]:
@@ -2962,9 +2970,11 @@ def _door_lines(lot: "QuadfitLot") -> tuple[tuple[float, float, float, float], .
     if lot.edges is None:
         return ()
     lines = _door_streets(lot.edges)
-    return tuple(
+    got = tuple(
         (e.x1, e.y1, e.x2, e.y2) for e in lines if _direction_ft(e.bearing_deg, lines) >= DOOR_LINE_MIN_FT
     )
+    # A frontage short all along is still the street (:func:`street_directions`).
+    return got or tuple((e.x1, e.y1, e.x2, e.y2) for e in lines)
 
 
 def _doors_face_a_street(
